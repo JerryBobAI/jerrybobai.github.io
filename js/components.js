@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 检查是否在根目录（首页）
         const isRoot = currentPath === '/' ||
-                    (currentPath === '/index.html' && !currentPath.includes('/docs/'));
+                    currentPath === '/index.html' ||
+                    (currentPath.endsWith('/index.html') && !currentPath.includes('/docs/'));
 
         // 检查是否在docs目录下
         const isInDocs = currentPath.includes('/docs/');
