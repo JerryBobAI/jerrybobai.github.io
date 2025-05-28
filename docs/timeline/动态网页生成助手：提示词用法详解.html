@@ -130,6 +130,14 @@
     </style>
 </head>
 <body class="antialiased">
+    <!-- 导航栏 -->
+    <header class="w-full bg-white shadow-md fixed top-0 left-0 z-10" data-component="header"></header>
+
+    <!-- 文章元信息组件 -->
+    <div class="w-full mt-16" data-component="article-meta"></div>
+    
+    <!-- 正文内容 -->
+    <div class="mt-8">
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl">
 
@@ -465,6 +473,13 @@
             });
         }
     </script>
-
+    
+    </div> <!-- 关闭正文内容div -->
+    
+    <!-- 页脚 -->
+    <footer class="footer mt-12" data-component="footer"></footer>
+    
+    <!-- 加载组件脚本 -->
+    <script src="../../js/components.js"></script>
 </body>
 </html>
