@@ -5,10 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (headerElement) {
         let currentPath = window.location.pathname;
 
+        // 调试信息 - 在控制台输出当前路径
+        console.log('当前路径:', currentPath);
+
         // 检查是否在根目录（首页）
         const isRoot = currentPath === '/' ||
                     currentPath === '/index.html' ||
+                    currentPath === '/jerrybobai.github.io' ||
+                    currentPath === '/jerrybobai.github.io/' ||
+                    currentPath === '/jerrybobai.github.io/index.html' ||
                     (currentPath.endsWith('/index.html') && !currentPath.includes('/docs/'));
+
+        // 调试信息
+        console.log('是否为首页:', isRoot);
 
         // 检查是否在docs目录下
         const isInDocs = currentPath.includes('/docs/');
