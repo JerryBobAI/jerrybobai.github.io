@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人性的深思</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif; /* 优先使用思源黑体，更适合中文显示 */
+            background-color: #F5F5F3; /* 米白色背景，带一点灰度，类似宣纸或微水泥质感 */
+            color: #5C5C5C; /* 深灰色文字，避免纯黑的尖锐感 */
+        }
+        .wabi-sabi-container {
+            max-width: 1200px; /* 限制内容最大宽度，在大屏幕上保持舒适阅读 */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 4rem 2rem; /* 上下留白，左右边距 */
+        }
+        .highlight-text {
+            color: #8A7B6A; /* 陶土色或淡褐色作为点缀，柔和不刺眼 */
+        }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #D1C7BC, transparent); /* 柔和的分隔线，使用背景色调的渐变 */
+            margin: 3rem 0;
+        }
+        .oversized-text {
+            font-size: clamp(3rem, 8vw, 6rem); /* 响应式超大字体 */
+            font-weight: 700; /* 粗体 */
+            line-height: 1.1;
+            color: #4A4A4A; /* 稍深一点的灰色 */
+        }
+        .english-caption {
+            font-size: clamp(0.75rem, 1.5vw, 1rem);
+            color: #A09387; /* 更浅的辅助英文文字颜色 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .line-art-icon {
+            font-size: 3rem;
+            color: #A09387; /* 图标颜色与英文标题一致 */
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        /* 简单的入场动画 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* 为每个部分设置不同的延迟 */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="wabi-sabi-container min-h-screen flex flex-col justify-center">
+
+        <!-- Section 1: 人性的复杂 -->
+        <section class="text-center mb-16 md:mb-24 fade-in-up delay-1">
+            <div class="line-art-icon">
+                <i class="fas fa-adjust"></i> <!-- 用调整图标象征双面性 -->
+            </div>
+            <h1 class="oversized-text mb-2">
+                双面性 <span class="english-caption">DUALITY</span>
+            </h1>
+            <p class="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto">
+                人性的复杂在于其<strong class="highlight-text">双面性</strong>——既渴望安逸的捷径，也向往<strong class="highlight-text">创造的探险</strong>。
+            </p>
+            <p class="text-sm english-caption mt-4">The complexity of human nature lies in its DUALITY—a craving for easy shortcuts, yet a yearning for creative ADVENTURES.</p>
+        </section>
+
+        <div class="section-divider fade-in-up delay-1"></div>
+
+        <!-- Section 2: 真正的分野 -->
+        <section class="text-center my-16 md:my-24 fade-in-up delay-2">
+            <div class="line-art-icon">
+                <i class="fas fa-road-spoke"></i> <!-- 三条分叉路象征选择 -->
+            </div>
+            <h2 class="oversized-text mb-2">
+                分野 <span class="english-caption">THE GREAT DIVIDE</span>
+            </h2>
+            <p class="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto">
+                真正的分野不在基因，而在<strong class="highlight-text">三重选择</strong>：你注视的<strong class="highlight-text">远方</strong>、你坚守的<strong class="highlight-text">意志</strong>、你呼吸的<strong class="highlight-text">文化</strong>。
+            </p>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="p-6 border border-[#D1C7BC] rounded-lg bg-white/30 backdrop-blur-sm">
+                    <i class="fas fa-binoculars text-2xl highlight-text mb-2"></i>
+                    <h3 class="text-lg font-semibold mb-1 text-[#4A4A4A]">注视的远方</h3>
+                    <p class="text-sm text-[#6B6B6B]">YOUR DISTANT HORIZON</p>
+                </div>
+                <div class="p-6 border border-[#D1C7BC] rounded-lg bg-white/30 backdrop-blur-sm">
+                    <i class="fas fa-hand-fist text-2xl highlight-text mb-2"></i>
+                    <h3 class="text-lg font-semibold mb-1 text-[#4A4A4A]">坚守的意志</h3>
+                    <p class="text-sm text-[#6B6B6B]">YOUR UNWAVERING WILL</p>
+                </div>
+                <div class="p-6 border border-[#D1C7BC] rounded-lg bg-white/30 backdrop-blur-sm">
+                    <i class="fas fa-feather-alt text-2xl highlight-text mb-2"></i> <!-- 羽毛象征文化/气息 -->
+                    <h3 class="text-lg font-semibold mb-1 text-[#4A4A4A]">呼吸的文化</h3>
+                    <p class="text-sm text-[#6B6B6B]">THE CULTURE YOU BREATHE</p>
+                </div>
+            </div>
+            <p class="text-sm english-caption mt-8">The true SEPARATION lies not in genes, but in a TRIAD of choices: the HORIZON you gaze upon, the WILL you uphold, and the CULTURE you inhabit.</p>
+        </section>
+
+        <div class="section-divider fade-in-up delay-2"></div>
+
+        <!-- Section 3: 值得永远保持清醒 -->
+        <section class="text-center mt-16 md:mt-24 fade-in-up delay-3">
+             <div class="line-art-icon">
+                <i class="fas fa-eye"></i> <!-- 眼睛象征清醒 -->
+            </div>
+            <h2 class="oversized-text mb-2">
+                清醒 <span class="english-caption">STAY AWAKE</span>
+            </h2>
+            <p class="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto mb-6">
+                值得永远<strong class="highlight-text">保持清醒</strong>：
+            </p>
+            <ul class="list-none space-y-4 max-w-2xl mx-auto text-lg md:text-xl text-left">
+                <li class="flex items-start p-4 border border-[#D1C7BC] rounded-lg bg-white/30 backdrop-blur-sm">
+                    <i class="fas fa-puzzle-piece highlight-text mr-3 mt-1 flex-shrink-0"></i>
+                    <span>把别人眼中的工作变成自己的<strong class="highlight-text">游乐园</strong></span>
+                </li>
+                <li class="flex items-start p-4 border border-[#D1C7BC] rounded-lg bg-white/30 backdrop-blur-sm">
+                    <i class="fas fa-brain highlight-text mr-3 mt-1 flex-shrink-0"></i>
+                    <span>不断<strong class="highlight-text">矫正认知</strong>的偏差</span>
+                </li>
+                <li class="flex items-start p-4 border border-[#D1C7BC] rounded-lg bg-white/30 backdrop-blur-sm">
+                    <i class="fas fa-headphones highlight-text mr-3 mt-1 flex-shrink-0"></i>
+                    <span>在喧嚣中找到属于自己的<strong class="highlight-text">节奏</strong></span>
+                </li>
+            </ul>
+             <p class="text-sm english-caption mt-8">It's worth staying perpetually AWAKE: transform others' work into your PLAYGROUND, continuously correct cognitive BIASES, and find your own RHYTHM amidst the noise.</p>
+        </section>
+
+    </div>
+
+    <footer class="text-center py-8 text-sm text-[#A09387] border-t border-[#D1C7BC] mt-16">
+        <p>© 2024 Reflection. Crafted with Wabi-Sabi aesthetics.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧之光：四本好书的深度洞察</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f1f5f9; /* bg-slate-100 */
+            color: #1e293b; /* text-slate-800 */
+        }
+        .apple-title {
+            font-weight: 900; /* Extra bold for Chinese titles */
+        }
+        .english-subtitle {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .tech-gradient-teal::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            opacity: 0.1;
+            background: radial-gradient(circle at top right, theme('colors.teal.500') 0%, transparent 60%);
+        }
+        .tech-gradient-blue::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            opacity: 0.07;
+            background: radial-gradient(circle at bottom left, theme('colors.blue.600') 0%, transparent 70%);
+        }
+        .icon-showcase {
+            font-size: 8rem; /* text-9xl roughly */
+            line-height: 1;
+            margin-bottom: 1.5rem; /* mb-6 */
+            color: theme('colors.blue.400');
+            opacity: 0.8;
+        }
+        .section-container {
+            min-height: 90vh;
+            padding-top: 5rem; /* py-20 */
+            padding-bottom: 5rem; /* py-20 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .material-card {
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); /* shadow-lg */
+            overflow: hidden;
+            position: relative;
+        }
+        .key-insight {
+            font-size: 1.5rem; /* text-2xl */
+            line-height: 2rem; /* leading-8 */
+            font-weight: 700; /* font-bold */
+            color: theme('colors.teal.600');
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        .book-title-main {
+            font-size: 2.25rem; /* text-4xl */
+        }
+        @media (min-width: 768px) { /* md */
+            .book-title-main {
+                font-size: 3rem; /* text-5xl */
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .book-title-main {
+                font-size: 3.75rem; /* text-6xl */
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <!-- Navigation Bar (Simplified) -->
+    <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-600 apple-title">智慧洞察</h1>
+            <nav class="space-x-4 text-sm md:text-base">
+                <a href="#mr-toad" class="text-slate-600 hover:text-blue-600 transition-colors">蛤蟆先生</a>
+                <a href="#adler" class="text-slate-600 hover:text-blue-600 transition-colors">自卑与超越</a>
+                <a href="#nvc" class="text-slate-600 hover:text-blue-600 transition-colors">非暴力沟通</a>
+                <a href="#art-of-loving" class="text-slate-600 hover:text-blue-600 transition-colors">爱的艺术</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-[70vh] md:min-h-[80vh] flex items-center bg-white relative tech-gradient-blue">
+        <div class="container mx-auto px-6 text-center">
+            <span class="material-icons-outlined text-7xl md:text-8xl text-blue-500 opacity-70 mb-4">auto_stories</span>
+            <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-blue-600 apple-title leading-tight">
+                开启心智<br>汲取智慧
+            </h2>
+            <p class="mt-4 text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-2xl mx-auto">
+                精选四本心理与沟通经典，提炼核心洞察，助您更好地理解自我与世界。
+            </p>
+            <p class="mt-2 text-sm text-slate-500 english-subtitle">
+                Insights from four transformative books on psychology and communication.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 1: 蛤蟆先生去看心理医生 -->
+    <section id="mr-toad" class="section-container bg-slate-50 relative tech-gradient-teal">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-4 flex justify-center md:justify-start">
+                    <span class="material-icons-outlined icon-showcase">psychology</span>
+                </div>
+                <div class="md:col-span-8">
+                    <h3 class="book-title-main font-bold text-blue-600 apple-title">蛤蟆先生去看心理医生</h3>
+                    <p class="mt-1 mb-6 text-base text-slate-500 english-subtitle">MR. TOAD SEES A PSYCHIATRIST</p>
+
+                    <div class="space-y-6 text-left">
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 1：识别与管理情绪状态</p>
+                            <p class="text-slate-700 text-lg">通过蛤蟆的咨询历程，我们学习到认识自己的“儿童自我”、“父母自我”和“成人自我”状态至关重要。真正的成长在于发展强大的“成人自我”，理性应对现实，而非被不成熟的情绪或苛责的内在声音所控制。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Understanding and managing our Child, Parent, and Adult ego states is key to emotional maturity.</p>
+                        </div>
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 2：心理咨询是自我探索的旅程</p>
+                            <p class="text-slate-700 text-lg">心理咨询并非简单的“修理”，而是一个在专业人士引导下，勇敢面对内心、理解过往经历、并最终实现自我接纳与成长的过程。它需要耐心、信任和自我反思的勇气。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Counseling is a journey of self-discovery, not a quick fix, requiring courage and patience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: 自卑与超越 -->
+    <section id="adler" class="section-container bg-white relative tech-gradient-blue">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-8 md:order-2">
+                    <h3 class="book-title-main font-bold text-blue-600 apple-title">自卑与超越</h3>
+                    <p class="mt-1 mb-6 text-base text-slate-500 english-subtitle">WHAT LIFE SHOULD MEAN TO YOU (Adler)</p>
+
+                    <div class="space-y-6 text-left">
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 1：人生意义在于贡献与社会兴趣</p>
+                            <p class="text-slate-700 text-lg">阿德勒强调，人生的真正意义不在于追求个人优越感的虚幻满足，而在于培养“社会兴趣”，为他人和社会做出贡献。克服自卑感的健康途径是与他人合作，在奉献中找到价值。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">The meaning of life is found in contribution and social interest, not isolated superiority.</p>
+                        </div>
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 2：自卑感是普遍的，关键在于如何超越</p>
+                            <p class="text-slate-700 text-lg">每个人都有不同程度的自卑感，这是人类进步的动力之一。但重要的是以积极、有建设性的方式去追求优越，而不是通过贬低他人或逃避现实来获得虚假的补偿。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Inferiority is universal; overcoming it constructively is what matters for growth.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-4 md:order-1 flex justify-center md:justify-start">
+                     <span class="fas fa-rocket icon-showcase"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: 非暴力沟通 -->
+    <section id="nvc" class="section-container bg-slate-50 relative tech-gradient-teal">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-4 flex justify-center md:justify-start">
+                    <span class="material-icons-outlined icon-showcase">record_voice_over</span>
+                </div>
+                <div class="md:col-span-8">
+                    <h3 class="book-title-main font-bold text-blue-600 apple-title">非暴力沟通</h3>
+                    <p class="mt-1 mb-6 text-base text-slate-500 english-subtitle">NONVIOLENT COMMUNICATION</p>
+
+                    <div class="space-y-6 text-left">
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 1：专注于观察、感受、需要、请求 (OFNR)</p>
+                            <p class="text-slate-700 text-lg">非暴力沟通的核心四要素：不带评论的<strong class="text-teal-700">观察</strong>，清晰表达自己的<strong class="text-teal-700">感受</strong>，识别并表达感受背后未被满足的<strong class="text-teal-700">需要</strong>，以及提出具体、可行的<strong class="text-teal-700">请求</strong>。这取代了指责、评判和命令。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Focus on Observations, Feelings, Needs, and Requests (OFNR) instead of judgment and demands.</p>
+                        </div>
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 2：同理心是连接的桥梁</p>
+                            <p class="text-slate-700 text-lg">非暴力沟通不仅关乎如何表达自己，更强调如何倾听他人。通过同理心去理解对方的感受和需要，即使我们不同意其行为或观点，也能建立深刻的人际连接，促进理解与合作。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Empathy is the bridge to connection, understanding others' feelings and needs deeply.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: 爱的艺术 -->
+    <section id="art-of-loving" class="section-container bg-white relative tech-gradient-blue">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-8 md:order-2">
+                    <h3 class="book-title-main font-bold text-blue-600 apple-title">爱的艺术</h3>
+                    <p class="mt-1 mb-6 text-base text-slate-500 english-subtitle">THE ART OF LOVING</p>
+
+                    <div class="space-y-6 text-left">
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 1：爱是一种需要学习和实践的艺术</p>
+                            <p class="text-slate-700 text-lg">弗洛姆认为，爱并非仅仅是一种感觉或运气，而是一门艺术，需要知识、努力和持续的实践。它像学习任何其他艺术（如音乐、绘画）一样，要求我们投入纪律、专注和耐心。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Love is an art that requires knowledge, effort, discipline, and practice, not just a feeling.</p>
+                        </div>
+                        <div class="material-card p-6 md:p-8">
+                            <p class="key-insight">洞察 2：成熟的爱包含关怀、责任、尊重和了解</p>
+                            <p class="text-slate-700 text-lg">真正的爱是主动的给予，而非被动的接受。其基本要素包括：对爱人成长和幸福的积极<strong class="text-teal-700">关怀</strong>，对其需求的回应（<strong class="text-teal-700">责任感</strong>），如其所是地看待对方并助其成长（<strong class="text-teal-700">尊重</strong>），以及深入地<strong class="text-teal-700">了解</strong>对方。此外，还需要克服自恋，培养<strong class="text-teal-700">信仰</strong>的能力。</p>
+                            <p class="text-xs text-slate-400 english-subtitle mt-2">Mature love involves care, responsibility, respect, knowledge, and overcoming narcissism with faith.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-4 md:order-1 flex justify-center md:justify-start">
+                    <span class="material-icons-outlined icon-showcase">auto_fix_high</span> <!-- or favorite, palette -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-slate-800 text-slate-300">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-xl md:text-2xl font-semibold text-white mb-4 apple-title">愿这些洞察，<br class="sm:hidden">点亮您的心智之旅。</p>
+            <p class="text-sm english-subtitle">May these insights illuminate your journey of understanding.</p>
+            <div class="mt-8 space-x-4">
+                <a href="#hero" class="text-teal-400 hover:text-teal-300 transition-colors">返回顶部 <i class="fas fa-arrow-up ml-1"></i></a>
+            </div>
+            <p class="mt-8 text-xs text-slate-400">
+                内容总结与感悟基于个人阅读。网页设计融合 Apple Keynote 风格与 Google Material Design 色系。
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Basic Intersection Observer for subtle animations (optional)
+        const sections = document.querySelectorAll('section[id]'); // Only sections with an ID
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2 // At least 20% of the section is visible
+        };
+
+        function handleIntersection(entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn'); // You'd need to define this animation
+                    // To prevent re-animation: observer.unobserve(entry.target);
+                }
+            });
+        }
+
+        // If you want to add a fadeIn animation (example):
+        // Add to your <style> tag:
+        // @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        // .animate-fadeIn { animation: fadeIn 0.7s ease-out forwards; }
+
+        // const observer = new IntersectionObserver(handleIntersection, observerOptions);
+        // sections.forEach(section => {
+        //    observer.observe(section);
+        //    section.style.opacity = "0"; // Initially hide for fade-in effect, if using animation
+        // });
+
+        // Smooth scroll is handled by Tailwind's `scroll-smooth` on <html>
+    </script>
+
+</body>
+</html>

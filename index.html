@@ -1,7 +1,73 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字海洋的月光</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="selection:bg-[#689094]/30 selection:text-[#3D3D3D]">
+    <!-- 添加导航栏 -->
+    <header class="w-full bg-white shadow-md fixed top-0 left-0 z-10" data-component="header"></header>
+
+    <!-- 添加"鲸波月影"部分 -->
+    <div class="w-full bg-[var(--color-background)] text-center py-16 mt-16">
+        <h1 class="text-6xl md:text-8xl text-gray-800">鲸波月影</h1>
+    </div>
+
+    <div class="content-wrapper container">
+        <div class="binary-bg" aria-hidden="true">
+            <span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>0</span><span>1</span>
+            <span>1</span><span>0</span><span>0</span><span>1</span><span>0</span><span>1</span><span>1</span><span>0</span>
+            <span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>0</span><span>1</span>
+        </div>
+
+        <div class="mb-4 md:mb-6">
+            <p class="text-xl md:text-3xl font-context text-secondary">
+                在 <span class="text-2xl md:text-4xl text-tertiary">0</span> 与 <span class="text-2xl md:text-4xl text-tertiary">1</span> 的海洋
+            </p>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display">
+            打捞
+            <br class="sm:hidden"> <!-- Break line on very small screens -->
+            <span class="block mt-2 md:mt-3">
+                <span class="text-highlight-gradient">月光</span><span class="text-highlight-gradient">碎片</span>
+            </span>
+        </h1>
+
+        <p class="text-sm md:text-md uppercase tracking-wider mt-8 md:mt-12 text-tertiary">
+            SALVAGING MOONLIGHT IN A DIGITAL SEA
+        </p>
+    </div>
+
+    <!-- iframe预览组件 -->
+    <div data-component="iframe-previews" data-previews='[
+        {
+            "title": "动态网页生成助手：提示词用法详解",
+            "link": "docs/timeline/动态网页生成助手：提示词用法详解.html",
+            "src": "docs/timeline/动态网页生成助手：提示词用法详解.html"
+        },
+        {
+            "title": "人性的双面性",
+            "link": "docs/timeline/人性的双面性.html",
+            "src": "docs/timeline/人性的双面性.html"
+        }
+    ]'></div>
+
+    <div class="mt-16">
+        <p class="text-sm text-tertiary">鲸波深处，代码与月光共振</p>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer" data-component="footer"></footer>
+    <!-- 加载组件脚本 -->
+    <script src="js/components.js"></script>
+    <script src="js/iframe-previews.js"></script>
 </body>
 </html>

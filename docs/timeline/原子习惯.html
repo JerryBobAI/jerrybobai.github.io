@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原子习惯 - 动态网页</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            scroll-behavior: smooth;
+        }
+        .highlight-blue { color: #4285F4; }
+        .highlight-yellow { color: #FBBC05; }
+        .highlight-green { color: #34A853; }
+        .highlight-red { color: #EA4335; }
+
+        .bg-google-blue-light { background-color: rgba(66, 133, 244, 0.08); }
+        .bg-google-yellow-light { background-color: rgba(251, 188, 5, 0.08); }
+
+        .border-google-blue { border-color: #4285F4; }
+        .border-google-yellow { border-color: #FBBC05; }
+        .border-google-green { border-color: #34A853; }
+        .border-google-red { border-color: #EA4335; }
+
+        .super-text {
+            font-weight: 800;
+        }
+        .emphasis-number {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 800;
+            line-height: 1;
+        }
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            padding: 1.75rem;
+            box-shadow: 0 8px 16px -3px rgba(0, 0, 0, 0.07), 0 3px 7px -3px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px -4px rgba(0,0,0,0.1), 0 5px 10px -5px rgba(0,0,0,0.08);
+        }
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 0.85rem;
+        }
+        .card-icon {
+            font-size: 2.25rem;
+            margin-bottom: 1.15rem;
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.03);
+        }
+        .brand-stripe {
+            height: 6px;
+            width: 120px;
+            margin: 2.5rem auto 3rem auto;
+            border-radius: 3px;
+        }
+        .text-main-color { color: #202124; }
+        .text-secondary-color { color: #5f6368; }
+
+        .container-xl {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .container-xl { padding-left: 2.5rem; padding-right: 2.5rem; }
+        }
+        @media (min-width: 1280px) {
+            .container-xl { padding-left: 4rem; padding-right: 4rem; }
+        }
+
+        .identity-layer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 220px;
+        }
+        .identity-layer {
+            border: 3px solid;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            text-align: center;
+            position: absolute;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05); /* Reduced shadow intensity */
+        }
+        .identity-layer .layer-title {
+            font-size: 1.1rem;
+        }
+        .identity-layer .layer-subtitle {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-top: 4px;
+            line-height: 1.3;
+            font-weight: 400;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-main-color">
+
+    <div class="container-xl py-12 md:py-20">
+
+        <header class="text-center mb-16 md:mb-24">
+            <h1 class="super-text text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold mb-3">原子习惯</h1>
+            <p class="text-xl sm:text-2xl md:text-3xl text-secondary-color tracking-wider">ATOMIC HABITS</p>
+            <p class="text-lg text-gray-500 mt-2">by James Clear</p>
+        </header>
+
+        <section class="mb-16 md:mb-24 text-center px-4">
+            <p class="text-2xl md:text-3xl lg:text-4xl font-semibold max-w-4xl mx-auto mb-10 leading-relaxed">
+                “成功是日常习惯的产物 - <span class="highlight-blue">而非</span> 一生一次的巨大转变。”
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-16">
+                <div class="text-center">
+                    <p class="emphasis-number highlight-blue">1%</p>
+                    <p class="text-xl md:text-2xl font-semibold">每天进步 <span class="text-sm text-gray-500 block uppercase tracking-wider">Better Every Day</span></p>
+                </div>
+                <div class="text-4xl md:text-6xl font-light text-gray-300 transform md:rotate-0 rotate-90">→</div>
+                <div class="text-center">
+                    <p class="emphasis-number highlight-yellow">37.78<span class="text-3xl md:text-4xl lg:text-5xl">%</span></p>
+                    <p class="text-xl md:text-2xl font-semibold">每年进步 <span class="text-sm text-gray-500 block uppercase tracking-wider">Better Every Year</span></p>
+                </div>
+            </div>
+        </section>
+
+        <div class="brand-stripe bg-google-blue"></div>
+
+        <section id="core-principles" class="my-16 md:my-24 px-4">
+            <h2 class="section-title">核心原则 <span class="text-lg block text-secondary-color font-normal uppercase tracking-wider">Core Principles</span></h2>
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="card bg-google-blue-light">
+                    <h3 class="card-title text-blue-700 mb-6 text-center">行为改变的3个层次 <span class="text-sm text-blue-500 block uppercase tracking-wider">3 Layers of Behavior Change</span></h3>
+                    <div class="identity-layer-container relative py-4">
+                        {/* <!-- Outermost Circle - Adjusted border and text color --> */}
+                        <div class="identity-layer border-gray-200 text-gray-700" style="width: 220px; height: 220px; z-index: 1; background-color: white;">
+                            <span class="layer-title">结果</span> <span class="layer-subtitle">OUTCOMES<br>(WHAT?)</span>
+                        </div>
+                        {/* <!-- Middle Circle - Adjusted border and text color --> */}
+                        <div class="identity-layer border-gray-300 text-gray-700" style="width: 160px; height: 160px; z-index: 2; background-color: white;">
+                            <span class="layer-title">过程</span> <span class="layer-subtitle">PROCESSES<br>(HOW?)</span>
+                        </div>
+                        {/* <!-- Innermost Circle - Styles for blue fill and white text --> */}
+                        <div class="identity-layer text-white border-[#4285F4]" style="width: 100px; height: 100px; z-index: 3; background-color: #4285F4;">
+                            <span class="layer-title font-bold">身份</span> <span class="layer-subtitle">IDENTITY<br>(WHO?)</span>
+                        </div>
+                    </div>
+                    <p class="text-center text-blue-700 font-semibold mt-6 text-lg">基于<strong class="font-bold">身份</strong>的习惯，而非基于结果的习惯</p>
+                </div>
+                <div class="space-y-8">
+                    <div class="card">
+                        <p class="text-xl lg:text-2xl font-semibold">“忘记目标，<span class="highlight-yellow">专注于系统</span>。”</p>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider mt-1">Forget Goals, Focus on System.</p>
+                    </div>
+                    <div class="card">
+                        <p class="text-xl lg:text-2xl font-semibold">“坏习惯之所以不断重复，并非因为你不想改变，而是因为你用错了<span class="highlight-blue">改变的系统</span>。”</p>
+                        <p class="text-sm text-gray-500 uppercase tracking-wider mt-1">Bad habits repeat due to the wrong system for change.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="brand-stripe bg-google-yellow"></div>
+
+        <section id="habit-loop" class="my-16 md:my-24 px-4">
+            <h2 class="section-title">习惯回路 <span class="text-lg block text-secondary-color font-normal uppercase tracking-wider">The Habit Loop</span></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <div class="card border-t-4 border-google-blue">
+                    <i class="fas fa-eye card-icon highlight-blue bg-blue-50"></i>
+                    <h3 class="card-title">提示 <span class="text-sm font-normal text-gray-400 ml-1">CUE</span></h3>
+                    <p class="text-2xl font-bold mb-3">让它显而易见</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Make It Obvious</p>
+                    <ul class="space-y-3 text-secondary-color text-sm flex-grow">
+                        <li><i class="fas fa-list-check fa-fw mr-2 highlight-blue"></i><strong>列出日常习惯:</strong> 觉察现有行为。</li>
+                        <li><i class="fas fa-layer-group fa-fw mr-2 highlight-blue"></i><strong>习惯叠加:</strong> “在[旧习惯]后，执行[新习惯]”。</li>
+                        <li><i class="fas fa-map-signs fa-fw mr-2 highlight-blue"></i><strong>环境设计:</strong> 优化空间，“一空间一用途”。</li>
+                    </ul>
+                </div>
+
+                <div class="card border-t-4 border-google-yellow">
+                    <i class="fas fa-heart card-icon highlight-yellow bg-yellow-50"></i>
+                    <h3 class="card-title">渴求 <span class="text-sm font-normal text-gray-400 ml-1">CRAVING</span></h3>
+                    <p class="text-2xl font-bold mb-3">让它有吸引力</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Make It Attractive</p>
+                     <ul class="space-y-3 text-secondary-color text-sm flex-grow">
+                        <li><i class="fas fa-link fa-fw mr-2 highlight-yellow"></i><strong>诱惑捆绑:</strong> 喜欢的事 + 想养成的习惯。</li>
+                        <li><i class="fas fa-users fa-fw mr-2 highlight-yellow"></i><strong>我们模仿:</strong> 加入积极的文化圈。</li>
+                        <li><i class="fas fa-clock fa-fw mr-2 highlight-yellow"></i><strong>激励仪式:</strong> 创造启动仪式进入状态。</li>
+                    </ul>
+                </div>
+
+                <div class="card border-t-4 border-google-green">
+                    <i class="fas fa-running card-icon highlight-green bg-green-50"></i>
+                    <h3 class="card-title">反应 <span class="text-sm font-normal text-gray-400 ml-1">RESPONSE</span></h3>
+                    <p class="text-2xl font-bold mb-3">让它简便易行</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Make It Easy</p>
+                    <ul class="space-y-3 text-secondary-color text-sm flex-grow">
+                        <li><i class="fas fa-sync-alt fa-fw mr-2 highlight-green"></i><strong>重复而非完美:</strong> 频率塑造习惯。</li>
+                        <li><i class="fas fa-sliders-h fa-fw mr-2 highlight-green"></i><strong>减少阻力:</strong> 为未来扫清障碍。</li>
+                        <li><i class="fas fa-stopwatch-20 fa-fw mr-2 highlight-green"></i><strong>两分钟法则:</strong> 新习惯开始不超过2分钟。</li>
+                        <li><i class="fas fa-cogs fa-fw mr-2 highlight-green"></i><strong>自动化:</strong> 尽可能自动化好习惯。</li>
+                    </ul>
+                </div>
+
+                <div class="card border-t-4 border-google-red">
+                    <i class="fas fa-gift card-icon highlight-red bg-red-50"></i>
+                    <h3 class="card-title">奖励 <span class="text-sm font-normal text-gray-400 ml-1">REWARD</span></h3>
+                    <p class="text-2xl font-bold mb-3">让它令人愉悦</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">Make It Satisfying</p>
+                     <ul class="space-y-3 text-secondary-color text-sm flex-grow">
+                        <li><i class="fas fa-star fa-fw mr-2 highlight-red"></i><strong>即时满足:</strong> 增加即时快乐。</li>
+                        <li><i class="fas fa-medal fa-fw mr-2 highlight-red"></i><strong>个人奖励计划:</strong> 可视化奖励。</li>
+                        <li><i class="fas fa-chart-line fa-fw mr-2 highlight-red"></i><strong>习惯追踪器:</strong> 衡量进步。</li>
+                        <li class="mt-auto pt-3"><div class="p-2 bg-yellow-50 rounded border border-yellow-200"><i class="fas fa-exclamation-triangle fa-fw mr-1 text-yellow-600"></i><strong class="text-yellow-700">古德哈特定律:</strong> 当衡量标准成为目标，不再是好标准。</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="brand-stripe bg-google-blue"></div>
+
+        <section id="break-bad-habits" class="my-16 md:my-24 px-4">
+            <h2 class="section-title">如何戒除坏习惯 <span class="text-lg block text-secondary-color font-normal uppercase tracking-wider">How to Break a Bad Habit?</span></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card bg-slate-700 text-white hover:bg-slate-600">
+                    <i class="fas fa-eye-slash card-icon text-slate-400 bg-slate-600"></i>
+                    <h3 class="card-title">让提示隐形</h3>
+                    <p class="text-lg font-semibold mb-2 uppercase text-slate-300 tracking-wider">Make It Invisible</p>
+                    <p class="text-sm flex-grow text-slate-300">减少接触导致坏习惯的提示。</p>
+                </div>
+                <div class="card bg-slate-700 text-white hover:bg-slate-600">
+                     <i class="fas fa-thumbs-down card-icon text-slate-400 bg-slate-600"></i>
+                    <h3 class="card-title">让它失去吸引力</h3>
+                    <p class="text-lg font-semibold mb-2 uppercase text-slate-300 tracking-wider">Make It Unattractive</p>
+                    <p class="text-sm flex-grow text-slate-300">重塑心态，强调避免坏习惯的好处。</p>
+                </div>
+                <div class="card bg-slate-700 text-white hover:bg-slate-600">
+                    <i class="fas fa-lock card-icon text-slate-400 bg-slate-600"></i>
+                    <h3 class="card-title">让它难以执行</h3>
+                    <p class="text-lg font-semibold mb-2 uppercase text-slate-300 tracking-wider">Make It Difficult</p>
+                    <p class="text-sm flex-grow text-slate-300">增加执行坏习惯的步骤或阻力。</p>
+                </div>
+                <div class="card bg-slate-700 text-white hover:bg-slate-600">
+                    <i class="fas fa-heart-broken card-icon text-slate-400 bg-slate-600"></i>
+                    <h3 class="card-title">让它令人不快</h3>
+                    <p class="text-lg font-semibold mb-2 uppercase text-slate-300 tracking-wider">Make It Unsatisfying</p>
+                    <p class="text-sm flex-grow text-slate-300">让坏习惯的代价公开且痛苦。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-16 md:mt-24 pt-10 pb-16 border-t border-gray-300 text-center px-4">
+             <p class="text-xl md:text-2xl lg:text-3xl font-semibold max-w-4xl mx-auto text-secondary-color leading-relaxed">
+                “这是一个<span class="highlight-blue">持续的过程</span>。没有终点线，小习惯会不断<span class="highlight-yellow">积累复利</span>。让习惯变得愉快。带着厌倦感爱上它。”
+            </p>
+            <p class="text-sm text-gray-400 mt-6 uppercase tracking-wider">This is a continuous process. No finish line. Small habits compound. Make habits enjoyable. Fall in love with boredom.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

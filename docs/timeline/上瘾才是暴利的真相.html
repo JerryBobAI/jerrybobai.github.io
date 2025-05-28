@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上瘾：暴利的真相 - Addiction: The Truth of Profit</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #1A1A1A; /* Dark background like the image */
+            color: #FFFFFF; /* Default text color white for dark background */
+        }
+
+        .memphis-card {
+            padding: 2rem; /* 32px */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .memphis-bg-yellow { background-color: #FFD166; color: #1A1A1A; } /* Yellow card, dark text */
+        .memphis-bg-pink   { background-color: #EF476F; color: #FFFFFF; }
+        .memphis-bg-green  { background-color: #06D6A0; color: #1A1A1A; } /* Green card, dark text */
+        .memphis-bg-blue   { background-color: #118AB2; color: #FFFFFF; }
+        .memphis-bg-dark-card { background-color: #282c34; color: #FFFFFF; } /* Slightly lighter dark for cards, white text */
+
+
+        .text-display-huge { font-size: clamp(6rem, 20vw, 15rem); line-height: 0.8; font-weight: 900; }
+        .text-display-xl   { font-size: clamp(3.5rem, 10vw, 8rem); line-height: 1; font-weight: 800; }
+        .text-display-lg   { font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.1; font-weight: 700; }
+
+        .chinese-title { font-weight: 900; }
+        .english-subtitle { font-size: 0.8em; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 0.25rem; }
+
+        .highlight-text-yellow-solid { color: #FFD166; } /* Solid yellow for main title on dark bg */
+
+        /* Gradients for dark backgrounds - ensure start color is bright */
+        .highlight-text-pink-gradient {
+            background: linear-gradient(to right, #EF476F 60%, rgba(239, 71, 111, 0.7) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-green-gradient {
+            background: linear-gradient(to right, #06D6A0 60%, rgba(6, 214, 160, 0.7) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+         /* Gradient for yellow card (dark text) - make it subtle or use solid */
+        .highlight-text-blue-on-yellow { /* Example: for yellow card with dark text */
+            background: linear-gradient(to right, #118AB2 60%, #0b5a77 100%); /* Darker blue shade */
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+
+        .chart-bar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem; /* 12px */
+            font-size: 0.9rem; /* 14.4px */
+        }
+        .chart-label {
+            width: 120px; /* Adjust as needed */
+            flex-shrink: 0;
+            margin-right: 1rem; /* 16px */
+            text-align: right;
+            color: #333333; /* Darker gray for labels on yellow card */
+        }
+        .chart-bar-wrapper {
+            flex-grow: 1;
+            background-color: rgba(0, 0, 0, 0.08); /* Darker, low-opacity track on yellow card */
+            border-radius: 4px;
+            height: 24px; /* Bar height */
+            display: flex;
+            align-items: center;
+        }
+        .chart-bar {
+            background-color: #E0AC00; /* Slightly darker yellow for bar, or a contrasting color */
+            /* Or use a contrasting color from memphis palette e.g. memphis-bg-blue */
+            /* background-color: #118AB2; */
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+        }
+        .chart-value {
+            margin-left: 0.75rem; /* 12px */
+            font-weight: 600;
+            min-width: 30px; /* Ensure space for numbers */
+            color: #1A1A1A; /* Dark text for values outside bar on yellow card */
+        }
+        .chart-bar .bar-value-inside { /* Value inside bar */
+            /* If bar is #E0AC00 (darker yellow), text should be dark */
+            color: #1A1A1A;
+            /* If bar is #118AB2 (blue), text should be white */
+            /* color: #FFFFFF; */
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .source-text { font-size: 0.875rem; color: #A0AEC0; opacity: 0.8; } /* For top source text on dark bg */
+
+        .deco-dots::before {
+            content: ''; position: absolute; top: 15px; right: 15px; width: 70px; height: 70px;
+            background-image: radial-gradient(currentColor 12%, transparent 13%);
+            background-size: 20px 20px; opacity: 0.1;
+        }
+        /* For cards with white text, dots should be white */
+        .memphis-bg-dark-card .deco-dots::before,
+        .memphis-bg-pink .deco-dots::before,
+        .memphis-bg-blue .deco-dots::before {
+             background-image: radial-gradient(white 12%, transparent 13%);
+             opacity: 0.07; /* Make it more subtle on dark cards */
+        }
+        /* For cards with dark text, dots should be dark */
+        .memphis-bg-yellow .deco-dots::before,
+        .memphis-bg-green .deco-dots::before {
+            background-image: radial-gradient(black 12%, transparent 13%);
+            opacity: 0.07;
+        }
+
+
+    </style>
+</head>
+<body class="p-4 md:p-6 lg:p-8">
+    <div class="max-w-[1920px] mx-auto space-y-8 md:space-y-12">
+
+        <!-- Hero Section -->
+        <div class="text-center py-8 md:py-12">
+            <h1 class="text-display-huge highlight-text-yellow-solid chinese-title">上瘾</h1>
+            <br/><br/>
+            <h2 class="text-display-lg chinese-title -mt-4 md:-mt-8 text-white">才是<span class="highlight-text-pink-gradient">暴利</span>的真相</h2>
+            <span class="english-subtitle text-lg text-gray-400">ADDICTION: THE HIDDEN KEY TO PROFIT</span>
+        </div>
+
+        <!-- Insight Section -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-stretch">
+            <div class="memphis-card memphis-bg-dark-card md:col-span-3 deco-dots">
+                <h3 class="text-2xl lg:text-3xl chinese-title mb-3 text-white"><i class="fas fa-lightbulb mr-2 opacity-70"></i>商业成功的<span class="highlight-text-green-gradient">核心</span></h3>
+                <span class="english-subtitle text-gray-400">THE CORE OF COMMERCIAL SUCCESS</span>
+                <p class="text-3xl lg:text-5xl xl:text-6xl font-bold my-6 md:my-10 leading-tight text-white">
+                    “贩卖<span class="highlight-text-yellow-solid">多巴胺</span>，<br class="hidden md:block"/> 而非产品”
+                </p>
+                <p class="text-lg lg:text-xl opacity-90 text-gray-200">
+                    真正赚钱的生意往往不靠产品本身，而是靠制造“<span class="highlight-text-pink-gradient font-semibold">成瘾感</span>”。
+                </p>
+                <span class="english-subtitle mt-2 text-gray-400">TRUE PROFIT COMES FROM CREATING "ADDICTION", NOT JUST SELLING PRODUCTS.</span>
+            </div>
+
+            <!-- Dopamine Chart Section -->
+            <div class="memphis-card memphis-bg-yellow md:col-span-2 deco-dots"> <!-- Added deco-dots here for consistency -->
+                <h3 class="text-2xl lg:text-3xl chinese-title mb-4 text-center text-black">人类快乐因子</h3>
+                <p class="text-sm opacity-80 text-center mb-1 chinese-title text-gray-700">多巴胺分泌数量 <span class="font-bold text-black">前二十</span> 的行为</p>
+                <span class="english-subtitle text-center mb-6 text-gray-600">TOP 20 DOPAMINE-RELEASING BEHAVIORS</span>
+                <div id="dopamineChart" class="space-y-2 pr-2 overflow-y-auto max-h-[500px] md:max-h-none">
+                    <!-- Chart data will be injected here by JS -->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        const dopamineData = [
+            { label: "男女女爱", value: 550, eng: "INTIMACY" },
+            { label: "还清债务", value: 225, eng: "DEBT CLEARED" },
+            { label: "吸烟", value: 220, eng: "SMOKING" },
+            { label: "工资到账", value: 188, eng: "SALARY RECEIVED" },
+            { label: "涨薪", value: 183, eng: "PAY RAISE" },
+            { label: "别人还钱", value: 162, eng: "OTHERS REPAY" },
+            { label: "打游戏胜利", value: 158, eng: "GAMING VICTORY" },
+            { label: "饮酒", value: 150, eng: "ALCOHOL" },
+            { label: "健身", value: 142, eng: "WORKOUT" },
+            { label: "吃美食", value: 130, eng: "DELICIOUS FOOD" },
+            { label: "朋友聚会", value: 120, eng: "FRIENDS GATHERING" },
+            { label: "按摩", value: 92, eng: "MASSAGE" },
+            { label: "完成任务", value: 90, eng: "TASK COMPLETED" },
+            { label: "读完一本书", value: 89, eng: "FINISH READING" },
+            { label: "追剧", value: 81, eng: "BINGE WATCHING" },
+            { label: "听歌", value: 76, eng: "MUSIC" },
+            { label: "洗热水澡", value: 72, eng: "HOT SHOWER" },
+            { label: "睡到自然醒", value: 58, eng: "NATURAL WAKE-UP" },
+            { label: "游泳", value: 57, eng: "SWIMMING" },
+            { label: "被夸赞", value: 47, eng: "BEING PRAISED" }
+        ];
+
+        const chartContainer = document.getElementById('dopamineChart');
+        const maxValue = Math.max(...dopamineData.map(item => item.value));
+
+        dopamineData.forEach(item => {
+            const barPercentage = (item.value / maxValue) * 100;
+            // English subtitle for chart labels - ensure it's dark on yellow bg
+            const itemEngHTML = item.eng ? `<span class="block text-xs opacity-70 text-gray-700 tracking-wider">${item.eng}</span>` : '';
+
+            // If bar is very short, value is outside. If long, value is inside.
+            const valueInsideBar = barPercentage > 20; // Threshold for placing value inside
+            const barValueHTML = valueInsideBar ? `<span class="bar-value-inside">${item.value}</span>` : '';
+            const externalValueHTML = !valueInsideBar ? `<div class="chart-value">${item.value}</div>` : `<div class="chart-value opacity-0">${item.value}</div>`; // Invisible placeholder
+
+            const chartItemHTML = `
+                <div class="chart-bar-container group">
+                    <div class="chart-label text-xs sm:text-sm text-gray-800 group-hover:font-semibold transition-all">${item.label} ${itemEngHTML}</div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="width: ${barPercentage}%;">
+                            ${barValueHTML}
+                        </div>
+                    </div>
+                    ${externalValueHTML}
+                </div>
+            `;
+            chartContainer.innerHTML += chartItemHTML;
+        });
+    </script>
+
+</body>
+</html>

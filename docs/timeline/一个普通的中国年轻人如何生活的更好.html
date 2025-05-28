@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个普通中国年轻人如何生活的更好？</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #FAF3E0; /* 浅米白色背景 */
+            color: #4A4A4A; /* 深灰褐色文字 */
+        }
+        .bento-grid {
+            display: grid;
+            gap: 1.5rem; /* 24px */
+            padding: 1.5rem; /* 24px */
+            /* On extra large screens (2xl), use 3 columns, otherwise 2 on lg, and 1 on smaller screens */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .bento-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1536px) { /* 2xl breakpoint, for 1920px or wider */
+            .bento-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            /* Make some items span multiple columns or rows on very large screens */
+            .bento-item-intro {
+                grid-column: span 3 / span 3; /* Full width for intro */
+            }
+             .bento-item-conclusion {
+                grid-column: span 3 / span 3; /* Full width for conclusion */
+            }
+            .bento-item-cta {
+                grid-column: span 3 / span 3; /* Full width for cta */
+            }
+        }
+
+        .bento-item {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem; /* 12px */
+            padding: 1.5rem; /* 24px */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .bento-item-title {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            color: #2D3748; /*更深的蓝灰色*/
+            margin-bottom: 0.75rem;
+        }
+        .bento-item-subtitle-en {
+            font-size: 0.875rem; /* 14px */
+            color: #A0AEC0; /* 浅灰色 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+        .bento-item-content p {
+            margin-bottom: 0.5rem;
+            line-height: 1.75;
+        }
+        .bento-item-content strong {
+            color: #38A169; /* 点缀绿色 */
+        }
+        .bento-item-icon-container {
+            width: 100%;
+            min-height: 150px; /* Minimum height for illustration */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .bento-item-icon-container svg {
+            width: 80%;
+            height: auto;
+            max-height: 150px;
+        }
+        .highlight-point {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 700;
+            color: #DD6B20; /* 点缀橙红色 */
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        .quote {
+            font-style: italic;
+            color: #718096; /* 中灰色 */
+            border-left: 3px solid #F6AD55; /* 橘黄色边框 */
+            padding-left: 1rem;
+            margin: 1rem 0;
+        }
+        .list-disc {
+            list-style-position: inside;
+        }
+        .list-disc li::marker {
+            color: #DD6B20;
+        }
+        /* Specific grid item spans for better layout on 2xl */
+        @media (min-width: 1536px) { /* 2xl */
+            .bento-item-1, .bento-item-2, .bento-item-3, .bento-item-4, .bento-item-5 {
+                /* Default to 1 span */
+            }
+            .bento-item-1 { grid-row: span 1; }
+            .bento-item-2 { grid-row: span 1; }
+            .bento-item-3 { grid-row: span 1; }
+            .bento-item-4 { grid-row: span 1; }
+            .bento-item-5 { grid-row: span 1; }
+            /* Example: Make one item taller if it has more content or for visual balance */
+            /* .bento-item-1 { grid-row: span 2; } */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-screen-2xl">
+        <header class="text-center py-12 px-6 bento-item bento-item-intro" style="background-color: #FFF8E7;"> <!-- Slightly different bg for header -->
+            <h1 class="text-5xl font-bold text-orange-600 mb-4">在这个时代，一个普通的中国年轻人如何生活的更好？</h1>
+            <p class="text-xl text-gray-600">这是一个无数中国年轻人都在默默思考、但极少被认真回答的问题。</p>
+            <p class="text-2xl font-semibold mt-4 text-gray-700">所谓“更好地生活”，并不是更富、更红、更成功，而是：<span class="text-orange-500">更真实地活着，更自由地成长，更有力量地存在。</span></p>
+        </header>
+
+        <main class="bento-grid">
+            <!-- 1. 重新定义“成功” -->
+            <div class="bento-item bento-item-1">
+                <div class="bento-item-icon-container bg-purple-50">
+                    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 75 Q25 50 50 25 Q75 50 50 75 M45 50 L55 50 M50 45 L50 55" stroke="#A78BFA" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.3" transform="translate(-10 -10) scale(0.8)"></path><rect x="10" y="60" width="80" height="30" rx="5" fill="#E9D5FF" opacity="0.5"></rect><text x="50" y="78" font-family="sans-serif" font-size="10" fill="#6B46C1" text-anchor="middle">内在秩序</text><path d="M150 75 Q125 50 150 25 Q175 50 150 75" stroke="#A78BFA" stroke-width="2" fill="#A78BFA" opacity="0.8"></path><text x="150" y="53" font-family="sans-serif" font-size="10" fill="white" text-anchor="middle">自己</text><text x="20" y="20" font-family="sans-serif" font-size="8" fill="#D1D5DB">学历?</text><text x="80" y="25" font-family="sans-serif" font-size="8" fill="#D1D5DB">平台?</text><text x="50" y="95" font-family="sans-serif" font-size="8" fill="#D1D5DB">收入?</text></svg>
+                </div>
+                <h2 class="bento-item-title"><span class="highlight-point">1️⃣</span>重新定义“成功”</h2>
+                <p class="bento-item-subtitle-en">Redefine SUCCESS</p>
+                <div class="bento-item-content">
+                    <p>从外部评价转向内在秩序。</p>
+                    <p class="quote">过去我们被教导：成功 = 学历 + 平台 + 收入 + 社会地位。但这个时代正在瓦解那套标准化路径：</p>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>好大学 ≠ 好人生；体制内 ≠ 安全感；</li>
+                        <li>平台越大，反而越容易被异化为工具人；</li>
+                        <li>财富自由不是人生的终点，而是内心自由的一部分。</li>
+                    </ul>
+                    <p class="mt-4">🧭 所以你首先要问的是：<strong class="text-purple-600">我在意的“更好”到底是什么？</strong>被看见？被爱？有选择权？表达自由？成为一个能影响他人的人？</p>
+                    <p>从那里出发，你才能走自己的路，而不是被时代的幻象牵着走。</p>
+                </div>
+            </div>
+
+            <!-- 2. 拥抱AI与自由职业 -->
+            <div class="bento-item bento-item-2">
+                <div class="bento-item-icon-container bg-blue-50">
+                     <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><rect x="60" y="30" width="80" height="50" rx="5" ry="5" fill="#93C5FD"></rect><line x1="60" y1="30" x2="100" y2="10" stroke="#93C5FD" stroke-width="2"></line><line x1="140" y1="30" x2="100" y2="10" stroke="#93C5FD" stroke-width="2"></line><circle cx="100" cy="10" r="5" fill="#3B82F6"></circle><text x="100" y="13" font-family="sans-serif" font-size="8" fill="white" text-anchor="middle">AI</text><path d="M70 55 Q80 45 90 55 T110 55 T130 55" stroke="#3B82F6" stroke-width="2" fill="none"></path><circle cx="75" cy="70" r="3" fill="#3B82F6"></circle><circle cx="100" cy="70" r="3" fill="#3B82F6"></circle><circle cx="125" cy="70" r="3" fill="#3B82F6"></circle><text x="20" y="25" font-family="sans-serif" font-size="8" fill="#60A5FA">写作</text><text x="160" y="45" font-family="sans-serif" font-size="8" fill="#60A5FA">播客</text><text x="30" y="85" font-family="sans-serif" font-size="8" fill="#60A5FA">课程</text></svg>
+                </div>
+                <h2 class="bento-item-title"><span class="highlight-point">2️⃣</span>拥抱AI与自由职业</h2>
+                <p class="bento-item-subtitle-en">Embrace AI & Freelance</p>
+                <div class="bento-item-content">
+                    <p>从被动等待机会，到主动创造价值。</p>
+                    <p>AI + 网络 + 数字工具，已经彻底打破了“找份好工作才有好生活”的旧范式：</p>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>你可以自己创造工作，而不是等别人雇你；</li>
+                        <li>你可以靠写作、播客、剪辑、课程、咨询、翻译等，构建一个多元收入系统；</li>
+                        <li>你甚至可以边游历边赚钱、边思考边输出，用生活本身成为你的事业。</li>
+                    </ul>
+                    <p class="mt-4">🌿 <strong class="text-blue-600">不是每个人都要成为大V或创业者，但你可以成为一个有价值的个体，并以此维生。</strong></p>
+                </div>
+            </div>
+
+            <!-- 3. 建立信任资产 -->
+            <div class="bento-item bento-item-3">
+                 <div class="bento-item-icon-container bg-green-50">
+                    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 20 Q100 0 150 20 L150 70 Q100 90 50 70 Z" fill="#A7F3D0" stroke="#34D399" stroke-width="2"></path><circle cx="100" cy="45" r="10" fill="#10B981"></circle><path d="M70 60 Q100 70 130 60" stroke="#10B981" stroke-width="2" fill="none" stroke-dasharray="3 3"></path><path d="M60 30 Q100 40 140 30" stroke="#10B981" stroke-width="2" fill="none" stroke-dasharray="3 3"></path><text x="100" y="48" font-family="sans-serif" font-size="8" fill="white" text-anchor="middle">信任</text><text x="20" y="50" font-family="sans-serif" font-size="8" fill="#059669">分享</text><text x="170" y="50" font-family="sans-serif" font-size="8" fill="#059669">连接</text></svg>
+                </div>
+                <h2 class="bento-item-title"><span class="highlight-point">3️⃣</span>建立信任资产</h2>
+                <p class="bento-item-subtitle-en">Build TRUST Assets</p>
+                <div class="bento-item-content">
+                    <p>而不是刷短期流量。这个时代最稀缺的不是技能，是信任。</p>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>技能越来越容易获得（有AI、有课程、有共享平台）；</li>
+                        <li>但信任却极难建立——它来自长期表达、真实分享、彼此连接。</li>
+                    </ul>
+                    <p class="mt-4">📌 建议从现在开始：</p>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>建立一个内容输出阵地（哪怕是公众号/小红书/豆瓣日志）；</li>
+                        <li>让别人知道你是谁、你在探索什么、你在为谁服务；</li>
+                        <li>积累不是“粉丝”，而是“<strong class="text-green-700">长期愿意跟你一起成长的人</strong>”。</li>
+                    </ul>
+                    <p>这，就是你的 微型护城河，是你未来抵御巨变的安全气囊。</p>
+                </div>
+            </div>
+
+            <!-- 4. 发展自己的“生命系统” -->
+            <div class="bento-item bento-item-4">
+                <div class="bento-item-icon-container bg-yellow-50">
+                    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="50" r="35" fill="#FEF3C7" stroke="#FBBF24" stroke-width="2"></circle><path d="M100 15 A35 35 0 0 1 100 85" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5"></path><path d="M100 15 Q80 50 100 85" fill="none" stroke="#F59E0B" stroke-width="1.5"></path><path d="M100 15 Q120 50 100 85" fill="none" stroke="#F59E0B" stroke-width="1.5"></path><text x="100" y="53" font-family="sans-serif" font-size="10" fill="#B45309" text-anchor="middle">完整</text><text x="30" y="30" font-family="sans-serif" font-size="8" fill="#D97706">身心</text><text x="160" y="30" font-family="sans-serif" font-size="8" fill="#D97706">自然</text><text x="30" y="75" font-family="sans-serif" font-size="8" fill="#D97706">玩耍</text><text x="160" y="75" font-family="sans-serif" font-size="8" fill="#D97706">阅读</text></svg>
+                </div>
+                <h2 class="bento-item-title"><span class="highlight-point">4️⃣</span>发展自己的“生命系统”</h2>
+                <p class="bento-item-subtitle-en">Develop Your LIFE System</p>
+                <div class="bento-item-content">
+                    <p>而不只是“职业系统”。“生活更好”的真正核心在于：你能否作为一个整体存在，而不是被切割成“上班的人”“社交的人”“乖孩子”……</p>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>发展身心觉察力，照顾好情绪与身体；</li>
+                        <li>保留玩耍、写日记、看电影、和朋友深聊的时间；</li>
+                        <li>去触碰自然、去尝试未知、去读那些“无用的书”；</li>
+                    </ul>
+                    <p class="mt-4">📌 <strong class="text-yellow-600">真正有力量的人，不是最卷的人，而是活得最完整的人。</strong></p>
+                </div>
+            </div>
+
+            <!-- 5. 建立连接，共同生长 -->
+            <div class="bento-item bento-item-5">
+                <div class="bento-item-icon-container bg-pink-50">
+                    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="15" fill="#FBCFE8" stroke="#EC4899" stroke-width="2"></circle><circle cx="100" cy="50" r="15" fill="#FBCFE8" stroke="#EC4899" stroke-width="2"></circle><circle cx="150" cy="50" r="15" fill="#FBCFE8" stroke="#EC4899" stroke-width="2"></circle><line x1="65" y1="50" x2="85" y2="50" stroke="#DB2777" stroke-width="2"></line><line x1="115" y1="50" x2="135" y2="50" stroke="#DB2777" stroke-width="2"></line><path d="M50 65 Q100 85 150 65" stroke="#DB2777" stroke-width="1.5" fill="none" stroke-dasharray="4 4"></path><text x="20" y="25" font-family="sans-serif" font-size="8" fill="#BE185D">共鸣</text><text x="170" y="25" font-family="sans-serif" font-size="8" fill="#BE185D">共创</text><text x="100" y="85" font-family="sans-serif" font-size="8" fill="#BE185D" text-anchor="middle">共生</text></svg>
+                </div>
+                <h2 class="bento-item-title"><span class="highlight-point">5️⃣</span>建立连接，共同生长</h2>
+                <p class="bento-item-subtitle-en">Connect & GROW Together</p>
+                <div class="bento-item-content">
+                    <p>而不是孤军奋战。你无法一个人过好这一生，尤其在系统越来越割裂、关系越来越脆弱的当下。</p>
+                    <ul class="list-disc pl-5 text-gray-600">
+                        <li>建立属于自己的“森林”：2-3个深度共鸣的朋友；</li>
+                        <li>加入一些小型社群：比如AI探索组、写作互助组、自由职业互助圈；</li>
+                        <li>去影响别人，也允许别人影响你。</li>
+                    </ul>
+                    <p class="mt-4">🌱 <strong class="text-pink-600">这是你在混乱中找回秩序的力量来源：共鸣、共创、共生。</strong></p>
+                </div>
+            </div>
+
+            <!-- 最后的提醒 -->
+            <div class="bento-item bento-item-conclusion" style="background-color: #FEFBF2;"> <!-- Slightly different bg for conclusion -->
+                <div class="bento-item-icon-container bg-red-50">
+                    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 70 C 50 30, 150 30, 170 70 S 100 110, 30 70" fill="#FEE2E2" stroke="#F87171" stroke-width="2"></path><path d="M100 20 L110 40 L130 45 L115 60 L120 80 L100 70 L80 80 L85 60 L70 45 L90 40 Z" fill="#FECACA" stroke="#EF4444" stroke-width="1.5" opacity="0.8"></path><text x="100" y="60" font-family="sans-serif" font-size="12" fill="#DC2626" text-anchor="middle" font-weight="bold">❤️</text></svg>
+                </div>
+                <h2 class="bento-item-title text-center text-red-500">最后的提醒</h2>
+                <p class="bento-item-subtitle-en text-center">Final REMINDER</p>
+                <div class="bento-item-content text-center text-xl">
+                    <p>这个时代对“普通人”的要求，不是“变得伟大”，而是：</p>
+                    <p class="font-bold text-3xl my-4 text-red-600">变得真实、变得自主、变得流动。</p>
+                    <p>你无需成为大人物，但你可以成为一个<strong class="text-red-500">自由地活着，有能力连接世界，有能力照顾自己和他人的人。</strong></p>
+                    <p class="mt-4 text-2xl font-semibold">这，就是“生活得更好”。</p>
+                </div>
+            </div>
+             <!-- 行动号召 -->
+            <div class="bento-item bento-item-cta text-center" style="background-color: #E6FFFA;">
+                <h3 class="text-2xl font-semibold text-teal-700 mb-3">继续探索你的生活系统</h3>
+                <p class="text-gray-600 mb-4">如果你愿意，我可以继续陪你一起构建你的“生活系统图谱”：你的方向、工具、收入系统、表达路径和关系网络，一步步搭建。</p>
+                <p class="text-xl font-medium text-teal-600">你想从哪个维度先聊起？</p>
+                <!-- Potential interactive elements could go here -->
+            </div>
+        </main>
+
+        <footer class="text-center py-8 text-sm text-gray-500">
+            <p>Generated by Dynamic Web Page Assistant</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple script for minor interactions if needed in the future
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("年轻人的生活指南已加载！");
+        });
+    </script>
+</body>
+</html>

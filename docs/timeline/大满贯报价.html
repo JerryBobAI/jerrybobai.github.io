@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大满贯报价 - 创造无法拒绝的价值 (100M Offers Insights)</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f0f2f5; /* Light gray page background */
+            scroll-behavior: smooth;
+        }
+
+        .memphis-card {
+            padding: 2rem 2.5rem;
+            border-radius: 0.85rem; /* Slightly more rounded */
+            box-shadow: 0 12px 20px -4px rgba(0,0,0,0.08), 0 5px 8px -3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 180px;
+        }
+
+        .memphis-bg-yellow { background-color: #FFD166; color: #1a202c; } /* Dark text */
+        .memphis-bg-pink   { background-color: #EF476F; color: #ffffff; }
+        .memphis-bg-green  { background-color: #06D6A0; color: #1a202c; } /* Dark text */
+        .memphis-bg-blue   { background-color: #118AB2; color: #ffffff; }
+        .memphis-bg-white  { background-color: #FFFFFF; color: #1a202c; }
+        .memphis-bg-dark   { background-color: #1a202c; color: #f7fafc; } /* Very dark, light text */
+
+        .text-super-display { font-size: clamp(4rem, 12vw, 10rem); line-height: 0.9; font-weight: 900; }
+        .text-super-xl    { font-size: clamp(2.8rem, 7vw, 5.5rem); line-height: 1; font-weight: 800; }
+        .text-super-lg    { font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.1; font-weight: 700; }
+        .text-super-md    { font-size: clamp(1.5rem, 4vw, 2.5rem); line-height: 1.2; font-weight: 700; }
+
+        .chinese-title { font-weight: 900; }
+        .english-subtitle { font-size: 0.75em; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 0.25rem; }
+
+        .highlight-text-yellow { background: linear-gradient(to right, #FFD166 60%, rgba(255,209,102,0.5) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-pink   { background: linear-gradient(to right, #EF476F 60%, rgba(239,71,111,0.5) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-green  { background: linear-gradient(to right, #06D6A0 60%, rgba(6,214,160,0.5) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-blue   { background: linear-gradient(to right, #118AB2 60%, rgba(17,138,178,0.5) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-black-on-light { background: linear-gradient(to right, #2D3748 50%, rgba(45,55,72,0.5) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+
+        .icon-large { font-size: 2.8rem; margin-bottom: 1rem; opacity: 0.6; }
+        .memphis-bg-pink .icon-large, .memphis-bg-blue .icon-large, .memphis-bg-dark .icon-large { opacity: 0.5; }
+
+        .deco-triangles::before { /* Example: Triangles */
+            content: ''; position: absolute; bottom: -30px; right: -30px; width: 120px; height: 120px;
+            background:
+                linear-gradient(135deg, currentColor 25%, transparent 25%) -30px 0,
+                linear-gradient(225deg, currentColor 25%, transparent 25%) -30px 0,
+                linear-gradient(315deg, currentColor 25%, transparent 25%),
+                linear-gradient(45deg,  currentColor 25%, transparent 25%);
+            background-size: 60px 60px;
+            opacity: 0.05;
+        }
+         .memphis-bg-dark .deco-triangles::before, .memphis-bg-blue .deco-triangles::before, .memphis-bg-pink .deco-triangles::before {
+            opacity: 0.08; background-image: linear-gradient(135deg, white 25%, transparent 25%)... /* adjust for white */
+        }
+
+
+        .section-divider {
+            text-align: center; padding: 2.5rem 0 1.5rem;
+            font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 800;
+        }
+         .value-equation-container {
+            font-family: 'Courier New', Courier, monospace; /* Monospace for formula feel */
+            font-size: clamp(1.2rem, 3vw, 2.5rem); line-height: 1.5;
+            text-align: center; padding: 1.5rem;
+        }
+        .value-equation-numerator, .value-equation-denominator { display: block; }
+        .value-equation-divider { border-top: 3px solid currentColor; margin: 0.5rem auto; width: 60%; }
+        .value-equation-operator { margin: 0 0.5em; }
+
+
+    </style>
+</head>
+<body class="p-4 md:p-6 lg:p-8">
+    <div class="max-w-[1920px] mx-auto space-y-6 md:space-y-8">
+
+        <!-- Hero Section -->
+        <div class="memphis-card memphis-bg-dark text-center deco-triangles">
+            <i class="fas fa-rocket icon-large"></i>
+            <h1 class="text-super-xl chinese-title">大满贯<span class="highlight-text-yellow">报价</span></h1>
+            <p class="english-subtitle text-xl">GRAND SLAM OFFERS</p>
+            <p class="mt-4 text-super-md chinese-title">如何创造让人<span class="highlight-text-green">无法拒绝</span>的价值</p>
+            <p class="mt-2 text-lg opacity-80">广告回报率 <span class="text-super-lg highlight-text-pink">36:1</span> 的秘诀 | 作者 Alex Hormozi</p>
+        </div>
+
+        <!-- Author's Journey Section -->
+        <div class="memphis-card memphis-bg-white">
+            <h2 class="section-divider chinese-title"><i class="fas fa-user-tie mr-3 text-gray-600"></i>作者的<span class="highlight-text-blue">逆袭</span>之路 <span class="english-subtitle text-gray-500">THE AUTHOR'S JOURNEY</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-700">
+                <p><i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>曾面临破产边缘，靠“创造报价”技能自救。</p>
+                <p><i class="fas fa-dumbbell text-green-500 mr-2"></i>23岁开设首家健身房，3年内发展至6家连锁。</p>
+                <p><i class="fas fa-plane text-blue-500 mr-2"></i>振兴各地健身房，模式许可给全球5000+家。</p>
+                <p><i class="fas fa-pills text-purple-500 mr-2"></i>成立补充剂和软件公司支持健身房业务。</p>
+                <p><i class="fas fa-hand-holding-usd text-yellow-600 mr-2"></i>2021年以4620万美元出售公司66%股权。</p>
+                <p><i class="fas fa-chart-line text-indigo-500 mr-2"></i>成立Acquisition.com，投资组合年创收2亿美元+</p>
+            </div>
+        </div>
+
+        <!-- Pricing Section -->
+        <div class="memphis-card memphis-bg-yellow">
+            <h2 class="section-divider chinese-title"><i class="fas fa-dollar-sign mr-3"></i>定价的<span class="highlight-text-pink">艺术</span> <span class="english-subtitle">THE ART OF PRICING</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-super-md chinese-title mb-2">拒绝<span class="highlight-text-black-on-light">价格战</span></h3>
+                    <p class="text-sm">创造物超所值，让人无法拒绝，而非最低价。</p>
+                </div>
+                <div>
+                    <h3 class="text-super-md chinese-title mb-2">商品化<span class="highlight-text-black-on-light">困境</span></h3>
+                    <p class="text-sm">避免复制“穷困潦倒”的竞争对手，通过价值与价格差突围。</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                 <h3 class="text-super-md chinese-title mb-3 text-center"><i class="fas fa-users mr-2"></i>找到<span class="highlight-text-blue">饥渴的客户群</span> (High Demand)</h3>
+                 <ul class="list-disc list-inside space-y-1 text-sm pl-4">
+                     <li>巨大痛苦、迫切需求你产品的人。</li>
+                     <li>具购买力，易于定位和触达。</li>
+                     <li>市场在不断成长 (健康、财富、人际关系三大类)。</li>
+                     <li><strong class="text-red-700">核心：为现有需求提供解决方案，而非创造需求。</strong></li>
+                 </ul>
+            </div>
+             <div class="mt-6 text-center">
+                <h3 class="text-super-md chinese-title"><i class="fas fa-crown mr-2"></i>收取<span class="highlight-text-pink">溢价</span> (Premium Price)</h3>
+                <p class="text-sm mt-1">“成为最贵的有战略优势” - Dan Kennedy。提升感知价值，投入业务，改善体验，增加客户成功率。</p>
+            </div>
+        </div>
+
+        <!-- Value Equation Section -->
+        <div class="memphis-card memphis-bg-dark deco-triangles">
+            <h2 class="section-divider chinese-title"><i class="fas fa-equals mr-3"></i>价值<span class="highlight-text-green">等式</span> <span class="english-subtitle">THE VALUE EQUATION</span></h2>
+            <div class="value-equation-container text-white">
+                <span class="font-bold text-3xl highlight-text-yellow">价值 (Value) =</span>
+                <div>
+                    <span class="value-equation-numerator">(<span class="highlight-text-pink">梦想结果</span> <span class="value-equation-operator">X</span> <span class="highlight-text-green">感知实现可能性</span>)</span>
+                    <div class="value-equation-divider"></div>
+                    <span class="value-equation-denominator">(<span class="highlight-text-blue">时间延迟</span> <span class="value-equation-operator">X</span> <span class="highlight-text-pink">精力与牺牲</span>)</span>
+                </div>
+            </div>
+            <p class="text-center text-sm mt-4 opacity-80">提升上半部分，降低下半部分。成功公司专注降低客户的时间与精力付出。</p>
+        </div>
+
+        <!-- Creating Grand Slam Offer -->
+        <div class="memphis-card memphis-bg-green">
+            <h2 class="section-divider chinese-title"><i class="fas fa-magic mr-3"></i>创造你的<span class="highlight-text-blue">大满贯报价</span> <span class="english-subtitle">CRAFTING YOUR GRAND SLAM OFFER</span></h2>
+            <ol class="list-decimal list-inside space-y-2 text-sm pl-4">
+                <li>确定客户的<strong class="font-semibold">梦想结果</strong> (Dream Outcome)。</li>
+                <li>列出所有<strong class="font-semibold">问题/障碍</strong> (Problems/Obstacles)。</li>
+                <li>将问题转化为<strong class="font-semibold">解决方案</strong> (Solutions) - 解决每一个问题。</li>
+                <li>最大化<strong class="font-semibold">利润/价值</strong> (Profit/Value Maximizers) - 高价值、低成本，“一对多”理想。</li>
+                <li>构建最终的<strong class="font-semibold">报价阶梯</strong> (Offer Stack)。</li>
+            </ol>
+            <p class="mt-4 text-center text-base font-semibold">目标：最短时间，最小努力，最大可能实现更大目标。</p>
+        </div>
+
+        <!-- Enhancing Offer Section -->
+        <div class="memphis-card memphis-bg-white">
+            <h2 class="section-divider chinese-title"><i class="fas fa-bolt mr-3 text-gray-600"></i>增强你的<span class="highlight-text-pink">报价</span> <span class="english-subtitle text-gray-500">ENHANCING YOUR OFFER</span></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <h4 class="text-lg font-bold mb-1 text-pink-600"><i class="fas fa-hourglass-half mr-1"></i>稀缺性 & 紧迫性</h4>
+                    <p class="text-xs">有限供应/名额/赠品，截止日期，制造FOMO。</p>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <h4 class="text-lg font-bold mb-1 text-green-600"><i class="fas fa-gift mr-1"></i>赠品 (Bonuses)</h4>
+                    <p class="text-xs">分解组件+赠品，提升整体感知价值。</p>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <h4 class="text-lg font-bold mb-1 text-blue-600"><i class="fas fa-shield-alt mr-1"></i>保证 (Guarantees)</h4>
+                    <p class="text-xs">消除客户风险。类型：无条件、有条件、反向、隐含。创意命名。</p>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg lg:col-span-3">
+                     <h4 class="text-lg font-bold mb-1 text-yellow-700"><i class="fas fa-signature mr-1"></i>报价命名 (Naming)</h4>
+                     <p class="text-xs mb-1">直接影响转化率。M-A-G-I-C公式：</p>
+                     <p class="text-xs font-mono bg-gray-100 p-2 rounded">M(诱饵) + A(目标客户) + G(结果) + I(时间) + C(容器词)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="memphis-card memphis-bg-dark text-center deco-triangles">
+            <i class="fas fa-trophy icon-large"></i>
+            <h2 class="text-super-lg chinese-title">核心理念：<span class="highlight-text-green">价值</span>远超<span class="highlight-text-yellow">价格</span></h2>
+            <span class="english-subtitle">CORE IDEA: VALUE EXCEEDS PRICE DRAMATICALLY</span>
+            <p class="mt-6 text-lg opacity-90">通过深刻理解客户，设计无法拒绝的报价，运用增强策略，是实现商业成功和财务自由的关键。你的第一个大满贯报价，助你实现首个<span class="text-2xl font-bold highlight-text-pink">$100,000</span>！</p>
+        </div>
+    </div>
+</body>
+</html>

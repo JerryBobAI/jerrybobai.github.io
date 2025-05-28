@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>将你的理想生活提前到现在</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #FFFFFF;
+            color: #000000;
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(90deg, #3B82F6, #8B5CF6, #F97316);
+        }
+        .gradient-bg-light {
+            background: linear-gradient(90deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1), rgba(249,115,22,0.1));
+        }
+        .gradient-border {
+            border-image-slice: 1;
+            border-image-source: linear-gradient(90deg, #3B82F6, #8B5CF6, #F97316);
+            border-width: 4px;
+            border-style: solid;
+        }
+        .highlight-blue { color: #3B82F6; }
+        .highlight-purple { color: #8B5CF6; }
+        .highlight-orange { color: #F97316; }
+
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 7rem); /* Responsive large text */
+            font-weight: 800; /* Extra bold */
+            line-height: 1.1;
+        }
+        .large-digit {
+            font-size: clamp(5rem, 15vw, 10rem);
+            font-weight: 800;
+            line-height: 1;
+        }
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .sub-title {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .content-text {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            line-height: 1.8;
+        }
+        .chinese-bold-large {
+            font-weight: 700;
+        }
+        .english-small {
+            font-size: 0.8em;
+            font-weight: 400;
+            opacity: 0.7;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .priority-item {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left-width: 8px;
+        }
+        .priority-1 { border-image: linear-gradient(to bottom, #3B82F6, #60A5FA) 1; }
+        .priority-2 { border-image: linear-gradient(to bottom, #8B5CF6, #A78BFA) 1; }
+        .priority-3 { border-image: linear-gradient(to bottom, #EC4899, #F472B6) 1; }
+        .priority-4 { border-image: linear-gradient(to bottom, #F97316, #FB923C) 1; }
+
+        .line-graphic {
+            height: 2px;
+            background: linear-gradient(90deg, rgba(59,130,246,0.8), rgba(139,92,246,0.8), rgba(249,115,22,0.8));
+            margin: 2rem auto;
+            width: 50%;
+            opacity: 0.7;
+        }
+        .line-graphic-short {
+            height: 4px; /* Thicker for emphasis */
+            background: linear-gradient(90deg, #3B82F6, #8B5CF6, #F97316);
+            margin: 1rem 0;
+            width: 100px;
+            border-radius: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-section {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .stagger-fade > * {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-20 md:mb-32 fade-in-section">
+            <h1 class="ultra-large-text mb-4">
+                <span class="chinese-bold-large">将你的理想生活</span>
+                <span class="gradient-text chinese-bold-large">提前到现在</span>
+                <span class="english-small">Bring Your Ideal Life to the PRESENT</span>
+            </h1>
+            <p class="content-text max-w-3xl mx-auto mb-8 text-gray-700">
+                一个震撼的观点来自 <strong class="highlight-purple">Dan Koe</strong>: “如果你没有为实现自己的理想未来而努力，那你就是在为别人（老板）的理想未来而努力。”
+            </p>
+            <div class="w-24 h-1 gradient-bg mx-auto rounded-full"></div>
+        </section>
+
+        <!-- Action Start Section -->
+        <section class="text-center mb-20 md:mb-32 fade-in-section" style="animation-delay: 0.2s;">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+                <div class="md:w-1/3">
+                    <p class="large-digit gradient-text">5</p>
+                    <p class="sub-title chinese-bold-large">分钟<span class="english-small">MINUTES A DAY</span></p>
+                </div>
+                <div class="md:w-2/3 md:text-left">
+                    <h2 class="section-title">
+                        <span class="chinese-bold-large">立刻行动</span>
+                        <span class="english-small">TAKE ACTION IMMEDIATELY</span>
+                    </h2>
+                    <p class="content-text mb-4">
+                        从每天<strong class="highlight-blue">少量时间</strong>开始，用于实现个人理想生活，循序渐进逐步增加，形成习惯。
+                        比如写作是你的理想职业，从每天写<strong class="highlight-orange">5分钟</strong>开始。
+                    </p>
+                    <p class="content-text font-semibold">
+                        当你确定你的理想生活，等待和拖延是无意义的！如果你现在连<strong class="highlight-purple">15分钟</strong>都没有，那你也不可能开始。
+                    </p>
+                    <div class="line-graphic-short mt-6 md:mx-0"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3 Key Actions Section -->
+        <section class="mb-20 md:mb-32 fade-in-section" style="animation-delay: 0.4s;">
+            <h2 class="section-title text-center mb-12">
+                <span class="chinese-bold-large">实现理想生活的</span><span class="gradient-text chinese-bold-large">3个关键行动</span>
+                <span class="english-small">3 KEY ACTIONS FOR YOUR IDEAL LIFE</span>
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8 text-center stagger-fade">
+                <div class="p-8 rounded-xl shadow-xl gradient-bg-light" style="animation-delay: 0.5s;">
+                    <i class="fas fa-brain icon-large highlight-blue"></i>
+                    <h3 class="sub-title chinese-bold-large">清晨 <span class="english-small">MORNING</span></h3>
+                    <p class="content-text">创作、输出和专注，去<strong class="highlight-blue">运用</strong>你的大脑。</p>
+                </div>
+                <div class="p-8 rounded-xl shadow-xl gradient-bg-light" style="animation-delay: 0.65s;">
+                    <i class="fas fa-book-reader icon-large highlight-purple"></i>
+                    <h3 class="sub-title chinese-bold-large">下午 <span class="english-small">AFTERNOON</span></h3>
+                    <p class="content-text">阅读、学习和社交活动，去<strong class="highlight-purple">充实</strong>大脑。</p>
+                </div>
+                <div class="p-8 rounded-xl shadow-xl gradient-bg-light" style="animation-delay: 0.8s;">
+                    <i class="fas fa-moon icon-large highlight-orange"></i>
+                    <h3 class="sub-title chinese-bold-large">睡前 <span class="english-small">BEFORE SLEEP</span></h3>
+                    <p class="content-text">写日记、规划和冥想，去<strong class="highlight-orange">放空</strong>大脑。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep Work Section -->
+        <section class="text-center mb-20 md:mb-32 fade-in-section" style="animation-delay: 0.6s;">
+            <div class="max-w-3xl mx-auto">
+                <i class="fas fa-rocket icon-large gradient-text"></i>
+                <h2 class="section-title">
+                    <span class="chinese-bold-large">深度工作的</span><span class="gradient-text chinese-bold-large">必要性</span>
+                    <span class="english-small">THE NECESSITY OF DEEP WORK</span>
+                </h2>
+                <p class="content-text mb-4">
+                    生产力的本质是用<strong class="highlight-blue">最少的时间</strong>，高效完成工作。
+                </p>
+                <p class="content-text">
+                    当我们投入精力在一个目标上，哪怕最开始没有多热爱，当投入达到<strong class="highlight-purple">突破点</strong>时，也会随之产生热情。
+                </p>
+                <div class="line-graphic"></div>
+            </div>
+        </section>
+
+        <!-- Priority Ladder Section -->
+        <section class="mb-20 md:mb-32 fade-in-section" style="animation-delay: 0.8s;">
+            <h2 class="section-title text-center mb-12">
+                <span class="chinese-bold-large">理想生活工作</span><span class="gradient-text chinese-bold-large">优先级阶梯</span>
+                <span class="english-small">PRIORITY LADDER FOR IDEAL LIFE (by Dan Koe)</span>
+            </h2>
+            <div class="max-w-2xl mx-auto stagger-fade">
+                <div class="priority-item priority-1 shadow-lg rounded-lg" style="animation-delay: 0.9s;">
+                    <h3 class="sub-title chinese-bold-large">优先级 1 <span class="english-small">PRIORITY 1</span></h3>
+                    <p class="content-text">创建并推动一个实现<strong class="highlight-blue">未来理想生活愿景</strong>的项目。</p>
+                </div>
+                <div class="priority-item priority-2 shadow-lg rounded-lg" style="animation-delay: 1.0s;">
+                    <h3 class="sub-title chinese-bold-large">优先级 2 <span class="english-small">PRIORITY 2</span></h3>
+                    <p class="content-text">专注该项目<strong class="highlight-purple">最核心</strong>的任务。</p>
+                </div>
+                <div class="priority-item priority-3 shadow-lg rounded-lg" style="animation-delay: 1.1s;">
+                    <h3 class="sub-title chinese-bold-large">优先级 3 <span class="english-small">PRIORITY 3</span></h3>
+                    <p class="content-text">其它项目相关有价值和<strong class="highlight-orange">附加价值</strong>任务。</p>
+                </div>
+                <div class="priority-item priority-4 shadow-lg rounded-lg" style="animation-delay: 1.2s;">
+                    <h3 class="sub-title chinese-bold-large">优先级 4 <span class="english-small">PRIORITY 4</span></h3>
+                    <p class="content-text">日常<strong class="text-gray-600">运营工作</strong>。</p>
+                </div>
+            </div>
+            <p class="content-text text-center mt-8 font-semibold">
+                深以为然，按照优先级少想多做，<strong class="gradient-text">想都是问题，做都是答案！</strong>
+            </p>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="text-center py-16 md:py-24 gradient-bg-light rounded-xl fade-in-section" style="animation-delay: 1.0s;">
+             <h2 class="ultra-large-text mb-6">
+                <span class="chinese-bold-large">现在开始</span>
+                <span class="english-small">START NOW</span>
+            </h2>
+            <p class="section-title gradient-text chinese-bold-large">
+                就去做你理想生活会做的事儿！
+            </p>
+            <span class="english-small -mt-2 block opacity-80">DO WHAT YOU'D DO IN YOUR IDEAL LIFE!</span>
+            <button class="mt-8 px-10 py-4 gradient-bg text-white font-bold text-xl rounded-lg shadow-lg hover:opacity-90 transition-opacity duration-300">
+                <i class="fas fa-play mr-2"></i> 开始我的理想生活
+            </button>
+        </section>
+
+    </div>
+
+    <footer class="text-center py-8 border-t border-gray-200">
+        <p class="text-sm text-gray-600">© 2024 理想生活践行者. Inspired by Dan Koe.</p>
+    </footer>
+
+    <script>
+        // Simple stagger animation for elements with .stagger-fade class
+        document.addEventListener('DOMContentLoaded', () => {
+            const staggerContainers = document.querySelectorAll('.stagger-fade');
+            staggerContainers.forEach(container => {
+                const children = Array.from(container.children);
+                children.forEach((child, index) => {
+                    const delay = parseFloat(child.style.animationDelay) || 0;
+                    child.style.animationDelay = `${delay + index * 0.15}s`;
+                });
+            });
+
+            // Intersection Observer for fade-in sections
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        // Animate children if it's a stagger container
+                        if (entry.target.classList.contains('stagger-fade')) {
+                            const children = Array.from(entry.target.children);
+                            children.forEach((child, index) => {
+                                const childDelay = parseFloat(child.style.animationDelay) || 0;
+                                child.style.animationDelay = `${childDelay}s`; // Keep original or staggered delay
+                                child.style.opacity = '1';
+                                child.style.transform = 'translateY(0)';
+                            });
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                // Initialize styles for animation
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>

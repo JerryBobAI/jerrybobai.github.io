@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show HN 日报精选 - 2025-05-27</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg-blue-purple {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+        }
+        .gradient-bg-purple-orange {
+            background-image: linear-gradient(to right, #8b5cf6, #f97316);
+        }
+        .gradient-bg-blue-purple-orange {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #f97316);
+        }
+        .highlight-line {
+            height: 4px;
+            width: 120px;
+            background-image: linear-gradient(to right, #3b82f6, #a855f7, #ef4444);
+            border-radius: 2px;
+        }
+        .btn-gradient {
+            background-image: linear-gradient(to right, #3b82f6 0%, #8b5cf6 50%, #3b82f6 100%);
+            background-size: 200% auto;
+            transition: background-position 0.5s ease, transform 0.2s ease;
+        }
+        .btn-gradient:hover {
+            background-position: right center;
+            transform: scale(1.03);
+        }
+        .btn-outline {
+            border: 2px solid #000000;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-outline:hover {
+            background-color: #000000;
+            color: #ffffff;
+            transform: scale(1.03);
+        }
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.1), 0 8px 15px rgba(139, 92, 246, 0.1);
+        }
+        .text-shadow-highlight {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 30px rgba(139, 92, 246, 0.2);
+        }
+        .icon-gradient {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .feature-icon {
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+        .category-tag {
+            background-image: linear-gradient(to right, rgba(59,130,246,0.15), rgba(139,92,246,0.15));
+            border: 1px solid rgba(59,130,246,0.3);
+            color: #3b82f6; /* Fallback or primary text color for tag */
+        }
+         .gradient-text-category {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body class="bg-white text-black">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 max-w-screen-2xl">
+
+        <header class="text-center mb-16 lg:mb-24">
+            <div class="inline-block mb-6">
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight">
+                    <span class="gradient-text gradient-bg-blue-purple-orange">Show HN</span> <span class="text-black">日报精选</span>
+                </h1>
+                <div class="highlight-line mx-auto mt-3 sm:mt-4"></div>
+            </div>
+            <p class="text-7xl sm:text-8xl md:text-9xl font-bold text-black my-6 md:my-8 text-shadow-highlight">2025.05.27</p>
+            <p class="text-lg md:text-xl text-gray-700 uppercase tracking-wider">
+                SHOW HN 日报精选
+            </p>
+            <p class="mt-4 text-xl md:text-2xl text-black">
+                每日精选来自 <span class="font-semibold gradient-text gradient-bg-blue-purple">Hacker News</span> 的 <span class="font-semibold gradient-text gradient-bg-purple-orange">Show HN</span> 项目
+            </p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
+            <!-- Projects will be injected here by JavaScript -->
+        </main>
+
+        <footer class="text-center mt-16 lg:mt-24 pt-10 border-t border-gray-200">
+            <p class="text-base text-gray-700">
+                © <span id="currentYear"></span> Show HN 日报精选. 版权所有.
+            </p>
+            <p class="text-sm text-gray-500 mt-2">
+                内容来源于 Hacker News Show HN。
+            </p>
+            <p class="text-xs text-gray-400 mt-1">
+                页面最后更新时间：2025/05/27 08:03 (源站时间)
+            </p>
+            <div class="mt-6">
+                <a href="https://news.ycombinator.com/show" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-orange-500 transition-colors mx-3 text-2xl">
+                    <i class="fab fa-hacker-news"></i>
+                </a>
+                <a href="https://github.com/Justin3go/hunt0" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-black transition-colors mx-3 text-2xl">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const projectsData = [
+            {
+                title: "PgDog – 无需扩展即可分片 Postgres",
+                category: "开发者工具",
+                categoryIcon: "fas fa-cogs",
+                points: 157,
+                comments: 33,
+                description: "PgDog 是一个基于 Rust 的开源 PostgreSQL 代理，无需更改应用程序或数据库扩展即可实现分片。",
+                features: [
+                    "无需应用程序修改或扩展即可对 PostgreSQL 进行分片",
+                    "支持跨分片查询和简单聚合（最大值、最小值、计数、总和）",
+                    "适用于 RDS 和 Cloud SQL 等托管 Postgres 服务",
+                    "多线程异步架构，实现高并发",
+                    "包括读/写流量拆分和负载均衡",
+                    "具有分布式 COPY 功能，可实现无缝批量数据插入",
+                    "使用 Postgres 解析器进行查询检查、阻止和重写",
+                    "针对 OLTP 工作负载进行了优化，内存分配最少",
+                    "计划通过逻辑复制支持重新分片，以实现零停机扩展"
+                ],
+                originalLink: "https://github.com/pgdogdev/pgdog",
+                discussionLink: "https://news.ycombinator.com/item?id=44099187"
+            },
+            {
+                title: "AI 用于建筑设计、规划和审批",
+                category: "设计",
+                categoryIcon: "fas fa-drafting-compass",
+                points: 9,
+                comments: 7,
+                description: "基于当地分区规则生成3D体量和场地规划的人工智能工具。",
+                features: [
+                    "快速确定给定地块的可建选项",
+                    "在几分钟内生成3D体量和场地规划",
+                    "对早期建筑和开发规划非常有用"
+                ],
+                originalLink: "https://www.spacial.io/",
+                discussionLink: "https://news.ycombinator.com/item?id=44102366"
+            },
+            {
+                title: "极简专注与时间追踪网页计时器",
+                category: "效率工具",
+                categoryIcon: "fas fa-clock",
+                points: 82,
+                comments: 37,
+                description: "一个极简的、仅本地运行的网页计时器，用于追踪自由职业者的编码时长并保持专注。",
+                features: [
+                    "无需登录",
+                    "简洁明了的界面",
+                    "仅本地运行",
+                    "专为专注和时间追踪设计",
+                    "目前免费，未来可能商业化"
+                ],
+                originalLink: "https://iamlockedin.com/",
+                discussionLink: "https://news.ycombinator.com/item?id=44095176"
+            },
+            {
+                title: "CodeNow – 基于 WebRTC 和 WASM 的 CoderPad",
+                category: "开发者工具",
+                categoryIcon: "fas fa-code",
+                points: 4,
+                comments: 0,
+                description: "CodeNow 是一个协作编码平台，使用 WebRTC 和 WASM 在浏览器内执行，无需服务器端代码管理。",
+                features: [
+                    "使用 WebAssembly (WASM) 进行安全的浏览器内代码执行",
+                    "通过 WebRTC 支持实时协作",
+                    "灵感来源于 Leetcode 和 CoderPad",
+                    "无需远程服务器端代码执行"
+                ],
+                originalLink: "https://codenow-mu.vercel.app/problems/0001-fizzbuzz",
+                discussionLink: "https://news.ycombinator.com/item?id=44101439"
+            },
+            {
+                title: "更简洁的 Markdown 语言和静态站点生成器 (Shrimple)",
+                category: "开发者工具",
+                categoryIcon: "fas fa-file-alt",
+                points: 3,
+                comments: 7,
+                description: "一个名为 Shrimple 的 Markdown 语言和静态站点生成器。",
+                features: [
+                    "更简洁的 Markdown 语法",
+                    "静态站点生成能力"
+                ],
+                originalLink: "https://qount25.dev/Shrimple/",
+                discussionLink: "https://news.ycombinator.com/item?id=44099487"
+            },
+            {
+                title: "Scholtz – 找到需要您产品的客户和用户",
+                category: "市场营销",
+                categoryIcon: "fas fa-bullhorn",
+                points: 3,
+                comments: 4,
+                description: "一个 AI 工具，通过分析您的网站并识别感兴趣的个人，帮助创始人找到真正的潜在客户和用户。",
+                features: [
+                    "扫描您的网站以了解您的业务",
+                    "识别真正关心您产品的人",
+                    "提供直接联系方式，无垃圾邮件",
+                    "目前专注于美国科技行业的 LinkedIn 个人资料",
+                    "提供试用，最多可搜索 10 个人"
+                ],
+                originalLink: "https://scholtz.ai/welcome",
+                discussionLink: "https://news.ycombinator.com/item?id=44097076"
+            },
+            {
+                title: "从 Indeed 和 LinkedIn 中移除 AI 生成的垃圾招聘信息",
+                category: "效率工具",
+                categoryIcon: "fas fa-filter",
+                points: 3,
+                comments: 1,
+                description: "从 Indeed 和 LinkedIn 中过滤掉 AI 生成的招聘信息，帮助用户找到真实的职位列表。",
+                features: [
+                    "过滤 AI 生成的招聘信息",
+                    "适用于 Indeed 和 LinkedIn",
+                    "帮助用户找到真实的职位列表"
+                ],
+                originalLink: "https://github.com/username1001/ByeAnnotations",
+                discussionLink: "https://news.ycombinator.com/item?id=44101444"
+            },
+            {
+                title: "在浏览器中运行的可配置桌面环境",
+                category: "消费科技",
+                categoryIcon: "fas fa-desktop",
+                points: 3,
+                comments: 2,
+                description: "一个完全在浏览器中运行的可配置桌面环境，具有文件系统、应用程序和主题功能，使用原生 JS 构建。",
+                features: [
+                    "具有功能性文件系统和应用程序的完整桌面环境",
+                    "可自定义的窗口管理器和主题",
+                    "使用原生 JS 构建，依赖极少（仅 esbuild 用于打包）",
+                    "作为个人项目开发，最初是重写个人网站",
+                    "使用 LLM 进行初始应用程序草稿和构思，专注于逻辑和架构",
+                    "具有可执行格式、权限系统和临时概念",
+                    "旨在最大限度地减少开发阻力并鼓励持续迭代"
+                ],
+                originalLink: "https://peaberberian.github.io/",
+                discussionLink: "https://news.ycombinator.com/item?id=44097508"
+            },
+            {
+                title: "AI Page Ready – 您的网站是否为 ChatGPT、Gemini 和 Claude 做好了准备？",
+                category: "开发者工具",
+                categoryIcon: "fas fa-robot",
+                points: 4,
+                comments: 1,
+                description: "一个检查网页是否针对 ChatGPT、Gemini 和 Claude 等 AI 工具进行优化的工具。",
+                features: [
+                    "在六个关键领域运行 40 多项检查",
+                    "评估可发现性、结构化数据、内容质量等",
+                    "专注于针对 AI 的特定优化以获得更好的可见性",
+                    "面向电子商务、SEO、内容和 SaaS 用户",
+                    "欢迎反馈和功能建议"
+                ],
+                originalLink: "https://aipageready.com/",
+                discussionLink: "https://news.ycombinator.com/item?id=44097341"
+            },
+            {
+                title: "BufferTab – 存在于浏览器 URL 中的极简 Markdown 编辑器",
+                category: "文本工具",
+                categoryIcon: "fas fa-font",
+                points: 3,
+                comments: 1,
+                description: "极简 Markdown 编辑器，内容持久化在浏览器 URL 中，便于共享和跨设备访问。",
+                features: [
+                    "内容存储在 URL 中，方便共享",
+                    "轻量级便签本，用于快速笔记",
+                    "通过 OpenAI Whisper 进行语音转文本（需要 API 密钥）",
+                    "API 密钥本地存储在浏览器中"
+                ],
+                originalLink: "https://github.com/AlexW00/Buffertab",
+                discussionLink: "https://news.ycombinator.com/item?id=44096577"
+            },
+            {
+                title: "VexFS – 面向 AI 代理的内核原生语义文件系统",
+                category: "开发者工具",
+                categoryIcon: "fas fa-hdd",
+                points: 4,
+                comments: 3,
+                description: "VexFS 是一个内核原生文件系统，集成了向量嵌入和语义搜索功能，专为 AI 代理设计，无需单独的向量数据库即可实现 RAG。",
+                features: [
+                    "将向量嵌入与文件一同存储",
+                    "支持语义搜索（目前为暴力搜索，计划未来支持 HNSW）",
+                    "通过 IOCTL + mmap 接口提供功能",
+                    "作为本地 AI 代理的语义记忆层",
+                    "在 RAG 工作流程中无需单独的向量数据库",
+                    "处于早期原型阶段，具备基本功能"
+                ],
+                originalLink: "https://news.ycombinator.com/item?id=44095926",
+                discussionLink: "https://news.ycombinator.com/item?id=44095926"
+            },
+            {
+                title: "关于任何事物的个性化新闻通讯",
+                category: "研究工具",
+                categoryIcon: "fas fa-newspaper",
+                points: 4,
+                comments: 3,
+                description: "一项服务，可以按可自定义的频率发送关于小众主题的个性化新闻通讯。",
+                features: [
+                    "自动整理特定主题的更新",
+                    "可自定义的发送频率（每周/每日）",
+                    "非常适合新闻频繁的小众兴趣",
+                    "旨在节省追踪趋势的时间"
+                ],
+                originalLink: "https://research.builtbymosaic.com/",
+                discussionLink: "https://news.ycombinator.com/item?id=44099418"
+            },
+            {
+                title: "Actor-Critic MCP 服务器帮助您的 AI 从双重角度思考",
+                category: "开发者工具",
+                categoryIcon: "fas fa-brain",
+                points: 3,
+                comments: 0,
+                description: "AI 服务器，使 AI 模型能够进行双重角度思考。",
+                features: [
+                    "使用 Actor-Critic 架构",
+                    "支持多角度决策",
+                    "专为 AI 模型增强而设计"
+                ],
+                originalLink: "https://github.com/aquarius-wing/actor-critic-thinking-mcp",
+                discussionLink: "https://news.ycombinator.com/item?id=44095384"
+            },
+            {
+                title: "我用1个月独立开发了一个 AI 图像工具 (Styleloop)",
+                category: "图像工具",
+                categoryIcon: "fas fa-image",
+                points: 3,
+                comments: 4,
+                description: "Styleloop 是一款独立开发的 AI 工具，可以将图像转换为吉卜力、像素艺术和动物森友会等风格的艺术作品。",
+                features: [
+                    "使用 AI 进行图像到图像的转换",
+                    "提供精选的艺术风格",
+                    "使用 Next.js、Supabase、Stripe 和 Cloudflare 构建",
+                    "独立开发的 SaaS 项目",
+                    "计划添加更多创意模式"
+                ],
+                originalLink: "https://styleloop.art/en",
+                discussionLink: "https://news.ycombinator.com/item?id=44093635"
+            },
+            {
+                title: "Claude Exporter – 将 Claude 对话保存为 PDF、Markdown 等格式",
+                category: "效率工具",
+                categoryIcon: "fas fa-file-export",
+                points: 3,
+                comments: 0,
+                description: "一款 Chrome 扩展程序，可轻松一键将 Claude AI 对话保存为 PDF、Markdown、JSON 等多种格式。",
+                features: [
+                    "支持多种导出格式，包括 PDF、Markdown、文本、CSV 和 JSON",
+                    "保留 Claude 的高级输出，如 Artifacts 和 AI 思考过程",
+                    "提供广泛的自定义选项",
+                    "只需几次点击即可简单快速地使用"
+                ],
+                originalLink: "https://www.claudexporter.com/en",
+                discussionLink: "https://news.ycombinator.com/item?id=44093452"
+            }
+        ];
+
+        const mainGrid = document.querySelector('main');
+
+        projectsData.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'bg-white p-6 rounded-xl shadow-lg border border-gray-200 card-hover-effect flex flex-col justify-between';
+
+            let featuresHTML = '';
+            if (project.features && project.features.length > 0) {
+                featuresHTML = `
+                    <h4 class="text-lg font-semibold text-black mt-5 mb-2">核心特性 <span class="text-sm font-normal text-gray-500 uppercase">Key Features</span></h4>
+                    <ul class="list-none space-y-1.5 text-sm text-gray-700 mb-6">
+                        ${project.features.map(feature => `
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle fa-fw mr-2.5 mt-1 feature-icon icon-gradient"></i>
+                                <span>${feature.replace(/"/g, '"')}</span>
+                            </li>`).join('')}
+                    </ul>
+                `;
+            }
+
+            card.innerHTML = `
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <h2 class="text-2xl lg:text-3xl font-bold text-black pr-2">${project.title}</h2>
+                        ${project.category ? `<span class="text-xs font-semibold px-3 py-1.5 rounded-full whitespace-nowrap category-tag">
+                                                <i class="${project.categoryIcon || 'fas fa-tag'} mr-1.5 opacity-70"></i><span class="gradient-text-category">${project.category.toUpperCase()}</span>
+                                              </span>` : ''}
+                    </div>
+                    <div class="flex items-center text-sm text-gray-700 mb-4 space-x-6">
+                        <span class="flex items-center"><i class="fas fa-arrow-up mr-2 icon-gradient text-lg"></i> <span class="font-bold text-3xl text-black">${project.points}</span> <span class="ml-1.5 text-xs text-gray-500">得分</span></span>
+                        <span class="flex items-center"><i class="fas fa-comments mr-2 icon-gradient text-lg"></i> <span class="font-bold text-3xl text-black">${project.comments}</span> <span class="ml-1.5 text-xs text-gray-500">评论</span></span>
+                    </div>
+                    <p class="text-base text-gray-800 mb-1 leading-relaxed">${project.description}</p>
+                    ${featuresHTML}
+                </div>
+                <div class="mt-auto pt-5 border-t border-gray-200">
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                        <a href="${project.originalLink}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center text-white font-semibold py-3 px-4 rounded-lg btn-gradient text-base">
+                            <i class="fas fa-external-link-alt mr-1.5"></i> 查看项目 <span class="text-xs opacity-80">(查看项目)</span>
+                        </a>
+                        <a href="${project.discussionLink}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center text-black font-semibold py-3 px-4 rounded-lg btn-outline text-base">
+                            <i class="fab fa-hacker-news mr-1.5"></i> HN 讨论 <span class="text-xs opacity-80">(查看讨论)</span>
+                        </a>
+                    </div>
+                </div>
+            `;
+            mainGrid.appendChild(card);
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>

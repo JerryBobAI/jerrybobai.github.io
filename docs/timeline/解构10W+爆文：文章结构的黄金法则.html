@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构10W+爆文：文章结构的黄金法则</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa; /* 极浅灰色背景 */
+            color: #202124; /* Google深灰色文字 */
+            overflow-x: hidden;
+        }
+
+        .google-blue { color: #4285F4; }
+        .google-red { color: #DB4437; }
+        .google-yellow { color: #F4B400; }
+        .google-green { color: #0F9D58; }
+
+        .bg-google-blue { background-color: #4285F4; }
+        .bg-google-red { background-color: #DB4437; }
+        .bg-google-yellow { background-color: #F4B400; }
+        .bg-google-green { background-color: #0F9D58; }
+
+        .bg-google-blue-light { background-color: rgba(66, 133, 244, 0.1); }
+        .bg-google-yellow-light { background-color: rgba(244, 180, 0, 0.1); }
+        .bg-google-green-light { background-color: rgba(15, 157, 88, 0.1); }
+        .bg-google-red-light { background-color: rgba(219, 68, 55, 0.1); }
+
+
+        .text-super-large {
+            font-size: clamp(2.5rem, 6vw, 4.2rem); /* 略微调整以适应更长标题 */
+            font-weight: 700;
+            line-height: 1.25;
+        }
+        .text-section-title {
+            font-size: clamp(1.7rem, 3.8vw, 2.6rem);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        .text-content-title {
+            font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+            font-weight: 500;
+        }
+        .text-english-accent {
+            font-size: 0.75rem; /* 略微减小 */
+            font-weight: 400;
+            color: #5f6368;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .text-descriptive { /* 新增，用于描述性文字 */
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            color: #5f6368;
+            line-height: 1.6;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+            padding: 1.5rem 2rem; /* 增加左右padding */
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px 0 rgba(0,0,0,0.12), 0 2px 6px 0 rgba(0,0,0,0.08);
+        }
+
+        .detail-item {
+            background-color: #f1f3f4;
+            padding: 0.85rem 1.1rem;
+            border-radius: 6px;
+            margin-bottom: 0.85rem;
+            display: flex;
+            align-items: center;
+        }
+        .detail-item .material-icons-outlined {
+            margin-right: 0.85rem;
+            font-size: 1.6rem; /* 稍微增大图标 */
+        }
+        .detail-item-text {
+            flex: 1;
+        }
+        .detail-item-subtext {
+            font-size: 0.8rem;
+            color: #70757a;
+            margin-left: 0.5rem;
+        }
+
+        .section-number {
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1;
+            opacity: 0.12;
+        }
+
+        .container-max {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .divider-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            margin: 0 0.6rem; /* 稍微增大间距 */
+            background-color: currentColor; /* 使用父元素颜色 */
+            opacity: 0.5;
+        }
+        .intro-paragraph {
+            font-size: clamp(1rem, 1.8vw, 1.25rem);
+            line-height: 1.7;
+        }
+        .footer-paragraph {
+            font-size: clamp(0.95rem, 1.7vw, 1.15rem);
+            line-height: 1.7;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="container-max mx-auto px-4 md:px-8 py-12 md:py-20">
+
+        <header class="text-center mb-16 md:mb-24 relative">
+            <div class="absolute -top-10 -left-10 w-28 h-28 bg-google-blue opacity-15 rounded-full filter blur-xl animate-pulse"></div>
+            <div class="absolute -bottom-12 -right-10 w-36 h-36 bg-google-yellow opacity-15 rounded-full filter blur-xl animate-pulse delay-500"></div>
+
+            <h1 class="text-super-large mb-4 text-gray-800">
+                解构<span class="google-red">10W+爆文</span>的秘密：你离顶级内容创作，只差一个清晰的“<span class="google-green">骨架</span>”！
+                <span class="block text-english-accent mt-3 tracking-wider">DECODING VIRAL CONTENT: THE GOLDEN RULE OF ARTICLE STRUCTURE</span>
+            </h1>
+            <p class="intro-paragraph text-gray-600 max-w-3xl mx-auto">
+                你是否也曾面对屏幕，灵感汹涌却不知从何构建文章的殿堂？是否渴望笔尖生花，却总在结构上迷失方向？别再让混乱的思绪埋没你的才华！这本《写作的方法》为你揭示文章结构的黄金法则，助你搭建稳固而富有魅力的表达框架。
+                <span class="block text-english-accent mt-2">FROM CHAOS TO CLARITY: BUILD YOUR MASTERPIECE WITH SOLID FRAMEWORK</span>
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 md:gap-8">
+
+            <section class="lg:col-span-6 card relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-8 -mr-8 section-number google-blue">01</div>
+                <h2 class="text-section-title mb-2 google-blue">
+                    破茧成蝶：四大经典结构
+                </h2>
+                <p class="text-english-accent mb-6">TRANSFORM YOUR WRITING: FOUR CLASSIC STRUCTURES TO CAPTIVATE & CONVINCE</p>
+                <p class="text-descriptive mb-6">让你的表达逻辑清晰，直击人心！每一种结构都是一把钥匙，解锁不同叙事风格的无限可能。</p>
+
+                <div class="space-y-5">
+                    <div>
+                        <h3 class="text-content-title mb-2 font-semibold">1. 总分式 <span class="text-sm text-gray-500 font-normal ml-1">Overall-Detail</span></h3>
+                        <p class="text-descriptive mb-3">提纲挈领，纲举目张——思维的导航塔，引领读者精准抵达核心。</p>
+                        <div class="pl-4 border-l-2 border-google-blue-light space-y-3">
+                            <p class="detail-item"><span class="material-icons-outlined google-blue">layers</span><span class="detail-item-text">总-分-总</span><span class="detail-item-subtext">经典收束，印象深刻</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-blue">segment</span><span class="detail-item-text">分-分-总</span><span class="detail-item-subtext">层层铺垫，聚焦总结</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-blue">compress</span><span class="detail-item-text">分-总-分</span><span class="detail-item-subtext">点睛核心，再行展开</span></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-content-title mb-2 font-semibold">2. 对比式 <span class="text-sm text-gray-500 font-normal ml-1">Contrast Structure</span></h3>
+                        <p class="text-descriptive mb-3">黑白分明，是非立判——在碰撞中彰显深度，让观点更具张力。</p>
+                         <div class="pl-4 border-l-2 border-google-yellow-light space-y-3">
+                            <p class="detail-item"><span class="material-icons-outlined google-yellow">compare_arrows</span><span class="detail-item-text">定义：一正一反，观点交锋，凸显主张</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-yellow">error_outline</span><span class="detail-item-text">注意：篇幅均衡，对比点清晰（不超4组）</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-yellow">insights</span><span class="detail-item-text">好处：层次鲜明，深度挖掘，强化认知</span></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-content-title mb-2 font-semibold">3. 递进式 <span class="text-sm text-gray-500 font-normal ml-1">Progressive Structure</span></h3>
+                        <p class="text-descriptive mb-3">层层深入，步步为营——如剥洋葱般揭示内核，引发读者持续探索的欲望。</p>
+                        <div class="pl-4 border-l-2 border-google-green-light space-y-3">
+                            <p class="detail-item"><span class="material-icons-outlined google-green">trending_up</span><span class="detail-item-text">现象-分析-结论-升华 (纵向深度)</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-green">travel_explore</span><span class="detail-item-text">现象-观点-案例-升华 (横向广度)</span></p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-content-title mb-2 font-semibold">4. 故事型 <span class="text-sm text-gray-500 font-normal ml-1">Narrative Structure</span></h3>
+                        <p class="text-descriptive mb-3">情节引人，共鸣油生——用叙事的魔力编织情感纽带，让文字拥有生命。</p>
+                        <div class="pl-4 border-l-2 border-google-red-light space-y-3">
+                            <p class="text-gray-700 mb-1 font-medium text-sm">戏剧弧光 (DRAMATIC ARC):</p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">play_circle_outline</span><span class="detail-item-text">起点 (Opening): 冲突初现，引人入胜</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">sync</span><span class="detail-item-text">承接 (Rising Action): 矛盾发展，伏笔暗藏</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">change_history</span><span class="detail-item-text">转折 (Climax): 高潮迭起，扣人心弦</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">check_circle_outline</span><span class="detail-item-text">合拢 (Resolution): 尘埃落定，余韵悠长</span></p>
+                            <p class="text-gray-700 mt-3 mb-1 font-medium text-sm">叙事手法 (NARRATIVE TECHNIQUES):</p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">straight</span><span class="detail-item-text">正叙 (Chronological): 顺理成章，娓娓道来</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">u_turn_left</span><span class="detail-item-text">倒叙 (Reverse Chronological): 悬念先置，回溯因果</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-red">shuffle</span><span class="detail-item-text">插叙 (Interspersed): 主线穿插，丰富层次</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="lg:col-span-6 space-y-6 md:space-y-8">
+                <section class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 section-number google-green">02</div>
+                    <h2 class="text-section-title mb-2 google-green">匠心雕琢：结构细节的魔力</h2>
+                    <p class="text-english-accent mb-6">THE MAGIC OF DETAIL: CRAFTING A FLAWLESS STRUCTURE</p>
+                    <div class="space-y-3">
+                        <p class="detail-item"><span class="material-icons-outlined google-green">lightbulb</span><span class="detail-item-text">开头“薄而脆”</span><span class="detail-item-subtext">惊鸿一瞥定乾坤，简洁明快，瞬间抓住眼球。</span></p>
+                        <p class="detail-item"><span class="material-icons-outlined google-green">waves</span><span class="detail-item-text">过渡“滑而妙”</span><span class="detail-item-subtext">承上启下巧无痕，自然流畅，如丝绸拂过。</span></p>
+                        <p class="detail-item"><span class="material-icons-outlined google-green">compress</span><span class="detail-item-text">结尾“少而重”</span><span class="detail-item-subtext">余音绕梁三日绝，精炼深刻，引人深思。</span></p>
+                        <p class="detail-item"><span class="material-icons-outlined google-green">air</span><span class="detail-item-text">文章“呼吸感”</span><span class="detail-item-subtext">张弛有度韵律生，赋予文字生命力，阅读如享受。</span></p>
+                    </div>
+                </section>
+
+                <section class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 section-number google-yellow">03</div>
+                    <h2 class="text-section-title mb-2 google-yellow">惊艳开场：如何设计完美序章</h2>
+                    <p class="text-english-accent mb-6">THE ART OF THE OPENING: HOOK YOUR READERS FROM WORD ONE</p>
+                    <div class="mb-5">
+                        <h4 class="font-semibold text-gray-700 mb-2 text-content-title">为何是“黄金三秒” <span class="text-sm text-gray-500">(WHY IT'S CRUCIAL)</span></h4>
+                        <div class="flex flex-wrap items-center text-sm text-gray-600 text-descriptive">
+                            <span><i class="material-icons-outlined text-xs mr-1 align-bottom">visibility</i>首因效应</span> <div class="divider-dot google-yellow"></div>
+                            <span><i class="material-icons-outlined text-xs mr-1 align-bottom">music_note</i>定调之声</span> <div class="divider-dot google-yellow"></div>
+                            <span><i class="material-icons-outlined text-xs mr-1 align-bottom">foundation</i>结构基石</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-700 mb-3 text-content-title">三大“吸睛”秘法 <span class="text-sm text-gray-500">(THREE MAGNETIC METHODS)</span></h4>
+                        <div class="space-y-3">
+                            <p class="detail-item"><span class="material-icons-outlined google-yellow">help_outline</span><span class="detail-item-text">悬念法：引人入胜的谜题</span><span class="detail-item-subtext">激起好奇，渴望探寻。</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-yellow">psychology</span><span class="detail-item-text">痛点共鸣式：直击灵魂的共鸣</span><span class="detail-item-subtext">洞察痛点，瞬间连接。</span></p>
+                            <p class="detail-item"><span class="material-icons-outlined google-yellow">feed</span><span class="detail-item-text">新闻热点式：借势而为的智慧</span><span class="detail-item-subtext">紧贴热点，赋予时效。</span></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 section-number google-red">04</div>
+                    <h2 class="text-section-title mb-2 google-red">意犹未尽：打造“豹尾”的艺术</h2>
+                    <p class="text-english-accent mb-6">LEAVE A LASTING IMPRESSION: THE ART OF A POWERFUL CONCLUSION</p>
+                     <div class="space-y-3">
+                        <p class="detail-item"><span class="material-icons-outlined google-red">summarize</span><span class="detail-item-text">总结全文式：清晰收束的句号</span><span class="detail-item-subtext">归纳要点，完整交代。</span></p>
+                        <p class="detail-item"><span class="material-icons-outlined google-red">military_tech</span><span class="detail-item-text">金句拔高式：振聋发聩的点睛</span><span class="detail-item-subtext">凝练金句，思想闪耀。</span></p>
+                        <p class="detail-item"><span class="material-icons-outlined google-red">forum</span><span class="detail-item-text">话题互动式：未完待续的邀请</span><span class="detail-item-subtext">提出问题，延续思考。</span></p>
+                        <p class="detail-item"><span class="material-icons-outlined google-red">replay</span><span class="detail-item-text">首尾呼应式：圆满闭环的艺术</span><span class="detail-item-subtext">巧妙呼应，结构之美。</span></p>
+                    </div>
+                    <p class="mt-5 text-sm text-gray-600 italic text-descriptive">真正的“豹尾”，是那份“拍案叫绝”的惊艳，是技巧之上的浑然天成，让读者掩卷长思，回味无穷。</p>
+                </section>
+            </div>
+        </div>
+
+        <footer class="mt-16 md:mt-24 text-center p-8 md:p-12 bg-white rounded-lg shadow-xl relative overflow-hidden">
+            <div class="absolute -top-5 -left-5 w-20 h-20 bg-google-green opacity-10 rounded-full transform rotate-45 filter blur-sm"></div>
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-google-red opacity-10 rounded-lg transform -rotate-12 filter blur-sm"></div>
+            <span class="material-icons-outlined google-blue text-6xl mb-5">auto_stories</span>
+            <p class="footer-paragraph text-gray-700 max-w-2xl mx-auto mb-3">
+                还在为文章结构混乱、内容东拉西扯而苦恼吗？是否感觉自己的好想法，总是无法清晰有力地呈现？别让“结构之痛”成为你内容创作的瓶颈！
+            </p>
+            <p class="text-xl md:text-2xl font-semibold google-blue">
+                这本《写作的方法》，正是为你量身打造的结构设计秘籍！
+                 <span class="block text-english-accent mt-2 text-gray-500 tracking-wider">YOUR ULTIMATE GUIDE: "THE WAY OF WRITING"</span>
+            </p>
+            <p class="footer-paragraph text-gray-600 max-w-2xl mx-auto mt-3">
+                它将是你思维的梳理师，表达的建筑师，助你从源头解决结构难题，让每一篇文章都能掷地有声，直抵人心！
+            </p>
+            <p class="text-xs text-gray-400 mt-10">© <span id="year"></span> Dynamic Page Assistant. Content Enhanced for Impact.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>

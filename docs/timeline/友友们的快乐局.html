@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友友们的快乐局 - 行程海报</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', 'Poppins', sans-serif;
+            background-color: #FFF8F5; /* 类似小红书的淡雅背景色 */
+            color: #333;
+        }
+
+        .hero-title {
+            font-size: 3rem; /* 超大字体 */
+            font-weight: 700;
+            color: #FF2E63; /* 小红书风格亮色 */
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #555;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+
+        .event-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 250px; /* 固定图片高度 */
+            object-fit: cover; /* 保证图片不变形 */
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .event-title {
+            font-size: 1.75rem; /* 突出核心要点 */
+            font-weight: 700;
+            color: #2c3e50; /* 深色标题 */
+            margin-bottom: 0.5rem;
+        }
+        .event-title .en-subtitle {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #FF2E63; /* 亮色点缀 */
+            display: block;
+            margin-top: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .event-details p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+        }
+        .event-details p i {
+            color: #FF2E63; /* 亮色图标 */
+            margin-right: 0.75rem;
+            width: 20px; /* 固定图标宽度 */
+            text-align: center;
+        }
+        .event-details strong {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .event-tags {
+            margin-top: auto; /* 将标签推到底部 */
+            padding-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: #FFE0E9; /* 淡粉色背景 */
+            color: #FF2E63; /* 小红书风格亮色文字 */
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        /* 响应式兼容更大显示器宽度 */
+        .container {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="hero-title">友友们的快乐局</h1>
+        <p class="hero-subtitle">OUR HAPPY GATHERINGS</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 行程1: 溪边露营 -->
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtcGluZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60" alt="溪边露营场景图">
+                <div class="card-content">
+                    <h2 class="event-title">
+                        溪边露营
+                        <span class="en-subtitle">Riverside Camping Gala</span>
+                    </h2>
+                    <div class="event-details">
+                        <p><i class="fas fa-calendar-alt"></i><strong>时间：</strong>5月31日 - 6月1日</p>
+                        <p><i class="fas fa-map-marker-alt"></i><strong>地址：</strong>小溪生态营地</p>
+                        <p><i class="fas fa-users"></i><strong>人员：</strong>金姗家、牛哥家、小平家 (Luna家 <span class="text-xs text-orange-500">待定</span>)</p>
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag">#溪边露营</span>
+                        <span class="tag">#亲近自然</span>
+                        <span class="tag">#五月之约</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行程2: 山里烤肉 -->
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmJxfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="山里烤肉场景图">
+                <div class="card-content">
+                    <h2 class="event-title">
+                        山里烤肉
+                        <span class="en-subtitle">Mountain BBQ Feast</span>
+                    </h2>
+                    <div class="event-details">
+                        <p><i class="fas fa-calendar-alt"></i><strong>时间：</strong>6月7日</p>
+                        <p><i class="fas fa-map-marker-alt"></i><strong>地址：</strong>RORO BBQ 肉肉餐厅 (怀柔雁栖店)</p>
+                        <p><i class="fas fa-users"></i><strong>人员：</strong>牛哥家、小平家、Luna家、金姗家、夏青家</p>
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag">#山间美味</span>
+                        <span class="tag">#烤肉派对</span>
+                        <span class="tag">#夏日炎炎</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 行程3: 阿那亚海边度假 -->
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVhY2glMjByZXNvcnR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60" alt="阿那亚海边度假场景图">
+                <div class="card-content">
+                    <h2 class="event-title">
+                        阿那亚海边度假
+                        <span class="en-subtitle">Aranya Seaside Getaway</span>
+                    </h2>
+                    <div class="event-details">
+                        <p><i class="fas fa-calendar-alt"></i><strong>时间：</strong>8月2日 - 8月4日</p>
+                        <p><i class="fas fa-map-marker-alt"></i><strong>地址：</strong>秦皇岛阿那亚</p>
+                        <p><i class="fas fa-users"></i><strong>人员：</strong>牛哥家、小平家、Luna家、金姗家、夏青家</p>
+                    </div>
+                    <div class="event-tags">
+                        <span class="tag">#阿那亚</span>
+                        <span class="tag">#海滨假日</span>
+                        <span class="tag">#夏日回忆</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

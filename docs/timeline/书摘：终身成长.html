@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《终身成长》思维模式的力量 - Mindset Insights</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #111827; /* Dark page background for contrast */
+            color: #F3F4F6; /* Default light text */
+            scroll-behavior: smooth;
+        }
+
+        .memphis-card {
+            padding: 2rem 2.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+
+        .memphis-bg-yellow { background-color: #FFD166; color: #1F2937; } /* Dark text on yellow */
+        .memphis-bg-pink   { background-color: #EF476F; color: #FFFFFF; }
+        .memphis-bg-green  { background-color: #06D6A0; color: #1F2937; } /* Dark text on green */
+        .memphis-bg-blue   { background-color: #118AB2; color: #FFFFFF; }
+        .memphis-bg-light  { background-color: #F9FAFB; color: #1F2937; } /* Light card, dark text */
+        .memphis-bg-dark-card { background-color: #1F2937; color: #F3F4F6; } /* Darker card on dark bg */
+
+
+        .text-super-display { font-size: clamp(4.5rem, 13vw, 11rem); line-height: 0.9; font-weight: 900; }
+        .text-super-xl    { font-size: clamp(3rem, 8vw, 6rem); line-height: 1; font-weight: 800; }
+        .text-super-lg    { font-size: clamp(2.2rem, 6vw, 4.5rem); line-height: 1.1; font-weight: 700; }
+        .text-super-md    { font-size: clamp(1.6rem, 4.5vw, 2.8rem); line-height: 1.2; font-weight: 700; }
+
+        .chinese-title { font-weight: 900; }
+        .english-subtitle { font-size: 0.8em; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 0.25rem; }
+
+        .highlight-text-yellow { background: linear-gradient(to right, #FFD166 60%, rgba(255,209,102,0.6) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-pink   { background: linear-gradient(to right, #EF476F 60%, rgba(239,71,111,0.6) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-green  { background: linear-gradient(to right, #06D6A0 60%, rgba(6,214,160,0.6) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-blue   { background: linear-gradient(to right, #118AB2 60%, rgba(17,138,178,0.6) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-text-white-on-dark { background: linear-gradient(to right, #FFFFFF 60%, rgba(255,255,255,0.6) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+
+        .icon-large { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+        .memphis-bg-yellow .icon-large, .memphis-bg-green .icon-large, .memphis-bg-light .icon-large { opacity: 0.6; color: #4B5563; }
+
+        .deco-pattern-1::after { /* Example: Diagonal lines */
+            content: ''; position: absolute; top: -50px; left: -50px; width: 200px; height: 200px;
+            background: repeating-linear-gradient(45deg, currentColor, currentColor 5px, transparent 5px, transparent 15px);
+            opacity: 0.03; transform: rotate(-15deg);
+        }
+        .memphis-bg-pink .deco-pattern-1::after, .memphis-bg-blue .deco-pattern-1::after, .memphis-bg-dark-card .deco-pattern-1::after {
+            opacity: 0.05;
+        }
+
+        .section-title-card {
+            text-align: center; padding-top: 3rem; padding-bottom: 3rem;
+        }
+        .section-title-card .text-super-lg { margin-bottom: 0.5rem;}
+
+        ul.checklist li { padding-left: 1.5em; position: relative; margin-bottom: 0.5em; }
+        ul.checklist li::before {
+            content: '\f00c'; /* Font Awesome check icon */
+            font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; left: 0;
+            opacity: 0.7;
+        }
+        .memphis-bg-yellow ul.checklist li::before,
+        .memphis-bg-green ul.checklist li::before,
+        .memphis-bg-light ul.checklist li::before { color: #118AB2; /* Blue check on light bgs */}
+        .memphis-bg-pink ul.checklist li::before,
+        .memphis-bg-blue ul.checklist li::before,
+        .memphis-bg-dark-card ul.checklist li::before { color: #06D6A0; /* Green check on dark bgs */}
+
+
+    </style>
+</head>
+<body class="p-4 md:p-6 lg:p-8">
+    <div class="max-w-[1920px] mx-auto space-y-8 md:space-y-10">
+
+        <!-- Hero Section -->
+        <div class="memphis-card memphis-bg-dark-card text-center deco-pattern-1">
+            <i class="fas fa-brain icon-large"></i>
+            <h1 class="text-super-xl chinese-title">《终身成长》</h1>
+            <p class="english-subtitle text-xl">MINDSET: THE NEW PSYCHOLOGY OF SUCCESS</p>
+            <p class="mt-6 text-super-md chinese-title">重新定义<span class="highlight-text-yellow">成功</span>的<span class="highlight-text-green">思维模式</span></p>
+            <p class="english-subtitle text-lg">REDEFINING THE MINDSET FOR SUCCESS by Carol S. Dweck</p>
+        </div>
+
+        <!-- Core Concepts: Mindsets -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="memphis-card memphis-bg-pink">
+                <i class="fas fa-box icon-large"></i>
+                <h2 class="text-super-lg chinese-title">固定型<span class="highlight-text-yellow">思维</span></h2>
+                <span class="english-subtitle">FIXED MINDSET</span>
+                <ul class="mt-4 space-y-2 checklist text-sm">
+                    <li>认为智力/才能<strong class="font-semibold">固定不变</strong></li>
+                    <li><strong class="font-semibold">害怕</strong>挑战，逃避困难</li>
+                    <li>视努力为<strong class="font-semibold">徒劳</strong>，或证明能力不足</li>
+                    <li>面对失败<strong class="font-semibold">轻易放弃</strong>，感到羞耻</li>
+                    <li><strong class="font-semibold">无视</strong>或抵触有益的批评</li>
+                    <li><strong class="font-semibold">嫉妒</strong>或受他人成功威胁</li>
+                </ul>
+            </div>
+            <div class="memphis-card memphis-bg-green">
+                <i class="fas fa-seedling icon-large"></i>
+                <h2 class="text-super-lg chinese-title">成长型<span class="highlight-text-blue">思维</span></h2>
+                <span class="english-subtitle">GROWTH MINDSET</span>
+                <ul class="mt-4 space-y-2 checklist text-sm">
+                    <li>相信能力可<strong class="font-semibold">培养发展</strong></li>
+                    <li><strong class="font-semibold">拥抱</strong>挑战，视为成长机会</li>
+                    <li>视努力为<strong class="font-semibold">精通之路</strong>的关键</li>
+                    <li>从失败中<strong class="font-semibold">学习</strong>，坚持不懈</li>
+                    <li><strong class="font-semibold">欢迎</strong>并利用批评改进</li>
+                    <li>从他人成功中<strong class="font-semibold">汲取灵感</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Book Summary Section -->
+        <div class="memphis-card memphis-bg-light section-title-card">
+            <i class="fas fa-book-open icon-large"></i>
+            <h2 class="text-super-lg chinese-title">核心总结</h2>
+            <span class="english-subtitle">CORE SUMMARY</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="memphis-card memphis-bg-yellow">
+                <h3 class="text-super-md chinese-title">两种<span class="highlight-text-pink">思维</span>核心差异</h3>
+                <p class="mt-2 text-sm">对能力、挑战、努力、失败和他人成功的不同看法。</p>
+            </div>
+            <div class="memphis-card memphis-bg-blue">
+                <h3 class="text-super-md chinese-title">挑战与<span class="highlight-text-yellow">努力</span></h3>
+                <p class="mt-2 text-sm">成长型视其为机遇和路径；固定型视其为威胁和徒劳。</p>
+            </div>
+            <div class="memphis-card memphis-bg-light">
+                <h3 class="text-super-md chinese-title">失败与<span class="highlight-text-green">批评</span></h3>
+                <p class="mt-2 text-sm">成长型从中学习；固定型感到被定义或被否定。</p>
+            </div>
+            <div class="memphis-card memphis-bg-pink">
+                <h3 class="text-super-md chinese-title">他人<span class="highlight-text-yellow">成功</span></h3>
+                <p class="mt-2 text-sm">成长型受激励；固定型感威胁。</p>
+            </div>
+            <div class="memphis-card memphis-bg-green">
+                <h3 class="text-super-md chinese-title">影响<span class="highlight-text-blue">广泛</span></h3>
+                <p class="mt-2 text-sm">教育、商业、人际关系、运动、养育等皆受思维模式影响。</p>
+            </div>
+             <div class="memphis-card memphis-bg-yellow">
+                <h3 class="text-super-md chinese-title">培养<span class="highlight-text-pink">成长型</span>思维</h3>
+                <p class="mt-2 text-sm">倾听内心对话、拥抱“尚不能”、关注过程、寻求反馈。</p>
+            </div>
+        </div>
+
+        <!-- Personal Reflections Section -->
+        <div class="memphis-card memphis-bg-dark-card section-title-card deco-pattern-1">
+            <i class="fas fa-comment-dots icon-large"></i>
+            <h2 class="text-super-lg chinese-title">个人感悟</h2>
+            <span class="english-subtitle">PERSONAL REFLECTIONS</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="memphis-card memphis-bg-blue"><h3 class="text-super-md chinese-title">自我<span class="highlight-text-yellow">觉察</span>是起点</h3><p class="mt-2 text-sm">识别自己的固定型思维触发点。</p></div>
+            <div class="memphis-card memphis-bg-light"><h3 class="text-super-md chinese-title">“尚不能” (<span class="highlight-text-green">YET</span>)的力量</h3><p class="mt-2 text-sm">改变对当前局限的看法，开启可能。</p></div>
+            <div class="memphis-card memphis-bg-pink"><h3 class="text-super-md chinese-title">努力的<span class="highlight-text-yellow">重新定义</span></h3><p class="mt-2 text-sm">努力是激活和发展能力的过程。</p></div>
+            <div class="memphis-card memphis-bg-yellow"><h3 class="text-super-md chinese-title">对批评<span class="highlight-text-blue">开放</span></h3><p class="mt-2 text-sm">建设性批评是成长的宝贵礼物。</p></div>
+            <div class="memphis-card memphis-bg-green"><h3 class="text-super-md chinese-title">庆祝他人<span class="highlight-text-pink">成功</span></h3><p class="mt-2 text-sm">将其视为学习和激励的源泉。</p></div>
+            <div class="memphis-card memphis-bg-light"><h3 class="text-super-md chinese-title">终身学习<span class="highlight-text-blue">基石</span></h3><p class="mt-2 text-sm">成长型思维是持续学习的内在驱动。</p></div>
+        </div>
+
+        <!-- Deeper Insights Section -->
+        <div class="memphis-card memphis-bg-pink section-title-card">
+            <i class="fas fa-search-plus icon-large"></i>
+            <h2 class="text-super-lg chinese-title">深度洞察</h2>
+            <span class="english-subtitle">DEEPER INSIGHTS</span>
+        </div>
+         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div class="memphis-card memphis-bg-light"><h3 class="text-super-md chinese-title">非<span class="highlight-text-green">简单</span>积极思考</h3><p class="mt-2 text-sm">是关于如何应对挑战和挫折的信念系统。</p></div>
+            <div class="memphis-card memphis-bg-yellow"><h3 class="text-super-md chinese-title">文化与<span class="highlight-text-blue">环境</span>影响</h3><p class="mt-2 text-sm">社会文化和成长环境塑造思维模式。</p></div>
+            <div class="memphis-card memphis-bg-green"><h3 class="text-super-md chinese-title">警惕“<span class="highlight-text-pink">假性</span>”成长思维</h3><p class="mt-2 text-sm">表面认同，实际行为仍是固定型。</p></div>
+            <div class="memphis-card memphis-bg-blue"><h3 class="text-super-md chinese-title">教育与<span class="highlight-text-yellow">养育</span>的责任</h3><p class="mt-2 text-sm">如何赞美、如何设定目标至关重要。</p></div>
+            <div class="memphis-card memphis-bg-light"><h3 class="text-super-md chinese-title">潜能<span class="highlight-text-pink">未知</span></h3><p class="mt-2 text-sm">成长型思维相信人的潜能难以估量。</p></div>
+            <div class="memphis-card memphis-bg-yellow"><h3 class="text-super-md chinese-title">成长是<span class="highlight-text-green">持续</span>过程</h3><p class="mt-2 text-sm">非一蹴而就，需不断实践和反思。</p></div>
+        </div>
+
+
+        <!-- Conclusion -->
+        <div class="memphis-card memphis-bg-dark-card text-center deco-pattern-1">
+            <i class="fas fa-rocket icon-large"></i>
+            <h2 class="text-super-lg chinese-title">选择<span class="highlight-text-green">成长</span>，释放<span class="highlight-text-yellow">无限潜能</span></h2>
+            <span class="english-subtitle">CHOOSE GROWTH, UNLOCK YOUR POTENTIAL</span>
+            <p class="mt-6 text-xl">思维模式并非天生，你可以选择并培养成长型思维，开启一段不断学习、持续进步的旅程。</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian大神笔记秘籍 - Steph Ango的用法解析</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+            background-color: #FFF0F5; /* 淡粉色背景，营造温馨感 */
+        }
+
+        .xiaohongshu-card {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.1); /* 紫罗兰色调阴影 */
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.2); /* 淡紫色边框 */
+        }
+
+        .card-title-main {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: #4A00E0; /* 深邃的紫色 */
+            line-height: 1.3;
+        }
+
+        .card-title-english {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #8A2BE2; /* 紫罗兰色 */
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .highlight-text {
+            font-weight: bold;
+            color: #FF00FF; /* 亮粉色/品红色 */
+        }
+        .highlight-text-blue {
+            font-weight: bold;
+            color: #007BFF; /* 品牌蓝 */
+        }
+
+        .super-highlight-num {
+            font-size: clamp(3rem, 10vw, 6rem); /* 更大的数字 */
+            font-weight: 800;
+            color: #FF69B4; /* 艳粉色 */
+            line-height: 1;
+            display: inline-block;
+            text-shadow: 2px 2px 5px rgba(255, 105, 180, 0.3);
+        }
+
+        .gradient-icon-bg {
+            padding: 12px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.2) 0%, rgba(138, 43, 226, 0.2) 100%); /* 粉紫渐变 */
+        }
+        .gradient-icon-bg i {
+             background: linear-gradient(135deg, #FF69B4 0%, #8A2BE2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+        }
+
+        .content-paragraph {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            line-height: 1.8;
+            color: #444; /* 深灰色，易读 */
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: rgba(138, 43, 226, 0.1); /* 紫色背景 */
+            color: #800080; /* 紫色 */
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .hero-header {
+             background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%); /* 清新蓝渐变 */
+             padding: 4rem 1.5rem;
+             border-radius: 20px;
+             margin-bottom: 2rem;
+             text-align: center;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: rgba(255,255,255,0.9);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .list-item-custom { display: flex; align-items: flex-start; margin-bottom: 0.8rem; }
+        .list-item-custom i { color: #8A2BE2; margin-right: 0.75rem; margin-top: 0.3rem; }
+
+        .code-snippet {
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c7254e; /* 类似Bootstrap代码颜色 */
+        }
+
+        .social-footer { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid rgba(0,0,0,0.05); }
+        .social-btn i { color: #6B7280; }
+        .social-btn.liked i { color: #EF4444; }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="container mx-auto max-w-3xl">
+
+        <header class="hero-header">
+            <h1 class="hero-title title-chinese">🤯 Obsidian大神笔记秘籍</h1>
+            <p class="hero-subtitle title-english">DECODING STEPH ANGO'S OBSIDIAN WORKFLOW</p>
+            <p class="mt-2 text-white/80 text-sm">像思考一样记笔记，用 emergent structure 整理灵感 ✨</p>
+        </header>
+
+        <!-- 卡片1: 核心理念 & 起步 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-lightbulb"></i></div>
+                    <div>
+                        <h2 class="card-title-main">掌控你的数字遗产<br>我的Obsidian核心理念</h2>
+                        <p class="card-title-english">MY CORE PHILOSOPHY: FILE OVER APP</p>
+                    </div>
+                </div>
+                <p class="content-paragraph">Obsidian对我来说，不仅仅是笔记软件，更是我的<strong class="highlight-text">思考、写作、甚至个人网站发布</strong>的中央枢纽！它拥抱混乱，让结构自然浮现。</p>
+                <p class="content-paragraph">最重要的原则：<strong class="text-3xl text-blue-600 block my-3 text-center p-3 bg-blue-50 rounded-lg">“文件优先于APP” (FILE OVER APP)</strong>你的数字创作必须是你可控的文件，格式要易于读取。Obsidian给了我这种自由！</p>
+                <p class="content-paragraph">想要同款？作者提供了 <a href="https://github.com/kepano/kepano-obsidian/archive/refs/heads/main.zip" target="_blank" rel="noopener noreferrer" class="text-pink-500 hover:underline font-semibold">Vault模版下载 <i class="fas fa-download"></i></a>，快去试试！</p>
+                <div>
+                    <span class="tag">#Obsidian</span><span class="tag">#数字笔记</span><span class="tag">#文件管理</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片2: 主题与效率工具 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-tools"></i></div>
+                    <div>
+                        <h2 class="card-title-main">颜值与实力并存<br>我的主题与效率神器</h2>
+                        <p class="card-title-english">THEME AND PRODUCTIVITY TOOLS</p>
+                    </div>
+                </div>
+                <ul class="space-y-3 mb-4">
+                    <li class="list-item-custom"><i class="fas fa-palette"></i><span><strong>主题 Theme:</strong> <a href="https://stephango.com/minimal" target="_blank" rel="noopener noreferrer" class="highlight-text-blue font-semibold">Minimal</a> - 简约而不简单！</span></li>
+                    <li class="list-item-custom"><i class="fas fa-cut"></i><span><strong>网页剪藏 Web Clipper:</strong> 保存文章和网页，甚至有 <a href="https://github.com/kepano/clipper-templates" target="_blank" rel="noopener noreferrer" class="highlight-text-blue font-semibold">特定网站模板</a>。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-sync-alt"></i><span><strong>同步 Sync:</strong> <a href="https://obsidian.md/sync" target="_blank" class="highlight-text-blue font-semibold">Obsidian Sync</a>，桌面、手机、平板无缝切换。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-database"></i><span><strong>数据组织 Bases:</strong> <a href="https://help.obsidian.md/bases" target="_blank" class="highlight-text-blue font-semibold">Obsidian Bases</a>，取代了Dataview (自2025年5月起)。</span></li>
+                </ul>
+                 <p class="content-paragraph">这些工具让我的信息输入和管理如虎添翼！</p>
+                <div>
+                    <span class="tag">#Obsidian插件</span><span class="tag">#Minimal主题</span><span class="tag">#效率工具</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片3: 个人黄金法则 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-scroll"></i></div>
+                    <div>
+                        <h2 class="card-title-main">我的 <span class="super-highlight-num">7</span> 条黄金法则<br>打造一致性与专注力</h2>
+                        <p class="card-title-english">MY PERSONAL RULES FOR FOCUS</p>
+                    </div>
+                </div>
+                <p class="content-paragraph">拥有<strong class="highlight-text">一致的风格</strong>能减少无数决策，让我更专注。我的几条核心规则：</p>
+                <ul class="space-y-2 mb-4 text-gray-700">
+                    <li class="list-item-custom"><i class="fas fa-folder-minus"></i><span><strong>避免多Vault：</strong>内容尽量不分割。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-sitemap"></i><span><strong>少用文件夹整理：</strong>（大部分情况）依赖链接和属性。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-tags"></i><span><strong>分类和标签用复数：</strong>如 <code class="code-snippet">#books</code> 而非 <code class="code-snippet">#book</code>。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-link"></i><span><strong>大量使用内部链接：</strong>连接一切！</span></li>
+                    <li class="list-item-custom"><i class="fas fa-calendar-alt"></i><span><strong>日期格式统一：</strong><code class="code-snippet">YYYY-MM-DD</code>。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-star-half-alt"></i><span><strong>7分制评分：</strong>体验打分更细致。</span></li>
+                    <li class="list-item-custom"><i class="fas fa-list-check"></i><span><strong>每周一个待办清单：</strong>保持清爽。</span></li>
+                </ul>
+                <p class="content-paragraph">制定你自己的规则，并写下来！可以随时修改。</p>
+                <div>
+                    <span class="tag">#知识管理</span><span class="tag">#个人系统</span><span class="tag">#笔记方法</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片4: 文件夹与组织 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                 <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-network-wired"></i></div>
+                    <div>
+                        <h2 class="card-title-main">告别文件夹焦虑<br>“链接”构建知识网络</h2>
+                        <p class="card-title-english">FOLDERS & ORGANIZATION: LINKS ARE KING</p>
+                    </div>
+                </div>
+                <p class="content-paragraph">我用极少的文件夹！因为很多笔记不止属于一个领域。系统追求<strong class="highlight-text">速度和“懒人友好”</strong>，不想费神思考笔记该放哪。</p>
+                <p class="content-paragraph">主要导航方式：快速切换、反向链接、笔记内链接。</p>
+                <p class="content-paragraph">笔记组织核心：<code class="code-snippet">categories</code> 属性 + Obsidian的 <strong class="highlight-text-blue">Bases</strong> 功能。</p>
+                <p class="content-paragraph"><strong class="highlight-text">大部分笔记在根目录</strong>：个人日记、文章、常青笔记等。在根目录=我写的或与我直接相关。</p>
+                <p class="content-paragraph">两大参考文件夹：</p>
+                <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+                    <li><code class="code-snippet">References</code>: 书籍、电影、地点、人物等外部事物。</li>
+                    <li><code class="code-snippet">Clippings</code>: 他人写的文章。</li>
+                </ul>
+                 <p class="content-paragraph mt-2">管理型文件夹（不常用导航）：<code class="code-snippet">Attachments</code> (附件), <code class="code-snippet">Daily</code> (日记), <code class="code-snippet">Templates</code> (模板)。</p>
+                <div>
+                    <span class="tag">#文件夹管理</span><span class="tag">#链接思维</span><span class="tag">#Obsidian技巧</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片5: 分形日记与随机回顾 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                 <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-infinity"></i></div>
+                    <div>
+                        <h2 class="card-title-main">灵感永不枯竭的秘密<br>分形日记与随机回顾</h2>
+                        <p class="card-title-english">FRACTAL JOURNALING & RANDOM REVISIT</p>
+                    </div>
+                </div>
+                <p class="content-paragraph">这是我驯服知识库这头“野兽”的方法：</p>
+                <p class="content-paragraph">✍️ <strong class="highlight-text">分形日记 (Fractal Journaling):</strong></p>
+                <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1 mb-3">
+                    <li>用Obsidian的“唯一笔记”快捷键随时记录想法 (<code class="code-snippet">YYYY-MM-DD HHmm</code> 前缀)。</li>
+                    <li>定期回顾：碎片日记 <i class="fas fa-arrow-right"></i> 周回顾 <i class="fas fa-arrow-right"></i> 月回顾 <i class="fas fa-arrow-right"></i> 年回顾。</li>
+                    <li>形成一个可缩放的生命网络，追溯想法的起源与演变。</li>
+                </ul>
+                <p class="content-paragraph">🎲 <strong class="highlight-text">随机回顾 (Random Revisit):</strong></p>
+                 <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+                    <li>每隔几个月，用“随机笔记”快捷键在库中漫游。</li>
+                    <li>查看局部图谱，重温旧思想，创建缺失链接，从过去获取灵感。</li>
+                    <li>也是维护笔记、修正格式的好机会。</li>
+                </ul>
+                <p class="content-paragraph mt-4 text-center p-3 bg-purple-50 rounded-lg text-purple-700 font-semibold">“不要外包你的理解 (Don’t delegate understanding)” — 我享受这个过程，它帮助我理解自己的模式。</p>
+                <div>
+                    <span class="tag">#日记方法</span><span class="tag">#灵感管理</span><span class="tag">#复盘</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片6: 属性、模板和评分 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-magic"></i></div>
+                    <div>
+                        <h2 class="card-title-main">模板控的福音<br>属性、模板与 <span class="super-highlight-num inline-block transform -translate-y-2">7</span>分评分制</h2>
+                        <p class="card-title-english">PROPERTIES, TEMPLATES & RATING SYSTEM</p>
+                    </div>
+                </div>
+                <p class="content-paragraph">几乎每条笔记都始于<strong class="highlight-text-blue">模板</strong>！模板能帮我“懒人式”添加信息，方便日后查找。</p>
+                <p class="content-paragraph">常见属性：日期 (创建/开始/结束/发布)、人物 (作者/导演/演员)、主题 (类型/话题)、地点、评分等。</p>
+                <p class="content-paragraph">属性规则：</p>
+                <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1 mb-3">
+                    <li>名称和值力求<strong class="highlight-text">可复用</strong> (如 <code class="code-snippet">genre</code> 跨媒体)。</li>
+                    <li>模板力求<strong class="highlight-text">可组合</strong> (如“人物”和“作者”模板可用于同一笔记)。</li>
+                    <li>属性名<strong class="highlight-text">简短</strong> (如 <code class="code-snippet">start</code> 代替 <code class="code-snippet">start-date</code>)。</li>
+                    <li>优先用 <code class="code-snippet">list</code> 类型属性。</li>
+                </ul>
+                <p class="content-paragraph">⭐ <strong class="highlight-text">7分制评分系统:</strong></p>
+                <ul class="list-disc list-inside ml-4 text-gray-700 space-y-1">
+                    <li>7 – 完美，必试，改变生活</li>
+                    <li>6 – 优秀，值得重复</li>
+                    <li>5 – 良好，路过可试</li>
+                    <li>4 – 及格，聊胜于无</li>
+                    <li>3 – 糟糕，尽量别碰</li>
+                    <li>2 – 极差，主动规避</li>
+                    <li>1 – 邪恶，坏的方面改变生活</li>
+                </ul>
+                <p class="content-paragraph mt-2">为什么是7分？因为在高分段需要更细致的区分，10分又太细了。</p>
+                <div>
+                    <span class="tag">#Obsidian模板</span><span class="tag">#元数据</span><span class="tag">#评分系统</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片7: 发布到网络 -->
+        <div class="xiaohongshu-card">
+            <div class="p-6 md:p-8">
+                 <div class="flex items-start space-x-4 mb-4">
+                    <div class="gradient-icon-bg"><i class="fas fa-globe-americas"></i></div>
+                    <div>
+                        <h2 class="card-title-main">从笔记到网站<br>我的内容发布流揭秘</h2>
+                        <p class="card-title-english">PUBLISHING TO THE WEB</p>
+                    </div>
+                </div>
+                <p class="content-paragraph">我的个人网站 <a href="https://stephango.com/" target="_blank" rel="noopener noreferrer" class="text-pink-500 hover:underline font-semibold">stephango.com</a> 就是用Obsidian<strong class="highlight-text">直接撰写、编辑和发布</strong>的！</p>
+                <p class="content-paragraph">我的流程（技术向，但完全可控）：</p>
+                <ol class="list-decimal list-inside ml-4 text-gray-700 space-y-1 mb-3">
+                    <li>为网站设<strong class="highlight-text">独立Vault</strong>。</li>
+                    <li>用<strong class="highlight-text-blue">Jekyll</strong> (静态网站生成器) 将笔记编译成HTML。</li>
+                    <li>用<strong class="highlight-text-blue">Obsidian Git</strong>插件推送到GitHub。</li>
+                    <li><strong class="highlight-text-blue">Netlify</strong>自动编译部署。</li>
+                    <li>用自己的<strong class="highlight-text-blue">Permalink Opener</strong>插件快速在浏览器打开笔记对比。</li>
+                </ol>
+                <p class="content-paragraph">网站配色方案是我创建的 <a href="https://stephango.com/flexoki" target="_blank" rel="noopener noreferrer" class="text-pink-500 hover:underline font-semibold">Flexoki</a>。</p>
+                <p class="content-paragraph">小白友好替代方案：<a href="https://obsidian.md/publish" target="_blank" class="highlight-text-blue font-semibold">Obsidian Publish</a> (作者的Minimal文档站就用这个)。其他生成器：Quartz, Astro, Eleventy, Hugo等。</p>
+                <div>
+                    <span class="tag">#数字花园</span><span class="tag">#个人网站</span><span class="tag">#Jekyll</span><span class="tag">#ObsidianPublish</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 模拟小红书底部操作栏 -->
+        <footer class="sticky bottom-0 w-full social-footer py-3 px-4 mt-12">
+            <div class="container mx-auto max-w-3xl flex justify-around items-center">
+                <button class="social-btn flex flex-col items-center hover:text-pink-500 liked">
+                    <i class="fas fa-heart text-2xl"></i>
+                    <span class="text-xs mt-1">2.5k</span>
+                </button>
+                <button class="social-btn flex flex-col items-center hover:text-pink-500">
+                    <i class="fas fa-star text-2xl"></i>
+                    <span class="text-xs mt-1">1.2k</span>
+                </button>
+                <button class="social-btn flex flex-col items-center hover:text-pink-500">
+                    <i class="fas fa-comment-dots text-2xl"></i>
+                    <span class="text-xs mt-1">580</span>
+                </button>
+                <button class="social-btn flex flex-col items-center hover:text-pink-500">
+                    <i class="fas fa-share-square text-2xl"></i>
+                    <span class="text-xs mt-1">Share</span>
+                </button>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

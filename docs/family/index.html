@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家庭生活 - JerryBob</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header class="w-full bg-white shadow-md fixed top-0 left-0 z-10" data-component="header"></header>
+
+    <!-- 主要内容 -->
+    <main class="container mt-24">
+        <h1 class="text-4xl md:text-5xl font-display text-center page-title">家庭生活</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 家庭关系卡片 -->
+            <div class="card">
+                <div class="card-header" style="background-color: #E27D60;">
+                    <i class="fas fa-heart card-icon"></i>
+                    <h2 class="card-title">家庭关系</h2>
+                    <p class="card-subtitle">亲情纽带，温暖港湾</p>
+                </div>
+                <div class="card-body">
+                    <ul class="card-list">
+                        <li class="card-list-item">
+                            <i class="fas fa-comments card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">有效沟通</h3>
+                                <p class="text-sm text-secondary">倾听与表达，建立家庭成员间的理解与信任</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-calendar-alt card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">优质陪伴</h3>
+                                <p class="text-sm text-secondary">创造共处时光，增进家庭凝聚力</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-hand-holding-heart card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">情感支持</h3>
+                                <p class="text-sm text-secondary">在困难时刻互相扶持，分享喜悦与成长</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-users card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">家庭传统</h3>
+                                <p class="text-sm text-secondary">建立独特的家庭仪式与传统，传承家庭价值观</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 子女教育卡片 -->
+            <div class="card">
+                <div class="card-header" style="background-color: #85CDCA;">
+                    <i class="fas fa-graduation-cap card-icon"></i>
+                    <h2 class="card-title">子女教育</h2>
+                    <p class="card-subtitle">培养未来，启迪心灵</p>
+                </div>
+                <div class="card-body">
+                    <ul class="card-list">
+                        <li class="card-list-item">
+                            <i class="fas fa-book-open card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">学习引导</h3>
+                                <p class="text-sm text-secondary">激发学习兴趣，培养自主学习能力</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-shield-alt card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">品德培养</h3>
+                                <p class="text-sm text-secondary">以身作则，教导正确的价值观与行为准则</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-child card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">兴趣发展</h3>
+                                <p class="text-sm text-secondary">支持孩子探索兴趣爱好，发展多元能力</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-balance-scale card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">平衡成长</h3>
+                                <p class="text-sm text-secondary">注重身心健康，学业与生活的平衡发展</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 家庭管理卡片 -->
+            <div class="card">
+                <div class="card-header" style="background-color: #E8A87C;">
+                    <i class="fas fa-home card-icon"></i>
+                    <h2 class="card-title">家庭管理</h2>
+                    <p class="card-subtitle">规划生活，共创和谐</p>
+                </div>
+                <div class="card-body">
+                    <ul class="card-list">
+                        <li class="card-list-item">
+                            <i class="fas fa-coins card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">财务规划</h3>
+                                <p class="text-sm text-secondary">合理预算，储蓄投资，为家庭提供稳定保障</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-tasks card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">家务分工</h3>
+                                <p class="text-sm text-secondary">公平分配家务，培养责任感与团队合作精神</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-calendar-check card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">时间管理</h3>
+                                <p class="text-sm text-secondary">平衡工作与家庭时间，提高生活质量</p>
+                            </div>
+                        </li>
+                        <li class="card-list-item">
+                            <i class="fas fa-couch card-list-icon"></i>
+                            <div>
+                                <h3 class="font-bold mb-1">居家环境</h3>
+                                <p class="text-sm text-secondary">创造舒适整洁的生活空间，提升家庭幸福感</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer" data-component="footer"></footer>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/components.js"></script>
+</body>
+</html>

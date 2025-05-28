@@ -1,0 +1,178 @@
+<!DOCTYPE
+html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平复焦虑的话</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #F5F5F4; /* 类似米白/沙色的背景 */
+            color: #57534E; /* 深灰，近碳黑 */
+            overflow-x: hidden; /* 防止水平滚动 */
+        }
+        .wabi-sabi-texture {
+            /* 可以添加一个非常微妙的背景纹理图片，或者用CSS渐变模拟 */
+            /* background-image: url('your-subtle-texture.png'); */
+        }
+        .chinese-main-text {
+            font-weight: 600; /* 粗体 */
+        }
+        .english-annotation {
+            font-size: 0.8em;
+            color: #A8A29E; /* 浅灰色英文 */
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .highlight-phrase {
+            /* 可以给特别强调的句子不同的样式，但侘寂风不宜过于鲜艳 */
+            color: #44403C; /* 稍深的灰 */
+        }
+
+        .ink-line-decorator {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(87, 83, 78, 0), rgba(87, 83, 78, 0.5), rgba(87, 83, 78, 0));
+            margin: 2rem auto;
+        }
+
+        .text-shadow-subtle {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* 超大字体和元素 */
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem); /* 响应式字体 */
+            line-height: 1.2;
+            color: #3B3835; /* 更深的强调色 */
+        }
+        .large-visual-text {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            line-height: 1.3;
+        }
+
+        /* 模拟水墨晕染或留白 */
+        .ink-wash-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px; /* 调整大小 */
+            height: 200px; /* 调整大小 */
+            background: radial-gradient(circle, rgba(214, 211, 209, 0.3) 0%, rgba(245, 245, 244, 0) 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none; /* 确保不影响文本交互 */
+        }
+
+        .content-wrapper {
+            max-width: 1200px; /* 限制最大内容宽度，适配大屏 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 为每个段落设置不同的延迟 */
+        .fade-in-up:nth-child(1) { animation-delay: 0.2s; }
+        .fade-in-up:nth-child(2) { animation-delay: 0.4s; }
+        .fade-in-up:nth-child(3) { animation-delay: 0.6s; }
+        .fade-in-up:nth-child(4) { animation-delay: 0.8s; }
+        .fade-in-up:nth-child(5) { animation-delay: 1s; }
+        .fade-in-up:nth-child(6) { animation-delay: 1.2s; }
+        .fade-in-up:nth-child(7) { animation-delay: 1.4s; }
+        .fade-in-up:nth-child(8) { animation-delay: 1.6s; }
+
+
+    </style>
+</head>
+<body class="wabi-sabi-texture">
+    <div class="min-h-screen w-full flex flex-col justify-center items-center p-6 sm:p-10 md:p-16 lg:p-24 relative overflow-hidden">
+
+        <div class="content-wrapper text-center relative z-10">
+            <header class="mb-12 md:mb-16 fade-in-up">
+                <h1 class="chinese-main-text hero-title text-shadow-subtle">
+                    这段话，<br class="sm:hidden">平复了我的焦虑
+                </h1>
+                <p class="english-annotation mt-2 text-lg">THESE WORDS, CALMED MY ANXIETY</p>
+            </header>
+
+            <section class="space-y-8 md:space-y-10 text-xl md:text-2xl lg:text-3xl leading-relaxed md:leading-loose">
+                <p class="fade-in-up">
+                    <span class="chinese-main-text">你在意什么，什么就会折磨你；</span>
+                    <span class="english-annotation">WHAT YOU FOCUS ON, CAN CONSUME YOU;</span>
+                </p>
+
+                <div class="ink-line-decorator fade-in-up"></div>
+
+                <p class="fade-in-up">
+                    <span class="chinese-main-text">你计较什么，什么就会困扰你；</span>
+                    <span class="english-annotation">WHAT YOU DWELL ON, CAN ENTANGLE YOU;</span>
+                </p>
+
+                <div class="ink-line-decorator fade-in-up"></div>
+
+                <p class="fade-in-up">
+                    <span class="chinese-main-text large-visual-text highlight-phrase">你要记住，人生没什么不可放下，</span>
+                    <span class="english-annotation">REMEMBER, IN LIFE, THERE IS NOTHING THAT CANNOT BE LET GO,</span>
+                </p>
+                <p class="fade-in-up">
+                    <span class="chinese-main-text">无论是爱而不得，还是事与愿违，</span>
+                    <span class="english-annotation">BE IT UNREQUITED LOVE, OR PLANS GONE ASTRAY,</span>
+                </p>
+                <p class="fade-in-up">
+                    <span class="chinese-main-text">这都是人生常态，人生如梦，梦不随人愿。</span>
+                    <span class="english-annotation">THESE ARE THE NORM. LIFE IS LIKE A DREAM, AND DREAMS SELDOM BEND TO OUR WILL.</span>
+                </p>
+
+                <div class="ink-line-decorator fade-in-up"></div>
+
+                <p class="fade-in-up">
+                    <span class="chinese-main-text">谁的生活不是一地鸡毛，只是有的人选择歇斯底里，有的人选择沉默不语。</span>
+                    <span class="english-annotation">WHOSE LIFE ISN'T A FIELD OF SCATTERED FEATHERS? SOME CHOOSE HYSTERIA, OTHERS CHOOSE SILENCE.</span>
+                </p>
+
+                <div class="ink-line-decorator fade-in-up"></div>
+
+                <p class="fade-in-up">
+                    <span class="chinese-main-text">很多时候，你那些义无反顾的执着，</span>
+                    <span class="english-annotation">OFTEN, THOSE UNYIELDING ATTACHMENTS YOU HOLD,</span>
+                </p>
+                <p class="fade-in-up">
+                    <span class="chinese-main-text large-visual-text highlight-phrase">那些让你遍体鳞伤的坚持，最终都将成为浮云。</span>
+                    <span class="english-annotation">THOSE PERSISTENCES THAT LEAVE YOU SCARRED, WILL ULTIMATELY FADE LIKE PASSING CLOUDS.</span>
+                </p>
+            </section>
+
+            <footer class="mt-16 md:mt-24 fade-in-up" style="animation-delay: 1.8s;">
+                <i class="far fa-leaf fa-2x" style="color: #A8A29E; opacity:0.6;"></i>
+                <p class="text-xs text-neutral-400 mt-2">INSPIRED BY LIFE'S IMPERMANENCE</p>
+            </footer>
+        </div>
+        <div class="ink-wash-bg"></div>
+    </div>
+    <script>
+        // Simple JS for potential future interactions or animations if needed.
+        // For now, animations are CSS-driven.
+        document.addEventListener('DOMContentLoaded', () => {
+            // console.log("Page loaded, ready for tranquility.");
+        });
+    </script>
+</body>
+</html>

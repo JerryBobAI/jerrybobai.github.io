@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一人公司 AI 工具箱 - 助你成为超级个体</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .text-gradient {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899, #f97316);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .bg-gradient-highlight {
+            background-image: linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1), rgba(249, 115, 22, 0.1));
+        }
+        .btn-primary {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-image: linear-gradient(to right, #2563eb, #7c3aed);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .section-title {
+            font-size: 3rem; /* 48px */
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .section-subtitle-en {
+            font-size: 1rem; /* 16px */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #6b7280; /* gray-500 */
+        }
+        .card {
+            background-color: #f9fafb; /* gray-50 */
+            border: 1px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.75rem; /* 12px */
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .tool-name {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 700;
+        }
+        .tool-feature {
+            font-size: 0.875rem; /* 14px */
+            color: #4b5563; /* gray-600 */
+        }
+        .highlight-text {
+            font-weight: bold;
+            color: #3b82f6; /* blue-500 */
+        }
+        .table-header th {
+            background-color: #eff6ff; /* blue-50 */
+            color: #1e3a8a; /* blue-800 */
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        /* Removed custom .table-cell CSS as Tailwind's divide-y handles row separation */
+        /* Correct padding for td elements will be handled by Tailwind classes or direct styling if needed */
+        td {
+            padding: 0.75rem 1rem; /* Default padding for table cells */
+        }
+
+        .gradient-line {
+            height: 4px;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899, #f97316);
+            margin: 2rem 0;
+        }
+
+        /* Specific gradient for titles with opacity changes */
+        .title-highlight-gradient {
+            position: relative;
+            display: inline-block;
+        }
+        .title-highlight-gradient::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px; /* Adjust as needed */
+            width: 100%;
+            height: 8px; /* Adjust as needed */
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.5), rgba(236, 72, 153, 0.3), rgba(249, 115, 22, 0.1));
+            z-index: -1;
+            opacity: 0.7;
+        }
+        .large-icon {
+            font-size: 2.5rem; /* 40px */
+            margin-bottom: 0.5rem; /* 8px */
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Hero Section -->
+    <header class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-6 text-center max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4">
+                一人公司 <span class="text-gradient">AI</span> 神器
+            </h1>
+            <p class="text-sm md:text-base uppercase tracking-widest text-gray-500 mb-8">SOLO POWERED BY AI</p>
+            <p class="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+                你是否也曾梦想，一个人，就是一支军队？🚀 在AI浪潮席卷的时代，<strong class="title-highlight-gradient">「一人公司」</strong>不再是遥不可及的空谈，而是触手可及的现实。但，从孤军奋战到独当一面，你与“超级个体”之间，或许只差一套趁手的AI神兵利器。
+            </p>
+            <p class="text-lg md:text-xl text-gray-700 mb-10 leading-relaxed">
+                告别团队协作的繁复，拥抱独立创造的自由，这份来自GitHub的宝藏项目 <code class="bg-gray-100 text-sm p-1 rounded">one-person-company</code>，为你精心梳理了从AI对话到智能设计，从灵感迸发到高效执行的全链路AI工具矩阵。这不仅仅是一份工具清单，更是你撬动巨大潜能、实现商业闭环的<strong class="title-highlight-gradient">数字钥匙🔑</strong>。准备好了吗？与我们一同解锁，用AI武装你的梦想，让“一人公司”的传奇，从此刻开启！
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="https://github.com/bleedline/one-person-company" target="_blank" class="btn-primary text-lg">
+                    <i class="fab fa-github mr-2"></i> 查看GitHub项目
+                </a>
+                <a href="#tools-start" class="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition duration-300 text-lg">
+                    <i class="fas fa-arrow-down mr-2"></i> 探索工具
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="tools-start" class="container mx-auto px-6 py-12">
+
+        <!-- Section 1: 日常必备工具 -->
+        <section class="mb-20">
+            <h2 class="section-title mb-2 text-center">
+                <span class="text-gradient">01</span> 日常必备
+            </h2>
+            <p class="section-subtitle-en text-center mb-12">EVERYDAY ESSENTIALS</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-comments large-icon mr-4"></i>
+                        <h3 class="tool-name">AI 对话 <span class="text-xs text-gray-500">AI CHAT</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-xl mb-1">Grok</h4>
+                    <p class="tool-feature">强大的AI对话能力 <span class="text-gray-400 text-xs">POWERFUL AI CONVERSATION</span></p>
+                    <p class="tool-feature"><span class="highlight-text">免费额度</span> <span class="text-gray-400 text-xs">FREE QUOTA</span></p>
+                </div>
+                <div class="card">
+                     <div class="flex items-center mb-3">
+                        <i class="fas fa-photo-video large-icon mr-4"></i>
+                        <h3 class="tool-name">图文视频 <span class="text-xs text-gray-500">IMAGE & VIDEO</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-xl mb-1">KlingAI</h4>
+                    <p class="tool-feature">AI驱动的创意工具 <span class="text-gray-400 text-xs">AI-DRIVEN CREATIVE TOOL</span></p>
+                    <p class="tool-feature"><span class="highlight-text">免费额度</span> <span class="text-gray-400 text-xs">FREE QUOTA</span></p>
+                </div>
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-code large-icon mr-4"></i>
+                        <h3 class="tool-name">IDE <span class="text-xs text-gray-500">DEVELOPMENT</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-xl mb-1">TRAE + Cursor</h4>
+                    <p class="tool-feature">AI辅助开发 <span class="text-gray-400 text-xs">AI-ASSISTED DEVELOPMENT</span></p>
+                    <p class="tool-feature"><span class="highlight-text">3.7免费用+免费</span> <span class="text-gray-400 text-xs">FREE TIER</span></p>
+                </div>
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-terminal large-icon mr-4"></i>
+                        <h3 class="tool-name">命令行 <span class="text-xs text-gray-500">COMMAND LINE</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-xl mb-1">Warp</h4>
+                    <p class="tool-feature">现代化终端 <span class="text-gray-400 text-xs">MODERN TERMINAL</span></p>
+                    <p class="tool-feature"><span class="highlight-text">免费</span> <span class="text-gray-400 text-xs">FREE</span></p>
+                </div>
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-globe large-icon mr-4"></i>
+                        <h3 class="tool-name">浏览器 <span class="text-xs text-gray-500">BROWSER</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-xl mb-1">Deta.Surf</h4>
+                    <p class="tool-feature">AI驱动浏览器 <span class="text-gray-400 text-xs">AI-DRIVEN BROWSER</span></p>
+                    <p class="tool-feature"><span class="highlight-text">内测免费</span> <span class="text-gray-400 text-xs">BETA FREE</span></p>
+                </div>
+            </div>
+        </section>
+
+        <div class="gradient-line"></div>
+
+        <!-- Section 2: 一键生成网站/App/游戏 -->
+        <section class="mb-20">
+            <h2 class="section-title mb-2 text-center">
+                <span class="text-gradient">02</span> 一键生成
+            </h2>
+            <p class="section-subtitle-en text-center mb-6">ONE-CLICK GENERATORS</p>
+            <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">同一个提示词，「创建一个好看的 SAAS 落地页」，测试了各家情况，并部署上线。</p>
+            <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="table-header">
+                        <tr>
+                            <th>平台 <span class="text-xs text-gray-500">PLATFORM</span></th>
+                            <th>耗时 <span class="text-xs text-gray-500">TIME</span></th>
+                            <th>特点 <span class="text-xs text-gray-500">FEATURES</span></th>
+                            <th>价格 <span class="text-xs text-gray-500">PRICE</span></th>
+                            <th>演示 <span class="text-xs text-gray-500">DEMO</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr><td>v0.dev</td><td>2分钟</td><td>最快无水印</td><td>免费</td><td><a href="#" class="text-blue-600 hover:underline">查看</a></td></tr>
+                        <tr><td>lovable</td><td>3分钟</td><td>最好看</td><td>免费</td><td><a href="#" class="text-blue-600 hover:underline">查看</a></td></tr>
+                        <tr><td>bolt.new</td><td>3分钟</td><td>体验好</td><td>免费</td><td><a href="#" class="text-blue-600 hover:underline">查看</a></td></tr>
+                        <tr><td>heyboss</td><td>12分钟</td><td>送$10</td><td>免费</td><td><a href="#" class="text-blue-600 hover:underline">查看</a></td></tr>
+                        <tr><td>replit</td><td>4分钟</td><td>$25/月额度</td><td>需绑卡</td><td>-</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="gradient-line"></div>
+
+        <!-- Section 3: 效率提升工具 -->
+        <section class="mb-20">
+            <h2 class="section-title mb-2 text-center">
+                <span class="text-gradient">03</span> 效率提升
+            </h2>
+            <p class="section-subtitle-en text-center mb-12">PRODUCTIVITY BOOSTERS</p>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-center flex items-center justify-center"><i class="fas fa-cogs text-3xl mr-3 text-gradient"></i>系统增强 <span class="text-sm text-gray-500 ml-2">SYSTEM ENHANCEMENT</span></h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Raycast</h4><p class="tool-feature">效率启动器 (免费)</p></div>
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Rectangle</h4><p class="tool-feature">窗口管理 (免费)</p></div>
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Karabiner</h4><p class="tool-feature">键盘定制 (开源)</p></div>
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Ice</h4><p class="tool-feature">工具栏增强 (开源)</p></div>
+                </div>
+            </div>
+
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-center flex items-center justify-center"><i class="fas fa-crop-alt text-3xl mr-3 text-gradient"></i>媒体工具 <span class="text-sm text-gray-500 ml-2">MEDIA TOOLS</span></h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="card">
+                        <h4 class="font-semibold text-xl mb-1">PixPin</h4>
+                        <p class="tool-feature">全能截图 (免费)</p>
+                        <ul class="list-disc list-inside text-sm text-gray-600 mt-2">
+                            <li>支持长截图、GIF、OCR</li>
+                            <li>贴图功能方便参考</li>
+                            <li>丰富标注工具</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="font-semibold text-xl mb-1">MotionShot</h4>
+                        <p class="tool-feature">演示录制 ($7/月或$140终身)</p>
+                        <ul class="list-disc list-inside text-sm text-gray-600 mt-2">
+                            <li>专业演示制作</li>
+                            <li>交互式标注</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6 bg-gray-50 p-6 rounded-lg">
+                    <h5 class="font-semibold text-lg mb-2">其他推荐工具:</h5>
+                    <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-gray-700">
+                        <li>Snipaste (截图, 免费)</li>
+                        <li>Kap (GIF录制, 开源)</li>
+                        <li>KeyCastr (按键显示, 开源)</li>
+                        <li>OBS (专业录屏, 开源)</li>
+                        <li>IINA (视频播放器, 开源)</li>
+                        <li>Downie (视频下载, 试用)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6 text-center flex items-center justify-center"><i class="fas fa-tools text-3xl mr-3 text-gradient"></i>效率工具 <span class="text-sm text-gray-500 ml-2">UTILITY TOOLS</span></h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Warp (AI)</h4><p class="tool-feature">AI 终端 (免费额度)</p></div>
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Pastebot</h4><p class="tool-feature">剪贴板 ($13终身)</p></div>
+                    <div class="card text-center"><h4 class="font-semibold text-lg">CleanShot</h4><p class="tool-feature">截图 ($29终身)</p></div>
+                    <div class="card text-center"><h4 class="font-semibold text-lg">Setapp</h4><p class="tool-feature">软件订阅 ($10/月)</p></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="gradient-line"></div>
+
+        <!-- Section 4: 设计工具集合 -->
+        <section class="mb-12">
+            <h2 class="section-title mb-2 text-center">
+                <span class="text-gradient">04</span> 设计集合
+            </h2>
+            <p class="section-subtitle-en text-center mb-12">DESIGN SUITE</p>
+
+            <div class="space-y-16">
+                <div class="card bg-gradient-highlight">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-palette large-icon mr-4"></i>
+                        <h3 class="tool-name">全能设计 <span class="text-xs text-gray-500">ALL-IN-ONE DESIGN</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-2xl mb-2">Recraft.ai</h4>
+                    <p class="tool-feature mb-1">AI驱动的设计平台 <span class="text-gray-400 text-xs">AI DESIGN PLATFORM</span></p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>每天免费 <span class="highlight-text">100次</span> 生成额度</li>
+                        <li>支持Logo、图片、MockUp、Banner</li>
+                        <li>提供模板和风格定制</li>
+                        <li><a href="#" class="text-blue-600 hover:underline font-semibold">点击领取额外福利</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                     <div class="flex items-center mb-3">
+                        <i class="fas fa-bullhorn large-icon mr-4"></i>
+                        <h3 class="tool-name">运营设计 <span class="text-xs text-gray-500">MARKETING DESIGN</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-2xl mb-2">Canva</h4>
+                    <p class="tool-feature mb-1">全能设计平台 <span class="text-gray-400 text-xs">VERSATILE DESIGN PLATFORM</span></p>
+                     <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>支持文档、白板、社媒、视频等</li>
+                        <li>海量模板一键修改</li>
+                        <li>绑卡免费 <span class="highlight-text">30天</span></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-drafting-compass large-icon mr-4"></i>
+                        <h3 class="tool-name">网站设计 <span class="text-xs text-gray-500">WEB DESIGN</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-2xl mb-2">Relume</h4>
+                    <p class="tool-feature mb-1">AI网站生成器 <span class="text-gray-400 text-xs">AI WEBSITE BUILDER</span></p>
+                     <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>一句话生成完整网站</li>
+                        <li>与 Figma 无缝集成</li>
+                        <li>绑卡免费 <span class="highlight-text">30天</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-center flex items-center justify-center"><i class="fas fa-pen-nib text-3xl mr-3 text-gradient"></i>Logo 设计 <span class="text-sm text-gray-500 ml-2">LOGO DESIGN</span></h3>
+                    <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="table-header">
+                                <tr>
+                                    <th>平台 <span class="text-xs text-gray-500">PLATFORM</span></th>
+                                    <th>特点 <span class="text-xs text-gray-500">FEATURES</span></th>
+                                    <th>价格 <span class="text-xs text-gray-500">PRICE</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr><td>Fiverr</td><td>专业设计平台</td><td>付费</td></tr>
+                                <tr><td>Design.com</td><td>AI 生成</td><td>免费试用</td></tr>
+                                <tr><td>AILogoGenerator</td><td>简单快速</td><td>免费</td></tr>
+                                <tr><td>LogoMakr</td><td>自定义强</td><td>免费</td></tr>
+                                <tr><td>LogoPony</td><td>风格多样</td><td>免费试用</td></tr>
+                                <tr><td>Looka</td><td>品牌套件</td><td>免费试用</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                     <h3 class="text-2xl font-bold mb-6 text-center flex items-center justify-center"><i class="fas fa-cube text-3xl mr-3 text-gradient"></i>3D 设计 <span class="text-sm text-gray-500 ml-2">3D DESIGN</span></h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="card">
+                            <h4 class="font-semibold text-xl mb-1">Blender</h4>
+                            <p class="tool-feature">专业3D软件</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 mt-2">
+                                <li>完全开源免费</li>
+                                <li>支持AI控制</li>
+                                <li>[IMCP 控制器]</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 class="font-semibold text-xl mb-1">Spline</h4>
+                            <p class="tool-feature">轻量级3D设计</p>
+                            <ul class="list-disc list-inside text-sm text-gray-600 mt-2">
+                                <li>社区免费模板</li>
+                                <li>支持网页端设计</li>
+                                <li>快速上手</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-center flex items-center justify-center"><i class="fas fa-film text-3xl mr-3 text-gradient"></i>动态设计 <span class="text-sm text-gray-500 ml-2">MOTION DESIGN</span></h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card">
+                            <h4 class="font-semibold text-lg">Jitter</h4>
+                            <p class="tool-feature">专注Hero动画, 简单易用, 免费版够用</p>
+                        </div>
+                        <div class="card">
+                            <h4 class="font-semibold text-lg">HailuoAI</h4>
+                            <p class="tool-feature">AI动态生成, 多种效果, 社媒优化, 免费版够用</p>
+                        </div>
+                        <div class="card">
+                            <h4 class="font-semibold text-lg">KlingAI</h4>
+                            <p class="tool-feature">创意动态工具, AI驱动转换, 社媒优化, 免费版够用</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-project-diagram large-icon mr-4"></i>
+                        <h3 class="tool-name">工作流设计 <span class="text-xs text-gray-500">WORKFLOW DESIGN</span></h3>
+                    </div>
+                    <h4 class="font-semibold text-2xl mb-2">Overflow</h4>
+                     <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>界面美观</li>
+                        <li>支持交互展示</li>
+                        <li>免费下载使用</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer / Final CTA -->
+    <footer class="py-16 bg-gray-900 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
+                打造你的<span class="text-gradient">「一人公司」</span>传奇
+            </h2>
+            <p class="text-lg md:text-xl text-gray-300 mb-10">
+                从今天开始，用AI武装自己，成为真正的超级个体！
+            </p>
+            <a href="https://github.com/bleedline/one-person-company" target="_blank" class="btn-primary text-xl inline-block">
+                <i class="fab fa-github mr-2"></i> one-person-company on GitHub
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心灵之旅：《少有人走的路》系列感悟 - 吉卜力风格</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&family=Gaegu:wght@300;400;700&display=swap');
+
+        body {
+            /* 尝试加入更圆润友好的字体，Gaegu作为一种手写感的补充，Noto Sans SC保证中文的清晰 */
+            font-family: "Gaegu", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            scroll-behavior: smooth;
+            /* 吉卜力风格背景色 - 柔和的米黄色 */
+            background-color: #FFFBEB; /* bg-amber-50 */
+            color: #5D4037; /* 深棕色文字，替代 theme-text-primary */
+        }
+
+        /* 吉卜力风格色彩定义 */
+        .ghibli-text-primary { color: #5D4037; } /* 深棕色 */
+        .ghibli-text-secondary { color: #795548; } /* 较浅的棕色 */
+        .ghibli-text-accent { color: #81C784; } /* 柔和的草绿色 */
+        .ghibli-text-accent-darker { color: #4CAF50; } /* 稍深的绿色 */
+
+        .ghibli-bg-primary { background-color: #FFFBEB; } /* 米黄色 */
+        .ghibli-bg-secondary { background-color: #E8F5E9; } /* 淡淡的薄荷绿/非常浅的草绿 */
+
+        /* 柔和的渐变背景，用于总结部分 */
+        .ghibli-bg-highlight-gradient {
+            background: linear-gradient(135deg, #FFF9C4 0%, #FFE0B2 100%); /* 从淡黄到淡橙黄的柔和渐变 */
+        }
+        .ghibli-text-on-highlight { color: #4E342E; } /* 在高亮背景上的文字颜色，确保对比度 */
+
+
+        /* 超大字体和元素强调 */
+        .text-super-large {
+            font-size: clamp(3rem, 10vw, 6.5rem); /* 吉卜力风格字体通常不会过于尖锐，可以略微减小最大值 */
+            font-weight: 700; /* Gaegu字体本身较细，用bold */
+            line-height: 1.1;
+        }
+        .text-emphasis-sub {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-weight: 400; /* Gaegu regular */
+        }
+
+        /* 勾线图形化元素 - 吉卜力风格下，颜色应柔和 */
+        .icon-outline {
+            fill: none;
+            stroke: currentColor; /* 将继承父元素的颜色 */
+            stroke-width: 1.5; /* 可以细一点，增加手绘感 */
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .content-section {
+            min-height: 100vh;
+            padding: 5rem 2rem; /* 调整内边距以适应风格 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width: 1920px) {
+            .content-section {
+                padding: 7rem 4rem;
+            }
+            .container {
+                max-width: 1500px;
+            }
+        }
+
+        .illustration-placeholder {
+            width: 100%;
+            min-height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem auto 2.5rem auto;
+        }
+        .illustration-placeholder-large {
+             min-height: 320px;
+        }
+
+        .section-title { margin-bottom: 1rem; }
+        .section-subtitle { margin-bottom: 2rem; }
+        .content-text { max-width: 750px; margin: 0 auto 1.5rem auto; line-height: 1.9; font-size: 1.1rem; }
+
+        /* 导航栏样式调整 */
+        header.ghibli-header {
+            background-color: rgba(255, 253, 247, 0.85); /* 米白带透明度 */
+            backdrop-filter: blur(8px);
+        }
+        header.ghibli-header nav a {
+            color: #795548; /* ghibli-text-secondary */
+        }
+        header.ghibli-header nav a:hover {
+            color: #81C784; /* ghibli-text-accent */
+        }
+        header.ghibli-header h1 {
+            color: #4CAF50; /* ghibli-text-accent-darker */
+        }
+        #mobile-menu.ghibli-mobile-menu {
+            background-color: #FFFDF7; /* 比header背景更实一点 */
+        }
+
+        /* FontAwesome图标颜色调整 */
+        .fa-icon-ghibli {
+            color: #81C784; /* 柔和草绿色 */
+            opacity: 0.85;
+        }
+        .fa-icon-ghibli-alt {
+            color: #A1887F; /* 浅棕色 */
+            opacity: 0.8;
+        }
+        .fa-icon-highlight {
+             color: #BF360C; /* 温暖的橙红色，用于总结部分 */
+        }
+
+
+    </style>
+</head>
+<body class="ghibli-bg-primary ghibli-text-primary">
+
+    <header class="fixed top-0 left-0 right-0 shadow-sm z-50 py-4 ghibli-header">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <h1 class="text-xl font-bold">心灵之旅 <span class="text-sm font-light ghibli-text-secondary hidden md:inline">A Journey of Soul</span></h1>
+            <nav class="hidden md:block">
+                <a href="#hero" class="px-3 py-2 rounded-md hover:bg-green-50 transition-colors duration-300">引言</a>
+                <a href="#book1" class="px-3 py-2 rounded-md hover:bg-green-50 transition-colors duration-300">书 I</a>
+                <a href="#book2" class="px-3 py-2 rounded-md hover:bg-green-50 transition-colors duration-300">书 II</a>
+                <a href="#book3" class="px-3 py-2 rounded-md hover:bg-green-50 transition-colors duration-300">书 III</a>
+                <a href="#summary" class="px-3 py-2 rounded-md hover:bg-green-50 transition-colors duration-300">总结</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <i class="fas fa-bars text-xl ghibli-text-primary"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden ghibli-mobile-menu shadow-lg">
+            <a href="#hero" class="block py-3 px-6 ghibli-text-secondary hover:bg-green-50">引言</a>
+            <a href="#book1" class="block py-3 px-6 ghibli-text-secondary hover:bg-green-50">书 I</a>
+            <a href="#book2" class="block py-3 px-6 ghibli-text-secondary hover:bg-green-50">书 II</a>
+            <a href="#book3" class="block py-3 px-6 ghibli-text-secondary hover:bg-green-50">书 III</a>
+            <a href="#summary" class="block py-3 px-6 ghibli-text-secondary hover:bg-green-50">总结</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto pt-20">
+
+        <section id="hero" class="content-section">
+            <div class="illustration-placeholder illustration-placeholder-large">
+                <i class="fas fa-road fa-7x fa-icon-ghibli"></i>
+            </div>
+            <h2 class="text-super-large section-title">心智成熟的旅程</h2>
+            <p class="text-emphasis-sub ghibli-text-secondary section-subtitle">A JOURNEY TO MATURITY</p>
+            <p class="content-text ghibli-text-secondary">
+                斯科特·派克的《少有人走的路》系列，是献给每一个渴望成长、寻求内心圆满的灵魂的深刻指引。它不仅揭示了心智成熟的艰难，更照亮了通往真我与幸福的路径。
+            </p>
+            <i class="fas fa-chevron-down fa-2x fa-icon-ghibli-alt animate-bounce mt-8"></i>
+        </section>
+
+        <section id="book1" class="content-section ghibli-bg-secondary">
+             <div class="illustration-placeholder">
+                <i class="fas fa-mountain fa-7x fa-icon-ghibli"></i>
+            </div>
+            <h3 class="text-super-large section-title">自律 <span class="text-emphasis-sub ghibli-text-secondary">&</span> 真爱</h3>
+            <p class="text-emphasis-sub ghibli-text-secondary section-subtitle">SELF-DISCIPLINE & TRUE LOVE</p>
+            <p class="content-text ghibli-text-secondary">
+                第一部曲的核心在于“自律”——它是解决人生问题的首要工具，包含推迟满足感、承担责任、尊重事实、保持平衡。而“爱”，并非一种感觉，而是扩展自我界限、促进心智成熟的意志与行动。
+            </p>
+            <div class="flex space-x-6 mt-4">
+                <div class="text-center p-3">
+                    <svg class="icon-outline w-10 h-10 mx-auto mb-2 ghibli-text-accent" viewBox="0 0 24 24"><path d="M12 3v18m6-15H6m13 9H5m14 6H4"></path></svg>
+                    <p class="text-sm ghibli-text-secondary">保持平衡</p>
+                </div>
+                <div class="text-center p-3">
+                    <svg class="icon-outline w-10 h-10 mx-auto mb-2 ghibli-text-accent" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <p class="text-sm ghibli-text-secondary">承担责任</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="book2" class="content-section">
+            <div class="illustration-placeholder">
+                <i class="fas fa-user-secret fa-7x fa-icon-ghibli"></i>
+            </div>
+            <h3 class="text-super-large section-title">真诚 <span class="text-emphasis-sub ghibli-text-secondary">&</span> 勇气</h3>
+            <p class="text-emphasis-sub ghibli-text-secondary section-subtitle">AUTHENTICITY & COURAGE</p>
+            <p class="content-text ghibli-text-secondary">
+                成长之路，需要我们勇敢地直面谎言——那些来自外界的、也包括我们对自己的欺骗。拥抱“真诚”，意味着卸下伪装，呈现真实的自我，这需要非凡的“勇气”和持续的内省。
+            </p>
+             <div class="flex space-x-6 mt-4">
+                <div class="text-center p-3">
+                    <svg class="icon-outline w-10 h-10 mx-auto mb-2 ghibli-text-accent" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <p class="text-sm ghibli-text-secondary">洞察真相</p>
+                </div>
+                <div class="text-center p-3">
+                     <svg class="icon-outline w-10 h-10 mx-auto mb-2 text-red-400" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <p class="text-sm ghibli-text-secondary">拥抱真我</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="book3" class="content-section ghibli-bg-secondary">
+            <div class="illustration-placeholder">
+                 <i class="fas fa-leaf fa-7x fa-icon-ghibli"></i>
+            </div>
+            <h3 class="text-super-large section-title">心灵 <span class="text-emphasis-sub ghibli-text-secondary">&</span> 恩典</h3>
+            <p class="text-emphasis-sub ghibli-text-secondary section-subtitle">SPIRIT & GRACE</p>
+            <p class="content-text ghibli-text-secondary">
+                更进一步，是与“心灵”的对话。探索信仰、潜意识的奥秘，觉察生活中的“恩典”与同步性。在焦虑的时代，学习简化生活，找到内在的平和与生命的深层意义，这是精神成长的核心。
+            </p>
+            <div class="flex space-x-6 mt-4">
+                <div class="text-center p-3">
+                    <svg class="icon-outline w-10 h-10 mx-auto mb-2 text-sky-400" viewBox="0 0 24 24"> <path d="M12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2Z"></path></svg>
+                    <p class="text-sm ghibli-text-secondary">觉察同步</p>
+                </div>
+                <div class="text-center p-3">
+                    <svg class="icon-outline w-10 h-10 mx-auto mb-2 ghibli-text-accent" viewBox="0 0 24 24"><path d="M12 6C12.5523 6 13 6.44772 13 7V12H18C18.5523 12 19 12.4477 19 13C19 13.5523 18.5523 14 18 14H13V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V14H6C5.44772 14 5 13.5523 5 13C5 12.4477 5.44772 12 6 12H11V7C11 6.44772 11.4477 6 12 6Z"></path></svg>
+                    <p class="text-sm ghibli-text-secondary">内在平和</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="summary" class="content-section ghibli-bg-highlight-gradient">
+            <div class="illustration-placeholder flex justify-center items-center space-x-8">
+                 <i class="fas fa-child-reaching fa-7x fa-icon-highlight opacity-90"></i>
+                 <i class="fas fa-sun fa-7x text-yellow-500 opacity-90"></i>
+            </div>
+            <h3 class="text-super-large ghibli-text-on-highlight section-title">少有人走的路</h3>
+            <p class="text-emphasis-sub ghibli-text-on-highlight section-subtitle" style="opacity: 0.9;">通往内在的自由 <span class="block text-sm mt-1">THE ROAD LESS TRAVELED, LEADS TO INNER FREEDOM</span></p>
+            <p class="content-text ghibli-text-on-highlight" style="opacity: 0.85;">
+                这三本书共同描绘了一条充满挑战但也无比丰盛的心灵成长之路。它需要我们持续地自律、真诚地生活、勇敢地探索未知。这的确是一条少有人走的路，但每一步的迈出，都更接近真正的自我、深刻的爱与持久的幸福。
+            </p>
+        </section>
+    </main>
+
+    <footer class="text-center py-10 ghibli-bg-secondary border-t border-green-100">
+        <p class="ghibli-text-secondary text-sm">Inspired by M. Scott Peck</p>
+        <p class="ghibli-text-secondary text-xs mt-1">© <span id="year"></span> Dynamic Page Assistant. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>
