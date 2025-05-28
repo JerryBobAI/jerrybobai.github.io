@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闲谈勿久，语落珠玑</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .gradient-text {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899); /* blue-500, purple-500, pink-500 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .highlight-block-gradient {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        .decorative-line {
+            height: 3px;
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.7), rgba(139, 92, 246, 0.7), rgba(236, 72, 153, 0.7));
+            opacity: 0.6;
+            border-radius: 1.5px;
+        }
+        /* Smooth scroll for anchor links if any */
+        html {
+            scroll-behavior: smooth;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body class="bg-white text-black">
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
+
+        <header class="absolute top-0 left-0 w-full py-6 px-4 md:px-8 z-20">
+            <div class="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-center text-xs">
+                <div class="text-gray-500">
+                    <span class="font-semibold text-gray-600">JerryBob</span> | <span id="currentDate"></span>
+                </div>
+                <div class="mt-2 sm:mt-0">
+                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium shadow-sm">个人</span>
+                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium ml-2 shadow-sm">沟通</span>
+                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium ml-2 shadow-sm">精炼</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="w-full max-w-screen-lg xl:max-w-screen-xl text-center z-10 pt-20 md:pt-24">
+            <section class="mb-16 md:mb-24">
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3 leading-tight tracking-tight">
+                    闲谈<span class="gradient-text">勿久</span>
+                </h1>
+                <h2 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight tracking-tight">
+                    语落<span class="gradient-text">珠玑</span>
+                </h2>
+                <p class="text-lg md:text-2xl text-gray-500 mb-10 tracking-wider uppercase">
+                    LESS TALK, MORE <span class="font-semibold gradient-text">GEMS</span>
+                </p>
+                <div class="decorative-line w-1/4 md:w-1/5 mx-auto my-8 md:my-10"></div>
+                <p class="text-base md:text-lg text-gray-700 max-w-xl lg:max-w-2xl mx-auto leading-relaxed">
+                    在信息爆炸的时代，让每一次表达都如精心雕琢的宝石，简洁、精准、且富有深刻价值。
+                </p>
+            </section>
+
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-start mb-16 md:mb-24">
+                <section class="p-6 md:p-8 rounded-xl highlight-block-gradient text-left shadow-lg">
+                    <div class="flex items-center mb-5 md:mb-6">
+                        <i class="fas fa-comments text-4xl md:text-5xl mr-4" style="color: #8b5cf6;"></i>
+                        <div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-0.5">闲谈<span class="font-light text-gray-600">勿久</span></h3>
+                            <p class="text-sm md:text-base text-gray-500 tracking-wider uppercase">Avoid Prolonged Chatter</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-sm md:text-base">
+                        时间是有限的宝贵资产。冗长空泛的对话不仅消耗心神，更会稀释信息的实际价值。培养克制与聚焦，提升沟通效率。
+                    </p>
+                    <ul class="list-none space-y-3 text-gray-600 text-sm md:text-base">
+                        <li class="flex items-start">
+                            <i class="fas fa-ban mr-3 mt-1 flex-shrink-0" style="color: #ec4899; opacity:0.8;"></i>
+                            <span>警惕无目的的漫谈，时刻保持对话的核心焦点。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-filter mr-3 mt-1 flex-shrink-0" style="color: #ec4899; opacity:0.8;"></i>
+                            <span>精炼信息，过滤冗余，迅速触及问题的本质。</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 flex justify-center opacity-60">
+                       <svg class="w-20 h-20 md:w-24 md:h-24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25 75 C40 30, 60 30, 75 75" stroke="url(#grad1)" stroke-width="2.5" stroke-dasharray="4 4" />
+                            <path d="M35 68 C45 40, 55 40, 65 68" stroke="url(#grad1)" stroke-width="2" stroke-dasharray="3 3" opacity="0.7"/>
+                            <path d="M42 60 C48 48, 52 48, 58 60" stroke="url(#grad1)" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.5"/>
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </section>
+
+                <section class="p-6 md:p-8 rounded-xl highlight-block-gradient text-left shadow-lg">
+                     <div class="flex items-center mb-5 md:mb-6">
+                        <i class="fas fa-gem text-4xl md:text-5xl mr-4" style="color: #3b82f6;"></i>
+                        <div>
+                            <h3 class="text-2xl md:text-3xl font-bold mb-0.5">语落<span class="font-light text-gray-600">珠玑</span></h3>
+                            <p class="text-sm md:text-base text-gray-500 tracking-wider uppercase">Words Like Pearls</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed text-sm md:text-base">
+                        让言语如精挑细选的珍珠，每一颗都闪耀思想的光芒。凝练的表达不仅易于理解与铭记，更能彰显非凡的智慧与深度。
+                    </p>
+                     <ul class="list-none space-y-3 text-gray-600 text-sm md:text-base">
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb mr-3 mt-1 flex-shrink-0" style="color: #3b82f6; opacity:0.8;"></i>
+                            <span>深思熟虑，提炼核心观点，使表达充满洞察力。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bullseye mr-3 mt-1 flex-shrink-0" style="color: #3b82f6; opacity:0.8;"></i>
+                            <span>字斟句酌，确保精准传达，令语言掷地有声。</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 flex justify-center opacity-80">
+                        <svg class="w-20 h-20 md:w-24 md:h-24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="28" cy="50" r="7" fill="url(#grad2)" opacity="0.7"/>
+                            <circle cx="50" cy="50" r="9" fill="url(#grad2)" />
+                            <circle cx="72" cy="50" r="7" fill="url(#grad2)" opacity="0.7"/>
+                            <path d="M15 50 H 85" stroke="url(#grad2)" stroke-width="1.5" opacity="0.2"/>
+                             <defs>
+                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </section>
+            </div>
+
+            <section class="mb-8 md:mb-12">
+                <p class="text-xl md:text-3xl font-semibold gradient-text">
+                    让每一次沟通，都成为思想的闪耀。
+                </p>
+                <p class="text-base md:text-lg text-gray-500 mt-3 tracking-wider uppercase">
+                    Embrace Clarity. Value Brevity.
+                </p>
+            </section>
+        </main>
+
+        <div class="absolute -bottom-1/3 -left-1/3 w-3/5 h-3/5 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 rounded-full filter blur-3xl opacity-40 animate-pulse z-0"></div>
+        <div class="absolute -top-1/3 -right-1/3 w-3/5 h-3/5 bg-gradient-to-l from-pink-500/20 via-purple-500/20 to-blue-500/20 rounded-full filter blur-3xl opacity-40 animate-pulse animation-delay-2000 z-0"></div>
+    </div>
+
+    <script>
+        document.getElementById('currentDate').textContent = new Date().toISOString().slice(0,10);
+    </script>
+</body>
+</html>
