@@ -1,2 +1,2 @@
-# jerrybob.github.io
-JerryBob's Website
+# jerrybobai.github.io
+JerryBob's Website for AI
