@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Roboto', 'Noto Sans SC', sans-serif;
@@ -130,14 +131,11 @@
     </style>
 </head>
 <body class="antialiased">
-    <!-- 导航栏 -->
-    <header class="w-full bg-white shadow-md fixed top-0 left-0 z-10" data-component="header"></header>
-
     <!-- 文章元信息组件 -->
-    <div class="w-full mt-16" data-component="article-meta"></div>
-    
+    <div class="w-full sticky top-0 z-10" data-component="article-meta"></div>
+
     <!-- 正文内容 -->
-    <div class="mt-8">
+    <div class="mt-4">
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl">
 
@@ -473,12 +471,12 @@
             });
         }
     </script>
-    
+
     </div> <!-- 关闭正文内容div -->
-    
+
     <!-- 页脚 -->
     <footer class="footer mt-12" data-component="footer"></footer>
-    
+
     <!-- 加载组件脚本 -->
     <script src="../../js/components.js"></script>
 </body>

@@ -123,21 +123,22 @@ document.addEventListener('DOMContentLoaded', async function() {
         `;
     }
 
-    // 加载文章元信息组件
+    // 渲染文章元信息组件
     const articleMetaElement = document.querySelector('[data-component="article-meta"]');
-    if (articleMetaElement) {
-        // 只在非index.html页面显示元信息
-        const isIndexPage = isRoot;
 
-        if (!isIndexPage) {
-            // 获取当前页面的元数据
-            const metadata = getPageMetadata(currentPath);
-            console.log('当前页面元数据:', metadata);
+	// 检查是否在iframe中
+    const isInIframe = window.self !== window.top;
 
-            // 获取当前日期（如果元数据中没有）
-            const today = new Date();
-            const dateStr = metadata?.date || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    // 是否显示元信息：仅当docs目录下且不是index.html且不是iframe时显示
+    const showMetaData = articleMetaElement && !isInIframe && currentPath.includes('/docs/') && !currentPath.endsWith('index.html');
+    if (showMetaData) {
+        // 获取当前页面的元数据
+        const metadata = getPageMetadata(currentPath);
+        console.log('当前页面元数据:', metadata);
 
+        // 获取当前日期（如果元数据中没有）
+        const today = new Date();
+        const dateStr = metadata?.date || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
             // 确定标签
             let tags = [];
             if (metadata && metadata.tags) {
@@ -196,15 +197,37 @@ document.addEventListener('DOMContentLoaded', async function() {
                 .ultra-light-date i {
                     color: rgba(120, 120, 120, 0.7);
                 }
+                .home-link {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-right: 8px;
+                    transition: opacity 0.2s;
+                }
+                .home-link:hover {
+                    opacity: 0.8;
+                }
+                .article-meta-blur {
+                    backdrop-filter: blur(8px);
+                    background: rgba(248, 249, 250, 0.85);
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                }
             `;
             document.head.appendChild(styleElement);
 
             // 构建元信息 HTML
+            // 计算返回首页的路径
+            let homeLink = "../../index.html";
+            if (currentPath.split('/').length <= 2) {
+                homeLink = "../index.html";
+            }
+
             articleMetaElement.innerHTML = `
-                <div class="w-full bg-[var(--color-background)]">
+                <div class="w-full article-meta-blur">
                     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center">
                         <div class="flex items-center ultra-light-date">
-                            <i class="far fa-calendar-alt mr-2" aria-hidden="true"></i>
+                            <a href="${homeLink}" class="home-link">
+                                <i class="fa-solid fa-home mr-2" aria-hidden="true"></i>
+                            </a>
                             <span class="text-sm font-medium">${dateStr}</span>
                         </div>
                         <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
@@ -213,10 +236,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     </div>
                 </div>
             `;
-        } else {
-            // 在首页不显示元信息
-            articleMetaElement.style.display = 'none';
-        }
+    } else {
+        // 在首页不显示元信息
+        articleMetaElement.style.display = 'none';
     }
 
     // 加载footer组件
