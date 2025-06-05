@@ -42,23 +42,77 @@ function renderHeader(currentPath, isRoot) {
     const socialLink = `${prefix}docs/social/index.html`;
 
     headerElement.innerHTML = `
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-            <div class="flex items-center">
-                <a href="${homeLink}" class="flex items-center hover:opacity-90 transition-opacity">
-                    <img src="${prefix}images/logo.png" alt="Logo" class="h-10 w-10 rounded-full mr-3">
-                    <span class="text-2xl font-bold text-gray-800">JerryBob</span>
-                </a>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="${homeLink}" class="flex items-center hover:opacity-90 transition-opacity">
+                        <img src="${prefix}images/logo.png" alt="Logo" class="h-10 w-10 rounded-full mr-3 flex-shrink-0">
+                        <span class="text-xl sm:text-2xl font-bold text-gray-800">JerryBob</span>
+                    </a>
+                </div>
+
+                <!-- 桌面端导航 -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="${homeLink}" class="nav-link ${homeClass}">首页</a>
+                    <a href="${aiLink}" class="nav-link ${aiClass}">AI</a>
+                    <a href="${personalLink}" class="nav-link ${personalClass}">个人</a>
+                    <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
+                    <a href="${workLink}" class="nav-link ${workClass}">工作</a>
+                    <a href="${socialLink}" class="nav-link ${socialClass}">社交</a>
+                </nav>
+
+                <!-- 移动端菜单按钮 -->
+                <button class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        id="mobile-menu-button" aria-expanded="false">
+                    <span class="sr-only">打开主菜单</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
-            <nav class="hidden md:flex space-x-6">
-                <a href="${homeLink}" class="nav-link ${homeClass}">首页</a>
-                <a href="${aiLink}" class="nav-link ${aiClass}">AI</a>
-                <a href="${personalLink}" class="nav-link ${personalClass}">个人</a>
-                <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
-                <a href="${workLink}" class="nav-link ${workClass}">工作</a>
-                <a href="${socialLink}" class="nav-link ${socialClass}">社交</a>
-            </nav>
+
+            <!-- 移动端导航菜单 -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+                    <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
+                    <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
+                    <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
+                    <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
+                    <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
+                    <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+                </div>
+            </div>
         </div>
     `;
+
+    // 添加移动端菜单交互
+    setTimeout(() => {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+
+                if (isExpanded) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                } else {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            // 点击菜单项后关闭菜单
+            const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    }, 100);
 }
 
 // =============== Footer组件 ===============

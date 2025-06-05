@@ -180,7 +180,7 @@
 
         /* 防止页面元素在全局动画开始前显示，避免闪烁 */
         body:not(.animations-ready) .preview-item,
-        body:not(.animations-ready) [data-component]:not(#whale-moon-title):not(#hero-content),
+        body:not(.animations-ready) [data-component]:not(#whale-moon-title):not(#hero-content):not([data-component="header"]),
         body:not(.animations-ready) .article-controls {
             opacity: 0;
             transform: translateY(20px);
@@ -204,7 +204,7 @@
         }
 
         /* 动画准备就绪后的其他元素过渡效果 */
-        body.animations-ready [data-component]:not(#whale-moon-title):not(#hero-content),
+        body.animations-ready [data-component]:not(#whale-moon-title):not(#hero-content):not([data-component="header"]),
         body.animations-ready .article-controls {
             opacity: 1;
             transform: translateY(0);
@@ -451,10 +451,10 @@
                 initializeIframePreviews();
             }
 
-            // 延迟触发动画，等待DOM更新
+            // 快速触发动画，减少白屏时间
             setTimeout(() => {
                 animatePreviewCards();
-            }, 100);
+            }, 50);
         }
 
         // 设置事件监听器
