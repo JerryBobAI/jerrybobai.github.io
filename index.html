@@ -16,11 +16,16 @@
     <header class="w-full bg-white shadow-md fixed top-0 left-0 z-10" data-component="header"></header>
 
     <!-- 添加"鲸波月影"部分 -->
-    <div class="w-full bg-[var(--color-background)] text-center py-16 mt-16">
-        <h1 class="text-6xl md:text-8xl text-gray-800">鲸波月影</h1>
+    <div id="whale-moon-title" class="w-full bg-[var(--color-background)] text-center py-16 mt-16">
+        <h1 class="whale-moon-text text-6xl md:text-8xl text-gray-800">
+            <span class="char" data-char="鲸">鲸</span>
+            <span class="char" data-char="波">波</span>
+            <span class="char" data-char="月">月</span>
+            <span class="char" data-char="影">影</span>
+        </h1>
     </div>
 
-    <div class="content-wrapper container">
+    <div id="hero-content" class="content-wrapper container">
         <div class="binary-bg" aria-hidden="true">
             <span>0</span><span>1</span><span>1</span><span>0</span><span>1</span><span>0</span><span>0</span><span>1</span>
             <span>1</span><span>0</span><span>0</span><span>1</span><span>0</span><span>1</span><span>1</span><span>0</span>
@@ -45,6 +50,9 @@
             SALVAGING MOONLIGHT IN A DIGITAL SEA
         </p>
     </div>
+
+    <!-- 分页时的顶部间距占位 -->
+    <div id="pagination-spacer" class="hidden" style="height: 120px; margin-top: 64px;"></div>
 
     <!-- 置顶文章预览组件 -->
     <div data-component="pinned-previews" id="pinned-previews"></div>
@@ -73,6 +81,152 @@
     </div>
 
     <style>
+        /* 鲸波月影标题沙子崩裂效果 */
+        .whale-moon-text {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+        }
+
+        .whale-moon-text .char {
+            display: inline-block;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            transform-origin: center;
+        }
+
+        /* 悬停时的沙子崩裂效果 - 更自然的Q弹效果 */
+        .whale-moon-text:hover .char:nth-child(1) {
+            transform: translate(-12px, -8px) rotate(-6deg) scale(0.92);
+            opacity: 0.75;
+        }
+
+        .whale-moon-text:hover .char:nth-child(2) {
+            transform: translate(6px, -12px) rotate(4deg) scale(0.88);
+            opacity: 0.7;
+        }
+
+        .whale-moon-text:hover .char:nth-child(3) {
+            transform: translate(-8px, 6px) rotate(-4deg) scale(0.96);
+            opacity: 0.8;
+        }
+
+        .whale-moon-text:hover .char:nth-child(4) {
+            transform: translate(14px, 10px) rotate(7deg) scale(0.9);
+            opacity: 0.72;
+        }
+
+        /* 添加粒子效果 - 更柔和的重影 */
+        .whale-moon-text:hover .char::after {
+            content: attr(data-char);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+            transform: translate(3px, -3px) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            filter: blur(0.5px);
+        }
+
+        /* 鲸波月影标题和内容区域Q弹动画效果 */
+        #whale-moon-title, #hero-content {
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            pointer-events: none;
+        }
+
+        #whale-moon-title.show, #hero-content.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        #whale-moon-title.hidden, #hero-content.hidden {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        /* 防止首页顶部元素被全局动画影响 */
+        #whale-moon-title, #hero-content {
+            animation: none !important;
+            will-change: opacity, transform;
+        }
+
+        /* 确保自定义动画优先级最高 */
+        #whale-moon-title.show, #hero-content.show {
+            animation: none !important;
+        }
+
+        /* 防止全局滚动动画系统影响首页顶部元素 */
+        #whale-moon-title.scroll-fade, #hero-content.scroll-fade,
+        #whale-moon-title .scroll-fade, #hero-content .scroll-fade {
+            animation: none !important;
+            opacity: inherit !important;
+            transform: inherit !important;
+            transition: none !important;
+        }
+
+        /* 防止fadeIn动画影响 */
+        #whale-moon-title.fade-in, #hero-content.fade-in,
+        #whale-moon-title .fade-in, #hero-content .fade-in {
+            animation: none !important;
+            opacity: inherit !important;
+            transform: inherit !important;
+        }
+
+        /* 防止页面元素在全局动画开始前显示，避免闪烁 */
+        body:not(.animations-ready) .preview-item,
+        body:not(.animations-ready) [data-component]:not(#whale-moon-title):not(#hero-content),
+        body:not(.animations-ready) .article-controls {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* 文章预览卡片的渐入效果 */
+        .preview-item {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .preview-item.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 预览容器保持稳定，不参与整体动画 */
+        #iframe-previews {
+            min-height: 200px; /* 保持最小高度，避免布局跳动 */
+        }
+
+        /* 动画准备就绪后的其他元素过渡效果 */
+        body.animations-ready [data-component]:not(#whale-moon-title):not(#hero-content),
+        body.animations-ready .article-controls {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* 首页顶部元素不受全局动画控制影响 */
+        body:not(.animations-ready) #whale-moon-title,
+        body:not(.animations-ready) #hero-content {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+
+        /* 分页占位元素 */
+        #pagination-spacer {
+            transition: opacity 0.3s ease;
+        }
+
+        #pagination-spacer.hidden {
+            display: none !important;
+        }
+
         /* 显示所有按钮样式 */
         .show-all-button {
             background: linear-gradient(135deg, rgba(104, 144, 148, 0.1) 0%, rgba(104, 144, 148, 0.05) 100%);
@@ -186,8 +340,58 @@
         const articlesPerPage = 20;
         let showingAll = false;
 
+        // 文章预览卡片动画函数
+        function animatePreviewCards() {
+            const previewItems = document.querySelectorAll('.preview-item');
+            previewItems.forEach((item, index) => {
+                // 移除之前的动画类，重置状态
+                item.classList.remove('animate-in');
+
+                setTimeout(() => {
+                    item.classList.add('animate-in');
+                }, index * 50); // 每个卡片延迟50ms出现
+            });
+        }
+
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
+            // 立即触发首页内容的渐入动画，与页面整体动画并行
+            const whaleMoonTitle = document.getElementById('whale-moon-title');
+            const heroContent = document.getElementById('hero-content');
+
+            // 防止全局动画系统影响这些元素
+            function protectFromGlobalAnimations() {
+                [whaleMoonTitle, heroContent].forEach(element => {
+                    if (element) {
+                        // 移除可能被全局系统添加的动画类
+                        element.classList.remove('scroll-fade', 'fade-in', 'visible');
+                        // 移除子元素的动画类
+                        element.querySelectorAll('.scroll-fade, .fade-in, .visible').forEach(child => {
+                            child.classList.remove('scroll-fade', 'fade-in', 'visible');
+                        });
+                    }
+                });
+            }
+
+            // 立即保护元素
+            protectFromGlobalAnimations();
+
+            // 触发自定义动画
+            whaleMoonTitle.classList.add('show');
+            heroContent.classList.add('show');
+
+            // 标记动画准备就绪，让其他元素可以开始动画
+            setTimeout(() => {
+                document.body.classList.add('animations-ready');
+                // 触发文章预览卡片的交错动画
+                animatePreviewCards();
+            }, 200); // 给首页顶部动画一点时间先开始
+
+            // 延迟再次保护，防止后续的全局系统影响
+            setTimeout(protectFromGlobalAnimations, 100);
+            setTimeout(protectFromGlobalAnimations, 500);
+            setTimeout(protectFromGlobalAnimations, 1000);
+
             // 从metadata.json文件中获取文章数据
             fetch('cache/metadata.json')
                 .then(response => response.json())
@@ -246,6 +450,11 @@
             if (typeof initializeIframePreviews === 'function') {
                 initializeIframePreviews();
             }
+
+            // 延迟触发动画，等待DOM更新
+            setTimeout(() => {
+                animatePreviewCards();
+            }, 100);
         }
 
         // 设置事件监听器
@@ -263,9 +472,17 @@
                 } else {
                     // 不需要分页，直接显示所有
                     displayArticles(allRegularArticles);
-                    // 确保置顶文章在第一页显示
+                    // 确保在第一页显示标题、内容和置顶文章，隐藏占位元素
+                    const whaleMoonTitle = document.getElementById('whale-moon-title');
+                    const heroContent = document.getElementById('hero-content');
                     const pinnedContainer = document.getElementById('pinned-previews');
+                    const paginationSpacer = document.getElementById('pagination-spacer');
+                    whaleMoonTitle.classList.remove('hidden');
+                    whaleMoonTitle.classList.add('show');
+                    heroContent.classList.remove('hidden');
+                    heroContent.classList.add('show');
                     pinnedContainer.style.display = 'block';
+                    paginationSpacer.classList.add('hidden');
                 }
             });
 
@@ -297,12 +514,30 @@
             displayArticles(pageArticles);
             updatePaginationControls();
 
-            // 非首页时隐藏置顶文章
+            // 控制"鲸波月影"标题、内容、置顶文章和占位元素的显示
+            const whaleMoonTitle = document.getElementById('whale-moon-title');
+            const heroContent = document.getElementById('hero-content');
             const pinnedContainer = document.getElementById('pinned-previews');
+            const paginationSpacer = document.getElementById('pagination-spacer');
+
             if (currentPage > 1) {
+                // 非首页时隐藏标题、内容和置顶文章，显示占位元素
+                whaleMoonTitle.classList.add('hidden');
+                whaleMoonTitle.classList.remove('show');
+                heroContent.classList.add('hidden');
+                heroContent.classList.remove('show');
                 pinnedContainer.style.display = 'none';
+                paginationSpacer.classList.remove('hidden');
             } else {
+                // 首页时显示标题、内容和置顶文章，隐藏占位元素
+                whaleMoonTitle.classList.remove('hidden');
+                heroContent.classList.remove('hidden');
                 pinnedContainer.style.display = 'block';
+                paginationSpacer.classList.add('hidden');
+
+                // 立即添加show类，触发Q弹动画
+                whaleMoonTitle.classList.add('show');
+                heroContent.classList.add('show');
             }
         }
 
