@@ -16,7 +16,7 @@
             background-clip: text;
             color: transparent;
         }
-        .highlight-block-gradient {
+        .highlight-blocJerryBobk-gradient {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));
             border: 1px solid rgba(59, 130, 246, 0.1);
         }
@@ -40,20 +40,6 @@
 </head>
 <body class="bg-white text-black">
     <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
-
-        <header class="absolute top-0 left-0 w-full py-6 px-4 md:px-8 z-20">
-            <div class="max-w-screen-xl mx-auto flex flex-col sm:flex-row justify-between items-center text-xs">
-                <div class="text-gray-500">
-                    <span class="font-semibold text-gray-600">JerryBob</span> | <span id="currentDate"></span>
-                </div>
-                <div class="mt-2 sm:mt-0">
-                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium shadow-sm">个人</span>
-                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium ml-2 shadow-sm">沟通</span>
-                    <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium ml-2 shadow-sm">精炼</span>
-                </div>
-            </div>
-        </header>
-
         <main class="w-full max-w-screen-lg xl:max-w-screen-xl text-center z-10 pt-20 md:pt-24">
             <section class="mb-16 md:mb-24">
                 <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-3 leading-tight tracking-tight">
@@ -163,5 +149,7 @@
     <script>
         document.getElementById('currentDate').textContent = new Date().toISOString().slice(0,10);
     </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
 </body>
 </html>

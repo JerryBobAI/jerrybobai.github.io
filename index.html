@@ -46,28 +46,315 @@
         </p>
     </div>
 
-    <!-- iframe预览组件 -->
-    <div data-component="iframe-previews" data-previews='[
-        {
-            "title": "动态网页生成助手：提示词用法详解",
-            "link": "docs/timeline/动态网页生成助手：提示词用法详解.html",
-            "src": "docs/timeline/动态网页生成助手：提示词用法详解.html"
-        },
-        {
-            "title": "人性的双面性",
-            "link": "docs/timeline/人性的双面性.html",
-            "src": "docs/timeline/人性的双面性.html"
+    <!-- 置顶文章预览组件 -->
+    <div data-component="pinned-previews" id="pinned-previews"></div>
+
+    <!-- 普通文章预览组件 -->
+    <div data-component="iframe-previews" id="iframe-previews"></div>
+
+    <!-- 显示更多按钮和分页控制 -->
+    <div id="article-controls" class="text-center mt-12 mb-16" style="display: none;">
+        <button id="show-all-btn" class="show-all-button">
+            <span class="text-highlight-gradient font-context">显示所有文章</span>
+        </button>
+        <div id="pagination-controls" class="mt-8" style="display: none;">
+            <div class="pagination-wrapper">
+                <button id="prev-page" class="pagination-btn pagination-btn-disabled" disabled>
+                    <i class="fas fa-chevron-left mr-2"></i>上一页
+                </button>
+                <div class="page-info">
+                    <span id="page-info" class="text-secondary font-context">第 1 页，共 1 页</span>
+                </div>
+                <button id="next-page" class="pagination-btn pagination-btn-disabled" disabled>
+                    下一页<i class="fas fa-chevron-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* 显示所有按钮样式 */
+        .show-all-button {
+            background: linear-gradient(135deg, rgba(104, 144, 148, 0.1) 0%, rgba(104, 144, 148, 0.05) 100%);
+            border: 2px solid rgba(104, 144, 148, 0.2);
+            border-radius: 0.75rem;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
         }
-    ]'></div>
+
+        .show-all-button:hover {
+            background: linear-gradient(135deg, rgba(104, 144, 148, 0.15) 0%, rgba(104, 144, 148, 0.08) 100%);
+            border-color: rgba(104, 144, 148, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 分页控件样式 */
+        .pagination-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(104, 144, 148, 0.1);
+            max-width: 500px;
+            min-width: 400px;
+            margin: 0 auto;
+        }
+
+        .pagination-btn {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 2rem;
+            color: var(--color-text-main);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            font-family: 'Noto Sans SC', sans-serif;
+            white-space: nowrap;
+            min-width: 100px;
+            justify-content: center;
+        }
+
+        .pagination-btn:not(.pagination-btn-disabled):hover {
+            background: rgba(104, 144, 148, 0.1);
+            color: var(--color-primary);
+            transform: translateY(-1px);
+        }
+
+        .pagination-btn-disabled {
+            color: var(--color-text-tertiary);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .page-info {
+            padding: 0.75rem 2rem;
+            background: rgba(104, 144, 148, 0.05);
+            border-radius: 0.5rem;
+            margin: 0 1rem;
+            min-width: 150px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 640px) {
+            .pagination-wrapper {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 1rem;
+                min-width: 280px;
+                max-width: 320px;
+            }
+
+            .page-info {
+                margin: 0;
+                order: -1;
+                min-width: 120px;
+                padding: 0.75rem 1rem;
+            }
+
+            .pagination-btn {
+                width: 100%;
+                justify-content: center;
+                min-width: auto;
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pagination-wrapper {
+                min-width: 260px;
+                max-width: 300px;
+            }
+        }
+    </style>
+
+    <script>
+        // 全局变量
+        let allRegularArticles = [];
+        let currentPage = 1;
+        const articlesPerPage = 20;
+        let showingAll = false;
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从metadata.json文件中获取文章数据
+            fetch('cache/metadata.json')
+                .then(response => response.json())
+                .then(data => {
+                    // 将数据转换为数组格式，并标记置顶状态
+                    const articles = Object.entries(data).map(([path, info]) => {
+                        return {
+                            title: info.title,
+                            link: path,
+                            src: path,
+                            date: info.date,
+                            tags: info.tags || ['博客'],
+                            pinned: info.pinned || false
+                        };
+                    });
+
+                    // 分离置顶文章和普通文章
+                    const pinnedArticles = articles.filter(article => article.pinned).slice(0, 2);
+                    allRegularArticles = articles.filter(article => !article.pinned);
+
+                    // 按日期倒序排列普通文章
+                    allRegularArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                    // 设置置顶预览组件的data-previews属性
+                    const pinnedContainer = document.getElementById('pinned-previews');
+                    if (pinnedArticles.length > 0) {
+                        pinnedContainer.setAttribute('data-previews', JSON.stringify(pinnedArticles));
+                        pinnedContainer.setAttribute('data-pinned', 'true');
+                    }
+
+                    // 初始显示前10篇普通文章
+                    displayArticles(allRegularArticles.slice(0, 10));
+
+                    // 如果文章数量超过10篇，显示"显示所有"按钮
+                    if (allRegularArticles.length > 10) {
+                        document.getElementById('article-controls').style.display = 'block';
+                    }
+
+                    // 初始化iframe预览组件
+                    if (typeof initializeIframePreviews === 'function') {
+                        initializeIframePreviews();
+                    }
+
+                    // 绑定事件监听器
+                    setupEventListeners();
+                })
+                .catch(error => console.error('加载文章数据失败:', error));
+        });
+
+        // 显示文章函数
+        function displayArticles(articles) {
+            const previewsContainer = document.getElementById('iframe-previews');
+            previewsContainer.setAttribute('data-previews', JSON.stringify(articles));
+
+            // 重新初始化iframe预览组件
+            if (typeof initializeIframePreviews === 'function') {
+                initializeIframePreviews();
+            }
+        }
+
+        // 设置事件监听器
+        function setupEventListeners() {
+            // "显示所有"按钮点击事件
+            document.getElementById('show-all-btn').addEventListener('click', function() {
+                showingAll = true;
+                currentPage = 1;
+                this.style.display = 'none';
+
+                if (allRegularArticles.length > articlesPerPage) {
+                    // 需要分页
+                    document.getElementById('pagination-controls').style.display = 'block';
+                    displayPagedArticles();
+                } else {
+                    // 不需要分页，直接显示所有
+                    displayArticles(allRegularArticles);
+                    // 确保置顶文章在第一页显示
+                    const pinnedContainer = document.getElementById('pinned-previews');
+                    pinnedContainer.style.display = 'block';
+                }
+            });
+
+            // 分页按钮事件
+            document.getElementById('prev-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayPagedArticles();
+                    scrollToArticlesSection();
+                }
+            });
+
+            document.getElementById('next-page').addEventListener('click', function() {
+                const totalPages = Math.ceil(allRegularArticles.length / articlesPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayPagedArticles();
+                    scrollToArticlesSection();
+                }
+            });
+        }
+
+        // 显示分页文章
+        function displayPagedArticles() {
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+            const pageArticles = allRegularArticles.slice(startIndex, endIndex);
+
+            displayArticles(pageArticles);
+            updatePaginationControls();
+
+            // 非首页时隐藏置顶文章
+            const pinnedContainer = document.getElementById('pinned-previews');
+            if (currentPage > 1) {
+                pinnedContainer.style.display = 'none';
+            } else {
+                pinnedContainer.style.display = 'block';
+            }
+        }
+
+        // 滚动到文章区域
+        function scrollToArticlesSection() {
+            const articlesSection = document.getElementById('iframe-previews');
+            if (articlesSection) {
+                // 使用平滑滚动，并留出一些顶部空间
+                const offsetTop = articlesSection.offsetTop - 100;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // 更新分页控制
+        function updatePaginationControls() {
+            const totalPages = Math.ceil(allRegularArticles.length / articlesPerPage);
+
+            // 更新页面信息
+            document.getElementById('page-info').textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
+
+            // 更新按钮状态
+            const prevBtn = document.getElementById('prev-page');
+            const nextBtn = document.getElementById('next-page');
+
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+
+            // 更新按钮样式类
+            if (currentPage === 1) {
+                prevBtn.className = 'pagination-btn pagination-btn-disabled';
+            } else {
+                prevBtn.className = 'pagination-btn';
+            }
+
+            if (currentPage === totalPages) {
+                nextBtn.className = 'pagination-btn pagination-btn-disabled';
+            } else {
+                nextBtn.className = 'pagination-btn';
+            }
+        }
+    </script>
 
     <div class="mt-16">
         <p class="text-sm text-tertiary">鲸波深处，代码与月光共振</p>
     </div>
 
     <!-- 页脚 -->
-    <footer class="footer" data-component="footer"></footer>
+    <footer class="footer mt-12" data-component="footer"></footer>
     <!-- 加载组件脚本 -->
-    <script src="js/components.js"></script>
-    <script src="js/iframe-previews.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

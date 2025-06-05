@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《我可能错了》—— 樊登的灵魂拷问</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #ffffff;
+            color: #000000;
+            overflow-x: hidden; /* 防止水平滚动 */
+        }
+        .gradient-text {
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .highlight-bg {
+            background-image: linear-gradient(to right, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+        }
+        .highlight-border {
+            border-image-source: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            border-image-slice: 1;
+        }
+        .large-icon {
+            font-size: 4rem; /* 72px */
+            opacity: 0.1;
+            position: absolute;
+            right: 5%;
+            top: 10%;
+            z-index: 0;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .section-title-cn {
+            font-size: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 0.5rem; /* 8px */
+        }
+        .section-title-en {
+            font-size: 1rem; /* 16px */
+            font-weight: 300;
+            color: #6b7280; /* gray-500 */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem; /* 32px */
+        }
+        .content-text {
+            font-size: 1.125rem; /* 18px */
+            line-height: 1.75; /* 28px */
+            color: #374151; /* gray-700 */
+        }
+        .point-text {
+            font-size: 1.25rem; /* 20px */
+            font-weight: 600;
+            margin-bottom: 0.5rem; /* 8px */
+        }
+        .sub-point-text {
+            font-size: 1rem; /* 16px */
+            color: #4b5563; /* gray-600 */
+            margin-left: 1.5rem; /* 24px */
+        }
+        .quote-text {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 500;
+            font-style: italic;
+            padding: 1rem;
+            border-left-width: 4px;
+        }
+        .giant-number {
+            font-size: 6rem; /* 96px */
+            font-weight: 800;
+            line-height: 1;
+        }
+        .tech-line {
+            height: 2px;
+            width: 80px;
+            margin: 1rem auto;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            opacity: 0.7;
+        }
+         .responsive-container {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem; /* 32px */
+            padding-right: 2rem; /* 32px */
+        }
+        @media (min-width: 1280px) { /* xl */
+            .responsive-container {
+                padding-left: 4rem; /* 64px */
+                padding-right: 4rem; /* 64px */
+            }
+        }
+        .card-item {
+            background-color: rgba(255, 255, 255, 0.8); /* Slight transparency if needed over a subtle bg */
+            backdrop-filter: blur(5px); /* For a frosted glass effect on supporting browsers */
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 1.5rem; /* 24px */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-image: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="responsive-container py-12 md:py-20">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-16 md:mb-24 relative">
+            <i class="fas fa-brain large-icon transform -rotate-12"></i>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4">
+                <span class="gradient-text">我可能错了</span>
+            </h1>
+            <p class="text-xl md:text-3xl font-semibold mb-2">樊登的灵魂拷问</p>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                在信息爆炸、观点极化、人人手握“真理”麦克风的时代，我们如何才能摆脱“我绝对正确”的思维定势？
+            </p>
+            <div class="mt-8">
+                <span class="inline-block w-1 h-1 bg-blue-500 rounded-full opacity-70"></span>
+                <span class="inline-block w-1 h-1 bg-purple-500 rounded-full opacity-70 ml-1"></span>
+                <span class="inline-block w-1 h-1 bg-pink-500 rounded-full opacity-70 ml-1"></span>
+            </div>
+        </section>
+
+        <!-- 核心困惑 -->
+        <section class="mb-16 md:mb-24 relative">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-5 text-center md:text-left">
+                     <h2 class="section-title-cn">核心困惑</h2>
+                     <p class="section-title-en">THE CENTRAL QUESTION</p>
+                    <p class="text-3xl md:text-5xl lg:text-6xl font-bold gradient-text leading-tight">
+                        如何活得<br>更通透？
+                    </p>
+                </div>
+                <div class="md:col-span-7">
+                    <p class="quote-text highlight-border border-l-4 content-text">
+                        如果承认“我可能错了”不仅仅是一种口头上的谦逊，而是一种可以刻意练习并深度内化的核心生存智慧，它将如何从根本上改变我们认知世界、与人相处乃至自我成长的轨迹，从而让我们活得更通透、更从容、更接近幸福？
+                    </p>
+                </div>
+            </div>
+             <i class="fas fa-question-circle large-icon opacity-05" style="font-size: 8rem; top: 50%; right: 2%; transform: translateY(-50%) rotate(10deg);"></i>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 作者的对话对象 -->
+        <section class="mb-16 md:mb-24 text-center">
+            <h2 class="section-title-cn">樊登在与谁对话？</h2>
+            <p class="section-title-en">WHO IS THE AUTHOR ADDRESSING?</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+                <div class="card-item">
+                    <i class="fas fa-users text-3xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">广大听众和读者</h3>
+                    <p class="sub-point-text">渴望提升认知、改善沟通、追求个人成长的人。</p>
+                </div>
+                <div class="card-item">
+                     <i class="fas fa-ghost text-3xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">陷入“我是对的”执念的灵魂</h3>
+                    <p class="sub-point-text">因此感到困扰、愤怒或孤独。</p>
+                </div>
+                <div class="card-item">
+                    <i class="fas fa-heart-crack text-3xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">争吵不休的伴侣</h3>
+                    <p class="sub-point-text">因坚持己见而伤害亲密关系。</p>
+                </div>
+                <div class="card-item">
+                     <i class="fas fa-briefcase text-3xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">错失机会的职场个体</h3>
+                    <p class="sub-point-text">因固执己见而阻碍发展。</p>
+                </div>
+                <div class="card-item">
+                     <i class="fas fa-comments text-3xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">无法理性交流的群体</h3>
+                    <p class="sub-point-text">因立场先行而激化矛盾。</p>
+                </div>
+                 <div class="card-item">
+                    <i class="fas fa-user-reflect text-3xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">过去的自己</h3>
+                    <p class="sub-point-text">那个也曾坚信“我对你错”的自己。</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 关键转向 -->
+        <section class="mb-16 md:mb-24 relative">
+             <i class="fas fa-directions large-icon opacity-05" style="font-size: 7rem; top: 10%; left: 5%; transform: rotate(-15deg);"></i>
+            <div class="text-center mb-12">
+                <h2 class="section-title-cn">关键转向</h2>
+                <p class="section-title-en">THE KEY SHIFT IN PERSPECTIVE</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div class="p-6 rounded-lg ">
+                    <h3 class="text-2xl font-semibold mb-3 text-gray-500">传统的提问模式 <span class="text-sm font-light">(TRADITIONAL)</span></h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600">
+                        <li>我怎样才能更正确？</li>
+                        <li>如何证明我是对的？</li>
+                        <li>如何让别人接受我的正确观点？</li>
+                    </ul>
+                </div>
+                <div class="p-6 rounded-lg highlight-bg">
+                    <h3 class="text-2xl font-semibold mb-3 gradient-text">樊登的关键转向 <span class="text-sm font-light">(FAN DENG'S SHIFT)</span></h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li class="font-medium">“‘追求正确’本身会不会就是问题的根源？”</li>
+                        <li class="font-medium">“如果我从‘我可能错了’这个前提出发，世界会展现出怎样不同的面貌？”</li>
+                        <li class="font-medium">“如何将‘我可能错了’从一种消极的自我怀疑，转变为一种积极的、赋能的思维模式？”</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-10 text-center text-xl md:text-2xl font-semibold content-text">
+                焦点从“证明自己” <i class="fas fa-arrow-right-long mx-2 text-purple-500"></i> “理解他人”，<br class="md:hidden">
+                从“坚持立场” <i class="fas fa-arrow-right-long mx-2 text-blue-500"></i> “探索真相”，<br class="md:hidden">
+                从“赢得辩论” <i class="fas fa-arrow-right-long mx-2 text-pink-500"></i> “共同成长”。
+            </p>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 方法论、洞见、问题 -->
+        <section class="mb-16 md:mb-24">
+            <div class="text-center mb-12">
+                <h2 class="section-title-cn">骨架、血肉与灵魂</h2>
+                <p class="section-title-en">FRAMEWORK, INSIGHTS, AND SOUL</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card-item p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-bone text-5xl gradient-text"></i>
+                        <h3 class="text-2xl font-bold mt-2">方法论 <span class="text-base font-normal text-gray-500">(骨架)</span></h3>
+                    </div>
+                    <p class="content-text text-sm">通过大量亲身经历、观察案例、心理学、沟通学、哲学智慧（如非暴力沟通、关键对话、认知偏差理论等）提炼。</p>
+                </div>
+                <div class="card-item p-6 md:col-span-2">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-heartbeat text-5xl gradient-text"></i>
+                        <h3 class="text-2xl font-bold mt-2">洞见 <span class="text-base font-normal text-gray-500">(血肉)</span></h3>
+                    </div>
+                    <ul class="space-y-3 content-text">
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i>“我可能错了”不是否定自我，而是为自我成长留出空间。</li>
+                        <li><i class="fas fa-check-circle text-purple-500 mr-2"></i>承认自己可能错，才能真正倾听，看到事物更多面向。</li>
+                        <li><i class="fas fa-check-circle text-pink-500 mr-2"></i>放下“我对你错”的执念，是改善人际关系的关键。</li>
+                        <li><i class="fas fa-check-circle text-blue-500 mr-2"></i>这种思维模式能带来内心平静，减少不必要的消耗。</li>
+                        <li><i class="fas fa-check-circle text-purple-500 mr-2"></i>它是一种反脆弱的智慧，让人在不确定性中保持开放和学习。</li>
+                    </ul>
+                </div>
+                <div class="card-item p-6 md:col-span-3 text-center">
+                     <i class="fas fa-lightbulb text-5xl gradient-text mb-3"></i>
+                    <h3 class="text-2xl font-bold">问题 <span class="text-base font-normal text-gray-500">(灵魂)</span></h3>
+                    <p class="mt-2 text-xl md:text-2xl font-medium content-text">
+                        面对一个越来越需要协作和理解的世界，<span class="gradient-text font-semibold">如何打破个体认知局限带来的壁垒？</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 问题的多维展开 -->
+        <section class="mb-16 md:mb-24 text-center">
+            <h2 class="section-title-cn">一个问题的多维展开</h2>
+            <p class="section-title-en">A MULTI-DIMENSIONAL EXPLORATION OF THE QUESTION</p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+                <div class="p-6 rounded-lg highlight-bg flex flex-col items-center">
+                    <i class="fas fa-brain text-4xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">认知层面</h3>
+                    <p class="sub-point-text text-center">如何识别和挑战自己的认知偏差和思维定势。</p>
+                </div>
+                <div class="p-6 rounded-lg highlight-bg flex flex-col items-center">
+                    <i class="fas fa-comments-dollar text-4xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">沟通层面</h3>
+                    <p class="sub-point-text text-center">如何运用“我可能错了”的姿态进行有效对话，化解冲突。</p>
+                </div>
+                <div class="p-6 rounded-lg highlight-bg flex flex-col items-center">
+                    <i class="fas fa-smile-beam text-4xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">情感层面</h3>
+                    <p class="sub-point-text text-center">如何处理因“被挑战”而产生的负面情绪，保持心态平和。</p>
+                </div>
+                <div class="p-6 rounded-lg highlight-bg flex flex-col items-center">
+                    <i class="fas fa-users-cog text-4xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">关系层面</h3>
+                    <p class="sub-point-text text-center">如何在各种关系中，通过这种思维改善互动质量。</p>
+                </div>
+                <div class="p-6 rounded-lg highlight-bg flex flex-col items-center lg:col-span-2">
+                    <i class="fas fa-chart-line text-4xl mb-3 gradient-text"></i>
+                    <h3 class="point-text">成长层面</h3>
+                    <p class="sub-point-text text-center">如何将“我可能错了”作为持续学习和自我迭代的动力。</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 书的价值 -->
+        <section class="mb-16 md:mb-24 relative">
+            <i class="fas fa-book-open large-icon opacity-05" style="font-size: 7rem; top: 5%; right: 5%; transform: rotate(15deg);"></i>
+            <div class="text-center mb-12">
+                <h2 class="section-title-cn">一本书的价值</h2>
+                <p class="section-title-en">THE VALUE OF A BOOK: WHAT IT ANSWERS</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">它说的 <span class="text-base font-light text-gray-500">(WHAT IT SAYS)</span></h3>
+                    <p class="content-text">是“我可能错了”这句话背后的道理、好处和一些实践方法。</p>
+                </div>
+                <div class="mt-8 md:mt-0">
+                    <h3 class="text-2xl font-semibold mb-4 gradient-text">它回答的 <span class="text-base font-light text-black">(WHAT IT ANSWERS)</span></h3>
+                    <p class="content-text font-medium text-lg">
+                        在复杂和快速变化的世界中，我们如何保持<span class="font-bold">谦逊、开放和学习</span>的心态，从而更好地适应环境、理解他人、成就自己，并最终获得一种更深层次的<span class="font-bold">安宁和智慧</span>。
+                    </p>
+                    <p class="content-text mt-4">
+                        它回答了人们在坚持“自我正确”时所感到的疲惫和隔阂，提供了一条通往更和谐、更具建设性的人际互动和内心平静的路径。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- “暗门”密码解读 -->
+        <section class="mb-16 md:mb-24 text-center py-12 highlight-bg rounded-xl relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-gradient-to-br from-blue-500 to-purple-500 opacity-30 rounded-full animate-pulse"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-tl from-pink-500 to-purple-500 opacity-30 rounded-full animate-pulse animation-delay-2000"></div>
+            <div class="relative z-10">
+                <i class="fas fa-key text-5xl mb-6 gradient-text"></i>
+                <h2 class="section-title-cn">“暗门”密码：认知操作系统升级指南</h2>
+                <p class="section-title-en">THE "SECRET CODE": A COGNITIVE OS UPGRADE MANUAL</p>
+                <p class="text-xl md:text-2xl lg:text-3xl font-semibold max-w-4xl mx-auto mt-6 content-text">
+                    《我可能错了》并非简单的“沟通技巧手册”或“心灵鸡汤”。<br>它是一种基于深刻自我反思和人性洞察的
+                    <span class="giant-number gradient-text block my-4">“元智慧”</span>
+                    <span class="block font-bold text-2xl md:text-3xl">认知工具</span>
+                </p>
+                <p class="mt-4 max-w-3xl mx-auto content-text">
+                    樊登试图告诉我们，“我可能错了”不是一句软弱的口号，而是一种强大的认知工具，一种能让我们在信息洪流中保持清醒，在人际交往中游刃有余的“元智慧”。
+                </p>
+            </div>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 未言之意 -->
+        <section class="mb-16 md:mb-24 relative">
+            <i class="fas fa-infinity large-icon opacity-05" style="font-size: 8rem; top: 40%; left: 2%; transform: translateY(-50%) rotate(-10deg);"></i>
+            <div class="text-center mb-12">
+                <h2 class="section-title-cn">未言之意</h2>
+                <p class="section-title-en">THE UNSPOKEN MESSAGE: EMBRACING POSSIBILITY</p>
+            </div>
+            <div class="max-w-4xl mx-auto content-text space-y-6 text-lg">
+                <p><i class="fas fa-puzzle-piece mr-2 gradient-text"></i>这本书温柔地解构了对<span class="font-bold">“确定性”</span>的执着，热情地拥抱了<span class="font-bold">“可能性”</span>。</p>
+                <p><i class="fas fa-seedling mr-2 gradient-text"></i>在一个追求标准答案和绝对正确的文化惯性下，樊登提醒我们，真正的力量恰恰在于<span class="font-bold">承认不确定性</span>，并在这种不确定性中保持探索和学习的姿态。</p>
+                <p><i class="fas fa-lightbulb-on mr-2 gradient-text"></i>它也暗示着，真正的智慧不是拥有多少知识，而是拥有怎样的<span class="font-bold">认知框架</span>去处理和运用这些知识，以及如何与持有不同知识和观点的人和谐共处。</p>
+            </div>
+        </section>
+
+        <div class="tech-line my-12 md:my-20"></div>
+
+        <!-- 最终总结/灵魂拷问 -->
+        <section class="text-center py-16 md:py-24 relative">
+             <div class="absolute inset-0 opacity-05" style="background-image: radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(255,255,255,0) 60%);"></div>
+            <h2 class="section-title-cn">最终之问</h2>
+            <p class="section-title-en">THE ULTIMATE QUESTION & THE BOOK'S RADIANCE</p>
+            <p class="text-3xl md:text-4xl lg:text-5xl font-bold max-w-5xl mx-auto leading-tight my-8">
+                我们如何才能不被自己的认知所困，<br class="hidden md:block">
+                真正地<span class="gradient-text">打开心扉</span>，<br class="hidden md:block">
+                去听，去看，去理解，<span class="gradient-text">去连接</span>？
+            </p>
+            <p class="text-xl md:text-2xl text-gray-700 mt-6">
+                这便是樊登写下这本书的核心驱动，也是这本书灵魂的朴素光芒。
+            </p>
+            <p class="mt-10 text-lg font-semibold">樊登《我可能错了》</p>
+        </section>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

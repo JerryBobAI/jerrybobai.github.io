@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专注系统，拥有恐怖执行力 - 小红书风</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #FDF6E3; /* 温暖的米黄色背景 */
+            color: #586E75; /* Solarized Dark Cyan for text */
+        }
+
+        .xiaohongshu-card {
+            background-color: #FEFBF3; /* 非常浅的米白卡片背景 */
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(181, 137, 0, 0.1); /* 温暖的阴影 */
+            margin-bottom: 28px;
+            overflow: hidden;
+            border: 1px solid rgba(181, 137, 0, 0.15);
+        }
+
+        .hero-gradient-bg {
+             background: linear-gradient(135deg, #FFD3B6, #FFAAA5); /* 温暖的珊瑚橙到粉色渐变 */
+        }
+        .highlight-bg-green {
+            background-color: #E6FFFA; /* 薄荷绿浅背景 */
+            color: #2C7A7B; /* 深薄荷绿文字 */
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            display: inline-block;
+        }
+         .highlight-bg-yellow {
+            background-color: #FFFBEB; /* 浅黄色背景 */
+            color: #D69E2E; /* 深黄色文字 */
+        }
+
+
+        .highlight-tag {
+            background-color: #FEF3C7; /* 品牌黄的浅色 */
+            color: #B45309; /* 品牌黄 */
+            padding: 4px 12px;
+            border-radius: 20px; /* 胶囊形状 */
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-block;
+            border: 1px solid #FDE68A;
+            transition: all 0.3s ease;
+        }
+        .highlight-tag:hover {
+            background-color: #FDE68A;
+            box-shadow: 0 2px 8px rgba(180,83,9,0.2);
+        }
+
+
+        .text-coral { color: #FF7F50; /* 珊瑚橙 */ }
+        .text-mint { color: #3EB489; /* 薄荷绿 */ }
+        .text-deep-blue { color: #073763; } /* 深沉稳蓝 */
+
+
+        .title-chinese-xl { font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.2; }
+        .title-chinese-large { font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 700; }
+        .title-chinese { font-weight: 700; }
+        .title-english { font-size: 0.9em; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        .icon-accent {
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        .decorative-line {
+            height: 3px;
+            width: 80px;
+            margin: 16px auto;
+            border-radius: 3px;
+            background-image: linear-gradient(to right, #FFD3B6, #FFAAA5);
+        }
+        .step-number {
+            background-color: #FFD3B6;
+            color: #B95C50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 4px rgba(185,92,80,0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="container mx-auto p-4 lg:p-8 max-w-screen-md"> <!-- Max width adjusted for readability -->
+
+        <!-- 封面/头部信息 -->
+        <header class="relative hero-gradient-bg text-white py-16 md:py-24 px-6 rounded-3xl shadow-xl mb-12 overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-white/20 rounded-full opacity-50 filter blur-xl"></div>
+            <div class="absolute -bottom-12 -right-12 w-52 h-52 bg-white/20 rounded-full opacity-50 filter blur-2xl"></div>
+            <div class="relative z-10 text-center">
+                 <div class="mb-4">
+                    <span class="inline-block bg-white/30 backdrop-blur-sm text-sm text-white font-semibold py-1 px-3 rounded-full title-english">Mindset SHIFT</span>
+                </div>
+                <h1 class="title-chinese-xl leading-tight">
+                    <span class="block">拥有<span class="text-yellow-300">恐怖执行力</span>的思维：</span>
+                    <span class="block mt-1">专注<strong class="underline decoration-wavy decoration-yellow-300">系统</strong></span>
+                </h1>
+                <p class="text-lg opacity-90 mt-6 max-w-xl mx-auto">摆脱“目标焦虑”，用系统思维重塑生活，体验过程中的幸福。</p>
+            </div>
+        </header>
+
+        <!-- 目标焦虑的困境 -->
+        <div class="xiaohongshu-card p-6 md:p-8">
+            <div class="flex items-center mb-4">
+                <div class="icon-accent bg-red-100 text-red-500"><i class="fas fa-bullseye-arrow"></i></div>
+                <h2 class="text-2xl title-chinese text-deep-blue">你是否也曾陷入“<span class="text-coral">目标焦虑</span>”？</h2>
+            </div>
+            <p class="text-gray-600 leading-relaxed mb-3">在这个“目标至上”的时代，我们总被鼓励去设定目标：减掉 <strong class="text-coral font-semibold">5斤</strong>、一年读 <strong class="text-coral font-semibold">50本书</strong>、学习一门<strong class="text-coral font-semibold">外语</strong>……</p>
+            <p class="text-gray-600 leading-relaxed">但你是否也有过这样的经历：目标设定得很美，行动却总是<strong class="text-coral">半途而废</strong>？或者即使达成了目标，也很快又陷入新的<strong class="text-coral">空虚</strong>？</p>
+            <div class="text-center mt-6">
+                 <i class="fas fa-sync-alt text-4xl text-red-300 animate-spin slow-spin"></i>
+                 <p class="text-sm text-gray-500 mt-1">目标-放弃-自责的循环</p>
+            </div>
+        </div>
+
+        <!-- 核心观点：专注系统 -->
+        <div class="xiaohongshu-card p-6 md:p-8 bg-gradient-to-br from-green-50 via-teal-50 to-cyan-50 border-green-200">
+             <div class="text-center mb-6">
+                <i class="fas fa-cogs text-6xl text-mint mb-3"></i>
+                <h2 class="text-3xl title-chinese text-mint">颠覆传统：<span class="underline decoration-wavy decoration-green-300">专注打造“系统”</span></h2>
+                <p class="text-sm text-gray-500 mt-1 title-english">FROM GOAL-ORIENTED TO SYSTEM-FOCUSED</p>
+            </div>
+            <p class="text-lg text-gray-700 leading-relaxed mb-4">今天分享的这篇文章，来自自我成长领域的作家 <strong class="highlight-bg-green">Kurtis Pykes</strong>，他提出了一个颠覆传统目标设定的观点：</p>
+            <blockquote class="text-xl font-semibold text-center text-mint p-4 bg-white rounded-lg shadow-sm border-l-4 border-mint my-5">
+                “与其执着于目标，不如专注打造「系统」。 ”
+            </blockquote>
+        </div>
+
+        <!-- 什么是系统？ -->
+        <div class="xiaohongshu-card p-6 md:p-8">
+            <div class="flex items-center mb-5">
+                <div class="icon-accent bg-yellow-100 text-yellow-600"><i class="fas fa-stream"></i></div>
+                <h2 class="text-2xl title-chinese text-deep-blue">🌱 什么是<span class="highlight-bg-yellow px-2 py-1 rounded-md">系统</span>？</h2>
+            </div>
+            <p class="text-gray-700 leading-relaxed mb-4">系统就是你<strong class="text-yellow-700">每天在做的事情</strong>，是那些<strong class="text-yellow-700">不依赖意志力</strong>、可以<strong class="text-yellow-700">自动运行</strong>的习惯和流程。比如：</p>
+            <div class="space-y-4 mt-5">
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <i class="fas fa-book-open text-2xl text-yellow-500 mr-4 mt-1"></i>
+                    <div>
+                        <p class="font-semibold text-gray-700">想写一本书？<span class="text-sm text-gray-500">(GOAL)</span></p>
+                        <p class="text-yellow-700 font-medium">系统是：<span class="highlight-bg-yellow px-1.5 py-0.5 rounded">每天写两页草稿。</span> <span class="text-xs title-english text-yellow-600">(SYSTEM)</span></p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <i class="fas fa-dumbbell text-2xl text-yellow-500 mr-4 mt-1"></i>
+                    <div>
+                        <p class="font-semibold text-gray-700">想降低体重？<span class="text-sm text-gray-500">(GOAL)</span></p>
+                        <p class="text-yellow-700 font-medium">系统是：<span class="highlight-bg-yellow px-1.5 py-0.5 rounded">每天控制饮食并规律运动。</span> <span class="text-xs title-english text-yellow-600">(SYSTEM)</span></p>
+                    </div>
+                </div>
+                <div class="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200">
+                     <i class="fas fa-bullhorn text-2xl text-yellow-500 mr-4 mt-1"></i>
+                    <div>
+                        <p class="font-semibold text-gray-700">想提升影响力？<span class="text-sm text-gray-500">(GOAL)</span></p>
+                        <p class="text-yellow-700 font-medium">系统是：<span class="highlight-bg-yellow px-1.5 py-0.5 rounded">每天坚持输出内容。</span> <span class="text-xs title-english text-yellow-600">(SYSTEM)</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 五步法与过程幸福 -->
+         <div class="xiaohongshu-card p-6 md:p-8">
+            <div class="flex items-center mb-5">
+                <div class="icon-accent bg-purple-100 text-purple-600"><i class="fas fa-drafting-compass"></i></div>
+                <h2 class="text-2xl title-chinese text-deep-blue">如何建立<span class="text-purple-500">自己的系统</span>？</h2>
+            </div>
+            <p class="text-gray-700 leading-relaxed mb-4">作者还分享了一个非常实用的“<strong class="text-purple-600 text-3xl font-bold">五</strong><span class="text-purple-500 font-semibold">步法</span>”，教你如何从零开始建立属于自己的系统。</p>
+            <div class="text-center my-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <p class="text-purple-700 font-semibold">
+                    <i class="fas fa- seedling mr-2"></i>
+                    更重要的是，这种系统思维能让你在追求目标的过程中就感受到<strong class="underline decoration-wavy decoration-purple-300">幸福</strong>，
+                </p>
+                <p class="text-purple-600 mt-1">而不是一味地“等我成功了再快乐”。</p>
+            </div>
+         </div>
+
+        <!-- 行动号召 -->
+        <div class="xiaohongshu-card text-center p-8 md:p-10 hero-gradient-bg text-white">
+            <i class="fas fa-rocket text-5xl mb-4 opacity-80"></i>
+            <h3 class="text-3xl font-bold mb-3 title-chinese">厌倦了反复失败？</h3>
+            <p class="text-xl opacity-90 mb-6">如果你也厌倦了“设目标—放弃—自责”的循环，不妨读一读这篇文章，开始用<strong class="text-yellow-200 underline">系统的思维</strong>重塑自己的生活。</p>
+            <button class="bg-white text-coral font-bold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-50 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 text-lg">
+                <i class="fas fa-book-reader mr-2"></i> 阅读原文，构建你的系统
+            </button>
+        </div>
+
+        <!-- 标签 -->
+        <div class="p-4 text-center">
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="highlight-tag">#执行力</span>
+                <span class="highlight-tag">#系统思维</span>
+                <span class="highlight-tag">#自我提升</span>
+                <span class="highlight-tag">#习惯养成</span>
+                <span class="highlight-tag">#目标管理</span>
+                <span class="highlight-tag">#KurtisPykes</span>
+                <span class="highlight-tag">#过程幸福</span>
+            </div>
+        </div>
+
+        <!-- 模拟小红书底部操作栏 -->
+        <footer class="sticky bottom-0 bg-white/80 backdrop-blur-md shadow-[-2px_0px_10px_rgba(0,0,0,0.08)] mt-12 py-3 px-4 border-t border-gray-200">
+            <div class="container mx-auto max-w-screen-md flex justify-around items-center text-gray-500">
+                <button class="flex flex-col items-center hover:text-coral transition-colors">
+                    <i class="fas fa-heart text-2xl text-red-500"></i>
+                    <span class="text-xs mt-1">2.8k</span>
+                </button>
+                <button class="flex flex-col items-center hover:text-yellow-500 transition-colors">
+                    <i class="fas fa-star text-2xl"></i>
+                    <span class="text-xs mt-1">1.1k</span>
+                </button>
+                <button class="flex flex-col items-center hover:text-mint transition-colors">
+                    <i class="fas fa-comment-dots text-2xl"></i>
+                    <span class="text-xs mt-1">409</span>
+                </button>
+                <button class="flex flex-col items-center hover:text-purple-500 transition-colors">
+                    <i class="fas fa-share-square text-2xl"></i>
+                    <span class="text-xs mt-1">Share</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+<script>
+    // Optional: Add a slight animation to cards on scroll or load
+    const cards = document.querySelectorAll('.xiaohongshu-card');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => {
+        card.style.opacity = 0;
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+        observer.observe(card);
+    });
+</script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
