@@ -1,0 +1,125 @@
+/* =============== 布局组件样式 - Header、Footer、导航等 =============== */
+
+/* =============== 导航组件 =============== */
+.nav-link {
+    color: #4b5563; /* text-gray-600 */
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+}
+.nav-link:hover {
+    color: var(--color-primary);
+    background-color: rgba(104, 144, 148, 0.1);
+}
+.nav-link.active {
+    color: var(--color-primary);
+    font-weight: 600;
+    background-color: rgba(104, 144, 148, 0.15);
+}
+
+/* 移动端导航链接 */
+.mobile-nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #4b5563;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+.mobile-nav-link:hover {
+    color: var(--color-primary);
+    background-color: rgba(104, 144, 148, 0.1);
+}
+.mobile-nav-link.active {
+    color: var(--color-primary);
+    font-weight: 600;
+    background-color: rgba(104, 144, 148, 0.15);
+}
+
+/* =============== 统一毛玻璃效果 =============== */
+.glass-effect {
+    /* 匹配首页色系的毛玻璃效果 - 增加不透明度 */
+    background: linear-gradient(135deg,
+        rgba(245, 248, 250, 0.8) 0%,
+        rgba(230, 238, 242, 0.85) 25%,
+        rgba(240, 245, 248, 0.75) 50%,
+        rgba(225, 235, 240, 0.8) 75%,
+        rgba(238, 243, 246, 0.8) 100%) !important;
+
+    /* 使用首页主色调的边框 */
+    border: 1px solid rgba(104, 144, 148, 0.2) !important;
+    border-bottom: 1px solid rgba(104, 144, 148, 0.3) !important;
+
+    /* 基础效果，无阴影 */
+    transition: all 0.3s ease !important;
+}
+
+.glass-effect:hover {
+    background: linear-gradient(135deg,
+        rgba(250, 252, 254, 0.9) 0%,
+        rgba(235, 242, 246, 0.95) 25%,
+        rgba(245, 249, 252, 0.85) 50%,
+        rgba(230, 238, 244, 0.9) 75%,
+        rgba(242, 247, 250, 0.9) 100%) !important;
+
+    border-color: rgba(104, 144, 148, 0.25) !important;
+    border-bottom-color: rgba(104, 144, 148, 0.35) !important;
+}
+
+/* =============== Header组件 =============== */
+.header-component {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    position: relative;
+}
+
+/* 首页header专用阴影效果 - 减轻阴影 */
+.header-component.glass-effect {
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.06),
+        0 2px 8px rgba(104, 144, 148, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.header-component.glass-effect:hover {
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        0 3px 12px rgba(104, 144, 148, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+/* 移除光泽效果，让header更透明 */
+
+/* header悬停效果已统一到 .glass-effect:hover */
+
+/* =============== Footer组件 =============== */
+.footer {
+    width: 100%;
+    background-color: var(--color-background);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    margin-top: 4rem;
+    border-top: 1px solid #e5e7eb;
+}
+.footer-text {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+}
+
+/* =============== 社交媒体按钮 =============== */
+.social-button {
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+}
+.social-button-text {
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 700;
+}

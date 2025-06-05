@@ -1,0 +1,128 @@
+/* =============== 核心样式 - 基础样式、变量、字体 =============== */
+
+/* =============== 基本样式 =============== */
+body {
+    font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #EAE6E1; /* 风化的米色 */
+    color: #3D3D3D; /* 碳色 */
+    overflow: auto; /* 允许页面滚动 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* 确保页面高度足够 */
+    text-align: center;
+    padding: 1rem;
+}
+
+/* =============== 颜色变量 =============== */
+:root {
+    --color-primary: #689094;
+    --color-text-main: #3D3D3D;
+    --color-text-secondary: #5A5A5A;
+    --color-text-tertiary: #6B6B6B;
+    --color-background: #EAE6E1;
+    --color-accent: #C8BFB6;
+    --color-border: #ddd;
+    --color-card-1: #8A9A5B; /* 橄榄绿 - 成长 */
+    --color-card-2: #7BA05B; /* 苔绿 - 健康 */
+    --color-card-3: #738276; /* 灰绿 - 体验 */
+}
+
+/* =============== 文本样式 =============== */
+.text-main { color: var(--color-text-main); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-primary { color: var(--color-primary); }
+
+/* 字体样式 */
+.font-display {
+    font-weight: 900;
+    line-height: 1.1;
+}
+.font-context {
+    font-weight: 700;
+}
+.text-highlight-gradient {
+    background-image: linear-gradient(to right, rgba(104, 144, 148, 0.9) 0%, rgba(104, 144, 148, 0.6) 50%, rgba(104, 144, 148, 0.3) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* =============== 布局容器 =============== */
+.container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: 100%;
+}
+@media (min-width: 640px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+@media (min-width: 1024px) {
+    .container {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+}
+
+/* =============== 背景元素 =============== */
+.memphis-shape {
+    position: absolute;
+    opacity: 0.05; /* Very subtle for background elements */
+    z-index: 0;
+    pointer-events: none;
+    color: var(--color-accent);
+}
+.content-wrapper {
+    position: relative; /* For Memphis shapes & absolute positioned elements */
+    z-index: 1; /* Ensure text is above background shapes */
+}
+
+/* Style for background 0s and 1s */
+.binary-bg {
+    position: absolute; /* 改为 absolute，使其相对于父容器定位 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 15vw; /* Very large, scales with viewport width */
+    font-weight: 900;
+    color: rgba(200, 191, 182, 0.15); /* #C8BFB6 with low alpha (沉静的陶土色) */
+    z-index: 0;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+    line-height: 0.8; /* Tighten line height for overlapping */
+}
+.binary-bg span {
+    opacity: 0.3; /* Make them even more faded */
+    margin: -2vw; /* Allow some overlap */
+}
+
+/* =============== 页面标题 =============== */
+.page-title {
+    position: relative;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+}
+.page-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-image: linear-gradient(to right, var(--color-card-1), var(--color-card-3));
+}

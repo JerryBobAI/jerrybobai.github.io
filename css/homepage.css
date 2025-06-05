@@ -1,0 +1,219 @@
+/* =============== 首页专用样式 =============== */
+
+/* =============== 鲸波月影标题动画 =============== */
+.whale-moon-text {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.whale-moon-text .char {
+    display: inline-block;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    transform-origin: center;
+}
+
+/* 悬停时的沙子崩裂效果 - 更自然的Q弹效果 */
+.whale-moon-text:hover .char:nth-child(1) {
+    transform: translate(-12px, -8px) rotate(-6deg) scale(0.92);
+    opacity: 0.75;
+}
+
+.whale-moon-text:hover .char:nth-child(2) {
+    transform: translate(6px, -12px) rotate(4deg) scale(0.88);
+    opacity: 0.7;
+}
+
+.whale-moon-text:hover .char:nth-child(3) {
+    transform: translate(-8px, 6px) rotate(-4deg) scale(0.96);
+    opacity: 0.8;
+}
+
+.whale-moon-text:hover .char:nth-child(4) {
+    transform: translate(14px, 10px) rotate(7deg) scale(0.9);
+    opacity: 0.72;
+}
+
+/* 添加粒子效果 - 更柔和的重影 */
+.whale-moon-text:hover .char::after {
+    content: attr(data-char);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.2;
+    transform: translate(3px, -3px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+    filter: blur(0.5px);
+}
+
+/* =============== 首页内容区域动画 =============== */
+#whale-moon-title, #hero-content {
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    pointer-events: none;
+}
+
+#whale-moon-title.show, #hero-content.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+#whale-moon-title.hidden, #hero-content.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+/* 防止首页顶部元素被全局动画影响 */
+#whale-moon-title, #hero-content {
+    animation: none !important;
+    will-change: opacity, transform;
+}
+
+/* 确保自定义动画优先级最高 */
+#whale-moon-title.show, #hero-content.show {
+    animation: none !important;
+}
+
+/* 防止全局滚动动画系统影响首页顶部元素 */
+#whale-moon-title.scroll-fade, #hero-content.scroll-fade,
+#whale-moon-title .scroll-fade, #hero-content .scroll-fade {
+    animation: none !important;
+    opacity: inherit !important;
+    transform: inherit !important;
+    transition: none !important;
+}
+
+/* 防止fadeIn动画影响 */
+#whale-moon-title.fade-in, #hero-content.fade-in,
+#whale-moon-title .fade-in, #hero-content .fade-in {
+    animation: none !important;
+    opacity: inherit !important;
+    transform: inherit !important;
+}
+
+/* 首页顶部元素不受全局动画控制影响 */
+body:not(.animations-ready) #whale-moon-title,
+body:not(.animations-ready) #hero-content {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+}
+
+/* =============== 分页控制组件 =============== */
+#pagination-spacer {
+    transition: opacity 0.3s ease;
+}
+
+#pagination-spacer.hidden {
+    display: none !important;
+}
+
+/* 显示所有按钮 */
+.show-all-button {
+    background: linear-gradient(135deg, rgba(104, 144, 148, 0.1) 0%, rgba(104, 144, 148, 0.05) 100%);
+    border: 2px solid rgba(104, 144, 148, 0.2);
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.show-all-button:hover {
+    background: linear-gradient(135deg, rgba(104, 144, 148, 0.15) 0%, rgba(104, 144, 148, 0.08) 100%);
+    border-color: rgba(104, 144, 148, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 分页控件 */
+.pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(104, 144, 148, 0.1);
+    max-width: 500px;
+    min-width: 400px;
+    margin: 0 auto;
+}
+
+.pagination-btn {
+    background: transparent;
+    border: none;
+    padding: 0.75rem 2rem;
+    color: var(--color-text-main);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-family: 'Noto Sans SC', sans-serif;
+    white-space: nowrap;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.pagination-btn:not(.pagination-btn-disabled):hover {
+    background: rgba(104, 144, 148, 0.1);
+    color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.pagination-btn-disabled {
+    color: var(--color-text-tertiary);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.page-info {
+    padding: 0.75rem 2rem;
+    background: rgba(104, 144, 148, 0.05);
+    border-radius: 0.5rem;
+    margin: 0 1rem;
+    min-width: 150px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* =============== 响应式设计 =============== */
+@media (max-width: 640px) {
+    .pagination-wrapper {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+        min-width: 280px;
+        max-width: 320px;
+    }
+
+    .page-info {
+        margin: 0;
+        order: -1;
+        min-width: 120px;
+        padding: 0.75rem 1rem;
+    }
+
+    .pagination-btn {
+        width: 100%;
+        justify-content: center;
+        min-width: auto;
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination-wrapper {
+        min-width: 260px;
+        max-width: 300px;
+    }
+}

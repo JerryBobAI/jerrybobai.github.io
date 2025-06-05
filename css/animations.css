@@ -1,0 +1,95 @@
+/* =============== 动画样式 =============== */
+
+/* =============== 页面加载动画 =============== */
+/* 只对初始存在的组件应用预加载隐藏，不影响动态生成的内容 */
+body:not(.animations-ready) [data-component="pinned-previews"]:empty,
+body:not(.animations-ready) [data-component="iframe-previews"]:empty,
+body:not(.animations-ready) .article-controls {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* =============== 文章预览卡片动画 =============== */
+.preview-item {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.preview-item.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 预览容器保持稳定，不参与整体动画 */
+#iframe-previews {
+    min-height: 200px; /* 保持最小高度，避免布局跳动 */
+}
+
+/* 动画准备就绪后的其他元素过渡效果 */
+body.animations-ready [data-component="pinned-previews"],
+body.animations-ready [data-component="iframe-previews"],
+body.animations-ready .article-controls {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* =============== 置顶标记动画 =============== */
+@keyframes gentlePulse {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+.pinned-badge i {
+    animation: gentlePulse 3s ease-in-out infinite !important;
+}
+
+/* =============== 卡片悬停动画 =============== */
+.preview-item:hover {
+    transform: translateY(-5px) !important;
+}
+
+.preview-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 12px; /* 确保悬停时保持圆角 */
+}
+
+/* 文章卡片动画 */
+.article-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-3px);
+}
+
+.article-card:hover .article-card-inner {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* 通用卡片动画 */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.ai-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ai-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}

@@ -6,7 +6,7 @@
 function renderHeader(currentPath, isRoot) {
     const headerElement = document.querySelector('[data-component="header"]');
     if (!headerElement) return;
-    headerElement.classList.add('header-component');
+    headerElement.classList.add('header-component', 'glass-effect');
 
     // 路径处理逻辑改进，避免重复路径
     let prefix = '';
@@ -208,21 +208,17 @@ function renderArticleMeta(currentPath, metadataCache) {
             return `<span class="inline-block ${colorClass} hover:opacity-80 transition-all duration-200 hover:scale-105 rounded-full px-3 py-1 text-xs font-medium border tag-animate" style="animation-delay: ${index * 0.1}s">${tag}</span>`;
         }).join('');
     }
-    
+
     // 构建元信息 HTML
     let homeLink = "../../index.html";
     if (currentPath.split('/').length <= 2) {
         homeLink = "../index.html";
     }
-    
+
     // 简化样式
     const styles = `
         <style>
-            .article-meta-blur {
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-                background-color: rgba(255, 255, 255, 0.7);
-            }
+            /* 移除重复的CSS，使用CSS文件中的统一样式 */
             .ultra-light-date {
                 color: rgba(107, 114, 128, 0.7);
             }
@@ -261,12 +257,6 @@ function renderArticleMeta(currentPath, metadataCache) {
                 transition: all 0.3s ease;
             }
 
-            .article-meta-component:hover .article-meta-blur {
-                background-color: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-            }
-
             .tag-animate {
                 opacity: 0;
                 transform: translateY(10px);
@@ -289,7 +279,7 @@ function renderArticleMeta(currentPath, metadataCache) {
     // 渲染 HTML 内容
     articleMetaElement.innerHTML = `
         ${styles}
-        <div class="w-full article-meta-blur">
+        <div class="w-full article-meta-blur glass-effect">
             <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
                 <div class="flex items-center ultra-light-date">
                     <a href="${homeLink}" class="home-link">
@@ -312,22 +302,22 @@ function renderArticleMeta(currentPath, metadataCache) {
 // 初始化所有布局组件
 async function initializeLayout() {
     console.log('🚀 开始初始化布局组件');
-    
+
     // 等待核心系统初始化完成
     const coreState = await initializeCore();
     if (!coreState) {
         console.error('❌ 核心系统初始化失败');
         return;
     }
-    
+
     const { currentPath, isRoot } = coreState;
     const metadataCache = getMetadataCache();
-    
+
     // 渲染各布局组件
     renderHeader(currentPath, isRoot);
     renderArticleMeta(currentPath, metadataCache);
     renderFooter(isRoot);
-    
+
     console.log('✅ 布局组件初始化完成');
 }
 
