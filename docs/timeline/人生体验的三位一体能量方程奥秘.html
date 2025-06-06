@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>人生体验公式 E = mc²</title>
+	<script src="https://cdn.tailwindcss.com/3.4.1"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<style>
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+			background-color: #ffffff;
+			color: #000000;
+		}
+		.gradient-text {
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+		}
+		.highlight-blue-purple {
+			background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+		}
+		.highlight-purple-red {
+			background-image: linear-gradient(to right, #8b5cf6, #ec4899);
+		}
+		.highlight-red-orange {
+			background-image: linear-gradient(to right, #ec4899, #f97316);
+		}
+		.highlight-blue-purple-orange {
+			background-image: linear-gradient(to right, #3b82f6, #a855f7, #f97316);
+		}
+		.section-main-title { /* Renamed from highlight-section-title to avoid confusion */
+			font-size: 2.25rem; /* Tailwind: text-4xl */
+			line-height: 2.5rem; /* Tailwind: leading-10 */
+			font-weight: 700; /* Tailwind: font-bold */
+			margin-bottom: 1rem; /* Tailwind: mb-4 */
+			text-align: center;
+			color: #000000; /* Black main title text */
+		}
+		.section-main-title .gradient-highlight { /* For the "一、公式解构" part */
+			 background-image: linear-gradient(to right, #3b82f6, #a855f7, #f97316);
+			 background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+		}
+		.section-subtitle-english {
+			display: block;
+			font-size: 0.875rem; /* text-sm */
+			font-weight: 300; /* font-light */
+			color: #555;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			margin-top: 0.25rem; /* mb-1 */
+		}
+
+		.chinese-main-text {
+			font-weight: 600; /* semi-bold or bold for Chinese main text */
+		}
+		.english-annotation {
+			font-size: 0.8em;
+			color: #4a5568; /* Tailwind gray-600, slightly darker than default #555 */
+			font-weight: 400; /* normal */
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			margin-left: 0.25rem;
+			margin-right: 0.25rem;
+		}
+		.super-large-text {
+			font-size: 5rem; /* Adjusted for balance */
+			font-weight: 800; /* Tailwind font-extrabold */
+		}
+		@media (min-width: 768px) {
+			.super-large-text {
+				font-size: 7rem; /* md:text-9xl */
+			}
+		}
+		.card {
+			background-color: #ffffff;
+			border: 1px solid rgba(0,0,0,0.08);
+			border-radius: 0.75rem; /* Tailwind rounded-xl */
+			padding: 1.5rem; /* Tailwind p-6 */
+			box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
+		}
+		.icon-container {
+			font-size: 2rem; /* Tailwind text-3xl */
+			margin-bottom: 0.75rem; /* Tailwind mb-3 */
+		}
+		.gradient-bg-element {
+			opacity: 0.08; /* Made more subtle */
+			position: absolute;
+			z-index: 0; /* Behind content */
+			filter: blur(80px); /* Increased blur */
+		}
+		.table-header {
+			font-weight: 700;
+			padding: 0.75rem 1rem; /* Tailwind p-3 px-4 */
+			background-color: rgba(0,0,0,0.03); /* Very light gray */
+			border-bottom: 1px solid rgba(0,0,0,0.1);
+		}
+		.table-cell {
+			padding: 0.75rem 1rem; /* Tailwind p-3 px-4 */
+			border-top: 1px solid rgba(0,0,0,0.05);
+		}
+		.data-highlight {
+			 font-size: 2.5rem; /* text-4xl */
+			 font-weight: 800; /* font-extrabold */
+		}
+	</style>
+</head>
+<body class="antialiased">
+
+<div class="min-h-screen w-full overflow-x-hidden relative">
+	<!-- Decorative background elements -->
+	<div class="gradient-bg-element highlight-blue-purple rounded-full w-[500px] h-[500px] top-[-15%] left-[-15%] animate-pulse animation-delay-2000"></div>
+	<div class="gradient-bg-element highlight-red-orange rounded-full w-[400px] h-[400px] bottom-[-10%] right-[-10%] animate-pulse animation-delay-4000"></div>
+
+	<!-- Hero Section -->
+	<section class="container mx-auto px-6 py-20 md:py-32 text-center min-h-[80vh] flex flex-col justify-center items-center relative z-10">
+		<h1 class="text-5xl md:text-6xl font-extrabold mb-6 chinese-main-text">
+			人生体验的<span class="gradient-text highlight-blue-purple-orange">奥秘</span>
+			<span class="section-subtitle-english mt-2">THE SECRET OF LIFE EXPERIENCE</span>
+		</h1>
+		<div class="my-8 md:my-12">
+			<p class="super-large-text gradient-text highlight-blue-purple-orange">E = mc²</p>
+			<p class="text-xl md:text-3xl font-bold mt-2 chinese-main-text">
+				体验 <span class="english-annotation text-lg md:text-xl">(Experience)</span> = 意义 <span class="english-annotation text-lg md:text-xl">(Meaning)</span> × 创造 <span class="english-annotation text-lg md:text-xl">(Create)</span> × 陪伴 <span class="english-annotation text-lg md:text-xl">(Company)</span>
+			</p>
+		</div>
+		<p class="max-w-3xl mx-auto text-md md:text-lg text-gray-700 leading-relaxed">
+			这个将人生体验公式化的类比，与爱因斯坦的质能方程 <strong class="font-semibold text-black">E=mc²</strong> 有哲学层面的神似——两者都试图用简洁的数学关系揭示复杂世界的本质。
+		</p>
+	</section>
+
+	<!-- Section 1: 公式解构 -->
+	<section class="py-16 md:py-24 relative z-10">
+		<div class="container mx-auto px-6">
+			<h2 class="section-main-title">
+				<span class="gradient-highlight">一、公式解构</span>：体验的三大核心维度
+				<span class="section-subtitle-english">DECONSTRUCTING THE FORMULA: THREE CORE DIMENSIONS OF EXPERIENCE</span>
+			</h2>
+			<div class="grid md:grid-cols-3 gap-8 mt-12">
+				<div class="card transform hover:scale-[1.03] transition-transform duration-300 ease-out">
+					<div class="icon-container gradient-text highlight-blue-purple"><i class="fas fa-anchor"></i></div>
+					<h3 class="text-2xl font-bold mb-3 chinese-main-text">意义 <span class="english-annotation">(Meaning)</span></h3>
+					<p class="text-lg font-semibold mb-2 gradient-text highlight-blue-purple">体验的“质量”维度</p>
+					<p class="text-gray-800 mb-3 text-sm leading-relaxed">
+						<strong class="font-semibold text-black">意义是体验的价值锚点</strong>，赋予经历深度。研究指出，生命意义感由 <strong class="font-semibold text-black">目的性</strong>、<strong class="font-semibold text-black">重要性</strong>、<strong class="font-semibold text-black">一致性</strong> 和 <strong class="font-semibold text-black">体验式欣赏</strong> 构成。
+					</p>
+					<p class="text-gray-800 text-sm leading-relaxed">
+						<strong class="font-semibold text-black">深层逻辑</strong>：无意义的体验如同无效能量，而意义能将平凡事件转化为“值得铭记的时刻”。
+					</p>
+				</div>
+				<div class="card transform hover:scale-[1.03] transition-transform duration-300 ease-out">
+					<div class="icon-container gradient-text highlight-purple-red"><i class="fas fa-cogs"></i></div>
+					<h3 class="text-2xl font-bold mb-3 chinese-main-text">创造 <span class="english-annotation">(Create)</span></h3>
+					<p class="text-lg font-semibold mb-2 gradient-text highlight-purple-red">体验的“能量转化”维度</p>
+					<p class="text-gray-800 mb-3 text-sm leading-relaxed">
+						<strong class="font-semibold text-black">创造是体验的主动引擎</strong>，将抽象意义具象化。
+						<br><em>个体层面</em>：通过创作将内在价值外显。
+						<br><em>社会层面</em>：体验经济强调设计 <strong class="font-semibold text-black">可参与的创造性活动</strong>。
+					</p>
+					<p class="text-gray-800 text-sm leading-relaxed">
+						<strong class="font-semibold text-black">数据佐证</strong>：约瑟夫·派恩的体验价值模型中，<strong class="font-semibold text-black">认知价值</strong> 和 <strong class="font-semibold text-black">情感价值</strong> 是核心指标。
+					</p>
+				</div>
+				<div class="card transform hover:scale-[1.03] transition-transform duration-300 ease-out">
+					<div class="icon-container gradient-text highlight-red-orange"><i class="fas fa-users"></i></div>
+					<h3 class="text-2xl font-bold mb-3 chinese-main-text">陪伴 <span class="english-annotation">(Company)</span></h3>
+					<p class="text-lg font-semibold mb-2 gradient-text highlight-red-orange">体验的“关系场域”维度</p>
+					<p class="text-gray-800 mb-3 text-sm leading-relaxed">
+						<strong class="font-semibold text-black">陪伴是体验的放大器</strong>，通过共享提升情感密度。
+						<br>人际关系是体验的“容器”：<strong class="font-semibold text-black">社交价值</strong> 能显著增强体验的积极记忆。
+					</p>
+					<p class="text-gray-800 text-sm leading-relaxed">
+						孤独的成就可能带来意义与创造，但 <strong class="font-semibold text-black">共享时刻</strong> 会注入情感共鸣。
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 2: 公式的深层隐喻 -->
+	<section class="py-16 md:py-24 relative z-10">
+		<div class="container mx-auto px-6">
+			<h2 class="section-main-title">
+				<span class="gradient-highlight">二、公式的深层隐喻</span>：为何类比 E=mc²？
+				<span class="section-subtitle-english">THE DEEPER METAPHOR: WHY THE ANALOGY TO E=mc²?</span>
+			</h2>
+			<div class="overflow-x-auto mt-12 card">
+				<table class="min-w-full text-left text-sm">
+					<thead>
+					<tr>
+						<th class="table-header">元素 <span class="english-annotation">(ELEMENT)</span></th>
+						<th class="table-header">E=mc²（物理世界 <span class="english-annotation">PHYSICAL WORLD</span>）</th>
+						<th class="table-header">e=m×c×c（体验世界 <span class="english-annotation">EXPERIENCE WORLD</span>）</th>
+					</tr>
+					</thead>
+					<tbody class="text-gray-800">
+					<tr>
+						<td class="table-cell font-semibold text-black">核心变量</td>
+						<td class="table-cell">质量（m） → 能量（E）</td>
+						<td class="table-cell">意义（m）→ 体验（e）</td>
+					</tr>
+					<tr>
+						<td class="table-cell font-semibold text-black">转化媒介</td>
+						<td class="table-cell">光速（c）→ 释放巨大能量</td>
+						<td class="table-cell">创造（c₁）与陪伴（c₂）→ 释放生命能量</td>
+					</tr>
+					<tr>
+						<td class="table-cell font-semibold text-black">哲学本质</td>
+						<td class="table-cell">质量与能量的等价性</td>
+						<td class="table-cell">意义、创造、陪伴的交互性</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="mt-10 text-center max-w-3xl mx-auto">
+				<h3 class="text-2xl font-bold mb-4 chinese-main-text">关键相似性 <span class="english-annotation">(KEY SIMILARITY)</span></h3>
+				<p class="text-lg text-gray-800 leading-relaxed">
+					二者均揭示 <strong class="gradient-text highlight-blue-purple text-xl font-semibold">潜在能量的释放机制</strong>：
+				</p>
+				<ul class="list-none mt-4 space-y-3 text-md text-gray-800">
+					<li class="flex items-start sm:items-center justify-center">
+						<i class="fas fa-rocket gradient-text highlight-blue-purple mr-3 mt-1 sm:mt-0 text-xl"></i>
+						<span><em>E=mc²</em> 中，<strong class="font-semibold text-black">c² (光速平方)</strong> 是能量转化的“杠杆”；</span>
+					</li>
+					<li class="flex items-start sm:items-center justify-center">
+						<i class="fas fa-people-arrows gradient-text highlight-purple-red mr-3 mt-1 sm:mt-0 text-xl"></i>
+						<span><em>e=m×c×c</em> 中，<strong class="font-semibold text-black">创造与陪伴的乘积效应</strong> 能将微小意义转化为终身难忘的体验。</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 3: 现实印证 -->
+	<section class="py-16 md:py-24 relative z-10">
+		<div class="container mx-auto px-6">
+			<h2 class="section-main-title">
+				<span class="gradient-highlight">三、现实印证</span>：研究支持的交互效应
+				<span class="section-subtitle-english">REAL-WORLD VALIDATION: RESEARCH-SUPPORTED INTERACTIVE EFFECTS</span>
+			</h2>
+			<div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+				<div class="card">
+					<div class="flex items-center mb-4">
+						<i class="fas fa-lightbulb text-3xl gradient-text highlight-blue-purple mr-3"></i>
+						<i class="fas fa-plus text-xl text-gray-400 mr-3"></i>
+						<i class="fas fa-palette text-3xl gradient-text highlight-blue-purple mr-3"></i>
+						<h3 class="text-xl font-bold chinese-main-text">意义 × 创造</h3>
+					</div>
+					<p class="text-gray-800 text-sm mb-2 leading-relaxed">当用户通过 <strong class="font-semibold text-black">创造行为</strong> 实现 <strong class="font-semibold text-black">个性化意义</strong>，体验价值最高。</p>
+					<p class="text-sm text-gray-700 italic"><strong class="font-semibold text-black">案例</strong>：迪士尼“魔法手环”提升复购率 <span class="data-highlight gradient-text highlight-blue-purple">30%</span>。</p>
+					<div class="mt-4 w-full h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-transparent opacity-60 rounded-full"></div>
+				</div>
+				<div class="card">
+					<div class="flex items-center mb-4">
+						<i class="fas fa-lightbulb text-3xl gradient-text highlight-purple-red mr-3"></i>
+						<i class="fas fa-plus text-xl text-gray-400 mr-3"></i>
+						<i class="fas fa-handshake text-3xl gradient-text highlight-purple-red mr-3"></i>
+						<h3 class="text-xl font-bold chinese-main-text">意义 × 陪伴</h3>
+					</div>
+					<p class="text-gray-800 text-sm mb-2 leading-relaxed"><strong class="font-semibold text-black">共享式欣赏</strong> 激活大脑奖赏回路，编码“人生意义事件”。</p>
+					<p class="text-sm text-gray-700 italic"><strong class="font-semibold text-black">数据</strong>：疫情期间共同寻找意义，抑郁指数降 <span class="data-highlight gradient-text highlight-purple-red">40%</span>。</p>
+					<div class="mt-4 w-full h-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-transparent opacity-60 rounded-full"></div>
+				</div>
+				<div class="card">
+					<div class="flex items-center mb-4">
+						<i class="fas fa-palette text-3xl gradient-text highlight-red-orange mr-3"></i>
+						<i class="fas fa-plus text-xl text-gray-400 mr-3"></i>
+						<i class="fas fa-handshake text-3xl gradient-text highlight-red-orange mr-3"></i>
+						<h3 class="text-xl font-bold chinese-main-text">创造 × 陪伴</h3>
+					</div>
+					<p class="text-gray-800 text-sm mb-2 leading-relaxed"><strong class="font-semibold text-black">协作创造</strong> 满足社交与成就需求，形成“心流体验”。</p>
+					<p class="text-sm text-gray-700 italic">这能激发深层次的满足感和连接感。</p>
+					<div class="mt-4 w-full h-1.5 bg-gradient-to-r from-pink-500 via-orange-500 to-transparent opacity-60 rounded-full"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 4: 启示 -->
+	<section class="py-16 md:py-24 relative z-10">
+		<div class="container mx-auto px-6">
+			<h2 class="section-main-title">
+				<span class="gradient-highlight">四、启示</span>：如何用公式优化人生体验？
+				<span class="section-subtitle-english">IMPLICATIONS: HOW TO OPTIMIZE LIFE EXPERIENCE</span>
+			</h2>
+			<div class="grid md:grid-cols-3 gap-8 mt-12">
+				<div class="text-center p-6 border border-gray-200 rounded-xl hover:shadow-xl transition-shadow duration-300">
+					<div class="icon-container gradient-text highlight-blue-purple"><i class="fas fa-search-plus"></i></div>
+					<h3 class="text-xl font-bold mb-3 chinese-main-text">意义挖掘 <span class="english-annotation">(MEANING DISCOVERY)</span></h3>
+					<p class="text-gray-800 text-sm">通过 <strong class="font-semibold gradient-text highlight-blue-purple">体验式欣赏</strong> 主动发现日常之美。</p>
+				</div>
+				<div class="text-center p-6 border border-gray-200 rounded-xl hover:shadow-xl transition-shadow duration-300">
+					<div class="icon-container gradient-text highlight-purple-red"><i class="fas fa-tools"></i></div>
+					<h3 class="text-xl font-bold mb-3 chinese-main-text">创造赋能 <span class="english-annotation">(CREATION EMPOWERMENT)</span></h3>
+					<p class="text-gray-800 text-sm">将目标转化为 <strong class="font-semibold gradient-text highlight-purple-red">可操作的创造行为</strong>。</p>
+				</div>
+				<div class="text-center p-6 border border-gray-200 rounded-xl hover:shadow-xl transition-shadow duration-300">
+					<div class="icon-container gradient-text highlight-red-orange"><i class="fas fa-user-friends"></i></div>
+					<h3 class="text-xl font-bold mb-3 chinese-main-text">陪伴选择 <span class="english-annotation">(COMPANIONSHIP CHOICE)</span></h3>
+					<p class="text-gray-800 text-sm">优先与 <strong class="font-semibold gradient-text highlight-red-orange">能激发意义与创造力的人</strong> 共享时光。</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer Section -->
+	<footer class="py-16 md:py-24 text-center bg-black text-white relative z-10">
+		<!-- Subtle wave or abstract background for footer -->
+		<div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(45deg, #3b82f6 25%, transparent 25%), linear-gradient(-45deg, #3b82f6 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #a855f7 75%), linear-gradient(-45deg, transparent 75%, #a855f7 75%); background-size: 20px 20px;"></div>
+
+		<div class="container mx-auto px-6 relative">
+			<div class="max-w-3xl mx-auto">
+				<i class="fas fa-quote-left text-3xl md:text-4xl gradient-text highlight-blue-purple-orange mb-6"></i>
+				<p class="text-xl md:text-2xl font-semibold italic mb-1 text-gray-300">
+					“逻辑带你从A到B，<span class="gradient-text highlight-blue-purple">想象力</span>带你去任何地方。”
+				</p>
+				<p class="text-sm text-gray-500 mb-8"><span class="english-annotation">ALBERT EINSTEIN</span></p>
+
+				<p class="text-lg md:text-xl leading-relaxed text-gray-300">
+					此公式亦然——它并非数学真理，而是对人类体验的 <strong class="font-semibold text-white">诗意建模</strong>：当意义为基、创造为翼、陪伴为风时，平凡生命亦能释放 <span class="text-2xl md:text-3xl font-bold gradient-text highlight-purple-red">超乎想象</span> 的能量。
+				</p>
+				<p class="text-2xl md:text-3xl font-extrabold mt-8 text-white">
+					体验的本质，是意义、创造与陪伴的 <span class="gradient-text highlight-blue-purple-orange" style="text-shadow: 0 0 8px rgba(59, 130, 246, 0.4), 0 0 15px rgba(168, 85, 247, 0.3);">共振</span>。
+					<span class="section-subtitle-english text-gray-500">THE ESSENCE: RESONANCE OF MEANING, CREATION, AND COMPANIONSHIP.</span>
+				</p>
+			</div>
+		</div>
+	</footer>
+</div>
+</body>
+</html>
