@@ -1,5 +1,180 @@
 // 布局组件 - header、footer、article-meta等页面布局相关组件
 
+// =============== 移动端菜单管理器 ===============
+let mobileMenuManager = null;
+
+function createMobileMenuManager() {
+    // 如果已存在管理器，先销毁
+    if (mobileMenuManager) {
+        mobileMenuManager.destroy();
+        mobileMenuManager = null;
+    }
+
+    mobileMenuManager = {
+        isToggling: false,
+        isInitialized: false,
+        outsideClickHandler: null,
+        buttonClickHandler: null,
+
+        init: function() {
+            if (this.isInitialized) return;
+
+            const button = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+
+            if (!button || !menu) return;
+
+            console.log('🔧 初始化移动端菜单管理器');
+
+            // 重置状态
+            menu.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
+            this.isToggling = false;
+
+            // 创建绑定的事件处理函数
+            this.buttonClickHandler = (event) => {
+                console.log('📱 菜单按钮被点击');
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                if (this.isToggling) {
+                    console.log('⏳ 菜单正在切换中，忽略点击');
+                    return;
+                }
+
+                this.toggle();
+            };
+
+            this.outsideClickHandler = (event) => {
+                const button = document.getElementById('mobile-menu-button');
+                const menu = document.getElementById('mobile-menu');
+
+                if (!button || !menu) return;
+
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                if (isExpanded && !menu.contains(event.target) && !button.contains(event.target)) {
+                    console.log('🖱️ 点击外部区域，关闭菜单');
+                    this.close();
+                }
+            };
+
+            // 绑定事件
+            button.addEventListener('click', this.buttonClickHandler, { capture: true });
+
+            // 菜单容器点击事件 - 阻止冒泡
+            const container = menu.querySelector('.mobile-menu-container');
+            if (container) {
+                container.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                });
+            }
+
+            // 菜单项点击事件
+            const links = menu.querySelectorAll('.mobile-nav-link');
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    console.log('🔗 菜单项被点击，关闭菜单');
+                    this.close();
+                });
+            });
+
+            // 延迟绑定外部点击事件，避免立即触发
+            setTimeout(() => {
+                document.addEventListener('click', this.outsideClickHandler);
+            }, 100);
+
+            this.isInitialized = true;
+            console.log('✅ 移动端菜单管理器初始化完成');
+        },
+
+        toggle: function() {
+            const button = document.getElementById('mobile-menu-button');
+            if (!button) return;
+
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            console.log(`🔄 切换菜单状态: ${isExpanded ? '关闭' : '打开'}`);
+
+            if (isExpanded) {
+                this.close();
+            } else {
+                this.open();
+            }
+        },
+
+        open: function() {
+            if (this.isToggling) return;
+            this.isToggling = true;
+
+            console.log('📂 打开菜单');
+            const button = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const container = menu.querySelector('.mobile-menu-container');
+
+            menu.classList.remove('hidden');
+            button.setAttribute('aria-expanded', 'true');
+
+            if (container) {
+                container.style.animation = 'mobileMenuSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                setTimeout(() => {
+                    this.isToggling = false;
+                    console.log('✅ 菜单打开完成');
+                }, 350);
+            } else {
+                this.isToggling = false;
+            }
+        },
+
+        close: function() {
+            if (this.isToggling) return;
+            this.isToggling = true;
+
+            console.log('📁 关闭菜单');
+            const button = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const container = menu.querySelector('.mobile-menu-container');
+
+            button.setAttribute('aria-expanded', 'false');
+
+            if (container) {
+                container.style.animation = 'mobileMenuSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    container.style.animation = '';
+                    this.isToggling = false;
+                    console.log('✅ 菜单关闭完成');
+                }, 250);
+            } else {
+                menu.classList.add('hidden');
+                this.isToggling = false;
+            }
+        },
+
+        destroy: function() {
+            console.log('🗑️ 销毁移动端菜单管理器');
+
+            if (this.outsideClickHandler) {
+                document.removeEventListener('click', this.outsideClickHandler);
+                this.outsideClickHandler = null;
+            }
+
+            if (this.buttonClickHandler) {
+                const button = document.getElementById('mobile-menu-button');
+                if (button) {
+                    button.removeEventListener('click', this.buttonClickHandler, { capture: true });
+                }
+                this.buttonClickHandler = null;
+            }
+
+            this.isInitialized = false;
+            this.isToggling = false;
+        }
+    };
+
+    return mobileMenuManager;
+}
+
 // =============== Header组件 ===============
 
 // 渲染Header组件
@@ -73,13 +248,15 @@ function renderHeader(currentPath, isRoot) {
 
             <!-- 移动端导航菜单 -->
             <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
-                    <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
-                    <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
-                    <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
-                    <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
-                    <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
-                    <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+                <div class="mobile-menu-container glass-effect mx-4 mt-2 mb-4 rounded-2xl shadow-lg overflow-hidden">
+                    <div class="px-4 py-3 space-y-1">
+                        <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
+                        <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
+                        <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
+                        <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
+                        <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
+                        <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,31 +264,8 @@ function renderHeader(currentPath, isRoot) {
 
     // 添加移动端菜单交互
     setTimeout(() => {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (mobileMenuButton && mobileMenu) {
-            mobileMenuButton.addEventListener('click', function() {
-                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-
-                if (isExpanded) {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                } else {
-                    mobileMenu.classList.remove('hidden');
-                    mobileMenuButton.setAttribute('aria-expanded', 'true');
-                }
-            });
-
-            // 点击菜单项后关闭菜单
-            const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                });
-            });
-        }
+        const manager = createMobileMenuManager();
+        manager.init();
     }, 100);
 }
 
