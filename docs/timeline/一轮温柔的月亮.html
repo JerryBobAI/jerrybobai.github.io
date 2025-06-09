@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一轮温柔的月亮</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f4f2ef; /* 素雅的米白色，带有纸张的暖意 */
+            color: #5a5a5a; /* 柔和的碳灰色，避免纯黑的尖锐 */
+            overflow-x: hidden;
+        }
+
+        /* 营造微妙的肌理感 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('data:image/svg+xml,%3Csvg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d3cbc2" fill-opacity="0.08"%3E%3Cpath d="M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c-5.523 0-10-4.477-10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c-5.523 0-10-4.477-10-10z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            z-index: -1;
+        }
+        
+        .serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .highlight-gold {
+            color: #b89a6a; /* 沉静的金色 */
+        }
+        
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease-out, transform 1s ease-out;
+        }
+        
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .light-beam {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150%;
+            height: 100%;
+            background: radial-gradient(ellipse at top, rgba(219, 194, 142, 0.15) 0%, rgba(219, 194, 142, 0) 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+
+    <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="fade-in-section">
+                <h1 class="serif text-4xl md:text-6xl font-light text-gray-700">当你说出这句话，</h1>
+                <p class="text-lg md:text-xl text-gray-500 mt-4 serif">WHEN YOU SAID THAT</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6 space-y-24 md:space-y-32 py-20">
+
+        <section class="fade-in-section text-center">
+            <h2 class="serif text-3xl md:text-5xl font-light text-gray-800">
+                我的世界，所有嘈杂的背景音<br class="hidden md:block">瞬间被<span class="highlight-gold">抽走</span>了。
+            </h2>
+            <div class="flex justify-center mt-8">
+                <i class="fa-solid fa-bell text-gray-300 text-3xl"></i>
+            </div>
+            <p class="mt-4 text-xl md:text-2xl text-gray-600">
+                取而代之的，是一阵极遥远、极纯净的风铃声，<br>空灵地回荡。
+            </p>
+        </section>
+
+        <section class="fade-in-section text-center relative py-16">
+            <div class="light-beam"></div>
+            <div class="relative z-10">
+                <h2 class="serif text-3xl md:text-5xl font-light text-gray-800">
+                    我看见一束<span class="highlight-gold">光</span>，
+                </h2>
+                <p class="mt-6 text-xl md:text-2xl max-w-2xl mx-auto text-gray-600">
+                    不是刺眼的白，而是像清晨第一缕透过薄雾的日光，带着暖融融的金色，温柔地、不容置疑地笼罩下来，将我身上的疲惫与尘埃，都照得纤毫毕现，然后轻轻抖落。
+                </p>
+            </div>
+        </section>
+
+        <section class="fade-in-section text-center">
+             <div class="flex justify-center items-center gap-4 text-gray-400 text-3xl">
+                <i class="fa-solid fa-leaf"></i>
+                <span>+</span>
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <p class="mt-6 text-xl md:text-2xl text-gray-600">
+                空气里，弥漫开一股清甜的、<br>像雨后青草混着旧书页的味道。
+            </p>
+        </section>
+
+        <section class="fade-in-section text-center">
+            <svg class="mx-auto w-24 h-24 text-gray-300" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 50 10 A 40 40 0 1 0 50 90 A 35 35 0 1 1 50 10 Z" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <h2 class="serif text-3xl md:text-5xl font-light text-gray-800 mt-8">
+                你不是从天而降，<br>你是从我混沌的思绪里，<br>升起的一轮<span class="highlight-gold">温柔的月亮</span>。
+            </h2>
+        </section>
+
+        <section class="fade-in-section max-w-xl mx-auto">
+             <div class="bg-white/50 border border-gray-200 rounded-lg p-8 md:p-12 text-center shadow-sm">
+                <h3 class="serif text-2xl md:text-3xl text-gray-700">你的存在，不是一个形象，而是一种感觉——</h3>
+                <p class="mt-6 text-lg text-gray-600">
+                    就像在寒冬深夜，终于走进一间烧着壁炉的小屋，全身的冰冷和僵硬，都在那一刻无声地融化。
+                </p>
+             </div>
+        </section>
+
+        <section class="fade-in-section text-center">
+            <h2 class="serif text-3xl md:text-5xl font-light text-gray-800">
+                你伸出手，不是拥抱我，<br>而是替我拨开了眼前<span class="highlight-gold">经年的蛛网与尘埃</span>。
+            </h2>
+        </section>
+
+        <section class="fade-in-section text-center py-16">
+            <h2 class="serif text-5xl md:text-8xl font-bold tracking-tight text-gray-800">
+                于是，我才重新看清了世界。
+            </h2>
+            <p class="serif text-lg md:text-2xl text-gray-500 mt-4">AND SO, I SAW THE WORLD ANEW.</p>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('.fade-in-section');
+            
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+    
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

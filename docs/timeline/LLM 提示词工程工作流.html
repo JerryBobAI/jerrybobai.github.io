@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM 提示词工程工作流</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .google-blue { color: #4285F4; }
+        .google-red { color: #DB4437; }
+        .google-yellow { color: #F4B400; }
+        .google-green { color: #0F9D58; }
+
+        .bg-google-blue-light { background-color: rgba(66, 133, 244, 0.1); }
+        .bg-google-red-light { background-color: rgba(219, 68, 55, 0.1); }
+        .bg-google-yellow-light { background-color: rgba(244, 180, 0, 0.1); }
+        .bg-google-green-light { background-color: rgba(15, 157, 88, 0.1); }
+        
+        .highlight-chip {
+            @apply inline-block bg-slate-200 text-slate-800 rounded-md px-2 py-0.5 text-sm font-semibold mr-1;
+        }
+
+        .step-card {
+            @apply bg-white p-8 rounded-2xl border border-slate-200/80 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+        }
+        
+        .step-icon {
+            @apply text-5xl mb-4;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 max-w-screen-xl">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-16 md:mb-24">
+            <p class="text-lg font-semibold google-blue mb-2">PROMPT ENGINEERING WORKFLOW</p>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-slate-900">
+                构建高效 LLM 提示词的<br class="hidden md:block">系统化工作流
+            </h1>
+            <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-slate-600">
+                通过一个清晰、迭代的四步流程，从定义目标到最终测试，系统性地打造、评估和优化高质量的大语言模型提示词。
+            </p>
+        </header>
+
+        <!-- Structured Information Layout -->
+        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+
+            <!-- Step 1: Define & Collect -->
+            <div class="step-card">
+                <div class="flex items-start">
+                    <span class="text-7xl lg:text-8xl font-black google-blue opacity-20 -ml-2 mr-2 -mt-2">01</span>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">定义目标与收集样本</h2>
+                        <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+                            首先，清晰定义你希望 LLM 完成的具体任务。随后，准备 5-7 个高质量的 <span class="highlight-chip">“输入-输出”对</span> 作为正面示例。如果可能，加入 1-2 个 <span class="highlight-chip">“负面样本”</span> 来精确界定任务边界，帮助模型理解不应做什么。
+                        </p>
+                    </div>
+                </div>
+                 <div class="w-full h-32 mt-8 bg-google-blue-light rounded-lg flex items-center justify-center">
+                    <span class="material-icons-outlined google-blue" style="font-size: 64px;">ads_click</span>
+                </div>
+            </div>
+
+            <!-- Step 2: Generate Initial Prompt -->
+            <div class="step-card">
+                <div class="flex items-start">
+                    <span class="text-7xl lg:text-8xl font-black google-red opacity-20 -ml-2 mr-2 -mt-2">02</span>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">生成初始提示词 (一步到位)</h2>
+                        <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+                            在一个独立的对话中，向 LLM 发出一个综合指令，直接请求生成一个最佳提示词。指令应包含 <span class="highlight-chip">角色设定</span>、<span class="highlight-chip">任务描述</span>，并附上所有准备好的正、负面样本作为效果示例，明确输出格式和约束。
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full h-32 mt-8 bg-google-red-light rounded-lg flex items-center justify-center">
+                    <span class="material-icons-outlined google-red" style="font-size: 64px;">edit_note</span>
+                </div>
+            </div>
+
+            <!-- Step 3: Expert Evaluation & Iteration -->
+            <div class="step-card">
+                <div class="flex items-start">
+                    <span class="text-7xl lg:text-8xl font-black google-yellow opacity-20 -ml-2 mr-2 -mt-2">03</span>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">专家评估与迭代</h2>
+                        <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+                            立即转换角色，让 LLM 扮演 <span class="highlight-chip">提示词工程专家</span>。要求它根据预设的评估标准（如清晰性、简洁性、鲁棒性等）严格审视刚生成的提示词，并直接输出 3 个基于评估的、更优的 <span class="highlight-chip">替代版本</span>。
+                        </p>
+                    </div>
+                </div>
+                 <div class="w-full h-32 mt-8 bg-google-yellow-light rounded-lg flex items-center justify-center">
+                     <span class="material-icons-outlined google-yellow" style="font-size: 64px;">rate_review</span>
+                </div>
+            </div>
+            
+            <!-- Step 4: Test & Finalize -->
+            <div class="step-card">
+                <div class="flex items-start">
+                    <span class="text-7xl lg:text-8xl font-black google-green opacity-20 -ml-2 mr-2 -mt-2">04</span>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">测试与定稿</h2>
+                        <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+                            从 3 个替代版本中选择最佳版本。使用全新的、甚至是刁钻的 <span class="highlight-chip">“对抗性”输入</span> 对其进行压力测试。根据测试结果进行最后的手动微调，直至提示词表现稳定、可靠，最终定稿。
+                        </p>
+                    </div>
+                </div>
+                 <div class="w-full h-32 mt-8 bg-google-green-light rounded-lg flex items-center justify-center">
+                     <span class="material-icons-outlined google-green" style="font-size: 64px;">verified</span>
+                </div>
+            </div>
+
+        </main>
+        
+    </div>
+
+</body>
+</html>

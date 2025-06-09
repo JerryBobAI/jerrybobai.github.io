@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回家</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #F8F5F2; /* 宣纸米白 */
+            color: #4A4A4A; /* 墨色 */
+        }
+        .highlight-text {
+            color: #8C735B; /* 赭石色 */
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .ink-line {
+            width: 100px;
+            height: 1px;
+            background-color: #8C735B;
+            margin: 2rem auto;
+            opacity: 0.6;
+        }
+        .gongbi-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1549636595-c89673825832?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* 淡淡的山水或植物白描作为背景纹理 */
+            background-size: cover;
+            opacity: 0.05;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Section 1: The Hands -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center text-center relative">
+            <div class="gongbi-bg"></div>
+            <p class="mb-4 text-sm uppercase tracking-widest text-gray-500">WHEN YOU SAID THAT</p>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">我看见一双手</h1>
+            <p class="mt-6 text-lg md:text-xl max-w-2xl">一双布满褶皱、为儿女操劳了一生的手，此刻终于松开了。</p>
+            <div class="mt-12 text-5xl md:text-7xl highlight-text opacity-50">
+                <i class="fa-regular fa-hand"></i>
+            </div>
+        </section>
+
+        <!-- Section 2: Letting Go -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-start text-left">
+             <div class="w-full">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-4">RELEASE</p>
+                <h2 class="text-3xl md:text-5xl font-bold">松开了所有沉甸甸的行囊</h2>
+                <div class="ink-line !ml-0"></div>
+                <div class="space-y-6 text-lg md:text-xl max-w-3xl">
+                    <p>松开了紧握的缰绳，</p>
+                    <p>松开了自行车后座，</p>
+                    <p>松开了所有名为<span class="font-bold highlight-text text-2xl mx-2">“责任”</span>的重量。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Fading Sounds -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center text-center">
+            <p class="text-sm uppercase tracking-widest text-gray-500 mb-4">THE FADING ECHOES</p>
+            <h2 class="text-3xl md:text-5xl font-bold">那些声音，像潮水缓缓退去</h2>
+            <div class="my-10 text-4xl md:text-6xl font-bold space-x-8 md:space-x-16">
+                <span class="opacity-70">“爸爸”</span>
+                <span class="opacity-40">“妈妈”</span>
+            </div>
+            <p class="text-lg md:text-xl max-w-3xl">你听了一辈子的称呼，曾是甜蜜的负担，是深夜的惊醒，是清晨的催促，是刻在你骨头上的牵挂。现在，它们退去，露出了最底下、最干净的沙滩。</p>
+        </section>
+
+        <!-- Section 4: The Return Journey -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center text-center bg-opacity-50 relative">
+            <div class="gongbi-bg" style="background-image: url('https://images.unsplash.com/photo-1593106578502-282a7f969917?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); opacity: 0.08;"></div>
+            <p class="text-sm uppercase tracking-widest text-gray-500 mb-4">THE JOURNEY HOME</p>
+            <h2 class="text-5xl md:text-8xl font-bold">于是，你开始了</h2>
+            <h2 class="text-5xl md:text-8xl font-bold mt-4 highlight-text">一场返航</h2>
+            <div class="ink-line"></div>
+            <p class="text-lg md:text-xl max-w-3xl">脚下的路，那条宽阔喧闹的柏油路，渐渐变窄，长出了青苔，变成了小时候回家的那条田埂小径。</p>
+        </section>
+
+        <!-- Section 5: The Transformation -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center">
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <p class="text-sm uppercase tracking-widest text-gray-500 mb-2">SCENERY</p>
+                    <h3 class="text-3xl md:text-5xl font-bold">高楼大厦溶解</h3>
+                    <p class="text-xl md:text-2xl mt-2 text-gray-600">成了炊烟袅袅的平房</p>
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="text-sm uppercase tracking-widest text-gray-500 mb-2">SENSES</p>
+                    <h3 class="text-3xl md:text-5xl font-bold">车水马龙消散</h3>
+                    <p class="text-xl md:text-2xl mt-2 text-gray-600">换来晚饭的菜香与樟木箱陈旧的味道</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: The Release & The Voice -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center text-center">
+            <p class="text-lg md:text-xl max-w-3xl">你感觉自己变轻了，身体里那根紧绷了几十年的弦，终于<span class="text-2xl md:text-3xl font-bold highlight-text mx-2">“嘣”</span>地一声，温柔地断了。</p>
+            <p class="mt-6 text-lg md:text-xl max-w-3xl">你不再需要挺直腰板，因为身后有了一双更厚实的手掌，稳稳地托住了你。</p>
+            <div class="ink-line"></div>
+            <h2 class="text-4xl md:text-6xl font-bold mt-12">你终于又听见了</h2>
+            <h2 class="text-4xl md:text-6xl font-bold mt-4">有人喊你的<span class="highlight-text">乳名</span></h2>
+            <p class="mt-6 text-lg md:text-xl text-gray-600">那声音，带着一点责备，又全是心疼。</p>
+        </section>
+
+        <!-- Section 7: The Final Scene -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center text-center relative">
+            <div class="gongbi-bg" style="background-image: url('https://images.unsplash.com/photo-1554185628-3918a5991826?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); opacity: 0.1;"></div>
+            <p class="text-lg md:text-xl max-w-3xl">你循声望去，看见一扇门，门里透出温暖的、昏黄的灯光。</p>
+            <p class="text-4xl md:text-6xl my-12 highlight-text"><i class="fa-solid fa-door-open"></i></p>
+            <p class="text-lg md:text-xl max-w-3xl">你推开门。</p>
+            <p class="text-lg md:text-xl max-w-3xl mt-8">爸爸正坐在老旧的藤椅上读着报纸，妈妈在厨房里，围裙上还沾着面粉，她回过头，对你说：</p>
+            <div class="mt-12 p-8 border-2 border-[#8C735B] border-opacity-50 rounded-lg max-w-2xl">
+                <h3 class="text-3xl md:text-5xl font-bold leading-relaxed">“回来啦？快去洗手，准备吃饭了。”</h3>
+            </div>
+        </section>
+
+        <!-- Section 8: The Epilogue -->
+        <section class="fade-in min-h-screen flex flex-col justify-center items-center text-center">
+             <p class="text-sm uppercase tracking-widest text-gray-500 mb-8">HOMECOMING</p>
+             <div class="text-2xl md:text-4xl font-bold max-w-4xl space-y-6">
+                <p>那一刻，你不是任何人的父亲或母亲，</p>
+                <p>你只是他们的<span class="highlight-text text-4xl md:text-6xl">孩子</span>。</p>
+             </div>
+             <div class="ink-line"></div>
+             <h2 class="text-5xl md:text-8xl font-bold">你回家了。</h2>
+        </section>
+
+    </div>
+
+    <script>
+        const faders = document.querySelectorAll('.fade-in');
+
+        const appearOptions = {
+            threshold: 0.2, // trigger when 20% of the element is visible
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(
+            entries,
+            appearOnScroll
+        ) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>
