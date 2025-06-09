@@ -47,7 +47,7 @@ function renderHeader(currentPath, isRoot) {
                 <div class="flex items-center">
                     <a href="${homeLink}" class="flex items-center hover:opacity-90 transition-opacity">
                         <img src="${prefix}images/logo.png" alt="Logo" class="h-10 w-10 rounded-full mr-3 flex-shrink-0">
-                        <span class="text-xl sm:text-2xl font-bold text-gray-800">JerryBob</span>
+                        <span class="text-xl sm:text-2xl font-bold text-primary">JerryBob</span>
                     </a>
                 </div>
 
@@ -124,7 +124,7 @@ function renderFooter(isRoot) {
     if (isRoot) {
         footerElement.innerHTML = `
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
-                <p class="footer-text">© 2025 JerryBob. All rights reserved.</p>
+                <p class="footer-text">© 2025 <span class="text-primary font-semibold">JerryBob</span>. All rights reserved.</p>
                 <div class="flex space-x-4">
                     <a href="https://web.okjike.com/u/8d6e830c-4da1-4753-ab41-020b91002aec" target="_blank" class="social-button bg-yellow-400">
                         <span class="social-button-text">J</span>
