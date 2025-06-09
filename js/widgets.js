@@ -153,7 +153,7 @@ function buildPreviewMetaInfo(preview) {
 
     return `
         <div class="preview-meta">
-            <div class="flex items-center justify-between text-sm px-3 py-3">
+            <div class="flex items-center justify-between text-sm px-3 py-2">
                 <div class="flex items-center gap-2">
                     <i class="far fa-calendar-alt" style="color: #9CA3AF;"></i>
                     <span class="font-context font-normal" style="color: #9CA3AF;">${formattedDate}</span>

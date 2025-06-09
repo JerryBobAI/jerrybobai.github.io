@@ -70,6 +70,13 @@
     overflow: hidden; /* 隐藏溢出，确保圆角效果 */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 整体阴影 */
     border: none; /* 移除边框，避免白边 */
+    position: relative; /* 为渐变遮罩提供定位基础 */
+}
+
+/* 确保a标签有正确的定位属性以支持伪元素 */
+.preview-card a {
+    position: relative;
+    display: block;
 }
 
 /* 确保iframe只有顶部圆角，底部完全直角 */
@@ -86,16 +93,37 @@
     border-bottom-right-radius: 0 !important; /* 强制底部右角直角 */
 }
 
+/* iframe底部渐变遮罩效果 */
+.preview-card a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px; /* 渐变区域高度，只覆盖iframe底部 */
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 40%,
+        rgba(255, 255, 255, 0.7) 80%,
+        rgba(255, 255, 255, 1) 100%
+    );
+    pointer-events: none; /* 不影响点击事件 */
+    z-index: 5; /* 确保在iframe之上 */
+    border-radius: 0 0 12px 12px; /* 匹配iframe的底部圆角 */
+}
+
 /* iframe预览meta信息样式 */
 .preview-meta {
     background: rgba(234, 230, 225, 0.8);
     backdrop-filter: blur(8px);
     border-radius: 0 0 12px 12px !important; /* 只有底部圆角 */
     margin: 0 !important; /* 确保没有外边距 */
-    padding-top: 12px !important; /* 确保有内边距但没有外边距 */
     border-top: none !important; /* 确保与iframe无缝连接 */
     border-top-left-radius: 0 !important; /* 强制顶部左角直角 */
     border-top-right-radius: 0 !important; /* 强制顶部右角直角 */
+    position: relative; /* 为z-index提供定位基础 */
+    z-index: 10; /* 确保在渐变遮罩之上 */
 }
 
 .preview-meta .font-context {
@@ -116,7 +144,7 @@
         align-items: center !important;
         gap: 0.25rem !important;
         flex-wrap: nowrap !important; /* 不允许换行 */
-        padding: 0.5rem 0.75rem !important; /* 覆盖内联样式 */
+        padding: 0.5rem 0.75rem !important; /* 覆盖内联样式，保持与py-2一致 */
     }
 
     .preview-meta > .flex > .flex:first-child {
@@ -150,6 +178,11 @@
     /* 移动端iframe高度调整 */
     .preview-iframe {
         aspect-ratio: 2.5 / 2 !important; /* 移动端使用更紧凑的比例 */
+    }
+
+    /* 移动端渐变遮罩调整 */
+    .preview-card a::after {
+        height: 60px; /* 移动端减少渐变区域高度 */
     }
 
     /* 移动端日期文字优化 */
