@@ -186,6 +186,403 @@ body:not(.animations-ready) #hero-content {
     white-space: nowrap;
 }
 
+/* =============== 海洋波浪效果 =============== */
+.ocean-waves {
+    position: relative;
+    animation: oceanFloat 6s ease-in-out infinite;
+}
+
+/* 海洋整体浮动动画 */
+@keyframes oceanFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(-2px);
+    }
+    50% {
+        transform: translateY(1px);
+    }
+    75% {
+        transform: translateY(-1px);
+    }
+}
+
+/* 数字波浪效果 */
+.wave-number {
+    display: inline-block;
+    animation: numberWave 4s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+/* 为两个数字设置不同的延迟 */
+.wave-number:first-of-type {
+    animation-delay: 0s;
+}
+
+.wave-number:last-of-type {
+    animation-delay: 1s;
+}
+
+/* 数字波浪动画 */
+@keyframes numberWave {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    20% {
+        transform: translateY(-4px) rotate(1deg) scale(1.05);
+    }
+    40% {
+        transform: translateY(2px) rotate(-0.5deg) scale(0.98);
+    }
+    60% {
+        transform: translateY(-3px) rotate(0.8deg) scale(1.02);
+    }
+    80% {
+        transform: translateY(1px) rotate(-0.3deg) scale(0.99);
+    }
+}
+
+/* 悬停时的海浪增强效果 */
+.ocean-waves:hover .wave-number {
+    animation: numberWaveHover 2s ease-in-out infinite;
+}
+
+@keyframes numberWaveHover {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-6px) rotate(2deg) scale(1.1);
+    }
+    50% {
+        transform: translateY(3px) rotate(-1deg) scale(0.95);
+    }
+    75% {
+        transform: translateY(-4px) rotate(1.5deg) scale(1.05);
+    }
+}
+
+/* 添加海洋光影效果 */
+.ocean-waves::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(104, 144, 148, 0.05) 20%,
+        transparent 40%,
+        rgba(104, 144, 148, 0.03) 60%,
+        transparent 80%,
+        rgba(104, 144, 148, 0.05) 100%
+    );
+    background-size: 200% 100%;
+    animation: oceanShimmer 8s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: overlay;
+}
+
+/* 海洋光影流动动画 */
+@keyframes oceanShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* =============== 水波扭曲效果 =============== */
+.water-ripple {
+    position: relative;
+    display: inline-block;
+    animation: waterDistortion 4s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+/* 水中扭曲动画 */
+@keyframes waterDistortion {
+    0%, 100% {
+        transform: perspective(600px) rotateX(0deg) rotateY(0deg) scaleX(1) scaleY(1) skewX(0deg);
+        filter: none;
+    }
+    20% {
+        transform: perspective(600px) rotateX(0.8deg) rotateY(-0.4deg) scaleX(1.015) scaleY(0.985) skewX(0.2deg);
+        filter: blur(0.2px);
+    }
+    40% {
+        transform: perspective(600px) rotateX(-0.4deg) rotateY(0.8deg) scaleX(0.985) scaleY(1.015) skewX(-0.3deg);
+        filter: blur(0.15px);
+    }
+    60% {
+        transform: perspective(600px) rotateX(0.6deg) rotateY(0.2deg) scaleX(1.01) scaleY(0.99) skewX(0.1deg);
+        filter: blur(0.25px);
+    }
+    80% {
+        transform: perspective(600px) rotateX(-0.2deg) rotateY(-0.6deg) scaleX(0.995) scaleY(1.005) skewX(-0.15deg);
+        filter: blur(0.1px);
+    }
+}
+
+/* 添加水波纹理效果 */
+.water-ripple::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(
+            110deg,
+            transparent 25%,
+            rgba(104, 144, 148, 0.08) 30%,
+            transparent 35%,
+            rgba(255, 255, 255, 0.05) 40%,
+            transparent 45%,
+            rgba(104, 144, 148, 0.06) 50%,
+            transparent 55%,
+            rgba(104, 144, 148, 0.04) 60%,
+            transparent 65%
+        ),
+        radial-gradient(
+            ellipse at center,
+            rgba(104, 144, 148, 0.02) 0%,
+            transparent 70%
+        );
+    background-size: 30px 30px, 100% 100%;
+    animation: waterFlow 8s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: overlay;
+}
+
+/* 水流动画 */
+@keyframes waterFlow {
+    0% {
+        background-position: 0 0;
+        opacity: 0.3;
+    }
+    50% {
+        background-position: 20px 20px;
+        opacity: 0.6;
+    }
+    100% {
+        background-position: 40px 40px;
+        opacity: 0.3;
+    }
+}
+
+/* 悬停时的水波增强效果 */
+.water-ripple:hover {
+    animation: waterDistortionHover 1.5s ease-in-out infinite;
+}
+
+@keyframes waterDistortionHover {
+    0%, 100% {
+        transform: perspective(600px) rotateX(0deg) rotateY(0deg) scaleX(1) scaleY(1) skewX(0deg);
+        filter: blur(0.1px);
+    }
+    25% {
+        transform: perspective(600px) rotateX(1.5deg) rotateY(-0.8deg) scaleX(1.025) scaleY(0.975) skewX(0.4deg);
+        filter: blur(0.3px);
+    }
+    50% {
+        transform: perspective(600px) rotateX(-0.8deg) rotateY(1.5deg) scaleX(0.975) scaleY(1.025) skewX(-0.5deg);
+        filter: blur(0.2px);
+    }
+    75% {
+        transform: perspective(600px) rotateX(1.2deg) rotateY(0.4deg) scaleX(1.02) scaleY(0.98) skewX(0.3deg);
+        filter: blur(0.4px);
+    }
+}
+
+/* =============== 月光碎片效果 =============== */
+.moonlight-fragments {
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+}
+
+/* 为每个字符创建碎片效果 */
+.moonlight-fragments::before,
+.moonlight-fragments::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* 第一层碎片 - 清晰的主题色 */
+.moonlight-fragments::before {
+    color: rgba(104, 144, 148, 0.7);
+    transform: translate(-3px, -2px) rotate(-1deg);
+    z-index: -1;
+    animation: fragmentFloat1 6s ease-in-out infinite;
+}
+
+/* 第二层碎片 - 清晰的浅色 */
+.moonlight-fragments::after {
+    color: rgba(104, 144, 148, 0.4);
+    transform: translate(4px, 3px) rotate(1.5deg);
+    z-index: -2;
+    animation: fragmentFloat2 8s ease-in-out infinite;
+}
+
+/* 碎片浮动动画 */
+@keyframes fragmentFloat1 {
+    0%, 100% {
+        transform: translate(-3px, -2px) rotate(-1deg);
+    }
+    25% {
+        transform: translate(-4px, -3px) rotate(-1.5deg);
+    }
+    50% {
+        transform: translate(-2px, -2.5px) rotate(-0.5deg);
+    }
+    75% {
+        transform: translate(-3.5px, -1px) rotate(-1.2deg);
+    }
+}
+
+@keyframes fragmentFloat2 {
+    0%, 100% {
+        transform: translate(4px, 3px) rotate(1.5deg);
+    }
+    33% {
+        transform: translate(5px, 2px) rotate(2deg);
+    }
+    66% {
+        transform: translate(3px, 4px) rotate(1deg);
+    }
+}
+
+/* 悬停时的碎片分散效果 */
+.moonlight-fragments:hover::before {
+    color: rgba(104, 144, 148, 0.8);
+    transform: translate(-6px, -4px) rotate(-2.5deg);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.moonlight-fragments:hover::after {
+    color: rgba(104, 144, 148, 0.5);
+    transform: translate(7px, 5px) rotate(3deg);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 主文字的微弱抖动效果 */
+.moonlight-fragments:hover {
+    transform: translate(1px, -0.5px) rotate(0.3deg);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 主文字保持清晰，只有微弱的主体微动 */
+.moonlight-fragments {
+    animation: mainFragmentTremble 10s ease-in-out infinite;
+}
+
+/* 主文字的微弱颤动 */
+@keyframes mainFragmentTremble {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    20% {
+        transform: translate(0.2px, -0.1px) rotate(0.05deg);
+    }
+    40% {
+        transform: translate(-0.1px, 0.2px) rotate(-0.03deg);
+    }
+    60% {
+        transform: translate(0.1px, 0.1px) rotate(0.02deg);
+    }
+    80% {
+        transform: translate(-0.2px, -0.1px) rotate(-0.04deg);
+    }
+}
+
+/* =============== 月光扫光动效 =============== */
+.moonlight-shimmer {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        90deg,
+        var(--color-text-tertiary) 0%,
+        var(--color-text-tertiary) 35%,
+        rgba(104, 144, 148, 0.9) 45%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(104, 144, 148, 0.9) 55%,
+        var(--color-text-tertiary) 65%,
+        var(--color-text-tertiary) 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: moonlightSweep 12s ease-in-out infinite, moonlightBreath 4s ease-in-out infinite;
+}
+
+/* 微弱的呼吸效果 */
+@keyframes moonlightBreath {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes moonlightSweep {
+    0%, 85% {
+        background-position: -300% 0;
+    }
+    15%, 35% {
+        background-position: 300% 0;
+    }
+}
+
+/* 添加微弱的发光效果 */
+.moonlight-shimmer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -150%;
+    width: 150%;
+    height: calc(100% + 4px);
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(104, 144, 148, 0.08) 40%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(104, 144, 148, 0.08) 60%,
+        transparent 100%
+    );
+    animation: shimmerGlow 12s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: 2px;
+    filter: blur(1px);
+}
+
+@keyframes shimmerGlow {
+    0%, 85% {
+        left: -150%;
+        opacity: 0;
+    }
+    15%, 35% {
+        left: 150%;
+        opacity: 0.8;
+    }
+}
+
 /* =============== 响应式设计 =============== */
 @media (max-width: 640px) {
     .pagination-wrapper {
@@ -208,6 +605,116 @@ body:not(.animations-ready) #hero-content {
         justify-content: center;
         min-width: auto;
         padding: 0.75rem 1rem;
+    }
+
+    /* 移动端扫光效果调整 */
+    .moonlight-shimmer {
+        animation-duration: 10s; /* 移动端稍快一些 */
+    }
+
+    .moonlight-shimmer::before {
+        animation-duration: 10s;
+        filter: blur(0.5px); /* 移动端减少模糊效果 */
+    }
+
+    /* 移动端碎片效果调整 */
+    .moonlight-fragments::before {
+        color: rgba(104, 144, 148, 0.6);
+        transform: translate(-2px, -1.5px) rotate(-0.8deg); /* 适中的偏移 */
+        animation-duration: 8s; /* 稍快的动画 */
+    }
+
+    .moonlight-fragments::after {
+        color: rgba(104, 144, 148, 0.3);
+        transform: translate(3px, 2px) rotate(1deg); /* 适中的偏移 */
+        animation-duration: 10s; /* 稍快的动画 */
+    }
+
+    /* 移动端悬停效果调整 */
+    .moonlight-fragments:hover::before {
+        transform: translate(-4px, -3px) rotate(-1.5deg);
+    }
+
+    .moonlight-fragments:hover::after {
+        transform: translate(5px, 4px) rotate(2deg);
+    }
+
+    /* 移动端海洋波浪效果调整 */
+    .ocean-waves {
+        animation-duration: 8s; /* 移动端稍慢一些 */
+    }
+
+    .wave-number {
+        animation-duration: 6s; /* 减少动画频率 */
+    }
+
+    /* 移动端减弱波浪幅度 */
+    @keyframes oceanFloat {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        25% {
+            transform: translateY(-1px);
+        }
+        50% {
+            transform: translateY(0.5px);
+        }
+        75% {
+            transform: translateY(-0.5px);
+        }
+    }
+
+    @keyframes numberWave {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg) scale(1);
+        }
+        20% {
+            transform: translateY(-2px) rotate(0.5deg) scale(1.02);
+        }
+        40% {
+            transform: translateY(1px) rotate(-0.3deg) scale(0.99);
+        }
+        60% {
+            transform: translateY(-1.5px) rotate(0.4deg) scale(1.01);
+        }
+        80% {
+            transform: translateY(0.5px) rotate(-0.2deg) scale(0.995);
+        }
+    }
+
+    .ocean-waves::before {
+        background-size: 150% 100%; /* 减少背景尺寸 */
+        animation-duration: 10s; /* 稍慢的光影流动 */
+    }
+
+    /* 移动端水波效果调整 */
+    .water-ripple {
+        animation-duration: 6s; /* 移动端稍慢一些 */
+    }
+
+    .water-ripple::before {
+        background-size: 15px 15px; /* 减少纹理密度 */
+        animation-duration: 8s; /* 稍慢的流动 */
+    }
+
+    /* 移动端水波扭曲减弱 */
+    @keyframes waterDistortion {
+        0%, 100% {
+            transform: perspective(400px) rotateX(0deg) rotateY(0deg) scaleX(1) scaleY(1);
+            filter: none;
+        }
+        25% {
+            transform: perspective(400px) rotateX(0.5deg) rotateY(-0.3deg) scaleX(1.01) scaleY(0.99);
+            filter: blur(0.1px);
+        }
+        50% {
+            transform: perspective(400px) rotateX(-0.3deg) rotateY(0.5deg) scaleX(0.99) scaleY(1.01);
+            filter: blur(0.1px);
+        }
+        75% {
+            transform: perspective(400px) rotateX(0.4deg) rotateY(0.2deg) scaleX(1.005) scaleY(0.995);
+            filter: blur(0.2px);
+        }
     }
 }
 
