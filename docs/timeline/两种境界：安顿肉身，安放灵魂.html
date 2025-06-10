@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>两种境界：安顿肉身，安放灵魂</title>
+    
+    <!-- TailwindCSS 3.4.1 via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6.5.1 via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* 自定义字体和基础样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@300;400&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #0D0D0F; /* 深邃的背景色 */
+            color: #EAEAEA;
+            overflow-x: hidden;
+        }
+
+        /* 玻璃卡片的高亮边框，使用伪元素实现渐变效果 */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem; /* 对应 rounded-3xl */
+            border: 1px solid transparent;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* 动态光晕背景容器 */
+        #blurry-gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(120px); /* 强高斯模糊 */
+            overflow: hidden;
+        }
+
+        /* 光球元素 */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: all 5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态光晕背景 -->
+    <div id="blurry-gradient-bg">
+        <!-- JS将在此处创建光球 -->
+    </div>
+
+    <!-- 主内容容器 -->
+    <div class="relative min-h-screen w-full mx-auto px-6 py-16 md:px-12 md:py-24 lg:px-24">
+
+        <!-- Section 1: 核心引言 -->
+        <section class="min-h-[60vh] flex flex-col justify-center text-center">
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-wider leading-tight">
+                人这一生，<br class="md:hidden">所有修行只为<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-300">抵达两种境界</span>
+            </h1>
+            <p class="mt-6 text-lg md:text-xl text-gray-400 font-light tracking-widest uppercase">THE TWO REALMS OF LIFE'S JOURNEY</p>
+        </section>
+
+        <!-- Section 2: 两种境界的具体阐述 -->
+        <section class="mt-16 lg:mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- 卡片 1: 安顿肉身 -->
+                <div class="relative glass-card bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 h-full">
+                    <div class="flex items-start gap-6">
+                        <span class="text-7xl lg:text-8xl font-black text-cyan-400/80">01</span>
+                        <div>
+                            <h2 class="text-4xl md:text-5xl font-bold">安顿肉身</h2>
+                            <p class="mt-1 text-sm text-gray-400 uppercase tracking-widest">Settle the Body</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-gray-300 space-y-4 text-base md:text-lg font-light leading-relaxed">
+                        <p>这并非耽于享乐，而是与自己的身体达成和解。是懂得一蔬一饭的踏实，是一呼一吸的感恩，是在疲惫时允许自己安然入睡，是在病痛中温柔地与它共处。</p>
+                        <p>身体不是欲望的囚笼，而是我们在此世航行的唯一舟楫。善待它，修补它，让它坚固而妥帖，才能载着我们，去看更远的风景。</p>
+                    </div>
+                    <div class="absolute bottom-8 right-8 text-cyan-400/30">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s-8-4.5-8-11.5A8 8 0 0 1 12 2.5a8 8 0 0 1 8 9c0 7-8 11.5-8 11.5z"></path>
+                            <path d="M12 12v10"></path>
+                            <path d="M9 16h6"></path>
+                            <path d="M14 19h-4"></path>
+                            <path d="M12 22c-2 0-4-1-4-2.5"></path>
+                            <path d="M12 22c2 0 4-1 4-2.5"></path>
+                            <path d="M10 22c0-1 1-1.5 2-1.5s2 .5 2 1.5"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- 卡片 2: 安放灵魂 -->
+                <div class="relative glass-card bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 h-full">
+                    <div class="flex items-start gap-6">
+                        <span class="text-7xl lg:text-8xl font-black text-purple-400/80">02</span>
+                        <div>
+                            <h2 class="text-4xl md:text-5xl font-bold">安放灵魂</h2>
+                            <p class="mt-1 text-sm text-gray-400 uppercase tracking-widest">Place the Soul</p>
+                        </div>
+                    </div>
+                     <div class="mt-8 text-gray-300 space-y-4 text-base md:text-lg font-light leading-relaxed">
+                        <p>这并非遁世逃避，而是在喧嚣中为内心留出一方旷野。是在无常的命运里，保有不被夺走的热爱；是在庸常的岁月里，敢于追问生命的意义；是在他人的期待中，守住属于自己的节奏与悲喜。</p>
+                        <p>灵魂不是高悬的星辰，而是我们内在的神明。喂养它，聆听它，让它丰盈而高贵，才能在这趟旅途中，活得有方向，有光芒。</p>
+                    </div>
+                    <div class="absolute bottom-8 right-8 text-purple-400/30">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                            <path d="M12 2v6"></path>
+                            <path d="M12 17.77l-3.09 1.63"></path>
+                            <path d="M12 17.77l3.09 1.63"></path>
+                            <path d="M2 9.27l5 4.87"></path>
+                            <path d="M22 9.27l-5 4.87"></path>
+                         </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: 结论与升华 -->
+        <section class="mt-24 lg:mt-32 text-center max-w-4xl mx-auto">
+            <div class="mb-12">
+                <p class="text-2xl md:text-3xl lg:text-4xl leading-relaxed font-bold">
+                    安顿肉身，是把日子过成
+                    <span class="text-cyan-400">烟火</span>。
+                </p>
+                <p class="mt-4 text-2xl md:text-3xl lg:text-4xl leading-relaxed font-bold">
+                    安放灵魂，是把烟火活成
+                    <span class="text-purple-400">诗歌</span>。
+                </p>
+            </div>
+            
+            <div class="my-16 flex justify-center text-gray-400/30">
+                <svg width="120" height="120" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 向天生长 (灵魂) -->
+                    <path d="M50 45C50 35 40 30 40 20C40 10 50 5 50 5" stroke="url(#paint0_linear_1_2)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M50 45C50 35 60 30 60 20C60 10 50 5 50 5" stroke="url(#paint0_linear_1_2)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M35 15C30 20 30 30 40 30" stroke="url(#paint0_linear_1_2)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M65 15C70 20 70 30 60 30" stroke="url(#paint0_linear_1_2)" stroke-width="1.5" stroke-linecap="round"/>
+
+                    <!-- 向下扎根 (肉身) -->
+                    <path d="M50 55C50 65 40 70 40 80C40 90 50 95 50 95" stroke="url(#paint1_linear_1_2)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M50 55C50 65 60 70 60 80C60 90 50 95 50 95" stroke="url(#paint1_linear_1_2)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M35 85C30 80 30 70 40 70" stroke="url(#paint1_linear_1_2)" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M65 85C70 80 70 70 60 70" stroke="url(#paint1_linear_1_2)" stroke-width="1.5" stroke-linecap="round"/>
+                    
+                    <defs>
+                        <linearGradient id="paint0_linear_1_2" x1="50" y1="5" x2="50" y2="45" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#A78BFA" stop-opacity="0.8"/>
+                            <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_1_2" x1="50" y1="55" x2="50" y2="95" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#22D3EE" stop-opacity="0"/>
+                            <stop offset="1" stop-color="#22D3EE" stop-opacity="0.8"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <h3 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-wider">
+                一个向下扎根<span class="text-cyan-400">,</span><br>一个向天生长<span class="text-purple-400">,</span><br>
+                合起来，才是一个顶天立地的人。
+            </h3>
+        </section>
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgContainer = document.getElementById('blurry-gradient-bg');
+            const colors = ['#22D3EE', '#A78BFA', '#6EE7B7', '#F472B6']; // 预设的柔和光色
+            const blobCount = 4;
+
+            // 创建光球
+            for (let i = 0; i < blobCount; i++) {
+                const blob = document.createElement('div');
+                blob.classList.add('blob');
+                blob.style.backgroundColor = colors[i % colors.length];
+                bgContainer.appendChild(blob);
+                moveBlob(blob);
+            }
+
+            function moveBlob(blob) {
+                const size = Math.random() * 200 + 150; // 150px to 350px
+                const x = Math.random() * (window.innerWidth - size);
+                const y = Math.random() * (window.innerHeight - size);
+                const duration = Math.random() * 10 + 10; // 10s to 20s
+
+                blob.style.width = `${size}px`;
+                blob.style.height = `${size}px`;
+                blob.style.transform = `translate(${x}px, ${y}px)`;
+                blob.style.transitionDuration = `${duration}s`;
+                
+                // 递归调用，形成持续不断的、平滑的移动
+                setTimeout(() => moveBlob(blob), duration * 1000);
+            }
+            
+            // 窗口大小变化时重新计算位置
+            window.addEventListener('resize', () => {
+                const blobs = document.querySelectorAll('.blob');
+                blobs.forEach(blob => moveBlob(blob));
+            });
+        });
+    </script>
+
+</body>
+</html>
