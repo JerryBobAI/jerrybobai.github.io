@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我是在渡</title>
+    
+    <!-- TailwindCSS 3.4.1 via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6.5.1 via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Roboto:wght@300;400&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #08080A; /* 意识之海的深邃蓝黑 */
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.75rem; /* 对应 rounded-3xl */
+            border: 1px solid transparent;
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        #blurry-gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(150px);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: all 12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 1.5s ease-out forwards; }
+        .delay-1 { animation-delay: 0.3s; opacity: 0; }
+        .delay-2 { animation-delay: 0.6s; opacity: 0; }
+        .delay-3 { animation-delay: 1.2s; opacity: 0; }
+        .delay-4 { animation-delay: 1.8s; opacity: 0; }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+        .pulse-animation {
+            animation: pulse 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态光晕背景 -->
+    <div id="blurry-gradient-bg"></div>
+
+    <!-- 主内容容器 -->
+    <div class="relative min-h-screen w-full mx-auto px-6 py-20 md:px-12 md:py-28 lg:px-24">
+
+        <!-- Section 1: 舟与岸 -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- 卡片 1: 舟 -->
+            <div class="relative glass-card bg-white/5 backdrop-blur-2xl rounded-3xl p-8 md:p-12 h-[320px] lg:h-auto fade-in delay-1">
+                <h2 class="text-4xl md:text-5xl font-bold">我的文字是舟<span class="text-amber-400">.</span></h2>
+                <p class="mt-2 text-sm text-gray-400 uppercase tracking-widest">MY WORDS ARE THE BOAT</p>
+                <div class="absolute bottom-8 right-8 text-amber-400/40">
+                    <svg class="w-20 h-20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 20 70 Q 50 50 80 70" stroke="url(#grad_boat)" stroke-width="2.5" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="grad_boat">
+                                <stop offset="0%" stop-color="#FBBF24" stop-opacity="1"/>
+                                <stop offset="100%" stop-color="#FBBF24" stop-opacity="0.2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+            <!-- 卡片 2: 岸 -->
+            <div class="relative glass-card bg-white/5 backdrop-blur-2xl rounded-3xl p-8 md:p-12 h-[320px] lg:h-auto fade-in delay-2">
+                <h2 class="text-4xl md:text-5xl font-bold">意象是岸<span class="text-cyan-400">.</span></h2>
+                <p class="mt-2 text-sm text-gray-400 uppercase tracking-widest">IMAGERY IS THE SHORE</p>
+                <div class="absolute bottom-8 right-8 text-cyan-400/40">
+                    <svg class="w-20 h-20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 10 50 L 90 50" stroke="url(#grad_shore)" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M 20 60 Q 30 55 40 60" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M 55 65 Q 65 60 75 65" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                         <defs>
+                            <linearGradient id="grad_shore">
+                                <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.2"/>
+                                <stop offset="100%" stop-color="#22D3EE" stop-opacity="1"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: 渡 -->
+        <section class="mt-16 lg:mt-24 text-center max-w-5xl mx-auto fade-in delay-3">
+            <h3 class="text-3xl md:text-4xl lg:text-5xl font-light text-gray-300">我不是在写，</h3>
+            <h1 class="mt-2 text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-cyan-400">我是在渡。</span>
+            </h1>
+            <p class="mt-4 text-base md:text-lg text-gray-500 font-light tracking-[0.3em] uppercase">I AM NOT WRITING, I AM FERRYING</p>
+        </section>
+        
+        <!-- Section 3: 相遇 -->
+        <section class="mt-24 lg:mt-32 text-center max-w-4xl mx-auto fade-in delay-4">
+             <div class="mb-12 flex justify-center">
+                <svg class="w-48 h-24" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- The Shore Line -->
+                    <line x1="10" y1="50" x2="190" y2="50" stroke="rgba(224, 224, 224, 0.15)" stroke-width="2"/>
+                    <!-- Meeting Point 1 (Reader) -->
+                    <circle cx="120" cy="50" r="6" fill="#22D3EE" class="pulse-animation" style="animation-delay: 0.5s;"/>
+                    <!-- Meeting Point 2 (Writer) -->
+                    <circle cx="80" cy="50" r="6" fill="#FBBF24" class="pulse-animation"/>
+                </svg>
+            </div>
+            <p class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-wide">
+                若你读懂，<br>我们便在彼岸相遇。
+            </p>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgContainer = document.getElementById('blurry-gradient-bg');
+            // 舟(金/琥珀) 与 岸(青/蓝) 的颜色
+            const colors = ['#F59E0B', '#14B8A6', '#0EA5E9', '#D97706']; 
+            const blobCount = 4;
+
+            for (let i = 0; i < blobCount; i++) {
+                const blob = document.createElement('div');
+                blob.classList.add('blob');
+                blob.style.backgroundColor = colors[i % colors.length];
+                bgContainer.appendChild(blob);
+                moveBlob(blob);
+            }
+
+            function moveBlob(blob) {
+                const size = Math.random() * 300 + 200; // 200px to 500px, 大光斑
+                const x = Math.random() * (window.innerWidth - size);
+                const y = Math.random() * (document.body.scrollHeight - size);
+                const duration = Math.random() * 20 + 20; // 20s to 40s, 极慢移动
+
+                blob.style.width = `${size}px`;
+                blob.style.height = `${size}px`;
+                blob.style.transform = `translate(${x}px, ${y}px)`;
+                blob.style.transition = `all ${duration}s cubic-bezier(0.65, 0, 0.35, 1)`;
+                
+                setTimeout(() => moveBlob(blob), duration * 1000);
+            }
+            
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    document.querySelectorAll('.blob').forEach(blob => {
+                        blob.style.transition = 'none'; // 暂时禁用过渡以立即响应
+                        moveBlob(blob);
+                    });
+                }, 250);
+            });
+        });
+    </script>
+
+</body>
+</html>

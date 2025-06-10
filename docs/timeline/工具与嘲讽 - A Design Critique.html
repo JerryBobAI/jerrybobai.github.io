@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具与嘲讽 - A Design Critique</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #050810;
+        }
+
+        .glass-card {
+            background: rgba(25, 30, 50, 0.35);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card > * { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(80px); 
+        }
+
+        .blob {
+            position: absolute; border-radius: 50%; opacity: 0.8; will-change: transform;
+        }
+        .blob-1 { background: #87CEEB; width: 35vw; height: 35vw; top: -5vh; left: 5vw; animation: move-blob-1 30s ease-in-out infinite; }
+        .blob-2 { background: #9370DB; width: 30vw; height: 30vw; top: 50vh; left: 60vw; animation: move-blob-2 35s ease-in-out infinite; }
+        .blob-3 { background: #E67E22; width: 28vw; height: 28vw; top: 60vh; left: -10vw; animation: move-blob-3 25s ease-in-out infinite; } /* 新增一个警示性的颜色 */
+
+        @keyframes move-blob-1 { 0%{transform:translate(0,0) scale(1) rotate(0deg)} 33%{transform:translate(30vw,40vh) scale(1.2) rotate(120deg)} 66%{transform:translate(-20vw,20vh) scale(.8) rotate(240deg)} 100%{transform:translate(0,0) scale(1) rotate(360deg)} }
+        @keyframes move-blob-2 { 0%{transform:translate(0,0) scale(1) rotate(0deg)} 33%{transform:translate(-40vw,-30vh) scale(.9) rotate(-100deg)} 66%{transform:translate(10vw,20vh) scale(1.1) rotate(-220deg)} 100%{transform:translate(0,0) scale(1) rotate(-360deg)} }
+        @keyframes move-blob-3 { 0%{transform:translate(0,0) scale(1) rotate(0deg)} 33%{transform:translate(25vw,-35vh) scale(1.1) rotate(150deg)} 66%{transform:translate(-15vw,15vh) scale(.9) rotate(280deg)} 100%{transform:translate(0,0) scale(1) rotate(360deg)} }
+
+        /* 数据图表动画 */
+        .chart-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-chart 3s 1s ease-out forwards;
+        }
+        .chart-dot {
+            opacity: 0;
+            animation: fade-in 0.5s ease forwards;
+        }
+        @keyframes draw-chart { to { stroke-dashoffset: 0; } }
+        @keyframes fade-in { to { opacity: 1; } }
+
+        /* 为不同的点设置延迟 */
+        .chart-dot-1 { animation-delay: 1.2s; }
+        .chart-dot-2 { animation-delay: 1.8s; }
+        .chart-dot-3 { animation-delay: 2.5s; }
+        .chart-dot-4 { animation-delay: 3.0s; }
+
+        .highlight-gradient-cyan { background: linear-gradient(90deg, rgba(0, 255, 255, 0.7), rgba(0, 255, 255, 0)); }
+    </style>
+</head>
+<body class="w-full min-h-screen flex justify-center p-4 sm:p-8 lg:p-16">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main id="content-grid" class="w-full max-w-screen-2xl h-auto grid grid-cols-12 grid-rows-6 gap-6">
+
+        <!-- Card 1: 核心论点 -->
+        <div class="glass-card col-span-12 lg:col-span-12 row-span-2 p-8 lg:p-12 flex flex-col justify-center">
+            <h1 class="text-white text-4xl md:text-6xl lg:text-7xl font-black tracking-wider leading-tight">当一件工具不再好用时，</h1>
+            <h1 class="text-white text-4xl md:text-6xl lg:text-7xl font-black tracking-wider leading-tight mt-2">它的美，就成了一种<span class="text-cyan-300">高高在上的嘲讽</span>。</h1>
+        </div>
+
+        <!-- Card 2: 我们的立场 -->
+        <div class="glass-card col-span-12 lg:col-span-7 row-span-2 p-8 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-4">
+                     <i class="fa-solid fa-wrench text-cyan-300 text-2xl"></i>
+                    <span class="text-white/80 text-lg uppercase tracking-widest">Our Purpose</span>
+                </div>
+                <p class="text-white text-4xl md:text-5xl font-bold mt-4 leading-normal">我们是来解决问题的，</p>
+            </div>
+            <p class="text-white/60 text-base uppercase self-end">We are here to solve problems.</p>
+        </div>
+
+        <!-- Card 3: “纪念碑” - 障碍 -->
+        <div class="glass-card col-span-12 lg:col-span-5 row-span-4 p-8 flex flex-col justify-between">
+            <!-- 巨大的锁作为背景水印 -->
+            <i class="fa-solid fa-lock text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20rem] opacity-10 pointer-events-none"></i>
+            
+            <div>
+                 <p class="text-white text-3xl md:text-4xl font-bold leading-normal">不是来参观你们那座漂亮却<span class="text-orange-400">打不开门</span>的纪念碑的。</p>
+            </div>
+            <div class="relative z-10 text-right">
+                <p class="text-white/60 text-base uppercase">Not to visit your beautiful monument</p>
+                <p class="text-white/60 text-base uppercase">with a locked door.</p>
+            </div>
+        </div>
+
+        <!-- Card 4: “解决方案” - 动态图表 -->
+        <div class="glass-card col-span-12 lg:col-span-7 row-span-2 p-8 flex flex-col justify-center">
+             <div class="w-full h-full">
+                <svg width="100%" height="100%" viewBox="0 0 400 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="chart-line" d="M 20 130 Q 80 120, 120 80 T 220 50 T 380 20" stroke="#06B6D4" stroke-width="3" stroke-linecap="round"/>
+                    <circle class="chart-dot chart-dot-1" cx="20" cy="130" r="5" fill="#06B6D4"/>
+                    <circle class="chart-dot chart-dot-2" cx="120" cy="80" r="5" fill="#06B6D4"/>
+                    <circle class="chart-dot chart-dot-3" cx="220" cy="50" r="5" fill="#06B6D4"/>
+                    <circle class="chart-dot chart-dot-4" cx="380" cy="20" r="5" fill="#06B6D4"/>
+                </svg>
+             </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            const parallaxIntensity = 15;
+            document.body.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+                cards.forEach(card => {
+                    const transformX = x * parallaxIntensity;
+                    const transformY = y * parallaxIntensity;
+                    card.style.transform = `translate(${transformX}px, ${transformY}px) scale(1)`; // Ensure scale is reset
+                });
+            });
+        });
+    </script>
+</body>
+</html>

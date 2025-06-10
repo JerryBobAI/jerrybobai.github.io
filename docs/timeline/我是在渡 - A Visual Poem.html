@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我是在渡 - A Visual Poem</title>
+    
+    <!-- TailwindCSS 3.4.1 via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6.5.1 via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #050810;
+            /* [V3 优化] 移除 overflow: hidden，允许页面在内容超高时滚动 */
+            /* overflow: hidden; */
+        }
+
+        .glass-card {
+            background: rgba(20, 25, 40, 0.3);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+
+        .glass-card > * {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .glass-card p, .glass-card span, .glass-card i {
+             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 背景容器保持固定，不受页面滚动影响 */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* 这个 overflow:hidden 只作用于光球容器自身 */
+            z-index: -1;
+            filter: blur(80px); 
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.8; 
+            will-change: transform;
+        }
+
+        .blob-1 { background: #87CEEB; width: 35vw; height: 35vw; top: 5vh; left: 5vw; animation: move-blob-1 25s infinite alternate; }
+        .blob-2 { background: #9370DB; width: 30vw; height: 30vw; top: 40vh; left: 60vw; animation: move-blob-2 30s infinite alternate; }
+        .blob-3 { background: #FFB6C1; width: 25vw; height: 25vw; top: 60vh; left: 20vw; animation: move-blob-3 20s infinite alternate; }
+
+        @keyframes move-blob-1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(20vw, 30vh) scale(1.2); } }
+        @keyframes move-blob-2 { from { transform: translate(0, 0) scale(1); } to { transform: translate(-30vw, -15vh) scale(0.9); } }
+        @keyframes move-blob-3 { from { transform: translate(0, 0) scale(1); } to { transform: translate(10vw, -25vh) scale(1.1); } }
+
+        .wave-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            max-width: 2000px;
+            height: auto;
+            stroke: #ffffff;
+            stroke-width: 0.75;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            opacity: 0.35;
+            z-index: 1;
+            animation: draw-wave 8s ease-out forwards;
+        }
+
+        @keyframes draw-wave { to { stroke-dashoffset: 0; } }
+        
+        .highlight-gradient-cyan {
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.7), rgba(0, 255, 255, 0));
+        }
+    </style>
+</head>
+<!-- [V3 优化] 移除 'items-center' 类，让内容在超高时从顶部开始排列，而不是被垂直居中推出视口 -->
+<body class="w-full min-h-screen flex justify-center p-4 sm:p-8 lg:p-16">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <svg class="wave-svg" viewBox="0 0 1440 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-200 250 C 150 100, 350 400, 720 250 S 1290 100, 1640 250" stroke-linecap="round"/>
+    </svg>
+
+    <!-- 主内容网格布局现在可以安全地超过屏幕高度了 -->
+    <main id="content-grid" class="w-full max-w-screen-2xl h-auto grid grid-cols-12 grid-rows-6 gap-6 z-10">
+
+        <div class="glass-card col-span-12 lg:col-span-7 row-span-2 p-8 lg:p-12 flex flex-col justify-center">
+            <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider leading-tight">我的文字是舟，</h1>
+            <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-bold tracking-wider leading-tight mt-2">意象是岸。</h1>
+            <p class="text-white/70 text-lg uppercase tracking-widest mt-6">My Words are the Boat, Imagery the Shore.</p>
+        </div>
+
+        <div class="glass-card col-span-12 lg:col-span-5 row-span-2 p-8 flex flex-col justify-center">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-1 bg-cyan-400 highlight-gradient-cyan"></div>
+                <span class="text-white/80 text-lg uppercase tracking-widest">The Crossing</span>
+            </div>
+            <p class="text-white text-4xl md:text-5xl font-bold mt-6 leading-normal">我不是在写，<br>我是在渡。</p>
+        </div>
+        
+        <div class="glass-card col-span-6 lg:col-span-3 row-span-2 flex flex-col items-center justify-center text-white/80 p-6">
+            <i class="fa-solid fa-pen-nib text-8xl"></i>
+            <span class="mt-4 text-xl font-bold">写</span>
+            <span class="text-white/60 text-sm uppercase">WRITING</span>
+        </div>
+        
+        <div class="glass-card col-span-6 lg:col-span-4 row-span-2 flex flex-col items-center justify-center text-white/80 p-6">
+             <i class="fa-solid fa-water text-8xl"></i>
+             <span class="mt-4 text-xl font-bold">渡</span>
+             <span class="text-white/60 text-sm uppercase">CROSSING</span>
+        </div>
+        
+        <div class="glass-card col-span-12 lg:col-span-12 row-span-2 p-8 lg:p-12 flex flex-col justify-center items-center text-center">
+             <p class="text-white text-4xl md:text-6xl font-bold leading-tight">若你读懂，</p>
+             <p class="text-white text-4xl md:text-6xl font-bold mt-4 leading-tight">我们便在彼岸相遇。</p>
+             <div class="mt-8 flex items-center gap-3 text-white/70">
+                <i class="fa-solid fa-infinity"></i>
+                <span class="text-lg uppercase tracking-widest">We will meet on the other side.</span>
+             </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentGrid = document.getElementById('content-grid');
+            if (!contentGrid) return;
+            const cards = contentGrid.querySelectorAll('.glass-card');
+            const parallaxIntensity = 20;
+
+            document.body.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+
+                cards.forEach(card => {
+                    const transformX = x * parallaxIntensity;
+                    const transformY = y * parallaxIntensity;
+                    card.style.transform = `translate(${transformX}px, ${transformY}px)`;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
