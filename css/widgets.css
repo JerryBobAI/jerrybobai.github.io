@@ -93,30 +93,33 @@
     border-bottom-right-radius: 0 !important; /* 强制底部右角直角 */
 }
 
-/* iframe底部渐变遮罩效果 */
+/* iframe底部渐变遮罩效果 - 丝滑自然的过渡 */
 .preview-card a::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 80px; /* 渐变区域高度，只覆盖iframe底部 */
+    height: 35px; /* 更紧凑的渐变区域 */
     background: linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.3) 40%,
-        rgba(255, 255, 255, 0.7) 80%,
-        rgba(255, 255, 255, 1) 100%
+        rgba(234, 230, 225, 0) 0%,        /* 完全透明 */
+        rgba(234, 230, 225, 0.01) 10%,    /* 几乎不可见 */
+        rgba(234, 230, 225, 0.03) 25%,    /* 极其轻微 */
+        rgba(234, 230, 225, 0.12) 45%,    /* 很轻微 */
+        rgba(234, 230, 225, 0.35) 70%,    /* 轻微过渡 */
+        rgba(234, 230, 225, 0.65) 90%,    /* 中等过渡 */
+        rgba(234, 230, 225, 0.85) 100%    /* 匹配meta背景透明度 */
     );
     pointer-events: none; /* 不影响点击事件 */
     z-index: 5; /* 确保在iframe之上 */
-    border-radius: 0 0 12px 12px; /* 匹配iframe的底部圆角 */
+    border-radius: 0; /* 完全直角，确保与meta区域完美对接 */
 }
 
 /* iframe预览meta信息样式 */
 .preview-meta {
-    background: rgba(234, 230, 225, 0.8);
-    backdrop-filter: blur(8px);
+    background: rgba(234, 230, 225, 0.85); /* 适度透明，让背景内容微微透出 */
+    backdrop-filter: blur(16px) saturate(1.2); /* 更强的模糊和饱和度增强 */
     border-radius: 0 0 12px 12px !important; /* 只有底部圆角 */
     margin: 0 !important; /* 确保没有外边距 */
     border-top: none !important; /* 确保与iframe无缝连接 */
