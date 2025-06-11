@@ -68,14 +68,20 @@
         </button>
         <div id="pagination-controls" class="mt-8" style="display: none;">
             <div class="pagination-wrapper">
-                <button id="prev-page" class="pagination-btn pagination-btn-disabled" disabled>
-                    <i class="fas fa-chevron-left mr-2"></i>上一页
+                <button id="first-page" class="pagination-btn pagination-btn-disabled" disabled title="第一页">
+                    <i class="fas fa-angle-double-left"></i>
+                </button>
+                <button id="prev-page" class="pagination-btn pagination-btn-disabled" disabled title="上一页">
+                    <i class="fas fa-chevron-left"></i>
                 </button>
                 <div class="page-info">
                     <span id="page-info" class="text-secondary font-context">第 1 页，共 1 页</span>
                 </div>
-                <button id="next-page" class="pagination-btn pagination-btn-disabled" disabled>
-                    下一页<i class="fas fa-chevron-right ml-2"></i>
+                <button id="next-page" class="pagination-btn pagination-btn-disabled" disabled title="下一页">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button id="last-page" class="pagination-btn pagination-btn-disabled" disabled title="最后一页">
+                    <i class="fas fa-angle-double-right"></i>
                 </button>
             </div>
         </div>
@@ -255,6 +261,14 @@
             });
 
             // 分页按钮事件
+            document.getElementById('first-page').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage = 1;
+                    displayPagedArticles();
+                    scrollToArticlesSection();
+                }
+            });
+
             document.getElementById('prev-page').addEventListener('click', function() {
                 if (currentPage > 1) {
                     currentPage--;
@@ -267,6 +281,15 @@
                 const totalPages = Math.ceil(allRegularArticles.length / articlesPerPage);
                 if (currentPage < totalPages) {
                     currentPage++;
+                    displayPagedArticles();
+                    scrollToArticlesSection();
+                }
+            });
+
+            document.getElementById('last-page').addEventListener('click', function() {
+                const totalPages = Math.ceil(allRegularArticles.length / articlesPerPage);
+                if (currentPage < totalPages) {
+                    currentPage = totalPages;
                     displayPagedArticles();
                     scrollToArticlesSection();
                 }
@@ -329,25 +352,26 @@
             // 更新页面信息
             document.getElementById('page-info').textContent = `第 ${currentPage} 页，共 ${totalPages} 页`;
 
-            // 更新按钮状态
+            // 获取所有按钮
+            const firstBtn = document.getElementById('first-page');
             const prevBtn = document.getElementById('prev-page');
             const nextBtn = document.getElementById('next-page');
+            const lastBtn = document.getElementById('last-page');
 
-            prevBtn.disabled = currentPage === 1;
-            nextBtn.disabled = currentPage === totalPages;
+            // 更新按钮状态
+            const isFirstPage = currentPage === 1;
+            const isLastPage = currentPage === totalPages;
+
+            firstBtn.disabled = isFirstPage;
+            prevBtn.disabled = isFirstPage;
+            nextBtn.disabled = isLastPage;
+            lastBtn.disabled = isLastPage;
 
             // 更新按钮样式类
-            if (currentPage === 1) {
-                prevBtn.className = 'pagination-btn pagination-btn-disabled';
-            } else {
-                prevBtn.className = 'pagination-btn';
-            }
-
-            if (currentPage === totalPages) {
-                nextBtn.className = 'pagination-btn pagination-btn-disabled';
-            } else {
-                nextBtn.className = 'pagination-btn';
-            }
+            firstBtn.className = isFirstPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+            prevBtn.className = isFirstPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+            nextBtn.className = isLastPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+            lastBtn.className = isLastPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
         }
     </script>
 
