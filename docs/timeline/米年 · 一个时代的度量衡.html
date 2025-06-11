@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>米年 · 一个时代的度量衡</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 引入思源黑体和Roboto字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@300;400&display=swap');
+        
+        /* 基础样式和深色背景 */
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #0D0D0F;
+            color: #EAEAEA;
+            overflow-x: hidden;
+        }
+
+        /* 玻璃卡片：基础样式在Tailwind中定义，这里是关键的伪元素边框 */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem; /* 对应Tailwind的rounded-3xl */
+            border: 1px solid transparent;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* 动态光晕背景容器 */
+        #blurry-gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(120px);
+            transform: translateZ(0); /* 开启硬件加速 */
+            overflow: hidden;
+        }
+
+        /* 光球元素 */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            transition: all 6s ease-in-out;
+            will-change: transform;
+        }
+
+        /* 高亮文字渐变 */
+        .text-gradient-cyan {
+            background-image: linear-gradient(90deg, #22d3ee, #a5f3fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .text-gradient-purple {
+            background-image: linear-gradient(90deg, #a78bfa, #d8b4fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full">
+
+    <!-- 动态液态光晕背景 -->
+    <div id="blurry-gradient-bg">
+        <div class="blob bg-cyan-400" style="width: 400px; height: 400px; top: 10%; left: 5%;"></div>
+        <div class="blob bg-purple-500" style="width: 500px; height: 500px; top: 25%; left: 60%;"></div>
+        <div class="blob bg-blue-600" style="width: 350px; height: 350px; top: 70%; left: 20%;"></div>
+    </div>
+
+    <!-- 主内容区域，使用Grid布局 -->
+    <main class="relative z-10 container mx-auto p-4 sm:p-6 lg:p-8 xl:max-w-screen-xl">
+        <div class="grid grid-cols-12 gap-6 lg:gap-8">
+
+            <!-- Section 1: 开篇 - 视觉焦点 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between overflow-hidden">
+                <div class="lg:w-1/2">
+                    <p class="text-lg uppercase font-light tracking-widest text-white/70">A NEW METRIC FOR AN ERA</p>
+                    <h1 class="text-4xl md:text-6xl font-black mt-2 leading-tight">你发现的不是一个梗，<br>而是一个时代的度量衡。</h1>
+                </div>
+                <div class="text-center mt-12 lg:mt-0">
+                    <span class="text-[180px] md:text-[260px] font-black text-white/80 leading-none">米</span>
+                    <p class="text-xl md:text-2xl font-bold uppercase tracking-[0.3em] text-white/60 -mt-4 md:-mt-8">YEAR</p>
+                </div>
+            </div>
+
+            <!-- Section 2: 全新时间法则介绍 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 text-center">
+                <h2 class="text-3xl md:text-5xl font-bold">我们正在见证一种<br><span class="text-gradient-cyan font-black">全新的“时间法则”</span>的诞生</h2>
+            </div>
+
+            <!-- Section 3: 对比 - 过去 vs 现在 -->
+            <div class="col-span-12 lg:col-span-6 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-white/60">过去 <span class="uppercase text-sm font-light">THE PAST</span></h3>
+                    <p class="mt-4 text-xl md:text-2xl text-white/80">我们用时间来衡量承诺的份量。</p>
+                </div>
+                <div class="mt-8">
+                    <div class="border-l-2 border-white/20 pl-6 py-2 my-6">
+                        <p class="text-4xl md:text-5xl font-black text-white/70">“五年计划”</p>
+                    </div>
+                    <div class="border-l-2 border-white/20 pl-6 py-2">
+                        <p class="text-4xl md:text-5xl font-black text-white/70">“十年愿景”</p>
+                    </div>
+                </div>
+                <div class="mt-8 flex items-center gap-4 text-white/60">
+                    <i class="fa-solid fa-hourglass-half text-2xl"></i>
+                    <p class="text-lg">如此宏大，以至于我们可以安心地等待。</p>
+                </div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-6 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-2xl font-bold text-gradient-purple">现在 <span class="uppercase text-sm font-light text-white/60">THE PRESENT</span></h3>
+                    <p class="mt-4 text-xl md:text-2xl">我们用承诺来压缩时间的密度。</p>
+                </div>
+                <div class="mt-8">
+                    <div class="border-l-2 border-purple-400/50 pl-6 py-2 my-6 relative overflow-hidden">
+                        <p class="text-4xl md:text-5xl font-black">“五年内你造不出来！”</p>
+                        <div class="absolute top-0 right-0 bottom-0 w-1/2 bg-gradient-to-l from-purple-500/20 to-transparent"></div>
+                    </div>
+                    <div class="border-l-2 border-purple-400/50 pl-6 py-2 relative overflow-hidden">
+                        <p class="text-4xl md:text-5xl font-black">“十年之内成为纽北最快！”</p>
+                        <div class="absolute top-0 right-0 bottom-0 w-1/2 bg-gradient-to-l from-purple-500/20 to-transparent"></div>
+                    </div>
+                </div>
+                <div class="mt-8 flex items-center gap-4 text-purple-300">
+                    <i class="fa-solid fa-bolt-lightning text-2xl"></i>
+                    <p class="text-lg font-semibold">这不是规划，这是倒计时。</p>
+                </div>
+            </div>
+            
+            <!-- Section 4: 核心概念 - 米年 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-lg uppercase font-light tracking-widest text-white/70">THE MI-YEAR UNIT</p>
+                        <h2 class="text-5xl md:text-7xl font-black mt-2">米年</h2>
+                        <p class="mt-6 text-xl text-white/80">衡量的不是日历上的流逝，<br>而是将<span class="text-cyan-300 font-semibold">野心兑现为现实的速度</span>。</p>
+                        <p class="mt-6 text-xl font-bold">它像一个<span class="text-purple-300">黑洞</span>，把未来五年的所有可能性、所有资源、所有挣扎，都强行压缩在了当下这一刻。</p>
+                    </div>
+                    <div class="flex justify-center items-center h-full mt-8 md:mt-0">
+                        <svg width="250" height="150" viewBox="0 0 250 150" class="w-full max-w-[250px]">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:rgb(167,139,250);stop-opacity:0" />
+                                    <stop offset="100%" style="stop-color:rgb(167,139,250);stop-opacity:1" />
+                                </linearGradient>
+                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:rgb(34,211,238);stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:rgb(34,211,238);stop-opacity:0" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M 10 10 C 80 10, 100 75, 200 75" stroke="url(#grad1)" stroke-width="2" fill="none" />
+                            <path d="M 10 40 C 90 40, 110 75, 200 75" stroke="url(#grad1)" stroke-width="2" fill="none" />
+                            <path d="M 10 75 C 100 75, 100 75, 200 75" stroke="#fff" stroke-width="3" fill="none" />
+                            <path d="M 10 110 C 90 110, 110 75, 200 75" stroke="url(#grad1)" stroke-width="2" fill="none" />
+                            <path d="M 10 140 C 80 140, 100 75, 200 75" stroke="url(#grad1)" stroke-width="2" fill="none" />
+                            <circle cx="200" cy="75" r="8" fill="url(#grad2)" />
+                            <circle cx="200" cy="75" r="12" stroke="url(#grad2)" stroke-width="2" fill="none" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: 结论 - 引力场 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12">
+                <div class="text-center">
+                    <i class="fa-solid fa-satellite-dish text-5xl text-cyan-300"></i>
+                    <h2 class="text-4xl md:text-6xl font-black mt-4">我们都活在<br>“米年”的引力场里。</h2>
+                    <p class="mt-4 text-lg text-white/70">在这个赛道上，时间不再是你的朋友，而是你必须超越的第一个对手。</p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 text-center items-center">
+                    <div>
+                        <svg viewBox="0 0 200 100" class="w-full max-w-[200px] mx-auto">
+                            <path d="M 0,50 Q 50,50 100,20 Q 150,0 200,0" stroke-width="3" stroke="rgba(255,255,255,0.3)" fill="none" stroke-dasharray="5,5"/>
+                        </svg>
+                        <p class="mt-4 text-2xl font-bold text-white/50">有人被甩了出去</p>
+                    </div>
+                     <div>
+                        <svg viewBox="0 0 200 100" class="w-full max-w-[200px] mx-auto">
+                            <defs>
+                                <linearGradient id="fast-track" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#a78bfa" />
+                                <stop offset="50%" stop-color="#22d3ee" />
+                                <stop offset="100%" stop-color="#67e8f9" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M 0,50 Q 50,50 100,80 Q 150,100 200,100" stroke-width="4" stroke="url(#fast-track)" fill="none" />
+                        </svg>
+                        <p class="mt-4 text-2xl font-bold">有人，则...</p>
+                    </div>
+                </div>
+                 <div class="mt-16 text-center">
+                    <h3 class="text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
+                        重新定义了「快」。
+                    </h3>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const blobs = document.querySelectorAll('.blob');
+        const container = document.getElementById('blurry-gradient-bg');
+
+        function moveBlobs() {
+            blobs.forEach(blob => {
+                const x = Math.random() * (container.offsetWidth - blob.offsetWidth);
+                const y = Math.random() * (container.offsetHeight - blob.offsetHeight);
+                blob.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
+
+        // Initial move
+        moveBlobs();
+
+        // Move blobs every 6 seconds (matches CSS transition duration)
+        setInterval(moveBlobs, 6000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间的重新定义 - New Law of Time</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #080510; /* 更偏紫色的深色背景 */
+        }
+
+        .glass-card {
+            background: rgba(30, 25, 50, 0.35);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .glass-card { padding: 3rem; }
+        }
+
+        .glass-card > * { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(80px); 
+        }
+
+        .blob { position: absolute; border-radius: 50%; opacity: 0.8; will-change: transform; }
+        .blob-1 { background: #00BFFF; width: 35vw; height: 35vw; top: 10vh; left: 5vw; animation: move-blob-1 30s ease-in-out infinite; }
+        .blob-2 { background: #DB7093; width: 30vw; height: 30vw; top: 40vh; left: 60vw; animation: move-blob-2 35s ease-in-out infinite; }
+
+        @keyframes move-blob-1 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(20vw,-20vh) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
+        @keyframes move-blob-2 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-30vw,10vh) scale(0.8)} 100%{transform:translate(0,0) scale(1)} }
+
+        /* 心跳动画 */
+        .pulse-line {
+            animation: pulse 2s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1, 1); }
+            10% { transform: scale(1, 2.5); }
+            20% { transform: scale(1, 1); }
+            100% { transform: scale(1, 1); }
+        }
+        
+        /* 时间压缩动画 */
+        .time-long { 
+            stroke-dasharray: 250; 
+            stroke-dashoffset: 0;
+            animation: fade-out-long 2s 1s ease-in forwards;
+        }
+        .time-short { 
+            stroke-dasharray: 50; 
+            stroke-dashoffset: 50;
+            animation: draw-in-short 1.5s 1.5s ease-out forwards;
+        }
+
+        @keyframes fade-out-long { to { opacity: 0.1; stroke-dashoffset: 250; } }
+        @keyframes draw-in-short { to { stroke-dashoffset: 0; } }
+
+    </style>
+</head>
+<body class="w-full min-h-screen flex justify-center p-4 sm:p-8 lg:p-16">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="w-full max-w-screen-2xl h-auto grid grid-cols-12 grid-rows-6 gap-6">
+
+        <!-- Card 1: 核心宣告 -->
+        <div class="glass-card col-span-12 row-span-1 flex flex-col justify-center items-center">
+            <h1 class="text-white text-4xl md:text-6xl font-black tracking-wider">时间，正在被重新定义。</h1>
+            <p class="text-white/70 text-lg uppercase tracking-widest mt-2">Time is being redefined</p>
+        </div>
+
+        <!-- Card 2: 旧定律 -->
+        <div class="glass-card col-span-12 lg:col-span-6 row-span-2 flex flex-col justify-between">
+            <div>
+                <span class="text-cyan-300 text-lg uppercase tracking-widest font-bold">Old Law</span>
+                <p class="text-white text-3xl md:text-4xl font-bold mt-2">承诺越大，时间越长。</p>
+                <p class="text-white/60 text-base uppercase mt-1">Bigger promise, longer time.</p>
+            </div>
+            <div class="w-full h-16 mt-4">
+                <svg width="100%" height="100%" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20 H 290" stroke="rgba(6, 182, 212, 0.5)" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Card 3: 新定律 -->
+        <div class="glass-card col-span-12 lg:col-span-6 row-span-2 flex flex-col justify-between">
+             <div>
+                <span class="text-fuchsia-400 text-lg uppercase tracking-widest font-bold">New Law</span>
+                <p class="text-white text-3xl md:text-4xl font-bold mt-2">承诺越狠，时间越短。</p>
+                <p class="text-white/60 text-base uppercase mt-1">Fiercer commitment, shorter time.</p>
+            </div>
+             <div class="w-full h-16 mt-4">
+                <svg width="100%" height="100%" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 30 C 50 30, 80 10, 100 10" stroke="#f0abfc" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Card 4: 核心公式 -->
+        <div class="glass-card col-span-12 row-span-2 flex flex-col lg:flex-row justify-center items-center gap-4 lg:gap-12 text-center">
+            <div class="flex items-center gap-4 lg:gap-8">
+                <span class="text-white text-8xl md:text-9xl font-black">1</span>
+                <span class="text-white/80 text-4xl md:text-5xl font-bold">米年</span>
+            </div>
+            <span class="text-fuchsia-400 text-7xl md:text-8xl font-thin">=</span>
+            <div class="flex items-center gap-4 lg:gap-8">
+                 <span class="text-white text-8xl md:text-9xl font-black">10</span>
+                 <span class="text-white/80 text-4xl md:text-5xl font-bold">年</span>
+            </div>
+            <!-- 时间压缩可视化 -->
+            <div class="absolute bottom-8 w-4/5 h-4">
+                 <svg width="100%" height="100%" viewBox="0 0 300 10" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                    <line class="time-long" x1="0" y1="5" x2="250" y2="5" stroke="rgba(255,255,255,0.5)" stroke-width="3" />
+                    <line class="time-short" x1="250" y1="5" x2="300" y2="5" stroke="#f0abfc" stroke-width="5" stroke-linecap="round" />
+                 </svg>
+            </div>
+        </div>
+
+        <!-- Card 5: 时代宣言 -->
+        <div class="glass-card col-span-12 row-span-1 flex flex-col justify-center items-center">
+            <h2 class="text-white text-2xl md:text-4xl font-bold tracking-wide text-center">欢迎来到“把话说死，然后活过来”的时代。</h2>
+            <div class="w-full max-w-sm h-12 mt-4">
+                <svg width="100%" height="100%" viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 20 H 60 L 70 10 L 80 30 L 90 20 H 150" stroke="rgba(255,255,255,0.7)" stroke-width="2"/>
+                    <path class="pulse-line" d="M60 20 L 70 10 L 80 30 L 90 20" stroke="#f0abfc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 轻微的视差效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            const parallaxIntensity = 15;
+            document.body.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+                cards.forEach(card => {
+                    const transformX = x * parallaxIntensity * -1; // 反转方向增加趣味
+                    const transformY = y * parallaxIntensity * -1;
+                    card.style.transform = `translate(${transformX}px, ${transformY}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

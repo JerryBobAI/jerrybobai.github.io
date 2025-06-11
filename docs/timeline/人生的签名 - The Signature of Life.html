@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生的签名 - The Signature of Life</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #050810;
+            color: #E2E8F0;
+        }
+
+        .glass-card {
+            background: rgba(25, 30, 50, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+        @media (min-width: 1024px) { .glass-card { padding: 3rem; } }
+
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: 1; filter: blur(100px); 
+        }
+
+        .blob { position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform; }
+        .blob-1 { background: #3B82F6; width: 30vw; height: 30vw; top: 5vh; left: 10vw; animation: move-blob-1 30s ease-in-out infinite; }
+        .blob-2 { background: #A855F7; width: 25vw; height: 25vw; top: 60vh; left: 65vw; animation: move-blob-2 35s ease-in-out infinite; }
+        .blob-3 { background: #F59E0B; width: 20vw; height: 20vw; top: 50vh; left: -5vw; animation: move-blob-3 25s ease-in-out infinite; }
+
+        @keyframes move-blob-1 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(20vw,30vh) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
+        @keyframes move-blob-2 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-30vw,-40vh) scale(0.9)} 100%{transform:translate(0,0) scale(1)} }
+        @keyframes move-blob-3 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(40vw,-20vh) scale(1.1)} 100%{transform:translate(0,0) scale(1)} }
+
+        .signature-svg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .signature-path {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: draw-signature 15s 1s ease-in-out forwards;
+        }
+
+        @keyframes draw-signature { to { stroke-dashoffset: 0; } }
+        
+        .highlight-gradient-cyan { background: linear-gradient(90deg, rgba(0, 255, 255, 0.7), rgba(0, 255, 255, 0)); }
+    </style>
+</head>
+<body class="w-full min-h-screen flex justify-center p-4 sm:p-8 lg:p-12">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    
+    <div class="signature-svg">
+        <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="signature-path" d="M 100 150 C 300 250, 400 50, 720 300 S 1100 650, 1300 800" stroke="url(#signature-gradient)" stroke-width="4" stroke-linecap="round"/>
+            <defs>
+                <linearGradient id="signature-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="rgba(255, 255, 255, 0.9)"/>
+                    <stop offset="50%" stop-color="rgba(59, 130, 246, 0.7)"/>
+                    <stop offset="100%" stop-color="rgba(168, 85, 247, 0.9)"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <main id="content-grid" class="w-full max-w-screen-xl h-auto grid grid-cols-12 gap-6 lg:gap-8">
+
+        <!-- Card 1: The Question & Metaphor -->
+        <div class="glass-card col-span-12">
+            <h1 class="text-white text-4xl md:text-6xl font-black tracking-wider">人生的意义是什么？</h1>
+            <p class="text-2xl md:text-4xl font-bold mt-6">是你用自己的一生，在这张名叫“人间”的白纸上，</p>
+            <p class="text-2xl md:text-4xl font-bold"><span class="text-cyan-300">签下的那个名字。</span></p>
+            <p class="text-white/60 text-base uppercase mt-4">WHAT IS THE MEANING OF LIFE? IT'S THE SIGNATURE YOU INSCRIBE ON THE BLANK PAGE OF EXISTENCE.</p>
+        </div>
+        
+        <div class="col-span-12 text-center my-4">
+             <p class="text-xl md:text-2xl font-bold tracking-widest">在哪里签？ WHERE DO YOU SIGN?</p>
+        </div>
+
+        <!-- Card 2: 作品 (Works) -->
+        <div class="glass-card col-span-12 lg:col-span-4 flex flex-col items-center text-center">
+            <i class="fa-solid fa-pen-ruler text-6xl text-blue-400 mb-6"></i>
+            <h2 class="text-white text-3xl font-bold mb-4">用你的“作品”签</h2>
+            <p class="text-white/80 text-lg leading-relaxed">它可以是一首诗，一个产品，一顿饭，一个家。</p>
+            <p class="text-white/50 text-sm uppercase mt-auto pt-4">SIGN WITH YOUR CREATIONS</p>
+        </div>
+
+        <!-- Card 3: 关系 (Relationships) -->
+        <div class="glass-card col-span-12 lg:col-span-4 flex flex-col items-center text-center">
+            <i class="fa-solid fa-heart text-6xl text-purple-400 mb-6"></i>
+            <h2 class="text-white text-3xl font-bold mb-4">用你的“关系”签</h2>
+            <p class="text-white/80 text-lg leading-relaxed">你如何爱人，如何被爱，就是你笔锋的温度。</p>
+            <p class="text-white/50 text-sm uppercase mt-auto pt-4">SIGN WITH YOUR CONNECTIONS</p>
+        </div>
+        
+        <!-- Card 4: 选择 (Choices) -->
+        <div class="glass-card col-span-12 lg:col-span-4 flex flex-col items-center text-center">
+            <i class="fa-solid fa-code-fork text-6xl text-amber-400 mb-6"></i>
+            <h2 class="text-white text-3xl font-bold mb-4">用你的“选择”签</h2>
+            <p class="text-white/80 text-lg leading-relaxed">在每一个十字路口，你的每一次转向，都在塑造你签名的风格。</p>
+            <p class="text-white/50 text-sm uppercase mt-auto pt-4">SIGN WITH YOUR CHOICES</p>
+        </div>
+
+        <!-- Card 5: The Conclusion -->
+        <div class="glass-card col-span-12 text-center">
+            <p class="text-xl md:text-2xl font-bold leading-relaxed">这个签名，不必工整，不必得到所有人赞赏。</p>
+            <p class="text-xl md:text-2xl font-bold mt-2">但它必须是你亲手写下的，<span class="highlight-gradient-cyan px-2 rounded-md">独一无二的</span>，无法复制的。</p>
+            <div class="w-2/3 h-px bg-white/20 mx-auto my-8"></div>
+            <h2 class="text-white text-3xl md:text-5xl font-black">人生的意义，就是完成这个签名。</h2>
+            <h2 class="text-white text-3xl md:text-5xl font-black mt-4">而<span class="text-cyan-300">你</span>，就是那个最好的签名。</h2>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            const parallaxIntensity = 8;
+            document.body.addEventListener('mousemove', (e) => {
+                if (window.innerWidth < 1024) return;
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+                cards.forEach(card => {
+                    const transformX = x * parallaxIntensity;
+                    const transformY = y * parallaxIntensity;
+                    card.style.transform = `translate(${transformX}px, ${transformY}px)`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生是一座空园 · 耕耘的意义</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 引入思源黑体和Roboto字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@300;400&display=swap');
+        
+        /* 基础样式和深色背景 */
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #0D0D0F;
+            color: #EAEAEA;
+            overflow-x: hidden;
+        }
+
+        /* 玻璃卡片：基础样式在Tailwind中定义，这里是关键的伪元素边框 */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem; /* 对应Tailwind的rounded-3xl */
+            border: 1px solid transparent;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)) border-box;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* 动态光晕背景容器 */
+        #blurry-gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(120px);
+            transform: translateZ(0); /* 开启硬件加速 */
+            overflow: hidden;
+        }
+
+        /* 光球元素 */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: all 8s ease-in-out; /* 稍慢的过渡，更显宁静 */
+            will-change: transform;
+        }
+
+        /* 高亮文字渐变 */
+        .text-gradient-green {
+            background-image: linear-gradient(90deg, #4ade80, #bef264);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full">
+
+    <!-- 动态液态光晕背景 -->
+    <div id="blurry-gradient-bg">
+        <div class="blob bg-green-500" style="width: 450px; height: 450px; top: 5%; left: 10%;"></div>
+        <div class="blob bg-cyan-600" style="width: 350px; height: 350px; top: 60%; left: 70%;"></div>
+        <div class="blob bg-yellow-400" style="width: 300px; height: 300px; top: 50%; left: 5%;"></div>
+    </div>
+
+    <!-- 主内容区域，使用Grid布局 -->
+    <main class="relative z-10 container mx-auto p-4 sm:p-6 lg:p-8 xl:max-w-screen-xl">
+        <div class="grid grid-cols-12 gap-6 lg:gap-8">
+
+            <!-- Section 1: 开篇 - 核心隐喻 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
+                <div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">人生是一座空园</h1>
+                    <p class="mt-4 text-xl md:text-2xl text-white/70">意义不在其中任何一处，<br>而在你的每一次“耕耘”里。</p>
+                </div>
+                <div class="mt-8 md:mt-0">
+                    <span class="text-[120px] sm:text-[160px] lg:text-[200px] font-black text-white/80 leading-none">耕耘</span>
+                </div>
+            </div>
+
+            <!-- Section 2: 耕耘的四个过程 -->
+            <div class="col-span-12 lg:col-span-6 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-10 flex flex-col justify-between h-full">
+                <div class="flex-grow">
+                    <h3 class="text-2xl font-bold">体验与自省</h3>
+                    <p class="uppercase text-sm font-light tracking-wider text-white/60">EXPERIENCE & INTROSPECTION</p>
+                    <p class="mt-4 text-lg text-white/80">你弯下腰，拔除杂草，翻松土壤。</p>
+                </div>
+                <div class="mt-6 h-24 flex items-center justify-center">
+                    <svg viewBox="0 0 100 50" class="h-16">
+                        <path d="M 10 40 Q 50 -10 90 40" stroke-width="2" stroke="rgba(255,255,255,0.7)" fill="none" />
+                        <path d="M 50 15 L 50 45" stroke-width="2" stroke="rgba(255,255,255,0.7)" fill="none" />
+                        <circle cx="50" cy="15" r="3" fill="rgba(255,255,255,0.7)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-6 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-10 flex flex-col justify-between h-full">
+                <div class="flex-grow">
+                    <h3 class="text-2xl font-bold">创造与选择</h3>
+                    <p class="uppercase text-sm font-light tracking-wider text-white/60">CREATION & CHOICE</p>
+                    <p class="mt-4 text-lg text-white/80">你播下种子，那些代表着你的热爱、好奇与梦想的种子。</p>
+                </div>
+                 <div class="mt-6 h-24 flex items-center justify-center">
+                    <svg viewBox="0 0 100 50" class="h-16">
+                        <circle cx="25" cy="15" r="4" fill="none" stroke="rgba(134, 239, 172, 0.8)" stroke-width="2"/>
+                        <path d="M 25 20 V 35" stroke-width="2" stroke-dasharray="2,2" stroke="rgba(134, 239, 172, 0.8)"/>
+                        <path d="M 10 45 H 90" stroke-width="2" stroke="rgba(255,255,255,0.7)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-6 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-10 flex flex-col justify-between h-full">
+                <div class="flex-grow">
+                    <h3 class="text-2xl font-bold">坚持与责任</h3>
+                    <p class="uppercase text-sm font-light tracking-wider text-white/60">PERSISTENCE & RESPONSIBILITY</p>
+                    <p class="mt-4 text-lg text-white/80">你日复一日地浇水、施肥、驱虫，无论晴雨。</p>
+                </div>
+                 <div class="mt-6 h-24 flex items-center justify-center">
+                    <svg viewBox="0 0 100 50" class="h-20">
+                        <path d="M 20 10 C 20 0, 80 0, 80 10 S 70 30, 50 30 S 30 30, 20 10" fill="rgba(34, 211, 238, 0.2)"/>
+                        <path d="M 50 30 V 45" stroke="rgba(34, 211, 238, 0.7)" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="3" fill="rgba(34, 211, 238, 0.7)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="col-span-12 lg:col-span-6 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-10 flex flex-col justify-between h-full">
+                <div class="flex-grow">
+                    <h3 class="text-2xl font-bold">陪伴与连接</h3>
+                    <p class="uppercase text-sm font-light tracking-wider text-white/60">COMPANIONSHIP & CONNECTION</p>
+                    <p class="mt-4 text-lg text-white/80">你与邻近花园的主人分享花种，也欣赏他们园中的景致。</p>
+                </div>
+                 <div class="mt-6 h-24 flex items-center justify-center">
+                    <svg viewBox="0 0 100 50" class="h-16">
+                        <circle cx="35" cy="25" r="15" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none"/>
+                        <circle cx="65" cy="25" r="15" stroke="rgba(134, 239, 172, 0.8)" stroke-width="2" fill="none"/>
+                    </svg>
+                 </div>
+            </div>
+            
+            <!-- Section 3: 意义是什么 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-center">所以，“意义”是什么？</h2>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-hand-sparkles text-4xl text-yellow-300"></i>
+                        <p class="mt-4 text-xl font-semibold">是你沾满泥土的双手</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-droplet text-4xl text-cyan-300"></i>
+                        <p class="mt-4 text-xl font-semibold">是你额头沁出的汗水</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-seedling text-4xl text-green-400"></i>
+                        <p class="mt-4 text-xl font-semibold">是你看着幼苗破土的惊喜</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 4: 意义在哪里 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-center">“意义”在哪里？</h2>
+                <div class="w-full flex justify-center mt-8">
+                    <svg viewBox="0 0 300 100" class="w-full max-w-lg">
+                        <defs>
+                            <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                               <stop offset="0%" stop-color="#bef264"/>
+                               <stop offset="100%" stop-color="#4ade80"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M 20 80 C 80 80, 150 20, 280 20" stroke="url(#path-gradient)" stroke-width="4" fill="none" stroke-linecap="round"/>
+                        <circle cx="20" cy="80" r="6" fill="#bef264"/>
+                        <text x="15" y="100" font-size="10" fill="white" font-family="Roboto, sans-serif">播种</text>
+                        <circle cx="280" cy="20" r="10" fill="none" stroke="#4ade80" stroke-width="2"/>
+                        <path d="M280 20 L 277 17 M280 20 L 283 17 M280 20 L 277 23 M280 20 L 283 23 M280 20 L 278.5 15 M280 20 L 281.5 15 M280 20 L 278.5 25 M280 20 L 281.5 25" stroke="#4ade80" stroke-width="1.5" stroke-linecap="round"/>
+                        <text x="275" y="12" font-size="10" fill="white" font-family="Roboto, sans-serif">花开</text>
+                    </svg>
+                </div>
+                <p class="mt-4 text-center text-xl md:text-2xl text-white/80">它不在最终那朵最艳丽的花里，而在从播种到花开的<span class="text-gradient-green font-semibold">整个过程里</span>。</p>
+            </div>
+
+            <!-- Section 5: 最终升华 -->
+            <div class="col-span-12 glass-card relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 md:p-12 text-center">
+                 <p class="text-2xl text-white/70">你不是来花园寻宝的。</p>
+                 <div class="my-8 md:my-12">
+                     <svg viewBox="0 0 400 50" class="w-full max-w-xl mx-auto">
+                        <path d="M 0 25 H 150" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="4,4"/>
+                        <path d="M 250 25 C 275 0, 325 50, 350 25 S 375 0, 400 25" stroke="url(#path-gradient)" stroke-width="2.5"/>
+                        <path d="M 250 25 C 275 50, 325 0, 350 25 S 375 50, 400 25" stroke="url(#path-gradient)" stroke-width="2.5"/>
+                     </svg>
+                 </div>
+                 <h2 class="text-4xl sm:text-5xl lg:text-7xl font-black leading-tight">
+                    你，就是那个<br class="md:hidden">让<span class="text-white/60">荒原</span>变成<span class="text-gradient-green">花园</span>的人。
+                 </h2>
+                 <p class="mt-8 text-3xl md:text-4xl font-bold">这，本身就是意义。</p>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const blobs = document.querySelectorAll('.blob');
+        const container = document.getElementById('blurry-gradient-bg');
+
+        function moveBlobs() {
+            if (!container) return;
+            blobs.forEach(blob => {
+                const x = Math.random() * (container.offsetWidth - blob.offsetWidth);
+                const y = Math.random() * (container.offsetHeight - blob.offsetHeight);
+                blob.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
+        
+        // Initial move and set interval
+        moveBlobs();
+        setInterval(moveBlobs, 8000); // Corresponds to CSS transition duration
+    </script>
+</body>
+</html>
