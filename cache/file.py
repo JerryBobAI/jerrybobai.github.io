@@ -12,8 +12,9 @@ HTML文件自动处理脚本
 2. **提取标题**: 从HTML文件的<title>标签中提取标题
 3. **智能重命名**: 根据标题生成合适的文件名
 4. **拷贝文件**: 将文件拷贝到timeline目录
-5. **更新metadata**: 自动运行update.py更新元数据
-6. **清理源文件**: 将源文件安全移动到回收站
+5. **添加脚本引用**: 自动为HTML文件添加main.js脚本引用，确保页面组件正常显示
+6. **更新metadata**: 自动运行update.py更新元数据
+7. **清理源文件**: 将源文件安全移动到回收站
 
 ## 使用方法
 注意：脚本需要在cache目录下运行
@@ -28,8 +29,9 @@ HTML文件自动处理脚本
 4. 根据标题生成安全的文件名（去除特殊字符）
 5. 检查目标文件是否已存在，避免重复
 6. 拷贝文件到../docs/timeline/目录
-7. 运行update.py更新metadata.json
-8. 将源文件移动到回收站（可选，安全删除）
+7. 自动检查并添加main.js脚本引用（确保页面组件正常显示）
+8. 运行update.py更新metadata.json
+9. 将源文件移动到回收站（可选，安全删除）
 
 ## 注意事项
 - 文件名会自动清理特殊字符，确保文件系统兼容性
@@ -163,6 +165,51 @@ def find_html_files(source_dir, today_only=False):
 
     return html_files
 
+def ensure_main_js_script(file_path, dry_run=False):
+    """
+    确保HTML文件包含main.js脚本引用
+
+    Args:
+        file_path (Path): HTML文件路径
+        dry_run (bool): 是否为预览模式
+
+    Returns:
+        bool: 是否成功添加或已存在脚本引用
+    """
+    try:
+        # 读取文件内容
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        # 检查是否已经包含 main.js 脚本引用（更精确的检测）
+        if '<script src="../../js/main.js"></script>' in content or 'src="../../js/main.js"' in content:
+            print(f"   ✅ 已包含main.js脚本引用")
+            return True
+
+        # 检查是否有 </body> 标签
+        if '</body>' not in content:
+            print(f"   ⚠️  未找到</body>标签，跳过脚本添加")
+            return False
+
+        if dry_run:
+            print(f"   🔍 [预览] 将添加main.js脚本引用")
+            return True
+
+        # 在 </body> 前添加脚本引用
+        script_tag = '    <!-- 加载组件脚本 -->\n    <script src="../../js/main.js"></script>\n</body>'
+        new_content = content.replace('</body>', script_tag)
+
+        # 写回文件
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+
+        print(f"   ✅ 已添加main.js脚本引用")
+        return True
+
+    except Exception as e:
+        print(f"   ❌ 添加脚本引用失败: {e}")
+        return False
+
 def copy_file_to_timeline(source_file, target_filename, dry_run=False):
     """
     将文件拷贝到timeline目录
@@ -192,20 +239,24 @@ def copy_file_to_timeline(source_file, target_filename, dry_run=False):
 
     if target_file != original_target_file:
         print(f"   🔄 文件名冲突，重命名为: {target_file.name}")
-    
+
     if dry_run:
         print(f"   🔍 [预览] 将拷贝到: {target_file}")
         return True
-    
+
     try:
         # 确保目标目录存在
         timeline_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # 拷贝文件
         shutil.copy2(source_file, target_file)
         print(f"   ✅ 已拷贝到: {target_file.name}")
+
+        # 确保拷贝的文件包含main.js脚本引用
+        ensure_main_js_script(target_file, dry_run)
+
         return True
-        
+
     except Exception as e:
         print(f"   ❌ 拷贝失败: {e}")
         return False
