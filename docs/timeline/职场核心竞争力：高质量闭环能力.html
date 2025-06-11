@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职场核心竞争力：高质量闭环能力</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #0A0A0C;
+            color: #E5E7EB;
+            overflow-x: hidden;
+        }
+
+        .hybrid-grid-card {
+            background: rgba(30, 30, 35, 0.5);
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* 动态背景光斑 */
+        .blur-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: #4A00E0; /* Deep Purple */
+            top: -10%;
+            left: -20%;
+            animation: move-blob-1 35s infinite alternate ease-in-out;
+        }
+
+        .blob-2 {
+            width: 700px;
+            height: 700px;
+            background: #004E92; /* Deep Blue */
+            bottom: -20%;
+            right: -25%;
+            animation: move-blob-2 40s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-blob-1 {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(250px, 150px) scale(1.2); }
+        }
+        @keyframes move-blob-2 {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(-200px, -150px) scale(0.9); }
+        }
+
+        /* 鼠标跟随光晕 */
+        #cursor-light {
+            position: fixed;
+            width: 900px;
+            height: 900px;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(74, 0, 224, 0.1) 0%, rgba(74, 0, 224, 0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transition: background 0.3s ease;
+        }
+
+        /* 入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 闭环动效 */
+        .loop-glow {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid;
+            animation: pulse-glow 4s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态背景与光晕 -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden">
+        <div class="blur-blob blob-1"></div>
+        <div class="blur-blob blob-2"></div>
+    </div>
+    <div id="cursor-light"></div>
+
+    <div class="relative min-h-screen w-full py-20 px-4 sm:px-6 lg:px-8 z-10">
+        <main class="max-w-7xl mx-auto flex flex-col gap-24 md:gap-40">
+
+            <!-- Hero Section -->
+            <section class="text-center flex flex-col items-center justify-center min-h-[70vh] reveal">
+                <div class="relative w-48 h-48 mb-12 flex items-center justify-center">
+                    <div class="loop-glow border-purple-400/80 w-full h-full"></div>
+                    <div class="loop-glow border-blue-400/80 w-3/4 h-3/4" style="animation-delay: -2s;"></div>
+                    <i class="fa-solid fa-arrows-rotate text-6xl text-white"></i>
+                </div>
+                <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-tight">
+                    高质量闭环能力
+                </h1>
+                <p class="text-sm uppercase tracking-widest text-gray-400 mt-6">The Ability to Define & Close High-Value Loops</p>
+                <div class="mt-12 max-w-3xl hybrid-grid-card rounded-3xl p-6 md:p-8">
+                    <p class="text-gray-300 text-base md:text-lg">
+                        职场最核心的、能让你在任何行业、任何时代都立于不败之地的“道”，是一种看似简单，却极度稀缺的元能力：高质量地定义问题，并独立地形成闭环。
+                    </p>
+                </div>
+            </section>
+
+            <!-- The Divide: Task-Taker vs Loop-Closer -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-gray-500">The Watershed</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">普通员工与核心人才的<br class="md:hidden"/>唯一分水岭</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-stretch">
+                    <div class="hybrid-grid-card rounded-3xl p-8 flex flex-col text-center items-center">
+                        <i class="fa-solid fa-person-running text-5xl text-gray-500"></i>
+                        <h3 class="text-3xl font-bold mt-6">执行者</h3>
+                        <p class="uppercase text-sm tracking-widest text-gray-500">Task-Taker</p>
+                        <p class="mt-4 text-gray-400">完成任务，等待指令。是上级的“手脚”。</p>
+                        <div class="mt-auto pt-6 text-center">
+                           <p class="text-5xl font-black text-gray-600 opacity-50">完成</p>
+                        </div>
+                    </div>
+                    <div class="hybrid-grid-card rounded-3xl p-8 flex flex-col text-center items-center border-purple-400/50">
+                        <i class="fa-solid fa-brain text-5xl text-purple-400"></i>
+                        <h3 class="text-3xl font-bold mt-6 text-white">闭环者</h3>
+                        <p class="uppercase text-sm tracking-widest text-purple-400">Loop-Closer</p>
+                        <p class="mt-4 text-gray-300">管理期望，交付价值。是上级的“外置大脑”。</p>
+                        <div class="mt-auto pt-6 w-full bg-black/20 rounded-lg p-4">
+                           <p class="text-2xl font-bold text-white">数据 + 分析 + 洞察 + 建议</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="text-center mt-12 text-2xl md:text-4xl font-bold text-white">
+                    “你办事，<span class="text-purple-400">我放心</span>”的终极形态
+                 </div>
+            </section>
+            
+            <!-- The System: 4 Steps -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-gray-500">The System</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">闭环能力系统拆解</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-bullseye text-4xl text-blue-400 mb-4"></i>
+                        <h3 class="text-6xl font-black text-white">定义靶心</h3>
+                        <p class="text-sm uppercase tracking-widest text-blue-400">DECONSTRUCT THE 'WHY'</p>
+                        <p class="mt-4 text-gray-300">接到任务，先向上一步，思考其背后的真实意图。一个好的问题，能省掉80%的无用功。</p>
+                    </div>
+                     <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-sitemap text-4xl text-blue-400 mb-4"></i>
+                        <h3 class="text-6xl font-black text-white">规划路径</h3>
+                        <p class="text-sm uppercase tracking-widest text-blue-400">ARCHITECT THE 'HOW'</p>
+                        <p class="mt-4 text-gray-300">从终点反推，设计最高效的行动路径，盘点资源，预备Plan B。体现你的系统思维。</p>
+                    </div>
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-rocket text-4xl text-blue-400 mb-4"></i>
+                        <h3 class="text-6xl font-black text-white">推动进程</h3>
+                        <p class="text-sm uppercase tracking-widest text-blue-400">DRIVE WITH OWNERSHIP</p>
+                        <p class="mt-4 text-gray-300">主动沟通，带着备选方案解决问题，而不是抛出问题。你的职责是让事情往前走。</p>
+                    </div>
+                     <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-gem text-4xl text-blue-400 mb-4"></i>
+                        <h3 class="text-6xl font-black text-white">封装价值</h3>
+                        <p class="text-sm uppercase tracking-widest text-blue-400">PACKAGE THE 'WHAT'</p>
+                        <p class="mt-4 text-gray-300">将工作成果“封装”成让接收方能“即插即用”的价值包。永远比期待的多做一点点。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- How to Cultivate -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-gray-500">The Practice</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">如何修炼核武器级能力?</h2>
+                </div>
+                <div class="max-w-4xl mx-auto flex flex-col gap-6">
+                    <div class="hybrid-grid-card rounded-2xl p-6 flex items-center gap-6">
+                        <i class="fa-solid fa-user-tie text-3xl text-purple-300 w-12 text-center"></i>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">从“Owner心态”开始</h3>
+                            <p class="text-gray-400">把你负责的每件小事，都当成是你的“个人公司”在运营。</p>
+                        </div>
+                    </div>
+                     <div class="hybrid-grid-card rounded-2xl p-6 flex items-center gap-6">
+                        <i class="fa-solid fa-lightbulb text-3xl text-purple-300 w-12 text-center"></i>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">刻意练习“费曼学习法”</h3>
+                            <p class="text-gray-400">用最简单的语言向外行解释你要做什么，如果说不清就没想明白。</p>
+                        </div>
+                    </div>
+                     <div class="hybrid-grid-card rounded-2xl p-6 flex items-center gap-6">
+                        <i class="fa-solid fa-list-check text-3xl text-purple-300 w-12 text-center"></i>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">建立你的“问题清单”</h3>
+                            <p class="text-gray-400">面对任何任务，用固定的清单检查：目的、标准、相关人、风险。</p>
+                        </div>
+                    </div>
+                     <div class="hybrid-grid-card rounded-2xl p-6 flex items-center gap-6">
+                        <i class="fa-solid fa-magnifying-glass-chart text-3xl text-purple-300 w-12 text-center"></i>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">复盘他人的“漂亮活”</h3>
+                            <p class="text-gray-400">拆解高手是如何完成闭环的。模仿，是最好的学习。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section class="text-center flex flex-col items-center justify-center py-20 reveal">
+                <div class="flex items-center justify-center gap-8 md:gap-12">
+                    <i class="fa-solid fa-gears text-7xl md:text-8xl text-gray-600 opacity-60"></i>
+                    <i class="fa-solid fa-arrow-right-long text-4xl text-gray-500"></i>
+                    <i class="fa-solid fa-atom text-9xl md:text-[12rem] text-purple-400 animate-pulse"></i>
+                </div>
+                <h2 class="text-4xl sm:text-5xl md:text-7xl font-black text-white mt-12">
+                    成为<span class="text-purple-400">引擎</span>，而非齿轮
+                </h2>
+                <p class="text-sm uppercase tracking-widest text-gray-400 mt-4">Be the engine, not the cog</p>
+                <p class="mt-8 max-w-3xl mx-auto text-gray-300 text-lg">
+                    在AI可以完成越来越多执行性任务的今天，形成“价值闭环”的能力，其稀缺性正指数级上升。掌握它，你就是那个驱动整个机器运转、不可或缺的核心。
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // 鼠标跟随光晕效果
+        const cursorLight = document.getElementById('cursor-light');
+        document.addEventListener('mousemove', (e) => {
+            cursorLight.style.left = e.clientX + 'px';
+            cursorLight.style.top = e.clientY + 'px';
+        });
+
+        // 滚动入场动画
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

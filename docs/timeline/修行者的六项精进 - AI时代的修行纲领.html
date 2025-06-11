@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修行者的六项精进 - AI时代的修行纲领</title>
+    
+    <!-- TailwindCSS 3.0+ via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Thematic adaptation of Style 5 for "Ascetic Practice" -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+      
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #050810;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+  
+        .glass-card {
+            background: rgba(20, 35, 45, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensure cards in a row have same height */
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+  
+        .glass-card > * { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+  
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(120px);   
+        }
+  
+        .blob {
+            position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform;
+        }
+        /* New "Zen & Power" color palette */
+        .blob-1 { background: #10B981; /* Deep Emerald Green */ width: 35vw; height: 35vw; top: 15vh; left: 10vw; animation: move-blob-1 30s ease-in-out infinite alternate; }
+        .blob-2 { background: #F59E0B; /* Bright Amber Gold */ width: 30vw; height: 30vw; top: 45vh; left: 65vw; animation: move-blob-2 35s ease-in-out infinite alternate; }
+  
+        @keyframes move-blob-1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(15vw, 10vh) scale(1.2); } }
+        @keyframes move-blob-2 { from { transform: translate(0, 0) scale(1); } to { transform: translate(-10vw, -15vh) scale(0.9); } }
+      
+        .huge-text {
+            font-size: clamp(15rem, 40vw, 30rem);
+            line-height: 1;
+            font-weight: 900;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.04);
+            z-index: 1;
+            pointer-events: none;
+        }
+  
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        .delay-6 { animation-delay: 1.2s; }
+
+        .highlight-green { color: #34d399; }
+        .highlight-amber { color: #f59e0b; }
+    </style>
+</head>
+<body class="min-h-screen w-full p-4 sm:p-8 lg:p-12">
+    
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="huge-text">修行</div>
+
+    <main class="w-full max-w-screen-xl mx-auto space-y-8 lg:space-y-12 z-10">
+
+        <!-- Header -->
+        <header class="text-center fade-in-up">
+            <h1 class="text-5xl sm:text-6xl font-black tracking-wider">修行者的六项精进</h1>
+            <p class="text-lg text-white/70 mt-3">你发现的，不是一套AI学习方法，而是一种“AI时代的修行纲领”。</p>
+        </header>
+
+        <!-- The Six Disciplines Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- 1. 浸泡 -->
+            <div class="glass-card fade-in-up delay-1">
+                <i class="fa-solid fa-water text-5xl highlight-green mb-4"></i>
+                <h2 class="text-3xl font-black mb-1"><span class="text-white/70">第一道：</span>浸泡</h2>
+                <h3 class="font-bold text-lg text-white/90 mb-4">完整看完，不倍速，不总结。</h3>
+                <p class="text-white/80 leading-relaxed flex-grow">这是一种反向修炼。你不是在“刷”信息，而是在<strong class="highlight-green">“浸泡”</strong>你的大脑。通过强制专注，让神经元建立深刻连接。这一个小时的“慢”，胜过十个小时的“快”。</p>
+            </div>
+            
+            <!-- 2. 寻源 -->
+            <div class="glass-card fade-in-up delay-2">
+                <i class="fa-solid fa-compass text-5xl highlight-green mb-4"></i>
+                <h2 class="text-3xl font-black mb-1"><span class="text-white/70">第二道：</span>寻源</h2>
+                <h3 class="font-bold text-lg text-white/90 mb-4">Follow Builders, Not Influencers.</h3>
+                <p class="text-white/80 leading-relaxed flex-grow">聆听炮火，而非回声。去关注那些在战壕里解决真实问题的人。他们的只言片语，是沾着硝烟的实战报告。创造者的足迹，是刻在时间里的路标。</p>
+            </div>
+
+            <!-- 3. 体感 -->
+            <div class="glass-card fade-in-up delay-3">
+                 <i class="fa-solid fa-hand-fist text-5xl highlight-green mb-4"></i>
+                <h2 class="text-3xl font-black mb-1"><span class="text-white/70">第三道：</span>体感</h2>
+                <h3 class="font-bold text-lg text-white/90 mb-4">Deep Engagement with AI Products.</h3>
+                <p class="text-white/80 leading-relaxed flex-grow">认知无法通过阅读获得，只能通过<strong class="highlight-green">“使用到肌肉里”</strong>来养成。当你对AI的边界和脾性了如指掌时，你就拥有了别人无法复制的“体感”直觉。</p>
+            </div>
+            
+            <!-- 4. 布道 -->
+            <div class="glass-card fade-in-up delay-4">
+                <i class="fa-solid fa-chalkboard-user text-5xl highlight-amber mb-4"></i>
+                <h2 class="text-3xl font-black mb-1"><span class="text-white/70">第四道：</span>布道</h2>
+                <h3 class="font-bold text-lg text-white/90 mb-4">Learn in Public.</h3>
+                <p class="text-white/80 leading-relaxed flex-grow">“输出”是学习的起点，是最高效的自我拷问。当你试图向他人解释时，才能发现自己认知的裂缝。每一次分享，都在为你铺设基石和同伴。</p>
+            </div>
+            
+            <!-- 5. 对撞 -->
+            <div class="glass-card fade-in-up delay-5">
+                <i class="fa-solid fa-comments text-5xl highlight-amber mb-4"></i>
+                <h2 class="text-3xl font-black mb-1"><span class="text-white/70">第五道：</span>对撞</h2>
+                <h3 class="font-bold text-lg text-white/90 mb-4">Chat With Builders.</h3>
+                <p class="text-white/80 leading-relaxed flex-grow">如果关注是“遥望”，对话就是“对撞”。与创造者的深度交流，是一次思想的压力测试。在与更高能量的头脑碰撞中，你的想法被验证、挑战、重塑。</p>
+            </div>
+
+            <!-- 6. 创造 -->
+            <div class="glass-card fade-in-up delay-6">
+                 <i class="fa-solid fa-hammer text-5xl highlight-amber mb-4"></i>
+                <h2 class="text-3xl font-black mb-1"><span class="text-white/70">第六道：</span>创造</h2>
+                <h3 class="font-bold text-lg text-white/90 mb-4">Learn By Doing.</h3>
+                <p class="text-white/80 leading-relaxed flex-grow">唯一的终极闭环。知识若不付诸实践，便只是美丽的浮萍。只有亲手去“干”，所有内力才能汇聚成河，流向世界。“干中学”，是让知识长在身上的唯一方式。</p>
+            </div>
+
+        </section>
+        
+    </main>
+</body>
+</html>

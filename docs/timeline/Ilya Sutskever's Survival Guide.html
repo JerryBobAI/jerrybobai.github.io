@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilya Sutskever's Survival Guide</title>
+    
+    <!-- TailwindCSS 3.0+ via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Thematic adaptation of Style 5 for a philosophical guide -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+      
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #050810;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+  
+        .glass-card {
+            background: rgba(28, 35, 60, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2.5rem;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+  
+        .glass-card > * { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+  
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(120px);   
+        }
+  
+        .blob {
+            position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform;
+        }
+        /* New contemplative color palette */
+        .blob-1 { background: #0077FF; /* Deep, wise blue */ width: 35vw; height: 35vw; top: 10vh; left: 15vw; animation: move-blob-1 30s ease-in-out infinite alternate; }
+        .blob-2 { background: #9F7AEA; /* Mystical violet */ width: 30vw; height: 30vw; top: 50vh; left: 60vw; animation: move-blob-2 35s ease-in-out infinite alternate; }
+  
+        @keyframes move-blob-1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(10vw, 15vh) scale(1.1); } }
+        @keyframes move-blob-2 { from { transform: translate(0, 0) scale(1); } to { transform: translate(-15vw, -10vh) scale(0.9); } }
+      
+        .huge-text {
+            font-size: clamp(12rem, 30vw, 26rem);
+            line-height: 1;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.04);
+            z-index: 1;
+            pointer-events: none;
+        }
+  
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+
+        .highlight-blue { color: #38bdf8; }
+        .highlight-violet { color: #c084fc; }
+    </style>
+</head>
+<body class="min-h-screen w-full p-4 sm:p-8 lg:p-12">
+    
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="huge-text">GUIDE</div>
+
+    <main class="w-full max-w-7xl mx-auto space-y-8 lg:space-y-10 z-10">
+
+        <!-- Header -->
+        <header class="text-center fade-in-up">
+            <h1 class="text-4xl sm:text-5xl font-black tracking-wider">未来人类生存极简指南</h1>
+            <p class="text-lg text-white/70 mt-3">AN INTERPRETATION OF ILYA SUTSKEVER'S SPEECH</p>
+        </header>
+
+        <!-- The 3-Pillar Compass -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Pillar 1: Look Inward -->
+            <div class="glass-card text-center fade-in-up delay-1">
+                <i class="fa-solid fa-brain text-6xl highlight-blue mb-6"></i>
+                <h2 class="text-4xl font-black mb-4">向内看</h2>
+                <p class="text-lg text-white/80 leading-relaxed">摆平自己。<br>情绪是最大的内耗。<br>别和过去打架。</p>
+                <p class="text-sm text-white/50 mt-4 tracking-widest">LOOK INWARD</p>
+            </div>
+            
+            <!-- Pillar 2: Look Outward -->
+            <div class="glass-card text-center fade-in-up delay-2">
+                <i class="fa-solid fa-robot text-6xl highlight-violet mb-6"></i>
+                <h2 class="text-4xl font-black mb-4">向外看</h2>
+                <p class="text-lg text-white/80 leading-relaxed">认清现实。<br>AI能做所有事。<br>这不是观点，是逻辑。</p>
+                <p class="text-sm text-white/50 mt-4 tracking-widest">LOOK OUTWARD</p>
+            </div>
+
+            <!-- Pillar 3: Look Forward -->
+            <div class="glass-card text-center fade-in-up delay-3">
+                 <i class="fa-solid fa-arrow-trend-up text-6xl highlight-blue mb-6"></i>
+                <h2 class="text-4xl font-black mb-4">向前看</h2>
+                <p class="text-lg text-white/80 leading-relaxed">培养直觉。<br>怎么学？用。<br>用什么？用最好的。</p>
+                 <p class="text-sm text-white/50 mt-4 tracking-widest">LOOK FORWARD</p>
+            </div>
+        </section>
+
+        <!-- The Bridge: From Diploma to Ticket -->
+        <section class="glass-card text-center fade-in-up delay-4">
+             <i class="fa-solid fa-ticket text-5xl highlight-violet mb-6"></i>
+            <p class="text-2xl font-bold leading-tight">你的文凭，不是一张知识证书，<br>而是一张进入 <span class="highlight-violet">AI 竞技场</span> 的门票。</p>
+            <p class="text-sm text-white/60 mt-2 tracking-widest">YOUR DIPLOMA IS NOT A CERTIFICATE OF KNOWLEDGE, BUT A TICKET TO THE AI ARENA.</p>
+        </section>
+
+        <!-- The Final Call to Action -->
+        <section class="glass-card text-center fade-in-up delay-5">
+            <h3 class="text-2xl text-white/80 mb-4">唯一的玩法</h3>
+            <div class="flex items-center justify-center gap-4">
+                <p class="text-6xl font-black highlight-blue">亲自下场</p>
+                <i class="fa-solid fa-person-running text-5xl highlight-blue"></i>
+            </div>
+            <p class="text-sm text-white/60 mt-3 tracking-widest">THE ONLY WAY TO PLAY IS TO GET IN THE GAME YOURSELF.</p>
+        </section>
+        
+    </main>
+</body>
+</html>

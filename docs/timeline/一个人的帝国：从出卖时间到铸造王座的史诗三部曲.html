@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个人的帝国：从出卖时间到铸造王座的史诗三部曲</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030305;
+            color: #E5E7EB;
+            overflow-x: hidden;
+        }
+
+        .hybrid-grid-card {
+            background: rgba(15, 12, 22, 0.5);
+            -webkit-backdrop-filter: blur(50px);
+            backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* 动态背景光斑 */
+        .blur-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(160px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .blob-1 {
+            width: 800px;
+            height: 800px;
+            background: #4A00E0; /* Royal Purple */
+            top: -20%;
+            left: -25%;
+            animation: move-blob-1 50s infinite alternate ease-in-out;
+        }
+
+        .blob-2 {
+            width: 700px;
+            height: 700px;
+            background: #FFAB00; /* Molten Gold */
+            bottom: -25%;
+            right: -20%;
+            animation: move-blob-2 45s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-blob-1 {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(250px, 200px) scale(1.2) rotate(50deg); }
+        }
+        @keyframes move-blob-2 {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(-200px, -250px) scale(1.1) rotate(-40deg); }
+        }
+
+        /* 鼠标跟随光晕 */
+        #cursor-light {
+            position: fixed;
+            width: 900px;
+            height: 900px;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(191, 64, 191, 0.1) 0%, rgba(191, 64, 191, 0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .glow-icon {
+             filter: drop-shadow(0 0 15px currentColor);
+             animation: pulse-icon 4s infinite ease-in-out;
+        }
+        @keyframes pulse-icon {
+            0%, 100% { filter: drop-shadow(0 0 15px currentColor); opacity: 0.9; }
+            50% { filter: drop-shadow(0 0 25px currentColor); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态背景与光晕 -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden">
+        <div class="blur-blob blob-1"></div>
+        <div class="blur-blob blob-2"></div>
+    </div>
+    <div id="cursor-light"></div>
+
+    <div class="relative min-h-screen w-full py-20 px-4 sm:px-6 lg:px-8 z-10">
+        <main class="max-w-7xl mx-auto flex flex-col gap-28 md:gap-48">
+
+            <!-- Hero Section -->
+            <section class="text-center flex flex-col items-center justify-center min-h-[80vh] reveal">
+                <i class="fa-solid fa-chess-king text-8xl lg:text-9xl text-amber-400 mb-8 glow-icon"></i>
+                <h1 class="text-6xl sm:text-8xl lg:text-9xl font-black tracking-tight text-white leading-tight">
+                    一个人的帝国
+                </h1>
+                <p class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-300 mt-4">从出卖时间到铸造王座的史诗三部曲</p>
+                <div class="mt-12 max-w-3xl hybrid-grid-card rounded-3xl p-6 md:p-8">
+                    <p class="text-gray-300 text-base md:text-lg">
+                       这套系统，不仅是你的“人生B计划”，它终将成为你夺回生命主权的唯一路径。以下，不是三条路，而是你铸造个人王座的三个神圣阶段。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Chapter 1: The Swordsman -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-gray-400">Chapter I</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">剑士的试炼</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-400">The Artisan's Path: Forging Your Freedom</p>
+                </div>
+                <div class="grid md:grid-cols-5 gap-8 items-center">
+                     <div class="md:col-span-2 flex justify-center">
+                        <i class="fa-solid fa-khanda text-9xl lg:text-[12rem] text-gray-300 glow-icon" style="color: #9CA3AF;"></i>
+                    </div>
+                    <div class="md:col-span-3 hybrid-grid-card rounded-3xl p-8">
+                        <h3 class="text-3xl font-bold">用你的双手，赢得自由</h3>
+                        <p class="mt-4 text-gray-300">停止用时间换取口粮，开始用你的技艺换取资本。你的剑，就是你的专业技能。它让你直面战场，磨砺剑法，并赋予你独立活下去的尊严。</p>
+                        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                            <div class="border-t border-white/10 pt-4"> <h4 class="font-bold">窄门即宽门</h4> <p class="text-xs text-gray-400">稀缺性即定价权</p> </div>
+                            <div class="border-t border-white/10 pt-4"> <h4 class="font-bold">剑招产品化</h4> <p class="text-xs text-gray-400">服务即商品</p> </div>
+                            <div class="border-t border-white/10 pt-4"> <h4 class="font-bold">价值即正义</h4> <p class="text-xs text-gray-400">按结果收费</p> </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter 2: The Mage -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-purple-400">Chapter II</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">法师的低语</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-400">The Sage's Path: Forging Your Soul into an Asset</p>
+                </div>
+                 <div class="grid md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-3 hybrid-grid-card rounded-3xl p-8">
+                        <h3 class="text-3xl font-bold">将你的灵魂，铸成资产</h3>
+                        <p class="mt-4 text-gray-300">你不能永远靠挥剑维生，你要学会“魔法”——将你的思想和经验，变成可以无限复制、自行战斗的“魔法仆从”（数字产品）。它在你沉睡时，仍在为你攻城略地。</p>
+                        <div class="mt-6 border-t border-purple-400/20 pt-6">
+                            <h4 class="font-bold text-white">构建魔法塔</h4>
+                            <p class="text-gray-400">用<span class="text-purple-300">免费启蒙</span>吸引学徒，<span class="text-purple-300">低价卷轴</span>筛选信徒，<span class="text-purple-300">高价奥术</span>授予衣钵，<span class="text-purple-300">年费议会</span>加冕同袍。</p>
+                        </div>
+                    </div>
+                     <div class="md:col-span-2 flex justify-center">
+                         <i class="fa-solid fa-book-skull text-9xl lg:text-[12rem] text-purple-400 glow-icon"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter 3: The Monarch -->
+            <section class="reveal">
+                 <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-amber-400">Chapter III</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">君王的引力</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-400">The Magnet's Path: Becoming the Center of Gravity</p>
+                </div>
+                <div class="grid md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2 flex justify-center">
+                       <i class="fa-solid fa-crown text-9xl lg:text-[12rem] text-amber-400 glow-icon"></i>
+                    </div>
+                    <div class="md:col-span-3 hybrid-grid-card rounded-3xl p-8">
+                         <h3 class="text-3xl font-bold">你，就是风暴的中心</h3>
+                        <p class="mt-4 text-gray-300">你不再追逐，你只是存在，世界便向你涌来。建立你自己的“精神王国”（个人IP），你的追随者是“公民”，信任是你最坚固的王座。</p>
+                        <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                            <div class="border-t border-amber-400/20 pt-4"> <h4 class="font-bold">找到你的天命</h4> <p class="text-xs text-gray-400">在热爱的交汇处发光</p> </div>
+                            <div class="border-t border-amber-400/20 pt-4"> <h4 class="font-bold">给予即权力</h4> <p class="text-xs text-gray-400">慷慨将化为王权根基</p> </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Final Edict -->
+            <section class="text-center py-16 reveal">
+                 <div class="hybrid-grid-card rounded-3xl p-10 md:p-16 max-w-4xl mx-auto border-amber-400/30">
+                     <h2 class="text-4xl sm:text-5xl font-bold text-white">最后的敕令：完成你的身份加冕</h2>
+                     <p class="mt-6 max-w-2xl mx-auto text-gray-300 text-lg">
+                        这条路的起点，不是学习一个技能，而是完成一次内在的“王权交接”——将你生命的主宰权，从“老板”和“消费者”手中，夺回到你自己手里。
+                     </p>
+                    <div class="mt-12 border-t border-white/10 pt-10">
+                         <p class="text-xl font-bold text-white">从今天起，以一个“君王”的视角，审视这个世界。</p>
+                         <p class="mt-8 text-2xl md:text-3xl font-bold text-amber-300">那么，我的朋友，<br/>你准备为你的帝国，砌上哪一块基石？</p>
+                    </div>
+                 </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const cursorLight = document.getElementById('cursor-light');
+        document.addEventListener('mousemove', (e) => {
+            cursorLight.style.left = e.clientX + 'px';
+            cursorLight.style.top = e.clientY + 'px';
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时代变了 - 新时代的屠龙技</title>
+    
+    <!-- TailwindCSS 3.0+ via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Thematic adaptation for "The Great Shift" -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+      
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #050810;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+  
+        .glass-card {
+            background: rgba(30, 28, 50, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2.5rem;
+            height: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+  
+        .glass-card > * { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+  
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(120px);   
+        }
+  
+        .blob {
+            position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform;
+        }
+        /* New "Wisdom & Power" color palette */
+        .blob-1 { background: #A78BFA; /* Regal Purple */ width: 35vw; height: 35vw; top: 10vh; left: 15vw; animation: move-blob-1 30s ease-in-out infinite alternate; }
+        .blob-2 { background: #3B82F6; /* Tech Blue */ width: 30vw; height: 30vw; top: 50vh; left: 60vw; animation: move-blob-2 35s ease-in-out infinite alternate; }
+  
+        @keyframes move-blob-1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(15vw, 10vh) scale(1.1); } }
+        @keyframes move-blob-2 { from { transform: translate(0, 0) scale(1); } to { transform: translate(-10vw, -15vh) scale(0.9); } }
+      
+        .huge-text {
+            font-size: clamp(25rem, 60vw, 45rem);
+            line-height: 1;
+            font-weight: 900;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.04);
+            z-index: 1;
+            pointer-events: none;
+        }
+  
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        .delay-6 { animation-delay: 1.2s; }
+
+        .highlight-purple { color: #A78BFA; }
+    </style>
+</head>
+<body class="min-h-screen w-full p-4 sm:p-8 lg:p-12">
+    
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="huge-text">变</div>
+
+    <main class="w-full max-w-screen-xl mx-auto space-y-8 lg:space-y-10 z-10">
+
+        <!-- Header -->
+        <header class="text-center fade-in-up">
+            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black tracking-wide">时代变了。</h1>
+            <p class="text-lg text-white/70 mt-3">THE ERA HAS CHANGED.</p>
+        </header>
+
+        <!-- The Two Battlefields -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Old Battlefield -->
+            <div class="glass-card text-center fade-in-up delay-1">
+                <h2 class="text-4xl font-black text-white/50 mb-4">旧战场</h2>
+                <i class="fa-brands fa-fort-awesome text-7xl text-white/40 my-6"></i>
+                <p class="text-2xl text-white/60">用代码和数据，<br>搭建专用的堡垒。</p>
+            </div>
+            
+            <!-- New Battlefield -->
+            <div class="glass-card text-center fade-in-up delay-2">
+                <h2 class="text-4xl font-black highlight-purple mb-4">新战场</h2>
+                <i class="fa-solid fa-infinity text-7xl highlight-purple my-6"></i>
+                <p class="text-2xl font-bold">用语言和逻辑，<br>驾驭通用的神力。</p>
+            </div>
+        </section>
+        
+        <!-- The Core Shift -->
+        <section class="text-center fade-in-up delay-3">
+             <div class="glass-card inline-block p-8">
+                <p class="text-2xl lg:text-3xl font-bold leading-tight">你的价值，不再是你<span class="text-white/60">“会用”</span>什么工具。<br>而是你<span class="highlight-purple">“会问”</span>什么问题。</p>
+             </div>
+        </section>
+
+        <!-- The Call to Stop -->
+         <section class="text-center fade-in-up delay-4">
+             <div class="glass-card inline-block p-6">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-ban text-4xl text-red-500"></i>
+                    <p class="text-xl font-bold">所以，立刻停止对小框架的精雕细琢。</p>
+                </div>
+             </div>
+        </section>
+
+        <!-- The Three Dragon-Slaying Skills -->
+        <section class="text-center fade-in-up delay-5">
+            <h2 class="text-4xl font-black mb-6">去修炼这三项“屠龙技”：</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card">
+                    <i class="fa-solid fa-eye text-6xl highlight-purple mb-6"></i>
+                    <h3 class="text-3xl font-black">把世界看透</h3>
+                </div>
+                <div class="glass-card">
+                    <i class="fa-solid fa-comments text-6xl highlight-purple mb-6"></i>
+                    <h3 class="text-3xl font-black">把话说清</h3>
+                </div>
+                <div class="glass-card">
+                    <i class="fa-solid fa-lightbulb text-6xl highlight-purple mb-6"></i>
+                    <h3 class="text-3xl font-black">用常识颠覆专业</h3>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+</body>
+</html>

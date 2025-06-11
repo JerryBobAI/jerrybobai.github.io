@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语言的本质 · 唯一的操作系统</title>
+    
+    <!-- TailwindCSS 3.x CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Google Fonts & Custom Styles (基于样式3并优化) -->
+    <style>
+        /* 导入字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&family=Roboto:wght@300;400&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #050810; /* 深邃的星空黑 */
+            color: #EAEAEA;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 动态光晕背景 */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            filter: blur(100px); /* 增强模糊效果 */
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            will-change: transform;
+        }
+        .blob-1 { background: #0071E3; width: 35vw; height: 35vw; top: -5vh; left: 5vw; animation: move-blob-1 30s ease-in-out infinite alternate; }
+        .blob-2 { background: #8E44AD; width: 30vw; height: 30vw; top: 50vh; left: 60vw; animation: move-blob-2 35s ease-in-out infinite alternate; }
+        .blob-3 { background: #1ABC9C; width: 28vw; height: 28vw; top: 60vh; left: -10vw; animation: move-blob-3 25s ease-in-out infinite alternate; }
+
+        @keyframes move-blob-1 { from { transform: translate(0, 0) scale(1) rotate(0deg); } to { transform: translate(30vw, 40vh) scale(1.2) rotate(120deg); } }
+        @keyframes move-blob-2 { from { transform: translate(0, 0) scale(1) rotate(0deg); } to { transform: translate(-40vw, -30vh) scale(0.9) rotate(-100deg); } }
+        @keyframes move-blob-3 { from { transform: translate(0, 0) scale(1) rotate(0deg); } to { transform: translate(25vw, -35vh) scale(1.1) rotate(150deg); } }
+
+        /* 液态玻璃卡片 */
+        .glass-card {
+            background: rgba(28, 32, 52, 0.35);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem; /* 32px */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden; /* 确保内部元素不溢出圆角 */
+            padding: 2rem; /* 32px */
+        }
+        
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* 卡片内文字阴影，增强可读性 */
+        .glass-card > * {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* SVG 勾线动画 */
+        .chart-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-chart 3s 0.5s ease-out forwards;
+        }
+        .chart-dot {
+            opacity: 0;
+            animation: fade-in-dot 0.5s ease forwards;
+        }
+        @keyframes draw-chart { to { stroke-dashoffset: 0; } }
+        @keyframes fade-in-dot { to { opacity: 1; } }
+
+        /* 为不同的点设置动画延迟 */
+        .chart-dot-1 { animation-delay: 1.2s; }
+        .chart-dot-2 { animation-delay: 1.8s; }
+        .chart-dot-3 { animation-delay: 2.5s; }
+        .chart-dot-4 { animation-delay: 3.0s; }
+        
+        /* 高亮渐变条 */
+        .highlight-gradient-cyan {
+            background: linear-gradient(90deg, rgba(0, 225, 255, 0.6), rgba(0, 225, 255, 0));
+        }
+
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-8">
+
+    <!-- 动态光晕背景 -->
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- 主内容网格 -->
+    <div class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <!-- 1. 核心思想 (大卡片) -->
+        <div class="glass-card lg:col-span-2 lg:row-span-2 flex flex-col justify-between">
+            <div>
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
+                    语言的本质，<br>是“封装思想”。
+                </h1>
+                <p class="mt-4 text-xl text-gray-300 font-light">The Essence of Language is to Encapsulate Thought.</p>
+            </div>
+            <div class="w-full mt-8">
+                <svg viewBox="0 0 300 150" class="w-full h-auto">
+                    <defs>
+                        <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" style="stop-color:rgba(0, 225, 255, 0.7); stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(0, 225, 255, 0); stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    <path d="M 20 75 Q 80 20, 150 75 T 280 75" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none" class="chart-line"/>
+                    <circle cx="20" cy="75" r="5" fill="url(#grad1)" class="chart-dot chart-dot-1" />
+                    <rect x="145" y="70" width="10" height="10" fill="url(#grad1)" class="chart-dot chart-dot-2" transform="rotate(45 150 75)"/>
+                    <circle cx="280" cy="75" r="5" fill="url(#grad1)" class="chart-dot chart-dot-3" />
+                    <text x="150" y="120" fill="rgba(255,255,255,0.6)" font-size="14" text-anchor="middle" font-family="Roboto" class="chart-dot chart-dot-4">ENCAPSULATION</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- 2. 过去 -->
+        <div class="glass-card flex flex-col justify-between">
+            <h2 class="text-3xl font-bold">过去</h2>
+            <p class="text-gray-400 font-light">IN THE PAST</p>
+            <div class="space-y-5 mt-6 text-lg">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-code fa-fw text-2xl text-cyan-400"></i>
+                    <span>代码封装逻辑</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-ruler-combined fa-fw text-2xl text-cyan-400"></i>
+                    <span>图纸封装空间</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-chart-line fa-fw text-2xl text-cyan-400"></i>
+                    <span>图表封装趋势</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 现在 -->
+        <div class="glass-card flex flex-col justify-center items-center text-center">
+             <h2 class="text-3xl font-bold">现在</h2>
+             <p class="text-gray-400 font-light mb-4">RIGHT NOW</p>
+            <p class="text-2xl md:text-3xl font-bold leading-snug">
+                自然语言，<br>开始封装一切。
+            </p>
+            <i class="fa-solid fa-earth-asia text-8xl text-white/20 mt-6"></i>
+        </div>
+
+        <!-- 4. AI 时代 -->
+        <div class="glass-card lg:col-span-2 flex flex-col items-start">
+            <h2 class="text-3xl font-bold">AI 时代</h2>
+            <div class="w-1/4 h-1 my-3 highlight-gradient-cyan rounded-full"></div>
+            <p class="text-4xl md:text-5xl font-black mt-4">语言不再是<br>沟通工具。</p>
+            <p class="mt-2 text-lg text-gray-300 font-light">In the AI era, language transcends communication.</p>
+        </div>
+
+        <!-- 5. 唯一的操作系统 (大卡片) -->
+        <div class="glass-card lg:col-span-3">
+             <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+                <div class="flex-shrink-0">
+                    <h2 class="text-4xl md:text-5xl font-black leading-tight">
+                        唯一的<br>操作系统。
+                    </h2>
+                    <p class="mt-2 text-lg text-gray-300 font-light">The Sole Operating System.</p>
+                </div>
+                <div class="w-full flex-grow">
+                     <svg viewBox="0 0 200 100" class="w-full h-auto">
+                        <path class="chart-line" d="M 20 50 H 50 L 80 20 L 110 80 L 140 50 H 180" stroke="rgba(0, 225, 255, 0.5)" stroke-width="1" fill="none"/>
+                        <circle class="chart-dot chart-dot-1" cx="20" cy="50" r="4" fill="#00e1ff"/>
+                        <circle class="chart-dot chart-dot-2" cx="80" cy="20" r="4" fill="#00e1ff"/>
+                        <circle class="chart-dot chart-dot-3" cx="110" cy="80" r="4" fill="#00e1ff"/>
+                        <circle class="chart-dot chart-dot-4" cx="180" cy="50" r="4" fill="#00e1ff"/>
+                        <text x="20" y="40" fill="rgba(255,255,255,0.7)" font-size="8">YOU</text>
+                        <text x="170" y="40" fill="rgba(255,255,255,0.7)" font-size="8">WORLD</text>
+                    </svg>
+                </div>
+            </div>
+            <p class="mt-6 text-xl text-center font-light">它是我们与世界交互的唯一界面。</p>
+        </div>
+        
+        <!-- 6. 力量 -->
+        <div class="glass-card flex flex-col justify-center items-center text-center">
+            <i class="fa-solid fa-bolt-lightning text-6xl text-amber-300 mb-4"></i>
+            <p class="text-3xl font-black">你的语言，<br>就是你的力量。</p>
+            <p class="mt-2 text-gray-400 font-light">Your Language is Your Power.</p>
+        </div>
+
+        <!-- 7. 结语 -->
+        <div class="glass-card flex justify-center items-center">
+            <p class="text-4xl font-black tracking-widest">不多，也不少。</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.glass-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 20; // 除数越大，倾斜幅度越小
+                    const rotateY = (centerX - x) / 20;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

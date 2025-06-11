@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇点 · 一张筛子</title>
+    
+    <!-- TailwindCSS 3.0+ via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts for Chinese & English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- Selected Style: 样式5 -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+      
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #050810;
+            color: #E0E0E0;
+            overflow-x: hidden; /* 防止水平滚动 */
+        }
+  
+        .glass-card {
+            background: rgba(25, 30, 50, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2.5rem; /* 统一内边距 */
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+  
+        .glass-card > * { 
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); 
+        }
+  
+        .blob-container {
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            overflow: hidden; 
+            z-index: -1; 
+            filter: blur(100px);
+        }
+  
+        .blob {
+            position: absolute; 
+            border-radius: 50%; 
+            opacity: 0.7; 
+            will-change: transform;
+        }
+
+        .blob-1 { 
+            background: #00A3FF; /* 科技蓝 */
+            width: 30vw; 
+            height: 30vw; 
+            top: 10vh; 
+            left: 10vw; 
+            animation: move-blob-1 30s ease-in-out infinite alternate; 
+        }
+        .blob-2 { 
+            background: #D946EF; /* 品红/紫 */
+            width: 35vw; 
+            height: 35vw; 
+            top: 40vh; 
+            left: 60vw; 
+            animation: move-blob-2 35s ease-in-out infinite alternate; 
+        }
+  
+        @keyframes move-blob-1 { 
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(15vw, 20vh) scale(1.2) rotate(180deg); }
+        }
+        @keyframes move-blob-2 { 
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(-20vw, -15vh) scale(0.8) rotate(-180deg); }
+        }
+      
+        .huge-text {
+            font-size: clamp(8rem, 25vw, 20rem); /* 响应式巨型字体 */
+            line-height: 1;
+            font-weight: 900;
+            position: fixed; /* 固定在视口中 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.05); /* 更淡的颜色 */
+            z-index: 1;
+            pointer-events: none;
+        }
+  
+        .network-line {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: draw-line 4s ease-out forwards;
+            animation-delay: 1s; /* 延迟动画开始 */
+        }
+        .network-node {
+            opacity: 0;
+            animation: pulse-node 2.5s ease-in-out infinite;
+        }
+        @keyframes draw-line { 
+            to { stroke-dashoffset: 0; } 
+        }
+        @keyframes pulse-node { 
+            0%, 100% { opacity: 0.8; r: 4; } 
+            50% { opacity: 1; r: 6; } 
+        }
+        /* 为不同节点设置动画延迟 */
+        .node-1 { animation-delay: 2.0s; }
+        .node-2 { animation-delay: 2.5s; }
+        .node-3 { animation-delay: 3.0s; }
+        .node-4 { animation-delay: 3.5s; }
+        .node-5 { animation-delay: 4.0s; }
+  
+        .binary-stream {
+            position: fixed; /* 固定在视口 */
+            top: -50px;
+            font-family: monospace;
+            font-size: 1rem;
+            color: rgba(0, 255, 255, 0.3); /* 高亮色透明渐变 */
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            user-select: none;
+            z-index: 0;
+            animation: fall 15s linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+
+        /* 高亮渐变条 */
+        .highlight-bar {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+        }
+        .highlight-cyan {
+             background: linear-gradient(180deg, rgba(0, 255, 255, 0.8), rgba(0, 255, 255, 0));
+        }
+        .highlight-magenta {
+             background: linear-gradient(180deg, rgba(217, 70, 239, 0.8), rgba(217, 70, 239, 0));
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full flex items-center justify-center p-4 sm:p-8 lg:p-12">
+    
+    <!-- 动态液态光晕背景 -->
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- 背景巨型文字 -->
+    <div class="huge-text">奇点</div>
+
+    <!-- 二进制码流容器 -->
+    <div id="binary-stream-container"></div>
+
+    <!-- 主内容容器 -->
+    <main class="w-full max-w-7xl mx-auto space-y-8 lg:space-y-12 z-10">
+
+        <!-- 1. 引言 -->
+        <section class="text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider">奇点不是一个点，是一张<span class="text-cyan-300">筛子</span>。</h1>
+            <p class="text-xl lg:text-2xl text-white/70 mt-4">它温柔地降临，然后开始筛选。</p>
+        </section>
+
+        <!-- 2. 筛选过程可视化 -->
+        <section class="flex justify-center items-center h-48 my-4 lg:my-0">
+             <svg width="250" height="150" viewBox="0 0 250 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g opacity="0.6">
+                    <!-- Lines -->
+                    <path class="network-line" d="M10 75 L 80 30" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                    <path class="network-line" style="animation-delay: 1.2s" d="M10 75 L 80 120" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                    <path class="network-line" style="animation-delay: 1.4s" d="M80 30 L 170 30" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                    <path class="network-line" style="animation-delay: 1.6s" d="M80 120 L 170 120" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                    <path class="network-line" style="animation-delay: 1.8s" d="M170 30 L 240 75" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                    <path class="network-line" style="animation-delay: 2.0s" d="M170 120 L 240 75" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+                    <path class="network-line" style="animation-delay: 2.2s" d="M80 30 L 170 120" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                    <path class="network-line" style="animation-delay: 2.4s" d="M80 120 L 170 30" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                    <!-- Nodes -->
+                    <circle class="network-node node-1" cx="10" cy="75" r="4" fill="#00A3FF"/>
+                    <circle class="network-node node-2" cx="80" cy="30" r="4" fill="#D946EF"/>
+                    <circle class="network-node node-3" cx="80" cy="120" r="4" fill="#D946EF"/>
+                    <circle class="network-node node-4" cx="170" cy="30" r="4" fill="#D946EF"/>
+                    <circle class="network-node node-5" cx="170" cy="120" r="4" fill="#D946EF"/>
+                    <circle class="network-node" style="animation-delay: 4.5s;" cx="240" cy="75" r="4" fill="#00A3FF"/>
+                </g>
+            </svg>
+        </section>
+
+        <!-- 3. 对比内容 -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            
+            <!-- 左侧：筛掉 -->
+            <div class="glass-card flex flex-col space-y-8">
+                <div class="highlight-bar highlight-magenta"></div>
+                <h2 class="text-3xl lg:text-4xl font-bold text-fuchsia-400"><i class="fa-solid fa-filter mr-3"></i>它将筛掉</h2>
+                <div class="space-y-10 flex-grow flex flex-col justify-around">
+                    <div class="flex items-center gap-6">
+                        <i class="fa-solid fa-cubes-stacked text-5xl text-fuchsia-400/80 w-16 text-center"></i>
+                        <div>
+                            <p class="text-4xl lg:text-5xl font-black">套路</p>
+                            <p class="text-sm text-white/50 tracking-widest mt-1">CREATIVITY BASED ON FORMULAS</p>
+                        </div>
+                    </div>
+                     <div class="flex items-center gap-6">
+                        <i class="fa-solid fa-person-digging text-5xl text-fuchsia-400/80 w-16 text-center"></i>
+                        <div>
+                            <p class="text-4xl lg:text-5xl font-black">生存</p>
+                            <p class="text-sm text-white/50 tracking-widest mt-1">LABOR FOR MERE SURVIVAL</p>
+                        </div>
+                    </div>
+                     <div class="flex items-center gap-6">
+                        <i class="fa-solid fa-key text-5xl text-fuchsia-400/80 w-16 text-center"></i>
+                        <div>
+                            <p class="text-4xl lg:text-5xl font-black">信息差</p>
+                            <p class="text-sm text-white/50 tracking-widest mt-1">AUTHORITY FROM INFORMATION GAPS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：留下 -->
+            <div class="glass-card flex flex-col space-y-8">
+                <div class="highlight-bar highlight-cyan"></div>
+                <h2 class="text-3xl lg:text-4xl font-bold text-cyan-300"><i class="fa-solid fa-seedling mr-3"></i>它将留下</h2>
+                <div class="space-y-10 flex-grow flex flex-col justify-around">
+                    <div class="flex items-center gap-6">
+                        <i class="fa-solid fa-star text-5xl text-cyan-300/80 w-16 text-center"></i>
+                        <div>
+                            <p class="text-4xl lg:text-5xl font-black">体验</p>
+                            <p class="text-sm text-white/50 tracking-widest mt-1">UNIQUE, INIMITABLE EXPERIENCES</p>
+                        </div>
+                    </div>
+                     <div class="flex items-center gap-6">
+                        <i class="fa-solid fa-link text-5xl text-cyan-300/80 w-16 text-center"></i>
+                        <div>
+                            <p class="text-4xl lg:text-5xl font-black">连接</p>
+                            <p class="text-sm text-white/50 tracking-widest mt-1">UNRESERVED, GENUINE CONNECTIONS</p>
+                        </div>
+                    </div>
+                     <div class="flex items-center gap-6">
+                        <i class="fa-solid fa-compass text-5xl text-cyan-300/80 w-16 text-center"></i>
+                        <div>
+                            <p class="text-4xl lg:text-5xl font-black">追寻</p>
+                            <p class="text-sm text-white/50 tracking-widest mt-1">PURSUIT WITHOUT PURPOSE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 4. 结论 -->
+        <section class="glass-card text-center">
+             <p class="text-xl lg:text-2xl text-white/80 mb-4">未来的十年，人类唯一的功课：</p>
+             <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight my-6">
+                找到机器无法染指的，<br class="hidden sm:block"> <span class="text-cyan-300">人之所以为人的那部分</span>。
+             </h3>
+             <p class="text-xl lg:text-2xl text-white/80 mt-4">然后，用尽一生去捍卫它。</p>
+        </section>
+
+    </main>
+
+    <script>
+        // 动态生成二进制码流
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('binary-stream-container');
+            const streamCount = Math.floor(window.innerWidth / 50); // 根据屏幕宽度决定数量
+
+            for (let i = 0; i < streamCount; i++) {
+                const stream = document.createElement('div');
+                stream.className = 'binary-stream';
+                stream.style.left = `${Math.random() * 100}vw`;
+                stream.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                stream.style.animationDelay = `${Math.random() * 5}s`;
+                
+                let binaryString = '';
+                for (let j = 0; j < 50; j++) {
+                    binaryString += Math.round(Math.random());
+                }
+                stream.textContent = binaryString;
+                
+                container.appendChild(stream);
+            }
+        });
+    </script>
+
+</body>
+</html>
