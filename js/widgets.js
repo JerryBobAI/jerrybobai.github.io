@@ -145,10 +145,11 @@ function buildPreviewMetaInfo(preview) {
         }
     }
 
-    // 使用共享的标签构建函数
+    // 使用共享的标签构建函数 - 自动检测背景色
     const tagsHtml = buildTagsHtml(tags, {
         padding: 'px-2 py-1',
         withAnimation: false  // iframe预览不需要动画
+        // 不指定 isDarkBackground，让函数自动检测
     });
 
     return `

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计语言蓝图：The Ultimate Prompt</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #08080B;
+            color: #E5E7EB;
+            overflow-x: hidden;
+        }
+
+        .hybrid-grid-card {
+            background: rgba(25, 27, 38, 0.5);
+            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* 动态背景光斑 */
+        .blur-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .blob-1 {
+            width: 700px;
+            height: 700px;
+            background: #0071E3; /* Cyber Blue */
+            top: -20%;
+            left: -25%;
+            animation: move-blob-1 40s infinite alternate ease-in-out;
+        }
+        .blob-2 {
+            width: 800px;
+            height: 800px;
+            background: #BF40BF; /* Vivid Magenta */
+            bottom: -25%;
+            right: -30%;
+            animation: move-blob-2 35s infinite alternate ease-in-out;
+        }
+        @keyframes move-blob-1 {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(250px, 150px) scale(1.2); }
+        }
+        @keyframes move-blob-2 {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(-200px, -150px) scale(0.9); }
+        }
+
+        /* 鼠标跟随光晕 */
+        #cursor-light {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.1) 0%, rgba(0, 113, 227, 0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.215, 0.610, 0.355, 1), transform 1s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 高亮色透明度渐变 */
+        .highlight-gradient-magenta {
+            background: linear-gradient(to right, rgba(191, 64, 191, 0.4), rgba(191, 64, 191, 0));
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态背景与光晕 -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden">
+        <div class="blur-blob blob-1"></div>
+        <div class="blur-blob blob-2"></div>
+    </div>
+    <div id="cursor-light"></div>
+
+    <div class="relative min-h-screen w-full py-20 px-4 sm:px-6 lg:px-8 z-10">
+        <main class="max-w-7xl mx-auto flex flex-col gap-24 md:gap-32">
+
+            <!-- Hero Section -->
+            <section class="text-center flex flex-col items-center justify-center min-h-[60vh] reveal">
+                <h1 class="text-6xl sm:text-7xl lg:text-9xl font-black tracking-tight text-white leading-tight">
+                    设计语言蓝图
+                </h1>
+                <p class="text-sm uppercase tracking-widest text-gray-500 mt-6">THE ULTIMATE PROMPT</p>
+            </section>
+            
+            <!-- Core Philosophy Section -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                     <h2 class="text-5xl md:text-7xl font-bold text-white">核心设计哲学</h2>
+                     <p class="mt-4 text-gray-400">The Core Philosophy of Hybrid Grid Style</p>
+                </div>
+                <div class="flex flex-col gap-8">
+                    <div class="hybrid-grid-card rounded-3xl p-8 md:p-10">
+                        <h3 class="text-2xl font-bold text-white mb-4">核心背景、流体感玻璃层与动态光色</h3>
+                        <p class="text-gray-300">通常叠加在多样化的背景之上，背景的复杂性与色彩变化能更好地衬托出玻璃层的流体特质。其核心视觉特征是具有显著高斯模糊效果的半透明“玻璃”层，该玻璃层并非呈现单一固定的色彩，而是能够捕捉并柔和地漫射来自背景或内部光源的色彩，形成如同液体般缓缓流淌或交融的动态光晕与色彩过渡。这些光色可能呈现为柔和的多色渐变、微妙的极光般舞动或富有深度的色彩层次，赋予玻璃层一种非固态的、流动的视觉生命力。玻璃边缘通常带有关极细微且动态变化的亮色勾边或内阴影，模拟光线在流动液体或曲面玻璃上的反射与折射，增强其立体感和精致感。这些流体感玻璃组件通常以圆角化的模块形态出现，在界面中以有组织的网格或灵活的模块化布局排列，既保持结构清晰，又展现视觉的柔和与流动。</p>
+                    </div>
+                     <div class="hybrid-grid-card rounded-3xl p-8 md:p-10">
+                        <h3 class="text-2xl font-bold text-white mb-4">文字、图标、UI元素及其在流体感玻璃背景下的呈现</h3>
+                        <p class="text-gray-300">玻璃层上承载的文字、图标和UI控件，通常采用对比度高且视觉清晰的单色（如亮白色、浅灰色或根据整体光感选择的极淡彩色），以确保在不断变化的、多色调的流体感玻璃背景下的卓越可读性与辨识度。前景元素的设计风格趋向简洁、现代，线条清晰或带有轻微的体量感，避免与背景的流体效果产生视觉冲突。这些元素在玻璃层内部遵循均衡的布局原则和清晰的信息层级，与流动的背景形成稳定与动态的对比。交互时，玻璃层内部的流体光色可能会产生更明显的动态响应（如色彩流动加速、光斑位移、涟漪扩散），或玻璃层本身的透明度、模糊度及光泽感发生细腻变化，以提供即时、灵敏且极富沉浸感的视觉反馈，整体营造出一种既高端精致、又充满未来科技感与有机生命力的独特美学体验。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rules Section -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                     <h2 class="text-5xl md:text-7xl font-bold text-white">12条核心法则</h2>
+                     <p class="mt-4 text-gray-400">The 12 Core Rules</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><i class="fa-solid fa-clone text-4xl text-blue-400 mb-3"></i><h4 class="font-bold text-lg text-white">1. 单页展示</h4><p class="text-gray-400 text-sm">One Page Layout</p></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><p class="font-black text-8xl text-white -mt-4">2</p><h4 class="font-bold text-lg text-white -mt-2">超大字体</h4><p class="text-gray-400 text-sm">Oversized Elements</p></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><div class="flex items-end gap-2 text-blue-400"><i class="fa-solid fa-mobile-screen-button text-2xl"></i><i class="fa-solid fa-tablet-screen-button text-3xl"></i><i class="fa-solid fa-desktop text-4xl"></i></div><h4 class="font-bold text-lg text-white mt-3">3. 响应式</h4><p class="text-gray-400 text-sm">Responsive Design</p></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><p class="font-black text-5xl text-white">中文</p><p class="uppercase tracking-widest text-gray-400 text-sm mt-1">English</p><h4 class="font-bold text-lg text-white mt-3">4. 中英文混用</h4></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><i class="fa-regular fa-compass text-5xl text-blue-400 mb-3"></i><h4 class="font-bold text-lg text-white">5. 简洁勾线图形</h4><p class="text-gray-400 text-sm">Line Art Graphics</p></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48 relative overflow-hidden"><div class="absolute inset-y-0 left-0 w-2/3 highlight-gradient-magenta"></div><i class="fa-solid fa-palette text-4xl text-fuchsia-400 z-10"></i><h4 class="font-bold text-lg text-white mt-3 z-10">6. 高亮色透明度渐变</h4></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><i class="fa-solid fa-chart-pie text-5xl text-blue-400 mb-3"></i><h4 class="font-bold text-lg text-white">7. 在线图表组件</h4><p class="text-gray-400 text-sm">Chart Components</p></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex items-center justify-center h-48 gap-4"><i class="fa-brands fa-html5 text-5xl text-orange-500"></i><i class="fa-brands fa-css3-alt text-5xl text-blue-500"></i><i class="fa-brands fa-js text-5xl text-yellow-400"></i></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex items-center justify-center h-48 gap-4"><i class="fa-brands fa-font-awesome text-5xl text-sky-500"></i><i class="fa-solid fa-icons text-5xl text-green-500"></i></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><div class="relative"><i class="fa-regular fa-face-smile text-5xl text-yellow-400"></i><i class="fa-solid fa-ban text-7xl text-red-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80"></i></div><h4 class="font-bold text-lg text-white mt-3">10. 避免Emoji</h4></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><i class="fa-solid fa-file-circle-check text-5xl text-green-400 mb-3"></i><h4 class="font-bold text-lg text-white">11. 不省略内容</h4><p class="text-gray-400 text-sm">No Omission</p></div>
+                    <div class="hybrid-grid-card rounded-2xl p-6 text-center flex flex-col items-center justify-center h-48"><i class="fa-solid fa-language text-5xl text-blue-400 mb-3"></i><h4 class="font-bold text-lg text-white">12. 中文输出</h4><p class="text-gray-400 text-sm">Chinese Output</p></div>
+                </div>
+            </section>
+
+            <!-- Final Prompt Transcript Section -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <h2 class="text-5xl md:text-7xl font-bold text-white">完整提示词原文</h2>
+                    <p class="mt-4 text-gray-400">The Source of Truth</p>
+                </div>
+                <div class="hybrid-grid-card rounded-3xl p-8 md:p-10 max-w-5xl mx-auto">
+                    <pre class="whitespace-pre-wrap text-gray-300 font-sans text-base leading-relaxed">基于提供的文本或者网站等关键信息，帮我用类似苹果发布会 PPT 的 Hybrid Grid 风格的视觉设计生成一个中文动态网页展示，具体要求为：
+
+1.  尽量在一页展示全部信息
+    核心背景、流体感玻璃层与动态光色：【通常叠加在多样化的背景（无论是深色、浅色、图案化或图像化）之上，背景的复杂性与色彩变化能更好地衬托出玻璃层的流体特质。其核心视觉特征是具有显著高斯模糊效果的半透明“玻璃”层，该玻璃层并非呈现单一固定的色彩，而是能够捕捉并柔和地漫射来自背景或内部光源的色彩，形成如同液体般缓缓流淌或交融的动态光晕与色彩过渡。这些光色可能呈现为【柔和的多色渐变、微妙的极光般舞动或富有深度的色彩层次】，赋予玻璃层一种非固态的、流动的视觉生命力。玻璃边缘通常带有【极细微且动态变化的亮色勾边或内阴影】，模拟光线在流动液体或曲面玻璃上的反射与折射，增强其立体感和精致感。这些流体感玻璃组件通常以【圆角化的模块形态（如卡片、面板、图标容器）】出现，在界面中以【有组织的网格或灵活的模块化布局】排列，既保持结构清晰，又展现视觉的柔和与流动。】
+    文字、图标、UI元素及其在流体感玻璃背景下的呈现：【玻璃层上承载的文字、图标和UI控件，通常采用【对比度高且视觉清晰的单色（如亮白色、浅灰色或根据整体光感选择的极淡彩色）】，以确保在不断变化的、多色调的流体感玻璃背景下的卓越可读性与辨识度。前景元素的设计风格趋向【简洁、现代，线条清晰或带有轻微的体量感】，避免与背景的流体效果产生视觉冲突。这些元素在玻璃层内部遵循【均衡的布局原则和清晰的信息层级】，与流动的背景形成稳定与动态的对比。交互时，玻璃层内部的【流体光色可能会产生更明显的动态响应（如色彩流动加速、光斑位移、涟漪扩散）】，或玻璃层本身的【透明度、模糊度及光泽感发生细腻变化】，以提供即时、灵敏且极富沉浸感的视觉反馈，整体营造出一种既高端精致、又充满未来科技感与有机生命力的独特美学体验。】
+2.  强调超大字体或数字突出核心要点，画面中有超大视觉元素强调重点，与小元素的比例形成反差
+3.  网页需要以响应式兼容更大的显示器宽度比如1920px及以上
+4.  中英文混用，中文大字体粗体，英文小字作为点缀
+5.  简洁的勾线图形化作为数据可视化或者配图元素
+6.  运用高亮色自身透明度渐变制造科技感，但是不同高亮色不要互相渐变
+7.  数据可以引用在线的图表组件，样式需要跟主题一致
+8.  使用HTML5、TailwindCSS 3.0+（通过CDN引入）和必要的JavaScript
+9.  使用专业图标库如Font Awesome或Material Icons（通过CDN引入）
+10. 避免使用emoji作为主要图标
+11. 不要省略内容要点
+12. 过程输出也采用简体中文</pre>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const cursorLight = document.getElementById('cursor-light');
+        document.addEventListener('mousemove', (e) => {
+            cursorLight.style.left = e.clientX + 'px';
+            cursorLight.style.top = e.clientY + 'px';
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.05 });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
