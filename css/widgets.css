@@ -93,40 +93,66 @@
     border-bottom-right-radius: 0 !important; /* 强制底部右角直角 */
 }
 
-/* iframe底部渐变遮罩效果 - 丝滑自然的过渡 */
+/* iframe底部渐变遮罩效果 - 基础样式 */
 .preview-card a::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 35px; /* 更紧凑的渐变区域 */
+    height: 80px; /* 增加渐变高度，让过渡更自然 */
+    pointer-events: none;
+    z-index: 1; /* 降低z-index，确保不覆盖meta区域 */
+    border-radius: 0;
+    /* 默认浅色背景渐变 - 进一步降低透明度 */
     background: linear-gradient(
         to bottom,
-        rgba(234, 230, 225, 0) 0%,        /* 完全透明 */
-        rgba(234, 230, 225, 0.01) 10%,    /* 几乎不可见 */
-        rgba(234, 230, 225, 0.03) 25%,    /* 极其轻微 */
-        rgba(234, 230, 225, 0.12) 45%,    /* 很轻微 */
-        rgba(234, 230, 225, 0.35) 70%,    /* 轻微过渡 */
-        rgba(234, 230, 225, 0.65) 90%,    /* 中等过渡 */
-        rgba(234, 230, 225, 0.85) 100%    /* 匹配meta背景透明度 */
+        transparent 0%,                   /* 完全透明 */
+        rgba(234, 230, 225, 0.03) 20%,   /* 极轻微遮罩 */
+        rgba(234, 230, 225, 0.1) 50%,    /* 轻微遮罩 */
+        rgba(234, 230, 225, 0.2) 80%,    /* 中等遮罩 */
+        rgba(234, 230, 225, 0.35) 100%   /* 与meta区域透明度一致 */
     );
-    pointer-events: none; /* 不影响点击事件 */
-    z-index: 5; /* 确保在iframe之上 */
-    border-radius: 0; /* 完全直角，确保与meta区域完美对接 */
 }
 
-/* iframe预览meta信息样式 */
+/* iframe底部渐变遮罩效果 - 深色背景适配 */
+.preview-card.dark-bg a::after {
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,                   /* 完全透明 */
+        rgba(0, 0, 0, 0.03) 20%,         /* 极轻微黑色遮罩 */
+        rgba(0, 0, 0, 0.1) 50%,          /* 轻微黑色遮罩 */
+        rgba(0, 0, 0, 0.15) 80%,         /* 中等黑色遮罩 */
+        rgba(0, 0, 0, 0.25) 100%         /* 与meta区域透明度一致，让紫色渐变清晰透过 */
+    ) !important;
+}
+
+/* iframe预览meta信息样式 - 基础样式 */
 .preview-meta {
-    background: rgba(234, 230, 225, 0.85); /* 适度透明，让背景内容微微透出 */
-    backdrop-filter: blur(16px) saturate(1.2); /* 更强的模糊和饱和度增强 */
-    border-radius: 0 0 12px 12px !important; /* 只有底部圆角 */
-    margin: 0 !important; /* 确保没有外边距 */
-    border-top: none !important; /* 确保与iframe无缝连接 */
-    border-top-left-radius: 0 !important; /* 强制顶部左角直角 */
-    border-top-right-radius: 0 !important; /* 强制顶部右角直角 */
-    position: relative; /* 为z-index提供定位基础 */
-    z-index: 10; /* 确保在渐变遮罩之上 */
+    background: rgba(234, 230, 225, 0.35) !important; /* 进一步降低透明度，让背景更清晰 */
+    backdrop-filter: blur(8px) saturate(1.05); /* 大幅减少模糊，让背景内容清晰可见 */
+    border-radius: 0 0 12px 12px !important;
+    margin: 0 !important;
+    border-top: none !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    position: absolute; /* 改为绝对定位 */
+    bottom: 0; /* 定位到底部 */
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+/* iframe预览meta信息样式 - 深色背景适配 */
+.preview-card.dark-bg .preview-meta {
+    background: rgba(0, 0, 0, 0.25) !important; /* 进一步降低透明度，让紫色渐变清晰透过 */
+    backdrop-filter: blur(8px) saturate(1.05); /* 大幅减少模糊，让背景内容清晰可见 */
+}
+
+/* 深色背景下的文字颜色调整 */
+.preview-card.dark-bg .preview-meta .font-context,
+.preview-card.dark-bg .preview-meta .fa-calendar-alt {
+    color: rgba(255, 255, 255, 0.8) !important; /* 浅色文字，提高对比度 */
 }
 
 .preview-meta .font-context {

@@ -103,8 +103,8 @@ function initializePreviews(selector, isPinned) {
                             scrolling="no"
                             title="${title || '内容预览'}">
                         </iframe>
+                        ${metaInfo}
                     </a>
-                    ${metaInfo}
                 </div>
             `;
 
@@ -117,6 +117,11 @@ function initializePreviews(selector, isPinned) {
         // 清空并设置容器的内容
         previewsContainer.innerHTML = '';
         previewsContainer.appendChild(containerWrapper);
+
+        // 延迟检测背景色并应用深色模式样式
+        setTimeout(() => {
+            applyDarkModeToPreviewCards();
+        }, 100);
 
         console.log(`${isPinned ? '置顶' : '普通'}文章预览组件初始化完成，共加载`, previews.length, '篇文章');
 
@@ -165,6 +170,96 @@ function buildPreviewMetaInfo(preview) {
             </div>
         </div>
     `;
+}
+
+// =============== 深色模式适配 ===============
+
+// 为预览卡片应用深色模式样式
+function applyDarkModeToPreviewCards() {
+    // 获取所有预览卡片
+    const previewCards = document.querySelectorAll('.preview-card');
+    if (previewCards.length === 0) {
+        console.log('🎨 未找到预览卡片，跳过深色模式适配');
+        return;
+    }
+
+    previewCards.forEach((card, index) => {
+        try {
+            // 获取iframe元素
+            const iframe = card.querySelector('iframe');
+            if (!iframe) return;
+
+            // 等待iframe加载完成后检测背景色
+            const checkIframeBackground = () => {
+                try {
+                    // 尝试访问iframe内容（可能受跨域限制）
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframeDoc && iframeDoc.body) {
+                        const iframeStyle = iframe.contentWindow.getComputedStyle(iframeDoc.body);
+                        const bgColor = iframeStyle.backgroundColor;
+
+                        console.log(`🎨 检测iframe ${index + 1} 背景色:`, bgColor);
+
+                        // 简单的深色检测：检查背景色的亮度
+                        const isIframeDark = isBackgroundDark(bgColor);
+
+                        if (isIframeDark) {
+                            card.classList.add('dark-bg');
+                            console.log(`✅ 为预览卡片 ${index + 1} 应用深色模式样式`);
+                        } else {
+                            card.classList.remove('dark-bg');
+                            console.log(`✅ 为预览卡片 ${index + 1} 应用浅色模式样式`);
+                        }
+                    }
+                } catch (e) {
+                    // 跨域限制，使用全局背景检测作为备选
+                    console.log(`🎨 iframe ${index + 1} 跨域限制，使用全局背景检测`);
+
+                    // 使用全局背景检测
+                    if (typeof window.isDarkBackground === 'function') {
+                        const isDark = window.isDarkBackground();
+                        if (isDark) {
+                            card.classList.add('dark-bg');
+                            console.log(`✅ 为预览卡片 ${index + 1} 应用深色模式样式（全局检测）`);
+                        } else {
+                            card.classList.remove('dark-bg');
+                            console.log(`✅ 为预览卡片 ${index + 1} 应用浅色模式样式（全局检测）`);
+                        }
+                    }
+                }
+            };
+
+            // 等待iframe加载完成
+            iframe.addEventListener('load', checkIframeBackground);
+            // 备用方案：延迟检测
+            setTimeout(checkIframeBackground, 500);
+
+        } catch (e) {
+            console.warn(`预览卡片 ${index + 1} 背景检测失败:`, e);
+        }
+    });
+
+    console.log('🎨 预览卡片深色模式适配完成');
+}
+
+// 简单的背景色深浅检测函数
+function isBackgroundDark(bgColor) {
+    if (!bgColor || bgColor === 'transparent' || bgColor === 'rgba(0, 0, 0, 0)') {
+        return false;
+    }
+
+    // 解析RGB值
+    const rgb = bgColor.match(/\d+/g);
+    if (!rgb || rgb.length < 3) return false;
+
+    // 计算亮度 (使用相对亮度公式)
+    const r = parseInt(rgb[0]);
+    const g = parseInt(rgb[1]);
+    const b = parseInt(rgb[2]);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // 亮度小于128认为是深色
+    return brightness < 128;
 }
 
 // =============== 文章卡片组件 ===============
@@ -249,6 +344,8 @@ if (typeof window !== 'undefined') {
     window.initializeArticleCards = initializeArticleCards;
     window.initializeWidgets = initializeWidgets;
     window.buildPreviewMetaInfo = buildPreviewMetaInfo;
+    window.applyDarkModeToPreviewCards = applyDarkModeToPreviewCards;
+    window.isBackgroundDark = isBackgroundDark;
 }
 
 // 页面加载完成后自动初始化小部件
