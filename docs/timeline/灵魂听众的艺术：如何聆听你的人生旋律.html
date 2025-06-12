@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵魂听众的艺术：如何聆听你的人生旋律</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #0C0A14;
+            color: #E0E7FF;
+            overflow-x: hidden;
+        }
+
+        .hybrid-grid-card {
+            background: rgba(28, 22, 40, 0.5);
+            -webkit-backdrop-filter: blur(50px);
+            backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* 动态背景光斑 */
+        .blur-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(160px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .blob-1 {
+            width: 800px;
+            height: 800px;
+            background: #4a148c; /* Serene Blue-Purple */
+            top: -20%;
+            left: -25%;
+            animation: move-blob-1 60s infinite alternate ease-in-out;
+        }
+
+        .blob-2 {
+            width: 700px;
+            height: 700px;
+            background: #E91E63; /* Sacred Pink */
+            bottom: -25%;
+            right: -20%;
+            animation: move-blob-2 55s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-blob-1 {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(180px, 120px) scale(1.2) rotate(40deg); }
+        }
+        @keyframes move-blob-2 {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(-150px, -200px) scale(1.1) rotate(-50deg); }
+        }
+
+        /* 鼠标跟随光晕 */
+        #cursor-light {
+            position: fixed;
+            width: 800px;
+            height: 800px;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(233, 30, 99, 0.08) 0%, rgba(233, 30, 99, 0) 50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1), transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .glow-icon {
+             filter: drop-shadow(0 0 15px currentColor);
+             animation: breath-icon 6s infinite ease-in-out;
+        }
+        @keyframes breath-icon {
+            0%, 100% { filter: drop-shadow(0 0 15px currentColor); opacity: 0.8; transform: scale(1); }
+            50% { filter: drop-shadow(0 0 25px currentColor); opacity: 1; transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="antialiased font-light">
+
+    <!-- 动态背景与光晕 -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden">
+        <div class="blur-blob blob-1"></div>
+        <div class="blur-blob blob-2"></div>
+    </div>
+    <div id="cursor-light"></div>
+
+    <div class="relative min-h-screen w-full py-20 px-4 sm:px-6 lg:px-8 z-10">
+        <main class="max-w-7xl mx-auto flex flex-col gap-28 md:gap-40">
+
+            <!-- Hero Section -->
+            <section class="text-center flex flex-col items-center justify-center min-h-[70vh] reveal">
+                <i class="fa-solid fa-ear-listen text-8xl lg:text-9xl text-pink-300 mb-8 glow-icon"></i>
+                <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-tight">
+                    灵魂听众的艺术
+                </h1>
+                <p class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-300 mt-4">The Art of Listening to Your Life's Melody</p>
+            </section>
+
+            <!-- Chapter 1: The Receiver -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-cyan-300">第一章</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">调准你的“接收器”</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-400">活在极致的“在场”中，摘下“思绪”的降噪耳机。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-location-crosshairs text-4xl text-cyan-300 mb-4"></i>
+                        <h3 class="text-3xl font-bold">练习“感官锚定”</h3>
+                        <p class="mt-3 text-gray-300">对抗思绪纷飞的强大武器。强制性地将注意力锚定在听觉、触觉、味觉等任一感官上，让当下的音符压过你脑中的噪音。</p>
+                    </div>
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-feather-pointed text-4xl text-cyan-300 mb-4"></i>
+                        <h3 class="text-3xl font-bold">拥抱“无目的的漫游”</h3>
+                        <p class="mt-3 text-gray-300">每周安排一次无目的的散步或凝视。从一个焦急的“赶路人”，切换回一个从容的“欣赏者”。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter 2: The Player -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-pink-300">第二章</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">精炼你的“播放器”</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-400">你的“心”就是那台播放器。你如何诠释，决定了人生的质感。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-filter-circle-dollar text-4xl text-pink-300 mb-4"></i>
+                        <h3 class="text-3xl font-bold">建立你的“意义滤镜”</h3>
+                        <p class="mt-3 text-gray-300">音符本身是中性的，是你的滤镜给它们染上了色彩。练习“重塑叙事”，从被动的情绪接收者，变成主动的意义创造者。</p>
+                    </div>
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-sliders text-4xl text-pink-300 mb-4"></i>
+                        <h3 class="text-3xl font-bold">演奏你的“选择乐章”</h3>
+                        <p class="mt-3 text-gray-300">在每个音符的间隙，运用你的自由意志。你的回应，谱写了你自己的乐章。你不再是命运的木偶，而是你回应方式的总和。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter 3: The Echo -->
+            <section class="reveal">
+                <div class="text-center mb-12">
+                    <p class="text-sm uppercase tracking-widest text-purple-300">第三章</p>
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mt-2">谱写你的“回响曲”</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-gray-400">最深刻的聆听是参与其中，让你的旋律融入宇宙的合唱。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-water text-4xl text-purple-300 mb-4"></i>
+                        <h3 class="text-3xl font-bold">创造“心流时刻”</h3>
+                        <p class="mt-3 text-gray-300">找到并刻意为你的“心流扳机”创造时间。每一次心流，都是你个人旋律中最嘹亮的乐章，是与宇宙的完美共鸣。</p>
+                    </div>
+                    <div class="hybrid-grid-card rounded-3xl p-8">
+                        <i class="fa-solid fa-people-arrows text-4xl text-purple-300 mb-4"></i>
+                        <h3 class="text-3xl font-bold">成为“爱的传递者”</h3>
+                        <p class="mt-3 text-gray-300">深刻地聆听他人，分享你的知识与善意。每一次给予，都是在为你自己的生命乐章增加温暖的伴奏，并激起他人的回响。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Conclusion -->
+            <section class="reveal">
+                <div class="hybrid-grid-card rounded-3xl p-10 md:p-16 text-center">
+                    <h2 class="text-5xl md:text-6xl font-bold text-white">那么，如何聆听？</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 text-center">
+                        <div><i class="fa-solid fa-peace text-3xl text-cyan-300 mb-3"></i><h3 class="text-xl font-bold">像禅师一样</h3><p class="text-gray-400">活在当下</p></div>
+                        <div><i class="fa-solid fa-brain text-3xl text-pink-300 mb-3"></i><h3 class="text-xl font-bold">像哲学家一样</h3><p class="text-gray-400">诠释意义</p></div>
+                        <div><i class="fa-solid fa-palette text-3xl text-purple-300 mb-3"></i><h3 class="text-xl font-bold">像艺术家一样</h3><p class="text-gray-400">创造心流</p></div>
+                        <div><i class="fa-solid fa-hand-holding-heart text-3xl text-red-300 mb-3"></i><h3 class="text-xl font-bold">像慈悲者一样</h3><p class="text-gray-400">传递爱</p></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Final Statement -->
+            <section class="text-center py-16 reveal">
+                 <p class="max-w-3xl mx-auto text-xl text-gray-400">当幕布落下，交响乐终将结束。你无法带走任何一个音符，但你完整、深刻、毫无保留的聆听本身，以及你在这场聆听中，为你自己和他人所创造的意义与回响——</p>
+                 <div class="my-12">
+                     <i class="fa-solid fa-infinity text-8xl text-white glow-icon" style="animation-duration: 8s; color: #FFFFFF;"></i>
+                 </div>
+                 <h1 class="text-8xl font-black text-white">那，就是永恒。</h1>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const cursorLight = document.getElementById('cursor-light');
+        document.addEventListener('mousemove', (e) => {
+            cursorLight.style.left = e.clientX + 'px';
+            cursorLight.style.top = e.clientY + 'px';
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

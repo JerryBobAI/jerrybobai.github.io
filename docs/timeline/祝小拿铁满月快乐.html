@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祝小拿铁满月快乐</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <!-- Google Fonts: Noto Sans SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 全局及背景核心样式 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030014; /* 深邃的底色 */
+            color: #e5e7eb; /* 默认文字颜色 */
+            overflow-x: hidden;
+        }
+
+        /* 动态霓虹光晕背景容器 */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -10;
+        }
+
+        /* 霓虹光球 - 调整为更温暖、梦幻的色调 */
+        .light-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px); 
+            opacity: 0.65; /* 略微提高不透明度，营造更温暖的包裹感 */
+        }
+
+        @keyframes animate-float {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            25% { transform: translate(var(--mid-x), var(--mid-y)) scale(1.3); }
+            50% { transform: translate(var(--end-x), var(--end-y)) scale(0.9); }
+            75% { transform: translate(var(--mid-y), var(--mid-x)) scale(1.2); }
+            100% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+        }
+
+        .orb-1 { animation: animate-float 38s ease-in-out infinite; }
+        .orb-2 { animation: animate-float 48s ease-in-out infinite reverse; }
+        .orb-3 { animation: animate-float 42s ease-in-out infinite; }
+
+        /* 前景长虹玻璃效果叠加层 */
+        main::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: repeating-linear-gradient(90deg, 
+                rgba(0, 0, 0, 0.2) 0px, 
+                rgba(0, 0, 0, 0.2) 4px,
+                transparent 4px, 
+                transparent 10px
+            );
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        /* --- 前景元素及动画 --- */
+
+        /* 滚动入场动画 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 高亮色 & 辉光效果 */
+        .highlight-latte {
+            color: #fb923c; /* 温暖的拿铁/琥珀色 */
+            text-shadow: 0 0 12px rgba(251, 146, 60, 0.5); /* 增加柔和辉光 */
+        }
+        .highlight-pink {
+            color: #f472b6; /* 赛博朋克粉 */
+        }
+        .highlight-blue {
+            color: #60a5fa; /* 电光蓝 */
+        }
+        
+        /* 主标题下方的辉光线条 */
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem; /* 调整位置 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            /* 使用拿铁色渐变 */
+            background: linear-gradient(90deg, rgba(251, 146, 60, 0) 0%, rgba(251, 146, 60, 1) 50%, rgba(251, 146, 60, 0) 100%);
+            border-radius: 2px;
+            filter: blur(3px);
+        }
+
+        /* 爱心脉冲动画 */
+        @keyframes pulse-heart {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+        .heart-pulse {
+            animation: pulse-heart 2.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 背景：动态霓虹光球 (调整为暖色调为主) -->
+    <div class="background-container">
+        <!-- 温暖拿铁色 -->
+        <div class="light-orb orb-1" style="width: 60vw; height: 60vw; background-color: #fb923c; --start-x: -20vw; --start-y: -20vh; --mid-x: 50vw; --mid-y: 80vh; --end-x: 10vw; --end-y: 10vh;"></div>
+        <!-- 温柔粉色 -->
+        <div class="light-orb orb-2" style="width: 50vw; height: 50vw; background-color: #ec4899; --start-x: 70vw; --start-y: 10vh; --mid-x: 0vw; --mid-y: 60vh; --end-x: 80vw; --end-y: 90vh;"></div>
+        <!-- 宁静蓝色 (作为点缀) -->
+        <div class="light-orb orb-3" style="width: 40vw; height: 40vw; background-color: #60a5fa; --start-x: 10vw; --start-y: 70vh; --mid-x: 80vw; --mid-y: 20vh; --end-x: -10vw; --end-y: 50vh;"></div>
+    </div>
+
+    <main class="relative z-10">
+        <div class="container mx-auto px-6 lg:px-8">
+            <!-- 采用单屏居中布局，展示所有信息 -->
+            <section class="min-h-screen flex flex-col justify-center items-center text-center space-y-8 scroll-animate">
+
+                <p class="text-xl lg:text-2xl text-gray-300 font-light" style="transition-delay: 0.2s;">
+                    从此，你们的每一天，都有了
+                    <br class="md:hidden">
+                    <span class="text-6xl md:text-8xl font-black highlight-latte">“拿铁”</span>
+                    的味道。
+                </p>
+
+                <div class="max-w-3xl text-lg lg:text-xl text-gray-200 space-y-4 font-light" style="transition-delay: 0.4s;">
+                    <p><i class="fas fa-sun highlight-latte fa-fw mr-2"></i>是清晨第一口的惊喜，</p>
+                    <p><i class="fas fa-mug-hot highlight-latte fa-fw mr-2"></i>是午后最安心的陪伴，</p>
+                    <p><i class="fas fa-hands-holding-child highlight-latte fa-fw mr-2"></i>是捧在手心、暖在心里的，
+                        <br class="md:hidden">
+                        一辈子的香醇。
+                    </p>
+                </div>
+
+                <div class="pt-12" style="transition-delay: 0.6s;">
+                    <h1 class="relative text-4xl md:text-5xl lg:text-6xl font-black tracking-wider title-underline">
+                        祝小拿铁满月快乐
+                    </h1>
+                </div>
+
+                <div class="flex items-center space-x-4 pt-8" style="transition-delay: 0.8s;">
+                    <i class="fas fa-heart text-3xl lg:text-4xl highlight-pink heart-pulse"></i>
+                    <p class="text-2xl lg:text-3xl font-bold">
+                        一生被爱包裹
+                    </p>
+                    <i class="fas fa-heart text-3xl lg:text-4xl highlight-pink heart-pulse" style="animation-delay: 0.5s;"></i>
+                </div>
+                
+            </section>
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- 入场动画 ---
+        // 为简化单屏展示，页面加载后直接触发动画
+        const mainSection = document.querySelector('.scroll-animate');
+        // 使用一个小的延迟确保所有元素都已渲染
+        setTimeout(() => {
+            if (mainSection) {
+                mainSection.classList.add('is-visible');
+                // 逐个为子元素添加入场效果
+                const children = mainSection.children;
+                for(let i=0; i < children.length; i++) {
+                    children[i].style.transitionDelay = `${i * 0.25}s`;
+                }
+            }
+        }, 100);
+
+
+        // --- 背景光球随机化 ---
+        const orbs = document.querySelectorAll('.light-orb');
+        orbs.forEach(orb => {
+            // 为每个光球的动画添加随机延迟，使它们的运动错开，更自然
+            orb.style.animationDelay = `${Math.random() * -10}s`;
+        });
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

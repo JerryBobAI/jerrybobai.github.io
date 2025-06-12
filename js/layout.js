@@ -284,11 +284,11 @@ function renderHeader(currentPath, isRoot) {
 
             /* 增强的毛玻璃效果 - 默认深色背景优化 */
             .header-component .glass-effect {
-                background: rgba(0, 0, 0, 0.8) !important;
+                background: rgba(40, 40, 40, 0.7) !important; /* 通用深灰色，适配各种深色背景 */
                 backdrop-filter: blur(30px) saturate(180%) !important;
                 -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
                 border: none !important;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important; /* 更轻的阴影 */
             }
 
             /* 浅色背景的毛玻璃效果 - 融入背景色，无边框 */

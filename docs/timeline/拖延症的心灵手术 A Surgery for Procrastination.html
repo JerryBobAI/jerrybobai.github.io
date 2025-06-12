@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拖延症的心灵手术 | A Surgery for Procrastination</title>
+    
+    <!-- TailwindCSS 3.4.1 via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6.5.2 via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #e5e7eb; /* 浅灰色文字 */
+            /* 
+               背景设计:
+               1. 基础色: 深邃的蓝紫色调 (#0c001f)。
+               2. 霓虹光晕: 电光蓝为主，警戒橙为辅，营造科技与警示感。
+               3. 长虹玻璃纹理: 深色的垂直棱纹。
+               4. 固定背景: 创造深度视差效果。
+            */
+            background-color: #0c001f;
+            background-image: 
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 16px),
+                radial-gradient(ellipse 60% 90% at 85% 15%, rgba(255, 107, 0, 0.35), transparent),
+                radial-gradient(ellipse 50% 80% at 15% 80%, rgba(0, 150, 255, 0.45), transparent);
+            background-attachment: fixed;
+            background-size: cover;
+            overflow-x: hidden;
+        }
+
+        /* 动画入场效果 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 
+         *  --- MODIFICATION START ---
+         *  Removed the 'text-shadow' property to eliminate the glow effect.
+         */
+        .highlight-glow {
+            color: #fb923c; /* 警戒橙 */
+        }
+
+        .highlight-glow-pink {
+            color: #f472b6; /* 赛博朋克粉 */
+        }
+        /* --- MODIFICATION END --- */
+        
+        /* 标题下划线渐变 */
+        .title-underline {
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(251, 146, 60, 0) 0%, rgba(251, 146, 60, 1) 50%, rgba(251, 146, 60, 0) 100%);
+            border-radius: 2px;
+        }
+        
+        /* 毛玻璃卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body class="bg-black antialiased">
+
+    <main class="w-full max-w-[1920px] mx-auto">
+
+        <!-- Section 1: Introduction -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center relative overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-5 scale-150">
+                 <i class="fa-solid fa-brain text-[25rem] text-white"></i>
+            </div>
+            <div class="reveal relative">
+                <p class="text-xl md:text-2xl text-gray-300 tracking-wider">这可能是我们这一代人，内心最普遍、也最痛苦的挣扎。</p>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black my-4">拖延，不是懒。</h1>
+                <p class="text-2xl md:text-4xl font-bold text-gray-200">它是一种<span class="highlight-glow">情绪调节问题</span></p>
+                <p class="mt-8 max-w-2xl mx-auto text-lg text-gray-400">它是你的大脑为了逃避焦虑、恐惧等负面情绪，而选择的“<span class="font-bold text-white">逃避机制</span>”。</p>
+            </div>
+        </section>
+
+        <!-- Section 2: The "Surgery" Concept -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="reveal text-center">
+                <p class="text-xl md:text-2xl text-gray-300 uppercase tracking-[0.2em]">The Solution</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2 mb-8">一场<span class="highlight-glow-pink">心灵手术</span></h2>
+                <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-400 leading-relaxed">
+                    治愈拖延症，不是一场意志力的战斗，而是一场与自己情绪和解、并重建行为系统的过程。这本“手术指南”分为三步：
+                </p>
+            </div>
+            <div class="reveal mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                <!-- Step 1 -->
+                <div class="text-center p-8 border border-white/10 rounded-3xl">
+                    <div class="text-5xl font-black text-blue-400">01</div>
+                    <h3 class="text-2xl font-bold mt-4">诊断病因</h3>
+                    <p class="text-gray-400 mt-2">Diagnose the Cause</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center p-8 border border-white/10 rounded-3xl">
+                    <div class="text-5xl font-black text-orange-400">02</div>
+                    <h3 class="text-2xl font-bold mt-4">重塑心法</h3>
+                    <p class="text-gray-400 mt-2">Remodel the Mindset</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="text-center p-8 border border-white/10 rounded-3xl">
+                    <div class="text-5xl font-black text-pink-400">03</div>
+                    <h3 class="text-2xl font-bold mt-4">系统化行动</h3>
+                    <p class="text-gray-400 mt-2">Systemize the Action</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Step 1 - Diagnose the Monsters -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="reveal text-center">
+                <h2 class="text-5xl md:text-6xl font-black title-underline">诊断病因：你的拖延是哪只“怪兽”？</h2>
+                <p class="mt-8 text-lg text-gray-400">Step 01: Identify Your Emotional Monster</p>
+            </div>
+            <div class="reveal mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 w-full max-w-7xl">
+                <div class="glass-card p-8 text-center flex flex-col items-center">
+                    <i class="fa-solid fa-trophy text-6xl text-orange-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold">完美主义怪兽</h3>
+                    <p class="text-gray-400 mt-3 flex-grow">“必须做到最好，否则就不如不做。”</p>
+                </div>
+                <div class="glass-card p-8 text-center flex flex-col items-center">
+                    <i class="fa-solid fa-ghost text-6xl text-blue-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold">恐惧怪兽</h3>
+                    <p class="text-gray-400 mt-3 flex-grow">“如果我失败了怎么办？别人会怎么看我？”</p>
+                </div>
+                <div class="glass-card p-8 text-center flex flex-col items-center">
+                    <i class="fa-solid fa-map-signs text-6xl text-purple-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold">迷茫怪兽</h3>
+                    <p class="text-gray-400 mt-3 flex-grow">“任务太大了，我根本不知道从哪儿下手。”</p>
+                </div>
+                <div class="glass-card p-8 text-center flex flex-col items-center">
+                    <i class="fa-solid fa-bed-pulse text-6xl text-green-300 mb-4"></i>
+                    <h3 class="text-2xl font-bold">无聊怪兽</h3>
+                    <p class="text-gray-400 mt-3 flex-grow">“这件事太没意思了，一点劲都提不起来。”</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Step 2 - Remodel the Mindset -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="reveal text-center">
+                <h2 class="text-5xl md:text-6xl font-black title-underline">重塑心法：改变你与任务的关系</h2>
+                <p class="mt-8 text-lg text-gray-400">Step 02: Change Your Relationship with the Task</p>
+            </div>
+            <div class="reveal mt-12 w-full max-w-5xl space-y-12">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-3xl font-bold"><span class="highlight-glow">接纳</span> 与 <span class="highlight-glow">自我原谅</span></h3>
+                        <p class="text-gray-300 mt-2">原谅过去的拖延，对自己说：“现在，我可以重新开始。”</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+                    <div class="text-center md:text-right">
+                        <h3 class="text-3xl font-bold">把“完成”变成“<span class="highlight-glow-pink">开始</span>”</h3>
+                        <p class="text-gray-300 mt-2">你的目标不是“写完报告”，而是“打开文档，写下标题”。</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-8 text-center">
+                    <div class="w-full">
+                        <h3 class="text-3xl font-bold">拥抱“<span class="highlight-glow">完成好过完美</span>”</h3>
+                        <div class="mt-4 flex justify-center items-end gap-8">
+                            <div class="text-center">
+                                <div class="text-8xl font-black text-green-400">60<span class="text-4xl">%</span></div>
+                                <p class="text-gray-300">已完成的草稿</p>
+                            </div>
+                            <div class="text-4xl font-bold text-gray-500"> > </div>
+                            <div class="text-center">
+                                <div class="text-8xl font-black text-gray-600 opacity-70">100<span class="text-4xl">%</span></div>
+                                <p class="text-gray-500">想象中的杰作</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Step 3 - Systemize the Action -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+             <div class="reveal text-center">
+                <h2 class="text-5xl md:text-6xl font-black title-underline">系统化行动：让“开始”变得简单</h2>
+                <p class="mt-8 text-lg text-gray-400">Step 03: Make 'Starting' as Easy as Breathing</p>
+            </div>
+            <div class="reveal mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl">
+                <div class="glass-card p-8">
+                    <i class="fa-solid fa-shoe-prints text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold">两分钟法则</h3>
+                    <p class="text-gray-400 mt-2">任何任务，找到一个两分钟内能完成的“启动版”。<br>“每天跑步” → “穿上我的跑鞋”</p>
+                </div>
+                <div class="glass-card p-8">
+                    <i class="fa-solid fa-mobile-screen-button text-4xl text-red-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold">环境设计</h3>
+                    <p class="text-gray-400 mt-2">增加分心阻力（手机放远点），减少开始阻力（跑鞋放床头）。</p>
+                </div>
+                <div class="glass-card p-8">
+                    <i class="fa-solid fa-list-check text-4xl text-green-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold">任务分解</h3>
+                    <p class="text-gray-400 mt-2">把大象切成小块。例如“做PPT”：</p>
+                    <ul class="mt-3 space-y-2 text-gray-300">
+                        <li><i class="fa-regular fa-square-check text-green-400 mr-2"></i>确定核心观点 (5分钟)</li>
+                        <li><i class="fa-regular fa-square mr-2"></i>列出5个分论点 (10分钟)</li>
+                        <li><i class="fa-regular fa-square mr-2"></i>为每个论点找配图 (15分钟)</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-8">
+                    <i class="fa-solid fa-stopwatch-20 text-4xl text-pink-400 mb-4"></i>
+                    <h3 class="text-2xl font-bold">番茄工作法</h3>
+                    <p class="text-gray-400 mt-2">专注25分钟，休息5分钟。创造紧迫感与即时奖赏。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 6: Final Call to Action -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+             <div class="reveal">
+                <h2 class="text-4xl md:text-5xl font-bold">最后的“灵魂一问”</h2>
+                <p class="mt-8 max-w-3xl mx-auto text-xl md:text-2xl text-gray-300 leading-relaxed">
+                    忘掉“治愈拖延症”这个宏大目标。看着你清单上最拖延的那件事，然后问自己：
+                </p>
+                <div class="my-12 p-8 border-2 border-dashed border-orange-400/50 rounded-3xl max-w-4xl mx-auto">
+                    <p class="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                        “在接下来的<span class="highlight-glow">5分钟</span>内，为了这件事，<br>我能完成的、最微不足道、简单到可笑的第一步是什么？”
+                    </p>
+                </div>
+                <h3 class="text-6xl md:text-8xl font-black highlight-glow-pink animate-pulse">现在，就去做。</h3>
+                <p class="mt-4 text-xl text-white/70 tracking-[0.2em] uppercase">Today, I am in charge.</p>
+             </div>
+        </section>
+
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15 // 元素进入视口15%时触发
+            });
+
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
