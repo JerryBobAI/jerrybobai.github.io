@@ -177,15 +177,119 @@ function createMobileMenuManager() {
 
 // =============== Header组件 ===============
 
-// 渲染Header组件 - 在文章页面显示元信息
+// 渲染Header组件 - 根据页面类型显示不同内容
 function renderHeader(currentPath, isRoot) {
-    // 只在文章页面显示
-    const isArticlePage = currentPath.includes('docs/') && !currentPath.endsWith('index.html');
-    if (!isArticlePage) {
-        console.log('❌ 非文章页面，跳过header渲染');
+    const isIndexPage = currentPath.endsWith('index.html') || currentPath === '' || currentPath === '/';
+    const isArticlePage = currentPath.includes('docs/') && !isIndexPage;
+
+    if (isIndexPage) {
+        // 所有index页面显示导航栏
+        renderHomepageHeader(currentPath, isRoot);
+    } else if (isArticlePage) {
+        // 文章页面显示元信息
+        renderArticleHeader(currentPath, isRoot);
+    } else {
+        console.log('❌ 未知页面类型，跳过header渲染');
         return;
     }
+}
 
+// 渲染导航栏 - 用于所有index页面（首页、分类页等）
+function renderHomepageHeader(currentPath, isRoot) {
+    const headerElement = document.querySelector('[data-component="header"]');
+    if (!headerElement) return;
+    headerElement.classList.add('header-component', 'glass-effect');
+
+    // 路径处理逻辑改进，避免重复路径
+    let prefix = '';
+    if (!isRoot) {
+        // 计算当前页面到网站根目录的路径
+        const pathSegments = currentPath.split('/');
+        // 如果是docs下的子目录，需要回退两级
+        if (pathSegments.length >= 2 && pathSegments[0] === 'docs') {
+            prefix = '../../';
+        } else if (pathSegments.length >= 1) {
+            // 其他情况回退一级
+            prefix = '../';
+        }
+    }
+
+    // 调试输出
+    console.log('当前路径:', currentPath, '前缀:', prefix);
+
+    // 设置导航激活状态
+    let homeClass = isRoot ? 'active' : '';
+    let aiClass = currentPath.includes('/docs/ai/') ? 'active' : '';
+    let personalClass = currentPath.includes('/docs/personal/') ? 'active' : '';
+    let familyClass = currentPath.includes('/docs/family/') ? 'active' : '';
+    let workClass = currentPath.includes('/docs/work/') ? 'active' : '';
+    let socialClass = currentPath.includes('/docs/social/') ? 'active' : '';
+
+    // 生成绝对路径的链接
+    const homeLink = `${prefix}index.html`;
+    const aiLink = `${prefix}docs/ai/index.html`;
+    const personalLink = `${prefix}docs/personal/index.html`;
+    const familyLink = `${prefix}docs/family/index.html`;
+    const workLink = `${prefix}docs/work/index.html`;
+    const socialLink = `${prefix}docs/social/index.html`;
+
+    headerElement.innerHTML = `
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="${homeLink}" class="flex items-center hover:opacity-90 transition-opacity">
+                        <img src="${prefix}images/logo.png" alt="Logo" class="h-10 w-10 rounded-full mr-3 flex-shrink-0">
+                        <span class="text-xl sm:text-2xl font-bold text-primary">JerryBob</span>
+                    </a>
+                </div>
+
+                <!-- 桌面端导航 -->
+                <nav class="hidden md:flex space-x-6">
+                    <a href="${homeLink}" class="nav-link ${homeClass}">首页</a>
+                    <a href="${aiLink}" class="nav-link ${aiClass}">AI</a>
+                    <a href="${personalLink}" class="nav-link ${personalClass}">个人</a>
+                    <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
+                    <a href="${workLink}" class="nav-link ${workClass}">工作</a>
+                    <a href="${socialLink}" class="nav-link ${socialClass}">社交</a>
+                </nav>
+
+                <!-- 移动端菜单按钮 -->
+                <button class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        id="mobile-menu-button" aria-expanded="false">
+                    <span class="sr-only">打开主菜单</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 移动端导航菜单 -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="mobile-menu-container glass-effect mx-4 mt-2 mb-4 rounded-2xl shadow-lg overflow-hidden">
+                    <div class="px-4 py-3 space-y-1">
+                        <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
+                        <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
+                        <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
+                        <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
+                        <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
+                        <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 添加移动端菜单交互
+    setTimeout(() => {
+        const manager = createMobileMenuManager();
+        manager.init();
+    }, 100);
+
+    console.log('✅ 导航栏渲染完成 (index页面)');
+}
+
+// 渲染文章页面Header - 显示元信息
+function renderArticleHeader(currentPath, isRoot) {
     // 检查是否已存在header组件
     let headerElement = document.querySelector('[data-component="header"]');
 
@@ -572,7 +676,7 @@ async function initializeLayout() {
     const { currentPath, isRoot } = coreState;
     const metadataCache = getMetadataCache();
 
-    // 渲染各布局组件 - 元信息功能已移到header中
+    // 渲染各布局组件
     renderHeader(currentPath, isRoot);
     renderFooter(isRoot);
 
@@ -582,6 +686,8 @@ async function initializeLayout() {
 // 导出函数供其他模块使用
 if (typeof window !== 'undefined') {
     window.renderHeader = renderHeader;
+    window.renderHomepageHeader = renderHomepageHeader;
+    window.renderArticleHeader = renderArticleHeader;
     window.renderFooter = renderFooter;
     window.renderArticleMeta = renderArticleMeta;
     window.initializeLayout = initializeLayout;
