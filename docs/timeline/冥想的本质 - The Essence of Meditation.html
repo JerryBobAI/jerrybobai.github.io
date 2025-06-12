@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冥想的本质 - The Essence of Meditation</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    
+    <!-- Font Awesome via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa; /* 极浅灰色背景 */
+            color: #1d1d1f; /* 接近苹果的深灰色文本 */
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 核心：色彩云雾/极光渐变背景 */
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px); /* 增强模糊效果 */
+            opacity: 0.2; /* 降低不透明度，更柔和 */
+            animation: move 30s infinite alternate;
+        }
+        
+        .blob-1 { top: -30%; left: -10%; width: 50vw; height: 50vw; background: #3498db; animation-duration: 40s; } /* Calm Blue */
+        .blob-2 { top: 10%; right: -20%; width: 45vw; height: 45vw; background: #e67e22; animation-duration: 28s; } /* Warm Orange */
+        .blob-3 { bottom: -20%; left: 20%; width: 40vw; height: 40vw; background: #9b59b6; animation-duration: 35s; } /* Soft Purple */
+        .blob-4 { bottom: 5%; right: 15%; width: 35vw; height: 35vw; background: #f1c40f; animation-duration: 22s; } /* Faded Gold */
+
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            to {
+                transform: translate(15vw, -10vh) scale(1.3) rotate(25deg);
+            }
+        }
+        
+        /* 滚动触发动画的基础样式 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 数字删除线效果 */
+        .strikethrough {
+            position: relative;
+            display: inline-block;
+        }
+        .strikethrough::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -10%;
+            right: -10%;
+            border-top: 12px solid #1d1d1f;
+            transform: rotate(-10deg);
+            transform-origin: center;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态极光背景 -->
+    <div class="aurora-background">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+        <div class="aurora-blob blob-4"></div>
+    </div>
+
+    <main class="relative z-10">
+
+        <!-- Section 1: 本质 -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal">
+                <p class="text-xl md:text-2xl text-gray-500 mb-4 tracking-widest uppercase">The Essence of Meditation</p>
+                <h1 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-gray-800 leading-tight">
+                    冥想的本质：<br>打断<span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-orange-500">自动驾驶</span>
+                </h1>
+                 <!-- 勾线图形化 - 断开的循环 -->
+                <svg class="w-24 h-24 mx-auto mt-12 text-gray-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M90 50C90 72.0914 72.0914 90 50 90C27.9086 90 10 72.0914 10 50C10 27.9086 27.9086 10 50 10" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M58 11.5L78 11.5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M68 1.5L68 21.5" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Section 2: 最简之道 -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal max-w-4xl w-full">
+                <p class="text-xl md:text-2xl text-gray-500 mb-4 tracking-widest uppercase">The Simplest Algorithm</p>
+                <h2 class="text-5xl md:text-6xl font-bold tracking-tight mb-12">最简之道</h2>
+                <div class="bg-gray-800/80 backdrop-blur-sm text-left rounded-2xl p-8 shadow-2xl font-mono text-xl md:text-2xl text-gray-200">
+                    <p><span class="text-sky-400">while</span> (<span class="text-orange-400">true</span>) {</p>
+                    <p class="pl-8"><span class="text-purple-400">perceive_breath</span>();</p>
+                    <p class="pl-8"><span class="text-gray-400">// if_mind_wanders.gently_return();</span></p>
+                    <p>}</p>
+                </div>
+                 <p class="mt-8 text-2xl text-gray-600">两行代码，无限循环。</p>
+            </div>
+        </section>
+
+        <!-- Section 3: 核心指令 -->
+        <section class="min-h-screen w-full flex items-center justify-center p-8 overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 w-full max-w-7xl mx-auto">
+                <!-- 左侧：感知呼吸 -->
+                <div class="scroll-reveal text-center bg-white/40 backdrop-blur-2xl rounded-3xl p-8 lg:p-12 shadow-xl border border-white/30">
+                    <p class="text-base text-sky-600 mb-2 tracking-widest uppercase">STEP 01</p>
+                    <h3 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">感知呼吸</h3>
+                    <!-- 勾线图形化 - 呼吸波浪 -->
+                    <svg class="w-full h-16 text-sky-500 my-8" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 25C35 5, 65 45, 100 25S 135 5, 165 25S 195 45, 195 45" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+                        <path d="M5 25C35 5, 65 45, 100 25S 135 5, 165 25" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <!-- 右侧：温柔返回 -->
+                <div class="scroll-reveal text-center bg-white/40 backdrop-blur-2xl rounded-3xl p-8 lg:p-12 shadow-xl border border-white/30" style="transition-delay: 200ms;">
+                    <p class="text-base text-orange-600 mb-2 tracking-widest uppercase">STEP 02</p>
+                    <h3 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">温柔返回</h3>
+                    <p class="text-lg text-gray-600">走神了，就温柔地回到第一步。</p>
+                    <div class="text-7xl text-orange-500 my-6">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: 边界定义 -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+             <div class="scroll-reveal text-center">
+                <p class="text-xl md:text-2xl text-gray-500 mb-8 tracking-widest uppercase">There Is No Step Three</p>
+                <div class="strikethrough text-[20rem] md:text-[28rem] lg:text-[36rem] font-black text-gray-800/80 leading-none">3</div>
+                <h2 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-gray-800 -mt-8 md:-mt-12">没有第三步</h2>
+             </div>
+        </section>
+
+
+        <!-- Section 5: 终极归纳 -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal">
+                <div class="text-6xl md:text-7xl text-gray-400 mb-12">
+                     <i class="fa-solid fa-infinity"></i>
+                </div>
+                <h2 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-gray-800">
+                    这就是全部
+                </h2>
+                <p class="mt-6 text-2xl md:text-3xl text-gray-500 tracking-widest uppercase">This Is Everything</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2 // 元素可见20%时触发
+            });
+
+            const hiddenElements = document.querySelectorAll('.scroll-reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

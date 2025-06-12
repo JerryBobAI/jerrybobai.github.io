@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的乐章</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <!-- Google Fonts: Noto Sans SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030014;
+            color: #e5e7eb;
+            overflow: hidden; /* 隐藏滚动条，强制单屏体验 */
+        }
+
+        .background-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -10;
+        }
+
+        .light-orb {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.6;
+        }
+
+        @keyframes animate-float {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            50% { transform: translate(var(--end-x), var(--end-y)) scale(1.2); }
+            100% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+        }
+
+        .orb-1 { animation: animate-float 40s ease-in-out infinite; }
+        .orb-2 { animation: animate-float 50s ease-in-out infinite reverse; }
+
+        main::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: repeating-linear-gradient(90deg, 
+                rgba(0, 0, 0, 0.2) 0px, rgba(0, 0, 0, 0.2) 4px,
+                transparent 4px, transparent 10px);
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            z-index: -5; pointer-events: none;
+        }
+
+        .content-reveal > * {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .highlight-pink { color: #f472b6; }
+        .highlight-blue { color: #60a5fa; }
+        
+        .text-gradient-final {
+            background-image: linear-gradient(90deg, #f472b6, #60a5fa, #f59e0b);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        /* 核心视觉：脉动的音符 */
+        @keyframes pulse-note {
+            0%, 100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(244, 114, 182, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 50px rgba(244, 114, 182, 0);
+            }
+        }
+        .pulsing-note {
+            animation: pulse-note 3s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        
+        /* 旋转的乐章图标 */
+        @keyframes spin-record {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spinning-record {
+            animation: spin-record 10s linear infinite;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="background-container">
+        <div class="light-orb orb-1" style="width: 70vw; height: 70vw; background-color: #ec4899; --start-x: 50vw; --start-y: 50vh; --end-x: 50vw; --end-y: 50vh;"></div>
+        <div class="light-orb orb-2" style="width: 60vw; height: 60vw; background-color: #3b82f6; --start-x: 0vw; --start-y: 0vh; --end-x: 100vw; --end-y: 100vh;"></div>
+    </div>
+
+    <main class="relative z-10">
+        <div class="min-h-screen flex flex-col justify-center items-center text-center p-6 content-reveal">
+
+            <!-- 1. 过去与未来：边缘化的存在 (已优化可读性) -->
+            <div class="w-full max-w-5xl flex justify-between items-center mb-10">
+                <!-- MODIFICATION START: Increased text brightness and opacity -->
+                <div class="text-left text-gray-400 opacity-80">
+                <!-- MODIFICATION END -->
+                    <p class="text-xl md:text-2xl">别看昨天，</p>
+                    <p class="text-lg md:text-xl font-light">那是回音。<span class="text-xs ml-1">THE ECHO</span></p>
+                </div>
+                <!-- MODIFICATION START: Increased text brightness and opacity -->
+                <div class="text-right text-gray-400 opacity-80">
+                <!-- MODIFICATION END -->
+                    <p class="text-xl md:text-2xl">别想明天，</p>
+                    <p class="text-lg md:text-xl font-light">那是天籁。<span class="text-xs ml-1">THE HEAVENLY</span></p>
+                </div>
+            </div>
+
+            <!-- 2. 当下：绝对的核心 -->
+            <div class="relative flex flex-col items-center justify-center my-8">
+                <div class="absolute w-48 h-48 md:w-64 md:h-64 bg-pink-500/30 rounded-full pulsing-note"></div>
+                
+                <p class="text-2xl md:text-3xl font-light text-gray-200 z-10">你的生命，只是</p>
+                <h1 class="text-7xl md:text-9xl font-black highlight-pink my-2 z-10">这一个音</h1>
+                <p class="text-3xl md:text-5xl font-bold text-white mt-4 z-10">全然地，成为它。</p>
+            </div>
+
+            <!-- 3. 结论：最终的乐章 -->
+            <div class="mt-16 text-center">
+                 <p class="text-2xl md:text-4xl text-gray-200">
+                    这，就是你的
+                    <span class="text-5xl md:text-7xl font-black block mt-2 text-gradient-final">乐章</span>
+                 </p>
+                 <i class="fas fa-record-vinyl text-4xl md:text-5xl text-gray-400 mt-6 spinning-record"></i>
+            </div>
+            
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const contentContainer = document.querySelector('.content-reveal');
+        if (contentContainer) {
+            const children = Array.from(contentContainer.children);
+            setTimeout(() => {
+                children.forEach((child, index) => {
+                    child.style.transitionDelay = `${index * 0.6 + 0.5}s`;
+                    child.style.opacity = '1';
+                    child.style.transform = 'translateY(0)';
+                });
+            }, 100);
+        }
+
+        const orbs = document.querySelectorAll('.light-orb');
+        orbs.forEach(orb => {
+            orb.style.animationDelay = `${Math.random() * -10}s`;
+        });
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
