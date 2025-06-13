@@ -416,24 +416,24 @@ function renderArticleHeader(currentPath, isRoot) {
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important; /* 更轻的阴影 */
             }
 
-            /* 浅色背景的毛玻璃效果 - 融入背景色，无边框 */
+            /* 浅色背景的毛玻璃效果 - 更透明，适配白色和浅色背景 */
             .header-component.light-bg .glass-effect {
-                background: rgba(234, 230, 225, 0.85) !important; /* 使用页面背景色 #EAE6E1 */
-                backdrop-filter: blur(20px) saturate(180%) !important;
-                -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+                background: rgba(255, 255, 255, 0.75) !important; /* 白色透明背景，更通用 */
+                backdrop-filter: blur(20px) saturate(120%) !important;
+                -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
                 border: none !important;
-                box-shadow: none !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important; /* 极淡的阴影，几乎不可见 */
             }
 
-            /* 浅色背景下的日期文字 */
+            /* 浅色背景下的日期文字 - 更深的颜色确保可读性 */
             .header-component.light-bg .ultra-light-date {
-                color: rgba(107, 114, 128, 0.8) !important;
+                color: rgba(55, 65, 81, 0.85) !important; /* 更深的灰色 */
             }
             .header-component.light-bg .ultra-light-date a {
-                color: rgba(107, 114, 128, 0.8) !important;
+                color: rgba(55, 65, 81, 0.85) !important;
             }
             .header-component.light-bg .ultra-light-date a:hover {
-                color: rgba(107, 114, 128, 1) !important;
+                color: rgba(55, 65, 81, 1) !important;
             }
 
             /* 深色背景下的日期文字 - 更白更清晰 */
