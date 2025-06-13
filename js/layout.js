@@ -214,17 +214,44 @@ function renderHomepageHeader(currentPath, isRoot) {
         }
     }
 
+    // 设置导航激活状态 - 改进逻辑，确保所有页面都能正确高亮
+    let homeClass = '';
+    let aiClass = '';
+    let personalClass = '';
+    let familyClass = '';
+    let workClass = '';
+    let socialClass = '';
+    let learnClass = '';
+
+    // 判断当前页面类型并设置对应的激活状态
+    if (currentPath.includes('docs/ai/')) {
+        aiClass = 'active';
+    } else if (currentPath.includes('docs/personal/')) {
+        personalClass = 'active';
+    } else if (currentPath.includes('docs/family/')) {
+        familyClass = 'active';
+    } else if (currentPath.includes('docs/work/')) {
+        workClass = 'active';
+    } else if (currentPath.includes('docs/social/')) {
+        socialClass = 'active';
+    } else if (currentPath.includes('docs/learn/')) {
+        learnClass = 'active';
+    } else {
+        // 默认情况下（首页或其他页面）激活首页
+        homeClass = 'active';
+    }
+
     // 调试输出
     console.log('当前路径:', currentPath, '前缀:', prefix);
-
-    // 设置导航激活状态
-    let homeClass = isRoot ? 'active' : '';
-    let aiClass = currentPath.includes('/docs/ai/') ? 'active' : '';
-    let personalClass = currentPath.includes('/docs/personal/') ? 'active' : '';
-    let familyClass = currentPath.includes('/docs/family/') ? 'active' : '';
-    let workClass = currentPath.includes('/docs/work/') ? 'active' : '';
-    let socialClass = currentPath.includes('/docs/social/') ? 'active' : '';
-    let learnClass = currentPath.includes('/docs/learn/') ? 'active' : '';
+    console.log('导航激活状态:', {
+        home: homeClass,
+        ai: aiClass,
+        personal: personalClass,
+        family: familyClass,
+        work: workClass,
+        social: socialClass,
+        learn: learnClass
+    });
 
     // 生成绝对路径的链接
     const homeLink = `${prefix}index.html`;
