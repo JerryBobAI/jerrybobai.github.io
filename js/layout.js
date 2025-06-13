@@ -263,21 +263,12 @@ function renderHomepageHeader(currentPath, isRoot) {
                 </button>
             </div>
 
-            <!-- 移动端导航菜单 -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="mobile-menu-container glass-effect mx-4 mt-2 mb-4 rounded-2xl shadow-lg overflow-hidden">
-                    <div class="px-4 py-3 space-y-1">
-                        <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
-                        <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
-                        <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
-                        <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
-                        <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
-                        <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
-                    </div>
-                </div>
-            </div>
+
         </div>
     `;
+
+    // 创建独立的移动端菜单（在header外部）
+    createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass);
 
     // 添加移动端菜单交互
     setTimeout(() => {
@@ -286,6 +277,36 @@ function renderHomepageHeader(currentPath, isRoot) {
     }, 100);
 
     console.log('✅ 导航栏渲染完成 (index页面)');
+}
+
+// 创建独立的移动端菜单
+function createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass) {
+    // 检查是否已存在移动端菜单
+    let existingMenu = document.getElementById('mobile-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+
+    // 创建独立的移动端菜单
+    const mobileMenu = document.createElement('div');
+    mobileMenu.id = 'mobile-menu';
+    mobileMenu.className = 'md:hidden hidden fixed top-16 left-0 right-0 z-50';
+
+    mobileMenu.innerHTML = `
+        <div class="mobile-menu-container glass-effect mx-4 mt-2 mb-4 rounded-2xl shadow-lg overflow-hidden">
+            <div class="px-4 py-3 space-y-1">
+                <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
+                <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
+                <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
+                <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
+                <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
+                <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+            </div>
+        </div>
+    `;
+
+    // 插入到body中
+    document.body.appendChild(mobileMenu);
 }
 
 // 渲染文章页面Header - 显示元信息
@@ -688,6 +709,7 @@ if (typeof window !== 'undefined') {
     window.renderHeader = renderHeader;
     window.renderHomepageHeader = renderHomepageHeader;
     window.renderArticleHeader = renderArticleHeader;
+    window.createIndependentMobileMenu = createIndependentMobileMenu;
     window.renderFooter = renderFooter;
     window.renderArticleMeta = renderArticleMeta;
     window.initializeLayout = initializeLayout;
