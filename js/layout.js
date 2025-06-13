@@ -24,7 +24,7 @@ function createMobileMenuManager() {
 
             if (!button || !menu) return;
 
-            console.log('🔧 初始化移动端菜单管理器');
+            Logger.info('MENU', '初始化移动端菜单管理器');
 
             // 重置状态
             menu.classList.add('hidden');
@@ -33,13 +33,13 @@ function createMobileMenuManager() {
 
             // 创建绑定的事件处理函数
             this.buttonClickHandler = (event) => {
-                console.log('📱 菜单按钮被点击');
+                Logger.debug('MENU', '菜单按钮被点击');
                 event.preventDefault();
                 event.stopPropagation();
                 event.stopImmediatePropagation();
 
                 if (this.isToggling) {
-                    console.log('⏳ 菜单正在切换中，忽略点击');
+                    Logger.debug('MENU', '菜单正在切换中，忽略点击');
                     return;
                 }
 
@@ -54,7 +54,7 @@ function createMobileMenuManager() {
 
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
                 if (isExpanded && !menu.contains(event.target) && !button.contains(event.target)) {
-                    console.log('🖱️ 点击外部区域，关闭菜单');
+                    // 点击外部区域，关闭菜单
                     this.close();
                 }
             };
@@ -75,7 +75,7 @@ function createMobileMenuManager() {
             const links = menu.querySelectorAll('.mobile-nav-link');
             links.forEach(link => {
                 link.addEventListener('click', () => {
-                    console.log('🔗 菜单项被点击，关闭菜单');
+                    // 菜单项被点击，关闭菜单
                     this.close();
                 });
             });
@@ -86,7 +86,7 @@ function createMobileMenuManager() {
             }, 100);
 
             this.isInitialized = true;
-            console.log('✅ 移动端菜单管理器初始化完成');
+            Logger.success('MENU', '移动端菜单管理器初始化完成');
         },
 
         toggle: function() {
@@ -94,7 +94,7 @@ function createMobileMenuManager() {
             if (!button) return;
 
             const isExpanded = button.getAttribute('aria-expanded') === 'true';
-            console.log(`🔄 切换菜单状态: ${isExpanded ? '关闭' : '打开'}`);
+            Logger.debug('MENU', `切换菜单状态: ${isExpanded ? '关闭' : '打开'}`);
 
             if (isExpanded) {
                 this.close();
@@ -107,7 +107,7 @@ function createMobileMenuManager() {
             if (this.isToggling) return;
             this.isToggling = true;
 
-            console.log('📂 打开菜单');
+            // 打开菜单
             const button = document.getElementById('mobile-menu-button');
             const menu = document.getElementById('mobile-menu');
             const container = menu.querySelector('.mobile-menu-container');
@@ -119,7 +119,7 @@ function createMobileMenuManager() {
                 container.style.animation = 'mobileMenuSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
                 setTimeout(() => {
                     this.isToggling = false;
-                    console.log('✅ 菜单打开完成');
+                    // 菜单打开完成
                 }, 350);
             } else {
                 this.isToggling = false;
@@ -130,7 +130,7 @@ function createMobileMenuManager() {
             if (this.isToggling) return;
             this.isToggling = true;
 
-            console.log('📁 关闭菜单');
+            // 关闭菜单
             const button = document.getElementById('mobile-menu-button');
             const menu = document.getElementById('mobile-menu');
             const container = menu.querySelector('.mobile-menu-container');
@@ -143,7 +143,7 @@ function createMobileMenuManager() {
                     menu.classList.add('hidden');
                     container.style.animation = '';
                     this.isToggling = false;
-                    console.log('✅ 菜单关闭完成');
+                    // 菜单关闭完成
                 }, 250);
             } else {
                 menu.classList.add('hidden');
@@ -152,7 +152,7 @@ function createMobileMenuManager() {
         },
 
         destroy: function() {
-            console.log('🗑️ 销毁移动端菜单管理器');
+            Logger.debug('MENU', '销毁移动端菜单管理器');
 
             if (this.outsideClickHandler) {
                 document.removeEventListener('click', this.outsideClickHandler);
@@ -189,7 +189,7 @@ function renderHeader(currentPath, isRoot) {
         // 文章页面显示元信息
         renderArticleHeader(currentPath, isRoot);
     } else {
-        console.log('❌ 未知页面类型，跳过header渲染');
+        Logger.warn('HEADER', '未知页面类型，跳过header渲染');
         return;
     }
 }
@@ -242,8 +242,8 @@ function renderHomepageHeader(currentPath, isRoot) {
     }
 
     // 调试输出
-    console.log('当前路径:', currentPath, '前缀:', prefix);
-    console.log('导航激活状态:', {
+    Logger.debug('HEADER', `当前路径: ${currentPath}, 前缀: ${prefix}`);
+    Logger.debug('HEADER', '导航激活状态', {
         home: homeClass,
         ai: aiClass,
         personal: personalClass,
@@ -306,7 +306,7 @@ function renderHomepageHeader(currentPath, isRoot) {
         manager.init();
     }, 100);
 
-    console.log('✅ 导航栏渲染完成 (index页面)');
+    Logger.success('HEADER', '导航栏渲染完成 (index页面)');
 }
 
 // 创建独立的移动端菜单
@@ -347,7 +347,7 @@ function renderArticleHeader(currentPath, isRoot) {
 
     // 如果不存在，创建新的header组件
     if (!headerElement) {
-        console.log('📝 创建新的header组件');
+        Logger.info('HEADER', '创建新的header组件');
         headerElement = document.createElement('div');
         headerElement.setAttribute('data-component', 'header');
         headerElement.className = 'header-component glass-effect';
@@ -358,9 +358,9 @@ function renderArticleHeader(currentPath, isRoot) {
             bodyElement.insertBefore(headerElement, bodyElement.firstChild);
             // 给body添加class，确保页面内容不被遮挡
             bodyElement.classList.add('has-fixed-header');
-            console.log('✅ Header组件已插入到body开头');
+            Logger.success('HEADER', 'Header组件已插入到body开头');
         } else {
-            console.warn('⚠️ 无法找到body元素');
+            Logger.warn('HEADER', '无法找到body元素');
             return;
         }
     } else {
@@ -519,21 +519,21 @@ function renderArticleHeader(currentPath, isRoot) {
     setTimeout(() => {
         if (typeof window.isDarkBackground === 'function') {
             const isDark = window.isDarkBackground();
-            console.log('🎨 根据背景色调整毛玻璃效果:', isDark ? '深色背景' : '浅色背景');
+            Logger.debug('STYLE', `根据背景色调整毛玻璃效果: ${isDark ? '深色背景' : '浅色背景'}`);
 
             if (!isDark) {
                 // 浅色背景：添加light-bg类
                 headerElement.classList.add('light-bg');
-                console.log('✅ 应用浅色背景毛玻璃效果');
+                Logger.debug('STYLE', '应用浅色背景毛玻璃效果');
             } else {
                 // 深色背景：移除light-bg类（使用默认深色效果）
                 headerElement.classList.remove('light-bg');
-                console.log('✅ 应用深色背景毛玻璃效果');
+                Logger.debug('STYLE', '应用深色背景毛玻璃效果');
             }
         }
     }, 100);
 
-    console.log('✅ Header组件（包含元信息）渲染完成');
+    Logger.success('HEADER', 'Header组件（包含元信息）渲染完成');
 }
 
 // =============== Footer组件 ===============
@@ -558,10 +558,10 @@ function renderFooter(isRoot) {
         `;
         footerElement.style.display = 'block';
         footerElement.style.opacity = '1';
-        console.log('首页显示footer');
+        Logger.debug('FOOTER', '首页显示footer');
     } else {
         footerElement.style.display = 'none';
-        console.log('非首页不显示footer');
+        Logger.debug('FOOTER', '非首页不显示footer');
     }
 }
 
@@ -570,7 +570,7 @@ function renderFooter(isRoot) {
 // 渲染文章元信息组件 - 功能已移到header中
 function renderArticleMeta(currentPath, metadataCache) {
     // 功能已移到 renderHeader 中，不再单独渲染
-    console.log('ℹ️ 元信息功能已移到header组件中');
+    Logger.debug('LAYOUT', '元信息功能已移到header组件中');
     return;
 
     // 检查是否已存在元信息组件
@@ -578,7 +578,7 @@ function renderArticleMeta(currentPath, metadataCache) {
 
     // 如果不存在，创建新的元信息组件
     if (!articleMetaElement) {
-        console.log('📝 创建新的元信息组件');
+        Logger.debug('LAYOUT', '创建新的元信息组件');
         articleMetaElement = document.createElement('div');
         articleMetaElement.setAttribute('data-component', 'article-meta');
         articleMetaElement.className = 'article-meta-component';
@@ -588,24 +588,22 @@ function renderArticleMeta(currentPath, metadataCache) {
 
         if (bodyElement) {
             bodyElement.insertBefore(articleMetaElement, bodyElement.firstChild);
-            console.log('✅ 元信息组件已插入到body开头');
+            Logger.debug('LAYOUT', '元信息组件已插入到body开头');
         } else {
-            console.warn('⚠️ 无法找到 body 元素');
+            Logger.warn('LAYOUT', '无法找到 body 元素');
             return;
         }
     }
 
     // 获取元数据
     const metadata = getPageMetadata(currentPath);
-    console.log('📊 获取到的元数据:', metadata);
 
     // 设置默认值
     const today = new Date();
     const dateStr = metadata?.date || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     let tags = metadata && metadata.tags ? metadata.tags : ['博客'];
 
-    console.log('📅 使用的日期:', dateStr);
-    console.log('🏷️ 使用的标签:', tags);
+    Logger.debug('DATA', `使用的日期: ${dateStr}, 标签: ${tags.join(', ')}`);
 
     // 使用共享的标签构建函数
     let tagsHtml = '';
@@ -615,7 +613,7 @@ function renderArticleMeta(currentPath, metadataCache) {
             withAnimation: true
         });
     } else {
-        console.error('❌ buildTagsHtml 函数未定义，回退到原始方法');
+        Logger.warn('TAG', 'buildTagsHtml 函数未定义，回退到原始方法');
         // 回退到原始方法
         const tagColors = getTagColorsForTags ? getTagColorsForTags(tags) : tags.map(tag => getTagColorClass(tag));
         tagsHtml = tags.map((tag, index) => {
@@ -709,20 +707,26 @@ function renderArticleMeta(currentPath, metadataCache) {
         </div>
     `;
 
-    console.log('✅ 元信息组件渲染完成');
+    Logger.success('LAYOUT', '元信息组件渲染完成');
 }
 
 // =============== 布局系统初始化 ===============
 
 // 初始化所有布局组件
 async function initializeLayout() {
-    console.log('🚀 开始初始化布局组件');
+    Logger.info('LAYOUT', '开始初始化布局组件');
 
     // 等待核心系统初始化完成
     const coreState = await initializeCore();
     if (!coreState) {
-        console.error('❌ 核心系统初始化失败');
-        return;
+        // 如果是在iframe中，coreState为null，这是正常的
+        if (window.self !== window.top) {
+            Logger.debug('LAYOUT', '在iframe中，跳过布局初始化');
+            return;
+        } else {
+            Logger.error('LAYOUT', '核心系统初始化失败');
+            return;
+        }
     }
 
     const { currentPath, isRoot } = coreState;
@@ -732,7 +736,7 @@ async function initializeLayout() {
     renderHeader(currentPath, isRoot);
     renderFooter(isRoot);
 
-    console.log('✅ 布局组件初始化完成');
+    Logger.success('LAYOUT', '布局组件初始化完成');
 }
 
 // 导出函数供其他模块使用
@@ -759,9 +763,18 @@ if (document.readyState === 'loading') {
 
 // 备用方案：如果上面的都没执行，在 window.onload 时执行
 window.addEventListener('load', function() {
+    // 检查是否在iframe中
+    if (window.self !== window.top) {
+        return; // 在iframe中不执行备用方案
+    }
+
     // 检查是否已经初始化过
+    if (window.top.systemInitialized) {
+        return; // 已经初始化过，不需要备用方案
+    }
+
     if (!document.querySelector('[data-component="article-meta"]')) {
-        console.log('🔄 备用方案：在 window.onload 时初始化布局');
+        Logger.info('LAYOUT', '备用方案：在 window.onload 时初始化布局');
         initializeLayout();
     }
 });

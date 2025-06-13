@@ -10,7 +10,7 @@ function normalizePath(path) {
     try {
         normalizedPath = decodeURIComponent(normalizedPath);
     } catch (e) {
-        console.log('⚠️ 路径解码失败，使用原始路径:', path);
+        Logger.warn('PATH', `路径解码失败，使用原始路径: ${path}`);
     }
 
     const REPO_NAME = 'jerrybobai.github.io';
@@ -29,7 +29,7 @@ function normalizePath(path) {
         normalizedPath = normalizedPath.substring(1);
     }
 
-    console.log('🔄 路径归一化: ', path, ' -> ', normalizedPath);
+    Logger.debug('PATH', `路径归一化: ${path} -> ${normalizedPath}`);
     return normalizedPath;
 }
 
@@ -51,21 +51,21 @@ function isRootPath(path) {
 // 简化的元数据路径计算
 function getMetadataPath() {
     const currentPath = window.location.pathname;
-    console.log('🔍 当前页面路径:', currentPath);
+    Logger.debug('PATH', `当前页面路径: ${currentPath}`);
 
     // 简化逻辑：如果在 docs/timeline 目录下，使用 ../../cache/metadata.json
     if (currentPath.includes('docs/timeline/')) {
-        console.log('📁 检测到 timeline 目录，使用相对路径');
+        Logger.debug('PATH', '检测到 timeline 目录，使用相对路径');
         return '../../cache/metadata.json';
     }
     // 如果在 docs 目录下，使用 ../cache/metadata.json
     else if (currentPath.includes('docs/')) {
-        console.log('📁 检测到 docs 目录，使用相对路径');
+        Logger.debug('PATH', '检测到 docs 目录，使用相对路径');
         return '../cache/metadata.json';
     }
     // 根目录使用直接路径
     else {
-        console.log('📁 根目录，使用直接路径');
+        Logger.debug('PATH', '根目录，使用直接路径');
         return 'cache/metadata.json';
     }
 }
@@ -73,38 +73,38 @@ function getMetadataPath() {
 let metadataCache = null; // 全局缓存，避免重复加载
 
 async function loadMetadata() {
-    console.log('开始加载元数据, 当前缓存状态:', metadataCache);
+    Logger.debug('DATA', `开始加载元数据, 当前缓存状态: ${metadataCache ? '已缓存' : '未缓存'}`);
     if (metadataCache) {
-        console.log('使用缓存的元数据');
+        Logger.debug('DATA', '使用缓存的元数据');
         return metadataCache;
     }
 
     const METADATA_PATH = getMetadataPath();
-    console.log('尝试从路径加载元数据:', METADATA_PATH);
+    Logger.debug('DATA', `尝试从路径加载元数据: ${METADATA_PATH}`);
 
     try {
         const response = await fetch(METADATA_PATH);
-        console.log('元数据请求响应状态:', response.status);
+        Logger.debug('DATA', `元数据请求响应状态: ${response.status}`);
         if (response.ok) {
             metadataCache = await response.json();
-            console.log('元数据加载成功:', Object.keys(metadataCache).length, '条记录');
+            Logger.info('DATA', `元数据加载成功: ${Object.keys(metadataCache).length} 条记录`);
         } else {
-            console.error('无法加载元数据文件, 状态码:', response.status);
+            Logger.error('DATA', `无法加载元数据文件, 状态码: ${response.status}`);
         }
     } catch (error) {
-        console.error('加载元数据时出错:', error.message);
+        Logger.error('DATA', `加载元数据时出错: ${error.message}`);
     }
     return metadataCache;
 }
 
 // 获取当前页面的元数据 - 增强调试版本，专门处理空格编码问题
 function getPageMetadata(path) {
-    console.log('🔍 查找页面元数据');
-    console.log('📍 原始路径:', path);
-    console.log('📊 元数据缓存状态:', metadataCache ? '已加载' : '未加载');
+    Logger.debug('DATA', '查找页面元数据');
+    Logger.debug('DATA', `原始路径: ${path}`);
+    Logger.debug('DATA', `元数据缓存状态: ${metadataCache ? '已加载' : '未加载'}`);
 
     if (!metadataCache) {
-        console.log('❌ 元数据缓存为空');
+        Logger.warn('DATA', '元数据缓存为空');
         return null;
     }
 
@@ -114,7 +114,7 @@ function getPageMetadata(path) {
     try {
         decodedFilename = decodeURIComponent(filename);
     } catch (e) {
-        console.log('⚠️ 文件名解码失败，使用原始文件名');
+        Logger.warn('DATA', '文件名解码失败，使用原始文件名');
     }
 
     // 创建多种路径变体来处理各种编码情况
@@ -136,7 +136,7 @@ function getPageMetadata(path) {
         pathVariants.add(decodedPath.replace(/^\/+/, ''));
         pathVariants.add(normalizePath(decodedPath));
     } catch (e) {
-        console.log('⚠️ 路径解码失败');
+        Logger.warn('DATA', '路径解码失败');
     }
 
     // 特别处理空格编码问题
@@ -154,28 +154,28 @@ function getPageMetadata(path) {
     pathVariants.add('docs/timeline/' + spaceEncodedPath.split('/').pop());
 
     const pathVariantsArray = Array.from(pathVariants);
-    console.log('🔍 尝试的路径变体:', pathVariantsArray);
-    console.log('📁 原始文件名:', filename);
-    console.log('📁 解码文件名:', decodedFilename);
+    Logger.debug('DATA', `尝试的路径变体: ${pathVariantsArray.join(', ')}`);
+    Logger.debug('DATA', `原始文件名: ${filename}`);
+    Logger.debug('DATA', `解码文件名: ${decodedFilename}`);
 
     // 精确匹配
     for (const variant of pathVariantsArray) {
         if (metadataCache[variant]) {
-            console.log('✅ 找到精确匹配的元数据:', variant, metadataCache[variant]);
+            Logger.debug('DATA', `找到精确匹配的元数据: ${variant}`);
             return metadataCache[variant];
         }
     }
 
     // 如果精确匹配失败，尝试模糊匹配
-    console.log('🔍 精确匹配失败，尝试模糊匹配');
-    console.log('🔍 元数据中可用的键（前10个）:', Object.keys(metadataCache).slice(0, 10));
+    Logger.debug('DATA', '精确匹配失败，尝试模糊匹配');
+    Logger.debug('DATA', `元数据中可用的键（前10个）: ${Object.keys(metadataCache).slice(0, 10).join(', ')}`);
 
     // 获取不带路径的纯文件名进行模糊匹配
     const pureFilename = filename.replace(/^.*\//, '');
     const decodedPureFilename = decodedFilename.replace(/^.*\//, '');
 
-    console.log('📁 纯文件名:', pureFilename);
-    console.log('📁 解码纯文件名:', decodedPureFilename);
+    Logger.debug('DATA', `纯文件名: ${pureFilename}`);
+    Logger.debug('DATA', `解码纯文件名: ${decodedPureFilename}`);
 
     const matchingKeys = Object.keys(metadataCache).filter(key => {
         const keyFilename = key.split('/').pop();
@@ -185,15 +185,15 @@ function getPageMetadata(path) {
                key.includes(decodedPureFilename);
     });
 
-    console.log('📝 模糊匹配找到的键:', matchingKeys);
+    Logger.debug('DATA', `模糊匹配找到的键: ${matchingKeys.join(', ')}`);
 
     // 使用第一个匹配的键
     if (matchingKeys.length > 0) {
-        console.log('🎯 使用模糊匹配找到的第一个键:', matchingKeys[0]);
+        Logger.debug('DATA', `使用模糊匹配找到的第一个键: ${matchingKeys[0]}`);
         return metadataCache[matchingKeys[0]];
     }
 
-    console.log('❌ 未找到匹配的元数据');
+    Logger.debug('DATA', '未找到匹配的元数据');
     return null;
 }
 
@@ -259,10 +259,13 @@ function setupScrollAnimations() {
 async function initializeCore() {
     // 只在主页面执行组件渲染逻辑
     const isInIframe = window.self !== window.top;
-    console.log('🔍 是否在iframe中:', isInIframe);
-    if (isInIframe) return;
+    Logger.debug('CORE', `是否在iframe中: ${isInIframe}`);
+    if (isInIframe) {
+        // 在iframe中时，返回null表示跳过初始化
+        return null;
+    }
 
-    console.log('🚀 开始初始化核心系统');
+    Logger.info('CORE', '开始初始化核心系统');
 
     // 注入全局样式
     injectGlobalStyles();
@@ -270,8 +273,8 @@ async function initializeCore() {
     // 获取当前路径和首页状态
     const currentPath = normalizePath(window.location.pathname);
     const isRoot = isRootPath(currentPath);
-    console.log('📍 当前归一化路径:', currentPath);
-    console.log('🏠 是否为首页:', isRoot);
+    Logger.debug('CORE', `当前归一化路径: ${currentPath}`);
+    Logger.debug('CORE', `是否为首页: ${isRoot}`);
 
     // 加载元数据
     await loadMetadata();
@@ -279,7 +282,7 @@ async function initializeCore() {
     // 启动滚动动画
     setupScrollAnimations();
 
-    console.log('✅ 核心系统初始化完成');
+    Logger.success('CORE', '核心系统初始化完成');
 
     // 返回系统状态供其他模块使用
     return {

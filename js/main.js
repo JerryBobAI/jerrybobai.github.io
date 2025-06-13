@@ -13,12 +13,36 @@
 
 (function() {
     'use strict';
-    
+
+    // 检查是否在iframe中，如果是则跳过模块加载
+    const isInIframe = window.self !== window.top;
+    if (isInIframe) {
+        console.log('⚠️ 在iframe中，跳过模块系统加载');
+        return;
+    }
+
+    // 使用更强的全局标志防止重复加载
+    if (window.top.moduleSystemLoaded) {
+        console.log('⚠️ 模块系统已加载，跳过重复加载');
+        return;
+    }
+
+    // 立即设置标志到顶层窗口，防止并发加载
+    window.top.moduleSystemLoaded = true;
+
+    // 如果正在加载中，也跳过
+    if (window.top.moduleSystemLoading) {
+        console.log('⚠️ 模块系统正在加载中，跳过重复加载');
+        return;
+    }
+    window.top.moduleSystemLoading = true;
+
     console.log('🚀 开始加载JavaScript模块系统...');
     
     // 定义需要加载的模块列表（按依赖顺序）
     const modules = [
-        'utils.js',      // 工具函数（最基础，其他模块可能依赖）
+        'logger.js',     // 日志系统（最基础，其他模块都会使用）
+        'utils.js',      // 工具函数（基础工具，其他模块可能依赖）
         'core.js',       // 核心系统（元数据管理、路径处理）
         'layout.js',     // 布局组件（header、footer、article-meta）
         'widgets.js'     // UI小部件（iframe预览、文章卡片）
@@ -40,7 +64,12 @@
             const script = document.createElement('script');
             script.src = basePath + src;
             script.onload = () => {
-                console.log(`✅ 模块加载完成: ${src}`);
+                // logger.js加载完成后，后续模块都可以使用Logger
+                if (src === 'logger.js') {
+                    console.log(`✅ 模块加载完成: ${src}`);
+                } else {
+                    Logger.success('LOAD', `模块加载完成: ${src}`);
+                }
                 resolve();
             };
             script.onerror = () => {
@@ -57,19 +86,25 @@
             for (const module of modules) {
                 await loadScript(module);
             }
-            console.log('✅ 所有JavaScript模块加载完成');
-            
+            Logger.success('SYSTEM', '所有JavaScript模块加载完成');
+
+            // 清除加载中标志
+            window.top.moduleSystemLoading = false;
+
             // 所有模块加载完成后，初始化系统
             initializeSystem();
-            
+
         } catch (error) {
-            console.error('❌ 模块加载过程中出现错误:', error);
+            Logger.error('SYSTEM', '模块加载过程中出现错误', error);
+            // 重置标志，允许重试
+            window.top.moduleSystemLoaded = false;
+            window.top.moduleSystemLoading = false;
         }
     }
     
     // 系统初始化
     function initializeSystem() {
-        console.log('🔧 开始初始化系统...');
+        Logger.info('SYSTEM', '开始初始化系统...');
         
         // 等待DOM完全加载
         if (document.readyState === 'loading') {
@@ -81,26 +116,35 @@
     
     // 执行实际的初始化
     function performInitialization() {
+        // 防止重复初始化
+        if (window.top.systemInitialized) {
+            Logger.debug('SYSTEM', '系统已初始化，跳过重复初始化');
+            return;
+        }
+        window.top.systemInitialized = true;
+
         try {
             // 初始化核心系统（如果存在）
             if (typeof window.initializeSystem === 'function') {
                 window.initializeSystem();
             }
-            
+
             // 初始化布局组件（如果存在）
             if (typeof window.initializeLayout === 'function') {
                 window.initializeLayout();
             }
-            
+
             // 初始化UI小部件（如果存在）
             if (typeof window.initializeWidgets === 'function') {
                 window.initializeWidgets();
             }
-            
-            console.log('✅ 系统初始化完成');
-            
+
+            Logger.success('SYSTEM', '系统初始化完成');
+
         } catch (error) {
-            console.error('❌ 系统初始化过程中出现错误:', error);
+            Logger.error('SYSTEM', '系统初始化过程中出现错误', error);
+            // 重置标志，允许重试
+            window.top.systemInitialized = false;
         }
     }
     

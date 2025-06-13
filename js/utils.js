@@ -113,26 +113,27 @@ function isDarkBackground() {
         const bodyStyle = window.getComputedStyle(document.body);
         const backgroundColor = bodyStyle.backgroundColor;
 
-        console.log('🎨 检测到的body背景色:', backgroundColor);
+        // 只在DEBUG级别记录详细信息
+        Logger.debug('STYLE', `检测到的body背景色: ${backgroundColor}`);
 
         // 如果没有背景色，检查html元素
         if (!backgroundColor || backgroundColor === 'rgba(0, 0, 0, 0)' || backgroundColor === 'transparent') {
             const htmlStyle = window.getComputedStyle(document.documentElement);
             const htmlBackgroundColor = htmlStyle.backgroundColor;
-            console.log('🎨 检测到的html背景色:', htmlBackgroundColor);
+            Logger.debug('STYLE', `检测到的html背景色: ${htmlBackgroundColor}`);
             if (htmlBackgroundColor && htmlBackgroundColor !== 'rgba(0, 0, 0, 0)' && htmlBackgroundColor !== 'transparent') {
                 const result = isColorDark(htmlBackgroundColor);
-                console.log('🎨 背景色检测结果 (html):', result ? '深色' : '浅色');
+                Logger.debug('STYLE', `背景色检测结果 (html): ${result ? '深色' : '浅色'}`);
                 return result;
             }
         }
 
         // 解析RGB值并计算亮度
         const result = isColorDark(backgroundColor);
-        console.log('🎨 背景色检测结果 (body):', result ? '深色' : '浅色');
+        Logger.debug('STYLE', `背景色检测结果 (body): ${result ? '深色' : '浅色'}`);
         return result;
     } catch (e) {
-        console.warn('无法检测背景色，使用默认深色方案:', e);
+        Logger.warn('STYLE', '无法检测背景色，使用默认深色方案', e);
         return true; // 默认假设是深色背景
     }
 }
@@ -177,11 +178,11 @@ function buildTagsHtml(tags, options = {}) {
     let useDarkColors;
     if (isDarkBackground !== null) {
         useDarkColors = isDarkBackground;
-        console.log('🏷️ 使用指定的背景类型:', useDarkColors ? '深色' : '浅色');
+        Logger.debug('TAG', `使用指定的背景类型: ${useDarkColors ? '深色' : '浅色'}`);
     } else {
         // 调用全局的背景检测函数
         useDarkColors = window.isDarkBackground ? window.isDarkBackground() : true;
-        console.log('🏷️ 自动检测背景类型:', useDarkColors ? '深色' : '浅色');
+        Logger.debug('TAG', `自动检测背景类型: ${useDarkColors ? '深色' : '浅色'}`);
     }
 
     const tagColors = getTagColorsForTags(tags, useDarkColors);

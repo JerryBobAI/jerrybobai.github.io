@@ -123,10 +123,10 @@ function initializePreviews(selector, isPinned) {
             applyDarkModeToPreviewCards();
         }, 100);
 
-        console.log(`${isPinned ? '置顶' : '普通'}文章预览组件初始化完成，共加载`, previews.length, '篇文章');
+        Logger.info('WIDGET', `${isPinned ? '置顶' : '普通'}文章预览组件初始化完成，共加载 ${previews.length} 篇文章`);
 
     } catch (error) {
-        console.error('解析预览数据时出错:', error);
+        Logger.error('WIDGET', '解析预览数据时出错', error);
     }
 }
 
@@ -179,7 +179,7 @@ function applyDarkModeToPreviewCards() {
     // 获取所有预览卡片
     const previewCards = document.querySelectorAll('.preview-card');
     if (previewCards.length === 0) {
-        console.log('🎨 未找到预览卡片，跳过深色模式适配');
+        Logger.debug('WIDGET', '未找到预览卡片，跳过深色模式适配');
         return;
     }
 
@@ -198,32 +198,32 @@ function applyDarkModeToPreviewCards() {
                         const iframeStyle = iframe.contentWindow.getComputedStyle(iframeDoc.body);
                         const bgColor = iframeStyle.backgroundColor;
 
-                        console.log(`🎨 检测iframe ${index + 1} 背景色:`, bgColor);
+                        Logger.debug('WIDGET', `检测iframe ${index + 1} 背景色: ${bgColor}`);
 
                         // 简单的深色检测：检查背景色的亮度
                         const isIframeDark = isBackgroundDark(bgColor);
 
                         if (isIframeDark) {
                             card.classList.add('dark-bg');
-                            console.log(`✅ 为预览卡片 ${index + 1} 应用深色模式样式`);
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用深色模式样式`);
                         } else {
                             card.classList.remove('dark-bg');
-                            console.log(`✅ 为预览卡片 ${index + 1} 应用浅色模式样式`);
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用浅色模式样式`);
                         }
                     }
                 } catch (e) {
                     // 跨域限制，使用全局背景检测作为备选
-                    console.log(`🎨 iframe ${index + 1} 跨域限制，使用全局背景检测`);
+                    Logger.debug('WIDGET', `iframe ${index + 1} 跨域限制，使用全局背景检测`);
 
                     // 使用全局背景检测
                     if (typeof window.isDarkBackground === 'function') {
                         const isDark = window.isDarkBackground();
                         if (isDark) {
                             card.classList.add('dark-bg');
-                            console.log(`✅ 为预览卡片 ${index + 1} 应用深色模式样式（全局检测）`);
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用深色模式样式（全局检测）`);
                         } else {
                             card.classList.remove('dark-bg');
-                            console.log(`✅ 为预览卡片 ${index + 1} 应用浅色模式样式（全局检测）`);
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用浅色模式样式（全局检测）`);
                         }
                     }
                 }
@@ -235,11 +235,11 @@ function applyDarkModeToPreviewCards() {
             setTimeout(checkIframeBackground, 500);
 
         } catch (e) {
-            console.warn(`预览卡片 ${index + 1} 背景检测失败:`, e);
+            Logger.warn('WIDGET', `预览卡片 ${index + 1} 背景检测失败`, e);
         }
     });
 
-    console.log('🎨 预览卡片深色模式适配完成');
+    Logger.debug('WIDGET', '预览卡片深色模式适配完成');
 }
 
 // 简单的背景色深浅检测函数
@@ -316,10 +316,10 @@ function initializeArticleCards() {
         // 添加网格布局类
         articleCardsContainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-8', 'mb-16');
 
-        console.log('文章卡片组件初始化完成，共加载', articles.length, '篇文章');
+        Logger.info('WIDGET', `文章卡片组件初始化完成，共加载 ${articles.length} 篇文章`);
 
     } catch (error) {
-        console.error('Error parsing article data:', error);
+        Logger.error('WIDGET', 'Error parsing article data', error);
     }
 }
 
@@ -327,7 +327,7 @@ function initializeArticleCards() {
 
 // 初始化所有小部件
 function initializeWidgets() {
-    console.log('🚀 开始初始化UI小部件');
+    Logger.info('WIDGET', '开始初始化UI小部件');
     
     // 初始化iframe预览组件
     initializeIframePreviews();
@@ -335,7 +335,7 @@ function initializeWidgets() {
     // 初始化文章卡片组件
     initializeArticleCards();
     
-    console.log('✅ UI小部件初始化完成');
+    Logger.success('WIDGET', 'UI小部件初始化完成');
 }
 
 // 导出函数供其他模块使用

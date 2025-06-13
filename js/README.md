@@ -5,6 +5,7 @@
 ```
 js/
 ├── main.js      # 主入口文件（统一加载器）
+├── logger.js    # 统一日志系统
 ├── utils.js     # 共享工具函数
 ├── core.js      # 核心系统功能
 ├── layout.js    # 布局组件
@@ -27,10 +28,11 @@ js/
 
 `main.js` 会按以下顺序自动加载模块：
 
-1. `utils.js` - 基础工具函数
-2. `core.js` - 核心系统功能
-3. `layout.js` - 布局组件
-4. `widgets.js` - UI小部件
+1. `logger.js` - 统一日志系统
+2. `utils.js` - 基础工具函数
+3. `core.js` - 核心系统功能
+4. `layout.js` - 布局组件
+5. `widgets.js` - UI小部件
 
 ## 各模块功能
 
@@ -39,6 +41,12 @@ js/
 - 自动按依赖顺序加载所有模块
 - 处理模块加载错误
 - 系统初始化协调
+
+### logger.js
+- 统一的日志记录系统
+- 可配置的日志级别
+- 模块化的日志分类
+- 性能友好的条件日志
 
 ### utils.js
 - 标签颜色生成函数
@@ -60,6 +68,50 @@ js/
 - iframe预览卡片组件
 - 文章卡片组件
 - UI小部件管理
+
+## 日志系统使用
+
+### 基本用法
+
+```javascript
+// 错误日志
+Logger.error('MODULE', '错误信息', errorObject);
+
+// 警告日志
+Logger.warn('MODULE', '警告信息');
+
+// 信息日志
+Logger.info('MODULE', '重要信息');
+
+// 调试日志
+Logger.debug('MODULE', '调试信息');
+
+// 成功日志
+Logger.success('MODULE', '操作成功');
+```
+
+### 模块分类
+
+使用预定义的模块图标：
+- `SYSTEM` 🚀 - 系统启动、初始化
+- `LAYOUT` 🏗️ - 布局系统
+- `HEADER` 📋 - 头部组件
+- `MENU` 📱 - 菜单系统
+- `DATA` 📊 - 数据处理
+- `STYLE` 🎨 - 样式处理
+- `ERROR` ❌ - 错误信息
+
+### 日志级别
+
+```javascript
+// 设置日志级别（生产环境建议设为 INFO）
+Logger.setLevel(LOG_LEVELS.INFO);
+```
+
+- `ERROR` (0) - 只显示错误
+- `WARN` (1) - 显示警告和错误
+- `INFO` (2) - 显示信息、警告和错误
+- `DEBUG` (3) - 显示所有日志
 
 ## 添加新模块
 
