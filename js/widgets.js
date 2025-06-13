@@ -26,15 +26,14 @@ function initializePreviews(selector, isPinned) {
         const previews = JSON.parse(previewsDataStr);
         if (!Array.isArray(previews) || previews.length === 0) return;
 
-        // 根据是否置顶设置不同的样式
-        let containerClass = 'grid grid-cols-1 md:grid-cols-2 gap-12 mt-12 px-4 md:px-8 lg:px-12 w-full max-w-screen-xl mx-auto';
+        // 所有页面都使用与header一致的双重padding策略：container + px-4 sm:px-6 lg:px-8
+        let containerClass = 'container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 mt-12';
         let itemClass = 'preview-item hover:scale-105 transition-transform duration-300 ease-in-out';
         let iframeClass = 'preview-iframe w-full';
         let iframeHeight = '400px';
 
-        // 置顶文章的特殊处理
+        // 置顶文章的特殊处理 - 移除宽度限制，保持与普通文章一致的宽度
         if (isPinned) {
-            containerClass = 'grid grid-cols-1 md:grid-cols-2 gap-12 mt-12 px-4 md:px-8 lg:px-12 w-full max-w-screen-xl mx-auto';
             itemClass = 'preview-item pinned-preview-item hover:scale-105 transition-transform duration-300 ease-in-out';
             iframeClass = 'preview-iframe w-full pinned-iframe';
             iframeHeight = '450px';
@@ -328,13 +327,13 @@ function initializeArticleCards() {
 // 初始化所有小部件
 function initializeWidgets() {
     Logger.info('WIDGET', '开始初始化UI小部件');
-    
+
     // 初始化iframe预览组件
     initializeIframePreviews();
-    
+
     // 初始化文章卡片组件
     initializeArticleCards();
-    
+
     Logger.success('WIDGET', 'UI小部件初始化完成');
 }
 

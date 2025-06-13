@@ -39,14 +39,37 @@
 
     console.log('🚀 开始加载JavaScript模块系统...');
     
+    // 检测当前页面类型
+    const currentPath = window.location.pathname;
+    const isHomepage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/docs/'));
+    const isTagsPage = currentPath.includes('/docs/tags/');
+
+    console.log('🔍 页面检测信息:', {
+        currentPath,
+        isHomepage,
+        isTagsPage
+    });
+
     // 定义需要加载的模块列表（按依赖顺序）
-    const modules = [
-        'logger.js',     // 日志系统（最基础，其他模块都会使用）
-        'utils.js',      // 工具函数（基础工具，其他模块可能依赖）
-        'core.js',       // 核心系统（元数据管理、路径处理）
-        'layout.js',     // 布局组件（header、footer、article-meta）
-        'widgets.js'     // UI小部件（iframe预览、文章卡片）
+    const coreModules = [
+        'logger.js',           // 日志系统（最基础，其他模块都会使用）
+        'utils.js',            // 工具函数（基础工具，其他模块可能依赖）
+        'core.js',             // 核心系统（元数据管理、路径处理）
+        'shared/articles.js',  // 共享文章管理逻辑
+        'shared/pagination.js', // 共享分页逻辑
+        'layout.js',           // 布局组件（header、footer、article-meta）
+        'widgets.js'           // UI小部件（iframe预览、文章卡片）
     ];
+
+    // 根据页面类型添加特定模块
+    const pageModules = [];
+    if (isHomepage) {
+        pageModules.push('pages/homepage.js');
+    } else if (isTagsPage) {
+        pageModules.push('pages/tags.js');
+    }
+
+    const modules = [...coreModules, ...pageModules];
     
     // 获取当前脚本的基础路径
     function getBasePath() {
@@ -86,7 +109,7 @@
             for (const module of modules) {
                 await loadScript(module);
             }
-            Logger.success('SYSTEM', '所有JavaScript模块加载完成');
+            Logger.success('SYSTEM', `所有JavaScript模块加载完成 - 页面类型: ${isHomepage ? '首页' : isTagsPage ? '标签页' : '其他'}`);
 
             // 清除加载中标志
             window.top.moduleSystemLoading = false;
@@ -124,11 +147,6 @@
         window.top.systemInitialized = true;
 
         try {
-            // 初始化核心系统（如果存在）
-            if (typeof window.initializeSystem === 'function') {
-                window.initializeSystem();
-            }
-
             // 初始化布局组件（如果存在）
             if (typeof window.initializeLayout === 'function') {
                 window.initializeLayout();
@@ -139,7 +157,9 @@
                 window.initializeWidgets();
             }
 
-            Logger.success('SYSTEM', '系统初始化完成');
+            Logger.success('SYSTEM', `系统初始化完成 - 页面类型: ${isHomepage ? '首页' : isTagsPage ? '标签页' : '其他'}`);
+
+            // 页面特定的模块会自动初始化，无需在这里调用
 
         } catch (error) {
             Logger.error('SYSTEM', '系统初始化过程中出现错误', error);

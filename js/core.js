@@ -58,6 +58,11 @@ function getMetadataPath() {
         Logger.debug('PATH', '检测到 timeline 目录，使用相对路径');
         return '../../cache/metadata.json';
     }
+    // 如果在 docs/tags 目录下，使用 ../../cache/metadata.json
+    else if (currentPath.includes('docs/tags/')) {
+        Logger.debug('PATH', '检测到 tags 目录，使用相对路径');
+        return '../../cache/metadata.json';
+    }
     // 如果在 docs 目录下，使用 ../cache/metadata.json
     else if (currentPath.includes('docs/')) {
         Logger.debug('PATH', '检测到 docs 目录，使用相对路径');

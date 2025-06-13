@@ -216,7 +216,7 @@ function renderHomepageHeader(currentPath, isRoot) {
 
     // 设置导航激活状态 - 改进逻辑，确保所有页面都能正确高亮
     let homeClass = '';
-    let aiClass = '';
+    let tagsClass = '';
     let personalClass = '';
     let familyClass = '';
     let workClass = '';
@@ -224,8 +224,8 @@ function renderHomepageHeader(currentPath, isRoot) {
     let learnClass = '';
 
     // 判断当前页面类型并设置对应的激活状态
-    if (currentPath.includes('docs/ai/')) {
-        aiClass = 'active';
+    if (currentPath.includes('docs/tags/')) {
+        tagsClass = 'active';
     } else if (currentPath.includes('docs/personal/')) {
         personalClass = 'active';
     } else if (currentPath.includes('docs/family/')) {
@@ -245,7 +245,7 @@ function renderHomepageHeader(currentPath, isRoot) {
     Logger.debug('HEADER', `当前路径: ${currentPath}, 前缀: ${prefix}`);
     Logger.debug('HEADER', '导航激活状态', {
         home: homeClass,
-        ai: aiClass,
+        tags: tagsClass,
         personal: personalClass,
         family: familyClass,
         work: workClass,
@@ -255,7 +255,7 @@ function renderHomepageHeader(currentPath, isRoot) {
 
     // 生成绝对路径的链接
     const homeLink = `${prefix}index.html`;
-    const aiLink = `${prefix}docs/ai/index.html`;
+    const tagsLink = `${prefix}docs/tags/index.html`;
     const personalLink = `${prefix}docs/personal/index.html`;
     const familyLink = `${prefix}docs/family/index.html`;
     const workLink = `${prefix}docs/work/index.html`;
@@ -275,7 +275,7 @@ function renderHomepageHeader(currentPath, isRoot) {
                 <!-- 桌面端导航 -->
                 <nav class="hidden md:flex space-x-6">
                     <a href="${homeLink}" class="nav-link ${homeClass}">首页</a>
-                    <a href="${aiLink}" class="nav-link ${aiClass}">AI</a>
+                    <a href="${tagsLink}" class="nav-link ${tagsClass}">标签</a>
                     <a href="${personalLink}" class="nav-link ${personalClass}">个人</a>
                     <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
                     <a href="${workLink}" class="nav-link ${workClass}">工作</a>
@@ -298,7 +298,7 @@ function renderHomepageHeader(currentPath, isRoot) {
     `;
 
     // 创建独立的移动端菜单（在header外部）
-    createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass, learnClass);
+    createIndependentMobileMenu(homeLink, tagsLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, tagsClass, personalClass, familyClass, workClass, socialClass, learnClass);
 
     // 添加移动端菜单交互
     setTimeout(() => {
@@ -310,7 +310,7 @@ function renderHomepageHeader(currentPath, isRoot) {
 }
 
 // 创建独立的移动端菜单
-function createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass, learnClass) {
+function createIndependentMobileMenu(homeLink, tagsLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, tagsClass, personalClass, familyClass, workClass, socialClass, learnClass) {
     // 检查是否已存在移动端菜单
     let existingMenu = document.getElementById('mobile-menu');
     if (existingMenu) {
@@ -326,7 +326,7 @@ function createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink,
         <div class="mobile-menu-container glass-effect mx-4 mt-2 mb-4 rounded-2xl shadow-lg overflow-hidden">
             <div class="px-4 py-3 space-y-1">
                 <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
-                <a href="${aiLink}" class="mobile-nav-link ${aiClass}">AI</a>
+                <a href="${tagsLink}" class="mobile-nav-link ${tagsClass}">标签</a>
                 <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
                 <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
                 <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
