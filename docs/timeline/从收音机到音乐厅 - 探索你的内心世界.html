@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从收音机到音乐厅 - 探索你的内心世界</title>
+    
+    <!-- TailwindCSS 3.4.1 via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome 6.5.1 via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* 自定义字体与全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #0c0a1a; /* 深邃的紫黑色背景 */
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        /* 核心背景：微妙的、模糊的彩色渐变 */
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(255, 115, 133, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(90, 135, 255, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(218, 130, 255, 0.15) 0%, transparent 30%);
+            animation: subtle-breathing 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes subtle-breathing {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* 玻璃拟物面板基础样式 */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2rem; /* 32px */
+            transition: all 0.3s ease;
+        }
+
+        /* 全息彩虹玻璃按钮 */
+        .holographic-glass {
+            background-image: linear-gradient(135deg, rgba(236, 72, 153, 0.5), rgba(168, 85, 247, 0.5), rgba(59, 130, 246, 0.5));
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem;
+            transition: all 0.3s ease;
+        }
+        .holographic-glass:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+        }
+        
+        /* 科技感高亮色透明度渐变 */
+        .highlight-orange-gradient {
+            background: linear-gradient(90deg, rgba(249, 115, 22, 0.7), rgba(249, 115, 22, 0));
+        }
+        .highlight-blue-gradient {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.7), rgba(59, 130, 246, 0));
+        }
+
+        /* 页面进入动效 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="background-gradient"></div>
+
+    <main class="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-20 py-24 md:py-32">
+        
+        <!-- 网格布局容器 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+            <!-- 1. 开篇：核心提问 -->
+            <div class="lg:col-span-12 text-center reveal">
+                <h1 class="text-6xl sm:text-8xl lg:text-[10rem] font-black tracking-tighter leading-none">你的心</h1>
+                <p class="mt-4 text-2xl sm:text-3xl lg:text-4xl text-neutral-300 font-light">是喋喋不休的收音机，还是静水流深的音乐厅？</p>
+                <p class="mt-2 text-lg text-neutral-400 font-light tracking-widest">MIND AS A RADIO / OR A CONCERT HALL</p>
+            </div>
+
+            <!-- 2. 问题陈述：收音机 -->
+            <div class="lg:col-span-7 mt-20 reveal glass-panel p-8 md:p-10">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-tower-broadcast text-3xl text-orange-400"></i>
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold">老式收音机</h2>
+                        <p class="text-neutral-400">THE CHATTERING RADIO</p>
+                    </div>
+                </div>
+                <p class="mt-6 text-lg text-neutral-200">
+                    旋钮从未停歇，在无数个频道间仓皇跳跃。昨天的懊恼，明天的焦虑，他人的期待，瞬间的欲望…所有声音挤在一个频段上，失真、串扰，汇成一片焦灼的背景噪音。
+                </p>
+                <div class="mt-8">
+                    <div class="flex items-center gap-3 text-neutral-300 mb-4">
+                        <i class="fa-solid fa-circle-exclamation text-orange-400"></i><span>失真 / DISTORTION</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-neutral-300">
+                        <i class="fa-solid fa-sliders text-orange-400"></i><span>串扰 / CROSSTALK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2.1 收音机可视化 -->
+            <div class="lg:col-span-5 mt-20 reveal glass-panel p-8 flex flex-col justify-center items-center">
+                <h3 class="text-6xl md:text-8xl font-black text-orange-400">99.9<span class="text-4xl">%</span></h3>
+                <p class="text-neutral-300 mt-2">焦灼背景噪音</p>
+                <p class="text-neutral-500 text-sm">ANXIETY BACKGROUND NOISE</p>
+                <div class="w-full h-24 mt-4">
+                     <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
+                        <path d="M0 50 L20 80 L40 30 L60 90 L80 20 L100 60 L120 40 L140 75 L160 25 L180 85 L200 50 L220 95 L240 15 L260 70 L280 45 L300 65" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="w-full h-1 mt-1 highlight-orange-gradient"></div>
+            </div>
+
+            <!-- 3. 解决方案：静音按钮 -->
+            <div class="lg:col-span-12 mt-20 reveal holographic-glass p-12 md:p-16 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <div>
+                    <h2 class="text-4xl md:text-6xl font-bold">它只是递给你一个按钮</h2>
+                    <p class="mt-2 text-xl md:text-2xl text-neutral-200 font-light">一个你生来就持有，却从未真正按下的按钮。</p>
+                    <p class="mt-1 text-neutral-400 tracking-widest">A BUTTON YOU'VE ALWAYS HAD</p>
+                </div>
+                <div class="mt-8 md:mt-0 flex flex-col items-center">
+                    <i class="fa-solid fa-volume-xmark text-8xl md:text-9xl text-white"></i>
+                    <p class="mt-4 text-4xl font-black tracking-wider">静音</p>
+                </div>
+            </div>
+
+            <!-- 4. 转变发生：音乐厅 -->
+            <div class="lg:col-span-5 mt-20 reveal glass-panel p-8 flex flex-col justify-center items-center">
+                <h3 class="text-6xl md:text-8xl font-black text-blue-400">∞</h3>
+                <p class="text-neutral-300 mt-2">内在背景音乐</p>
+                <p class="text-neutral-500 text-sm">LIFE'S OWN SOUNDTRACK</p>
+                 <div class="w-full h-24 mt-4">
+                    <svg width="100%" height="100%" viewBox="0 0 300 100" preserveAspectRatio="none">
+                        <path d="M0 50 Q 75 10, 150 50 T 300 50" fill="none" stroke="#60a5fa" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="w-full h-1 mt-1 highlight-blue-gradient"></div>
+            </div>
+
+            <!-- 4.1 音乐厅描述 -->
+            <div class="lg:col-span-7 mt-20 reveal glass-panel p-8 md:p-10">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-music text-3xl text-blue-400"></i>
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold">内在音乐厅</h2>
+                        <p class="text-neutral-400">THE INNER CONCERT HALL</p>
+                    </div>
+                </div>
+                <p class="mt-6 text-lg text-neutral-200">
+                    当喧嚣退潮，寂静第一次如星空般降临。你才第一次听见，那片噪音之下，生命自带的背景音乐。它始终在场，是平和本身。
+                </p>
+                <div class="mt-8 space-y-4">
+                    <div class="flex items-center gap-3 text-neutral-300">
+                        <i class="fa-solid fa-seedling text-blue-400"></i><span>没有旋律，却深植喜悦 / ROOTED IN JOY</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-neutral-300">
+                        <i class="fa-solid fa-star-of-life text-blue-400"></i><span>没有歌词，却充满安详 / FILLED WITH PEACE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 新的身份：主人 -->
+            <div class="lg:col-span-12 mt-28 reveal text-center">
+                <p class="text-xl md:text-2xl text-neutral-400 font-light">从此，你不再是那个被动的信息接收器</p>
+                <h2 class="text-7xl sm:text-9xl lg:text-[12rem] font-black tracking-tighter leading-none my-2">
+                    你成了<span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-sky-400">主人</span>
+                </h2>
+                <p class="text-xl md:text-2xl text-neutral-300 font-light">聆听世界，却不再被世界淹没。</p>
+                <p class="mt-2 text-neutral-500 tracking-widest">THE MASTER OF YOUR INNER HALL</p>
+            </div>
+            
+            <!-- 6. 结论升华 -->
+            <div class="lg:col-span-12 mt-28 reveal glass-panel p-12 md:p-16 text-center">
+                <i class="fa-solid fa-infinity text-5xl text-fuchsia-400"></i>
+                <h3 class="mt-6 text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
+                    穿越喧闹，去拜访你内在最深邃的寂静，并发现——
+                </h3>
+                <div class="mt-12">
+                    <p class="text-5xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400">
+                        繁花盛开，音乐正起。
+                    </p>
+                    <p class="mt-4 text-neutral-400 text-lg tracking-widest">WHERE FLOWERS BLOOM & MUSIC PLAYS</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // 滚动可视区域动画
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // 可选：一旦可见就停止观察，以优化性能
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, {
+            threshold: 0.1 // 元素进入视窗10%时触发
+        });
+
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

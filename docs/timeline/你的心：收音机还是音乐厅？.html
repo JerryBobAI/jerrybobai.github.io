@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你的心：收音机还是音乐厅？</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- Font Awesome via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* 自定义字体和全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            background-image: 
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+        }
+        
+        /* 核心标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Chart.js 图表容器需要明确的宽高 */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        /* 勾线风格图标 */
+        .icon-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid currentColor;
+            color: #3b82f6; /* System Blue */
+        }
+        .icon-outline i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <!-- Hybrid Grid 容器 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- 1. Hero Section: 核心问题 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-4 p-8 sm:p-12 text-center flex flex-col justify-center items-center min-h-[60vh] lg:min-h-[70vh]">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-4">THE INNER SANCTUARY</p>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight">
+                    你的心，是喋喋不休的收音机，<br class="hidden sm:block">还是<span class="holographic-text">静水流深</span>的音乐厅？
+                </h1>
+            </div>
+
+            <!-- 2. The Problem: 收音机 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-lg flex flex-col">
+                <div class="flex items-center gap-4">
+                    <div class="icon-outline">
+                       <i class="fa-solid fa-tower-broadcast"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-blue-500">一台老式收音机</h2>
+                        <p class="text-sm text-gray-500">AN OLD-FASHIONED RADIO</p>
+                    </div>
+                </div>
+                <p class="mt-4 text-gray-600">旋钮从未停歇，在无数个频道间仓皇跳跃。所有声音都挤在一个频段上，失真、串扰，汇成一片焦灼的背景噪音。</p>
+                <div class="flex-grow flex items-center justify-center mt-6">
+                    <span class="text-8xl md:text-9xl font-black text-gray-300 select-none" style="text-shadow: 2px 2px 0px white, -2px -2px 0px white;">噪 音</span>
+                </div>
+            </div>
+
+            <!-- 3. The Noise: 数据可视化 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-lg">
+                <h3 class="text-xl font-bold">我们活在这片嘈杂里太久</h3>
+                <p class="text-sm text-gray-500 mb-4">...久到以为，自己就是这片噪音。</p>
+                <div class="chart-container">
+                    <canvas id="noiseChart"></canvas>
+                </div>
+                <p class="text-xs text-center text-gray-400 mt-2">可视化：思绪的串扰</p>
+            </div>
+
+            <!-- 4. The Solution: 静音按钮 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-4 bg-green-500 text-white rounded-3xl p-8 shadow-lg flex flex-col md:flex-row items-center justify-between gap-8 transition-transform duration-300 hover:scale-[1.02]">
+                <div class="md:w-2/3">
+                    <h2 class="text-3xl lg:text-4xl font-bold">并非要你换台更昂贵的机器。</h2>
+                    <p class="mt-2 opacity-80">所谓修行，只是递给你一个，你生来就持有，却从未真正按下的按钮。</p>
+                </div>
+                <div class="flex-shrink-0 flex items-center justify-center bg-white/20 w-48 h-48 rounded-full border-4 border-white cursor-pointer group">
+                    <span class="text-5xl font-black text-white group-hover:scale-110 transition-transform">静音</span>
+                </div>
+            </div>
+            
+            <!-- 5. The Revelation: 寂静降临 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-3 bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-lg">
+                <h2 class="text-2xl font-bold text-blue-500">当喧嚣退潮，寂静如星空般降临</h2>
+                <p class="text-sm text-gray-500 mb-4">WHEN THE NOISE RECEDES</p>
+                <p class="text-gray-600">你才第一次听见，那片噪音之下，生命自带的背景音乐。它没有歌词，却充满<span class="font-bold text-blue-500">安详</span>。它没有旋律，却深植<span class="font-bold text-blue-500">喜悦</span>。它始终在场，是平和本身。</p>
+                <div class="chart-container mt-4">
+                    <canvas id="serenityChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- 6. The Transformation: 成为主人 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-1 bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-lg flex flex-col justify-center">
+                <div class="icon-outline mb-4">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <h2 class="text-2xl font-bold">成为音乐厅的主人</h2>
+                <p class="text-sm text-gray-500 mb-4">MASTER OF THE HALL</p>
+                <p class="text-gray-600">你可以选择让思想的交响乐奏响，也可以让它归于寂静。你聆听世界，却不再被世界淹没。</p>
+            </div>
+            
+            <!-- 7. Final Insight: 终极旅程 -->
+            <div class="reveal col-span-1 md:col-span-2 lg:col-span-4 bg-gray-800 text-white rounded-3xl p-8 sm:p-12 shadow-2xl text-center flex flex-col items-center">
+                 <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mb-6"></div>
+                <p class="text-xl lg:text-2xl font-light max-w-4xl">
+                    从收音机到音乐厅的旅程，并非从喧闹走向死寂。
+                </p>
+                <p class="text-3xl lg:text-4xl font-bold mt-4 max-w-4xl holographic-text">
+                    而是穿越喧闹，去拜访你内在最深邃的寂静，并发现——
+                </p>
+                <div class="mt-8 text-2xl lg:text-3xl font-semibold flex flex-col sm:flex-row gap-4 sm:gap-8 items-center">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-fan text-green-400 text-4xl animate-spin" style="animation-duration: 5s;"></i>
+                        <span>繁花盛开</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-music text-pink-400 text-4xl"></i>
+                        <span>音乐正起</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // 滚动入场动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // 添加一个小的延迟，让元素逐个出现
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, {
+                threshold: 0.1 // 元素可见10%时触发
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+            
+            // --- Chart.js 初始化 ---
+
+            // 1. 噪音图表
+            const noiseCtx = document.getElementById('noiseChart');
+            if(noiseCtx) {
+                new Chart(noiseCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['昨天', '...', '他人', '...', '欲望', '...', '明天'],
+                        datasets: [{
+                            label: '懊恼',
+                            data: [65, 40, 80, 55, 75, 45, 60],
+                            borderColor: 'rgba(251, 146, 60, 0.6)', // pastel orange
+                            tension: 0.4,
+                            borderWidth: 2,
+                        }, {
+                            label: '焦虑',
+                            data: [35, 60, 30, 81, 46, 75, 40],
+                            borderColor: 'rgba(244, 114, 182, 0.6)', // pastel pink
+                            tension: 0.4,
+                            borderWidth: 2,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        scales: {
+                            y: { display: false },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#9ca3af' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 2. 宁静图表
+            const serenityCtx = document.getElementById('serenityChart');
+            if(serenityCtx) {
+                new Chart(serenityCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['', '', '', '', '', '', ''],
+                        datasets: [{
+                            label: '平和',
+                            data: [40, 45, 42, 50, 48, 55, 50],
+                            borderColor: 'rgba(59, 130, 246, 0.7)', // System Blue
+                            fill: true,
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)', // 高亮色透明度渐变
+                            tension: 0.5, // 非常平滑的曲线
+                            pointRadius: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false }
+                        },
+                        scales: {
+                            y: { display: false, min: 0, max: 100 },
+                            x: { display: false }
+                        },
+                        animation: {
+                           duration: 2000
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

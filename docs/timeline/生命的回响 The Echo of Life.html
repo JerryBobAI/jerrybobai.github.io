@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命的回响 | The Echo of Life</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* 自定义字体与全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        
+        html.dark body {
+            background-color: #111;
+            color: #eee;
+        }
+
+        /* 蚀刻玻璃文字效果 */
+        .text-etched {
+            /* 浅色模式: 微阴影模拟深度，微高光模拟边缘 */
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 -0.5px 0.5px rgba(255, 255, 255, 0.5);
+        }
+        .dark .text-etched {
+            /* 深色模式: 阴影变浅，白色"描边"高光更明显 */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 0 1.5px rgba(255, 255, 255, 0.6);
+        }
+
+        /* 动态光学特性高亮文字 */
+        .text-highlight-dynamic {
+            background-image: linear-gradient(90deg, 
+                #38bdf8, /* sky-400 */
+                #818cf8, /* indigo-400 */
+                #e879f9, /* fuchsia-400 */
+                #38bdf8
+            );
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: text-flow 8s linear infinite;
+        }
+
+        @keyframes text-flow {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        /* 卡片/面板基础样式 (模拟玻璃) */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.65); /* 浅色模式 65% 透明度 */
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dark .glass-panel {
+            background-color: rgba(28, 28, 30, 0.35); /* 深色模式 35% 透明度 + 灰黑基底 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* SVG路径绘制动画 */
+        .path-draw {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 5s ease-in-out forwards;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        /* 元素入场动画 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 动态背景 Canvas -->
+    <canvas id="dynamic-bg" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+    
+    <!-- 暗黑模式切换按钮 -->
+    <button id="theme-toggle" class="fixed top-5 right-5 z-50 h-10 w-10 glass-panel rounded-full flex items-center justify-center text-lg">
+        <i class="fa-solid fa-sun block dark:hidden"></i>
+        <i class="fa-solid fa-moon hidden dark:block"></i>
+    </button>
+
+    <main class="min-h-screen w-full p-6 sm:p-12 lg:p-16 2xl:p-24 flex flex-col items-center justify-center overflow-hidden">
+        
+        <div class="w-full max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8">
+            
+            <!-- Part 1: 核心概念 - 回响 -->
+            <div class="lg:col-span-5 flex flex-col justify-center items-center text-center fade-in-up">
+                <p class="text-etched text-lg md:text-xl font-light uppercase tracking-widest mb-4">THE MEANING OF LIFE</p>
+                <h1 class="text-etched text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                    生命的意义，或许就是用你短暂的一生，<br class="hidden sm:block">
+                    在这寂静的宇宙中，制造一场值得被听见的回响。
+                </h1>
+                <div class="relative mt-12">
+                    <h2 class="text-8xl md:text-9xl lg:text-[180px] xl:text-[220px] font-black text-highlight-dynamic">
+                        回响
+                    </h2>
+                    <p class="absolute -bottom-4 right-0 text-etched font-light text-xl">ECHO</p>
+                </div>
+            </div>
+
+            <!-- Part 2: 回响的构成 -->
+            <div class="lg:col-span-5 mt-16 lg:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="glass-panel rounded-3xl p-8 flex flex-col items-center text-center fade-in-up" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 mb-6 rounded-2xl flex items-center justify-center bg-sky-400/20 text-sky-400">
+                        <i class="fa-solid fa-shoe-prints fa-2x -rotate-45"></i>
+                    </div>
+                    <h3 class="text-4xl font-bold text-etched">来过</h3>
+                    <p class="mt-2 text-etched/80 font-light text-lg">LIVED</p>
+                    <p class="mt-4 text-etched/60">证明你来过，<br>留下独特的印记。</p>
+                </div>
+                
+                <div class="glass-panel rounded-3xl p-8 flex flex-col items-center text-center fade-in-up" style="transition-delay: 400ms;">
+                    <div class="w-16 h-16 mb-6 rounded-2xl flex items-center justify-center bg-indigo-400/20 text-indigo-400">
+                        <i class="fa-solid fa-heart fa-2x"></i>
+                    </div>
+                    <h3 class="text-4xl font-bold text-etched">爱过</h3>
+                    <p class="mt-2 text-etched/80 font-light text-lg">LOVED</p>
+                    <p class="mt-4 text-etched/60">体验深刻的情感，<br>建立生命的连接。</p>
+                </div>
+
+                <div class="glass-panel rounded-3xl p-8 flex flex-col items-center text-center fade-in-up" style="transition-delay: 600ms;">
+                    <div class="w-16 h-16 mb-6 rounded-2xl flex items-center justify-center bg-fuchsia-400/20 text-fuchsia-400">
+                        <i class="fa-solid fa-satellite-dish fa-2x"></i>
+                    </div>
+                    <h3 class="text-4xl font-bold text-etched">共振过</h3>
+                    <p class="mt-2 text-etched/80 font-light text-lg">RESONATED</p>
+                    <p class="mt-4 text-etched/60">与万物共振，<br>成为宇宙的一部分。</p>
+                </div>
+            </div>
+
+            <!-- Part 3: 行动号召 -->
+            <div class="lg:col-span-5 mt-24 lg:mt-32 text-center fade-in-up">
+                 <p class="text-etched text-lg md:text-xl font-light uppercase tracking-widest mb-2">SO, MY FRIEND</p>
+                 <p class="text-etched text-2xl md:text-3xl font-bold mb-8">别再问意义是什么。</p>
+                 <div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 text-5xl md:text-7xl lg:text-8xl font-black">
+                     <span class="text-etched text-sky-500/80 dark:text-sky-400/90">去活</span>
+                     <span class="text-etched text-indigo-500/80 dark:text-indigo-400/90">去爱</span>
+                     <span class="text-etched text-fuchsia-500/80 dark:text-fuchsia-400/90">去犯错</span>
+                     <span class="text-etched text-emerald-500/80 dark:text-emerald-400/90">去创造</span>
+                 </div>
+                 <p class="mt-8 text-etched text-lg md:text-xl font-light uppercase tracking-widest">JUST LIVE. LOVE. FAIL. CREATE.</p>
+            </div>
+            
+            <!-- Part 4: 最终答案 - 生命足迹 -->
+            <div class="lg:col-span-5 mt-24 lg:mt-32 w-full flex flex-col items-center fade-in-up">
+                <div class="w-full relative h-48">
+                    <svg id="path-svg" class="absolute top-0 left-0 w-full h-full" viewBox="0 0 800 100" preserveAspectRatio="none">
+                        <path d="M0,50 Q100,10 200,50 T400,60 Q500,100 600,50 T800,40" fill="none" stroke="url(#path-gradient)" stroke-width="3" />
+                        <defs>
+                            <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="50%" stop-color="#818cf8" />
+                                <stop offset="100%" stop-color="#e879f9" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h3 class="text-etched text-center text-3xl md:text-4xl lg:text-5xl font-bold mt-8 max-w-4xl">
+                    答案早已写在你的每一道足迹里。
+                </h3>
+                <p class="mt-4 text-etched/80 font-light text-lg uppercase tracking-widest">THE ANSWER IS IN YOUR FOOTPRINTS</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 动态背景 Canvas 效果 ---
+        const canvas = document.getElementById('dynamic-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor(isDarkMode) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 80 + 40; // 大小不一的光球
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                const colors = isDarkMode
+                    ? ['rgba(56,189,248,0.3)', 'rgba(129,140,248,0.3)', 'rgba(232,121,249,0.3)']
+                    : ['rgba(56,189,248,0.5)', 'rgba(129,140,248,0.5)', 'rgba(232,121,249,0.5)'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < -this.size || this.x > canvas.width + this.size || this.y < -this.size || this.y > canvas.height + this.size) {
+                    // 粒子飘出屏幕后重置
+                    Object.assign(this, new Particle(document.documentElement.classList.contains('dark')));
+                    this.y = canvas.height + this.size; // 从底部进入
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.filter = 'blur(50px)'; // 强模糊制造光晕效果
+                ctx.fill();
+            }
+        }
+
+        function initParticles(isDarkMode) {
+            particles = [];
+            const particleCount = Math.floor(canvas.width / 200); // 响应式粒子数量
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(isDarkMode));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        resizeCanvas();
+        initParticles(document.documentElement.classList.contains('dark'));
+        animate();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles(document.documentElement.classList.contains('dark'));
+        });
+        
+        // --- 暗黑模式切换 ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // 初始加载时检查本地存储或系统偏好
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+            // 重新初始化粒子颜色
+            initParticles(html.classList.contains('dark'));
+        });
+
+        // --- 元素入场动画 ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // 特别处理SVG路径动画
+                    if (entry.target.id === 'path-svg') {
+                       const path = entry.target.querySelector('path');
+                       const length = path.getTotalLength();
+                       // 清除可能存在的旧样式
+                       path.style.strokeDasharray = length;
+                       path.style.strokeDashoffset = length;
+                       // 强制重绘并添加动画类
+                       path.getBoundingClientRect(); 
+                       path.classList.add('path-draw');
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+        observer.observe(document.getElementById('path-svg'));
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

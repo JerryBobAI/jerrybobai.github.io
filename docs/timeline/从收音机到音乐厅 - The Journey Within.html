@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>从收音机到音乐厅 - The Journey Within</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    
+    <!-- Font Awesome via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #fcfcfd;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        .aurora-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.2; animation: move 40s infinite alternate;
+        }
+        .blob-1 { top: -40%; left: -20%; width: 60vw; height: 60vw; background: #0c3483; animation-duration: 45s; } /* Deep Blue */
+        .blob-2 { top: 20%; right: -30%; width: 50vw; height: 50vw; background: #56ab2f; animation-duration: 30s; } /* Serene Green-Teal */
+        .blob-3 { bottom: -30%; left: 10%; width: 45vw; height: 45vw; background: #ff7e5f; animation-duration: 50s; } /* Soft Peach */
+        .blob-4 { bottom: 0%; right: 0%; width: 40vw; height: 40vw; background: #fde19a; animation-duration: 25s; } /* Pale Gold */
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(-10vw, 10vh) scale(1.2) rotate(-30deg); }
+        }
+        
+        .scroll-reveal {
+            opacity: 0; transform: translateY(50px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .mute-button-glow {
+            box-shadow: 0 0 80px 20px rgba(255, 255, 255, 0.5), 0 0 0px 0px rgba(255, 255, 255, 0.5) inset;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="aurora-background">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+        <div class="aurora-blob blob-4"></div>
+    </div>
+
+    <main class="relative z-10">
+
+        <!-- Section 1: The Choice -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal">
+                <p class="text-2xl md:text-3xl text-gray-600 mb-6">你的心，是</p>
+                <h1 class="text-6xl md:text-8xl font-black tracking-tighter">
+                    喋喋不休的<span class="text-orange-500">收音机</span>
+                </h1>
+                <p class="text-4xl md:text-6xl my-4 text-gray-500 font-light">还是</p>
+                <h1 class="text-6xl md:text-8xl font-black tracking-tighter">
+                    静水流深的<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">音乐厅</span>？
+                </h1>
+            </div>
+        </section>
+
+        <!-- Section 2: The Radio -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal max-w-4xl">
+                <div class="text-8xl text-orange-500/80 mb-8"><i class="fa-solid fa-radio"></i></div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">一台失控的老式收音机</h2>
+                <p class="text-xl md:text-2xl text-gray-600 leading-relaxed">
+                    昨天的懊恼，明天的焦虑，他人的期待，瞬间的欲望……所有声音挤在一个频段，失真、串扰，汇成一片焦灼的<span class="font-bold">背景噪音</span>。
+                </p>
+                <p class="mt-8 text-2xl md:text-3xl text-gray-800 font-bold">我们活在这片嘈杂里太久，久到以为，自己就是这片噪音。</p>
+            </div>
+        </section>
+
+        <!-- Section 3: The Turning Point -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal max-w-4xl">
+                 <p class="text-xl md:text-2xl text-gray-500 mb-8 tracking-widest uppercase">The Path Within</p>
+                <p class="text-2xl md:text-3xl text-gray-700 leading-relaxed mb-12">
+                   而所谓修行，并非要你换一台更昂贵的机器。它只是递给你一个，你生来就持有，却从未真正按下的按钮——
+                </p>
+                <div class="relative inline-flex items-center justify-center">
+                    <div class="w-48 h-48 md:w-60 md:h-60 bg-white/50 backdrop-blur-xl rounded-full mute-button-glow flex items-center justify-center shadow-2xl border border-white/50">
+                        <span class="text-5xl md:text-6xl font-black text-gray-800">静音</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Section 4: The Concert Hall -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal max-w-4xl">
+                <p class="text-2xl md:text-3xl text-gray-700 leading-relaxed">当喧嚣退潮，寂静第一次如星空般降临。你才第一次听见，那片噪音之下，<span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500">生命自带的背景音乐</span>。</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center mt-16">
+                    <div class="p-6 bg-white/20 backdrop-blur-lg rounded-2xl border border-white/20">
+                        <h3 class="font-bold text-xl mb-2">无词之歌</h3>
+                        <p class="text-gray-600">却充满安详</p>
+                    </div>
+                     <div class="p-6 bg-white/20 backdrop-blur-lg rounded-2xl border border-white/20">
+                        <h3 class="font-bold text-xl mb-2">无律之曲</h3>
+                        <p class="text-gray-600">却深植喜悦</p>
+                    </div>
+                     <div class="p-6 bg-white/20 backdrop-blur-lg rounded-2xl border border-white/20">
+                        <h3 class="font-bold text-xl mb-2">永恒在场</h3>
+                        <p class="text-gray-600">是平和本身</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: The Master -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal max-w-4xl">
+                 <div class="text-7xl text-gray-800 mb-8"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h2 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-8">
+                    你成了这座<br>内在音乐厅的主人
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-600">
+                    你可以选择让思想的交响乐奏响，也可以让它归于寂静。你聆听世界，却不再被世界淹没。
+                </p>
+            </div>
+        </section>
+        
+        <!-- Section 6: The Journey -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal max-w-4xl">
+                <p class="text-2xl md:text-3xl text-gray-700 leading-relaxed mb-12">
+                    从<span class="font-bold text-orange-500">收音机</span>到<span class="font-bold text-blue-500">音乐厅</span>的旅程，<br>并非从喧闹走向死寂。
+                </p>
+                <!-- SVG path animation -->
+                <svg class="w-64 h-32 mx-auto" viewBox="0 0 250 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 80 C 20 20, 40 100, 50 70 S 70 0, 90 50 C 110 100, 130 0, 150 50 C 175 125, 200 25, 240 50" stroke="#fb923c" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M10 80 C 40 50, 80 50, 150 50 C 200 50, 220 50, 240 50" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <p class="text-3xl md:text-4xl lg:text-5xl font-bold mt-12">
+                    而是穿越喧闹，<br>去拜访你内在最深邃的寂静。
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 7: The Vista -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal">
+                <p class="text-xl md:text-2xl text-gray-500 mb-8 tracking-widest uppercase">And Discover...</p>
+                <h2 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight">
+                    那里，繁花盛开
+                </h2>
+                <h1 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-amber-400 mt-4">
+                    音乐正起
+                </h1>
+                 <div class="text-6xl text-pink-400 mt-16 opacity-80">
+                    <i class="fa-solid fa-fan"></i>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2 });
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

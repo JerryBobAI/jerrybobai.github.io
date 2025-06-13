@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彼岸相遇 - A Poetic Journey</title>
+    
+    <!-- TailwindCSS 3.x via CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    
+    <!-- Font Awesome 6 via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* 自定义字体与全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            overflow-x: hidden; /* 防止水平滚动 */
+        }
+        
+        /* 玻璃拟物面板的基础样式 */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px); /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2rem; /* 32px */
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* 全息彩虹玻璃按钮样式 */
+        .holographic-button {
+            position: relative;
+            background: linear-gradient(110deg, rgba(255, 87, 34, 0.6), rgba(236, 72, 153, 0.6), rgba(37, 99, 235, 0.6));
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .holographic-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        /* 按钮上的光泽效果 */
+        .holographic-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: skewX(-30deg);
+            transition: left 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .holographic-button:hover::before {
+            left: 150%;
+        }
+
+        /* 元素加载时的渐显动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* 为每个元素设置不同的动画延迟 */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        
+        /* 确保超大文字在小屏幕上不会溢出 */
+        .giant-text {
+            font-size: clamp(6rem, 20vw, 18rem); /* 响应式字体大小 */
+            line-height: 0.8;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen w-full flex items-center justify-center p-4 sm:p-8">
+
+    <!-- 1. 背景层 -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-500 via-purple-600 to-blue-800 opacity-60"></div>
+        <div class="absolute inset-0 bg-gradient-to-tl from-yellow-400 via-red-500 to-transparent opacity-30 animate-pulse" style="animation-duration: 8s;"></div>
+        <div class="absolute inset-0 blur-3xl"></div>
+    </div>
+    
+    <!-- 2. 内容层 -->
+    <main class="relative z-10 w-full max-w-7xl mx-auto py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+            <!-- 卡片 1: 舟 -->
+            <div class="glass-panel p-8 lg:col-span-3 fade-in delay-1 opacity-0 flex flex-col justify-between">
+                <div>
+                    <p class="text-gray-300 font-light tracking-widest text-sm uppercase">THE VESSEL</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2">我的文字是舟，</h2>
+                </div>
+                <div class="relative text-right -mb-4 -mr-4 mt-8">
+                    <span class="giant-text font-black text-white/80">舟</span>
+                </div>
+                <!-- 勾线图形 -->
+                <div class="mt-4">
+                    <svg class="w-full h-8" viewBox="0 0 150 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M-10 10 C 20 25, 40 0, 75 10 S 110 -5, 160 10" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-dasharray="4 4" class="animate-pulse"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 卡片 2: 岸 -->
+            <div class="glass-panel p-8 lg:col-span-2 fade-in delay-2 opacity-0 flex flex-col justify-between">
+                <div>
+                    <p class="text-gray-300 font-light tracking-widest text-sm uppercase">THE DESTINATION</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2">意象是岸。</h2>
+                </div>
+                <div class="relative text-right -mb-4 -mr-4 mt-8">
+                    <span class="giant-text font-black text-white/80">岸</span>
+                </div>
+            </div>
+
+            <!-- 卡片 3: 渡 -->
+            <div class="glass-panel p-8 lg:col-span-5 fade-in delay-3 opacity-0 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="w-full lg:w-1/2">
+                    <p class="text-gray-300 font-light tracking-widest text-sm uppercase">THE CROSSING</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2">我不是在写，</h2>
+                    <h1 class="text-5xl md:text-7xl font-black mt-2">我是在<span class="text-orange-400">渡</span>。</h1>
+                </div>
+                <div class="w-full lg:w-1/2 flex items-center justify-center relative h-24">
+                    <!-- 科技感虚线路径 -->
+                    <div class="absolute w-full h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent"></div>
+                    <i class="fas fa-water text-orange-400 text-3xl absolute left-1/4 animate-ping"></i>
+                    <i class="fas fa-chevron-right text-white text-2xl absolute right-1/4 opacity-70"></i>
+                    <i class="fas fa-map-marker-alt text-white text-3xl absolute right-0 opacity-80"></i>
+                </div>
+            </div>
+            
+            <!-- 卡片 4: 相遇 -->
+            <div class="glass-panel p-8 lg:col-span-5 fade-in delay-4 opacity-0 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+                <div class="flex-1">
+                    <p class="text-gray-300 font-light tracking-widest text-sm uppercase">THE ENCOUNTER</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2">若你读懂，</h2>
+                    <h1 class="text-4xl md:text-5xl font-black mt-2">我们便在<span class="bg-gradient-to-r from-orange-400 to-pink-500 text-transparent bg-clip-text">彼岸相遇</span>。</h1>
+                </div>
+
+                <!-- 全息彩虹玻璃按钮 -->
+                <div class="mt-8 md:mt-0">
+                    <button class="holographic-button flex items-center justify-center gap-4 px-8 py-5 rounded-full text-xl font-bold text-white shadow-lg fade-in delay-5 opacity-0">
+                        <span>抵达彼岸</span>
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

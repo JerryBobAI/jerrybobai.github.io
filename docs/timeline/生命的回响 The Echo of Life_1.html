@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命的回响 | The Echo of Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #0c0a09; /* Fallback background */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* 自定义全息彩虹动画 */
+        @keyframes holographic {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .holographic-btn {
+            background: linear-gradient(-45deg, #ff00ff, #00ffff, #ffff00, #ff0000, #ff00ff, #00ffff);
+            background-size: 400% 400%;
+            animation: holographic 10s ease infinite;
+        }
+
+        /* Chart.js 工具提示样式 */
+        .chartjs-tooltip {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 8px;
+            color: white;
+            padding: 8px 12px;
+            font-family: 'Noto Sans SC', sans-serif;
+            pointer-events: none;
+            transition: all .2s ease;
+        }
+
+        /* 为超大标题添加描边效果，增强可读性 */
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full">
+
+    <!-- 动态高斯模糊背景 -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-20%] h-[40rem] w-[40rem] rounded-full bg-gradient-to-br from-purple-500/80 to-pink-500/80 blur-3xl opacity-40 animate-[spin_40s_linear_infinite]"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] h-[50rem] w-[50rem] rounded-full bg-gradient-to-br from-cyan-400/70 to-blue-600/70 blur-3xl opacity-30 animate-[spin_50s_linear_infinite_reverse]"></div>
+        <div class="absolute top-[20%] right-[10%] h-[30rem] w-[30rem] rounded-full bg-gradient-to-br from-orange-400/60 to-yellow-300/60 blur-3xl opacity-40 animate-[spin_30s_linear_infinite]"></div>
+    </div>
+
+    <!-- 主内容容器 -->
+    <main class="container mx-auto px-6 py-16 lg:px-8 lg:py-24">
+        
+        <div class="grid grid-cols-12 gap-6 lg:gap-8">
+
+            <!-- Section 1: 核心主张 -->
+            <div class="col-span-12 p-8 lg:p-12 rounded-3xl lg:rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
+                <p class="text-lg uppercase tracking-widest text-white/70">THE MEANING OF LIFE</p>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mt-4 text-stroke">生命的意义，</h1>
+                <p class="mt-6 text-2xl md:text-4xl lg:text-5xl font-bold max-w-5xl leading-tight">
+                    或许就是用你短暂的一生，在这寂静的宇宙中，制造一场值得被听见的回响。
+                </p>
+            </div>
+
+            <!-- Section 2: 回响的构成 -->
+            <div class="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mt-6 lg:mt-8">
+                <!-- 卡片：来过 -->
+                <div class="p-8 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col items-center text-center">
+                    <i class="fa-solid fa-shoe-prints text-4xl text-white/80 transform -rotate-45"></i>
+                    <h2 class="text-3xl font-bold mt-4">来过</h2>
+                    <p class="text-white/70 mt-2">PROOF OF EXISTENCE</p>
+                    <p class="mt-4">用足迹证明你的存在。</p>
+                </div>
+                <!-- 卡片：爱过 -->
+                <div class="p-8 rounded-3xl bg-pink-500/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col items-center text-center">
+                    <i class="fa-solid fa-heart text-4xl text-white/80"></i>
+                    <h2 class="text-3xl font-bold mt-4">爱过</h2>
+                    <p class="text-white/70 mt-2">CAPACITY TO LOVE</p>
+                    <p class="mt-4">用温暖连接每颗心灵。</p>
+                </div>
+                <!-- 卡片：共振过 -->
+                <div class="p-8 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col items-center text-center">
+                     <i class="fa-solid fa-wave-square text-4xl text-white/80"></i>
+                    <h2 class="text-3xl font-bold mt-4">共振过</h2>
+                    <p class="text-white/70 mt-2">RESONANCE WITH UNIVERSE</p>
+                    <p class="mt-4">与万物同频，感受世界。</p>
+                </div>
+            </div>
+
+            <!-- Section 3: 数据化象征 - 生命回响图 -->
+            <div class="col-span-12 lg:col-span-8 mt-6 lg:mt-8 p-8 rounded-3xl lg:rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl flex flex-col">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">生命回响图谱</h3>
+                        <p class="text-white/70">YOUR LIFE'S VIBRATION</p>
+                    </div>
+                    <!-- 勾线图形化配图 -->
+                    <svg class="w-16 h-16 text-white/50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                       <path d="M10 50 C 25 20, 35 80, 50 50 S 65 20, 80 50 S 95 80, 90 50" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="mt-6 flex-grow">
+                    <canvas id="lifeEchoChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Section 4: 行动号召 -->
+            <div class="col-span-12 lg:col-span-4 mt-6 lg:mt-8 flex flex-col gap-6 lg:gap-8">
+                <div class="p-8 rounded-3xl bg-blue-500/10 backdrop-blur-xl border border-white/20 shadow-lg h-full flex flex-col justify-center">
+                    <p class="text-white/80">最终，朋友</p>
+                    <p class="text-2xl font-bold mt-2">别再问意义是什么。</p>
+                </div>
+                <!-- 四个行动点 -->
+                <div class="grid grid-cols-2 gap-4">
+                     <div class="aspect-square p-4 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-person-running text-3xl mb-2"></i>
+                        <h4 class="font-bold text-xl">去活</h4>
+                        <p class="text-xs text-white/60">LIVE</p>
+                    </div>
+                     <div class="aspect-square p-4 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-hand-holding-heart text-3xl mb-2"></i>
+                        <h4 class="font-bold text-xl">去爱</h4>
+                        <p class="text-xs text-white/60">LOVE</p>
+                    </div>
+                     <div class="aspect-square p-4 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-arrows-rotate text-3xl mb-2"></i>
+                        <h4 class="font-bold text-xl">去犯错</h4>
+                        <p class="text-xs text-white/60">MISTAKE</p>
+                    </div>
+                    <div class="aspect-square p-4 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-lightbulb text-3xl mb-2"></i>
+                        <h4 class="font-bold text-xl">去创造</h4>
+                        <p class="text-xs text-white/60">CREATE</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: 全息彩虹按钮 和 最终结论 -->
+            <div class="col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mt-6 lg:mt-8">
+                 <!-- 全息彩虹按钮 -->
+                <div class="lg:col-span-1 p-1.5 rounded-full holographic-btn shadow-2xl transition-transform hover:scale-105 flex items-center">
+                    <a href="#" class="w-full h-full bg-slate-900/80 rounded-full flex items-center justify-between px-3 py-2 backdrop-blur-sm">
+                        <div class="pl-4">
+                            <p class="font-bold text-xl">开始创造</p>
+                            <p class="text-sm text-white/60">CREATE YOUR ECHO</p>
+                        </div>
+                        <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-pen-nib text-2xl text-slate-900"></i>
+                        </div>
+                    </a>
+                </div>
+                <!-- 最终结论 -->
+                <div class="lg:col-span-2 p-8 rounded-3xl lg:rounded-[2rem] bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg flex items-center">
+                    <div>
+                        <p class="text-lg font-light text-white/80">在某个安静的午后，回望来路，你会发现...</p>
+                        <p class="text-2xl lg:text-3xl font-bold mt-3">答案早已写在你的每一道足迹里。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+<script>
+    // Chart.js: 生命回响图
+    const ctx = document.getElementById('lifeEchoChart').getContext('2d');
+    
+    // 自定义高亮色透明度渐变
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(139, 92, 246, 0.6)'); // Purple with opacity
+    gradient.addColorStop(1, 'rgba(139, 92, 246, 0)');
+
+    const lifeEchoChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['萌芽', '探索', '热恋', '迷茫', '奋斗', '沉淀', '洞见', '回响'],
+            datasets: [{
+                label: '生命能量',
+                data: [10, 35, 75, 40, 80, 60, 95, 85],
+                borderColor: 'rgba(255, 255, 255, 0.9)',
+                backgroundColor: gradient,
+                fill: true,
+                tension: 0.4, // 使线条平滑
+                pointBackgroundColor: 'rgba(255, 255, 255, 1)',
+                pointBorderColor: 'rgba(255, 255, 255, 0.5)',
+                pointRadius: 5,
+                pointHoverRadius: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false // 隐藏图例
+                },
+                tooltip: {
+                    enabled: false, // 禁用默认 tooltip
+                    // 如果需要自定义，可以这样做：
+                    // external: function(context) {
+                    //     // ... 自定义 tooltip DOM 元素逻辑 ...
+                    // }
+                }
+            },
+            scales: {
+                y: {
+                    display: false, // 隐藏Y轴
+                    beginAtZero: true
+                },
+                x: {
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        font: {
+                            family: "'Noto Sans SC', sans-serif",
+                            size: 14
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)' // X轴网格线颜色
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
