@@ -224,6 +224,7 @@ function renderHomepageHeader(currentPath, isRoot) {
     let familyClass = currentPath.includes('/docs/family/') ? 'active' : '';
     let workClass = currentPath.includes('/docs/work/') ? 'active' : '';
     let socialClass = currentPath.includes('/docs/social/') ? 'active' : '';
+    let learnClass = currentPath.includes('/docs/learn/') ? 'active' : '';
 
     // 生成绝对路径的链接
     const homeLink = `${prefix}index.html`;
@@ -232,6 +233,7 @@ function renderHomepageHeader(currentPath, isRoot) {
     const familyLink = `${prefix}docs/family/index.html`;
     const workLink = `${prefix}docs/work/index.html`;
     const socialLink = `${prefix}docs/social/index.html`;
+    const learnLink = `${prefix}docs/learn/index.html`;
 
     headerElement.innerHTML = `
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -251,6 +253,7 @@ function renderHomepageHeader(currentPath, isRoot) {
                     <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
                     <a href="${workLink}" class="nav-link ${workClass}">工作</a>
                     <a href="${socialLink}" class="nav-link ${socialClass}">社交</a>
+                    <a href="${learnLink}" class="nav-link ${learnClass}">学习</a>
                 </nav>
 
                 <!-- 移动端菜单按钮 -->
@@ -268,7 +271,7 @@ function renderHomepageHeader(currentPath, isRoot) {
     `;
 
     // 创建独立的移动端菜单（在header外部）
-    createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass);
+    createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass, learnClass);
 
     // 添加移动端菜单交互
     setTimeout(() => {
@@ -280,7 +283,7 @@ function renderHomepageHeader(currentPath, isRoot) {
 }
 
 // 创建独立的移动端菜单
-function createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass) {
+function createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, aiClass, personalClass, familyClass, workClass, socialClass, learnClass) {
     // 检查是否已存在移动端菜单
     let existingMenu = document.getElementById('mobile-menu');
     if (existingMenu) {
@@ -301,6 +304,7 @@ function createIndependentMobileMenu(homeLink, aiLink, personalLink, familyLink,
                 <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
                 <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
                 <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+                <a href="${learnLink}" class="mobile-nav-link ${learnClass}">学习</a>
             </div>
         </div>
     `;
