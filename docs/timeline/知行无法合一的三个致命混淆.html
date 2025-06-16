@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知行无法合一的三个致命混淆</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --system-blue: 0 122 255;
+            --knowledge-purple: 88 86 214;
+            --action-green: 52 199 89;
+            --aurora-gradient: linear-gradient(90deg, #f97316, #ef4444, #ec4899);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+        }
+
+        html.dark body {
+            background-color: #0d1117;
+            color: #f9fafb;
+        }
+
+        .text-aurora {
+            background: var(--aurora-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1), transform 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-1 { transition-delay: 100ms; }
+        .delay-2 { transition-delay: 200ms; }
+        .delay-3 { transition-delay: 300ms; }
+        .delay-4 { transition-delay: 400ms; }
+
+        .dark .card-glass {
+            background-color: rgba(28, 41, 60, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 2xl:max-w-screen-2xl">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-24 md:mb-32">
+            <h1 class="fade-in-up text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-gray-300 dark:text-gray-700">
+                知 <span class="text-gray-400 dark:text-gray-600 mx-2 md:mx-4">/</span> 行
+            </h1>
+            <h2 class="fade-in-up delay-1 mt-6 text-3xl md:text-5xl font-bold tracking-tight text-gray-800 dark:text-gray-200">
+                你之所以“<span class="text-aurora">知行无法合一</span>”
+            </h2>
+            <p class="fade-in-up delay-2 mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-600 dark:text-gray-400">
+                是因为你犯了三个致命的混淆。
+            </p>
+        </section>
+
+        <!-- The Three Confusions Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            
+            <!-- Confusion 1: Knowing vs. Getting -->
+            <div class="fade-in-up delay-1 bg-white dark:card-glass shadow-lg rounded-[2rem] p-8 md:p-10 flex flex-col">
+                <div class="w-16 h-16 mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50">
+                    <i class="fa-solid fa-lightbulb text-3xl" style="color: rgb(var(--system-blue));"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">把“知道”当“得到”</h3>
+                <p class="mt-1 text-md font-semibold text-gray-500 dark:text-gray-400">Knowing ≠ Getting</p>
+                <p class="mt-6 text-base text-gray-600 dark:text-gray-300 flex-grow">
+                    大脑的“恍然大悟”会产生快感，让你误以为已经掌握。收藏100个健身视频，就仿佛拥有了八块腹肌。这种<strong class="font-semibold text-blue-600 dark:text-blue-400">廉价的满足感</strong>，是行动的最大敌人。
+                </p>
+            </div>
+
+            <!-- Confusion 2: Principles vs. Methods -->
+            <div class="fade-in-up delay-2 bg-white dark:card-glass shadow-lg rounded-[2rem] p-8 md:p-10 flex flex-col">
+                <div class="w-16 h-16 mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/50 dark:to-purple-800/50">
+                     <i class="fa-solid fa-signs-post text-3xl" style="color: rgb(var(--knowledge-purple));"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">把“道理”当“方法”</h3>
+                <p class="mt-1 text-md font-semibold text-gray-500 dark:text-gray-400">Principles ≠ Methods</p>
+                 <p class="mt-6 text-base text-gray-600 dark:text-gray-300 flex-grow">
+                    道理是普适的“原则”，而生活是具体的“情境”。你缺的不是“要勇敢”的道理，而是将道理<strong class="font-semibold text-purple-600 dark:text-purple-400">“翻译”成具体行动</strong>的刻意练习。
+                </p>
+            </div>
+
+            <!-- Confusion 3: The Brain vs. You -->
+            <div class="fade-in-up delay-3 bg-white dark:card-glass shadow-lg rounded-[2rem] p-8 md:p-10 flex flex-col">
+                <div class="w-16 h-16 mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/50 dark:to-green-800/50">
+                     <i class="fa-solid fa-elephant text-3xl" style="color: rgb(var(--action-green));"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">把“大脑”当成“你”</h3>
+                <p class="mt-1 text-md font-semibold text-gray-500 dark:text-gray-400">The Brain ≠ You</p>
+                 <p class="mt-6 text-base text-gray-600 dark:text-gray-300 flex-grow">
+                    控制你的是情绪化的“大象”，而非理智的“骑象人”（大脑）。你光是说服了骑象人，却从未安抚和训练那头<strong class="font-semibold text-green-600 dark:text-green-400">真正决定方向的大象</strong>。
+                </p>
+            </div>
+        </div>
+        
+        <!-- Conclusion Section -->
+        <section class="text-center mt-24 md:mt-32 fade-in-up">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-800 dark:text-gray-200">
+                所以，你不是过不好
+            </h2>
+            <h2 class="mt-4 text-6xl md:text-8xl lg:text-9xl font-black text-aurora">
+                从未真正“开始过”
+            </h2>
+            <p class="mt-8 text-lg md:text-xl max-w-3xl mx-auto text-gray-600 dark:text-gray-400">
+                你一直在起点练习着“准备起跑”的姿势，却从未听见那声发令枪响。
+            </p>
+            <div class="mt-12">
+                 <div class="w-20 h-20 mx-auto rounded-3xl flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-700/50">
+                    <i class="fa-solid fa-flag-checkered text-4xl text-gray-700 dark:text-gray-300"></i>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="fade-in-up delay-4 sticky bottom-4 w-full flex justify-center z-50">
+        <div class="mx-auto flex items-center gap-4 rounded-full px-4 py-2 bg-white/50 dark:bg-black/30 backdrop-blur-lg shadow-lg border border-gray-200/50 dark:border-white/10">
+            <span class="text-xs text-gray-600 dark:text-gray-400">THE THREE CONFUSIONS</span>
+            <div class="h-4 w-px bg-gray-300 dark:bg-gray-600"></div>
+            <button id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+                <i class="fa-solid fa-sun block dark:hidden"></i>
+                <i class="fa-solid fa-moon hidden dark:block"></i>
+            </button>
+        </div>
+    </footer>
+
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

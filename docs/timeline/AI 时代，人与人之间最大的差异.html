@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 时代，人与人之间最大的差异</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    
+    <!-- Font Awesome via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Google Fonts for a modern feel (Manrope) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styles and custom font */
+        body {
+            font-family: 'Manrope', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: #f8f9fa; /* Very light gray */
+            color: #1f2937; /* Dark gray for text */
+            overflow-x: hidden;
+        }
+
+        /* The Aurora/Color Cloud background effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                radial-gradient(at 20% 25%, hsla(263, 85%, 65%, 0.3) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, hsla(320, 80%, 70%, 0.3) 0px, transparent 50%),
+                radial-gradient(at 50% 80%, hsla(28, 95%, 60%, 0.3) 0px, transparent 50%),
+                radial-gradient(at 75% 75%, hsla(200, 85%, 65%, 0.25) 0px, transparent 50%);
+            z-index: -1;
+            filter: blur(120px);
+            opacity: 0.8;
+            animation: moveGradient 20s ease infinite alternate;
+        }
+        
+        @keyframes moveGradient {
+            from { transform: translate(-10%, -10%) scale(1.2); }
+            to { transform: translate(10%, 10%) scale(1.2); }
+        }
+
+        /* Animation for scroll-triggered elements */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom text gradient for highlight numbers */
+        .text-gradient-highlight {
+            background-image: linear-gradient(to bottom, #a855f7, rgba(168, 85, 247, 0));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <main class="relative z-10">
+
+        <!-- 1. Hero Section: The Ultimate Question -->
+        <section class="min-h-screen flex items-center justify-center p-6 text-center reveal">
+            <div class="max-w-6xl mx-auto">
+                <p class="text-xl md:text-2xl font-light text-gray-500 tracking-widest mb-4">THE ULTIMATE QUESTION</p>
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 tracking-tighter leading-tight">
+                    在 AI 时代<br>人与人之间最大的差异是什么？
+                </h1>
+                <div class="mt-16 text-gray-400 animate-bounce">
+                    <i class="fa-solid fa-arrow-down fa-2x"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. The Core Shift Section -->
+        <section class="min-h-screen flex items-center justify-center p-6 reveal">
+            <div class="max-w-5xl mx-auto text-center">
+                <p class="text-2xl md:text-3xl lg:text-4xl text-gray-600 leading-relaxed mb-8">
+                    当记忆、计算、逻辑等“硬技能”被极大拉平后<br>真正的差异将从
+                </p>
+                <h2 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-500">
+                    “你拥有什么”
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-500 my-4">WHAT YOU HAVE</p>
+                <i class="fa-solid fa-right-long text-4xl text-gray-400 my-8"></i>
+                <h2 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 tracking-tighter">
+                    “你是谁”
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-500 mt-4">WHO YOU ARE</p>
+            </div>
+        </section>
+        
+        <!-- The Four Dimensions -->
+        <div class="space-y-24 md:space-y-32 py-24 md:py-32">
+
+            <!-- Dimension 1: Questions -->
+            <section class="px-6 reveal">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-4 text-center lg:text-left">
+                        <h2 class="text-9xl lg:text-[180px] font-black text-gradient-highlight leading-none">01</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4">提问的深度与角度</h3>
+                        <p class="text-lg md:text-xl font-light text-gray-500 mt-2 tracking-wider">FROM ANSWER CONSUMER TO QUESTION CREATOR</p>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl">
+                            <i class="fa-solid fa-magnifying-glass-chart text-5xl text-purple-500 mb-6"></i>
+                            <p class="text-xl md:text-2xl text-gray-700 leading-relaxed">
+                                当 AI 提供无穷答案时，价值在于提出开启全新可能性的问题。差异体现在：<br><br>
+                                <span class="font-bold text-purple-600">旺盛的好奇心：</span>你是否会追问十个“为什么”？<br>
+                                <span class="font-bold text-purple-600">敏锐的洞察力：</span>是改良马车，还是想象无需马的交通工具？<br>
+                                <span class="font-bold text-purple-600">独特的视角：</span>当所有人问“如何提效”时，你是否敢问“这事是否值得做”？
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dimension 2: Action -->
+            <section class="px-6 reveal">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-8 lg:order-2">
+                         <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl">
+                            <i class="fa-solid fa-person-running text-5xl text-orange-500 mb-6"></i>
+                            <p class="text-xl md:text-2xl text-gray-700 leading-relaxed">
+                                AI 让“纸上谈兵”成本为零，这反而让 <span class="font-extrabold text-2xl md:text-3xl text-orange-600">“真刀真枪”的实干</span> 变得无比珍贵。稀缺的是：<br><br>
+                                <span class="font-bold text-orange-600">行动的勇气：</span>敢于用笨拙的方式，迈出完美计划的第一步。<br>
+                                <span class="font-bold text-orange-600">面对失败的韧性：</span>从现实碰壁中学习，并向 AI 提出更好的问题。<br>
+                                <span class="font-bold text-orange-600">承担风险的魄力：</span>敢于在不确定性中下注，并为结果负责。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-4 lg:order-1 text-center lg:text-right">
+                        <h2 class="text-9xl lg:text-[180px] font-black text-transparent bg-clip-text bg-gradient-to-b from-orange-500 to-transparent leading-none">02</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4">行动的勇气与韧性</h3>
+                        <p class="text-lg md:text-xl font-light text-gray-500 mt-2 tracking-wider">FROM PERFECT PLANNER TO CLUMSY PRACTITIONER</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dimension 3: Purpose -->
+            <section class="px-6 reveal">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-4 text-center lg:text-left">
+                        <h2 class="text-9xl lg:text-[180px] font-black text-transparent bg-clip-text bg-gradient-to-b from-pink-500 to-transparent leading-none">03</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4">目标的感召力与“为何”</h3>
+                        <p class="text-lg md:text-xl font-light text-gray-500 mt-2 tracking-wider">FROM EFFICIENT EXECUTOR TO MISSION-DRIVEN LEADER</p>
+                    </div>
+                    <div class="lg:col-span-8">
+                        <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl">
+                             <i class="fa-solid fa-bullseye text-5xl text-pink-500 mb-6"></i>
+                            <p class="text-xl md:text-2xl text-gray-700 leading-relaxed">
+                                AI 是终极的“How”，但无法提供发自你内心的 <span class="font-extrabold text-2xl md:text-3xl text-pink-600">“Why”</span>。价值的源头是：<br><br>
+                                <span class="font-bold text-pink-600">内在驱动：</span>你的燃料是源于欲望，还是源于纯粹的热爱？<br>
+                                <span class="font-bold text-pink-600">使命格局：</span>你的目标是服务小我，还是服务于大我？<br>
+                                <span class="font-bold text-pink-600">你的故事：</span>你是否能用你的“为何”，去感召和集结他人？
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dimension 4: Experience -->
+             <section class="px-6 reveal">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-8 lg:order-2">
+                         <div class="bg-white/60 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl">
+                            <i class="fa-solid fa-heart-pulse text-5xl text-sky-500 mb-6"></i>
+                            <p class="text-xl md:text-2xl text-gray-700 leading-relaxed">
+                                AI 没有肉身体验，无法真正共情。那些反“智力”的、属于人性的维度，将变得无价：<br><br>
+                                <span class="font-bold text-sky-600">审美与品味：</span>定义什么是“美”。<br>
+                                <span class="font-bold text-sky-600">幽默与自嘲：</span>高级智慧与情感的混合物。<br>
+                                <span class="font-bold text-sky-600">信任与领导力：</span>人们追随的是值得信赖的同类。<br>
+                                <span class="font-bold text-sky-600">爱与被爱的能力：</span>建立深度、真实的人际连接。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-4 lg:order-1 text-center lg:text-right">
+                        <h2 class="text-9xl lg:text-[180px] font-black text-transparent bg-clip-text bg-gradient-to-b from-sky-500 to-transparent leading-none">04</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4">体验的质感与爱的能力</h3>
+                        <p class="text-lg md:text-xl font-light text-gray-500 mt-2 tracking-wider">FROM INFORMATION PROCESSOR TO MEANING CONNECTOR</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Conclusion Section -->
+        <section class="min-h-screen flex items-center justify-center p-6 text-center reveal">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">在AI的浪潮之下，最大的差异不再是知识的鸿沟，而是 <span class="font-bold text-gray-800">品格的鸿沟</span>。</h2>
+                <p class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+                    它不再是你“知道”什么，而是你
+                    <span class="text-purple-600">“相信”</span>什么，
+                    你<span class="text-orange-600">“敢于”</span>做什么，
+                    你<span class="text-pink-600">“为何”</span>而做，
+                    以及你<span class="text-sky-600">“感受”</span>到了什么。
+                </p>
+                <hr class="w-24 h-1 mx-auto my-12 bg-gray-300 border-0 rounded">
+                <p class="text-2xl md:text-3xl font-light text-gray-800">
+                    AI时代最重要的问题，不是去问AI。<br>
+                    <span class="font-bold">而是要不断地，问我们自己。</span>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Simple scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        });
+
+        revealElements.forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

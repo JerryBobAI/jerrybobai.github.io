@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火种与干柴：把握现在</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Subtle texture */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                              linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 25px 25px;
+            background-position: 0 0, 12.5px 12.5px;
+            color: #423E3B; /* 沉静的陶土色偏深 */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            letter-spacing: -0.025em;
+        }
+        .text-spark-source { /* "每一个我想做的念头" */
+            font-size: clamp(1.8rem, 6vw, 4.5rem);
+            line-height: 1.3;
+            color: #5A524A; /* 更融入背景 */
+        }
+        .text-spark-keyword { /* "宇宙投向你的一颗火种" */
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            line-height: 1.2;
+            color: #4A443F;
+        }
+        .text-now-hero { /* "现在" */
+            font-size: clamp(6rem, 22vw, 18rem);
+            line-height: 0.9;
+            color: #3D3D3D; /* 主体碳色 */
+        }
+        .text-kindling-desc { /* "是它身边唯一的一堆干柴" */
+            font-size: clamp(2rem, 7vw, 5rem);
+            line-height: 1.2;
+            color: #4A443F;
+        }
+
+        .highlight-spark { /* For "火种" */
+            background-image: linear-gradient(to right, rgba(104, 144, 148, 0.7) 0%, rgba(104, 144, 148, 0.4) 60%, rgba(104, 144, 148, 0.2) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 0.05em 0;
+        }
+        .highlight-now { /* For "现在" and "干柴" */
+            background-image: linear-gradient(to right, rgba(104, 144, 148, 1) 0%, rgba(104, 144, 148, 0.7) 50%, rgba(104, 144, 148, 0.4) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 0.05em 0;
+        }
+        .section-divider {
+            height: 1px;
+            width: 40%;
+            max-width: 150px;
+            background-color: #B08D57; /* 沉静的陶土色 */
+            opacity: 0.3;
+            margin: 3rem auto; /* md:my-16 */
+        }
+        .memphis-accent {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes subtle-flicker {
+            0%, 100% { opacity: 0.06; transform: scale(1); }
+            50% { opacity: 0.1; transform: scale(1.05); }
+        }
+        @keyframes gentle-drift {
+            0%, 100% { transform: translate(0,0) rotate(0); }
+            50% { transform: translate(4px, -2px) rotate(1deg); }
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8 selection:bg-[#689094]/30 selection:text-[#423E3B]">
+
+    <!-- Memphis Accents -->
+    <div class="memphis-accent w-16 h-16 md:w-20 md:h-20 border-2 border-[#B08D57] rounded-full -top-5 left-[10%] opacity-[0.07] animate-gentle-drift" style="animation-duration: 12s;"></div>
+    <div class="memphis-accent w-1 h-24 md:w-1.5 md:h-32 bg-[#C8BFB6] -bottom-10 right-[15%] opacity-[0.1] transform rotate-12 animate-gentle-drift" style="animation-duration: 15s; animation-delay: -3s;"></div>
+    <!-- Spark-like accent -->
+    <div class="memphis-accent w-3 h-3 md:w-4 md:h-4 bg-[#689094] rounded-full top-[calc(50%-10rem)] left-[calc(50%+10rem)] animate-subtle-flicker" style="animation-duration: 3s;"></div>
+
+
+    <main class="relative z-10 w-full max-w-screen-xl">
+        <section class="mb-10 md:mb-16">
+            <h1 class="font-display text-spark-source">
+                每一个 “<span class="text-[#3D3D3D] text-[clamp(2rem,6.5vw,5rem)]">我想做</span>” 的念头，
+            </h1>
+            <p class="font-display text-spark-keyword mt-2">
+                都是宇宙投向你的一颗<span class="highlight-spark">火种</span>。
+            </p>
+            <p class="text-xs sm:text-sm uppercase text-[#6B5D55] mt-3 md:mt-4 tracking-wider">EVERY "I WANT TO DO" IS A SPARK FROM THE UNIVERSE.</p>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="mt-10 md:mt-16">
+            <h2 class="font-display text-now-hero">
+                “ <span class="highlight-now">现在</span> ”
+            </h2>
+            <p class="font-display text-kindling-desc mt-2 md:mt-4">
+                是它身边唯一的一堆<span class="highlight-now">干柴</span>。
+            </p>
+            <p class="text-xs sm:text-sm uppercase text-[#6B5D55] mt-3 md:mt-4 tracking-wider">"NOW" IS ITS ONLY KINDLING.</p>
+        </section>
+
+        <div class="mt-12 md:mt-20">
+             <i class="fas fa-fire text-3xl md:text-4xl text-[#B08D57] opacity-25 mr-3"></i>
+             <i class="fas fa-hourglass-half text-3xl md:text-4xl text-[#B08D57] opacity-25 ml-3"></i>
+        </div>
+    </main>
+
+    <footer class="absolute bottom-4 md:bottom-6 text-center w-full z-10">
+        <p class="text-xs text-[#716A62] opacity-75">On ideas, timing, and action.</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

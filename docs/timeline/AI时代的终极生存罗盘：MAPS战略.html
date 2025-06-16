@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI时代的终极生存罗盘：MAPS战略</title>
+    
+    <!-- TailwindCSS via CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    
+    <!-- Font Awesome via CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #ffffff;
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        .aurora-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; overflow: hidden;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.2; animation: move 40s infinite alternate;
+        }
+        .blob-1 { top: -30%; left: -20%; width: 60vw; height: 60vw; background: #ff00c1; animation-duration: 35s; } /* Cyber Pink */
+        .blob-2 { top: 20%; right: -25%; width: 50vw; height: 50vw; background: #007cf0; animation-duration: 28s; } /* Future Blue */
+        .blob-3 { bottom: -30%; left: 30%; width: 55vw; height: 55vw; background: #ffde00; animation-duration: 45s; } /* Intelligent Yellow */
+        .blob-4 { bottom: 10%; right: 10%; width: 40vw; height: 40vw; background: #8A2BE2; animation-duration: 22s; } /* Blue Violet */
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(15vw, 20vh) scale(1.3) rotate(90deg); }
+        }
+        
+        .scroll-reveal {
+            opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .gradient-text {
+            background-image: linear-gradient(90deg, #007cf0, #ff00c1, #ffde00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="aurora-background">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+        <div class="aurora-blob blob-4"></div>
+    </div>
+
+    <main class="relative z-10">
+
+        <!-- Section 1: Hero -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal">
+                <p class="text-xl md:text-2xl text-gray-500 mb-4 tracking-widest uppercase">The Ultimate Survival Compass for the AI Era</p>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-gray-900">AI时代的终极生存罗盘</h1>
+                <!-- SVG Compass Icon -->
+                <svg class="w-24 h-24 mx-auto my-12 text-gray-400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15 L45 50 L50 85 L55 50 L50 15Z" fill="currentColor" opacity="0.7"/>
+                    <path d="M50 15 L45 50 L50 85 L55 50 L50 15Z" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="5" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h2 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter gradient-text">MAPS战略</h2>
+            </div>
+        </section>
+
+        <!-- Section 2: Introduction of MAPS -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="text-center max-w-4xl mx-auto">
+                <p class="scroll-reveal text-2xl md:text-3xl lg:text-4xl text-gray-700 mb-8">在AI如洪水般重塑世界的今天，焦虑和迷茫是常态。我们缺的不是信息，而是一张清晰的导航图。</p>
+                <p class="scroll-reveal text-2xl md:text-3xl lg:text-4xl text-gray-800 font-bold" style="transition-delay: 200ms;">MAPS框架，正是这样一张图。</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20 w-full max-w-7xl">
+                <!-- M -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 400ms;">
+                    <h3 class="text-4xl font-bold text-pink-600">M</h3>
+                    <p class="text-xl mt-2 font-semibold">Mindset</p><p class="text-lg text-gray-600">心智</p>
+                </div>
+                <!-- A -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 500ms;">
+                    <h3 class="text-4xl font-bold text-blue-600">A</h3>
+                    <p class="text-xl mt-2 font-semibold">Architecture</p><p class="text-lg text-gray-600">架构</p>
+                </div>
+                <!-- P -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 600ms;">
+                    <h3 class="text-4xl font-bold text-pink-600">P</h3>
+                    <p class="text-xl mt-2 font-semibold">Prompt</p><p class="text-lg text-gray-600">对话</p>
+                </div>
+                <!-- S -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 700ms;">
+                    <h3 class="text-4xl font-bold text-blue-600">S</h3>
+                    <p class="text-xl mt-2 font-semibold">System</p><p class="text-lg text-gray-600">系统</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: M - Mindset -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="scroll-reveal text-center mb-16 max-w-4xl">
+                <p class="text-xl md:text-2xl text-pink-600 mb-2 tracking-widest uppercase">First Evolution</p>
+                <h2 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter">MINDSET</h2>
+                <p class="text-2xl md:text-3xl text-gray-700 mt-4">从“恐惧的旁观者”到“兴奋的驾驶员”</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl w-full">
+                <!-- Leverage -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 200ms;">
+                    <h4 class="text-2xl font-bold mb-4">从“替代焦虑”到“杠杆思维”</h4>
+                    <p class="text-gray-500 mb-2">旧: “AI会取代我吗?”</p>
+                    <p class="text-pink-700 font-semibold">新: “我如何用AI撬动10倍成果?”</p>
+                </div>
+                <!-- Prototype -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 300ms;">
+                    <h4 class="text-2xl font-bold mb-4">从“完美主义”到“原型主义”</h4>
+                    <p class="text-gray-500 mb-2">旧: “必须完美计划再开始。”</p>
+                    <p class="text-pink-700 font-semibold">新: “我能用AI在1小时内搭出原型。”</p>
+                </div>
+                <!-- Capability -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 400ms;">
+                    <h4 class="text-2xl font-bold mb-4">从“知识囤积”到“能力构建”</h4>
+                    <p class="text-gray-500 mb-2">旧: “我要学所有AI工具。”</p>
+                    <p class="text-pink-700 font-semibold">新: “我聚焦构建提问、整合等核心能力。”</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: A - Architecture -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="scroll-reveal text-center mb-16 max-w-4xl">
+                <p class="text-xl md:text-2xl text-blue-600 mb-2 tracking-widest uppercase">Second Evolution</p>
+                <h2 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter">ARCHITECTURE</h2>
+                <p class="text-2xl md:text-3xl text-gray-700 mt-4">从“瑞士军刀”到“乐高工厂”</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl w-full">
+                 <!-- Single Responsibility -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 200ms;">
+                    <h4 class="text-2xl font-bold mb-4">单一功能原则</h4>
+                    <p class="text-gray-500 mb-2">旧: 一个复杂应用解决大问题。</p>
+                    <p class="text-blue-700 font-semibold">新: 将任务拆解为多个“微型AI代理”。</p>
+                </div>
+                <!-- Human-in-the-Loop -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 300ms;">
+                    <h4 class="text-2xl font-bold mb-4">人机回路设计</h4>
+                    <p class="text-gray-500 mb-2">旧: 全自动化的“黑箱”。</p>
+                    <p class="text-blue-700 font-semibold">新: 在关键节点预留“人工审核”。</p>
+                </div>
+                <!-- Memory & Context -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 400ms;">
+                    <h4 class="text-2xl font-bold mb-4">记忆与上下文架构</h4>
+                    <p class="text-gray-500 mb-2">旧: AI是“金鱼记忆”。</p>
+                    <p class="text-blue-700 font-semibold">新: 为AI建立外部“长期记忆库”。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: P - Prompt -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="scroll-reveal text-center mb-16 max-w-4xl">
+                <p class="text-xl md:text-2xl text-pink-600 mb-2 tracking-widest uppercase">Third Evolution</p>
+                <h2 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter">PROMPT</h2>
+                <p class="text-2xl md:text-3xl text-gray-700 mt-4">从“模糊的指令”到“精准的沟通”</p>
+            </div>
+            <div class="flex flex-col gap-8 max-w-5xl w-full">
+                <!-- Persona -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8">
+                    <h4 class="text-2xl font-bold mb-4">角色扮演法 (Persona Pattern)</h4>
+                    <p class="text-gray-500 mb-2">坏对话: “帮我写个文案。”</p>
+                    <p class="text-pink-700 font-semibold">好对话: “你是一位苹果资深营销专家，以乔布斯风格...”</p>
+                </div>
+                <!-- Chain-of-Thought -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 200ms;">
+                    <h4 class="text-2xl font-bold mb-4">思维链法 (Chain-of-Thought)</h4>
+                    <p class="text-gray-500 mb-2">坏对话: “分析一下对手。”</p>
+                    <p class="text-pink-700 font-semibold">好对话: “我们来一步步分析... 第一步... 第二步...”</p>
+                </div>
+                <!-- Output Formatting -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 300ms;">
+                    <h4 class="text-2xl font-bold mb-4">输出格式化 (Output Formatting)</h4>
+                    <p class="text-gray-500 mb-2">坏对话: “给我些建议。”</p>
+                    <p class="text-pink-700 font-semibold">好对话: “请以Markdown表格形式输出，包含三列...”</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: S - System -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8">
+            <div class="scroll-reveal text-center mb-16 max-w-4xl">
+                <p class="text-xl md:text-2xl text-blue-600 mb-2 tracking-widest uppercase">Fourth Evolution</p>
+                <h2 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter">SYSTEM</h2>
+                <p class="text-2xl md:text-3xl text-gray-700 mt-4">从“手工作坊”到“自动化流水线”</p>
+            </div>
+             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl w-full">
+                <!-- Triggers -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 200ms;">
+                    <h4 class="text-2xl font-bold mb-4">识别“自动化触发器”</h4>
+                    <p class="text-gray-500 mb-2">手工作坊: 手动检查、下载、上传。</p>
+                    <p class="text-blue-700 font-semibold">自动化流水线: 当...时，自动...</p>
+                </div>
+                <!-- API-First -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 300ms;">
+                    <h4 class="text-2xl font-bold mb-4">API优先原则</h4>
+                    <p class="text-gray-500 mb-2">手工作坊: 手动复制粘贴。</p>
+                    <p class="text-blue-700 font-semibold">自动化流水线: 用API将软件“粘合”。</p>
+                </div>
+                <!-- Personal OS -->
+                <div class="scroll-reveal glass-card rounded-3xl p-8" style="transition-delay: 400ms;">
+                    <h4 class="text-2xl font-bold mb-4">构建“个人操作系统”</h4>
+                    <p class="text-gray-500 mb-2">手工作坊: 信息散落各处。</p>
+                    <p class="text-blue-700 font-semibold">自动化流水线: 信息自动归入“第二大脑”。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Conclusion -->
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center">
+            <div class="scroll-reveal max-w-5xl">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-12">
+                    MAPS，相辅相成，缺一不可。
+                </h2>
+                <div class="space-y-6 text-2xl md:text-3xl text-left text-gray-800">
+                    <p><span class="text-pink-600 font-bold">Mindset</span> 是你的方向盘，决定了你要去哪里。</p>
+                    <p><span class="text-blue-600 font-bold">Architecture</span> 是你的蓝图，决定了应用有多坚固灵活。</p>
+                    <p><span class="text-pink-600 font-bold">Prompt</span> 是你的油门刹车，决定了协作的效率精度。</p>
+                    <p><span class="text-blue-600 font-bold">System</span> 是你修建的高速公路，决定了产出能否规模化。</p>
+                </div>
+                <h1 class="mt-20 text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter">
+                    你，将不再是被浪潮裹挟的浮萍，<br>而是驾驭浪潮的<span class="gradient-text">冲浪者</span>。
+                </h1>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            const hiddenElements = document.querySelectorAll('.scroll-reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
