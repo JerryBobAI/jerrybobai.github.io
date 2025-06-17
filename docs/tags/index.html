@@ -10,6 +10,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/styles.css">
+    <!-- 标签云折叠样式 -->
+    <style>
+        /* 标签云容器 */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem; /* tag 间距 */
+            padding: 0.5rem 1rem; /* 减少内边距让箭头更靠近 */
+            text-align: left; /* 左对齐 */
+        }
+        /* 默认折叠状态：高度约 3 行，超出隐藏 */
+        .tag-cloud.collapsed {
+            max-height: 7.25rem; /* 3 行左右，根据行高微调 */
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        /* 切换按钮样式 */
+        .tag-cloud-toggle-btn {
+            cursor: pointer;
+            font-size: 1.25rem; /* text-xl */
+            color: #6b7280;      /* gray-500 */
+            transition: transform 0.3s ease, color 0.2s;
+        }
+        .tag-cloud-toggle-btn:hover {
+            color: #374151;      /* gray-700 */
+        }
+        .tag-cloud-toggle-btn.rotate {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
 <body class="bg-background text-text-main">
     <!-- 导航栏 -->
@@ -20,12 +50,16 @@
         <!-- 标签云 -->
         <div class="mb-12">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div id="tag-cloud" class="tag-cloud">
+                <div id="tag-cloud" class="tag-cloud collapsed">
                     <!-- 标签将通过JavaScript动态生成 -->
                     <div class="text-center text-gray-500">
                         <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
                         <p>正在加载标签...</p>
                     </div>
+                </div>
+                <!-- 折叠/展开按钮 -->
+                <div class="text-center mt-1">
+                    <i id="toggle-tag-cloud-btn" class="fas fa-angle-double-down tag-cloud-toggle-btn"></i>
                 </div>
             </div>
         </div>
@@ -82,5 +116,18 @@
 
     <!-- 加载组件脚本 -->
     <script src="../../js/main.js"></script>
+    <!-- 标签云折叠逻辑 -->
+    <script>
+        (function() {
+            const tagCloud = document.getElementById('tag-cloud');
+            const toggleBtn = document.getElementById('toggle-tag-cloud-btn');
+            if (!tagCloud || !toggleBtn) return;
+            toggleBtn.addEventListener('click', () => {
+                const collapsed = tagCloud.classList.toggle('collapsed');
+                // 根据状态添加/移除旋转，使箭头方向正确
+                toggleBtn.classList.toggle('rotate', !collapsed);
+            });
+        })();
+    </script>
 </body>
 </html>
