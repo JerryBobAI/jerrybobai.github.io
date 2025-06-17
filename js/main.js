@@ -38,11 +38,22 @@
     window.top.moduleSystemLoading = true;
 
     console.log('🚀 开始加载JavaScript模块系统...');
-    
+
     // 检测当前页面类型
     const currentPath = window.location.pathname;
     const isHomepage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/docs/'));
     const isTagsPage = currentPath.includes('/docs/tags/');
+    const isArticlePage = currentPath.includes('/docs/') && !currentPath.endsWith('/index.html');
+
+    // 立即设置页面类型，避免后续布局跳动
+    if (isArticlePage) {
+        document.body.setAttribute('data-page-type', 'article');
+        console.log('📄 检测到文章页面，预设header空间');
+    } else if (isHomepage) {
+        document.body.setAttribute('data-page-type', 'homepage');
+    } else if (isTagsPage) {
+        document.body.setAttribute('data-page-type', 'tags');
+    }
 
     console.log('🔍 页面检测信息:', {
         currentPath,

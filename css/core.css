@@ -15,6 +15,11 @@ body {
     padding: 1rem;
 }
 
+/* 文章页面预设header空间，避免JavaScript执行时的布局跳动 */
+body[data-page-type="article"] {
+    padding: 64px 1rem 1rem 1rem !important;
+}
+
 /* =============== 颜色变量 =============== */
 :root {
     --color-primary: #689094;

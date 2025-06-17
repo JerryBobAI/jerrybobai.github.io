@@ -348,16 +348,28 @@ function renderArticleHeader(currentPath, isRoot) {
     // 如果不存在，创建新的header组件
     if (!headerElement) {
         Logger.info('HEADER', '创建新的header组件');
+
+        // 确保body已设置为文章页面类型，并强制设置padding
+        const bodyElement = document.body;
+        if (bodyElement) {
+            if (!bodyElement.hasAttribute('data-page-type')) {
+                bodyElement.setAttribute('data-page-type', 'article');
+                Logger.debug('LAYOUT', '设置页面类型为文章页面');
+            }
+            // 强制设置padding，覆盖文章页面内部的样式
+            bodyElement.style.paddingTop = '64px';
+            bodyElement.style.transition = 'none'; // 禁用过渡效果
+            Logger.debug('LAYOUT', '强制设置body padding-top，确保header不会遮挡内容');
+        }
+
         headerElement = document.createElement('div');
         headerElement.setAttribute('data-component', 'header');
         headerElement.className = 'header-component glass-effect';
+        headerElement.style.opacity = '0'; // 初始设置为透明，等待透明度渐入动画
 
         // 插入到body的开头
-        const bodyElement = document.body;
         if (bodyElement) {
             bodyElement.insertBefore(headerElement, bodyElement.firstChild);
-            // 给body添加class，确保页面内容不被遮挡
-            bodyElement.classList.add('has-fixed-header');
             Logger.success('HEADER', 'Header组件已插入到body开头');
         } else {
             Logger.warn('HEADER', '无法找到body元素');
@@ -408,6 +420,27 @@ function renderArticleHeader(currentPath, isRoot) {
 
     const homeLink = `${prefix}index.html`;
 
+    // 根据背景色动态调整毛玻璃效果 - 同步检测
+    let isDark = true; // 默认深色
+    if (typeof window.isDarkBackground === 'function') {
+        try {
+            isDark = window.isDarkBackground();
+            Logger.debug('STYLE', `同步检测背景色: ${isDark ? '深色背景' : '浅色背景'}`);
+
+            if (!isDark) {
+                // 浅色背景：添加light-bg类
+                headerElement.classList.add('light-bg');
+                Logger.debug('STYLE', '应用浅色背景毛玻璃效果');
+            } else {
+                // 深色背景：移除light-bg类（使用默认深色效果）
+                headerElement.classList.remove('light-bg');
+                Logger.debug('STYLE', '应用深色背景毛玻璃效果');
+            }
+        } catch (error) {
+            Logger.error('STYLE', `背景色检测出错: ${error.message}`);
+        }
+    }
+
     // 添加header样式
     const headerStyles = `
         <style>
@@ -420,28 +453,21 @@ function renderArticleHeader(currentPath, isRoot) {
                 margin: 0 !important;
                 z-index: 1001 !important;
                 opacity: 0;
-                transform: translateY(-20px);
-                animation: slideInFromTop 0.6s ease-out forwards;
+                animation: fadeInOnly 0.3s ease-out forwards 0.1s; /* 快速透明度渐入，不干扰文章动画 */
+                will-change: opacity; /* 只优化opacity */
             }
 
-            @keyframes slideInFromTop {
+            @keyframes fadeInOnly {
                 from {
                     opacity: 0;
-                    transform: translateY(-20px);
                 }
                 to {
                     opacity: 1;
-                    transform: translateY(0);
                 }
             }
 
-            /* 确保页面内容不被header遮挡 */
-            body.has-fixed-header {
-                padding-top: 64px !important;
-            }
-
             /* 增强的毛玻璃效果 - 默认深色背景优化 */
-            .header-component .glass-effect {
+            .header-component.glass-effect {
                 background: rgba(40, 40, 40, 0.7) !important; /* 通用深灰色，适配各种深色背景 */
                 backdrop-filter: blur(30px) saturate(180%) !important;
                 -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
@@ -450,7 +476,7 @@ function renderArticleHeader(currentPath, isRoot) {
             }
 
             /* 浅色背景的毛玻璃效果 - 更透明，适配白色和浅色背景 */
-            .header-component.light-bg .glass-effect {
+            .header-component.light-bg.glass-effect {
                 background: rgba(255, 255, 255, 0.75) !important; /* 白色透明背景，更通用 */
                 backdrop-filter: blur(20px) saturate(120%) !important;
                 -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
@@ -502,38 +528,18 @@ function renderArticleHeader(currentPath, isRoot) {
     // 使用导航栏的布局结构，但填入元信息内容
     headerElement.innerHTML = `
         ${headerStyles}
-        <div class="w-full glass-effect">
-            <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
-                <div class="flex items-center ultra-light-date">
-                    <a href="${homeLink}" class="home-link">
-                        <i class="fa-solid fa-home mr-2" aria-hidden="true"></i>
-                    </a>
-                    <span class="text-sm font-medium">${dateStr}</span>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
-                    ${tagsHtml}
-                </div>
+        <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center ultra-light-date">
+                <a href="${homeLink}" class="home-link">
+                    <i class="fa-solid fa-home mr-2" aria-hidden="true"></i>
+                </a>
+                <span class="text-sm font-medium">${dateStr}</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
+                ${tagsHtml}
             </div>
         </div>
     `;
-
-    // 根据背景色动态调整毛玻璃效果
-    setTimeout(() => {
-        if (typeof window.isDarkBackground === 'function') {
-            const isDark = window.isDarkBackground();
-            Logger.debug('STYLE', `根据背景色调整毛玻璃效果: ${isDark ? '深色背景' : '浅色背景'}`);
-
-            if (!isDark) {
-                // 浅色背景：添加light-bg类
-                headerElement.classList.add('light-bg');
-                Logger.debug('STYLE', '应用浅色背景毛玻璃效果');
-            } else {
-                // 深色背景：移除light-bg类（使用默认深色效果）
-                headerElement.classList.remove('light-bg');
-                Logger.debug('STYLE', '应用深色背景毛玻璃效果');
-            }
-        }
-    }, 100);
 
     Logger.success('HEADER', 'Header组件（包含元信息）渲染完成');
 }
@@ -547,7 +553,7 @@ function renderFooter(isRoot) {
     if (isRoot) {
         footerElement.innerHTML = `
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
-                <p class="footer-text">© 2025 <span class="text-primary font-semibold">JerryBob</span>. All rights reserved.</p>
+                <p class="footer-text">&copy; 2025 <span class="text-primary font-semibold">JerryBob</span>. All rights reserved.</p>
                 <div class="flex space-x-4">
                     <a href="https://web.okjike.com/u/8d6e830c-4da1-4753-ab41-020b91002aec" target="_blank" class="social-button bg-yellow-400">
                         <span class="social-button-text">J</span>

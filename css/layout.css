@@ -124,12 +124,7 @@
 }
 
 /* =============== Header组件 =============== */
-.header-component {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    position: relative;
-}
+/* header-component的position由JavaScript动态设置，避免冲突 */
 
 /* 首页header专用阴影效果 - 减轻阴影 */
 .header-component.glass-effect {
