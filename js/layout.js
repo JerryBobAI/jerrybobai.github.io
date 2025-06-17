@@ -273,14 +273,14 @@ function renderHomepageHeader(currentPath, isRoot) {
                 </div>
 
                 <!-- 桌面端导航 -->
-                <nav class="hidden md:flex space-x-6">
+                <nav class="hidden md:flex flex-nowrap items-center gap-6 whitespace-nowrap overflow-x-auto hide-scrollbar">
                     <a href="${homeLink}" class="nav-link ${homeClass}">首页</a>
                     <a href="${tagsLink}" class="nav-link ${tagsClass}">标签</a>
                     <a href="${personalLink}" class="nav-link ${personalClass}">个人</a>
-                    <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
+                    <a href="${learnLink}" class="nav-link ${learnClass}">学习</a>
                     <a href="${workLink}" class="nav-link ${workClass}">工作</a>
                     <a href="${socialLink}" class="nav-link ${socialClass}">社交</a>
-                    <a href="${learnLink}" class="nav-link ${learnClass}">学习</a>
+                    <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
                 </nav>
 
                 <!-- 移动端菜单按钮 -->
@@ -328,10 +328,10 @@ function createIndependentMobileMenu(homeLink, tagsLink, personalLink, familyLin
                 <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
                 <a href="${tagsLink}" class="mobile-nav-link ${tagsClass}">标签</a>
                 <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
-                <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
+                <a href="${learnLink}" class="mobile-nav-link ${learnClass}">学习</a>
                 <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
                 <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
-                <a href="${learnLink}" class="mobile-nav-link ${learnClass}">学习</a>
+                <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
             </div>
         </div>
     `;
@@ -385,6 +385,8 @@ function renderArticleHeader(currentPath, isRoot) {
     const today = new Date();
     const dateStr = metadata?.date || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     let tags = metadata && metadata.tags ? metadata.tags : ['博客'];
+
+    Logger.debug('DATA', `使用的日期: ${dateStr}, 标签: ${tags.join(', ')}`);
 
     // 使用共享的标签构建函数 - 自动检测背景色
     let tagsHtml = '';
@@ -622,8 +624,7 @@ function renderArticleMeta(currentPath, metadataCache) {
         }).join('');
     }
 
-    // 构建元信息 HTML
-    let homeLink = "../../index.html";
+    const homeLink = "../../index.html";
     if (currentPath.split('/').length <= 2) {
         homeLink = "../index.html";
     }
