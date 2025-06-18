@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>空虚与光</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #E0D9D3; /* 微水泥色 */
+            color: #3D3D3D; /* 碳色 */
+            overflow-x: hidden;
+        }
+        .font-display {
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to right, rgba(104, 144, 148, 0.9) 0%, rgba(104, 144, 148, 0.6) 55%, rgba(104, 144, 148, 0.3) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .highlight-luminous { /* A more vibrant gradient for the final revelation */
+            background-image: linear-gradient(to right, rgba(104, 144, 148, 1) 0%, rgba(131, 169, 172, 0.7) 60%, rgba(158, 194, 197, 0.5) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .paradox-card {
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            border: 1px solid #C8BFB6; /* 沉静的陶土色边框 */
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .paradox-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+        }
+        .card-icon {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #B08D57;
+            opacity: 0.2;
+            margin-bottom: 1rem;
+        }
+        .memphis-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.05;
+        }
+        @keyframes subtle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+    </style>
+</head>
+<body class="selection:bg-[#689094]/30 selection:text-[#3D3D3D]">
+
+    <div class="container mx-auto max-w-screen-xl py-12 px-4 md:py-24 md:px-8">
+
+        <!-- Act 1: The Paradoxical Pursuits -->
+        <section class="mb-16 md:mb-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Card 1: Freedom -->
+                <div class="paradox-card">
+                    <div class="memphis-shape w-24 h-24 border-2 border-[#689094] rounded-full -right-8 -top-8"></div>
+                    <div>
+                        <i class="fas fa-feather-alt card-icon"></i>
+                        <h2 class="font-display text-3xl md:text-4xl">追逐<span class="text-highlight-gradient">自由</span></h2>
+                        <p class="text-md text-[#5A5A5A] uppercase">PURSUIT OF FREEDOM</p>
+                    </div>
+                    <p class="text-xl md:text-2xl mt-4 font-light text-[#4A4A4A]">却坠入了更大的<strong class="font-semibold text-[#3D3D3D]">虚空</strong>。</p>
+                </div>
+                <!-- Card 2: Intimacy -->
+                <div class="paradox-card">
+                     <div class="memphis-shape w-0 h-0 border-l-[40px] border-l-transparent border-b-[60px] border-b-[#C8BFB6] border-r-[40px] border-r-transparent -bottom-5 left-[40%]"></div>
+                    <div>
+                        <i class="fas fa-users card-icon"></i>
+                        <h2 class="font-display text-3xl md:text-4xl">拥抱<span class="text-highlight-gradient">亲密</span></h2>
+                        <p class="text-md text-[#5A5A5A] uppercase">EMBRACE OF INTIMACY</p>
+                    </div>
+                    <p class="text-xl md:text-2xl mt-4 font-light text-[#4A4A4A]">却触到了<strong class="font-semibold text-[#3D3D3D]">孤独</strong>的硬核。</p>
+                </div>
+                <!-- Card 3: Peak -->
+                <div class="paradox-card md:col-span-2 lg:col-span-1">
+                     <div class="memphis-shape w-32 h-1 bg-[#B08D57] -bottom-1 right-0 transform -rotate-45 origin-bottom-right opacity-10"></div>
+                    <div>
+                        <i class="fas fa-mountain card-icon"></i>
+                        <h2 class="font-display text-3xl md:text-4xl">抵达<span class="text-highlight-gradient">巅峰</span></h2>
+                        <p class="text-md text-[#5A5A5A] uppercase">REACHING THE PEAK</p>
+                    </div>
+                    <p class="text-xl md:text-2xl mt-4 font-light text-[#4A4A4A]">却看见了另一座山峰的<strong class="font-semibold text-[#3D3D3D]">沉默召唤</strong>。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Act 2: The Revelation of Truth -->
+        <section class="text-center my-20 md:my-32 relative">
+            <div class="memphis-shape w-48 h-48 bg-[#DCD6CC] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 -z-10"></div>
+            <p class="text-xl md:text-2xl lg:text-3xl text-[#4A4A4A] leading-relaxed max-w-3xl mx-auto">
+                我们称之为“<strong class="font-semibold text-[#3D3D3D]">目标</strong>”的东西，<br>不过是<strong class="font-semibold text-[#3D3D3D]">空虚感</strong>给自己找的下一个<span class="text-highlight-gradient">宿主</span>。
+            </p>
+            <p class="text-sm uppercase text-[#6B6B6B] mt-6 tracking-wider">THAT WHICH WE CALL "GOAL" IS BUT THE NEXT HOST FOR OUR EMPTINESS.</p>
+        </section>
+
+        <!-- Act 3: The Quiet Command -->
+        <section class="text-center my-20 md:my-32">
+            <h3 class="font-display text-4xl md:text-5xl lg:text-6xl text-[#6B5D55] animate-pulse" style="animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;">
+                别再战斗了。
+            </h3>
+            <p class="text-sm uppercase text-[#887a71] mt-3 tracking-wider">STOP FIGHTING.</p>
+        </section>
+
+        <!-- Act 4: The Entrance for Light -->
+        <section class="text-center mt-20 md:mt-32 space-y-6 md:space-y-10 relative">
+            <div class="memphis-shape w-[80vmin] h-[80vmin] border border-[#C8BFB6] rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-30 animate-pulse" style="animation-duration: 10s;"></div>
+             <p class="text-2xl md:text-3xl lg:text-4xl text-[#4A4A4A] leading-relaxed">
+                空虚，是上帝在你心里留下的一个<strong class="font-semibold text-[#3D3D3D]">破洞</strong>。
+            </p>
+            <p class="text-xl md:text-2xl text-[#5A5A5A]">为的是让</p>
+            <h2 class="font-display text-[clamp(5rem,18vw,14rem)] leading-none">
+                <span class="highlight-luminous">光</span>
+                <span class="block text-2xl md:text-3xl text-[#5A5A5A] mt-4">能照进来。</span>
+            </h2>
+            <h2 class="font-display text-[clamp(5rem,18vw,14rem)] leading-none mt-6 md:mt-10">
+                 <span class="highlight-luminous">世界</span>
+                 <span class="block text-2xl md:text-3xl text-[#5A5A5A] mt-4">能流进来。</span>
+            </h2>
+        </section>
+    </div>
+
+    <footer class="text-center mt-16 md:mt-24 py-10 border-t border-[#C8BFB6]">
+        <p class="text-sm text-[#5A5A5A]">&copy; 2024 On Emptiness and Light. An interpretation.</p>
+        <p class="text-xs text-[#6B6B6B] mt-1">Visualized with Wabi-Sabi & Memphis influences.</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

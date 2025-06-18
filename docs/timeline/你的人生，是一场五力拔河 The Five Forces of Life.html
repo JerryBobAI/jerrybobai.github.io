@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>你的人生，是一场五力拔河 | The Five Forces of Life</title>
+
+	<script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+	<style>
+		/* --- 五彩斑斓 (Colorful) 风格 --- */
+		@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+		body {
+			font-family: 'Noto Sans SC', sans-serif;
+			background-color: #f8fafc; /* slate-50, 极浅的灰色背景 */
+			color: #1e293b; /* slate-800, 深灰色文字保证可读性 */
+			/* 四角渐变光晕背景 */
+			background-image:
+				radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+				radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+				radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+				radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+		}
+
+		/* 核心标题的全息彩虹渐变 */
+		.holographic-text {
+			background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+
+		/* 动画效果：滚动进入时触发 */
+		.reveal {
+			opacity: 0;
+			transform: translateY(30px);
+			transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		.reveal.visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		/* 简洁勾线风格图标容器 */
+		.icon-outline {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 6rem; /* 96px */
+			height: 6rem; /* 96px */
+			border-radius: 1.75rem; /* 28px */
+			border: 2px solid currentColor;
+			color: #3b82f6; /* System Blue */
+			transition: all 0.3s ease;
+		}
+		.icon-outline i {
+			font-size: 2.5rem; /* 40px */
+		}
+		.reveal:hover .icon-outline {
+			background-color: #3b82f6;
+			color: white;
+		}
+	</style>
+</head>
+<body class="antialiased">
+
+<main class="container mx-auto px-6 py-24 lg:py-32 space-y-24 lg:space-y-32">
+
+	<section class="min-h-screen flex flex-col justify-center items-center text-center reveal">
+		<p class="text-slate-500 text-lg md:text-xl tracking-widest">THE FIVE FORCES OF LIFE</p>
+		<h1 class="text-5xl md:text-7xl lg:text-9xl font-black my-4 text-slate-900">
+			一场<span class="holographic-text">五力拔河</span>
+		</h1>
+		<p class="max-w-3xl text-slate-600 text-lg lg:text-xl leading-relaxed">
+			想象一下，你站在生命的原点，五股巨大的力量从不同方向拉扯着你。它们并非敌人，而是塑造你、成就你的基本力。
+		</p>
+	</section>
+
+	<div class="space-y-20 lg:space-y-24">
+
+		<section class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center reveal">
+			<div class="bg-white p-8 lg:p-12 rounded-3xl shadow-xl text-center">
+				<div class="icon-outline mx-auto mb-6">
+					<i class="fa-solid fa-bullseye"></i>
+				</div>
+				<h2 class="text-5xl lg:text-6xl font-black text-slate-900">向心力</h2>
+				<p class="text-slate-500 text-lg tracking-widest mt-1">Centripetal Force</p>
+			</div>
+			<div class="text-lg space-y-4">
+				<p class="text-slate-700">这股力量，是你内在宇宙的引力核心。当世界试图将你撕扯成碎片——他人的期望、社会的噪音、纷繁的欲望——是“向心力”将你每一个散落的部分，温柔而坚定地拉回中心。它在你耳边低语：“嘿，别忘了你自己。”</p>
+				<p class="font-bold text-slate-800 text-xl lg:text-2xl pt-4">你，找到回家的路了吗？</p>
+			</div>
+		</section>
+
+		<section class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center reveal">
+			<div class="text-lg space-y-4 md:text-right md:order-last">
+				<p class="text-slate-700">宇宙的铁律是“熵增”，一切终将归于沉寂和无序。而生命，以其“生长力”，点燃了对抗这股终极虚无的火焰。这股力量，是你的好奇心、你的求知欲，是你那颗“永远不满足于此”的心。</p>
+				<p class="font-bold text-slate-800 text-xl lg:text-2xl pt-4">今天，你又为自己的生命注入了怎样的新鲜血液？</p>
+			</div>
+			<div class="bg-white p-8 lg:p-12 rounded-3xl shadow-xl text-center">
+				<div class="icon-outline mx-auto mb-6">
+					<i class="fa-solid fa-seedling"></i>
+				</div>
+				<h2 class="text-5xl lg:text-6xl font-black text-slate-900">生长力</h2>
+				<p class="text-slate-500 text-lg tracking-widest mt-1">Growth Force</p>
+			</div>
+		</section>
+
+		<section class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center reveal">
+			<div class="bg-white p-8 lg:p-12 rounded-3xl shadow-xl text-center">
+				<div class="icon-outline mx-auto mb-6">
+					<i class="fa-solid fa-lightbulb"></i>
+				</div>
+				<h2 class="text-5xl lg:text-6xl font-black text-slate-900">创造力</h2>
+				<p class="text-slate-500 text-lg tracking-widest mt-1">Creative Force</p>
+			</div>
+			<div class="text-lg space-y-4">
+				<p class="text-slate-700">工作与谋生，天差地别。谋生是动物本能，而“创造力”，是将你内在的火焰锻造成可见之光的过程。创造的本质，不是完成任务，而是“用你的独一无二，去回答世界的一个难题”。</p>
+				<p class="font-bold text-slate-800 text-xl lg:text-2xl pt-4">你的工作，是在消耗你，还是在创造你？</p>
+			</div>
+		</section>
+
+		<section class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center reveal">
+			<div class="text-lg space-y-4 md:text-right md:order-last">
+				<p class="text-slate-700">我们是独立的孤岛，但我们渴望成为群岛。“连接力”，就是那股驱动我们跨越深海，去寻找回声与镜子的力量。它让我们在关系中确认自己的坐标，明白“我”之于“我们”的意义。</p>
+				<p class="font-bold text-slate-800 text-xl lg:text-2xl pt-4">你有多久，没有进行一次让灵魂震颤的连接了？</p>
+			</div>
+			<div class="bg-white p-8 lg:p-12 rounded-3xl shadow-xl text-center">
+				<div class="icon-outline mx-auto mb-6">
+					<i class="fa-solid fa-people-arrows"></i>
+				</div>
+				<h2 class="text-5xl lg:text-6xl font-black text-slate-900">连接力</h2>
+				<p class="text-slate-500 text-lg tracking-widest mt-1">Connecting Force</p>
+			</div>
+		</section>
+
+		<section class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center reveal">
+			<div class="bg-white p-8 lg:p-12 rounded-3xl shadow-xl text-center">
+				<div class="icon-outline mx-auto mb-6">
+					<i class="fa-solid fa-shield-heart"></i>
+				</div>
+				<h2 class="text-5xl lg:text-6xl font-black text-slate-900">凝聚力</h2>
+				<p class="text-slate-500 text-lg tracking-widest mt-1">Cohesive Force</p>
+			</div>
+			<div class="text-lg space-y-4">
+				<p class="text-slate-700">这是最古老、最深沉的力量，源自血缘或超越血缘的情感契约。家，就是这股力量的实体。它是一种蛮不讲理的偏爱，是“无论如何，我都在”的终极承诺，为我们提供了对抗生命所有不确定性的心理基石。</p>
+				<p class="font-bold text-slate-800 text-xl lg:text-2xl pt-4">在你身后，有这样温暖的港湾吗？</p>
+			</div>
+		</section>
+	</div>
+
+	<section class="text-center py-20 reveal">
+		<h2 class="text-4xl lg:text-5xl font-black text-slate-900">成为自己人生的<span class="holographic-text">指挥家</span></h2>
+		<p class="max-w-4xl mx-auto text-slate-600 text-lg lg:text-xl leading-relaxed mt-8">
+			人生的智慧，不在于让每一种力量都达到100分，那只会让你被撕裂。真正的智慧，是成为自己人生的指挥家，主动地调配它们，指挥一曲属于你自己的、和谐而充满力量的生命交响乐。
+		</p>
+		<p class="text-2xl lg:text-3xl font-bold mt-12 text-slate-800">
+			去调音，去平衡，去指挥。
+			<br>
+			你，才是自己生命唯一的<span class="holographic-text">掌舵人</span>。
+		</p>
+		<div class="mt-16">
+			<a href="#" class="inline-block bg-green-500 text-white font-bold text-lg px-8 py-4 rounded-2xl shadow-lg shadow-green-500/30 transition-transform hover:scale-105 hover:shadow-xl">
+				开启你的乐章 <i class="fa-solid fa-arrow-right ml-2"></i>
+			</a>
+		</div>
+	</section>
+
+</main>
+
+<script>
+	// --- 简单的滚动入场动画脚本 ---
+	document.addEventListener("DOMContentLoaded", function() {
+		const reveals = document.querySelectorAll('.reveal');
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+					// Optional: Keep observing to re-trigger animation on scroll up
+					// observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			threshold: 0.1 // 元素进入视口10%时触发
+		});
+
+		reveals.forEach(reveal => {
+			observer.observe(reveal);
+		});
+	});
+</script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
