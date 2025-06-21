@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构《乌合之众》：从原石到雕塑的精神之旅</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc; /* 干净的浅灰色背景 */
+            color: #1e293b; /* 深蓝灰色文字，可读性高 */
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 92%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 90%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 90%, 0.4) 0px, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        /* 全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 系统强调色 */
+        .system-blue { color: #3b82f6; }
+        .system-purple { color: #8b5cf6; }
+        .system-orange { color: #f97316; }
+        .system-red { color: #ef4444; }
+        .action-green-bg { background-color: #22c55e; }
+
+        /* 滚动入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* 思辨/引用框样式 */
+        .prompt-box {
+            border-left: 4px solid #f97316; /* system-orange */
+            background-color: #fff7ed; /* orange-50 */
+            padding: 1rem 1.5rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-40 space-y-24 lg:space-y-48">
+
+        <section class="text-center min-h-[80vh] flex flex-col justify-center items-center reveal">
+            <h2 class="text-3xl md:text-5xl font-bold max-w-4xl mx-auto leading-tight">
+                解构《乌合之众》
+            </h2>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter my-10">
+                从<span class="holographic-text">原石</span>到<span class="holographic-text">雕塑</span>的精神之旅
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl text-slate-700">
+               我们将循着三道工序——“观其骨”、“填其肉”、“得其神”，将这块思想原石，雕琢成一座属于你自己的、清醒而立体的精神雕塑。
+            </p>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="system-blue font-bold tracking-widest">第一境 · 观其骨</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">俯瞰群体的山川河流</h2>
+                <p class="mt-6 text-xl text-slate-500">在动刀之前，先像雄鹰一样盘旋高空，看清这块“原石”的主干与脉络。</p>
+            </div>
+            <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-xl space-y-10">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="border-l-4 border-blue-300 pl-6">
+                        <h3 class="text-2xl font-bold mb-2">卷一：群体的精神</h3>
+                        <p class="text-slate-600">定义什么是“心理群体”，剖析其<span class="font-bold">情感化、低智化、易受暗示</span>的共同特征。</p>
+                    </div>
+                    <div class="border-l-4 border-purple-300 pl-6">
+                        <h3 class="text-2xl font-bold mb-2">卷二：群体的信念</h3>
+                        <p class="text-slate-600">探讨信念的形成，指出<span class="font-bold">领袖、断言、重复、传染</span>是其关键催化剂。</p>
+                    </div>
+                    <div class="border-l-4 border-orange-300 pl-6">
+                        <h3 class="text-2xl font-bold mb-2">卷三：群体的分类</h3>
+                        <p class="text-slate-600">将理论应用于实践，分析<span class="font-bold">异质性与同质性群体</span>（如陪审团、议会）的心理逻辑。</p>
+                    </div>
+                </div>
+                <hr class="border-slate-200 !my-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">心智地图：群体心理的论证路径</h3>
+                    <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-lg font-bold text-center">
+                        <span>个体</span>
+                        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+                        <span class="system-blue">心理群体</span>
+                        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+                        <span class="system-red">丧失理性</span>
+                        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+                        <span class="system-purple">领袖操控</span>
+                        <i class="fa-solid fa-arrow-right text-slate-300"></i>
+                        <span class="system-orange">形成信念</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="system-purple font-bold tracking-widest">第二境 · 填其肉</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">与勒庞在思想的矿井中对话</h2>
+                <p class="mt-6 text-xl text-slate-500">不再满足于“是什么”，而是要追问“为什么”和“真的是这样吗？”</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4">
+                    <h3 class="text-2xl font-bold mb-2 system-purple">钻探问题一：个体为何在群体中“降智”？</h3>
+                    <p class="text-slate-600"><strong class="text-slate-800">勒庞的回答：</strong>“集体无意识”让个体在匿名的庇护下摆脱道德和理性的束缚。</p>
+                    <p class="text-slate-600"><strong class="text-slate-800">你的思考：</strong>这个观点是否过于绝对？群体也存在建设性力量，如众筹、志愿者团队。勒庞的观察是否带有19世纪末法国社会动荡的烙印？</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4">
+                     <h3 class="text-2xl font-bold mb-2 system-purple">钻探问题二：“领袖”真的有如此大的魔力吗？</h3>
+                    <p class="text-slate-600"><strong class="text-slate-800">勒庞的回答：</strong>领袖的成功在于其坚定的意志和强大的声望，他们是行动家而非思想家。</p>
+                    <p class="text-slate-600"><strong class="text-slate-800">你的思考：</strong>今天的“意见领袖”是否仍在运用社交媒体实践“断言、重复、传染”的古老法则？我们是否曾不经意间被其俘获？</p>
+                </div>
+            </div>
+            <div class="mt-8 prompt-box">
+                <h3 class="text-xl font-bold text-orange-800">勒庞的“软肋”</h3>
+                <p class="mt-2 text-slate-700">勒庞的证据多为历史逸闻，缺乏严谨的实验数据。他将一切归因于抽象的“群体心理”，是否忽略了经济、政治、文化等更深层的结构性因素？这本书更像“天才的檄文”，而非“科学的报告”。</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+             <div class="text-center mb-16">
+                 <p class="system-orange font-bold tracking-widest">第三境 · 得其神</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">熬制一碗思想的浓汤</h2>
+                <p class="mt-6 text-xl text-slate-500">合上书，用自己的语言，重塑这本书的灵魂。</p>
+            </div>
+            <div class="bg-slate-800 text-white p-8 sm:p-12 rounded-3xl shadow-2xl">
+                <h3 class="text-center text-3xl font-bold mb-10">如果用一分钟向朋友介绍《乌合之众》？</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="border-t-4 border-blue-500 pt-4">
+                        <p class="font-bold text-lg text-blue-300 mb-2">通俗版</p>
+                        <p class="text-slate-300">“这本书说的是，人一扎堆就容易变傻。别看平时大家都是体面人，一旦聚成一群，就容易被最响亮、最极端的声音带着跑。所以，永远要警惕群体，保持自己的脑子。”</p>
+                    </div>
+                    <div class="border-t-4 border-purple-500 pt-4">
+                        <p class="font-bold text-lg text-purple-300 mb-2">深刻版</p>
+                        <p class="text-slate-300">“勒庞揭示了一个令人不安的真相：理性是脆弱的，文明是薄薄的一层外衣。在群体的洪流中，个体的独立意志很容易被冲垮，被原始的本能和情绪所取代。”</p>
+                    </div>
+                </div>
+                 <hr class="border-slate-700 !my-12">
+                 <div class="text-center">
+                     <h3 class="text-2xl font-bold mb-4">最终凝结成的核心箴言</h3>
+                     <p class="text-2xl md:text-3xl font-bold text-amber-300 leading-normal">“警惕你的喝彩，因为那可能不是你的声音。”</p>
+                 </div>
+            </div>
+        </section>
+
+        <section class="text-center py-20 reveal">
+             <div class="max-w-4xl mx-auto px-6">
+                <i class="fa-solid fa-shield-halved text-5xl system-blue mb-8"></i>
+                <h3 class="text-4xl md:text-5xl font-black leading-tight text-slate-800">
+                    你已将一块“原石”<br>雕琢成了属于你自己的“<span class="holographic-text">精神盾牌</span>”
+                </h3>
+                <p class="mt-8 text-xl text-slate-600 leading-relaxed">
+                    当你再次面对网络热潮、群体事件或任何形式的集体狂热时，你的脑中会响起勒庞的警报。这，便是阅读的真正意义：不是为了记住，而是为了看透。
+                </p>
+                <div class="mt-12">
+                    <a href="#" class="inline-block px-10 py-5 text-xl font-bold text-white rounded-2xl shadow-lg shadow-green-500/30 transition-transform duration-300 hover:scale-105 action-green-bg">
+                        保持清醒 <i class="fa-solid fa-brain ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.05 // Element comes into view earlier
+            });
+
+            const hiddenElements = document.querySelectorAll('.reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

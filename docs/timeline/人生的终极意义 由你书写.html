@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生的终极意义 | 由你书写</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc; /* 干净的浅灰色背景 */
+            color: #1e293b; /* 深蓝灰色文字 */
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 92%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 90%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 90%, 0.4) 0px, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        /* 全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 系统强调色 */
+        .system-blue { color: #3b82f6; }
+        .system-purple { color: #8b5cf6; }
+        .system-orange { color: #f97316; }
+        .action-green-bg { background-color: #22c55e; }
+
+        /* 滚动入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-40 space-y-24 lg:space-y-48">
+
+        <section class="text-center min-h-[80vh] flex flex-col justify-center items-center reveal">
+            <h2 class="text-3xl md:text-5xl font-bold max-w-4xl mx-auto leading-tight">
+                人生的终极意义是什么？
+            </h2>
+            <p class="mt-6 text-xl text-slate-600">一个叩问灵魂的终极问题，如同黑暗中投向宇宙的一声呐喊。</p>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter my-10">
+                它的答案，<span class="holographic-text">由你书写</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl text-slate-700">
+               让我们不向外寻找标准答案，而是向内探寻“创造”意义的可能性。
+            </p>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="system-blue font-bold tracking-widest">第一境 · 观其骨</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">审视“意义”的几种原材料</h2>
+                <p class="mt-6 text-xl text-slate-500">人类历史长河中，无数智者为我们提供了关于“意义”的核心“原石”。</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-8">
+                    <h3 class="text-3xl font-bold text-center">向外求：意义来自于<br>“更宏大的存在”</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4"><i class="fa-solid fa-hands-praying text-2xl system-blue mt-1"></i><div><h4 class="font-bold">神圣契约</h4><p class="text-slate-600">服务于神圣意志，生命是一场朝圣。</p></div></div>
+                        <div class="flex items-start gap-4"><i class="fa-solid fa-users text-2xl system-blue mt-1"></i><div><h4 class="font-bold">集体归属</h4><p class="text-slate-600">将“小我”融入“大我”，在集体中不朽。</p></div></div>
+                        <div class="flex items-start gap-4"><i class="fa-solid fa-leaf text-2xl system-blue mt-1"></i><div><h4 class="font-bold">自然之道</h4><p class="text-slate-600">顺应宇宙节律，在和谐宁静中找到位置。</p></div></div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-8">
+                    <h3 class="text-3xl font-bold text-center">向内求：意义由<br>“我自己”来定义</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4"><i class="fa-solid fa-person-digging text-2xl system-purple mt-1"></i><div><h4 class="font-bold">存在主义的宣告</h4><p class="text-slate-600">“存在先于本质”，用选择创造自己的意义。</p></div></div>
+                        <div class="flex items-start gap-4"><i class="fa-solid fa-wand-magic-sparkles text-2xl system-purple mt-1"></i><div><h4 class="font-bold">体验主义的绽放</h4><p class="text-slate-600">意义在于过程本身，在于体验的总和。</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="system-purple font-bold tracking-widest">第二境 · 填其肉</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">雕刻“意义”的三种技法</h2>
+                <p class="mt-6 text-xl text-slate-500">意义不是思考出来的，是“活”出来的。</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-center">
+                        <i class="fa-solid fa-heart text-5xl system-purple mb-4"></i>
+                        <h3 class="text-2xl font-bold">技法一：爱与连接</h3>
+                    </div>
+                    <p class="text-slate-600">爱一个具体的人，关心一个具体的生命，投身于一个具体的社群。深刻的连接感，是抵御虚无最强大的力量。</p>
+                    <p class="font-bold text-slate-700">你为谁流过泪，谁又曾是你的软肋与铠甲？</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-center">
+                        <i class="fa-solid fa-lightbulb text-5xl system-blue mb-4"></i>
+                        <h3 class="text-2xl font-bold">技法二：创造与贡献</h3>
+                    </div>
+                    <p class="text-slate-600">当你全身心投入去创造一件作品、解决一个难题、抚育一个生命时，你便在世界上留下了属于你的独一无二的印记。</p>
+                     <p class="font-bold text-slate-700">你为这个世界带来了什么？</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="text-center">
+                        <i class="fa-solid fa-mountain-sun text-5xl system-orange mb-4"></i>
+                        <h3 class="text-2xl font-bold">技法三：成长与超越</h3>
+                    </div>
+                    <p class="text-slate-600">将人生视为一场修行，所有的苦难、失败、挑战，都是磨练心性的“试金石”。不断超越昨日之我，本身就是一种激昂的意义。</p>
+                     <p class="font-bold text-slate-700">什么事让你痛苦，又让你变强？</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+             <div class="text-center mb-16">
+                 <p class="system-orange font-bold tracking-widest">第三境 · 得其神</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">你，就是那座独一无二的雕塑</h2>
+                <p class="mt-6 text-xl text-slate-500">放弃寻找“标准答案”的执念吧。</p>
+            </div>
+            
+            <div class="bg-slate-800 text-white p-8 sm:p-16 rounded-3xl shadow-2xl text-center">
+                <p class="text-2xl md:text-3xl text-slate-300 mb-6">一个从不追问意义的人生，才可能是真正无意义的。</p>
+                <h3 class="text-4xl md:text-6xl font-black leading-tight holographic-text">
+                    人生的终极意义，<br>就是去赋予人生以意义。
+                </h3>
+                <p class="mt-8 text-xl text-slate-300">宇宙没有给你剧本，这并非诅咒，而是最高的恩赐。因为它把最终的创作权，交到了你的手上。</p>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-lg">
+                    <div class="border-t-2 border-purple-400 pt-4">你爱过的人、牵过的手，<br>是你雕塑上的<span class="font-bold text-purple-300">温度</span>。</div>
+                    <div class="border-t-2 border-blue-400 pt-4">你创造的作品、付出的努力，<br>是你雕塑上的<span class="font-bold text-blue-300">线条</span>。</div>
+                    <div class="border-t-2 border-orange-400 pt-4">你战胜的苦难、达到的智慧，<br>是你雕塑上的<span class="font-bold text-orange-300">光芒</span>。</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center py-20 reveal">
+             <div class="max-w-4xl mx-auto px-6">
+                <i class="fa-solid fa-pen-nib text-5xl system-blue mb-8"></i>
+                <h3 class="text-4xl md:text-5xl font-black leading-tight text-slate-800">
+                    宇宙不欠你一个意义。<br>但你，可以送给宇宙一个精彩的故事。
+                </h3>
+                <p class="mt-8 text-2xl text-slate-600 leading-relaxed font-bold">
+                    现在，笔在你手中。
+                </p>
+                <div class="mt-12">
+                    <a href="#" class="inline-block px-10 py-5 text-xl font-bold text-white rounded-2xl shadow-lg shadow-green-500/30 transition-transform duration-300 hover:scale-105 action-green-bg">
+                        书写我的篇章 <i class="fa-solid fa-feather-pointed ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.05
+            });
+
+            const hiddenElements = document.querySelectorAll('.reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大恩即大仇：权力关系的逆转</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #050505; /* 极黑背景 */
+            color: #E5E7EB; /* 亮灰色文字 */
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .super-text {
+            font-size: clamp(3.5rem, 12vw, 10rem);
+            font-weight: 900;
+            line-height: 1;
+            text-align: center;
+        }
+        
+        .medium-text {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .english-subtitle {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9CA3AF; /* gray-400 */
+            font-weight: 500;
+        }
+
+        /* 高亮色 - 警戒橘红 */
+        .highlight-orange {
+            background-image: linear-gradient(to right, rgba(255, 99, 71, 1), rgba(255, 99, 71, 0.6));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 高亮色 - 电光蓝 */
+        .highlight-blue {
+            background-image: linear-gradient(to right, rgba(0, 191, 255, 1), rgba(0, 191, 255, 0.6));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .background-icon {
+            position: absolute;
+            z-index: 0;
+            opacity: 0.04;
+            pointer-events: none;
+            font-size: 25rem; /* ~400px */
+        }
+        
+        @media (min-width: 768px) {
+            .background-icon {
+                font-size: 40rem; /* ~640px */
+            }
+        }
+        
+        .card {
+            background-color: rgba(23, 23, 23, 0.5); /* #171717 with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem; /* 24px */
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        /* 伪元素延迟动画 */
+        .fade-in-delay-1 { animation-delay: 0.2s; }
+        .fade-in-delay-2 { animation-delay: 0.4s; }
+        .fade-in-delay-3 { animation-delay: 0.6s; }
+        .fade-in-delay-4 { animation-delay: 0.8s; }
+
+        /* 箭头动画 */
+        .scroll-down-arrow {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-screen-2xl mx-auto">
+
+        <section class="section">
+            <h1 class="super-text fade-in">大恩即大仇</h1>
+            <h2 class="medium-text text-gray-400 mt-4 fade-in fade-in-delay-1">
+                本质是一场<span class="highlight-orange">“权力关系”</span>的逆转
+            </h2>
+            <p class="english-subtitle mt-8 fade-in fade-in-delay-2">THE REVERSAL OF POWER DYNAMICS</p>
+            <div class="absolute bottom-10 text-gray-600 fade-in fade-in-delay-4">
+                <i class="fas fa-chevron-down text-2xl scroll-down-arrow"></i>
+            </div>
+        </section>
+
+        <section class="section">
+            <i class="fas fa-gift background-icon text-gray-500"></i>
+            <div class="relative z-10 text-center max-w-4xl mx-auto">
+                <p class="text-xl md:text-2xl text-gray-400 leading-relaxed fade-in">
+                    真正造成反目的，不是恩情本身，
+                </p>
+                <p class="medium-text mt-4 fade-in fade-in-delay-1">
+                    而是它背后<span class="highlight-orange">不对等</span>的权力结构。
+                </p>
+                <p class="english-subtitle mt-6 fade-in fade-in-delay-2">IT'S NOT THE KINDNESS, IT'S THE IMBALANCED POWER STRUCTURE BEHIND IT.</p>
+            </div>
+        </section>
+        
+        <section class="section">
+             <div class="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+                <div class="card fade-in">
+                    <div class="text-center">
+                        <i class="fas fa-hand-holding-usd text-5xl mb-6 highlight-orange"></i>
+                        <h3 class="medium-text mb-2"><span class="highlight-orange">愚蠢</span>的给予</h3>
+                        <p class="english-subtitle mb-8">IS A FORM OF ENTRAPMENT</p>
+                        
+                        <p class="super-text opacity-80 mb-6">绑架</p>
+                        
+                        <p class="text-xl md:text-2xl text-gray-300">
+                            是让对方感觉<strong class="font-bold text-white">更弱</strong>。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card fade-in fade-in-delay-2">
+                     <div class="text-center">
+                        <i class="fas fa-lightbulb text-5xl mb-6 highlight-blue"></i>
+                        <h3 class="medium-text mb-2"><span class="highlight-blue">聪明</span>的给予</h3>
+                        <p class="english-subtitle mb-8">IS A FORM OF EMPOWERMENT</p>
+
+                        <p class="super-text opacity-80 mb-6">赋能</p>
+
+                         <p class="text-xl md:text-2xl text-gray-300">
+                            是让对方变得<strong class="font-bold text-white">更强</strong>。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="text-center py-16 px-6 bg-black">
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                聪明的给予，是赋能，是让对方变得更强；<br class="hidden sm:block">
+                愚蠢的给予，是绑架，是让对方感觉更弱。
+            </p>
+            <p class="text-xs text-gray-600 mt-10">
+                Design Concept: Dark Tech x Hybrid Grid
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

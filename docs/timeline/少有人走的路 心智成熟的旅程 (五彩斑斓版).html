@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>少有人走的路 | 心智成熟的旅程 (五彩斑斓版)</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc; /* 干净的浅灰色背景 */
+            color: #1e293b; /* 深蓝灰色文字，可读性高 */
+            /* 柔和的彩色光晕背景，模拟彩色壁纸 */
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 92%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 90%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 90%, 0.4) 0px, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        /* 关键标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 系统强调色 */
+        .system-blue { color: #3b82f6; }
+        .system-purple { color: #8b5cf6; }
+        .system-orange { color: #f97316; }
+        .system-yellow { color: #f59e0b; }
+        .action-green-bg { background-color: #22c55e; }
+
+        /* 滚动入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 0.1s;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 思考题/引用框样式 */
+        .prompt-box {
+            border-left: 4px solid #f97316; /* system-orange */
+            background-color: #fff7ed; /* orange-50 */
+            padding: 1rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-40 space-y-24 lg:space-y-48">
+
+        <section class="text-center min-h-[80vh] flex flex-col justify-center items-center reveal">
+            <p class="text-xl lg:text-2xl text-slate-500 tracking-widest uppercase mb-4">The Road Less Traveled</p>
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-tight holographic-text">
+                少有人走的路
+            </h1>
+            <p class="mt-8 max-w-2xl mx-auto text-lg lg:text-xl text-slate-600">
+                开启一场从“厚”到“薄”，再到“薄”的精神雕琢之旅。
+            </p>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="text-blue-500 font-bold tracking-widest">第一境</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">观其骨</h2>
+                <p class="mt-6 text-xl text-slate-500">俯瞰大地的雄鹰：构建心智地图的四大支柱</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-lg text-center space-y-4">
+                    <i class="fa-solid fa-gem text-4xl system-blue"></i>
+                    <h3 class="text-2xl font-bold">基石：自律</h3>
+                    <p class="text-slate-600">一切心智成熟的起点与交通工具。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg text-center space-y-4">
+                    <i class="fa-solid fa-heart-pulse text-4xl system-purple"></i>
+                    <h3 class="text-2xl font-bold">动力：爱</h3>
+                    <p class="text-slate-600">拓展自我界限，促进成长的意愿与行动。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg text-center space-y-4">
+                    <i class="fa-solid fa-compass text-4xl system-orange"></i>
+                    <h3 class="text-2xl font-bold">探索：成长</h3>
+                    <p class="text-slate-600">建立并更新我们赖以生存的世界观。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg text-center space-y-4">
+                    <i class="fa-solid fa-star-of-life text-4xl system-yellow"></i>
+                    <h3 class="text-2xl font-bold">恩典：神奇力量</h3>
+                    <p class="text-slate-600">来自外部，超越我们理解的善意。</p>
+                </div>
+            </div>
+             <div class="mt-12 text-center bg-white p-8 rounded-3xl shadow-lg">
+                <p class="text-xl md:text-2xl font-bold tracking-wide">
+                    这是一条以“<span class="system-blue">自律</span>”为基石，以“<span class="system-purple">爱</span>”为动力，在探索“<span class="system-orange">世界观</span>”的过程中，时而获得“<span class="system-yellow">恩典</span>”相助，最终通往“心智成熟”的旅程。
+                </p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="text-purple-500 font-bold tracking-widest">第二境</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">填其肉</h2>
+                <p class="mt-6 text-xl text-slate-500">探寻真相的侦探：用问题钻探思想的深井</p>
+            </div>
+            <div class="bg-white p-8 sm:p-10 lg:p-12 rounded-3xl shadow-xl space-y-10">
+                <div>
+                    <h3 class="text-3xl font-bold mb-6"><i class="fa-solid fa-gem mr-3 system-blue"></i>关于“自律”</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                        <p><strong class="font-bold">推迟满足感：</strong>克服本能，为心智奠基。</p>
+                        <p><strong class="font-bold">承担责任：</strong>从“谁的错？”转向“我能做什么？”</p>
+                        <p><strong class="font-bold">忠于事实：</strong>勇敢地修正自己的认知“地图”。</p>
+                        <p><strong class="font-bold">保持平衡：</strong>在矛盾中走钢丝的最高级艺术。</p>
+                    </div>
+                </div>
+                <hr class="border-slate-200">
+                <div>
+                    <h3 class="text-3xl font-bold mb-6"><i class="fa-solid fa-heart-pulse mr-3 system-purple"></i>关于“爱”</h3>
+                     <p class="text-lg text-slate-700">坠入情网不是爱，真正的爱是需要付出努力的意志行为。它不是失去自我，而是<span class="font-bold system-purple">成就一个更大的自我</span>。</p>
+                </div>
+                <hr class="border-slate-200">
+                <div class="prompt-box">
+                    <p class="font-bold text-orange-800"><i class="fa-solid fa-magnifying-glass mr-2"></i>侦探提问：</p>
+                    <p class="text-slate-700 mt-2">这和阿德勒的“课题分离”有何异同？我们如何能确定自己看到的就是“事实”，而不是被个人偏见扭曲的“伪事实”？</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+             <div class="text-center mb-16">
+                 <p class="text-orange-500 font-bold tracking-widest">第三境</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">得其神</h2>
+                <p class="mt-6 text-xl text-slate-500">熬制浓汤的大厨：一句话掌握书的灵魂</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-lg text-center flex flex-col justify-center items-center">
+                    <p class="mb-4 text-slate-500">给行动者</p>
+                    <p class="text-xl font-bold">心智成熟的唯一途径，就是<span class="system-blue">直面问题</span>，而不是逃避。</p>
+                </div>
+                 <div class="bg-slate-800 text-white p-8 rounded-3xl shadow-2xl text-center flex flex-col justify-center items-center">
+                    <p class="mb-4 text-slate-300">给思考者</p>
+                    <p class="text-xl font-bold">真正的成长，始于你放弃寻找捷径，愿意用<span class="holographic-text">“自律”</span>这把刻刀，日复一日地雕琢自己。</p>
+                </div>
+                 <div class="bg-white p-8 rounded-3xl shadow-lg text-center flex flex-col justify-center items-center">
+                     <p class="mb-4 text-slate-500">给爱与被爱者</p>
+                    <p class="text-xl font-bold">爱不是一种感觉，而是一种<span class="system-purple">选择</span>：选择共同走向成熟。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center py-20 reveal bg-white rounded-3xl shadow-xl">
+             <div class="max-w-4xl mx-auto px-6">
+                <h3 class="text-4xl md:text-5xl font-black leading-tight text-slate-800">
+                    心智成熟，是一条<span class="holographic-text">少有人走的路</span>
+                </h3>
+                <p class="mt-8 text-xl text-slate-600 leading-relaxed">
+                    它始于承担责任的自律，经由滋养灵魂的真爱，最终通往一个超越自我的境界。这条路虽然艰难，却是唯一能让我们活得真实而自由的道路。
+                </p>
+                <div class="mt-12">
+                    <a href="#" class="inline-block px-10 py-5 text-xl font-bold text-white rounded-2xl shadow-lg shadow-green-500/30 transition-transform duration-300 hover:scale-105 action-green-bg">
+                        走上我的路 <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const hiddenElements = document.querySelectorAll('.reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
