@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构《小而美》：持续盈利的经营法则</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #f8fafc; /* 干净的浅灰色背景 */
+            color: #1e293b; /* 深蓝灰色文字 */
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 92%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 90%, 0.4) 0px, transparent 40%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 90%, 0.4) 0px, transparent 40%);
+            overflow-x: hidden;
+        }
+
+        /* 全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 系统强调色 */
+        .system-blue { color: #3b82f6; }
+        .system-purple { color: #8b5cf6; }
+        .system-orange { color: #f97316; }
+        .system-pink { color: #ec4899; }
+        .system-teal { color: #14b8a6; }
+        .system-amber { color: #f59e0b; }
+        .action-green-bg { background-color: #22c55e; }
+
+        /* 滚动入场动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* 思辨/引用框样式 */
+        .prompt-box {
+            border-left: 4px solid #f97316; /* system-orange */
+            background-color: #fff7ed; /* orange-50 */
+            padding: 1rem 1.5rem;
+            border-radius: 0 0.75rem 0.75rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 py-24 lg:py-40 space-y-24 lg:space-y-48">
+
+        <section class="text-center min-h-[80vh] flex flex-col justify-center items-center reveal">
+            <h2 class="text-3xl md:text-5xl font-bold max-w-4xl mx-auto leading-tight">
+                解构《小而美》
+            </h2>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter my-10">
+                选择<span class="holographic-text">伟大</span>，而非<span class="holographic-text">庞大</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl text-slate-700">
+               这不只是一本商业案例集，而是一种关于企业“灵魂”与“幸福感”的深刻思考。
+            </p>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="system-blue font-bold tracking-widest">第一境 · 观其骨</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">勾勒“反增长”的蓝图</h2>
+                <p class="mt-6 text-xl text-slate-500">俯瞰这张挑战了现代商业核心教条的“新大陆”地图。</p>
+            </div>
+            <div class="bg-white p-8 sm:p-12 rounded-3xl shadow-xl space-y-12">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold mb-4">一个抉择：决定性的十字路口</h3>
+                    <p class="text-lg text-slate-600 max-w-3xl mx-auto">所有“小而美”公司都曾面临决定性的扩张机会，但它们的共同选择是——<span class="text-4xl font-black text-red-500 mx-2 p-4 rounded-full bg-red-100">不</span>。这个“不”字，是通往“小而美”的唯一入口。</p>
+                </div>
+                
+                <hr class="border-slate-200">
+
+                <div class="text-center">
+                     <h3 class="text-3xl font-bold mb-8">六根支柱：支撑说“不”的底气 (The "Mojo")</h3>
+                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                        <div class="text-center space-y-3"><i class="fa-solid fa-lightbulb text-4xl system-amber"></i><p class="font-bold">灵魂感</p></div>
+                        <div class="text-center space-y-3"><i class="fa-solid fa-map-marker-alt text-4xl system-orange"></i><p class="font-bold">扎根感</p></div>
+                        <div class="text-center space-y-3"><i class="fa-solid fa-handshake-angle text-4xl system-pink"></i><p class="font-bold">亲密感</p></div>
+                        <div class="text-center space-y-3"><i class="fa-solid fa-hammer text-4xl system-teal"></i><p class="font-bold">匠人感</p></div>
+                        <div class="text-center space-y-3"><i class="fa-solid fa-users text-4xl system-purple"></i><p class="font-bold">归属感</p></div>
+                        <div class="text-center space-y-3"><i class="fa-solid fa-chess-king text-4xl system-blue"></i><p class="font-bold">掌控感</p></div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-16">
+                <p class="system-purple font-bold tracking-widest">第二境 · 填其肉</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">用思考与现实雕琢</h2>
+                <p class="mt-6 text-xl text-slate-500">我们不再是旁观者，而是参与者，与作者的观点进行碰撞和对话。</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4">
+                    <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-question-circle text-3xl system-purple"></i>
+                        <h3 class="text-2xl font-bold">第一刀：拷问“灵魂”</h3>
+                    </div>
+                    <p class="text-slate-600">抛开“赚钱”的标准答案，你的事业“为什么”而存在？如果公司明天消失，谁会真正感到惋惜？无法回答它，你的公司就只是一个空有躯壳的赚钱机器。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4">
+                     <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-dollar-sign text-3xl system-purple"></i>
+                        <h3 class="text-2xl font-bold">第二刀：解构“利润”</h3>
+                    </div>
+                    <p class="text-slate-600">利润不是“目标”，而是“结果”和“工具”。它是公司能够坚守灵魂、善待员工、回馈社区的“燃料”，而不是驱动一切的“主人”。</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-lg space-y-4">
+                     <div class="flex items-center gap-4">
+                        <i class="fa-solid fa-user-group text-3xl system-purple"></i>
+                        <h3 class="text-2xl font-bold">第三刀：重定义“关系”</h3>
+                    </div>
+                    <p class="text-slate-600">“亲密感”基于真实的人性关怀，而非冰冷的营销技巧。你是在服务一个有血有肉的人，还是在算计一个行走的钱包？前者带来忠诚，后者只带来交易。</p>
+                </div>
+            </div>
+             <div class="mt-8 prompt-box">
+                <h3 class="text-xl font-bold text-orange-800">现实的辩论</h3>
+                <p class="mt-2 text-slate-700">当竞争对手都在用资本烧钱时，坚守“小而美”会不会等于“坐以待毙”？——也许。但它也提供了一种对抗内卷的“解药”：放弃对速度的迷恋，在一个细分领域里，建立起由文化和情感构筑的、资本无法轻易摧毁的“护城河”。</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+             <div class="text-center mb-16">
+                 <p class="system-orange font-bold tracking-widest">第三境 · 得其神</p>
+                <h2 class="text-5xl md:text-7xl font-black mt-2">铸造你的“小而美”罗盘</h2>
+                <p class="mt-6 text-xl text-slate-500">将所有复杂的案例和分析，熔炼成能“立得住”的核心箴言。</p>
+            </div>
+            
+            <div class="bg-slate-800 text-white p-8 sm:p-12 rounded-3xl shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-amber-300">一分钟版：“商业世界的叛逆者”</h3>
+                        <p class="text-slate-300">“这本书讲述了一群‘商业世界里的叛逆者’。他们证明了，公司可以不必追求上市或无限扩张，而是选择一个最适合自己的规模，像经营一个家庭、一个社区、一件艺术品一样，去经营自己的事业。他们不为增长所奴役，最终却赢得了利润、尊敬和内心的宁静。”</p>
+                        <h3 class="text-2xl font-bold text-amber-300 pt-4">一句话版</h3>
+                        <p class="text-slate-300">“不要痴迷于做大，而要专注于做强；不要专注于做强，而要致力于做得长久而幸福。”</p>
+                    </div>
+                    <div class="bg-slate-700 rounded-2xl p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-user-tie text-5xl mb-6 text-white"></i>
+                        <h3 class="text-2xl font-bold holographic-text">一个终极拷问</h3>
+                        <p class="mt-4 text-xl text-slate-200">“这本书最终指向的，不是一个商业问题，而是一个人生问题。它迫使创始人回答：<br>我究竟想过上一种怎样的人生？”</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center py-20 reveal">
+             <div class="max-w-4xl mx-auto px-6">
+                <i class="fa-solid fa-compass-drafting text-5xl system-blue mb-8"></i>
+                <h3 class="text-4xl md:text-5xl font-black leading-tight text-slate-800">
+                    你已将《小而美》这块原石，<br>雕琢成了属于你自己的“<span class="holographic-text">经营罗盘</span>”
+                </h3>
+                <p class="mt-8 text-xl text-slate-600 leading-relaxed">
+                    从此，在每一个面临“增长”诱惑的十字路口，你都拥有了另一种选择的勇气。你知道，伟大，有比“规模”更动人的定义。
+                </p>
+                <div class="mt-12">
+                    <a href="#" class="inline-block px-10 py-5 text-xl font-bold text-white rounded-2xl shadow-lg shadow-green-500/30 transition-transform duration-300 hover:scale-105 action-green-bg">
+                        开启我的“小而美”之路 <i class="fa-solid fa-feather-pointed ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.05
+            });
+
+            const hiddenElements = document.querySelectorAll('.reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

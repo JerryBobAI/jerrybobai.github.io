@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>少有人走的路 | The Road Less Traveled - A Child's Story</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 全局及背景核心样式 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030014; /* 深邃的底色 */
+            color: #e5e7eb; /* 默认文字颜色 */
+            overflow-x: hidden;
+        }
+
+        /* 动态霓虹光晕背景容器 */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -10;
+        }
+
+        /* 霓虹光球 */
+        .light-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px); /* 关键：强烈的模糊效果形成光晕 */
+            opacity: 0.6;
+        }
+
+        @keyframes animate-float {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            50% { transform: translate(var(--end-x), var(--end-y)) scale(1.3); }
+            100% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+        }
+
+        .orb-1 { animation: animate-float 38s ease-in-out infinite alternate; }
+        .orb-2 { animation: animate-float 48s ease-in-out infinite alternate-reverse; }
+        .orb-3 { animation: animate-float 42s ease-in-out infinite alternate; }
+
+        /* 前景长虹玻璃效果叠加层 */
+        main::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* 关键：用重复线性渐变模拟粗犷的竖向棱纹 */
+            background-image: repeating-linear-gradient(90deg,
+                rgba(0, 0, 0, 0.2) 0px,
+                rgba(0, 0, 0, 0.2) 3px,
+                transparent 3px,
+                transparent 8px
+            );
+            /* 关键：用 backdrop-filter 扭曲后方光晕 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        /* --- 前景元素及动画 --- */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* "液态"毛玻璃卡片 */
+        .liquid-card {
+            background: rgba(20, 20, 35, 0.25);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px; /* 圆润的边角营造流动感 */
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* 高亮色 */
+        .highlight-pink { color: #f472b6; }
+        .highlight-blue { color: #60a5fa; }
+        .highlight-purple { color: #a78bfa; }
+        .highlight-gold { color: #f59e0b; }
+
+        /* 标题下划线 - 模拟辉光 */
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(244, 114, 182, 0) 0%, rgba(244, 114, 182, 1) 50%, rgba(244, 114, 182, 0) 100%);
+            border-radius: 2px;
+            filter: blur(2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="background-container">
+        <div class="light-orb orb-1" style="width: 50vw; height: 50vw; background-color: #ec4899; --start-x: -10vw; --start-y: -15vh; --end-x: 40vw; --end-y: 70vh;"></div>
+        <div class="light-orb orb-2" style="width: 45vw; height: 45vw; background-color: #3b82f6; --start-x: 60vw; --start-y: 5vh; --end-x: 10vw; --end-y: 80vh;"></div>
+        <div class="light-orb orb-3" style="width: 40vw; height: 40vw; background-color: #a855f7; --start-x: 20vw; --start-y: 60vh; --end-x: 70vw; --end-y: 10vh;"></div>
+    </div>
+
+    <main class="relative z-10">
+        <div class="container mx-auto px-6 lg:px-8 py-24 lg:py-32 space-y-24 lg:space-y-48">
+
+            <section class="min-h-screen flex flex-col justify-center items-center text-center scroll-animate">
+                <p class="text-xl lg:text-2xl font-light text-gray-400 uppercase tracking-widest mb-4">A SECRET STORY FOR YOU</p>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-tight tracking-tighter">
+                    少有人走的路
+                </h1>
+                <p class="mt-8 max-w-2xl mx-auto text-lg lg:text-2xl text-gray-300 font-light">
+                    这是一个藏在“大人书”里的秘密故事，关于一个叫做“舒服镇”和一种叫做“唉声叹气病”的魔法。
+                </p>
+            </section>
+            
+            <section class="scroll-animate max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                     <h2 class="text-5xl md:text-7xl font-black relative inline-block title-underline">两条路</h2>
+                     <p class="mt-8 text-xl text-gray-300">一个叫“小乐”的男孩，决定去寻找没有烦恼的快乐。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="liquid-card p-8 text-center border-2 border-amber-400/50">
+                        <i class="fas fa-sun text-6xl highlight-gold mb-6"></i>
+                        <h3 class="text-3xl font-bold mb-2">轻松大道</h3>
+                        <p class="text-gray-300">金光闪闪，宽阔平坦，铺满了棉花糖和糖果树。</p>
+                    </div>
+                    <div class="liquid-card p-8 text-center border-2 border-purple-400/50">
+                        <i class="fas fa-tree text-6xl highlight-purple mb-6"></i>
+                        <h3 class="text-3xl font-bold mb-2">少有人走的路</h3>
+                        <p class="text-gray-300">藏在荆棘和森林后，窄小、安静，充满未知。</p>
+                    </div>
+                </div>
+                <div class="mt-12 text-center text-2xl text-gray-200 p-8 liquid-card max-w-4xl mx-auto">
+                   一位叫“<strong class="highlight-blue font-bold">自律</strong>”的白胡子老爷爷说：“真正的快乐，藏在那条难走的路尽头。我将给你三件宝贝，去打败路上的怪兽。”
+                </div>
+            </section>
+            
+            <section class="scroll-animate max-w-5xl mx-auto text-center">
+                 <h2 class="text-8xl md:text-9xl lg:text-[12rem] font-black text-white/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">壹</h2>
+                 <div class="liquid-card p-8 lg:p-12">
+                    <p class="font-bold text-pink-400 mb-2">BATTLE 01</p>
+                    <h3 class="text-4xl lg:text-6xl font-black mb-6">VS 怪兽“马上就要”</h3>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="text-center">
+                            <i class="fas fa-cookie-bite text-8xl highlight-pink animate-bounce"></i>
+                            <p class="mt-4 text-xl font-bold">它的魔法</p>
+                            <p class="text-gray-300">让你只想吃掉眼前最甜的糖果，逃避重要的事。</p>
+                        </div>
+                        <div class="text-center">
+                             <i class="fas fa-award text-8xl highlight-pink"></i>
+                            <p class="mt-4 text-xl font-bold">神奇宝贝：<strong class="text-white">“先苦后甜”巧克力</strong></p>
+                            <p class="text-gray-300">只要先做一件难事，就能得到双倍的甜！</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+            <section class="scroll-animate max-w-5xl mx-auto text-center">
+                 <h2 class="text-8xl md:text-9xl lg:text-[12rem] font-black text-white/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">贰</h2>
+                 <div class="liquid-card p-8 lg:p-12">
+                    <p class="font-bold text-blue-400 mb-2">BATTLE 02</p>
+                    <h3 class="text-4xl lg:text-6xl font-black mb-6">VS 怪兽“都怪你”</h3>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="text-center">
+                            <i class="fas fa-users-slash text-8xl highlight-blue"></i>
+                            <p class="mt-4 text-xl font-bold">它的魔法</p>
+                            <p class="text-gray-300">让你觉得所有错都是别人的，自己最无辜。</p>
+                        </div>
+                        <div class="text-center">
+                             <i class="fas fa-user-check text-8xl highlight-blue"></i>
+                            <p class="mt-4 text-xl font-bold">神奇宝贝：<strong class="text-white">“责任”小镜子</strong></p>
+                            <p class="text-gray-300">敢于承认“这是我的问题”，怪兽就会消失。</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+             <section class="scroll-animate max-w-5xl mx-auto text-center">
+                 <h2 class="text-8xl md:text-9xl lg:text-[12rem] font-black text-white/10 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">叁</h2>
+                 <div class="liquid-card p-8 lg:p-12">
+                    <p class="font-bold text-purple-400 mb-2">FINAL BATTLE</p>
+                    <h3 class="text-4xl lg:text-6xl font-black mb-6">VS 怪兽“谎言迷雾”</h3>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="text-center">
+                            <i class="fas fa-smog text-8xl highlight-purple"></i>
+                            <p class="mt-4 text-xl font-bold">它的魔法</p>
+                            <p class="text-gray-300">制造假象，让你看不清方向，在原地打转。</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="relative">
+                                <i class="fas fa-lightbulb text-8xl highlight-purple"></i>
+                                <i class="fas fa-heart text-4xl text-red-500 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/3"></i>
+                            </div>
+                            <p class="mt-4 text-xl font-bold">神奇宝贝：<strong class="text-white">“真心”灯 (由“爱”点亮)</strong></p>
+                            <p class="text-gray-300">用真心说出真相，再浓的迷雾也会被驱散。</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+             <section class="scroll-animate text-center max-w-4xl mx-auto">
+                <h2 class="text-5xl md:text-7xl font-black relative inline-block title-underline">最大的宝藏</h2>
+                <div class="mt-12 liquid-card p-12">
+                    <i class="fas fa-gem text-6xl highlight-gold mb-8"></i>
+                    <p class="text-2xl lg:text-4xl text-gray-200 leading-relaxed font-light">
+                        路的尽头，只有一块闪着光的石头，上面刻着：
+                    </p>
+                    <p class="mt-6 text-3xl lg:text-5xl font-black text-white leading-snug">
+                         “当你不再害怕困难，困难本身就成了你最大的宝藏。”
+                    </p>
+                </div>
+            </section>
+            
+            <section class="scroll-animate text-center max-w-4xl mx-auto">
+                <h2 class="text-5xl md:text-7xl font-black">归来</h2>
+                <p class="mt-6 text-xl text-gray-300">小乐回来了。他不再需要糖果，因为他发现了比糖果甜一万倍的快乐。</p>
+                <div class="mt-12 liquid-card p-12 flex flex-col items-center">
+                    <i class="fas fa-kite text-8xl highlight-blue mb-8"></i>
+                    <p class="text-2xl text-gray-200">
+                        他用自己的双手修好了风筝，当它飞上天空时，那种<strong class="font-bold text-white">成就感</strong>；
+                    </p>
+                    <p class="mt-4 text-2xl text-gray-200">
+                        他向朋友真诚地道了歉，当他们重归于好时，那种<strong class="font-bold text-white">联结感</strong>。
+                    </p>
+                    <p class="mt-12 text-3xl font-bold highlight-pink">这，才是真正的快乐。</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const scrollElements = document.querySelectorAll('.scroll-animate');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // 动画只播放一次
+                }
+            });
+        }, { threshold: 0.1 });
+
+        scrollElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // 背景光球动画随机延迟
+        const orbs = document.querySelectorAll('.light-orb');
+        orbs.forEach(orb => {
+            orb.style.animationDelay = `${Math.random() * -10}s`;
+        });
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASMR切割视频爆款分析 - 谷歌发布会风格</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa; /* Google-style light gray */
+            color: #202124; /* Google's dark gray */
+        }
+        .chinese-title {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 900;
+        }
+        .chinese-heading {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+        }
+        .english-subtext {
+            font-family: 'Roboto', sans-serif;
+            color: #5f6368;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .g-blue { color: #4285F4; }
+        .bg-g-blue-soft { background-color: rgba(66, 133, 244, 0.1); }
+        .border-g-blue { border-color: #4285F4; }
+        .g-yellow { color: #FBBC05; }
+        .bg-g-yellow-soft { background-color: rgba(251, 188, 5, 0.1); }
+        .g-green { color: #34A853; }
+        .bg-g-green-soft { background-color: rgba(52, 168, 83, 0.1); }
+        .g-red { color: #EA4335; }
+        .bg-g-red-soft { background-color: rgba(234, 67, 53, 0.1); }
+
+        .content-section {
+            padding: 5rem 0;
+            border-bottom: 1px solid #e8eaed;
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: 1.1;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid #dadce0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(60,64,67,0.08), 0 6px 6px rgba(60,64,67,0.1);
+        }
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .prompt-box {
+            background-color: #f1f3f4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Roboto Mono', monospace;
+            color: #3c4043;
+            border-left: 4px solid #4285F4;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-xl">
+
+        <header class="text-center min-h-screen flex flex-col justify-center items-center">
+            <h1 class="chinese-title ultra-large-text">
+                <span class="g-blue">ASMR</span>切割视频
+            </h1>
+            <p class="chinese-title text-4xl md:text-5xl text-gray-700 mt-2">爆款案例与技术分析</p>
+            <p class="english-subtext text-lg mt-6">VIRAL PHENOMENON & TECHNICAL ANALYSIS</p>
+            <p class="mt-8 text-lg max-w-2xl mx-auto text-gray-600">
+                全网流行的ASMR切割视频，其共同特点是利用<span class="font-bold g-blue">透明材质</span> + <span class="font-bold g-green">高频脆响</span> + <span class="font-bold g-red">慢动作破坏</span>，触发观众的解压反应。
+            </p>
+        </header>
+
+        <section class="content-section fade-in-on-scroll">
+            <div class="text-center mb-16">
+                <h2 class="chinese-title text-4xl md:text-5xl">五大核心类型</h2>
+                <p class="english-subtext mt-3">THE FIVE CORE CATEGORIES</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card text-center">
+                    <span class="material-icons-outlined g-red text-6xl mb-4">auto_awesome</span>
+                    <h3 class="chinese-heading text-2xl">透明水果切割</h3>
+                    <p class="english-subtext text-sm mb-3">TRANSPARENT FRUIT</p>
+                    <p class="text-gray-600">最主流类型，将水果替换为玻璃或水晶质感。</p>
+                </div>
+                <div class="card text-center">
+                    <span class="material-icons-outlined g-green text-6xl mb-4">waves</span>
+                    <h3 class="chinese-heading text-2xl">弹性材质切割</h3>
+                    <p class="english-subtext text-sm mb-3">ELASTIC MATERIALS</p>
+                    <p class="text-gray-600">慢爽感代表，如果冻、硅胶、皂基等。</p>
+                </div>
+                <div class="card text-center">
+                    <span class="material-icons-outlined g-blue text-6xl mb-4">castle</span>
+                    <h3 class="chinese-heading text-2xl">微缩景观切割</h3>
+                    <p class="english-subtext text-sm mb-3">MINIATURE LANDSCAPES</p>
+                    <p class="text-gray-600">奇幻风格，如水晶城堡、玻璃建筑等。</p>
+                </div>
+                <div class="card text-center lg:col-start-1">
+                    <span class="material-icons-outlined g-yellow text-6xl mb-4">smart_toy</span>
+                    <h3 class="chinese-heading text-2xl">潮玩/IP手办切割</h3>
+                    <p class="english-subtext text-sm mb-3">DESIGNER TOYS / IP FIGURES</p>
+                    <p class="text-gray-600">Z世代爆款，破坏珍贵物品的禁忌感。</p>
+                </div>
+                <div class="card text-center">
+                    <span class="material-icons-outlined g-blue text-6xl mb-4">ac_unit</span>
+                    <h3 class="chinese-heading text-2xl">冰晶/矿石切割</h3>
+                    <p class="english-subtext text-sm mb-3">ICE CRYSTALS / MINERALS</p>
+                    <p class="text-gray-600">冷感解压，捕捉冰雾飞溅和裂痕蔓延。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section fade-in-on-scroll">
+             <div class="text-center mb-16">
+                <h2 class="chinese-title text-4xl md:text-5xl">案例深度分析</h2>
+                <p class="english-subtext mt-3">IN-DEPTH CASE ANALYSIS</p>
+            </div>
+            <div class="space-y-16">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-g-red-soft p-4 inline-block rounded-full mb-4">
+                           <span class="material-icons-outlined g-red text-4xl">auto_awesome</span>
+                        </div>
+                        <h3 class="chinese-heading text-3xl mb-2">一、透明水果切割</h3>
+                        <p class="text-gray-600 mb-4">刀切瞬间产生清脆碎裂声和慢动作形变。透明材质折射光影增强视觉冲击，硬物碎裂声触发ASMR酥麻感。</p>
+                        <p class="chinese-title text-6xl g-red">1650万+</p>
+                        <p class="text-gray-700 font-medium">蓝色玻璃树莓切割视频播放量</p>
+                        <p class="chinese-title text-6xl g-red mt-6">>8000Hz</p>
+                        <p class="text-gray-700 font-medium">高频碰撞声刺激神经</p>
+                    </div>
+                    <div class="bg-g-red-soft rounded-lg p-8 flex justify-center items-center h-full">
+                        <p class="text-center text-xl text-red-800">〔 视觉示意：一把刀正切开一颗晶莹剔透的玻璃草莓，碎片飞溅 〕</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                     <div class="bg-g-green-soft rounded-lg p-8 flex justify-center items-center h-full md:order-last">
+                        <p class="text-center text-xl text-green-800">〔 视觉示意：果冻被刀切开，呈现Q弹抖动后缓慢断裂的慢动作 〕</p>
+                    </div>
+                    <div>
+                        <div class="bg-g-green-soft p-4 inline-block rounded-full mb-4">
+                           <span class="material-icons-outlined g-green text-4xl">waves</span>
+                        </div>
+                        <h3 class="chinese-heading text-3xl mb-2">二、弹性材质切割</h3>
+                        <p class="text-gray-600 mb-4">核心体验是材质经历“挤压-形变-破裂”三阶段，声效为粘性撕裂声配合Q弹视觉。</p>
+                        <p class="chinese-title text-6xl g-green">2-3秒</p>
+                        <p class="text-gray-700 font-medium">颤抖延迟，延长解压快感</p>
+                    </div>
+                </div>
+
+                 <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="bg-g-blue-soft p-4 inline-block rounded-full mb-4">
+                           <span class="material-icons-outlined g-blue text-4xl">castle</span>
+                        </div>
+                        <h3 class="chinese-heading text-3xl mb-2">三、微缩景观切割</h3>
+                        <p class="text-gray-600 mb-4">刀切粉色水晶城堡，内部呈现半透明粉光，碎片倒塌声叠加晶体高频碎裂声。</p>
+                        <blockquote class="border-l-4 border-g-blue p-4 bg-white my-4">
+                            <p class="text-xl font-medium text-gray-800">“不贴但上头”</p>
+                            <p class="text-gray-600 mt-1">—— 用户反馈：画面奇幻但声音真实，形成独特吸引力。</p>
+                        </blockquote>
+                    </div>
+                    <div class="bg-g-blue-soft rounded-lg p-8 flex justify-center items-center h-full">
+                        <p class="text-center text-xl text-blue-800">〔 视觉示意：一把刀切开一座精美的粉色水晶城堡模型 〕</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section fade-in-on-scroll">
+            <div class="text-center mb-16">
+                <h2 class="chinese-title text-4xl md:text-5xl">爆款共性总结</h2>
+                <p class="english-subtext mt-3">KEY FORMULA FOR VIRALITY</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card">
+                    <span class="material-icons-outlined g-blue text-5xl mb-4">layers</span>
+                    <h3 class="chinese-heading text-2xl mb-2">材质优先级</h3>
+                    <p class="text-2xl font-bold text-gray-800">透明 > 弹性 > 实心</p>
+                    <p class="text-gray-600 mt-2">肉类、面包因声效差被淘汰。</p>
+                </div>
+                <div class="card">
+                    <span class="material-icons-outlined g-green text-5xl mb-4">model_training</span>
+                    <h3 class="chinese-heading text-2xl mb-2">技术依赖</h3>
+                    <p class="text-2xl font-bold text-gray-800">Google Veo 3</p>
+                    <p class="text-gray-600 mt-2">实现声画同步生成，无需后期配音。4K画质+慢动作强化细节。</p>
+                </div>
+                <div class="card">
+                    <span class="material-icons-outlined g-red text-5xl mb-4">bolt</span>
+                    <h3 class="chinese-heading text-2xl mb-2">神经刺激</h3>
+                    <p class="text-2xl font-bold text-gray-800">> 8000Hz</p>
+                    <p class="text-gray-600 mt-2">以上脆响刺激三叉神经，触发头皮发麻的放松反应。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section fade-in-on-scroll">
+             <div class="text-center mb-12">
+                <h2 class="chinese-title text-4xl md:text-5xl">想尝试制作？</h2>
+                <p class="english-subtext mt-3">WANT TO TRY MAKING ONE?</p>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <p class="text-center text-2xl chinese-heading mb-6">可参考公式：</p>
+                <div class="prompt-box text-center text-lg md:text-xl">
+                    [4K画质] + [切割对象材质] + [慢动作] + [ASMR声效描述] + [镜头特写]
+                </div>
+                <p class="text-center text-xl chinese-heading my-8">示例 <span class="english-subtext text-base">EXAMPLE PROMPT</span></p>
+                 <div class="prompt-box">
+                    <p class="font-bold">Realistic 4K close-up of knife slicing glowing jelly, slow-motion wobble with sticky tearing sounds, macro lens.</p>
+                </div>
+                 <p class="mt-12 text-center text-lg text-gray-700">这些视频通过<span class="font-bold">非现实材质</span>+<span class="font-bold">AI精准声画</span>颠覆传统ASMR创作，成为2025年减压新趋势。</p>
+            </div>
+        </section>
+
+        <footer class="text-center py-12 mt-8">
+             <p class="text-gray-500">分析由AI生成，旨在提供创意洞察。</p>
+             <p class="text-xs text-gray-400 mt-2">AI-POWERED ANALYSIS FOR CREATIVE INSIGHTS</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
