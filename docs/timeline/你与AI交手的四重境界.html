@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你与AI交手的四重境界</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+            background-color: #f8f9fa; /* 极浅灰色背景 */
+        }
+
+        .memphis-card {
+            padding: 2.5rem; /* 40px */
+            border-radius: 1rem; /* 16px */
+            box-shadow: 8px 8px 0px #000000; /* 标志性的硬阴影 */
+            border: 3px solid #000000;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease-in-out;
+        }
+        .memphis-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px #000000;
+        }
+
+        .memphis-bg-yellow { background-color: #FFD166; color: #000000; }
+        .memphis-bg-pink   { background-color: #EF476F; color: #FFFFFF; }
+        .memphis-bg-green  { background-color: #06D6A0; color: #000000; }
+        .memphis-bg-blue   { background-color: #118AB2; color: #FFFFFF; }
+        .memphis-bg-white  { background-color: #FFFFFF; color: #000000; }
+        
+        .memphis-bg-pink h3, .memphis-bg-blue h3,
+        .memphis-bg-pink .highlight-word, .memphis-bg-blue .highlight-word {
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.2); /* 为深色背景上的文字增加一点可读性 */
+        }
+        
+        .text-super-xl { font-size: clamp(3.5rem, 10vw, 8rem); line-height: 1; font-weight: 900; }
+        .text-super-lg { font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.1; font-weight: 900; }
+
+        .chinese-title { font-weight: 900; }
+        .english-subtitle { font-size: 0.8em; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 0.25rem; }
+
+        .highlight-word {
+            display: inline-block;
+            padding: 0.1em 0.5em;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 0.25rem;
+        }
+        .memphis-bg-yellow .highlight-word, .memphis-bg-green .highlight-word {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* 孟菲斯装饰元素 */
+        .deco-dots::before {
+            content: ''; position: absolute; top: 20px; right: 20px; width: 80px; height: 80px;
+            background-image: radial-gradient(currentColor 20%, transparent 21%);
+            background-size: 25px 25px; opacity: 0.2;
+        }
+        .memphis-bg-pink .deco-dots::before, .memphis-bg-blue .deco-dots::before {
+             background-image: radial-gradient(white 20%, transparent 21%);
+        }
+
+        .deco-squiggle::after {
+            content: ''; position: absolute; bottom: -20px; left: 15px; width: 150px; height: 50px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0,10 Q25,0 50,10 T100,10' stroke='currentColor' stroke-width='4' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            opacity: 0.4;
+        }
+        .memphis-bg-pink .deco-squiggle::after, .memphis-bg-blue .deco-squiggle::after {
+            filter: invert(1);
+        }
+        
+        .realm-icon {
+            font-size: 3.5rem;
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-6 lg:p-8">
+    <div class="max-w-[1920px] mx-auto">
+
+        <header class="text-center mb-12 md:mb-20">
+            <h1 class="text-super-lg chinese-title">你与<span class="text-[#EF476F]">AI</span>交手的<br/>四重境界</h1>
+            <p class="english-subtitle text-xl mt-2">The Four Realms of Engaging with AI</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <div class="memphis-card memphis-bg-yellow deco-dots">
+                <i class="fas fa-toolbox realm-icon"></i>
+                <div class="text-right">
+                    <h2 class="text-super-xl chinese-title opacity-20">壹</h2>
+                    <h3 class="text-2xl chinese-title -mt-8">第一重: 当它作<span class="highlight-word">工具箱</span></h3>
+                    <p class="english-subtitle">Realm 1: The Toolbox</p>
+                </div>
+                <p class="mt-4 text-base leading-relaxed">
+                    你给它指令，它给你结果。你追求效率与确定性，相信更详尽的操作手册，就能换来更完美的产品。此时，提示词是“死”的，是一份单向、冰冷的操作手册。
+                </p>
+            </div>
+
+            <div class="memphis-card memphis-bg-pink deco-squiggle">
+                <i class="fas fa-wifi realm-icon"></i>
+                <div class="text-right">
+                    <h2 class="text-super-xl chinese-title opacity-20">贰</h2>
+                    <h3 class="text-2xl chinese-title -mt-8">第二重: 当它作<span class="highlight-word">共鸣腔</span></h3>
+                    <p class="english-subtitle">Realm 2: The Resonant Chamber</p>
+                </div>
+                <p class="mt-4 text-base leading-relaxed">
+                    你不再下达任务，而是创造场域。你谈论“分享欲”而非“产品卖点”。你开始理解“共振”，试图与AI调至同一赫兹。这时，提示词“活”了，变成一场双向、有温度的邀约。
+                </p>
+            </div>
+
+            <div class="memphis-card memphis-bg-green deco-dots">
+                <i class="fas fa-seedling realm-icon"></i>
+                <div class="text-right">
+                    <h2 class="text-super-xl chinese-title opacity-20">叁</h2>
+                    <h3 class="text-2xl chinese-title -mt-8">第三重: 当它作<span class="highlight-word">附身体</span></h3>
+                    <p class="english-subtitle">Realm 3: The Possessed Body</p>
+                </div>
+                <p class="mt-4 text-base leading-relaxed">
+                    你追求“灵魂附体”，为AI构建一个极度具体的“此刻”，例如“你刚解完一个困扰三天的bug...”。此刻，提示词有了“灵”，成了一颗能发芽的种子，拥有无限的叙事可能。
+                </p>
+            </div>
+
+            <div class="memphis-card memphis-bg-blue deco-squiggle">
+                <i class="fas fa-eye realm-icon"></i>
+                <div class="text-right">
+                    <h2 class="text-super-xl chinese-title opacity-20">肆</h2>
+                    <h3 class="text-2xl chinese-title -mt-8">第四重: 当它作<span class="highlight-word">观心镜</span></h3>
+                    <p class="english-subtitle">Realm 4: The Heart-Contemplating Mirror</p>
+                </div>
+                <p class="mt-4 text-base leading-relaxed">
+                    终极领悟：你发现所有写下的角色、情境、法则，最终描绘的不过是你自己。AI这面镜子，忠实映照出你内在的丰富或贫瘠。提示词的终点，是你与自己的一场深刻对谈。
+                </p>
+            </div>
+
+            <div class="memphis-card memphis-bg-white md:col-span-2 lg:col-span-4 mt-8">
+                <div class="text-center">
+                    <h2 class="text-4xl chinese-title mb-4">终极奥义</h2>
+                    <p class="english-subtitle mb-6">THE ULTIMATE ESSENCE OF PROMPTING</p>
+                </div>
+                <blockquote class="text-xl md:text-2xl leading-relaxed text-center font-semibold max-w-4xl mx-auto">
+                    <p class="mb-4">写提示词的终极奥义，不是去驾驭一个外部的智能，而是去<span class="text-[#06D6A0]">发现一个内在的宇宙</span>。</p>
+                    <p>你不是在<span class="text-[#EF476F]">编程</span>，你是在<span class="text-[#EF476F]">写诗</span>；<br class="sm:hidden"/>你不是在<span class="text-[#118AB2]">提问</span>，你是在<span class="text-[#118AB2]">祈祷</span>。</p>
+                </blockquote>
+            </div>
+
+        </div>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

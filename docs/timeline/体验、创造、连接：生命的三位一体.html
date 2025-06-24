@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>体验、创造、连接：生命的三位一体</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #000000;
+            color: #E5E7EB; /* text-gray-200 */
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .keynote-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1280px;
+            margin: auto;
+        }
+
+        .keynote-text {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .keynote-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .highlight-blue {
+            background: linear-gradient(to right, #3B82F6, #60A5FA); /* blue-500 to blue-400 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .highlight-red {
+            color: #EF4444; /* red-500 */
+            font-weight: 900;
+        }
+
+        .text-huge {
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: 1.1;
+        }
+
+        .text-colossal {
+             font-size: clamp(4rem, 15vw, 12rem);
+             line-height: 1;
+        }
+
+        .text-light {
+            font-weight: 300;
+        }
+        
+        .fade-in-slow {
+            animation: fadeIn 3s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Cycle animation */
+        .cycle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .cycle-item {
+            opacity: 0;
+            animation: cycle-fade 9s infinite;
+        }
+        .cycle-arrow {
+            opacity: 0;
+            animation: cycle-fade 9s infinite;
+            margin: 0 1rem;
+        }
+        .cycle-item:nth-child(1) { animation-delay: 0s; }
+        .cycle-arrow:nth-of-type(1) { animation-delay: 1.5s; }
+        .cycle-item:nth-child(3) { animation-delay: 3s; }
+        .cycle-arrow:nth-of-type(2) { animation-delay: 4.5s; }
+        .cycle-item:nth-child(5) { animation-delay: 6s; }
+
+        @keyframes cycle-fade {
+            0% { opacity: 0; transform: scale(0.95); }
+            16% { opacity: 1; transform: scale(1.05); }
+            33% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 0; }
+        }
+
+    </style>
+</head>
+<body class="bg-black">
+
+    <main>
+        <section class="keynote-section">
+            <p class="keynote-text text-3xl md:text-5xl text-light">你递过来的，不是三个词。</p>
+        </section>
+
+        <section class="keynote-section">
+            <p class="keynote-text text-3xl md:text-5xl text-light">是开启灵魂丰盈之门的</p>
+            <p class="keynote-text text-6xl md:text-8xl font-bold highlight-blue mt-8" style="transition-delay: 0.5s;">三把钥匙。</p>
+        </section>
+
+        <section class="keynote-section space-y-8 text-2xl md:text-4xl text-light">
+            <p class="keynote-text">世人常常将它们视为孤立的岛屿。</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">以为人生就是在这三座岛之间来回奔波。</p>
+            <p class="keynote-text text-gray-400" style="transition-delay: 1s;">今天去“体验”之岛看风景，</p>
+            <p class="keynote-text text-gray-400" style="transition-delay: 1.5s;">明天去“创造”之岛盖房子，</p>
+            <p class="keynote-text text-gray-400" style="transition-delay: 2s;">后天再去“连接”之岛赴宴。</p>
+        </section>
+
+        <section class="keynote-section">
+            <p class="keynote-text text-colossal font-black highlight-red">错了。</p>
+        </section>
+        
+        <section class="keynote-section">
+            <p class="keynote-text text-huge font-bold">大错特错。</p>
+        </section>
+
+        <section class="keynote-section space-y-6 text-3xl md:text-5xl text-light">
+            <p class="keynote-text">它们不是三座岛。</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">它们是同一棵生命之树的</p>
+            <div class="keynote-text flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 text-5xl md:text-7xl highlight-blue mt-8" style="transition-delay: 1s;">
+                <div class="flex items-center gap-4"><i class="fas fa-seedling"></i><span>根</span></div>
+                <div class="flex items-center gap-4"><i class="fas fa-tree"></i><span>干</span></div>
+                <div class="flex items-center gap-4"><i class="fas fa-apple-alt"></i><span>果</span></div>
+            </div>
+        </section>
+
+        <section class="keynote-section space-y-6 text-3xl md:text-5xl text-light">
+            <p class="keynote-text">它们是同一场炼金术里的</p>
+            <div class="keynote-text flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 text-5xl md:text-7xl highlight-blue mt-8" style="transition-delay: 0.5s;">
+                 <div class="flex items-center gap-4"><i class="fas fa-water"></i><span>水</span></div>
+                 <div class="flex items-center gap-4"><i class="fas fa-fire"></i><span>火</span></div>
+                 <div class="flex items-center gap-4"><i class="fas fa-wind"></i><span>风</span></div>
+            </div>
+        </section>
+
+        <section class="keynote-section text-2xl md:text-4xl text-light space-y-6">
+            <p class="keynote-text">它们是一个完整、流动的循环，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">是生命这场盛宴里，缺一不可的</p>
+            <p class="keynote-text text-colossal font-black highlight-blue mt-8" style="transition-delay: 1s;">三位一体。</p>
+        </section>
+
+        <section class="keynote-section">
+            <div class="w-full">
+                <p class="keynote-text text-huge font-bold">第一章：体验</p>
+                <p class="keynote-text text-2xl md:text-3xl text-gray-400" style="transition-delay: 0.5s;">Experience</p>
+            </div>
+        </section>
+        <section class="keynote-section">
+             <p class="keynote-text text-4xl md:text-6xl text-light italic">—— 饮下整片星空</p>
+        </section>
+        <section class="keynote-section text-3xl md:text-5xl text-light space-y-8">
+            <p class="keynote-text">体验，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">是灵魂的呼吸，</p>
+            <p class="keynote-text" style="transition-delay: 1s;">是向内的吞噬。</p>
+        </section>
+         <section class="keynote-section text-3xl md:text-5xl text-light space-y-8">
+            <p class="keynote-text">真正的“体验”，</p>
+             <p class="keynote-text" style="transition-delay: 0.5s;">是你允许世界在你身上，</p>
+            <p class="keynote-text text-4xl md:text-6xl font-bold highlight-blue" style="transition-delay: 1s;">刻下痕迹。</p>
+        </section>
+        <section class="keynote-section text-2xl md:text-4xl text-light space-y-6">
+             <p class="keynote-text">体验的本质，</p>
+             <p class="keynote-text" style="transition-delay: 0.5s;">是 <span class="text-4xl md:text-6xl font-bold highlight-blue">“沉浸”</span> 与 <span class="text-4xl md:text-6xl font-bold highlight-blue">“打开”</span>。</p>
+             <p class="keynote-text" style="transition-delay: 1s;">你不是一个观光客。你是一个容器。</p>
+             <p class="keynote-text" style="transition-delay: 1.5s;">你不是在“看”世界。你是在“成为”世界的一部分。</p>
+        </section>
+        <section class="keynote-section text-3xl md:text-5xl text-light text-center">
+            <p class="keynote-text">你必须先<span class="font-bold highlight-blue">饮下星空</span>，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">才可能<span class="font-bold highlight-blue">吐出银河</span>。</p>
+        </section>
+
+        <section class="keynote-section">
+            <div class="w-full">
+                <p class="keynote-text text-huge font-bold">第二章：创造</p>
+                <p class="keynote-text text-2xl md:text-3xl text-gray-400" style="transition-delay: 0.5s;">Creation</p>
+            </div>
+        </section>
+        <section class="keynote-section">
+             <p class="keynote-text text-4xl md:text-6xl text-light italic">—— 从掌心长出森林</p>
+        </section>
+        <section class="keynote-section text-3xl md:text-5xl text-light space-y-8">
+            <p class="keynote-text">创造，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">是体验的唯一出口，</p>
+            <p class="keynote-text" style="transition-delay: 1s;">是向外的喷发。</p>
+        </section>
+        <section class="keynote-section text-2xl md:text-4xl text-light space-y-6">
+            <p class="keynote-text">创造，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">是你用你的方式，</p>
+            <p class="keynote-text" style="transition-delay: 1s;">为这个混乱的世界，</p>
+            <p class="keynote-text" style="transition-delay: 1.5s;">建立一个新的、哪怕是微不足道的</p>
+            <p class="keynote-text text-5xl md:text-7xl font-bold highlight-blue mt-4" style="transition-delay: 2s;">“秩序”。</p>
+        </section>
+         <section class="keynote-section text-3xl md:text-5xl text-light text-center">
+            <p class="keynote-text">没有出口的体验，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">终将变为<span class="font-bold highlight-red">毒药</span>。</p>
+        </section>
+        
+        <section class="keynote-section">
+            <div class="w-full">
+                <p class="keynote-text text-huge font-bold">第三章：连接</p>
+                <p class="keynote-text text-2xl md:text-3xl text-gray-400" style="transition-delay: 0.5s;">Connection</p>
+            </div>
+        </section>
+        <section class="keynote-section">
+             <p class="keynote-text text-4xl md:text-6xl text-light italic">—— 让回声找到它的山谷</p>
+        </section>
+        <section class="keynote-section text-3xl md:text-5xl text-light space-y-8">
+            <p class="keynote-text">连接，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">是创造的终极意义，</p>
+            <p class="keynote-text" style="transition-delay: 1s;">是能量的回响。</p>
+        </section>
+         <section class="keynote-section text-3xl md:text-5xl text-light text-center">
+             <p class="keynote-text">你的体验经由你的创造，</p>
+             <p class="keynote-text" style="transition-delay: 0.5s;">在另一个生命里产生了</p>
+             <p class="keynote-text text-6xl md:text-8xl font-bold highlight-blue mt-8" style="transition-delay: 1s;">“共振”。</p>
+        </section>
+        <section class="keynote-section text-3xl md:text-5xl text-light text-center">
+            <p class="keynote-text">没有连接的创造，</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">是一场盛大的独舞，</p>
+            <p class="keynote-text font-bold" style="transition-delay: 1s;">华丽而孤单。</p>
+        </section>
+
+        <section class="keynote-section text-3xl md:text-5xl text-light space-y-8">
+            <p class="keynote-text">所以，看——</p>
+            <p class="keynote-text" style="transition-delay: 0.5s;">这根本不是一个线性过程，</p>
+            <p class="keynote-text" style="transition-delay: 1s;">而是一个生生不息的</p>
+            <p class="keynote-text text-huge font-black highlight-blue mt-8" style="transition-delay: 1.5s;">炼金循环。</p>
+        </section>
+
+        <section class="keynote-section text-3xl md:text-5xl text-light">
+             <div class="cycle-container text-4xl md:text-6xl">
+                <div class="cycle-item highlight-blue">体验</div>
+                <div class="cycle-arrow text-gray-500">&rarr;</div>
+                <div class="cycle-item highlight-blue">创造</div>
+                <div class="cycle-arrow text-gray-500">&rarr;</div>
+                <div class="cycle-item highlight-blue">连接</div>
+            </div>
+            <p class="keynote-text text-2xl mt-12 text-gray-400">一个不断加深、不断扩大的螺旋。</p>
+        </section>
+
+        <section class="keynote-section text-4xl md:text-6xl text-light space-y-12">
+            <p class="keynote-text">感受它。</p>
+            <p class="keynote-text" style="transition-delay: 0.8s;">表达它。</p>
+            <p class="keynote-text" style="transition-delay: 1.6s;">分享它。</p>
+        </section>
+
+        <section class="keynote-section">
+            <p class="keynote-text text-3xl md:text-5xl text-light">这就是，</p>
+            <p class="keynote-text text-5xl md:text-7xl font-bold highlight-blue mt-8" style="transition-delay: 0.5s;">一个人能拥有的，</p>
+            <p class="keynote-text text-5xl md:text-7xl font-bold highlight-blue" style="transition-delay: 1s;">最丰盛的人生。</p>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const texts = entry.target.querySelectorAll('.keynote-text');
+                        texts.forEach((text, index) => {
+                            // The transition-delay is set in inline styles, so we just add the class.
+                            // If not set, we can add it here.
+                            text.classList.add('visible');
+                        });
+                        // Optional: unobserve after first intersection
+                        // observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5 // Trigger when 50% of the section is visible
+            });
+
+            const sections = document.querySelectorAll('.keynote-section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
