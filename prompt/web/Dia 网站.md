@@ -1,6 +1,6 @@
 ## 系统提示词
 
-基于提供的文本或者网站等关键信息，帮我用类似苹果发布会 PPT 的 Hybrid Grid 风格的视觉设计生成一个中文动态网页展示，具体要求为：
+基于提供的文本或者网站等关键信息，帮我用类似苹果发布会 PPT 的 Hybrid Layout 风格的视觉设计生成一个中文动态网页展示，具体要求为：
 
 1. 尽量在一页展示全部信息
    核心背景、基础色调与整体布局结构：
@@ -18,6 +18,96 @@
 10. 避免使用emoji作为主要图标
 11. 不要省略内容要点
 12. 过程输出也采用简体中文
+
+CSS 样式严格参考如下实现方式：
+
+```css
+<style>
+	/* 自定义全局样式 */
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+	body {
+		font-family: 'Noto Sans SC', sans-serif;
+		background-color: #f8f9fa; /* 极浅灰色背景 */
+		color: #1d1d1f; /* 接近苹果的深灰色文本 */
+		overflow-x: hidden;
+	}
+
+	/* 核心：色彩云雾/极光渐变背景 */
+	.aurora-background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -10;
+		overflow: hidden;
+	}
+
+	.aurora-blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(100px); /* 关键的模糊效果 */
+		opacity: 0.25;
+		animation: move 30s infinite alternate;
+	}
+
+	.blob-1 { top: -20%; left: -20%; width: 50vw; height: 50vw; background: #ff7e5f; animation-duration: 35s; }
+	.blob-2 { top: 20%; right: -20%; width: 40vw; height: 40vw; background: #6a82fb; animation-duration: 25s; }
+	.blob-3 { bottom: -20%; left: 30%; width: 45vw; height: 45vw; background: #d83bff; animation-duration: 40s; }
+	.blob-4 { bottom: 10%; right: 10%; width: 30vw; height: 30vw; background: #feca57; animation-duration: 20s; }
+
+
+	@keyframes move {
+		from {
+			transform: translate(0, 0) scale(1);
+		}
+		to {
+			transform: translate(10vw, 15vh) scale(1.2);
+		}
+	}
+
+	/* 滚动触发动画的基础样式 */
+	.scroll-reveal {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+	}
+
+	.scroll-reveal.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* 高亮色辉光效果 */
+	.tech-glow-blue::after {
+		content: '';
+		position: absolute;
+		bottom: -20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 150%;
+		height: 100px;
+		background: radial-gradient(circle, rgba(106, 130, 251, 0.3) 0%, rgba(106, 130, 251, 0) 70%);
+		z-index: -1;
+	}
+
+	.tech-glow-purple::after {
+		content: '';
+		position: absolute;
+		bottom: -20px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 150%;
+		height: 100px;
+		background: radial-gradient(circle, rgba(216, 59, 255, 0.3) 0%, rgba(216, 59, 255, 0) 70%);
+		z-index: -1;
+	}
+
+</style>
+```
+
+
 
 ## 样例输入
 
