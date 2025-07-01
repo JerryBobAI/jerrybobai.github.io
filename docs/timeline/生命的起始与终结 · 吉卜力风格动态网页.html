@@ -1,0 +1,354 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>生命的起始与终结 · 吉卜力风格动态网页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS 3.0+ CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Google Fonts: Noto Sans SC & Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Custom 吉卜力风格样式 -->
+  <style>
+    body {
+      font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+      background-color: #FDF6E3;
+      background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                        linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+      background-size: 20px 20px;
+      color: #3A2E2C;
+      min-height: 100vh;
+    }
+    .font-noto-sans-sc {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .highlight-text, .highlight-stat {
+      color: #FFB300;
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+      padding: 1.5rem;
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+    }
+    .card-alt-bg {
+      background-color: rgba(224, 242, 247, 0.75);
+    }
+    .card-darker-alt-bg {
+      background-color: rgba(206, 229, 234, 0.8);
+    }
+    .tech-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 250%;
+      height: 250%;
+      background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      animation: pulseGlow 8s infinite ease-in-out;
+    }
+    .content-z {
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    }
+    .ultra-large-text {
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .large-stat-text {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+    }
+    .list-icon {
+      color: #FFB300;
+      margin-right: 0.5rem;
+    }
+    /* 手绘勾线风格 */
+    .sketch-line {
+      stroke: #A3A380;
+      stroke-width: 2.5;
+      stroke-dasharray: 6 4;
+      filter: url(#sketchy);
+    }
+    /* 水彩渲染感 */
+    .watercolor-bg {
+      background: linear-gradient(120deg, rgba(224,242,247,0.5) 0%, rgba(253,246,227,0.7) 100%);
+      border-radius: 2rem;
+      filter: blur(0.5px);
+    }
+    /* 响应式大屏适配 */
+    @media (min-width: 1920px) {
+      .max-w-screen-2xl {
+        max-width: 1800px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- SVG滤镜：手绘感 -->
+  <svg width="0" height="0">
+    <filter id="sketchy">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="turb"/>
+      <feDisplacementMap in2="turb" in="SourceGraphic" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+  <main class="flex flex-col items-center justify-center min-h-screen py-8 px-4">
+    <!-- 标题与副标题 -->
+    <section class="w-full max-w-screen-2xl mb-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex-1">
+          <h1 class="ultra-large-text font-noto-sans-sc font-black mb-2">
+            生命的起始与终结
+          </h1>
+          <p class="text-2xl md:text-3xl font-noto-sans-sc font-bold text-[#3A2E2C] mb-4">
+            <span class="highlight-text">同一声低语</span>，轮回如歌
+          </p>
+          <p class="text-base md:text-lg text-[#6B5E54]">
+            <span class="font-bold">From the first cry to the final sigh,</span>
+            <span class="ml-2">爱与归途，始终如一。</span>
+          </p>
+        </div>
+        <!-- 手绘风格插画 -->
+        <div class="flex-1 flex items-center justify-center">
+          <svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="watercolor-bg shadow-lg">
+            <ellipse cx="160" cy="90" rx="120" ry="60" fill="#E0F2F7" fill-opacity="0.7"/>
+            <ellipse cx="160" cy="100" rx="90" ry="40" fill="#B7D7C9" fill-opacity="0.5"/>
+            <ellipse cx="160" cy="120" rx="60" ry="20" fill="#FDF6E3" fill-opacity="0.7"/>
+            <path d="M60 120 Q100 60 160 90 Q220 120 260 60" class="sketch-line" fill="none"/>
+            <circle cx="90" cy="80" r="12" fill="#FDF6E3" stroke="#A3A380" stroke-width="2"/>
+            <circle cx="230" cy="70" r="10" fill="#FDF6E3" stroke="#A3A380" stroke-width="2"/>
+            <path d="M150 110 Q160 130 170 110" class="sketch-line" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 轮回对话卡片区 -->
+    <section class="w-full max-w-screen-2xl grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <!-- 开场白卡片 -->
+      <div class="card tech-glow card-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-seedling list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">开场白</span>
+          </div>
+          <div class="ultra-large-text font-noto-sans-sc mb-2">“家属可以进来了。”</div>
+          <p class="text-lg font-noto-sans-sc mb-1">世界初启，模糊的光影中，有人焦急的等待，有人欣喜的低语。</p>
+          <p class="text-base text-[#6B5E54]">That’s the beginning of all things, the prologue of love and hope.</p>
+        </div>
+      </div>
+      <!-- 谢幕词卡片 -->
+      <div class="card tech-glow card-darker-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-leaf list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">谢幕词</span>
+          </div>
+          <div class="ultra-large-text font-noto-sans-sc mb-2">“家属可以进来了。”</div>
+          <p class="text-lg font-noto-sans-sc mb-1">故事落幕，微弱的呼吸里，有人不舍的守候，有人释然的叹息。</p>
+          <p class="text-base text-[#6B5E54]">That’s the peace after all, the epilogue of love and memory.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 轮回对话分组 -->
+    <section class="w-full max-w-screen-2xl grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <!-- 组1 -->
+      <div class="card tech-glow">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-baby list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">开场白</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“睁不开眼睛，听到了好多人的声音。”</div>
+          <p class="text-base font-noto-sans-sc mb-1">混沌初开，耳畔是陌生又温暖的喧嚣，是生命的集体合唱。</p>
+          <p class="text-sm text-[#6B5E54]">The world’s first welcome.</p>
+        </div>
+      </div>
+      <div class="card tech-glow card-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-bed list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">谢幕词</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“睁不开眼睛，听到了好多人的声音。”</div>
+          <p class="text-base font-noto-sans-sc mb-1">意识渐远，耳畔是熟悉又模糊的呢喃，是至亲的最后告别。</p>
+          <p class="text-sm text-[#6B5E54]">The last echo before departure.</p>
+        </div>
+      </div>
+      <!-- 组2 -->
+      <div class="card tech-glow card-darker-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-sun list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">开场白</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“原来这就是人间啊。”</div>
+          <p class="text-base font-noto-sans-sc mb-1">初识天地，稚嫩的心灵对万物投以好奇的凝视。</p>
+          <p class="text-sm text-[#6B5E54]">First encounter with the world.</p>
+        </div>
+      </div>
+      <div class="card tech-glow">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-mountain list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">谢幕词</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“原来这就是人间啊。”</div>
+          <p class="text-base font-noto-sans-sc mb-1">尘缘已尽，饱经风霜的灵魂回望一生。</p>
+          <p class="text-sm text-[#6B5E54]">A sigh of realization.</p>
+        </div>
+      </div>
+      <!-- 组3 -->
+      <div class="card tech-glow card-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-heart list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">开场白</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“好期待啊，一会儿就能见到妈妈了。”</div>
+          <p class="text-base font-noto-sans-sc mb-1">脐带相连，是生命对母性的原始渴望。</p>
+          <p class="text-sm text-[#6B5E54]">The first promise of love.</p>
+        </div>
+      </div>
+      <div class="card tech-glow card-darker-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-home list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">谢幕词</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“好期待啊，一会儿就能见到妈妈了。”</div>
+          <p class="text-base font-noto-sans-sc mb-1">光影消散，是游子归家的最后一声呢喃。</p>
+          <p class="text-sm text-[#6B5E54]">The final reunion.</p>
+        </div>
+      </div>
+      <!-- 组4 -->
+      <div class="card tech-glow">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-child list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">开场白</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“爸、妈，我来了！”</div>
+          <p class="text-base font-noto-sans-sc mb-1">一声啼哭，是新生命向世界发出的宣言。</p>
+          <p class="text-sm text-[#6B5E54]">The first note of a family story.</p>
+        </div>
+      </div>
+      <div class="card tech-glow card-alt-bg">
+        <div class="content-z">
+          <div class="flex items-center mb-2">
+            <i class="fa-solid fa-tree list-icon text-2xl"></i>
+            <span class="text-xl font-noto-sans-sc font-bold">谢幕词</span>
+          </div>
+          <div class="large-stat-text font-noto-sans-sc mb-2">“爸、妈，我来了！”</div>
+          <p class="text-base font-noto-sans-sc mb-1">静默无声，是疲惫灵魂向来路的致敬。</p>
+          <p class="text-sm text-[#6B5E54]">A tribute to the origin.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 轮回数据可视化与总结 -->
+    <section class="w-full max-w-screen-2xl flex flex-col md:flex-row items-center gap-8 mb-8">
+      <!-- 数据可视化：轮回之环 -->
+      <div class="flex-1 flex items-center justify-center">
+        <canvas id="cycleChart" width="320" height="320" class="bg-transparent"></canvas>
+      </div>
+      <!-- 总结卡片 -->
+      <div class="flex-1">
+        <div class="card tech-glow card-darker-alt-bg">
+          <div class="content-z">
+            <div class="flex items-center mb-2">
+              <i class="fa-solid fa-infinity list-icon text-2xl"></i>
+              <span class="text-xl font-noto-sans-sc font-bold">轮回总结</span>
+            </div>
+            <div class="ultra-large-text font-noto-sans-sc mb-2">“完成了一场轮回的对话”</div>
+            <p class="text-lg font-noto-sans-sc mb-1">爱，是唯一的信物；归途，是最终的答案。</p>
+            <p class="text-base text-[#6B5E54]">Love is the only token. Homecoming is the final answer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 页脚 -->
+    <footer class="w-full max-w-screen-2xl text-center mt-8 text-[#A3A380] text-sm">
+      &copy; 2025 吉卜力风格网页 · Designed with <i class="fa-solid fa-heart highlight-text"></i> Hybrid Layout
+    </footer>
+  </main>
+  <!-- Chart.js CDN for 数据可视化 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 轮回之环 Doughnut Chart
+    const ctx = document.getElementById('cycleChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          '起始·诞生',
+          '成长·体验',
+          '归途·谢幕',
+          '轮回·新生'
+        ],
+        datasets: [{
+          data: [25, 25, 25, 25],
+          backgroundColor: [
+            'rgba(183,215,201,0.85)', // 草地嫩绿
+            'rgba(224,242,247,0.85)', // 天空淡蓝
+            'rgba(253,246,227,0.85)', // 米白
+            'rgba(255,179,0,0.65)'    // 琥珀黄高亮
+          ],
+          borderColor: [
+            'rgba(163,163,128,0.7)',
+            'rgba(160,200,220,0.7)',
+            'rgba(210,180,140,0.7)',
+            'rgba(255,179,0,0.9)'
+          ],
+          borderWidth: 4,
+          hoverOffset: 16
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              font: { family: "'Noto Sans SC', sans-serif", size: 16, weight: 'bold' },
+              color: '#3A2E2C'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(255,255,255,0.95)',
+            titleColor: '#3A2E2C',
+            bodyColor: '#3A2E2C',
+            borderColor: '#FFB300',
+            borderWidth: 1
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

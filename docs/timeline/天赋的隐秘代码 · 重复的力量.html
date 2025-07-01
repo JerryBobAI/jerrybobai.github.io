@@ -1,0 +1,244 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>天赋的隐秘代码 · 重复的力量</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS 3.0+ CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Noto Sans SC & Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+	body {
+		font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+		background-color: #FDF6E3; /* 吉卜力米白底色 */
+		background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+						  linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+						  linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+						  linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+		background-size: 20px 20px;
+		color: #3A2E2C; /* 主文字颜色 深棕 */
+	}
+	.font-noto-sans-sc {
+		font-family: 'Noto Sans SC', sans-serif;
+	}
+	.highlight-text, .highlight-stat {
+		color: #FFB300; /* 温暖的琥珀黄高亮 */
+	}
+	.card {
+		background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+		backdrop-filter: blur(12px);
+		border-radius: 1.5rem; /* 苹果风格圆角 */
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+		padding: 1.5rem;
+		transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+		position: relative;
+		overflow: hidden;
+	}
+	.card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+	}
+	.card-alt-bg {
+		background-color: rgba(224, 242, 247, 0.75);
+	}
+	.card-darker-alt-bg {
+		 background-color: rgba(206, 229, 234, 0.8);
+	}
+	.tech-glow::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 250%;
+		height: 250%;
+		background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+		transform: translate(-50%, -50%);
+		z-index: 0;
+		animation: pulseGlow 8s infinite ease-in-out;
+	}
+	.content-z {
+		position: relative;
+		z-index: 1;
+	}
+	@keyframes pulseGlow {
+		0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+		50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+	}
+	.ultra-large-text {
+		font-size: clamp(3rem, 10vw, 8rem);
+		font-weight: 900;
+		line-height: 1;
+	}
+	.large-stat-text {
+		font-size: clamp(2.5rem, 6vw, 5rem);
+		font-weight: 700;
+	}
+	.list-icon {
+		color: #FFB300;
+		margin-right: 0.5rem;
+	}
+	.hand-drawn-border {
+		border: 3px solid rgba(58,46,44,0.12);
+		border-radius: 1.5rem;
+		box-shadow: 0 0 0 6px rgba(210,180,140,0.08) inset;
+	}
+	@media (min-width: 1920px) {
+		.max-w-screen-2xl {
+			max-width: 1800px;
+		}
+	}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center">
+  <main class="w-full flex flex-col items-center px-4 py-8">
+    <!-- 顶部标题区 -->
+    <section class="w-full max-w-screen-2xl flex flex-col md:flex-row items-center justify-between mb-8">
+      <div class="flex-1 flex flex-col items-start">
+        <h1 class="ultra-large-text font-noto-sans-sc font-black mb-2 tracking-tight">
+          天赋的隐秘代码
+        </h1>
+        <div class="text-xl md:text-2xl font-noto-sans-sc font-bold text-[#3A2E2C] mb-2">
+          <span class="highlight-text">重复是唯一答案</span>
+        </div>
+        <div class="text-base md:text-lg text-[#6B5B4B] font-light">
+          <span class="font-bold">The Secret of Talent</span>
+        </div>
+      </div>
+      <div class="flex-1 flex justify-end mt-6 md:mt-0">
+        <!-- 超大数字/视觉元素 -->
+        <div class="relative flex flex-col items-center">
+          <span class="large-stat-text highlight-stat font-noto-sans-sc font-extrabold drop-shadow-lg">10000+</span>
+          <span class="text-base md:text-lg text-[#6B5B4B] mt-1">次无人监考的重复</span>
+          <!-- 手绘风格线条 -->
+          <svg width="120" height="32" class="mt-2" fill="none">
+            <path d="M10 20 Q60 5 110 20" stroke="#B7C9A8" stroke-width="3" stroke-linecap="round" style="filter: blur(0.5px)" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主内容卡片 -->
+    <section class="w-full max-w-screen-2xl grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- 左侧：误解与真相 -->
+      <div class="card card-alt-bg tech-glow hand-drawn-border flex flex-col content-z">
+        <div class="flex items-center mb-4">
+          <i class="fa-solid fa-eye-slash list-icon text-2xl"></i>
+          <span class="text-xl font-noto-sans-sc font-bold">误解“天才”</span>
+        </div>
+        <ul class="space-y-2 text-base md:text-lg">
+          <li class="flex items-start">
+            <i class="fa-solid fa-xmark list-icon"></i>
+            <span>只看到<span class="highlight-text font-bold">结果</span>，忽略了<span class="highlight-text font-bold">过程</span></span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-xmark list-icon"></i>
+            <span>只看到<span class="highlight-text font-bold">光鲜</span>，忽略了<span class="highlight-text font-bold">汗水</span></span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-xmark list-icon"></i>
+            <span>只看到<span class="highlight-text font-bold">天赋</span>，忽略了<span class="highlight-text font-bold">训练</span></span>
+          </li>
+        </ul>
+      </div>
+      <!-- 中间：刻意练习与积累 -->
+      <div class="card tech-glow hand-drawn-border flex flex-col content-z">
+        <div class="flex items-center mb-4">
+          <i class="fa-solid fa-repeat list-icon text-2xl"></i>
+          <span class="text-xl font-noto-sans-sc font-bold">刻意练习</span>
+        </div>
+        <ul class="space-y-2 text-base md:text-lg">
+          <li class="flex items-start">
+            <i class="fa-solid fa-arrow-up list-icon"></i>
+            <span>“非凡与平凡的裂缝间，填塞着千千万万次无人监考的重复。”</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-arrow-up list-icon"></i>
+            <span>重复不是消耗，而是<span class="highlight-text font-bold">累积</span></span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-arrow-up list-icon"></i>
+            <span>量变到质变的<span class="highlight-text font-bold">唯一杠杆</span></span>
+          </li>
+        </ul>
+      </div>
+      <!-- 右侧：数据可视化 -->
+      <div class="card card-darker-alt-bg tech-glow hand-drawn-border flex flex-col content-z">
+        <div class="flex items-center mb-4">
+          <i class="fa-solid fa-chart-line list-icon text-2xl"></i>
+          <span class="text-xl font-noto-sans-sc font-bold">成长曲线</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <canvas id="repeatChart" width="220" height="120"></canvas>
+          <div class="text-sm text-[#6B5B4B] mt-2">重复次数与能力提升</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部感言/展望 -->
+    <section class="w-full max-w-screen-2xl mt-10">
+      <div class="card tech-glow hand-drawn-border content-z flex flex-col items-center text-center">
+        <div class="text-2xl md:text-3xl font-noto-sans-sc font-bold mb-2">
+          <span class="highlight-text">你的“重复”，不是宿命，而是超能力</span>
+        </div>
+        <p class="text-base md:text-lg text-[#3A2E2C] font-noto-sans-sc mb-2">
+          每一次枯燥的练习，每一个单调的循环，<br>
+          都是你为自己铸造的“隐形翅膀”。<br>
+          它们让你在平凡中扎根，在重复中生长，<br>
+          最终，在不经意间，展翅高飞，让世人惊叹为“天赋”。
+        </p>
+        <div class="flex items-center mt-2">
+          <i class="fa-solid fa-feather-pointed list-icon text-xl"></i>
+          <span class="text-base font-noto-sans-sc">Repeat is Power.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    // Chart.js 数据可视化
+    const ctx = document.getElementById('repeatChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1', '100', '1000', '5000', '10000'],
+        datasets: [{
+          label: '能力提升',
+          data: [1, 5, 20, 60, 100],
+          borderColor: 'rgba(255,179,0,0.85)',
+          backgroundColor: 'rgba(255,179,0,0.15)',
+          pointBackgroundColor: 'rgba(255,179,0,1)',
+          pointBorderColor: '#fff',
+          pointRadius: 6,
+          tension: 0.5,
+          fill: true,
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            title: { display: true, text: '重复次数', color: '#3A2E2C', font: { family: 'Noto Sans SC', weight: 'bold', size: 14 } },
+            ticks: { color: '#3A2E2C', font: { family: 'Noto Sans SC', weight: 'bold' } }
+          },
+          y: {
+            grid: { color: 'rgba(210,180,140,0.08)' },
+            title: { display: true, text: '能力指数', color: '#3A2E2C', font: { family: 'Noto Sans SC', weight: 'bold', size: 14 } },
+            ticks: { color: '#3A2E2C', font: { family: 'Noto Sans SC' }, stepSize: 20, beginAtZero: true }
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+
