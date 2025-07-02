@@ -1,0 +1,295 @@
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+  <title>《内驱式学习》Hybrid Ghibli Style 展示</title>
+  <!-- TailwindCSS 3.0+ CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Noto Sans SC & Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+	body {
+		font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+		background-color: #FDF6E3; /* 吉卜力米白底色 */
+		background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+						  linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+						  linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+						  linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+		background-size: 20px 20px;
+		color: #3A2E2C; /* 主文字颜色 深棕 */
+	}
+	.font-noto-sans-sc {
+		font-family: 'Noto Sans SC', sans-serif;
+	}
+	.highlight-text, .highlight-stat {
+		color: #FFB300; /* 温暖的琥珀黄高亮 - 移除了 text-shadow */
+	}
+	.card {
+		background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+		backdrop-filter: blur(12px);
+		border-radius: 1.5rem; /* 苹果风格圆角 */
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+		padding: 1.5rem; /* 24px */
+		transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+		position: relative;
+		overflow: hidden; /* For glow effects */
+	}
+	.card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+	}
+	.card-alt-bg {
+		background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+	}
+	.card-darker-alt-bg {
+		 background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+	}
+	.tech-glow::before { /* 卡片背景光晕效果保留 */
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 250%;
+		height: 250%;
+		background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+		transform: translate(-50%, -50%);
+		z-index: 0;
+		animation: pulseGlow 8s infinite ease-in-out;
+	}
+	.content-z {
+		position: relative;
+		z-index: 1;
+	}
+	@keyframes pulseGlow {
+		0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+		50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+	}
+	.ultra-large-text {
+		font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+		font-weight: 900; /* Noto Sans SC Black */
+		line-height: 1;
+	}
+	.large-stat-text {
+		font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+		font-weight: 700;
+	}
+	.list-icon {
+		color: #FFB300; /* Highlight color for list icons */
+		margin-right: 0.5rem; /* Space between icon and text */
+	}
+	/* 手绘水彩边框 */
+	.handdrawn-border {
+		border: 3px solid rgba(210,180,140,0.18);
+		border-radius: 2rem;
+		box-shadow: 0 0 0 6px rgba(210,180,140,0.08) inset;
+	}
+	/* 勾线图形风格 */
+	.sketch-line {
+		stroke: #3A2E2C;
+		stroke-width: 2.5;
+		stroke-dasharray: 6 4;
+		fill: none;
+		opacity: 0.7;
+	}
+	@media (min-width: 1920px) {
+		.max-w-screen-xl {
+			max-width: 1600px;
+		}
+	}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
+  <main class="w-full max-w-screen-xl mx-auto flex flex-col gap-10">
+    <!-- 超大主标题 -->
+    <section class="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex-1">
+        <h1 class="ultra-large-text font-noto-sans-sc font-black mb-4 leading-tight">
+          <span class="highlight-text">内驱式学习</span>
+        </h1>
+        <p class="text-2xl md:text-3xl font-noto-sans-sc font-bold mb-2">
+          不是一纸空谈，而是一场直击人心的觉醒
+        </p>
+        <p class="text-base md:text-lg text-gray-700 font-noto-sans-sc">
+          Learning is not passive input, but the ignition of inner fire.
+        </p>
+      </div>
+      <!-- 超大视觉元素：手绘风格水彩圆环 -->
+      <div class="flex-1 flex items-center justify-center relative">
+        <svg width="320" height="320" viewBox="0 0 320 320" class="absolute left-0 top-0 z-0" aria-hidden="true">
+          <ellipse cx="160" cy="160" rx="140" ry="140" class="sketch-line" style="stroke:#B7D7C2;stroke-width:10;opacity:0.5"/>
+          <ellipse cx="160" cy="160" rx="110" ry="110" class="sketch-line" style="stroke:#FFB300;stroke-width:7;opacity:0.3"/>
+        </svg>
+        <div class="relative z-10">
+          <i class="fa-solid fa-fire fa-7x highlight-text" style="filter: drop-shadow(0 0 16px #FFB30088);"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- 传统教学法对比 -->
+    <section class="flex flex-col md:flex-row gap-8">
+      <div class="card card-alt-bg tech-glow flex-1 handdrawn-border">
+        <div class="content-z">
+          <h2 class="text-3xl font-noto-sans-sc font-bold mb-2">
+            <span class="highlight-text">传统教学法</span> <span class="text-base font-normal text-gray-500 ml-2">Old School</span>
+          </h2>
+          <ul class="mt-4 space-y-2 text-lg">
+            <li class="flex items-start">
+              <i class="fa-solid fa-chalkboard-teacher list-icon"></i>
+              <span>“我讲你听”灌输式</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-layer-group list-icon"></i>
+              <span>题海战术，刷题成山</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-face-frown list-icon"></i>
+              <span>缺乏情感共鸣，难以激发兴趣</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card card-darker-alt-bg tech-glow flex-1 handdrawn-border">
+        <div class="content-z">
+          <h2 class="text-3xl font-noto-sans-sc font-bold mb-2">
+            <span class="highlight-text">内驱式学习</span> <span class="text-base font-normal text-gray-500 ml-2">Intrinsic Motivation</span>
+          </h2>
+          <ul class="mt-4 space-y-2 text-lg">
+            <li class="flex items-start">
+              <i class="fa-solid fa-bolt list-icon"></i>
+              <span>点燃内心火花，主动探索</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-brain list-icon"></i>
+              <span>脑科学 & 认知心理学支撑</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-heart list-icon"></i>
+              <span>情感、好奇心与“不服输”驱动</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 学习五元素 & 数据可视化 -->
+    <section class="flex flex-col md:flex-row gap-8 items-stretch">
+      <div class="card flex-1 tech-glow handdrawn-border">
+        <div class="content-z">
+          <h2 class="text-2xl font-noto-sans-sc font-bold mb-4">
+            <span class="highlight-text">学习五元素</span> <span class="text-base text-gray-500 ml-2">Five Elements</span>
+          </h2>
+          <ol class="list-decimal ml-6 space-y-1 text-lg">
+            <li>引导 <span class="highlight-text">注意力</span></li>
+            <li>设计 <span class="highlight-text">真实练习</span></li>
+            <li>提供 <span class="highlight-text">精准反馈</span></li>
+            <li>激发 <span class="highlight-text">内在动力</span></li>
+            <li>营造 <span class="highlight-text">情感氛围</span></li>
+          </ol>
+        </div>
+      </div>
+      <!-- 数据可视化：学习动力来源比例 -->
+      <div class="card card-alt-bg flex-1 tech-glow handdrawn-border flex flex-col items-center justify-center">
+        <div class="content-z w-full">
+          <h3 class="text-xl font-noto-sans-sc font-bold mb-2 text-center">
+            <span class="highlight-text">学习动力来源</span> <span class="text-base text-gray-500 ml-2">Motivation Sources</span>
+          </h3>
+          <canvas id="motivationChart" width="320" height="180" class="mx-auto"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 实用秘籍 & 结语 -->
+    <section class="flex flex-col md:flex-row gap-8">
+      <div class="card flex-1 tech-glow handdrawn-border">
+        <div class="content-z">
+          <h2 class="text-2xl font-noto-sans-sc font-bold mb-4">
+            <span class="highlight-text">实用秘籍</span> <span class="text-base text-gray-500 ml-2">Practical Guide</span>
+          </h2>
+          <ul class="space-y-2 text-lg">
+            <li class="flex items-start">
+              <i class="fa-solid fa-language list-icon"></i>
+              <span>英语学习方法全解析</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-check-double list-icon"></i>
+              <span>建议接地气，能落地</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa-solid fa-lightbulb list-icon"></i>
+              <span>让学习变得轻松高效</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card card-darker-alt-bg flex-1 tech-glow handdrawn-border flex flex-col justify-center">
+        <div class="content-z">
+          <h2 class="text-2xl font-noto-sans-sc font-bold mb-4">
+            <span class="highlight-text">情感共鸣</span> <span class="text-base text-gray-500 ml-2">Emotional Resonance</span>
+          </h2>
+          <p class="text-lg mb-2">
+            作者始终把孩子当作有情感、有好奇心的生命体，而不是“考试机器”。
+          </p>
+          <p class="text-lg">
+            跟着这本书的节奏走，学生的眼睛会重新闪耀光芒——那不是被考试吓出来的恐惧，而是自信、自由、热爱学习的光。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结尾号召 -->
+    <section class="w-full flex flex-col items-center mt-8">
+      <div class="card tech-glow handdrawn-border w-full md:w-2/3 text-center">
+        <div class="content-z">
+          <div class="ultra-large-text highlight-text mb-2">Let Curiosity Fly</div>
+          <div class="text-2xl font-noto-sans-sc font-bold mb-4">让内驱力带你飞</div>
+          <p class="text-lg text-gray-700 mb-2">推荐给每一个想让学习变成自我成长冒险的人。</p>
+          <a href="#" class="inline-block mt-4 px-8 py-3 rounded-full bg-yellow-400 bg-opacity-80 hover:bg-opacity-100 text-white font-bold text-xl shadow-lg transition-all duration-200">开启你的内驱式学习之旅</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 学习动力来源比例图
+    const ctx = document.getElementById('motivationChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['内驱力 Intrinsic', '外部压力 Extrinsic', '兴趣 Curiosity', '恐惧 Fear'],
+        datasets: [{
+          data: [55, 20, 20, 5],
+          backgroundColor: [
+            'rgba(255,179,0,0.85)', // 琥珀黄
+            'rgba(183,215,194,0.85)', // 草地绿
+            'rgba(135,206,235,0.85)', // 天空蓝
+            'rgba(58,46,44,0.65)' // 深棕
+          ],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            labels: {
+              color: '#3A2E2C',
+              font: { family: "'Noto Sans SC', sans-serif", size: 16 }
+            }
+          }
+        },
+        cutout: '70%',
+        responsive: false
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>顶级复盘 · Hybrid Ghibli Style</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Noto Sans SC & Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+	body {
+		font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+		background-color: #FDF6E3; /* 吉卜力米白底色 */
+		background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+						  linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+						  linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+						  linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+		background-size: 20px 20px;
+		color: #3A2E2C; /* 主文字颜色 深棕 */
+	}
+	.font-noto-sans-sc {
+		font-family: 'Noto Sans SC', sans-serif;
+	}
+	.highlight-text, .highlight-stat {
+		color: #FFB300; /* 温暖的琥珀黄高亮 */
+	}
+	.card {
+		background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+		backdrop-filter: blur(12px);
+		border-radius: 1.5rem; /* 苹果风格圆角 */
+		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+		padding: 1.5rem; /* 24px */
+		transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+		position: relative;
+		overflow: hidden; /* For glow effects */
+	}
+	.card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+	}
+	.card-alt-bg {
+		background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+	}
+	.card-darker-alt-bg {
+		 background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+	}
+	.tech-glow::before { /* 卡片背景光晕效果保留 */
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 250%;
+		height: 250%;
+		background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+		transform: translate(-50%, -50%);
+		z-index: 0;
+		animation: pulseGlow 8s infinite ease-in-out;
+	}
+	.content-z {
+		position: relative;
+		z-index: 1;
+	}
+	@keyframes pulseGlow {
+		0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+		50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+	}
+	.ultra-large-text {
+		font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+		font-weight: 900; /* Noto Sans SC Black */
+		line-height: 1;
+	}
+	.large-stat-text {
+		font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+		font-weight: 700;
+	}
+	.list-icon {
+		color: #FFB300; /* Highlight color for list icons */
+		margin-right: 0.5rem; /* Space between icon and text */
+	}
+	/* 手绘水彩边框 */
+	.handdrawn-border {
+		border: 3px solid rgba(58,46,44,0.12);
+		border-radius: 2rem;
+		box-shadow: 0 0 0 6px rgba(210,180,140,0.08) inset;
+	}
+	/* 响应式最大宽度 */
+	@media (min-width: 1920px) {
+		.max-w-screen-2xl {
+			max-width: 1680px;
+		}
+	}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-8">
+  <main class="w-full max-w-screen-2xl mx-auto">
+    <!-- 顶部大标题 -->
+    <section class="mb-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex-1">
+          <h1 class="ultra-large-text font-noto-sans-sc font-black leading-tight mb-4">
+            顶级复盘
+          </h1>
+          <div class="text-xl md:text-2xl font-noto-sans-sc font-bold highlight-text mb-2 tracking-wide">
+            不是自我安慰的回顾，而是对思维惯性的深度反抗
+          </div>
+          <div class="text-base md:text-lg text-gray-700 font-noto-sans-sc">
+            <span class="font-bold">Are you ready for your <span class="highlight-text">Top-level Review</span>?</span>
+          </div>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+          <!-- 手绘风格数据可视化 -->
+          <canvas id="reviewChart" width="320" height="220" class="handdrawn-border bg-white/60 shadow-lg"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主要内容卡片 -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+      <!-- 复盘本质 -->
+      <div class="card tech-glow handdrawn-border">
+        <div class="content-z">
+          <div class="large-stat-text font-noto-sans-sc font-black mb-2">
+            1️⃣ 复盘的本质
+          </div>
+          <div class="text-lg font-bold mb-2 highlight-text">不是总结，而是“逆向追问”</div>
+          <ul class="space-y-2 text-base font-noto-sans-sc">
+            <li><i class="fa-solid fa-question-circle list-icon"></i>哪些事根本不值得做？</li>
+            <li><i class="fa-solid fa-dice list-icon"></i>哪些收获其实只是偶然？</li>
+            <li><i class="fa-solid fa-magnifying-glass list-icon"></i>哪些问题的根源被你有意无意地忽略？</li>
+          </ul>
+          <div class="mt-4 text-sm text-gray-600 italic">
+            真正的突破，源自对失败和异常的深度剖析，而非对成功的机械复制。
+          </div>
+        </div>
+      </div>
+      <!-- 日复盘 -->
+      <div class="card card-alt-bg handdrawn-border">
+        <div class="content-z">
+          <div class="large-stat-text font-noto-sans-sc font-black mb-2">
+            2️⃣ 日复盘
+          </div>
+          <div class="text-lg font-bold mb-2 highlight-text">打破“忙碌=有价值”的幻觉</div>
+          <ul class="space-y-2 text-base font-noto-sans-sc">
+            <li><i class="fa-solid fa-trophy list-icon"></i>今日成就：识别“低效的胜利”</li>
+            <li><i class="fa-solid fa-ban list-icon"></i>今日反思：反抗路径依赖，防止时间被惯性吞噬</li>
+            <li><i class="fa-solid fa-heart list-icon"></i>今日收获/美好/感恩：主动修正“负面偏见”</li>
+          </ul>
+          <div class="mt-4 text-sm text-gray-600 italic">
+            许多创新，源于对微小正向信号的敏锐捕捉。
+          </div>
+        </div>
+      </div>
+      <!-- 周复盘 -->
+      <div class="card card-darker-alt-bg handdrawn-border">
+        <div class="content-z">
+          <div class="large-stat-text font-noto-sans-sc font-black mb-2">
+            3️⃣ 周复盘
+          </div>
+          <div class="text-lg font-bold mb-2 highlight-text">从“事件串联”到“因果链条”</div>
+          <ul class="space-y-2 text-base font-noto-sans-sc">
+            <li><i class="fa-solid fa-link list-icon"></i>汇总本周事件：寻找“意外的盟友”</li>
+            <li><i class="fa-solid fa-chart-line list-icon"></i>计划完成情况/反思：揭示系统性瓶颈</li>
+            <li><i class="fa-solid fa-seedling list-icon"></i>复盘收获/下周计划：主动设计“逆生长”机会</li>
+          </ul>
+          <div class="mt-4 text-sm text-gray-600 italic">
+            被忽视的旧技能，或许因新环境而焕发新生。
+          </div>
+        </div>
+      </div>
+      <!-- 反直觉洞见 -->
+      <div class="card handdrawn-border">
+        <div class="content-z">
+          <div class="large-stat-text font-noto-sans-sc font-black mb-2">
+            4️⃣ 反直觉洞见
+          </div>
+          <div class="text-lg font-bold mb-2 highlight-text">成长的真相，常在阴影里</div>
+          <ul class="space-y-2 text-base font-noto-sans-sc">
+            <li><i class="fa-solid fa-moon list-icon"></i>成长藏在“未完成”与“失误”中</li>
+            <li><i class="fa-solid fa-hands-holding list-icon"></i>“感恩”是对抗焦虑的理性武器</li>
+            <li><i class="fa-solid fa-tree list-icon"></i>韧性与创造力，源于持续发现美好</li>
+          </ul>
+          <div class="mt-4 text-sm text-gray-600 italic">
+            失败的探索，常常比成功更有价值。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结语/心锚 -->
+    <section class="w-full flex flex-col items-center mt-8">
+      <div class="card tech-glow handdrawn-border w-full md:w-2/3">
+        <div class="content-z flex flex-col items-center">
+          <div class="ultra-large-text font-noto-sans-sc font-black mb-2 highlight-text text-center">
+            心锚
+          </div>
+          <div class="text-xl md:text-2xl font-noto-sans-sc font-bold text-center mb-2">
+            用结构化方式，持续打破自我认知边界，<br>
+            发现那些被日常遮蔽的 <span class="highlight-text">“反常识”机会</span>。
+          </div>
+          <div class="text-base text-gray-700 font-noto-sans-sc text-center mb-2">
+            这正是无数变革者、思想家和创新者的共同秘密。
+          </div>
+          <div class="text-lg font-noto-sans-sc font-bold text-center mt-2">
+            你准备好，开始你的顶级复盘了吗？
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    // Chart.js 手绘风格雷达图
+    const ctx = document.getElementById('reviewChart').getContext('2d');
+    const data = {
+      labels: ['逆向追问', '日复盘', '周复盘', '反直觉', '心锚'],
+      datasets: [{
+        label: '复盘要素权重',
+        data: [95, 85, 80, 90, 100],
+        fill: true,
+        backgroundColor: 'rgba(255,179,0,0.18)',
+        borderColor: '#FFB300',
+        pointBackgroundColor: '#FFB300',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: '#FFB300',
+        borderWidth: 3,
+        tension: 0.35
+      }]
+    };
+    const options = {
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        r: {
+          angleLines: { color: 'rgba(58,46,44,0.12)' },
+          grid: { color: 'rgba(58,46,44,0.08)' },
+          pointLabels: {
+            font: { size: 16, family: "'Noto Sans SC', sans-serif", weight: 'bold' },
+            color: '#3A2E2C'
+          },
+          min: 0,
+          max: 100,
+          ticks: { display: false }
+        }
+      }
+    };
+    new Chart(ctx, { type: 'radar', data, options });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

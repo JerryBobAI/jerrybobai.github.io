@@ -1,0 +1,193 @@
+<!-- 文件名: index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini CLI · AI 操作系统形态预演</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: linear-gradient(120deg, #f8fafc 60%, #e0e7ef 100%);
+    }
+    .rainbow {
+      background: linear-gradient(90deg, #6a8dff 0%, #a66cff 50%, #ff7eb3 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .highlight {
+      background: linear-gradient(90deg, rgba(106,141,255,0.18) 0%, rgba(166,108,255,0.18) 100%);
+      border-radius: 1.5rem;
+      padding: 0.25rem 1rem;
+      display: inline-block;
+    }
+    .fade-btn {
+      background: linear-gradient(90deg, #6a8dff 0%, #a66cff 100%);
+      color: #fff;
+      border-radius: 9999px;
+      font-weight: 700;
+      box-shadow: 0 4px 24px 0 rgba(106,141,255,0.12);
+      transition: box-shadow 0.2s;
+    }
+    .fade-btn:hover {
+      box-shadow: 0 8px 32px 0 rgba(166,108,255,0.18);
+    }
+    .icon-bg {
+      background: linear-gradient(135deg, rgba(106,141,255,0.12) 0%, rgba(255,126,179,0.12) 100%);
+      border-radius: 50%;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (min-width: 1920px) {
+      .max-w-screen-xl {
+        max-width: 1600px;
+      }
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+  <div class="min-h-screen flex flex-col items-center justify-start px-6 py-12">
+    <!-- 顶部标题区 -->
+    <header class="w-full max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between mb-12">
+      <div class="flex-1">
+        <h1 class="text-6xl md:text-7xl font-extrabold leading-tight mb-4 rainbow tracking-tight">
+          Gemini CLI
+        </h1>
+        <div class="text-2xl md:text-3xl font-bold mb-2">
+          <span class="highlight">AI 操作系统形态预演</span>
+        </div>
+        <p class="text-lg md:text-xl text-gray-600 font-medium mb-6">
+          Google 以极简命令行为载体，探索“<span class="font-bold text-gray-900">自然语言即操作系统</span>”的未来。<span class="text-base text-gray-400 ml-2">A Preview of the Next OS Paradigm</span>
+        </p>
+        <button class="fade-btn px-8 py-3 text-lg mt-2 shadow-lg">
+          <i class="fa-solid fa-rocket mr-2"></i> 体验未来
+        </button>
+      </div>
+      <div class="flex-1 flex justify-center mt-10 md:mt-0">
+        <div class="icon-bg shadow-lg">
+          <i class="fa-solid fa-terminal text-7xl text-blue-500"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- 超大数字/要点区 -->
+    <section class="w-full max-w-screen-xl grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+      <div class="flex flex-col items-center">
+        <span class="text-[5rem] md:text-[7rem] font-extrabold rainbow leading-none">1</span>
+        <span class="text-xl font-bold mt-2">入口即语言</span>
+        <span class="text-gray-500 text-base mt-1">自然语言成为操作系统主入口</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <span class="text-[5rem] md:text-[7rem] font-extrabold rainbow leading-none">5+</span>
+        <span class="text-xl font-bold mt-2">一站式多任务</span>
+        <span class="text-gray-500 text-base mt-1">网页搜索、文件整理、图片转视频等一口气完成</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <span class="text-[5rem] md:text-[7rem] font-extrabold rainbow leading-none">∞</span>
+        <span class="text-xl font-bold mt-2">未来无限可能</span>
+        <span class="text-gray-500 text-base mt-1">Prompt 成为系统 API，重塑人机交互</span>
+      </div>
+    </section>
+
+    <!-- 主要内容区 -->
+    <main class="w-full max-w-screen-xl bg-white/80 rounded-3xl shadow-xl px-10 py-12 mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- 左侧：结构化要点 -->
+        <div>
+          <h2 class="text-3xl font-extrabold mb-6 rainbow">核心洞察</h2>
+          <ul class="space-y-6 text-lg">
+            <li>
+              <span class="font-bold text-blue-600">01. 不是开发工具，而是“AI 操作系统”雏形</span>
+              <div class="text-gray-600 mt-1">Gemini CLI 并非仅为写代码而生，而是 Google 对未来操作系统形态的系统性试水。</div>
+            </li>
+            <li>
+              <span class="font-bold text-purple-600">02. 语言即操作，体验全链路自动化</span>
+              <div class="text-gray-600 mt-1">无需多工具切换，复杂任务一站式完成，像有个全栈实习生住进你的电脑。</div>
+            </li>
+            <li>
+              <span class="font-bold text-pink-600">03. CLI 只是过渡形态，门槛待突破</span>
+              <div class="text-gray-600 mt-1">命令行对大众依然有门槛，未来将被 UI 封装，成为更友好的入口。</div>
+            </li>
+            <li>
+              <span class="font-bold text-orange-600">04. 语义层定义未来界面</span>
+              <div class="text-gray-600 mt-1">谁能定义“语义层”，谁就能重塑未来的界面、工具和工作方式。</div>
+            </li>
+          </ul>
+        </div>
+        <!-- 右侧：可视化/流程图 -->
+        <div class="flex flex-col items-center justify-center">
+          <canvas id="futureChart" width="400" height="320"></canvas>
+          <div class="text-sm text-gray-400 mt-4">数据可视化：Gemini CLI 能力分布</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 未来展望区 -->
+    <section class="w-full max-w-screen-xl flex flex-col md:flex-row items-center justify-between mb-10">
+      <div class="flex-1 mb-8 md:mb-0">
+        <h3 class="text-2xl md:text-3xl font-extrabold mb-4 rainbow">未来展望</h3>
+        <p class="text-lg text-gray-700 font-medium mb-2">
+          <span class="font-bold text-blue-700">Prompt</span> 将成为操作系统的一层，<span class="font-bold text-purple-700">UI</span> 入口取代命令行，<span class="font-bold text-pink-700">AI</span> 能力无缝融入日常。
+        </p>
+        <p class="text-base text-gray-500">
+          未来的操作系统，不再是窗口和鼠标的堆叠，而是“语义层”驱动的智能交互。Gemini CLI 只是起点，真正的变革才刚刚开始。
+        </p>
+      </div>
+      <div class="flex-1 flex justify-center">
+        <div class="icon-bg shadow-lg">
+          <i class="fa-solid fa-layer-group text-6xl text-purple-500"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部引用/说明 -->
+    <footer class="w-full max-w-screen-xl text-center text-gray-400 text-sm py-6">
+      <span>内容整理自 <a href="https://x.com/frxiaobei/status/1938225411114340634" class="underline text-blue-500" target="_blank">凡人小北 X 动态</a> · 设计风格参考 Apple Keynote Hybrid Layout</span>
+    </footer>
+  </div>
+  <!-- Chart.js 配置 -->
+  <script>
+    const ctx = document.getElementById('futureChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['网页搜索', '文件整理', '多媒体处理', '代码生成', '系统交互'],
+        datasets: [{
+          data: [22, 18, 20, 25, 15],
+          backgroundColor: [
+            'rgba(106,141,255,0.85)',
+            'rgba(166,108,255,0.85)',
+            'rgba(255,126,179,0.85)',
+            'rgba(255,184,108,0.85)',
+            'rgba(108,255,184,0.85)'
+          ],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: '#555',
+              font: { size: 16, weight: 'bold' }
+            }
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+
