@@ -1,0 +1,264 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>工作的本质 - 五层断层扫描</title>
+  <!-- TailwindCSS 3.0+ CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Google Fonts: Noto Sans SC & Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+      background-color: #FDF6E3;
+      background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                        linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+      background-size: 20px 20px;
+      color: #3A2E2C;
+      min-height: 100vh;
+    }
+    .font-noto-sans-sc {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .highlight-text, .highlight-stat {
+      color: #FFB300;
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+      padding: 1.5rem;
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+    }
+    .card-alt-bg {
+      background-color: rgba(224, 242, 247, 0.75);
+    }
+    .card-darker-alt-bg {
+      background-color: rgba(206, 229, 234, 0.8);
+    }
+    .tech-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 250%;
+      height: 250%;
+      background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      animation: pulseGlow 8s infinite ease-in-out;
+    }
+    .content-z {
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    }
+    .ultra-large-text {
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+    .large-stat-text {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+    }
+    .list-icon {
+      color: #FFB300;
+      margin-right: 0.5rem;
+    }
+    /* 手绘水彩边框 */
+    .hand-drawn-border {
+      border: 2.5px solid rgba(58,46,44,0.13);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 8px 0 rgba(210,180,140,0.08);
+      background-image: url('https://www.transparenttextures.com/patterns/watercolor.png');
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+    /* 响应式最大宽度 */
+    .max-w-screen-xxl {
+      max-width: 1920px;
+    }
+    /* 勾线SVG风格 */
+    .stroke-ghibli {
+      stroke: #3A2E2C;
+      stroke-width: 2.5;
+      fill: none;
+      opacity: 0.7;
+    }
+    /* 高亮渐变数字 */
+    .stat-glow {
+      background: linear-gradient(90deg, rgba(255,179,0,0.85) 0%, rgba(255,179,0,0.25) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="w-full flex flex-col items-center px-4 py-8 md:py-16 bg-opacity-90">
+    <!-- 主标题 -->
+    <header class="w-full max-w-screen-xxl mx-auto mb-12">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div>
+          <h1 class="ultra-large-text font-noto-sans-sc font-black tracking-tight mb-2">
+            <span class="highlight-text">工作的本质</span>
+          </h1>
+          <div class="text-xl md:text-2xl text-gray-700 font-noto-sans-sc font-bold mb-2">
+            用有限生命交换生存资源与社会地位
+          </div>
+          <div class="text-base md:text-lg text-gray-500 font-light">
+            <span class="mr-2">Hybrid Layout</span>
+            <span class="mr-2">Ghibli Color</span>
+            <span class="mr-2">Apple Style</span>
+          </div>
+        </div>
+        <div class="mt-8 md:mt-0">
+          <!-- 超大数字/视觉元素 -->
+          <span class="large-stat-text stat-glow font-noto-sans-sc font-black">5</span>
+          <span class="text-lg text-gray-600 ml-2">层断层扫描</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 能量流动勾线图 -->
+    <section class="w-full max-w-4xl mx-auto mb-12">
+      <div class="card card-alt-bg hand-drawn-border tech-glow">
+        <div class="content-z flex flex-col md:flex-row items-center">
+          <div class="w-full md:w-2/3 flex justify-center">
+            <!-- SVG 勾线能量流动图 -->
+            <svg viewBox="0 0 600 180" class="w-full h-40" aria-label="能量流动拓扑">
+              <!-- 雇员 -->
+              <circle cx="80" cy="90" r="32" class="stroke-ghibli" />
+              <text x="80" y="95" text-anchor="middle" font-size="20" font-family="Noto Sans SC" fill="#3A2E2C" font-weight="bold">雇员</text>
+              <!-- 时间/精力 -->
+              <path d="M112,90 Q180,40 250,90" class="stroke-ghibli" marker-end="url(#arrow)" />
+              <text x="170" y="60" font-size="14" fill="#3A2E2C">时间/精力</text>
+              <!-- 产出 -->
+              <circle cx="270" cy="90" r="32" class="stroke-ghibli" />
+              <text x="270" y="95" text-anchor="middle" font-size="18" font-family="Noto Sans SC" fill="#3A2E2C">产出</text>
+              <!-- 商品/服务 -->
+              <path d="M302,90 Q370,40 440,90" class="stroke-ghibli" marker-end="url(#arrow)" />
+              <text x="370" y="60" font-size="14" fill="#3A2E2C">商品/服务</text>
+              <!-- 雇主 -->
+              <circle cx="460" cy="90" r="32" class="stroke-ghibli" />
+              <text x="460" y="95" text-anchor="middle" font-size="20" font-family="Noto Sans SC" fill="#3A2E2C" font-weight="bold">雇主</text>
+              <!-- 资本 -->
+              <path d="M460,122 Q460,160 270,160 Q80,160 80,122" class="stroke-ghibli" marker-end="url(#arrow)" />
+              <text x="270" y="175" text-anchor="middle" font-size="14" fill="#3A2E2C">资本/报酬</text>
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L8,3 L0,6" fill="#3A2E2C"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+          <div class="w-full md:w-1/3 mt-6 md:mt-0 md:pl-8">
+            <div class="text-lg font-bold font-noto-sans-sc mb-2">能量流动拓扑</div>
+            <ul class="text-base text-gray-700 space-y-1">
+              <li><i class="fa-solid fa-arrow-right list-icon"></i>时间/精力 → 产出</li>
+              <li><i class="fa-solid fa-arrow-right list-icon"></i>产出 → 资本</li>
+              <li><i class="fa-solid fa-arrow-right list-icon"></i>资本 → 报酬</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 五层断层扫描卡片 -->
+    <main class="w-full max-w-screen-xxl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- 第一层 -->
+      <section class="card hand-drawn-border tech-glow content-z">
+        <div class="flex items-center mb-2">
+          <i class="fa-solid fa-layer-group list-icon text-2xl"></i>
+          <span class="text-2xl font-noto-sans-sc font-bold">第一层：系统蓝图</span>
+        </div>
+        <ul class="text-base md:text-lg space-y-1 mt-2">
+          <li><span class="highlight-text font-bold">官方规则：</span>劳动换取报酬，遵守契约，按贡献分配资源。</li>
+          <li><span class="highlight-text font-bold">地下规则：</span>权力结构决定分配，关系与身份影响机会，表面“热爱”实为“不得不为”。</li>
+          <li><span class="highlight-text font-bold">关键玩家：</span>雇主（资源控制者）、雇员（资源获取者）、中介（规则制定者/维护者）。</li>
+          <li><span class="highlight-text font-bold">能量流动：</span>时间/精力 → 产出 → 资本 → 报酬。</li>
+        </ul>
+      </section>
+      <!-- 第二层 -->
+      <section class="card card-alt-bg hand-drawn-border tech-glow content-z">
+        <div class="flex items-center mb-2">
+          <i class="fa-solid fa-brain list-icon text-2xl"></i>
+          <span class="text-2xl font-noto-sans-sc font-bold">第二层：人性基元</span>
+        </div>
+        <ul class="text-base md:text-lg space-y-1 mt-2">
+          <li><span class="highlight-text font-bold">底层按钮：</span>生存恐惧、损失厌恶、地位焦虑、身份认同、繁衍冲动。</li>
+          <li><span class="highlight-text font-bold">动物性本能：</span>用劳动换资源，争夺岗位，攀比地位，寻求归属。</li>
+        </ul>
+      </section>
+      <!-- 第三层 -->
+      <section class="card card-darker-alt-bg hand-drawn-border tech-glow content-z">
+        <div class="flex items-center mb-2">
+          <i class="fa-solid fa-sitemap list-icon text-2xl"></i>
+          <span class="text-2xl font-noto-sans-sc font-bold">第三层：权力拓扑</span>
+        </div>
+        <ul class="text-base md:text-lg space-y-1 mt-2">
+          <li><span class="highlight-text font-bold">获益者：</span>掌控资源分配权的雇主/资本方。</li>
+          <li><span class="highlight-text font-bold">代价支付者：</span>出卖时间和精力的雇员。</li>
+          <li><span class="highlight-text font-bold">议程设定者：</span>制度制定者、主流叙事制造者（如“工作光荣”、“热爱工作”）。</li>
+        </ul>
+      </section>
+      <!-- 第四层 -->
+      <section class="card hand-drawn-border tech-glow content-z">
+        <div class="flex items-center mb-2">
+          <i class="fa-solid fa-clock-rotate-left list-icon text-2xl"></i>
+          <span class="text-2xl font-noto-sans-sc font-bold">第四层：时间坍缩</span>
+        </div>
+        <ul class="text-base md:text-lg space-y-1 mt-2">
+          <li><span class="highlight-text font-bold">100年尺度：</span>工作形态随技术变迁而变，本质未变。</li>
+          <li><span class="highlight-text font-bold">1000年尺度：</span>劳动分工、资源分配、社会结构不断重组。</li>
+          <li><span class="highlight-text font-bold">历史模式：</span>奴役→雇佣→自动化，劳动形式变迁，本质始终是“资源分配的门槛”。</li>
+        </ul>
+      </section>
+      <!-- 第五层 -->
+      <section class="card card-alt-bg hand-drawn-border tech-glow content-z md:col-span-2">
+        <div class="flex items-center mb-2">
+          <i class="fa-solid fa-eye list-icon text-2xl"></i>
+          <span class="text-2xl font-noto-sans-sc font-bold">第五层：认知奇点</span>
+        </div>
+        <ul class="text-base md:text-lg space-y-1 mt-2">
+          <li><span class="highlight-text font-bold">房间里的大象：</span>绝大多数人“热爱工作”只是自我安慰，工作是生存的妥协。</li>
+          <li><span class="highlight-text font-bold">主流假设：</span>工作有“意义”、能“实现自我”。假设崩塌后，剩下的只是“用生命换资源”的赤裸交易。</li>
+          <li><span class="highlight-text font-bold">最违反直觉的解释：</span>工作不是“人类的荣耀”，而是资源分配机制的副产品。</li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- 结论高亮 -->
+    <footer class="w-full max-w-screen-xxl mx-auto mt-16">
+      <div class="card hand-drawn-border tech-glow content-z flex flex-col items-center">
+        <div class="ultra-large-text font-noto-sans-sc font-black highlight-text mb-2 text-center">
+          用有限生命<br>交换生存资源与社会地位
+        </div>
+        <div class="text-lg text-gray-700 font-noto-sans-sc font-bold text-center">
+          所有意义感，都是系统自我维护的叙事包装。
+        </div>
+      </div>
+    </footer>
+  </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

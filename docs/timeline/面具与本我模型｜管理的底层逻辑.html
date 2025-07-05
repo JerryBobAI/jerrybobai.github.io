@@ -1,0 +1,196 @@
+<!-- 管理本质“面具与本我模型”动态网页展示（可滚动修正版） -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>面具与本我模型｜管理的底层逻辑</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS 3.0+ CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Noto Sans SC 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Material Icons CDN -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+	body {
+		font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+		background-color: #DCD6CC; /* 褪色的亚麻色 */
+		background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+						  linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+		background-size: 30px 30px;
+		background-position: 0 0, 15px 15px;
+		color: #4A3B31;
+		/* overflow-x: hidden; 仅隐藏横向溢出，允许纵向滚动 */
+		min-height: 100vh;
+	}
+	.font-display {
+		font-weight: 900;
+		line-height: 1.05;
+		letter-spacing: -0.03em;
+	}
+	.text-highlight-gradient {
+		background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		padding-bottom: 0.1em;
+	}
+	.text-connecting {
+		font-size: clamp(1.5rem, 5vw, 3.5rem);
+		font-weight: 400;
+		color: #6B5D55;
+		display: block;
+		margin: 0.3em 0;
+		letter-spacing: normal;
+	}
+	.text-colossus {
+		font-size: clamp(4rem, 18vw, 15rem);
+	}
+	.memphis-accent {
+		position: absolute;
+		opacity: 0.07;
+		pointer-events: none;
+		z-index: 0;
+	}
+	@keyframes slowDrift {
+		0%, 100% { transform: translate(0, 0) rotate(0deg); }
+		25% { transform: translate(5px, -8px) rotate(1deg); }
+		75% { transform: translate(-5px, 8px) rotate(-1deg); }
+	}
+	.animate-slow-drift {
+		animation: slowDrift 15s ease-in-out infinite;
+	}
+  </style>
+</head>
+<body class="flex flex-col items-center min-h-screen relative overflow-x-hidden">
+
+  <!-- 孟菲斯风格装饰图形 -->
+  <svg class="memphis-accent animate-slow-drift" style="top:5%;left:3%;width:220px;height:220px;" viewBox="0 0 220 220" fill="none">
+    <rect x="20" y="20" width="180" height="180" rx="40" fill="#A6A29B" />
+    <circle cx="110" cy="110" r="60" fill="#B7B1A7" />
+    <path d="M40 180 Q110 60 180 180" stroke="#4A3B31" stroke-width="6" fill="none"/>
+  </svg>
+  <svg class="memphis-accent animate-slow-drift" style="bottom:8%;right:6%;width:180px;height:180px;" viewBox="0 0 180 180" fill="none">
+    <ellipse cx="90" cy="90" rx="80" ry="40" fill="#CFC8BC"/>
+    <rect x="40" y="40" width="100" height="20" rx="10" fill="#B7B1A7"/>
+    <path d="M20 160 Q90 80 160 160" stroke="#6B5D55" stroke-width="4" fill="none"/>
+  </svg>
+
+  <!-- 内容区 -->
+  <main class="relative z-10 w-full max-w-6xl px-6 py-12 flex flex-col items-center justify-center">
+    <!-- 超大主标题 -->
+    <h1 class="font-display text-colossus text-highlight-gradient select-none leading-none mb-2">
+      面具<br>与本我
+    </h1>
+    <span class="text-connecting">The Mask & The Self</span>
+
+    <!-- 副标题 -->
+    <h2 class="font-display text-4xl md:text-5xl text-[#4A3B31] mb-6 tracking-tight">
+      管理的底层逻辑
+    </h2>
+
+    <!-- 视觉分割线 -->
+    <div class="w-24 h-1 rounded-full mb-8" style="background: linear-gradient(90deg, rgba(104,144,148,0.3) 0%, rgba(104,144,148,0.1) 100%);"></div>
+
+    <!-- 结构化要点 -->
+    <section class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+      <div class="flex flex-col items-start">
+        <div class="flex items-center mb-2">
+          <span class="material-icons text-3xl mr-2 text-[#6B5D55]">account_circle</span>
+          <span class="font-bold text-2xl text-[#4A3B31]">结构层</span>
+        </div>
+        <ul class="text-lg text-[#4A3B31] leading-relaxed pl-2">
+          <li>管理者 = <b>个体自我</b> + <b>组织角色</b></li>
+          <li>二者共存，张力并存</li>
+          <li>管理行为 = 动态博弈产物</li>
+        </ul>
+      </div>
+      <div class="flex flex-col items-start">
+        <div class="flex items-center mb-2">
+          <span class="material-icons text-3xl mr-2 text-[#6B5D55]">bolt</span>
+          <span class="font-bold text-2xl text-[#4A3B31]">动力层</span>
+        </div>
+        <ul class="text-lg text-[#4A3B31] leading-relaxed pl-2">
+          <li>双重认同需求：<br>
+            <span class="ml-2">人性表达 & 角色履行</span>
+          </li>
+          <li>自我价值 vs 组织目标</li>
+          <li>多重外部压力</li>
+        </ul>
+      </div>
+      <div class="flex flex-col items-start">
+        <div class="flex items-center mb-2">
+          <span class="material-icons text-3xl mr-2 text-[#6B5D55]">lock</span>
+          <span class="font-bold text-2xl text-[#4A3B31]">约束层</span>
+        </div>
+        <ul class="text-lg text-[#4A3B31] leading-relaxed pl-2">
+          <li>角色规范不可逾越</li>
+          <li>人性局限影响判断</li>
+          <li>文化/制度/环境共同限定</li>
+        </ul>
+      </div>
+      <div class="flex flex-col items-start">
+        <div class="flex items-center mb-2">
+          <span class="material-icons text-3xl mr-2 text-[#6B5D55]">change_circle</span>
+          <span class="font-bold text-2xl text-[#4A3B31]">奇点/拐点</span>
+        </div>
+        <ul class="text-lg text-[#4A3B31] leading-relaxed pl-2">
+          <li>角色吞噬自我 → 失去温度</li>
+          <li>自我凌驾角色 → 失去公正</li>
+          <li>动态平衡 = 管理有效</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 模型可视化 -->
+    <section class="w-full max-w-3xl flex flex-col items-center mb-10">
+      <div class="w-full flex flex-col md:flex-row items-center justify-center gap-8">
+        <!-- 面具图标 -->
+        <div class="flex flex-col items-center">
+          <i class="fa-solid fa-mask fa-4x mb-2 text-[#6B5D55]"></i>
+          <span class="text-lg text-[#6B5D55]">角色<br>（面具）</span>
+        </div>
+        <!-- 箭头 -->
+        <svg width="80" height="40" viewBox="0 0 80 40" fill="none" class="mx-2">
+          <defs>
+            <linearGradient id="arrowGrad" x1="0" y1="20" x2="80" y2="20" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#689094" stop-opacity="0.7"/>
+              <stop offset="1" stop-color="#689094" stop-opacity="0.2"/>
+            </linearGradient>
+          </defs>
+          <path d="M10 20 H70" stroke="url(#arrowGrad)" stroke-width="6" stroke-linecap="round"/>
+          <polygon points="70,15 80,20 70,25" fill="#689094" />
+        </svg>
+        <!-- 脸图标 -->
+        <div class="flex flex-col items-center">
+          <i class="fa-regular fa-face-smile fa-4x mb-2 text-[#4A3B31]"></i>
+          <span class="text-lg text-[#4A3B31]">自我<br>（本我）</span>
+        </div>
+      </div>
+      <div class="mt-6 text-xl text-[#4A3B31] font-bold">
+        <span class="text-highlight-gradient">管理的艺术</span>：<br>
+        <span class="text-[#6B5D55]">既不被面具吞噬，也不让本我裸露无遗</span>
+      </div>
+    </section>
+
+    <!-- 结论区 -->
+    <section class="w-full max-w-2xl flex flex-col items-center">
+      <div class="text-2xl md:text-3xl font-display mb-2 text-[#4A3B31]">
+        <span class="text-highlight-gradient">结论</span>
+      </div>
+      <div class="text-lg md:text-xl text-[#4A3B31] leading-relaxed font-bold mb-2">
+        管理的底层逻辑是：<br>
+        <span class="text-highlight-gradient">“人”与“角色”在同一主体内的动态张力与调和。</span>
+      </div>
+      <div class="text-base md:text-lg text-[#6B5D55]">
+        管理的成败，取决于管理者能否在二者间找到最优平衡点。
+      </div>
+    </section>
+  </main>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,184 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>《活着》灵魂通感 · Hybrid Layout</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    html, body {
+      background: #fff;
+      color: #18181b;
+      font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+    }
+    .fade-bg {
+      background: linear-gradient(90deg, rgba(24,24,27,0.08) 0%, rgba(24,24,27,0.00) 100%);
+    }
+    .section-title {
+      letter-spacing: 0.05em;
+    }
+    .icon-outline {
+      stroke: #18181b;
+      stroke-width: 2.5;
+      fill: none;
+    }
+    .highlight {
+      background: linear-gradient(90deg, rgba(24,24,27,0.12) 0%, rgba(24,24,27,0.00) 100%);
+      border-radius: 0.5rem;
+      padding: 0.25em 0.75em;
+      display: inline-block;
+    }
+    .chart-bar {
+      background: linear-gradient(90deg, rgba(24,24,27,0.7) 0%, rgba(24,24,27,0.1) 100%);
+    }
+    @media (min-width: 1920px) {
+      .container-xl {
+        max-width: 1600px;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen w-full flex flex-col items-center justify-start">
+
+  <main class="container-xl mx-auto px-6 py-12 flex flex-col gap-20 w-full">
+
+    <!-- 超大标题区 -->
+    <section class="w-full flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="flex-1">
+        <h1 class="text-6xl md:text-8xl font-extrabold tracking-tight leading-tight mb-4 section-title">
+          <span class="highlight">活着</span>
+        </h1>
+        <div class="text-xl md:text-2xl text-gray-700 font-medium mb-2">Yu Hua · 余华</div>
+        <div class="text-base text-gray-500 font-light">Book Soul Whisperer · 灵魂通感</div>
+      </div>
+      <div class="flex-1 flex items-center justify-center">
+        <!-- 勾线牛与田野图形 -->
+        <svg width="320" height="180" viewBox="0 0 320 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="icon-outline" d="M30 150 Q60 120 120 140 Q180 160 220 120 Q260 80 300 100" />
+          <ellipse class="icon-outline" cx="80" cy="140" rx="18" ry="10"/>
+          <ellipse class="icon-outline" cx="240" cy="120" rx="22" ry="12"/>
+          <circle class="icon-outline" cx="60" cy="150" r="4"/>
+          <circle class="icon-outline" cx="260" cy="130" r="4"/>
+          <path class="icon-outline" d="M120 140 Q130 130 140 140 Q150 150 160 140"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 四大灵魂要素区 -->
+    <section class="w-full grid grid-cols-1 md:grid-cols-2 gap-12">
+      <!-- 心跳 -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="material-icons text-4xl text-black/80">favorite</span>
+          <span class="text-3xl md:text-4xl font-bold section-title">心跳 <span class="text-base text-gray-400 ml-2">Heartbeat</span></span>
+        </div>
+        <div class="text-lg md:text-xl text-gray-800 leading-relaxed">
+          我第一次听见《活着》的心跳，是在福贵抱着那头老牛，夕阳下，他的影子和牛的影子在田埂上拉长。那一刻，<span class="highlight">孤独与温柔</span>交织成一种无法言说的韧性。不是苦难的呻吟，而是一种活着本身的倔强低语。我感到自己的心也变成了一块干裂的土地，渴望着哪怕一滴温热的泪水。
+        </div>
+      </div>
+      <!-- 幽灵 -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="material-icons text-4xl text-black/80">psychology_alt</span>
+          <span class="text-3xl md:text-4xl font-bold section-title">幽灵 <span class="text-base text-gray-400 ml-2">Ghost</span></span>
+        </div>
+        <div class="text-lg md:text-xl text-gray-800 leading-relaxed">
+          这本书的幽灵，是一种<span class="highlight">平静的绝望</span>。无论多少灾祸、死亡、失去，都无法让福贵彻底崩溃。他的灵魂像一根被反复碾压却始终不碎的稻草。假如《活着》从未存在，世界将少了一种在极致苦难中仍能微笑着说“我还在”的勇气。它不是英雄的呐喊，而是普通人咬牙坚持的低语。
+        </div>
+      </div>
+      <!-- 回响 -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="material-icons text-4xl text-black/80">graphic_eq</span>
+          <span class="text-3xl md:text-4xl font-bold section-title">回响 <span class="text-base text-gray-400 ml-2">Echo</span></span>
+        </div>
+        <div class="text-lg md:text-xl text-gray-800 leading-relaxed">
+          在这个人人都在追逐意义、恐惧失去的时代，《活着》的声音尤为刺耳又真实。它提醒我们：<span class="highlight">活着并非为了什么伟大的目标，而仅仅是活着本身，就是全部的意义</span>。它像一面镜子，映出我们在焦虑和欲望中遗忘的那份朴素的存在感。在信息爆炸、情感麻木的今天，这种简朴的“活着”反而成了最稀缺的奢侈品。
+        </div>
+      </div>
+      <!-- 烙印 -->
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-3">
+          <span class="material-icons text-4xl text-black/80">fingerprint</span>
+          <span class="text-3xl md:text-4xl font-bold section-title">烙印 <span class="text-base text-gray-400 ml-2">Imprint</span></span>
+        </div>
+        <div class="text-lg md:text-xl text-gray-800 leading-relaxed">
+          《活着》在我身上留下的，是一种<span class="highlight">对痛苦的温柔凝视</span>。我不再急于逃离苦难，而学会了与它并肩前行。每当我以为再也无法承受的时候，脑海里就会浮现福贵牵着牛的背影——哪怕一无所有，也要用尽全力，走下去。这本书教会我的，不是如何避免失去，而是如何在失去中，依然温柔地活着。
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据可视化与信件区 -->
+    <section class="w-full flex flex-col md:flex-row gap-12 items-stretch">
+      <!-- 数据可视化：坚韧指数 -->
+      <div class="flex-1 flex flex-col items-center justify-center bg-white rounded-2xl shadow-sm p-8 fade-bg">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="fa-solid fa-chart-bar text-3xl text-black/80"></span>
+          <span class="text-2xl font-bold section-title">坚韧指数 <span class="text-base text-gray-400 ml-2">Resilience Index</span></span>
+        </div>
+        <div class="w-full flex flex-col gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-lg text-gray-700">苦难</span>
+            <span class="text-lg font-bold text-black">99</span>
+          </div>
+          <div class="w-full h-4 rounded-full chart-bar mb-2 relative overflow-hidden">
+            <div class="absolute left-0 top-0 h-4 rounded-full" style="width:99%;background:linear-gradient(90deg,rgba(24,24,27,0.7),rgba(24,24,27,0.1));"></div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-lg text-gray-700">温柔</span>
+            <span class="text-lg font-bold text-black">85</span>
+          </div>
+          <div class="w-full h-4 rounded-full chart-bar mb-2 relative overflow-hidden">
+            <div class="absolute left-0 top-0 h-4 rounded-full" style="width:85%;background:linear-gradient(90deg,rgba(24,24,27,0.5),rgba(24,24,27,0.05));"></div>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-lg text-gray-700">希望</span>
+            <span class="text-lg font-bold text-black">60</span>
+          </div>
+          <div class="w-full h-4 rounded-full chart-bar mb-2 relative overflow-hidden">
+            <div class="absolute left-0 top-0 h-4 rounded-full" style="width:60%;background:linear-gradient(90deg,rgba(24,24,27,0.3),rgba(24,24,27,0.02));"></div>
+          </div>
+        </div>
+      </div>
+      <!-- 信件区 -->
+      <div class="flex-1 flex flex-col justify-between bg-white rounded-2xl shadow-sm p-8 fade-bg">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="fa-solid fa-leaf text-3xl text-black/80"></span>
+          <span class="text-2xl font-bold section-title">一封写给田野的信 <span class="text-base text-gray-400 ml-2">A Letter to the Field</span></span>
+        </div>
+        <div class="text-lg md:text-xl text-gray-800 leading-relaxed">
+          亲爱的田野，<br>
+          你见证了福贵的一生，也见证了我的颤抖与成长。你无声地收纳了太多的眼泪和汗水，却依然在春天发芽，在秋日收割。你教会我，所谓“活着”，不是没有苦难，而是在苦难中依然能感受风、闻见泥土、看见日光。<br>
+          愿我也能像你，哪怕被反复犁开，也从不放弃生长。
+        </div>
+      </div>
+    </section>
+
+    <!-- 结语区 -->
+    <section class="w-full flex flex-col items-center justify-center mt-12">
+      <div class="text-4xl md:text-5xl font-extrabold text-black mb-4 section-title text-center">
+        <span class="highlight">结语</span>
+      </div>
+      <div class="text-xl md:text-2xl text-gray-800 font-medium text-center max-w-3xl mb-2">
+        《活着》不是一本关于死亡与失去的书，而是一首关于存活、关于人之为人的安静赞歌。
+      </div>
+      <div class="text-base md:text-lg text-gray-500 text-center max-w-2xl">
+        它用最朴素的语言，雕刻出生命的坚韧与温柔。<br>
+        它让我相信：只要心还在跳，哪怕一切都失去了，我们依然可以温柔地，倔强地，活着。
+      </div>
+    </section>
+  </main>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

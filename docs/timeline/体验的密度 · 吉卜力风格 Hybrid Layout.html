@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>体验的密度 · 吉卜力风格 Hybrid Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Material Icons CDN -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Open Sans & Noto Sans SC 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;900&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+      background-color: #FDF6E3; /* 吉卜力米白底色 */
+      background-image: 
+        linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+      background-size: 20px 20px;
+      color: #3A2E2C; /* 主文字颜色 深棕 */
+    }
+    .font-noto-sans-sc {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    .highlight-text, .highlight-stat {
+      color: #FFB300; /* 温暖的琥珀黄高亮 */
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+      backdrop-filter: blur(12px);
+      border-radius: 1.5rem; /* 苹果风格圆角 */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+      padding: 1.5rem;
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+    }
+    .card-alt-bg {
+      background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+    }
+    .card-darker-alt-bg {
+      background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+    }
+    .tech-glow::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 250%;
+      height: 250%;
+      background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      animation: pulseGlow 8s infinite ease-in-out;
+    }
+    .content-z {
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    }
+    .ultra-large-text {
+      font-size: clamp(3rem, 10vw, 8rem);
+      font-weight: 900;
+      font-family: 'Noto Sans SC', sans-serif;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .large-stat-text {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+    }
+    .list-icon {
+      color: #FFB300;
+      margin-right: 0.5rem;
+    }
+    .watercolor-bg {
+      background: linear-gradient(120deg, #E3F2FD 0%, #FDF6E3 60%, #E6E9C6 100%);
+      opacity: 0.7;
+      filter: blur(12px);
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 2rem;
+    }
+    .svg-stroke {
+      stroke: #FFB300;
+      stroke-width: 2.5;
+      fill: none;
+      opacity: 0.7;
+    }
+    .svg-stroke2 {
+      stroke: #3A2E2C;
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0.18;
+    }
+    @media (max-width: 900px) {
+      .ultra-large-text { font-size: 2.5rem; }
+      .large-stat-text { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen flex flex-col items-center justify-center px-4 py-10">
+    <!-- 顶部大标题区 -->
+    <section class="w-full max-w-5xl mx-auto flex flex-col items-center mb-12">
+      <div class="relative w-full flex flex-col items-center">
+        <div class="watercolor-bg"></div>
+        <h1 class="ultra-large-text highlight-text text-center drop-shadow font-noto-sans-sc content-z">
+          体验的密度
+        </h1>
+        <div class="mt-2 text-xl md:text-2xl text-[#3A2E2C] font-bold font-noto-sans-sc content-z">
+          <span class="highlight-text">“全然地活过”</span>
+          <span class="ml-2 text-base text-[#6B5B4B] font-normal en-font">Density of Experience</span>
+        </div>
+        <div class="mt-2 text-base md:text-lg text-[#6B5B4B] text-center max-w-2xl content-z">
+          不是你做了什么、得到了什么、留下了什么，而是你在活着的每一刻，是否真的“在场”——你有没有全然地感受过痛苦、喜悦、孤独、渴望、失落、希望？
+        </div>
+      </div>
+    </section>
+
+    <!-- 主内容区 -->
+    <section class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+      <!-- 左侧卡片：哲思与主旨 -->
+      <div class="card tech-glow flex flex-col justify-between min-h-[420px]">
+        <div class="content-z">
+          <div class="text-2xl font-bold mb-4 font-noto-sans-sc">
+            <span class="highlight-text">生命的意义</span>
+            <span class="en-font text-base ml-2 text-[#8D7B6A]">Meaning of Life</span>
+          </div>
+          <div class="text-base md:text-lg text-[#3A2E2C] leading-relaxed mb-4">
+            生命的意义，也许不是“为什么”，而是“如何”——如何去感受，如何去回应，如何在无意义的宇宙里，自己点一盏灯。价值不是终点，而是过程，是你和世界之间那一连串真实的碰撞和回响。
+          </div>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-start">
+              <span class="material-icons list-icon">wb_incandescent</span>
+              <span>在<strong class="highlight-text">无意义</strong>中，自己赋予意义</span>
+            </li>
+            <li class="flex items-start">
+              <span class="material-icons list-icon">favorite</span>
+              <span>全然地感受<strong class="highlight-text">痛苦</strong>与<strong class="highlight-text">喜悦</strong></span>
+            </li>
+            <li class="flex items-start">
+              <span class="material-icons list-icon">local_florist</span>
+              <span>哪怕只是为了一杯酒、一句真心话、一次深夜的坦白</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 右侧卡片：数据可视化与勾线插画 -->
+      <div class="card card-alt-bg flex flex-col items-center justify-center min-h-[420px] relative">
+        <div class="absolute inset-0 pointer-events-none">
+          <svg width="100%" height="100%" viewBox="0 0 400 300">
+            <ellipse class="svg-stroke2" cx="200" cy="150" rx="160" ry="60"/>
+            <path class="svg-stroke" d="M60,220 Q200,60 340,220" />
+            <circle class="svg-stroke" cx="200" cy="150" r="60" />
+          </svg>
+        </div>
+        <div class="content-z w-full flex flex-col items-center">
+          <div class="text-lg font-bold mb-2 text-[#3A2E2C] flex items-center gap-2">
+            <span class="material-icons highlight-text">insights</span>
+            <span>人生体验分布</span>
+          </div>
+          <canvas id="chart" width="320" height="180" class="mb-2"></canvas>
+          <div class="text-xs text-[#8D7B6A] en-font">Data: Experience Intensity (模拟)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结尾区 -->
+    <footer class="w-full max-w-3xl mx-auto mt-8 text-center">
+      <div class="large-stat-text highlight-text font-noto-sans-sc mb-2">
+        “全然地活过”
+      </div>
+      <div class="text-lg md:text-xl text-[#3A2E2C] mb-4">
+        生命的意义是什么？也许就是在无意义中，<span class="highlight-text">自己赋予意义</span>。
+      </div>
+      <div class="text-base text-[#6B5B4B] mb-2">
+        我们都在用自己的方式，给这场短暂的旅程，添上一点属于自己的光。
+      </div>
+      <div class="mt-4 flex justify-center gap-2">
+        <span class="material-icons text-2xl highlight-text">nights_stay</span>
+        <span class="en-font text-[#8D7B6A]">A little light in the night.</span>
+      </div>
+    </footer>
+  </div>
+  <!-- Chart.js 配置 -->
+  <script>
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['痛苦 Pain', '喜悦 Joy', '孤独 Solitude', '渴望 Desire', '希望 Hope', '失落 Loss'],
+        datasets: [{
+          data: [18, 22, 14, 16, 20, 10],
+          backgroundColor: [
+            'rgba(255,179,0,0.85)',   // 琥珀黄
+            'rgba(120,200,120,0.65)', // 嫩绿
+            'rgba(135,206,235,0.55)', // 天空蓝
+            'rgba(255,179,0,0.35)',   // 淡黄
+            'rgba(255,179,0,0.18)',   // 更淡黄
+            'rgba(120,200,120,0.18)'  // 更淡绿
+          ],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: '#3A2E2C',
+              font: { size: 15, weight: 'bold', family: "'Open Sans','Noto Sans SC',sans-serif" },
+              boxWidth: 18,
+              padding: 16
+            }
+          },
+          tooltip: {
+            backgroundColor: '#3A2E2C',
+            titleColor: '#FFB300',
+            bodyColor: '#fff'
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

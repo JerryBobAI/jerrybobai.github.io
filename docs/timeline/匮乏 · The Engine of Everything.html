@@ -1,0 +1,224 @@
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>匮乏 · The Engine of Everything</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Material Icons CDN -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- 优雅英文字体 Inter & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: linear-gradient(180deg, #F8F6F2 0%, #FFFDF8 100%);
+      min-height: 100vh;
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, 'Inter', 'Montserrat', sans-serif;
+    }
+    .super-title {
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .en-font {
+      font-family: 'Inter', 'Montserrat', 'SF Pro Display', Arial, sans-serif;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+    }
+    .en-small {
+      font-family: 'Inter', 'Montserrat', 'SF Pro Display', Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+    .highlight-orange {
+      color: #F0AD70;
+    }
+    .highlight-bg-orange {
+      background: linear-gradient(90deg, rgba(240,173,112,0.18) 0%, rgba(240,173,112,0.08) 100%);
+    }
+    .highlight-bg-black {
+      background: linear-gradient(90deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.04) 100%);
+    }
+    .svg-stroke {
+      stroke: #F0AD70;
+      stroke-width: 2.5;
+      fill: none;
+      opacity: 0.7;
+    }
+    .svg-stroke2 {
+      stroke: #222;
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0.18;
+    }
+    .fade-glow {
+      background: radial-gradient(circle at 60% 40%, rgba(240,173,112,0.18) 0%, rgba(240,173,112,0.00) 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    @media (max-width: 900px) {
+      .super-title { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body class="text-gray-900 font-sans">
+  <div class="fade-glow fixed inset-0"></div>
+  <main class="max-w-[1920px] mx-auto px-6 py-12 flex flex-col gap-20 relative z-10">
+    <!-- 顶部大标题 -->
+<!-- 标题区域优化版 -->
+<section class="flex flex-col items-center gap-6 mt-4 mb-2">
+  <!-- 主标题 -->
+  <div class="w-full flex flex-col items-center">
+    <span class="super-title highlight-orange select-none drop-shadow-lg">匮乏</span>
+  </div>
+  <!-- 英文副标题 -->
+  <div class="w-full flex flex-col items-center">
+    <span class="en-font text-2xl md:text-3xl tracking-widest text-gray-800 font-bold select-none"
+          style="letter-spacing:0.12em;">
+      The Engine of Everything
+    </span>
+  </div>
+  <!-- 高亮语句 -->
+  <div class="flex flex-col items-center gap-1 mt-2">
+    <span class="highlight-orange text-2xl md:text-3xl font-bold">“不满足”</span>
+    <span class="en-small text-gray-500">is the hidden drive behind all human creation.</span>
+  </div>
+  <!-- 图标单独一行，弱化 -->
+  <div class="mt-2">
+    <span class="material-icons text-4xl text-black/30">psychology_alt</span>
+  </div>
+</section>
+
+
+    <!-- 超大视觉反差区 -->
+    <section class="flex flex-col md:flex-row items-center justify-between gap-16">
+      <!-- 左侧超大数字/词 -->
+      <div class="flex-1 flex flex-col items-center md:items-start">
+        <div class="super-title highlight-bg-orange px-10 py-6 rounded-3xl shadow-lg mb-8 relative overflow-hidden">
+          <span class="highlight-orange">∞</span>
+          <svg class="absolute right-0 bottom-0" width="120" height="60">
+            <ellipse class="svg-stroke2" cx="60" cy="30" rx="50" ry="18"/>
+          </svg>
+        </div>
+        <div class="text-4xl font-extrabold text-gray-900 mb-3">
+          <span class="highlight-orange">永远不够</span>
+        </div>
+        <div class="text-lg text-gray-600 max-w-md">
+          <span class="font-bold">匮乏</span>，不是金钱、不是爱，而是更原始的“<span class="highlight-orange">永远不够</span>”。它驱动渴望、恐惧、竞争、创造、毁灭。
+        </div>
+      </div>
+      <!-- 右侧SVG勾线图形+英文点缀 -->
+      <div class="flex-1 flex flex-col items-center justify-center relative min-h-[320px]">
+        <svg width="340" height="220" viewBox="0 0 340 220" class="absolute left-1/2 -translate-x-1/2 top-0 z-0">
+          <path class="svg-stroke" d="M30,200 Q100,40 170,120 Q240,200 310,40" />
+          <circle class="svg-stroke" cx="170" cy="120" r="60" />
+          <ellipse class="svg-stroke2" cx="170" cy="120" rx="110" ry="40" />
+        </svg>
+        <div class="relative z-10 flex flex-col items-center">
+          <span class="material-icons text-7xl text-[#F0AD70] mb-2">psychology</span>
+          <span class="en-font text-lg font-medium tracking-wide text-gray-700">Desire · Fear · Creation</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 内容与数据可视化 -->
+    <section class="flex flex-col md:flex-row gap-12">
+      <!-- 左侧内容 -->
+      <div class="flex-1 flex flex-col gap-7">
+        <div class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+          <span class="highlight-orange">Aha!</span>
+          <span>时刻</span>
+        </div>
+        <div class="text-base text-gray-700 leading-relaxed">
+          人类社会的所有规则、叙事和理想，其实都是用来安抚这份匮乏的焦虑。我们发明了“意义”，是因为空虚太难忍受；我们追逐“成长”，是因为静止让人恐惧；我们渴望“被理解”，是因为孤独像深渊。哪怕是最无私的爱，也带着一点点“我希望你能填补我”的影子。
+        </div>
+        <div class="flex gap-4 mt-2">
+          <button class="px-7 py-2.5 rounded-full bg-black text-white font-bold shadow hover:bg-gray-800 transition text-lg">
+            继续探索
+          </button>
+          <button class="px-7 py-2.5 rounded-full bg-[#F0AD70] text-white font-bold shadow hover:bg-orange-400 transition text-lg">
+            观看视频
+          </button>
+        </div>
+      </div>
+      <!-- 右侧数据可视化 -->
+      <div class="flex-1 flex flex-col items-center justify-center">
+        <div class="w-full max-w-xs bg-white/90 rounded-2xl shadow-lg p-7 highlight-bg-black">
+          <div class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <span class="material-icons text-[#F0AD70]">insights</span>
+            匮乏驱动的行为分布
+          </div>
+          <canvas id="chart" width="300" height="180"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结尾区 -->
+    <footer class="mt-16 flex flex-col items-center gap-4">
+      <div class="text-2xl md:text-3xl font-bold text-gray-900 text-center">
+        真实游戏的底牌，是
+        <span class="highlight-orange">“不满足”</span>
+      </div>
+      <div class="text-base text-gray-600 text-center max-w-2xl">
+        它既让人痛苦，也让人活着。我们都在用各自的方式，和这个洞共处。有时它吞噬我们，有时它成就我们。
+      </div>
+      <div class="mt-4 flex items-center gap-2">
+        <span class="material-icons text-2xl text-black/60">nightlife</span>
+        <span class="text-gray-700">今晚，我举杯，敬这份坦白，也敬我们都还在路上。</span>
+      </div>
+    </footer>
+  </main>
+  <!-- Chart.js 配置 -->
+  <script>
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['创造', '竞争', '关系', '意义', '遗忘'],
+        datasets: [{
+          data: [28, 22, 18, 20, 12],
+          backgroundColor: [
+            'rgba(240,173,112,0.85)',
+            'rgba(0,0,0,0.75)',
+            'rgba(240,173,112,0.35)',
+            'rgba(0,0,0,0.18)',
+            'rgba(240,173,112,0.18)'
+          ],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '70%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: '#444',
+              font: { size: 14, weight: 'bold', family: "'Inter','Montserrat',sans-serif" },
+              boxWidth: 18,
+              padding: 16
+            }
+          },
+          tooltip: {
+            backgroundColor: '#222',
+            titleColor: '#F0AD70',
+            bodyColor: '#fff'
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

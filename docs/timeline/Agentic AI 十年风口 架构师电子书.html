@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Agentic AI 十年风口 | 架构师电子书</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #fff;
+    }
+    .blur-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 420px; z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .blur-spot {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.7;
+      z-index: 0;
+    }
+    .blur-spot.pink { background: #f7b6d2; width: 420px; height: 320px; top: -80px; left: 0; }
+    .blur-spot.purple { background: #b6b6f7; width: 420px; height: 320px; top: 0; left: 320px; }
+    .section-dark {
+      background: linear-gradient(90deg, #7C3AED 0%, #4F8FFF 100%);
+      color: #fff;
+    }
+    .section-dark .icon-outline { color: #fff; }
+    .section-dark .tag { color: #fff; background: rgba(255,255,255,0.18);}
+    .btn-purple {
+      background: linear-gradient(90deg, #7C3AED 0%, #4F8FFF 100%);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 9999px;
+      transition: background 0.2s;
+      box-shadow: 0 2px 16px 0 rgba(124,58,237,0.10);
+    }
+    .btn-purple:hover {
+      background: linear-gradient(90deg, #4F8FFF 0%, #7C3AED 100%);
+    }
+    .tag {
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 0.75rem;
+      padding: 0.2rem 0.9rem;
+      margin-right: 0.5rem;
+      display: inline-block;
+    }
+    .tag-pink { background: #f7b6d2; color: #a12c6e; }
+    .tag-blue { background: #b6e3f7; color: #1a4a6e; }
+    .tag-gold { background: #ffe9a7; color: #b88a00; }
+    .tag-purple { background: #e0d7fa; color: #7C3AED; }
+    .tag-green { background: #c6f7e2; color: #1a6e4a; }
+    .icon-outline {
+      color: #7C3AED;
+      font-size: 2.2rem;
+      opacity: 0.85;
+    }
+    .feature-card {
+      @apply rounded-2xl shadow bg-white flex flex-col items-center p-6;
+      min-width: 220px;
+      min-height: 180px;
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .feature-blue { color: #4F8FFF; }
+    .feature-pink { color: #f7b6d2; }
+    .feature-gold { color: #FFD700; }
+    .feature-green { color: #1FC47C; }
+    .feature-purple { color: #7C3AED; }
+    @media (min-width: 1920px) {
+      .max-w-screen-2xl {
+        max-width: 1600px;
+      }
+    }
+  </style>
+</head>
+<body class="relative min-h-screen flex flex-col items-center font-sans text-[#232323]">
+  <!-- 顶部模糊渐变背景 -->
+  <div class="blur-bg">
+    <div class="blur-spot pink"></div>
+    <div class="blur-spot purple"></div>
+  </div>
+  <!-- 顶部导航 -->
+  <nav class="w-full max-w-screen-2xl flex justify-between items-center py-6 px-12 z-10 relative">
+    <div class="flex items-center gap-4">
+      <i class="fa-solid fa-layer-group text-white bg-gradient-to-br from-[#7C3AED] to-[#4F8FFF] rounded-2xl p-3 shadow-lg" style="font-size:2.2rem;"></i>
+      <div class="text-2xl font-bold tracking-widest text-[#4F8FFF]">架构师 ARCHITECT</div>
+    </div>
+    <div class="flex gap-8 text-base font-semibold">
+      <a href="#special" class="hover:text-[#7C3AED] transition">专题</a>
+      <a href="#interview" class="hover:text-[#7C3AED] transition">访谈</a>
+      <a href="#talks" class="hover:text-[#7C3AED] transition">演讲</a>
+      <a href="#article" class="hover:text-[#7C3AED] transition">推荐</a>
+    </div>
+    <a href="#download" class="px-8 py-3 btn-purple text-lg shadow-lg">电子书下载</a>
+  </nav>
+
+  <!-- 主视觉区 -->
+  <section class="w-full max-w-screen-2xl flex flex-col md:flex-row items-center justify-between py-16 px-12 z-10 relative">
+    <div class="flex-1 flex flex-col items-start">
+      <div class="text-7xl font-extrabold leading-tight mb-6 text-[#4F8FFF]">
+        Agentic AI<br>
+        <span class="text-[#7C3AED]">十年风口</span>
+      </div>
+      <div class="text-2xl font-semibold mb-4 text-[#232323]">软件生态正在重构</div>
+      <div class="text-base text-[#7C3AED] mb-8">Agentic Software Revolution · InfoQ 2025</div>
+      <a id="download" href="#" class="inline-block px-10 py-4 btn-purple text-lg shadow-lg">立即下载电子书</a>
+    </div>
+    <div class="flex-1 flex flex-col items-center md:items-end mt-12 md:mt-0">
+      <div class="bg-white/90 rounded-3xl p-8 w-[380px] flex flex-col items-center shadow-lg border border-[#eaeaea]">
+        <i class="fa-solid fa-cubes icon-outline mb-4"></i>
+        <div class="text-7xl font-extrabold text-[#4F8FFF] mb-2">10</div>
+        <div class="text-base text-[#7C3AED] font-semibold mb-2">年技术变革</div>
+        <div class="text-sm text-[#232323]">Agentic AI 正在重塑软件开发与企业数字化</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 功能特点区块 -->
+  <section class="w-full max-w-screen-2xl px-12 py-8 z-10 relative">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div class="feature-card">
+        <i class="fa-solid fa-brain feature-icon feature-purple"></i>
+        <div class="text-xl font-bold mb-2 text-[#7C3AED]">智能理解</div>
+        <div class="text-base text-[#232323] text-center">AI 能理解业务、自动编写、持续演进，成为“数字工程师”。</div>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-users feature-icon feature-blue"></i>
+        <div class="text-xl font-bold mb-2 text-[#4F8FFF]">协同创新</div>
+        <div class="text-base text-[#232323] text-center">程序员与智能体协同，聚焦问题与方案设计。</div>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-rocket feature-icon feature-gold"></i>
+        <div class="text-xl font-bold mb-2 text-[#FFD700]">敏捷自建</div>
+        <div class="text-base text-[#232323] text-center">企业可快速自建软件，灵活满足定制需求。</div>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-shield-halved feature-icon feature-green"></i>
+        <div class="text-xl font-bold mb-2 text-[#1FC47C]">安全合规</div>
+        <div class="text-base text-[#232323] text-center">Agentic AI 遵守合规规则，保护核心知识产权。</div>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-chart-line feature-icon feature-pink"></i>
+        <div class="text-xl font-bold mb-2 text-[#f7b6d2]">高效进化</div>
+        <div class="text-base text-[#232323] text-center">持续优化开发流程，推动数字世界加速进化。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 卷首语 -->
+  <section class="w-full max-w-screen-2xl px-12 py-8 z-10 relative">
+    <div class="rounded-3xl p-8 bg-white shadow">
+      <div class="text-3xl font-bold mb-4 text-[#4F8FFF]">卷首语</div>
+      <div class="text-lg leading-relaxed max-w-4xl text-[#232323]">
+        十年前，我们惊叹于 AI 能“补全代码”。而今天，Agentic AI 已悄然改变了软件开发的整个生态，它不只是一个工具，更像是一个新物种——能理解业务、自动编写、持续演进的“数字工程师”。<br>
+        <span class="font-semibold text-[#7C3AED]">程序员的角色正在重塑</span>：写代码不再是核心能力，理解问题、设计方案、与智能体协同成为新竞争力。<br>
+        <span class="font-semibold text-[#7C3AED]">企业技术策略也被颠覆</span>：决策焦点从“买 SaaS”转向“能否快速自建软件”。Agentic AI 为中小企业开辟了数字化捷径。<br>
+        这本电子书记录了 Agentic AI 十年的变革与承诺，见证数字世界的加速进化。
+      </div>
+    </div>
+  </section>
+
+  <!-- 专题区块 -->
+  <section id="special" class="w-full max-w-screen-2xl px-12 py-8 grid grid-cols-1 md:grid-cols-2 gap-12 z-10 relative">
+    <div class="rounded-3xl p-8 bg-white shadow flex flex-col justify-between">
+      <div class="flex items-center mb-4">
+        <i class="fa-regular fa-lightbulb icon-outline mr-3"></i>
+        <div class="text-2xl font-bold text-[#4F8FFF]">特别专题</div>
+      </div>
+      <ul class="space-y-3 text-lg">
+        <li><span class="tag tag-blue">数据</span><span class="font-bold text-[#7C3AED]">Agentic Data Stack</span> 初探：传统数据仓库正在被 Agentic AI 吞噬？</li>
+        <li><span class="tag tag-pink">争议</span>Agentic AI 要终结数据库和 SaaS？大厂掌门人路线之争</li>
+        <li><span class="tag tag-purple">模型</span>GPT-4o “吉卜力”爆火，Prompt、SD 白学了？！大模型能力进化</li>
+        <li><span class="tag tag-green">实践</span>资源有限，如何构建高效能的 AI Agent</li>
+        <li><span class="tag tag-gold">产品</span>Agent 驱动的智能答疑产品构建实践</li>
+        <li><span class="tag tag-purple">趋势</span>Andrej Karpathy：AI 开启软件 3.0，重写一切的时代来了！</li>
+      </ul>
+    </div>
+    <div class="bg-white/90 rounded-3xl p-8 flex flex-col items-center justify-center shadow-lg border border-[#eaeaea]">
+      <canvas id="aiTrendChart" width="340" height="180"></canvas>
+      <div class="text-sm text-[#7C3AED] mt-2">AI Agentic 生态热度趋势（2020-2025）</div>
+    </div>
+  </section>
+
+  <!-- 访谈区块（深色模式） -->
+  <section id="interview" class="w-full max-w-screen-2xl px-12 py-8 grid grid-cols-1 md:grid-cols-2 gap-12 z-10 relative">
+    <div class="rounded-3xl p-8 section-dark flex flex-col justify-between">
+      <div class="flex items-center mb-4">
+        <i class="fa-regular fa-comments icon-outline mr-3"></i>
+        <div class="text-2xl font-bold">访谈文章</div>
+      </div>
+      <ul class="space-y-3 text-lg">
+        <li><span class="tag tag-gold">观点</span>吴恩达评 Agent 现状：MCP 还欠火候，A2A 协作堪称“双重奇迹”</li>
+        <li><span class="tag tag-pink">焦虑</span>83 岁图灵奖大师、龙书作者：大模型时代的技术焦虑</li>
+        <li><span class="tag tag-purple">创新</span>Claude Code 创始人详解：如何改写编程方式</li>
+        <li><span class="tag tag-blue">开源</span>微软开源 Copilot，VS Code 创始人谈“真正价值”</li>
+        <li><span class="tag tag-gold">商业</span>Cursor 年赚三亿美金，估值近百亿，竟无护城河？</li>
+        <li><span class="tag tag-green">效率</span>两工程师用 Claude Code 跑出 15 人团队效率</li>
+      </ul>
+    </div>
+    <div class="section-dark rounded-3xl p-8 flex flex-col items-center justify-center shadow-lg">
+      <i class="fa-solid fa-user-group" style="font-size:4.5rem;color:#fff;"></i>
+      <div class="text-7xl font-extrabold text-white mb-1">6+</div>
+      <div class="text-base text-white font-semibold">行业领袖深度访谈</div>
+    </div>
+  </section>
+
+  <!-- 演讲区块 -->
+  <section id="talks" class="w-full max-w-screen-2xl px-12 py-8 grid grid-cols-1 md:grid-cols-2 gap-12 z-10 relative">
+    <div class="rounded-3xl p-8 bg-white shadow flex flex-col justify-between">
+      <div class="flex items-center mb-4">
+        <i class="fa-regular fa-chalkboard icon-outline mr-3"></i>
+        <div class="text-2xl font-bold text-[#4F8FFF]">热门演讲实录</div>
+      </div>
+      <ul class="space-y-3 text-lg">
+        <li><span class="tag tag-green">测试</span>AI 驱动的智能化单元测试生成：字节跳动实践</li>
+        <li><span class="tag tag-blue">前端</span>去哪儿网前端代码自动生成技术实践</li>
+        <li><span class="tag tag-gold">商业</span>AI 创新应用 C 端 B 端商业化实践</li>
+        <li><span class="tag tag-purple">电商</span>大模型赋能电商 B 端，快手电商技术揭秘</li>
+        <li><span class="tag tag-blue">数据库</span>Databricks × Snowflake 下注，PostgreSQL 成 AI 时代数据库标准？</li>
+        <li><span class="tag tag-pink">RAG</span>复杂场景下的 RAG 架构演进</li>
+        <li><span class="tag tag-purple">多模态</span>揭秘千卡 GPU 集群高效训练多模态大模型</li>
+      </ul>
+    </div>
+    <div class="bg-gradient-to-br from-[#4F8FFF]/90 to-[#7C3AED]/90 rounded-3xl p-8 flex flex-col items-center justify-center shadow-lg">
+      <i class="fa-solid fa-chart-line text-white" style="font-size:4.5rem;"></i>
+      <div class="text-7xl font-extrabold text-white mb-1">8+</div>
+      <div class="text-base text-white font-semibold">一线企业落地案例</div>
+    </div>
+  </section>
+
+  <!-- 推荐文章区块 -->
+  <section id="article" class="w-full max-w-screen-2xl px-12 py-8 grid grid-cols-1 md:grid-cols-2 gap-12 z-10 relative">
+    <div class="rounded-3xl p-8 bg-white shadow flex flex-col justify-between">
+      <div class="flex items-center mb-4">
+        <i class="fa-regular fa-newspaper icon-outline mr-3"></i>
+        <div class="text-2xl font-bold text-[#4F8FFF]">推荐文章</div>
+      </div>
+      <ul class="space-y-3 text-lg">
+        <li><span class="tag tag-gold">观点</span>Java 三十周年：James Gosling 狠批 AI 是“一场骗局”</li>
+        <li><span class="tag tag-pink">争议</span>Redis 之父：AI 远远落后于人类程序员！</li>
+        <li><span class="tag tag-blue">前端</span>“前端已死”是危言耸听吗？</li>
+        <li><span class="tag tag-purple">趋势</span>InfoQ 2025 年趋势报告：软件架构和设计</li>
+        <li><span class="tag tag-green">团队</span>AI 将如何颠覆传统软件开发团队</li>
+        <li><span class="tag tag-gold">API</span>API 网关十五年演进：从微服务到 AI 神经网络</li>
+        <li><span class="tag tag-purple">混战</span>“AI 六小虎”两年混战，新的较量开始</li>
+      </ul>
+    </div>
+    <div class="bg-gradient-to-br from-[#FFD700]/90 to-[#7C3AED]/90 rounded-3xl p-8 flex flex-col items-center justify-center shadow-lg">
+      <i class="fa-solid fa-book-open text-white" style="font-size:4.5rem;"></i>
+      <div class="text-7xl font-extrabold text-white mb-1">7+</div>
+      <div class="text-base text-white font-semibold">趋势洞察与深度分析</div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="w-full max-w-screen-2xl px-12 py-8 flex flex-col md:flex-row justify-between items-center text-base text-[#7C3AED] mt-8 z-10 relative">
+    <div>© 2025 InfoQ 架构师电子书</div>
+    <div>Design inspired by Apple Keynote · Hybrid Layout</div>
+  </footer>
+
+  <!-- Chart.js 数据可视化 -->
+  <script>
+    const ctx = document.getElementById('aiTrendChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+        datasets: [{
+          label: 'Agentic AI 热度指数',
+          data: [20, 35, 55, 80, 120, 180],
+          borderColor: 'rgba(124,58,237,0.95)',
+          backgroundColor: 'rgba(124,58,237,0.13)',
+          borderWidth: 5,
+          pointRadius: 9,
+          pointBackgroundColor: 'rgba(79,143,255,0.95)',
+          tension: 0.4,
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: '#7C3AED', font: { size: 18, weight: 'bold' } }
+          },
+          y: {
+            grid: { color: 'rgba(124,58,237,0.13)' },
+            ticks: { color: '#232323', font: { size: 18 } }
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+
