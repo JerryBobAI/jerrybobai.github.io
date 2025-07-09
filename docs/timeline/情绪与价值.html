@@ -1,0 +1,215 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>情绪与价值 · Memphis Hybrid Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Noto Sans SC & Helvetica Neue -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+	body {
+		font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+		background-color: #DCD6CC; /* 褪色的亚麻色 */
+		background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+						  linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+		background-size: 30px 30px;
+		background-position: 0 0, 15px 15px;
+		color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+		min-height: 100vh;
+	}
+	.font-display {
+		font-weight: 900;
+		line-height: 1.05;
+		letter-spacing: -0.03em;
+	}
+	.text-highlight-gradient {
+		background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		padding-bottom: 0.1em;
+	}
+	.text-connecting {
+		font-size: clamp(1.5rem, 5vw, 3.5rem);
+		font-weight: 400;
+		color: #6B5D55;
+		display: block;
+		margin: 0.3em 0;
+		letter-spacing: normal;
+	}
+	.text-colossus {
+		font-size: clamp(4rem, 18vw, 15rem);
+	}
+	.memphis-accent {
+		position: absolute;
+		opacity: 0.05;
+		pointer-events: none;
+		z-index: 0;
+	}
+	@keyframes slowDrift {
+		0%, 100% { transform: translate(0, 0) rotate(0deg); }
+		25% { transform: translate(5px, -8px) rotate(1deg); }
+		75% { transform: translate(-5px, 8px) rotate(-1deg); }
+	}
+	.animate-slow-drift {
+		animation: slowDrift 15s ease-in-out infinite;
+	}
+	@media (min-width: 1920px) {
+		.max-w-screen-xl {
+			max-width: 1600px;
+		}
+	}
+  </style>
+</head>
+<body>
+  <!-- Memphis风格装饰元素 -->
+  <svg class="memphis-accent animate-slow-drift" width="420" height="420" style="top:2vw;left:2vw;position:fixed;"></svg>
+  <svg class="memphis-accent animate-slow-drift" width="320" height="320" style="bottom:2vw;right:2vw;position:fixed;"></svg>
+  <main class="w-full flex flex-col items-center px-4 py-8 relative z-10">
+    <!-- 超大主标题 -->
+    <section class="w-full max-w-screen-xl flex flex-col items-center mb-8">
+      <h1 class="text-colossus font-display font-black mb-4 text-highlight-gradient">
+        情绪
+      </h1>
+      <span class="text-connecting">Emotion</span>
+      <h1 class="text-colossus font-display font-black mb-4 text-highlight-gradient">
+        价值
+      </h1>
+      <span class="text-connecting">Value</span>
+      <p class="text-2xl md:text-3xl font-bold mt-6 mb-2" style="color:#4A3B31;">
+        怕的不是有情绪，怕的是只有情绪，没有价值
+      </p>
+      <span class="text-sm text-gray-500">Memphis Hybrid Layout</span>
+    </section>
+
+    <!-- 内容与建议卡片 -->
+    <section class="w-full max-w-screen-xl grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div class="relative bg-white/60 rounded-3xl shadow-lg p-8 flex flex-col items-center" style="backdrop-filter: blur(8px); border:1.5px solid #B8B1A7;">
+        <h2 class="text-2xl font-display font-bold mb-4 text-highlight-gradient">情绪不是敌人，只有情绪才是</h2>
+        <ul class="mt-4 space-y-3 text-left w-full max-w-md mx-auto">
+          <li class="flex items-start">
+            <i class="fa-solid fa-circle-exclamation mr-3" style="color:#6B5D55;"></i>
+            <span>每个人都会有情绪。焦虑、愤怒、无力感，这些都很正常。</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-arrow-rotate-left mr-3" style="color:#6B5D55;"></i>
+            <span>真正让人停滞不前的，不是情绪本身，而是我们只停留在情绪里，却没有任何行动。</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-battery-quarter mr-3" style="color:#6B5D55;"></i>
+            <span>情绪如果只是反复循环，最终只会消耗你的能量，让你陷入自我怀疑和无力感。</span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative bg-[#E6E1D5]/70 rounded-3xl shadow-lg p-8 flex flex-col items-center" style="backdrop-filter: blur(8px); border:1.5px solid #B8B1A7;">
+        <h2 class="text-2xl font-display font-bold mb-4 text-highlight-gradient">让情绪成为成长的起点</h2>
+        <ul class="mt-4 space-y-3 text-left w-full max-w-md mx-auto">
+          <li class="flex items-start">
+            <i class="fa-solid fa-pen-to-square mr-3" style="color:#6B5D55;"></i>
+            <span>把情绪当作信号，提醒自己去做点什么——哪怕只是一个小小的改变。</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-list-check mr-3" style="color:#6B5D55;"></i>
+            <span>焦虑时，写下让你焦虑的具体原因，然后挑一件最容易解决的小事，立刻去做。</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fa-solid fa-dumbbell mr-3" style="color:#6B5D55;"></i>
+            <span>愤怒时，试着用运动或写作把能量释放出来，而不是让它在心里发酵。</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 数据可视化与总结 -->
+    <section class="w-full max-w-screen-xl grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="relative bg-white/60 rounded-3xl shadow-lg p-8 flex flex-col items-center" style="backdrop-filter: blur(8px); border:1.5px solid #B8B1A7;">
+        <h2 class="text-xl font-display font-bold mb-4 text-highlight-gradient">情绪转化行为分布</h2>
+        <div class="w-full flex justify-center items-center" style="height:220px;">
+          <canvas id="emotionChart" width="400" height="220"></canvas>
+        </div>
+      </div>
+      <div class="relative bg-[#E6E1D5]/70 rounded-3xl shadow-lg p-8 flex flex-col justify-center" style="backdrop-filter: blur(8px); border:1.5px solid #B8B1A7;">
+        <h2 class="text-xl font-display font-bold mb-4 text-highlight-gradient">结语</h2>
+        <p class="text-lg font-bold mb-2 text-highlight-gradient">
+          让每一次情绪，都成为你创造价值的起点。
+        </p>
+        <p class="text-base" style="color:#4A3B31;">
+          情绪不是终点，行动才是答案。
+        </p>
+      </div>
+    </section>
+  </main>
+  <!-- Chart.js 配色与数据 -->
+  <script>
+    // Memphis装饰SVG内容
+    document.querySelectorAll('.memphis-accent').forEach((svg, i) => {
+      if (i === 0) {
+        svg.innerHTML = `
+          <rect x="30" y="30" width="120" height="30" rx="12" fill="#4A3B31"/>
+          <circle cx="200" cy="200" r="60" fill="#6B5D55"/>
+          <path d="M320,60 Q350,120 400,80" stroke="#4A3B31" stroke-width="8" fill="none"/>
+        `;
+      } else {
+        svg.innerHTML = `
+          <ellipse cx="160" cy="160" rx="80" ry="30" fill="#4A3B31"/>
+          <rect x="60" y="220" width="120" height="20" rx="8" fill="#6B5D55"/>
+          <path d="M40,40 Q80,100 160,60" stroke="#6B5D55" stroke-width="6" fill="none"/>
+        `;
+      }
+    });
+    // Chart.js
+    const ctx = document.getElementById('emotionChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['行动转化', '情绪停滞', '能量释放', '自我怀疑'],
+        datasets: [{
+          data: [42, 28, 20, 10],
+          backgroundColor: [
+            'rgba(104, 144, 148, 0.7)', // 暗哑蓝灰
+            'rgba(75, 61, 49, 0.7)',    // 深陶土
+            'rgba(182, 177, 167, 0.7)', // 褪色亚麻
+            'rgba(107, 93, 85, 0.7)'    // 柔和深灰
+          ],
+          borderColor: [
+            'rgba(104, 144, 148, 1)',
+            'rgba(75, 61, 49, 1)',
+            'rgba(182, 177, 167, 1)',
+            'rgba(107, 93, 85, 1)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              font: {
+                family: "'Noto Sans SC', sans-serif",
+                size: 16,
+                weight: 'bold'
+              },
+              color: '#4A3B31'
+            }
+          }
+        },
+        cutout: '70%',
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

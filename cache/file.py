@@ -47,7 +47,7 @@ import subprocess
 import re
 import sys
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # 检查依赖
 try:
@@ -113,13 +113,13 @@ def sanitize_filename(title):
     print(f"   🔧 生成文件名: {filename}")
     return filename
 
-def find_html_files(source_dir, today_only=False):
+def find_html_files(source_dir, days=1):
     """
     在指定目录中查找HTML文件
 
     Args:
         source_dir (str): 源目录路径
-        today_only (bool): 是否只查找今天修改的文件
+        days (int): 查找最近几天的文件
 
     Returns:
         list: HTML文件路径列表，按修改时间排序（最新的在前）
@@ -137,23 +137,22 @@ def find_html_files(source_dir, today_only=False):
         print(f"📁 在 {source_path} 中未找到HTML文件")
         return []
 
-    # 如果只查找今天的文件，进行过滤
-    if today_only:
+    if days is not None:
         today = datetime.now().date()
+        start_date = today - timedelta(days=days-1)
         filtered_files = []
 
         for file_path in html_files:
             try:
-                # 获取文件修改时间
                 mtime = datetime.fromtimestamp(file_path.stat().st_mtime).date()
-                if mtime == today:
+                if start_date <= mtime <= today:
                     filtered_files.append(file_path)
             except Exception as e:
                 print(f"   ⚠️  无法获取文件时间 {file_path.name}: {e}")
                 continue
 
         html_files = filtered_files
-        print(f"📁 在 {source_path} 中找到 {len(html_files)} 个今天修改的HTML文件")
+        print(f"📁 在 {source_path} 中找到 {len(html_files)} 个最近 {days} 天的HTML文件")
     else:
         print(f"📁 在 {source_path} 中找到 {len(html_files)} 个HTML文件")
 
@@ -411,6 +410,8 @@ def main():
                        help='源目录路径（默认: ~/Downloads）')
     parser.add_argument('--all-files', action='store_true',
                        help='处理所有HTML文件（默认只处理今天修改的文件）')
+    parser.add_argument('--week', action='store_true',
+                       help='处理最近7天的HTML文件')
     parser.add_argument('--dry-run', action='store_true',
                        help='预览模式，不实际执行操作')
     parser.add_argument('--keep-source', action='store_true',
@@ -423,15 +424,21 @@ def main():
     print("🚀 开始处理HTML文件...")
     print(f"📂 源目录: {args.source}")
     print(f"🎯 目标目录: ../docs/timeline/")
-    # 默认只处理今天的文件，除非指定 --all-files
-    today_only = not args.all_files
-    print(f"📅 搜索范围: {'所有HTML文件' if args.all_files else '仅今天修改的文件'}")
+    
+    if args.all_files:
+        days = None  # 不限制
+    elif args.week:
+        days = 7
+    else:
+        days = 1  # 默认当天
+    scope_str = '所有HTML文件' if days is None else f'最近 {days} 天的文件'
+    print(f"📅 搜索范围: {scope_str}")
 
     if args.dry_run:
         print("🔍 预览模式：将显示操作但不实际执行")
 
     # 查找HTML文件
-    html_files = find_html_files(args.source, today_only)
+    html_files = find_html_files(args.source, days)
     if not html_files:
         return
     

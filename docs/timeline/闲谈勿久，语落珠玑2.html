@@ -1,0 +1,175 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <title>语落珠玑 · Hybrid Memphis Layout</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Google Fonts: Noto Sans SC -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+	body {
+		font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+		background-color: #DCD6CC; /* 褪色的亚麻色 */
+		background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+						  linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+		background-size: 30px 30px;
+		background-position: 0 0, 15px 15px;
+		color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+	.font-display {
+		font-weight: 900;
+		line-height: 1.05;
+		letter-spacing: -0.03em;
+	}
+	.text-highlight-gradient {
+		background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		padding-bottom: 0.1em;
+	}
+	.text-connecting {
+		font-size: clamp(1.5rem, 5vw, 3.5rem);
+		font-weight: 400;
+		color: #6B5D55;
+		display: block;
+		margin: 0.3em 0;
+		letter-spacing: normal;
+	}
+	.text-colossus {
+		font-size: clamp(4rem, 18vw, 15rem);
+	}
+	.memphis-accent {
+		position: absolute;
+		opacity: 0.05;
+		pointer-events: none;
+		z-index: 0;
+	}
+	@keyframes slowDrift {
+		0%, 100% { transform: translate(0, 0) rotate(0deg); }
+		25% { transform: translate(5px, -8px) rotate(1deg); }
+		75% { transform: translate(-5px, 8px) rotate(-1deg); }
+	}
+	.animate-slow-drift {
+		animation: slowDrift 15s ease-in-out infinite;
+	}
+  </style>
+</head>
+<body class="relative overflow-hidden min-h-screen flex items-center justify-center">
+  <!-- Memphis 图形装饰 -->
+  <svg class="memphis-accent animate-slow-drift" width="420" height="420" style="top:5%;left:3%;">
+    <circle cx="210" cy="210" r="180" fill="#689094" />
+    <rect x="60" y="60" width="80" height="80" rx="18" fill="#4A3B31" />
+    <path d="M40,320 Q210,100 380,320" stroke="#6B5D55" stroke-width="18" fill="none"/>
+  </svg>
+  <svg class="memphis-accent animate-slow-drift" width="320" height="320" style="bottom:8%;right:6%;">
+    <rect x="40" y="40" width="180" height="60" rx="30" fill="#4A3B31"/>
+    <circle cx="260" cy="260" r="40" fill="#689094"/>
+    <path d="M60,260 Q160,120 260,260" stroke="#6B5D55" stroke-width="10" fill="none"/>
+  </svg>
+  <!-- 主内容 -->
+  <main class="relative z-10 w-full max-w-6xl px-6 py-12 flex flex-col items-center justify-center">
+    <!-- 超大主标题 -->
+    <h1 class="font-display text-colossus text-highlight-gradient select-none leading-tight tracking-tight">
+      闲谈勿久
+    </h1>
+    <!-- 英文点缀 -->
+    <span class="text-connecting uppercase tracking-widest mb-2">Less Talk, More Essence</span>
+    <!-- 副标题 -->
+    <h2 class="font-display text-5xl md:text-7xl text-[#4A3B31] mb-8 tracking-tight">
+      语落珠玑
+    </h2>
+    <!-- 重点语句 -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-4xl mx-auto mb-10">
+      <div class="flex-1">
+        <p class="text-2xl md:text-3xl font-bold mb-4 text-[#4A3B31]">惜时如金，言简意赅。</p>
+        <p class="text-lg md:text-xl text-[#6B5D55] mb-2">真正有分量的话语，往往寥寥数语，<br/>却能直击人心。</p>
+        <p class="text-lg md:text-xl text-[#6B5D55]">与其喋喋不休，不如用心表达，<br/>每一句都如珠似玉，熠熠生辉。</p>
+      </div>
+      <!-- 图形化可视化 -->
+      <div class="flex-1 flex flex-col items-center justify-center">
+        <!-- 简洁勾线图表 -->
+        <canvas id="wordsChart" width="220" height="180" class="mb-2"></canvas>
+        <span class="text-xs text-[#6B5D55]">言语分量可视化 / Word Impact</span>
+      </div>
+    </div>
+    <!-- 超大数字/要点 -->
+    <div class="flex flex-row items-center justify-center gap-12 mt-8">
+      <div class="flex flex-col items-center">
+        <span class="font-display text-7xl md:text-8xl text-highlight-gradient">3</span>
+        <span class="text-[#6B5D55] text-lg mt-2">核心要点</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <span class="font-display text-7xl md:text-8xl text-highlight-gradient">1</span>
+        <span class="text-[#6B5D55] text-lg mt-2">句直击人心</span>
+      </div>
+      <div class="flex flex-col items-center">
+        <span class="font-display text-7xl md:text-8xl text-highlight-gradient">∞</span>
+        <span class="text-[#6B5D55] text-lg mt-2">思考延展</span>
+      </div>
+    </div>
+    <!-- 英文小字点缀 -->
+    <div class="mt-12 text-sm text-[#6B5D55] tracking-wide">
+      <i class="fa-solid fa-quote-left mr-2"></i>
+      <span>Every word, a pearl. Every pause, a space for thought.</span>
+    </div>
+  </main>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 简洁勾线图表
+    const ctx = document.getElementById('wordsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['开场', '核心', '收束'],
+        datasets: [{
+          label: 'Impact',
+          data: [1, 10, 3],
+          borderColor: 'rgba(104, 144, 148, 0.7)',
+          backgroundColor: 'rgba(104, 144, 148, 0.15)',
+          borderWidth: 3,
+          pointBackgroundColor: 'rgba(104, 144, 148, 0.8)',
+          pointRadius: 7,
+          pointHoverRadius: 10,
+          tension: 0.45,
+          fill: true,
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: '#6B5D55', font: { family: 'Noto Sans SC', size: 14 } }
+          },
+          y: {
+            grid: { display: false },
+            min: 0,
+            max: 12,
+            ticks: { display: false }
+          }
+        }
+      }
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+
