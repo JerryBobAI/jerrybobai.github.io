@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不设憧憬，拥抱惊喜</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <!-- Google Fonts: Noto Sans SC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030014;
+            color: #e5e7eb;
+            overflow-x: hidden;
+        }
+        .background-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            overflow: hidden;
+            z-index: -10;
+        }
+        .light-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.6;
+        }
+        @keyframes animate-float {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            25% { transform: translate(var(--mid-x), var(--mid-y)) scale(1.3); }
+            50% { transform: translate(var(--end-x), var(--end-y)) scale(0.9); }
+            75% { transform: translate(var(--mid-y), var(--mid-x)) scale(1.2); }
+            100% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+        }
+        .orb-1 { animation: animate-float 36s ease-in-out infinite; }
+        .orb-2 { animation: animate-float 48s ease-in-out infinite reverse; }
+        .orb-3 { animation: animate-float 42s ease-in-out infinite; }
+        main::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-image: repeating-linear-gradient(90deg,
+                rgba(0,0,0,0.2) 0px,
+                rgba(0,0,0,0.2) 4px,
+                transparent 4px,
+                transparent 10px
+            );
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: -5;
+            pointer-events: none;
+        }
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .liquid-card {
+            background: rgba(20, 20, 35, 0.25);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 32px;
+            box-shadow: 0 16px 60px rgba(0,0,0,0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .liquid-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+        }
+        .highlight-pink { color: #f472b6; }
+        .highlight-blue { color: #60a5fa; }
+        .highlight-orange { color: #f59e42; }
+        .highlight-purple { color: #a855f7; }
+        .title-underline {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, rgba(244,114,182,0) 0%, rgba(244,114,182,1) 50%, rgba(244,114,182,0) 100%);
+            border-radius: 2px;
+            filter: blur(2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景霓虹光球 -->
+    <div class="background-container">
+        <div class="light-orb orb-1" style="width: 60vw; height: 60vw; background-color: #ec4899; --start-x: -20vw; --start-y: -20vh; --mid-x: 50vw; --mid-y: 80vh; --end-x: 10vw; --end-y: 10vh;"></div>
+        <div class="light-orb orb-2" style="width: 50vw; height: 50vw; background-color: #3b82f6; --start-x: 70vw; --start-y: 10vh; --mid-x: 0vw; --mid-y: 60vh; --end-x: 80vw; --end-y: 90vh;"></div>
+        <div class="light-orb orb-3" style="width: 40vw; height: 40vw; background-color: #a855f7; --start-x: 10vw; --start-y: 70vh; --mid-x: 80vw; --mid-y: 20vh; --end-x: -10vw; --end-y: 50vh;"></div>
+    </div>
+    <main class="relative z-10">
+        <div class="container mx-auto px-6 lg:px-12 py-24 flex flex-col gap-24 lg:gap-40">
+            <!-- Hero Section -->
+            <section class="min-h-screen flex flex-col justify-center items-center text-center scroll-animate">
+                <p class="text-xl lg:text-2xl font-light text-gray-400 uppercase tracking-widest mb-4">EMBRACE THE UNKNOWN</p>
+                <h1 class="text-5xl md:text-7xl lg:text-9xl font-black leading-tight tracking-tighter mb-8">
+                    <span class="highlight-pink">没有憧憬</span><br>
+                    更容易被<span class="highlight-blue">生活的惊喜</span>击中
+                </h1>
+                <p class="max-w-2xl mx-auto text-lg lg:text-2xl text-gray-300 font-light">
+                    当我们不再对未来设定过多的预期，也就给了未知留白的空间。<br>
+                    就像一场没有剧本的旅行，每一个转角，都是可能的风景。
+                </p>
+            </section>
+            <!-- 憧憬与枷锁 -->
+            <section class="scroll-animate">
+                <div class="liquid-card p-10 lg:p-16 text-center mx-auto max-w-4xl">
+                    <h2 class="text-4xl md:text-6xl font-black mb-6 title-underline">
+                        憧憬<br>
+                        <span class="text-lg font-light text-gray-400 tracking-widest uppercase">HOPE OR SHACKLE?</span>
+                    </h2>
+                    <p class="text-2xl font-bold mb-6">
+                        有时是希望，<span class="highlight-orange">也是枷锁</span>
+                    </p>
+                    <p class="text-lg lg:text-2xl text-gray-300 font-light mb-4">
+                        它让我们对结果充满期待，却也可能让我们忽略了过程中的美好。
+                        <br>当我们放下执念，学会与不确定共处，生活反而会以意想不到的方式回馈你。
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="flex flex-col items-center">
+                            <i class="fas fa-heart highlight-pink text-4xl mb-2"></i>
+                            <span class="text-base text-gray-200">一次偶遇的温暖</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <i class="fas fa-gift highlight-blue text-4xl mb-2"></i>
+                            <span class="text-base text-gray-200">一份突如其来的机遇</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <i class="fas fa-lightbulb highlight-purple text-4xl mb-2"></i>
+                            <span class="text-base text-gray-200">某个平凡日子里的灵感</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 惊喜属于空杯心态 -->
+            <section class="scroll-animate">
+                <div class="flex flex-col lg:flex-row gap-12 items-center justify-center">
+                    <div class="liquid-card p-10 flex-1 text-center">
+                        <h2 class="text-3xl md:text-5xl font-black mb-6 highlight-blue">惊喜，属于空杯以待的人</h2>
+                        <p class="text-xl text-gray-200 mb-4">不必总是苦苦追问 <span class="text-lg text-white font-bold">“明天会怎样”</span>，<br>用一颗开放的心，去拥抱每一刻的未知。</p>
+                        <div class="flex justify-center mt-8">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="48" fill="none" stroke="#60a5fa" stroke-width="8" opacity="0.4"/>
+                                <path d="M30 80 Q60 110 90 80" stroke="#f472b6" stroke-width="6" fill="none" opacity="0.7"/>
+                                <circle cx="60" cy="90" r="7" fill="#f472b6" opacity="0.7"/>
+                            </svg>
+                        </div>
+                        <p class="mt-6 text-lg text-gray-400">空杯心态 = 无限可能</p>
+                    </div>
+                </div>
+            </section>
+            <!-- 最美风景在不确定 -->
+            <section class="scroll-animate py-24 text-center">
+                <h2 class="text-4xl md:text-6xl font-black mb-12 title-underline">
+                    人生最美的风景<br>
+                    <span class="highlight-purple">恰恰在于它的不确定</span>
+                </h2>
+                <p class="text-2xl lg:text-3xl text-gray-200 mb-12">
+                    The most beautiful scenery<br>
+                    is always hidden in the unknown.
+                </p>
+                <div class="flex justify-center">
+                    <svg width="320" height="80" viewBox="0 0 320 80">
+                        <polyline points="0,60 40,30 80,50 120,20 160,60 200,40 240,70 280,30 320,60"
+                            fill="none" stroke="#a855f7" stroke-width="6" opacity="0.7"/>
+                        <circle cx="120" cy="20" r="10" fill="#60a5fa" opacity="0.8"/>
+                        <circle cx="280" cy="30" r="10" fill="#f472b6" opacity="0.8"/>
+                    </svg>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 滚动入场动画
+        const scrollElements = document.querySelectorAll('.scroll-animate');
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend);
+        };
+        const displayScrollElement = (element) => {
+            element.classList.add('is-visible');
+        };
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                }
+            });
+        }
+        window.addEventListener('scroll', handleScrollAnimation);
+        handleScrollAnimation();
+        // 背景光球随机化
+        const orbs = document.querySelectorAll('.light-orb');
+        orbs.forEach(orb => {
+            orb.style.animationDelay = `${Math.random() * -10}s`;
+        });
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

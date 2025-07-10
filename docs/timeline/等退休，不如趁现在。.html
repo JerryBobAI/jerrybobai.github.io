@@ -1,0 +1,217 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>等退休，不如趁现在。</title>
+  <!-- TailwindCSS 3.0+ CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Noto Sans SC 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Material Icons CDN -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- ECharts CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+      background-color: #DCD6CC; /* 褪色的亚麻色 */
+      background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                        linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .font-display {
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+    .text-highlight-gradient {
+      background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding-bottom: 0.1em;
+    }
+    .text-connecting {
+      font-size: clamp(1.5rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: #6B5D55;
+      display: block;
+      margin: 0.3em 0;
+      letter-spacing: normal;
+    }
+    .text-colossus {
+      font-size: clamp(4rem, 18vw, 15rem);
+    }
+    .memphis-accent {
+      position: absolute;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes slowDrift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(5px, -8px) rotate(1deg); }
+      75% { transform: translate(-5px, 8px) rotate(-1deg); }
+    }
+    .animate-slow-drift {
+      animation: slowDrift 15s ease-in-out infinite;
+    }
+    /* 自然肌理模拟 */
+    .texture-overlay {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+      opacity: 0.13;
+      mix-blend-mode: multiply;
+    }
+    /* 响应式大屏适配 */
+    @media (min-width: 1920px) {
+      .container-xl {
+        max-width: 1680px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  </style>
+</head>
+<body class="relative flex flex-col items-center justify-center min-h-screen">
+  <!-- 自然肌理叠加 -->
+  <div class="texture-overlay"></div>
+  <!-- 孟菲斯风格装饰图形 -->
+  <svg class="memphis-accent animate-slow-drift" width="320" height="320" style="top: 5%; left: 2%;">
+    <rect x="30" y="30" width="80" height="80" rx="18" fill="#689094" stroke="#4A3B31" stroke-width="2"/>
+    <circle cx="200" cy="100" r="40" fill="none" stroke="#4A3B31" stroke-width="3"/>
+    <path d="M60,200 Q120,250 200,220" fill="none" stroke="#4A3B31" stroke-width="2" stroke-dasharray="8,6"/>
+  </svg>
+  <svg class="memphis-accent animate-slow-drift" width="220" height="220" style="bottom: 8%; right: 4%;">
+    <rect x="40" y="40" width="60" height="60" rx="12" fill="#B6AFA7" stroke="#4A3B31" stroke-width="2"/>
+    <circle cx="150" cy="60" r="30" fill="none" stroke="#4A3B31" stroke-width="2"/>
+    <path d="M40,160 Q110,200 180,180" fill="none" stroke="#4A3B31" stroke-width="2" stroke-dasharray="6,5"/>
+  </svg>
+  <!-- 主内容区 -->
+  <main class="relative z-10 w-full flex flex-col items-center justify-center px-4 py-12 container-xl">
+    <!-- 超大主标题 -->
+    <h1 class="font-display text-colossus text-highlight-gradient select-none">
+      等退休
+    </h1>
+    <span class="text-connecting">Not wait for retirement</span>
+    <h2 class="font-display text-colossus text-[#4A3B31] select-none" style="font-size:clamp(2.5rem,10vw,7rem)">
+      不如趁现在
+    </h2>
+    <span class="text-connecting">Seize the moment</span>
+    <!-- 副标语 -->
+    <div class="mt-8 flex flex-col items-center gap-2">
+      <span class="font-bold text-3xl md:text-4xl text-[#4A3B31]">周末即远方，人生不等人。</span>
+      <span class="text-lg md:text-xl text-[#6B5D55] tracking-wide">The best time is the day you decide to set out.</span>
+    </div>
+    <!-- 数据可视化区块 -->
+    <section class="mt-16 w-full flex flex-col md:flex-row items-center justify-center gap-12">
+      <!-- 数据卡片 -->
+      <div class="flex flex-col items-center bg-[#F3F0EA] bg-opacity-80 rounded-3xl shadow-lg px-10 py-8 min-w-[260px] max-w-xs border border-[#B6AFA7]">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="material-icons text-4xl text-[#4A3B31]">flight_takeoff</span>
+          <span class="text-5xl font-display text-highlight-gradient">3.7</span>
+        </div>
+        <div class="text-[#6B5D55] text-lg font-semibold">平均每年短途旅行</div>
+        <div class="text-xs text-[#B6AFA7] mt-1">Short trips per year</div>
+      </div>
+      <!-- 数据可视化图表 -->
+      <div class="flex-1 min-w-[320px] max-w-2xl h-[320px] bg-[#F3F0EA] bg-opacity-80 rounded-3xl shadow-lg border border-[#B6AFA7] flex items-center justify-center relative">
+        <div id="chart" class="w-full h-full"></div>
+        <!-- 勾线图形化装饰 -->
+        <svg class="absolute top-4 right-4" width="60" height="60">
+          <rect x="10" y="10" width="40" height="40" rx="8" fill="none" stroke="#4A3B31" stroke-width="2"/>
+        </svg>
+      </div>
+      <!-- 数据卡片 -->
+      <div class="flex flex-col items-center bg-[#F3F0EA] bg-opacity-80 rounded-3xl shadow-lg px-10 py-8 min-w-[260px] max-w-xs border border-[#B6AFA7]">
+        <div class="flex items-center gap-3 mb-2">
+          <i class="fa-solid fa-shoe-prints text-4xl text-[#4A3B31]"></i>
+          <span class="text-5xl font-display text-highlight-gradient">72%</span>
+        </div>
+        <div class="text-[#6B5D55] text-lg font-semibold">渴望说走就走</div>
+        <div class="text-xs text-[#B6AFA7] mt-1">Desire for spontaneous travel</div>
+      </div>
+    </section>
+    <!-- 行动号召 -->
+    <div class="mt-20 flex flex-col items-center">
+      <span class="font-display text-4xl md:text-6xl text-highlight-gradient">最好的时光</span>
+      <span class="text-connecting">The best time</span>
+      <span class="font-bold text-2xl md:text-3xl text-[#4A3B31] mt-2">是你愿意出发的那一天。</span>
+    </div>
+  </main>
+  <!-- 底部版权 -->
+  <footer class="w-full text-center py-6 text-[#B6AFA7] text-sm z-10 relative">
+    <span>© 2025 趁现在出发 · Designed with Hybrid & Memphis Style</span>
+  </footer>
+  <!-- ECharts 图表初始化 -->
+  <script>
+    // 图表数据
+    const chartData = {
+      years: ['2019', '2020', '2021', '2022', '2023', '2024'],
+      trips: [2.1, 1.2, 2.8, 3.3, 3.9, 4.2]
+    };
+    // 初始化 ECharts
+    const chartDom = document.getElementById('chart');
+    const myChart = echarts.init(chartDom, null, { renderer: 'svg' });
+    const option = {
+      backgroundColor: 'rgba(0,0,0,0)',
+      grid: { left: 40, right: 20, top: 40, bottom: 40 },
+      xAxis: {
+        type: 'category',
+        data: chartData.years,
+        axisLine: { lineStyle: { color: '#B6AFA7' } },
+        axisLabel: { color: '#6B5D55', fontWeight: 'bold', fontFamily: 'Noto Sans SC' }
+      },
+      yAxis: {
+        type: 'value',
+        min: 0,
+        max: 5,
+        splitLine: { lineStyle: { color: '#E0DAD2', type: 'dashed' } },
+        axisLine: { show: false },
+        axisLabel: { color: '#6B5D55', fontFamily: 'Noto Sans SC' }
+      },
+      series: [{
+        data: chartData.trips,
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 14,
+        lineStyle: {
+          width: 5,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(104,144,148,0.8)' },
+            { offset: 1, color: 'rgba(104,144,148,0.2)' }
+          ])
+        },
+        itemStyle: {
+          color: 'rgba(104,144,148,0.7)',
+          borderColor: '#4A3B31',
+          borderWidth: 2
+        },
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            { offset: 0, color: 'rgba(104,144,148,0.18)' },
+            { offset: 1, color: 'rgba(104,144,148,0.03)' }
+          ])
+        }
+      }]
+    };
+    myChart.setOption(option);
+    window.addEventListener('resize', () => { myChart.resize(); });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

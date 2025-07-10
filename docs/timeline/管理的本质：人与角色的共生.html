@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理的本质：人与角色的共生</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #0f172a; /* bg-slate-900 */
+            color: #e2e8f0; /* text-slate-200 */
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        .brand-orange { color: #f97316; } /* text-orange-500 */
+        .bg-brand-orange { background-color: #f97316; }
+        .border-brand-orange { border-color: #f97316; }
+        .tech-blue { color: #60a5fa; } /* text-blue-400 */
+
+        .section-title {
+            font-size: 3rem; /* text-5xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-subtitle-en {
+            font-size: 1.125rem; /* text-lg */
+            color: #94a3b8; /* text-slate-400 */
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .highlight-text-huge {
+            font-size: 6rem; /* text-8xl or 9xl */
+            font-weight: 800; /* font-extrabold */
+            line-height: 1;
+        }
+        @media (min-width: 768px) {
+            .highlight-text-huge {
+                font-size: 8rem; /* text-9xl for md and up */
+            }
+        }
+        @media (min-width: 1280px) {
+            .highlight-text-huge {
+                font-size: 10rem; /* Larger for xl screens */
+            }
+        }
+
+        .content-card {
+            background-color: rgba(30, 41, 59, 0.7); /* bg-slate-800 with opacity */
+            border: 1px solid rgba(249, 115, 22, 0.3); /* border-orange-500/30 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            min-height: 280px; /* Ensure cards have some height */
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2);
+        }
+
+        .icon-feature {
+            font-size: 1.5rem; /* text-2xl */
+            margin-right: 0.75rem; /* mr-3 */
+        }
+
+        .text-gradient-orange {
+            background: linear-gradient(to right, #fbbf24, #f97316, #ea580c); /* amber-400, orange-500, orange-600 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .line-connector {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 2px dashed rgba(249, 115, 22, 0.5); /* orange-500/50 */
+            height: 80px; /* Adjust based on gap */
+            z-index: 0;
+        }
+
+        /* Animation for elements scrolling into view */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 max-w-screen-xl">
+
+        <section class="min-h-[50vh] flex flex-col justify-center items-center text-center p-4 relative animate-on-scroll">
+            <h1 class="text-6xl sm:text-7xl md:text-8xl font-extrabold mb-4 chinese-title">
+                <span class="text-gradient-orange">管理者</span>
+            </h1>
+            <p class="text-xl sm:text-2xl md:text-3xl text-slate-300 mb-2">MANAGER</p>
+            <p class="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight max-w-4xl mx-auto">
+                不止是职位标签，更是<span class="brand-orange">两种力量的叠加</span>
+                <span class="block text-lg sm:text-xl md:text-2xl text-slate-400 mt-2">More than a title, it's the superposition of two forces.</span>
+            </p>
+        </section>
+
+        <section class="relative py-12 md:py-20 animate-on-scroll">
+            <div class="line-connector h-[100px] top-0 md:top-24"></div> <div class="grid md:grid-cols-2 gap-8 relative z-10">
+                <div class="content-card flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-user-circle icon-feature brand-orange text-3xl"></i>
+                            <h3 class="text-3xl font-semibold chinese-title brand-orange">“这个人”</h3>
+                        </div>
+                        <p class="text-lg text-slate-300 mb-3">独一无二的<span class="font-bold tech-blue">性格</span>、<span class="font-bold tech-blue">价值观</span>、<span class="font-bold tech-blue">过往经历</span>。</p>
+                        <p class="text-sm text-slate-400">The unique personality, values, and past experiences.</p>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <i class="fas fa-lightbulb text-6xl tech-blue opacity-30"></i>
+                        <p class="text-lg text-slate-300 mt-2">没有“人”，管理就只剩下<span class="font-bold">流程和命令</span>，失去<span class="font-bold brand-orange">温度和创造力</span>。</p>
+                    </div>
+                </div>
+
+                <div class="content-card flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-briefcase icon-feature brand-orange text-3xl"></i>
+                            <h3 class="text-3xl font-semibold chinese-title brand-orange">“这个角色”</h3>
+                        </div>
+                        <p class="text-lg text-slate-300 mb-3">组织赋予的<span class="font-bold tech-blue">职责</span>、<span class="font-bold tech-blue">权力</span>与<span class="font-bold tech-blue">期望</span>。</p>
+                        <p class="text-sm text-slate-400">The responsibilities, authority, and expectations bestowed by the organization.</p>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <i class="fas fa-sitemap text-6xl tech-blue opacity-30"></i>
+                        <p class="text-lg text-slate-300 mt-2">没有“角色”，个人的善意和能力就难以转化为<span class="font-bold brand-orange">团队的成果</span>。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative mt-12 md:mt-16 animate-on-scroll">
+                <div class="line-connector h-[100px] top-[-50px]"></div> <div class="bg-brand-orange/20 border border-brand-orange rounded-xl p-6 md:p-8 text-center relative z-10">
+                    <i class="fas fa-infinity text-6xl brand-orange mb-4 animate-pulse"></i>
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold chinese-title text-gradient-orange mb-4">
+                        管理的本质：<span class="tech-blue">共生</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl md:text-2xl text-slate-200 max-w-2xl mx-auto">
+                        让“人”的独特性与“角色”的规范性，在同一个身体里共生。
+                        <span class="block text-base sm:text-lg text-slate-400 mt-2">
+                            The essence of management is enabling the uniqueness of "the person" and the normativity of "the role" to coexist within the same body.
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <section class="mt-12 md:mt-16 text-center relative animate-on-scroll">
+                <div class="line-connector h-[100px] top-[-50px]"></div> <div class="bg-slate-800/70 border border-tech-blue/30 rounded-xl p-6 md:p-8 relative z-10">
+                    <i class="fas fa-hand-holding-heart text-6xl tech-blue mb-4"></i>
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold chinese-title tech-blue mb-4">
+                        彼此<span class="brand-orange">成全</span>
+                    </h2>
+                    <p class="text-lg sm:text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto">
+                        只有当这两者彼此成全，管理才会有<span class="font-bold brand-orange">灵魂</span>，也有<span class="font-bold brand-orange">力量</span>。
+                        <span class="block text-base sm:text-lg text-slate-400 mt-2">
+                            Only when these two mutually fulfill each other will management have soul and power.
+                        </span>
+                    </p>
+                </div>
+            </section>
+
+        </div> <footer class="text-center py-8 mt-16 border-t border-slate-700">
+        <p class="text-slate-400">&copy; 2025. All Rights Reserved.</p>
+        <p class="text-xs text-slate-500 mt-1">Conceptual design inspired by Xiaomi's presentation style.</p>
+    </footer>
+
+    <script>
+        // Simple scroll animation
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
