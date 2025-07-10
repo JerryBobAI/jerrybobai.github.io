@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教育的火柴：点亮内心的光芒 - 吉卜力意境</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Zhi+Mang+Xing&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            line-height: 1.7; /* Increased line height for readability */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .font-zhi-mang-xing {
+            font-family: 'Zhi Mang Xing', cursive; /* 手写体用于强调诗意部分 */
+        }
+        .highlight-text {
+            color: #D28E3A; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.8rem; /* 增加内边距 */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+            color: #2E4033; /* 墨绿色文字 */
+        }
+        .card-special-bg {
+            background-color: rgba(240, 248, 255, 0.85); /* 柔和的浅蓝色 */
+            border: 2px solid rgba(210, 180, 140, 0.5); /* 泥土色边框 */
+        }
+
+        .soft-glow::before { /* 卡片背景光晕效果 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background-image: radial-gradient(circle, rgba(210, 180, 140, 0.1) 0%, rgba(210, 180, 140, 0.02) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0.8;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        .ultra-large-text {
+            font-size: clamp(3.5rem, 12vw, 9rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+            color: #3A2E2C;
+        }
+        .large-icon {
+            font-size: clamp(3rem, 8vw, 6rem); /* Responsive large icon */
+            color: #D28E3A;
+            opacity: 0.7;
+        }
+        .chinese-title {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+        }
+        .english-subtext {
+            font-size: 0.85rem;
+            color: #A0A0A0; /* 柔和的浅灰色 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        .paragraph-text {
+            color: #50463e; /* 稍浅的深棕色 */
+            font-size: 1.05rem;
+        }
+        .list-icon {
+            color: #D28E3A; /* Highlight color for list icons */
+            margin-right: 0.6rem;
+            font-size: 1.1rem;
+        }
+        .emphasis-quote {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #6B5D55; /* 沉静的陶土色 */
+            border-left: 4px solid #D28E3A;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-4 md:p-8 lg:p-12 max-w-[1920px] min-h-screen">
+
+        <header class="text-center mb-12 md:mb-20 lg:mb-24">
+            <h1 class="font-noto-sans-sc ultra-large-text mb-4">
+                教育的<span class="highlight-text">火柴</span>
+            </h1>
+            <p class="text-xl md:text-2xl lg:text-3xl text-[#5D4037] font-light">
+                不是知识倾倒，而是火花点亮
+                <span class="english-subtext mt-2 block">EDUCATION: NOT POURING, BUT IGNITING</span>
+            </p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+
+            <div class="card soft-glow md:col-span-2 lg:row-span-2">
+                <div class="content-z flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-school large-icon mr-4"></i>
+                            <h2 class="font-noto-sans-sc text-2xl md:text-3xl font-bold chinese-title">教育的<span class="highlight-text">真谛</span></h2>
+                        </div>
+                        <p class="english-subtext text-sm mb-4">THE ESSENCE OF EDUCATION</p>
+                        <p class="paragraph-text text-[#5D4037]">
+                            教育，不是把知识一勺勺倒进孩子的心里，
+                            而是<span class="font-bold highlight-text text-xl">悄悄在他们心里埋下一根火柴</span>。
+                        </p>
+                        <div class="my-6 text-center">
+                            <i class="fas fa-flask text-6xl text-gray-400/30"></i>
+                            <p class="text-sm text-[#795548] mt-2">More than mere instruction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg">
+                <div class="content-z">
+                    <i class="fas fa-lightbulb large-icon text-[#3E6650] mb-4"></i>
+                    <h2 class="font-noto-sans-sc text-2xl md:text-3xl font-bold chinese-title text-[#2E4033]">那<span class="highlight-text">火柴</span></h2>
+                    <p class="english-subtext text-xs text-[#00695C] mb-4">THE MATCHSTICK WITHIN</p>
+                    <p class="paragraph-text text-[#3E6650]">
+                        也许在某个清晨的阳光下、<br/>某本书的一页间、<br/>某次不经意的提问里，<br/>忽然<span class="font-bold highlight-text">擦亮</span>，<br/>照亮他们自己的路。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-special-bg md:col-span-2 lg:col-span-2">
+                <div class="content-z text-center flex flex-col justify-center h-full">
+                    <i class="fas fa-compass large-icon text-[#8c6239] mb-4 opacity-80"></i>
+                    <h2 class="font-noto-sans-sc text-3xl md:text-4xl font-bold chinese-title text-[#5D4037]">
+                        真正的<span class="highlight-text">教育</span>
+                    </h2>
+                    <p class="english-subtext text-sm mb-4">TRUE EDUCATION IS...</p>
+                    <p class="paragraph-text text-[#6B5D55] leading-relaxed">
+                        是让每个人都带着<span class="font-bold text-xl highlight-text">属于自己的火光</span>，<br/>
+                        去点燃<span class="font-bold text-xl highlight-text">更广阔的世界</span>。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="content-z">
+                    <i class="fas fa-fire-alt large-icon mb-4"></i>
+                    <h2 class="font-noto-sans-sc text-2xl md:text-3xl font-bold chinese-title">内在的<span class="highlight-text">光</span></h2>
+                    <p class="english-subtext text-xs text-[#A0A0A0] mb-4">THE INNER RADIANCE</p>
+                    <p class="paragraph-text text-[#50463e]">
+                        这火光并非由外力强加，而是源自内心深处的求知欲与探索欲。一旦被点燃，它将指引方向，驱动前行。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg">
+                <div class="content-z">
+                    <i class="fas fa-route large-icon text-[#3E6650] mb-4"></i>
+                    <h2 class="font-noto-sans-sc text-2xl md:text-3xl font-bold chinese-title text-[#2E4033]">探索的<span class="highlight-text">旅程</span></h2>
+                    <p class="english-subtext text-xs text-[#00695C] mb-4">A JOURNEY OF DISCOVERY</p>
+                    <p class="paragraph-text text-[#3E6650]">
+                        每一次独立的思考，每一次好奇的追问，都是这根火柴在寻找点燃的契机。教育的价值，在于为这场旅程提供引路而非终点。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card soft-glow md:col-span-2 lg:col-span-2">
+                <div class="content-z text-center flex flex-col justify-center h-full">
+                    <i class="fas fa-globe-asia large-icon text-[#5D4037] mb-4 opacity-80"></i>
+                    <h2 class="font-noto-sans-sc text-3xl md:text-4xl font-bold chinese-title">
+                        点燃<span class="highlight-text">更广阔的世界</span>
+                    </h2>
+                    <p class="english-subtext text-sm mb-4">ILLUMINATING A WIDER WORLD</p>
+                    <p class="emphasis-quote">
+                        “教育的意义在于开启而不是填满，它不是把水罐装满，而是点燃火花。”
+                        <span class="block text-right text-xs mt-2 opacity-70">- 威廉·巴特勒·叶芝 (William Butler Yeats)</span>
+                    </p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="text-center mt-12 md:mt-20 lg:mt-24 py-8 md:py-12 border-t-2 border-[#D1C4B0]/50">
+            <p class="font-noto-sans-sc text-xl md:text-2xl font-bold mb-2">
+                愿每一个孩子，都找到属于自己的<span class="highlight-text">光</span>。
+            </p>
+            <p class="text-base md:text-lg text-[#5D4037] uppercase tracking-wider font-light">MAY EVERY CHILD FIND THEIR OWN LIGHT.</p>
+            <p class="text-xs text-[#795548] mt-6 font-noto-sans-sc">吉卜力动画意境 / Studio Ghibli Inspired</p>
+        </footer>
+    </div>
+    <script>
+        // Simple fade-in animation for cards on scroll
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the card is visible
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)'; // Start slightly lower
+            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

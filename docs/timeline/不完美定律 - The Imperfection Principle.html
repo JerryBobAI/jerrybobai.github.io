@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不完美定律 - The Imperfection Principle</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 自定义字体和全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+        }
+
+        /* 核心标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chart.js 图表容器需要明确的宽高 */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        /* 勾线风格图标 */
+        .icon-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid currentColor;
+            color: #3b82f6; /* System Blue */
+        }
+        .icon-outline i {
+            font-size: 1.5rem;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 2rem; /* 宽大圆角 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(8px); /* 玻璃拟物效果 */
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* App图标色彩风格 */
+        .app-icon-bg-blue { background: linear-gradient(135deg, #3B82F6, #60A5FA); }
+        .app-icon-bg-green { background: linear-gradient(135deg, #22C55E, #4ADE80); }
+        .app-icon-bg-red { background: linear-gradient(135deg, #EF4444, #F87171); }
+        .app-icon-bg-purple { background: linear-gradient(135deg, #A855F7, #C084FC); }
+
+        .system-blue { color: #3B82F6; } /* 系统强调色 */
+        .action-green { color: #22C55E; } /* 行为召唤色 */
+        .pastel-orange { color: #FDBA74; } /* 辅助色板 */
+        .pastel-pink { color: #FBCFE8; }
+
+        .big-number {
+            font-size: clamp(4rem, 15vw, 10rem); /* 超大数字 */
+            font-weight: 900;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="container mx-auto px-6 lg:px-8 py-16 space-y-24">
+
+        <section class="text-center reveal">
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-tight holographic-text">
+                不完美定律
+            </h1>
+            <p class="mt-6 text-xl md:text-2xl text-gray-600 font-light max-w-4xl mx-auto">
+                人世间一切痛苦的根源，都源于对“圆满”的错误执念。
+            </p>
+        </section>
+
+        <section class="reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 system-blue">核心推论</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="card p-8 text-center flex flex-col items-center">
+                    <div class="icon-outline system-blue mb-6">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">“拥有”与“代价”恒定法则</h3>
+                    <p class="text-gray-600">你所羡慕的一切，都标好了你看不见的价格。</p>
+                </div>
+                <div class="card p-8 text-center flex flex-col items-center">
+                    <div class="icon-outline system-blue mb-6">
+                        <i class="fas fa-balance-scale-right"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">“苦”的总量均等法则</h3>
+                    <p class="text-gray-600">众生皆苦，但苦的形态不同。没有人能幸免。</p>
+                </div>
+                <div class="card p-8 text-center flex flex-col items-center">
+                    <div class="icon-outline system-blue mb-6">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">“幸福”的内求法则</h3>
+                    <p class="text-gray-600">幸福不在于“得到更多”，而在于“需要更少”。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="text-center lg:text-left">
+                <p class="text-lg text-gray-500 uppercase tracking-wider mb-2">Principle One</p>
+                <h2 class="text-5xl md:text-6xl font-black leading-tight">
+                    拥有与<span class="system-blue">代价</span><br>恒定法则
+                </h2>
+                <p class="mt-6 text-xl text-gray-700">
+                    你所羡慕的一切，都标好了你看不见的价格。你所拥有的一切，也支付了你未曾察觉的成本。
+                </p>
+            </div>
+            <div class="card p-8 space-y-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 app-icon-bg-purple rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-hand-holding-heart text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-lg">姻缘的债</p>
+                        <p class="text-gray-600 text-sm">儿女来偿</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 app-icon-bg-green rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-money-bill-wave text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-lg">财富的顺</p>
+                        <p class="text-gray-600 text-sm">子嗣来逆</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 app-icon-bg-blue rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-heartbeat text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-lg">健康的体魄</p>
+                        <p class="text-gray-600 text-sm">交换了安逸的资格</p>
+                    </div>
+                </div>
+                <p class="mt-8 text-xl text-gray-700 font-light border-l-4 border-gray-300 pl-4 py-2">
+                    生命是一个守恒的能量场。没有纯粹的“得”，也没有彻底的“失”。你看到的别人的“好”，只是他愿意让你看到的那一个切面。
+                </p>
+            </div>
+        </section>
+
+        <section class="reveal text-center">
+            <p class="text-lg text-gray-500 uppercase tracking-wider mb-2">Principle Two</p>
+            <h2 class="text-5xl md:text-6xl font-black leading-tight system-blue">
+                “苦”的总量<br class="md:hidden">均等法则
+            </h2>
+            <p class="mt-6 text-xl text-gray-700 max-w-3xl mx-auto">
+                众生皆苦，但苦的形态不同。没有人能幸免，只是各有各的“樊笼”。
+            </p>
+
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card p-6 flex flex-col items-center">
+                    <span class="big-number text-blue-500">穷</span>
+                    <p class="text-lg font-bold mt-2">有穷的愁</p>
+                </div>
+                <div class="card p-6 flex flex-col items-center">
+                    <span class="big-number text-green-500">富</span>
+                    <p class="text-lg font-bold mt-2">有富的忧</p>
+                </div>
+                <div class="card p-6 flex flex-col items-center">
+                    <span class="big-number text-red-500">智</span>
+                    <p class="text-lg font-bold mt-2">者为情所困</p>
+                </div>
+                <div class="card p-6 flex flex-col items-center">
+                    <span class="big-number text-purple-500">愚</span>
+                    <p class="text-lg font-bold mt-2">者为食所累</p>
+                </div>
+            </div>
+
+            <p class="mt-12 text-xl text-gray-700 font-light max-w-4xl mx-auto border-l-4 border-gray-300 pl-4 py-2">
+                放下对“无忧人生”的幻想。苦难，是人生的基本配置，不是意外。承认这一点，是成熟的开始。
+            </p>
+        </section>
+
+        <section class="reveal grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="text-center lg:text-left order-2 lg:order-1">
+                <p class="text-lg text-gray-500 uppercase tracking-wider mb-2">Principle Three</p>
+                <h2 class="text-5xl md:text-6xl font-black leading-tight">
+                    幸福的<br><span class="system-blue">内求</span>法则
+                </h2>
+                <p class="mt-6 text-xl text-gray-700">
+                    幸福不在于“得到更多”，而在于“需要更少”。向外追逐，永无宁日；向内探寻，方得澄明。
+                </p>
+                <div class="mt-8 space-y-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="app-icon-bg-red w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-sun text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-lg">逐日的心</p>
+                            <p class="text-gray-600 text-sm">养出三千烦恼丝</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="app-icon-bg-blue w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-tree text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-lg">抱朴的意</p>
+                            <p class="text-gray-600 text-sm">守得一片清净天</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2 card p-8 flex flex-col items-center justify-center h-96">
+                <div class="chart-container">
+                    <canvas id="happinessChart"></canvas>
+                </div>
+                <p class="text-sm text-gray-500 mt-4">Happiness Index vs. External Pursuit</p>
+            </div>
+        </section>
+
+        <section class="text-center reveal py-16">
+            <h2 class="text-4xl md:text-5xl font-black holographic-text mb-8">
+                真正的解药
+            </h2>
+            <p class="mt-4 text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto">
+                早已藏在结尾那几句朴素的箴言里：
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+                <div class="card p-8 flex flex-col items-center">
+                    <div class="icon-outline app-icon-bg-green mb-6">
+                        <i class="fas fa-eye text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 system-blue">视角切换</h3>
+                    <p class="text-gray-600 text-lg">莫见他人起高楼，且看自家灶火温。</p>
+                    <p class="text-sm text-gray-500 mt-2">(从“对比”模式切换为“沉浸”模式)</p>
+                </div>
+                <div class="card p-8 flex flex-col items-center">
+                    <div class="icon-outline app-icon-bg-red mb-6">
+                        <i class="fas fa-lightbulb text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 system-blue">欲望管理</h3>
+                    <p class="text-gray-600 text-lg">但守三分知足意，自有清风叩心门。</p>
+                    <p class="text-sm text-gray-500 mt-2">(从“加法”人生切换为“减法”人生)</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center reveal py-16">
+            <h2 class="text-5xl md:text-7xl font-black leading-tight holographic-text">
+                看清这点<br>风雪皆是风景
+            </h2>
+            <p class="mt-8 text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto">
+                人生不是一场抵达“完美”的冲刺，而是一场学会与“不完美”共舞的旅程。
+            </p>
+            <p class="mt-4 text-gray-500 uppercase tracking-widest text-sm">The Imperfection Principle</p>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 滚动动画逻辑
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        // Optional: remove 'visible' class when out of view
+                        // entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // 10% of the element visible to trigger
+            });
+
+            revealElements.forEach(el => observer.observe(el));
+
+            // Chart.js 图表渲染
+            const ctx = document.getElementById('happinessChart').getContext('2d');
+            const happinessChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['低欲望', '中欲望', '高欲望', '无限追逐'],
+                    datasets: [{
+                        label: '幸福指数',
+                        data: [90, 70, 40, 20],
+                        borderColor: '#3B82F6', // System Blue
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)', // With transparency
+                        tension: 0.3,
+                        fill: true,
+                        pointBackgroundColor: '#3B82F6',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#3B82F6',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '幸福指数: ' + context.raw;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#6B7280' // Gray-500
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)' // Light grid lines
+                            },
+                            ticks: {
+                                color: '#6B7280'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

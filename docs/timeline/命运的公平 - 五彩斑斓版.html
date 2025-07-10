@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>命运的公平 - 五彩斑斓版</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* 自定义字体和全局样式 */
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+            color: #1f2937; /* 深灰色文字 */
+            overflow-x: hidden;
+        }
+
+        /* 核心标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chart.js 图表容器需要明确的宽高 */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        /* 勾线风格图标 */
+        .icon-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid currentColor;
+            color: #3b82f6; /* System Blue */
+        }
+        .icon-outline i {
+            font-size: 1.5rem;
+        }
+
+        /* 纯白色卡片，宽大圆角，轻微阴影 */
+        .card-light {
+            background-color: white;
+            border-radius: 2.5rem; /* 宽大圆角 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-out;
+        }
+        .card-light:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 深色模式UI容器 */
+        .card-dark {
+            background-color: rgba(30, 40, 50, 0.8); /* 深邃、饱和的半透明颜色 */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 2.5rem; /* 宽大圆角 */
+            color: #e5e7eb; /* 亮白色文字 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 系统蓝 - 主要视觉引导色 */
+        .system-blue-text {
+            color: #3b82f6;
+        }
+        .system-blue-bg {
+            background-color: #3b82f6;
+        }
+
+        /* 行动绿 - 确认按钮和积极操作 */
+        .action-green-bg {
+            background-color: #22c55e;
+        }
+
+        /* 辅助粉彩颜色 */
+        .pastel-orange { color: #f97316; }
+        .pastel-yellow { color: #facc15; }
+        .pastel-pink { color: #ec4899; }
+
+        /* Icon App 渐变背景 */
+        .icon-app-bg-green { background-image: linear-gradient(45deg, #16a34a, #22c55e); }
+        .icon-app-bg-blue { background-image: linear-gradient(45deg, #2563eb, #3b82f6); }
+        .icon-app-bg-red { background-image: linear-gradient(45deg, #dc2626, #ef4444); }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="relative z-10">
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="reveal">
+                <p class="text-xl md:text-2xl text-gray-500 mb-4 tracking-widest uppercase">The Grand Tapestry</p>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-tight">
+                    你是否也曾觉得<br>
+                    命运的剧本<span class="holographic-text">出了错？</span>
+                </h1>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+                <div class="card-light p-8 lg:p-12 reveal">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-green w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-hand-holding-heart text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">争吵一生，知感恩</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        那争吵一生的夫妻，却养出了最知感恩的孩子；
+                    </p>
+                </div>
+                <div class="card-light p-8 lg:p-12 reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-red w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-syringe text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">举案齐眉，被病痛</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        那举案齐眉的伴侣，终日被药罐和叹息包裹。
+                    </p>
+                </div>
+                <div class="card-light p-8 lg:p-12 reveal" style="transition-delay: 0.2s;">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-blue w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-wrench text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">筋骨强健，愁生计</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        那个筋骨强健的汉子，正为三餐生计锁紧眉头；
+                    </p>
+                </div>
+                <div class="card-light p-8 lg:p-12 reveal" style="transition-delay: 0.3s;">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-green w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-sack-dollar text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">锦衣玉食，为子泪</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        那位锦衣玉食的富豪，在深夜里为不成器的子嗣流泪。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32 bg-gray-900 rounded-b-[4rem] text-center card-dark overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                <h2 class="text-5xl md:text-7xl font-black leading-tight holographic-text reveal mb-12">
+                    时序流转<br>人生百态
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+                    <div class="card-dark p-8 lg:p-12 reveal">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-4 system-blue-text">少年得志，盛名下倒数</h3>
+                        <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+                            有人少年得志，马蹄飞扬，却不知盛名之下，生命已悄然倒数；
+                        </p>
+                        <div class="flex justify-center mt-8">
+                            <div class="icon-outline w-20 h-20 rounded-full flex items-center justify-center border-system-blue-text">
+                                <i class="fas fa-hourglass-half text-4xl system-blue-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-dark p-8 lg:p-12 reveal" style="transition-delay: 0.1s;">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-4 system-blue-text">半生潦倒，灰烬中真金</h3>
+                        <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+                            有人半生潦倒，受尽冷眼，暮年回首，竟于灰烬中炼出了真金。
+                        </p>
+                        <div class="flex justify-center mt-8">
+                             <div class="icon-outline w-20 h-20 rounded-full flex items-center justify-center border-system-blue-text">
+                                <i class="fas fa-gem text-4xl system-blue-text"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32">
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+                <div class="card-light p-8 lg:p-12 reveal">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-pink w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-heart text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">捧出真心，遇浪子</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        那个捧出全部真心的姑娘，爱上了一个习惯远航的浪子；
+                    </p>
+                </div>
+                <div class="card-light p-8 lg:p-12 reveal" style="transition-delay: 0.1s;">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-blue w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-mask text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">游戏人间，被痴心</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        那个声明游戏人间的过客，却被一颗笨拙的痴心，收了魂魄。
+                    </p>
+                </div>
+                <div class="card-light p-8 lg:p-12 reveal" style="transition-delay: 0.2s;">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-green w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-seedling text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">聪慧如蒲公英，散落</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        聪慧过人的孩子，像蒲公英，风一吹，就散落天涯，再难相聚；
+                    </p>
+                </div>
+                <div class="card-light p-8 lg:p-12 reveal" style="transition-delay: 0.3s;">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="icon-app-bg-red w-16 h-16 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-tree text-white text-3xl"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold system-blue-text">资质平庸，守身边</h2>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+                        资质平庸的儿孙，倒如门前老树，始终守在身边，绕膝承欢。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32">
+             <div class="max-w-4xl mx-auto px-6 lg:px-8 grid grid-cols-1 gap-12">
+                <div class="card-light p-8 lg:p-12 reveal text-center">
+                    <p class="text-xl md:text-2xl font-bold system-blue-text mb-4">世界之谜</p>
+                    <h2 class="text-5xl md:text-7xl font-black leading-tight">
+                        勤恳如蚁，不过温饱；<br>
+                        狡猾如狐，扶摇直上。
+                    </h2>
+                    <p class="mt-8 text-lg md:text-xl text-gray-700 leading-relaxed">
+                        勤恳如蚁的人，耗尽一生，不过求得温饱，不敢奢求其他；狡猾如狐的人，凭一时机巧，便能扶摇直上，指点江山。
+                    </p>
+                     <div class="flex justify-center mt-8 space-x-8">
+                        <span class="icon-outline !text-orange-500"><i class="fas fa-hammer"></i></span>
+                        <span class="icon-outline !text-purple-500"><i class="fas fa-feather-alt"></i></span>
+                    </div>
+                </div>
+             </div>
+        </section>
+
+        <section class="py-24 md:py-32 bg-gray-900 rounded-t-[4rem] text-center card-dark overflow-hidden">
+            <div class="max-w-4xl mx-auto px-6 lg:px-8 reveal">
+                <h2 class="text-5xl md:text-7xl font-black leading-tight holographic-text mb-8">
+                    这世界就像一个巨大的、<br>
+                    矛盾的谜题。
+                </h2>
+                <p class="text-lg md:text-xl text-gray-300 leading-relaxed mb-12">
+                    才华横溢者，被名利缚住了手脚；身居高位者，被权谋熬干了心血。人人都有自己的战场，人人都在自己的围城。卖绸缎的愁销路，种田地的盼晴天。
+                </p>
+
+                <h3 class="text-5xl md:text-6xl font-black leading-tight text-white mb-8">
+                    你以为是造化弄人，<br>
+                    其实，这才是<span class="system-blue-text">造化的公平。</span>
+                </h3>
+                <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+                    它从不许诺谁一个完美无瑕的人生。你看，月有圆缺，山有崩塌，何况是我们这血肉之躯？在这洪荒宇宙里，你我皆是微尘；在这江湖路远中，谁不是一身风霜的倦客？
+                </p>
+                 <div class="flex justify-center mt-12 space-x-8">
+                    <span class="icon-outline !text-blue-400 border-blue-400"><i class="fas fa-balance-scale-right"></i></span>
+                    <span class="icon-outline !text-green-400 border-green-400"><i class="fas fa-yin-yang"></i></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="reveal max-w-5xl mx-auto">
+                <p class="text-xl md:text-2xl text-gray-500 mb-8 tracking-widest uppercase">Your Own Light</p>
+                <h2 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-tight">
+                    浮生这杯茶，<br>没有定味，口口皆新。
+                </h2>
+                <p class="mt-8 text-2xl md:text-3xl lg:text-4xl text-gray-700 leading-relaxed">
+                    与其站在别人的风景里仰望，<br>不如回到自己的生活中<span class="system-blue-text font-bold">点亮一盏灯。</span>
+                </p>
+                <div class="mt-16">
+                    <a href="#" class="inline-flex items-center px-10 py-5 text-xl font-bold text-white rounded-full action-green-bg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                        点亮我的灯火 <i class="fa-solid fa-lightbulb ml-3"></i>
+                    </a>
+                </div>
+                <h3 class="text-4xl md:text-5xl font-bold tracking-tight mt-12 text-gray-800">
+                    心中存下三分知足，<br>
+                    命运自会为你让开一扇，通往清风明月的门。
+                </h3>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                    // Optional: remove 'visible' if you want animation to replay on scroll back
+                    // else {
+                    //     entry.target.classList.remove('visible');
+                    // }
+                });
+            }, {
+                threshold: 0.1 // 元素进入视口10%时触发
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
