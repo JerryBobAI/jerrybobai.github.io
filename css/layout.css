@@ -126,6 +126,35 @@
 /* =============== Header组件 =============== */
 /* header-component的position由JavaScript动态设置，避免冲突 */
 
+/* Logo fallback styles */
+.header-component img[alt*="Logo"] {
+    background-color: var(--color-primary, #689094);
+    background-image: linear-gradient(135deg, 
+        var(--color-primary, #689094) 0%, 
+        rgba(104, 144, 148, 0.8) 100%);
+    position: relative;
+}
+
+.header-component img[alt*="Logo"]::before {
+    content: "JB";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 0.75rem;
+    display: none;
+}
+
+.header-component img[alt*="Logo"]:not([src]) {
+    background-color: var(--color-primary, #689094);
+}
+
+.header-component img[alt*="Logo"]:not([src])::before {
+    display: block;
+}
+
 /* 首页header专用阴影效果 - 减轻阴影 */
 .header-component.glass-effect {
     box-shadow:

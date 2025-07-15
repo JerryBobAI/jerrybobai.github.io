@@ -267,7 +267,13 @@ function renderHomepageHeader(currentPath, isRoot) {
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <a href="${homeLink}" class="flex items-center hover:opacity-90 transition-opacity">
-                        <img src="${prefix}images/logo.png" alt="Logo" class="h-10 w-10 rounded-full mr-3 flex-shrink-0">
+                        <img src="${prefix}images/logo.png" 
+                             srcset="${prefix}images/logo/logo-40.png 1x, ${prefix}images/logo/logo-80.png 2x"
+                             alt="JerryBob Logo" 
+                             loading="eager"
+                             decoding="async"
+                             onerror="this.onerror=null; this.src='${prefix}images/logo/logo-original.png'; this.srcset='';"
+                             class="h-10 w-10 rounded-full mr-3 flex-shrink-0">
                         <span class="text-xl sm:text-2xl font-bold text-primary">JerryBob</span>
                     </a>
                 </div>

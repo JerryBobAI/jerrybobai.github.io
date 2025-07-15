@@ -21,6 +21,7 @@ Icon
 *.swo
 .project
 .settings/
+.kiro
 
 # 依赖目录
 node_modules/
