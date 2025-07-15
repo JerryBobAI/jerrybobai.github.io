@@ -11,7 +11,7 @@
  * <script src="../../js/main.js"></script>
  */
 
-(function() {
+(function () {
     'use strict';
 
     // 检查是否在iframe中，如果是则跳过模块加载
@@ -43,6 +43,11 @@
     const currentPath = window.location.pathname;
     const isHomepage = currentPath === '/' || (currentPath.endsWith('/index.html') && !currentPath.includes('/docs/'));
     const isTagsPage = currentPath.includes('/docs/tags/');
+    const isPersonalPage = currentPath.includes('/docs/personal/');
+    const isLearnPage = currentPath.includes('/docs/learn/');
+    const isWorkPage = currentPath.includes('/docs/work/');
+    const isSocialPage = currentPath.includes('/docs/social/');
+    const isFamilyPage = currentPath.includes('/docs/family/');
     const isArticlePage = currentPath.includes('/docs/') && !currentPath.endsWith('/index.html');
 
     // 立即设置页面类型，避免后续布局跳动
@@ -53,12 +58,27 @@
         document.body.setAttribute('data-page-type', 'homepage');
     } else if (isTagsPage) {
         document.body.setAttribute('data-page-type', 'tags');
+    } else if (isPersonalPage) {
+        document.body.setAttribute('data-page-type', 'personal');
+    } else if (isLearnPage) {
+        document.body.setAttribute('data-page-type', 'learn');
+    } else if (isWorkPage) {
+        document.body.setAttribute('data-page-type', 'work');
+    } else if (isSocialPage) {
+        document.body.setAttribute('data-page-type', 'social');
+    } else if (isFamilyPage) {
+        document.body.setAttribute('data-page-type', 'family');
     }
 
     console.log('🔍 页面检测信息:', {
         currentPath,
         isHomepage,
-        isTagsPage
+        isTagsPage,
+        isPersonalPage,
+        isLearnPage,
+        isWorkPage,
+        isSocialPage,
+        isFamilyPage
     });
 
     // 定义需要加载的模块列表（按依赖顺序）
@@ -68,6 +88,7 @@
         'core.js',             // 核心系统（元数据管理、路径处理）
         'shared/articles.js',  // 共享文章管理逻辑
         'shared/pagination.js', // 共享分页逻辑
+        'shared/category-page.js', // 共享分类页面基类
         'layout.js',           // 布局组件（header、footer、article-meta）
         'widgets.js'           // UI小部件（iframe预览、文章卡片）
     ];
@@ -78,10 +99,20 @@
         pageModules.push('pages/homepage.js');
     } else if (isTagsPage) {
         pageModules.push('pages/tags.js');
+    } else if (isPersonalPage) {
+        pageModules.push('pages/personal.js');
+    } else if (isLearnPage) {
+        pageModules.push('pages/learn.js');
+    } else if (isWorkPage) {
+        pageModules.push('pages/work.js');
+    } else if (isSocialPage) {
+        pageModules.push('pages/social.js');
+    } else if (isFamilyPage) {
+        pageModules.push('pages/family.js');
     }
 
     const modules = [...coreModules, ...pageModules];
-    
+
     // 获取当前脚本的基础路径
     function getBasePath() {
         const scripts = document.getElementsByTagName('script');
@@ -89,9 +120,9 @@
         const src = currentScript.src;
         return src.substring(0, src.lastIndexOf('/') + 1);
     }
-    
+
     const basePath = getBasePath();
-    
+
     // 动态加载JavaScript文件
     function loadScript(src) {
         return new Promise((resolve, reject) => {
@@ -113,14 +144,14 @@
             document.head.appendChild(script);
         });
     }
-    
+
     // 按顺序加载所有模块
     async function loadAllModules() {
         try {
             for (const module of modules) {
                 await loadScript(module);
             }
-            Logger.success('SYSTEM', `所有JavaScript模块加载完成 - 页面类型: ${isHomepage ? '首页' : isTagsPage ? '标签页' : '其他'}`);
+            Logger.success('SYSTEM', `所有JavaScript模块加载完成 - 页面类型: ${isHomepage ? '首页' : isTagsPage ? '标签页' : isPersonalPage ? '个人页' : isLearnPage ? '学习页' : isWorkPage ? '工作页' : isSocialPage ? '社交页' : isFamilyPage ? '家庭页' : '其他'}`);
 
             // 清除加载中标志
             window.top.moduleSystemLoading = false;
@@ -135,11 +166,11 @@
             window.top.moduleSystemLoading = false;
         }
     }
-    
+
     // 系统初始化
     function initializeSystem() {
         Logger.info('SYSTEM', '开始初始化系统...');
-        
+
         // 等待DOM完全加载
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', performInitialization);
@@ -147,7 +178,7 @@
             performInitialization();
         }
     }
-    
+
     // 执行实际的初始化
     function performInitialization() {
         // 防止重复初始化
@@ -168,7 +199,7 @@
                 window.initializeWidgets();
             }
 
-            Logger.success('SYSTEM', `系统初始化完成 - 页面类型: ${isHomepage ? '首页' : isTagsPage ? '标签页' : '其他'}`);
+            Logger.success('SYSTEM', `系统初始化完成 - 页面类型: ${isHomepage ? '首页' : isTagsPage ? '标签页' : isPersonalPage ? '个人页' : isLearnPage ? '学习页' : isWorkPage ? '工作页' : isSocialPage ? '社交页' : isFamilyPage ? '家庭页' : '其他'}`);
 
             // 页面特定的模块会自动初始化，无需在这里调用
 
@@ -178,8 +209,8 @@
             window.top.systemInitialized = false;
         }
     }
-    
+
     // 开始加载模块
     loadAllModules();
-    
+
 })();

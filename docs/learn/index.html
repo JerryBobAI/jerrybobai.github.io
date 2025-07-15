@@ -10,144 +10,125 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css/styles.css">
+    <!-- 标签云折叠样式 -->
+    <style>
+        /* 标签云容器 */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem; /* tag 间距 */
+            padding: 0.5rem 1rem; /* 减少内边距让箭头更靠近 */
+            text-align: left; /* 左对齐 */
+        }
+        /* 默认折叠状态：高度约 3 行，超出隐藏 */
+        .tag-cloud.collapsed {
+            max-height: 7.25rem; /* 3 行左右，根据行高微调 */
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        /* 切换按钮样式 */
+        .tag-cloud-toggle-btn {
+            cursor: pointer;
+            font-size: 1.25rem; /* text-xl */
+            color: #6b7280;      /* gray-500 */
+            transition: transform 0.3s ease, color 0.2s;
+            display: none; /* 默认隐藏，由JavaScript控制显示 */
+        }
+        .tag-cloud-toggle-btn:hover {
+            color: #374151;      /* gray-700 */
+        }
+        .tag-cloud-toggle-btn.rotate {
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-background text-text-main">
     <!-- 导航栏 -->
     <header class="w-full bg-white shadow-md fixed top-0 left-0 z-10" data-component="header"></header>
 
     <!-- 主要内容 -->
-    <main class="container mt-24">
-        <h1 class="text-4xl md:text-5xl font-display text-center page-title">学习成长</h1>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- 书摘笔记卡片 -->
-            <div class="card">
-                <div class="card-header" style="background-color: #6366F1;">
-                    <i class="fas fa-book-open card-icon"></i>
-                    <h2 class="card-title">书摘笔记</h2>
-                    <p class="card-subtitle">汲取智慧，记录思考</p>
+    <main class="w-full mt-24">
+        <!-- 标签云 -->
+        <div class="mb-12">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="tag-cloud" class="tag-cloud collapsed">
+                    <!-- 标签将通过JavaScript动态生成 -->
+                    <div class="text-center text-gray-500">
+                        <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                        <p>正在加载标签...</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <ul class="card-list">
-                        <li class="card-list-item">
-                            <i class="fas fa-highlight card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">精华摘录</h3>
-                                <p class="text-sm text-secondary">提取书中精华观点，形成知识体系</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-lightbulb card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">思考感悟</h3>
-                                <p class="text-sm text-secondary">记录阅读过程中的思考与感悟</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-link card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">知识连接</h3>
-                                <p class="text-sm text-secondary">建立知识间的联系，形成思维网络</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-share-alt card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">分享交流</h3>
-                                <p class="text-sm text-secondary">与他人分享读书心得，碰撞思维火花</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 学习方法卡片 -->
-            <div class="card">
-                <div class="card-header" style="background-color: #10B981;">
-                    <i class="fas fa-brain card-icon"></i>
-                    <h2 class="card-title">学习方法</h2>
-                    <p class="card-subtitle">科学学习，高效成长</p>
-                </div>
-                <div class="card-body">
-                    <ul class="card-list">
-                        <li class="card-list-item">
-                            <i class="fas fa-target card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">目标导向</h3>
-                                <p class="text-sm text-secondary">设定明确的学习目标，制定可行的学习计划</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-repeat card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">间隔重复</h3>
-                                <p class="text-sm text-secondary">运用遗忘曲线，科学安排复习时间</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-puzzle-piece card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">主动学习</h3>
-                                <p class="text-sm text-secondary">通过提问、总结、教授他人来深化理解</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-chart-line card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">反思总结</h3>
-                                <p class="text-sm text-secondary">定期回顾学习过程，调整学习策略</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 认知提升卡片 -->
-            <div class="card">
-                <div class="card-header" style="background-color: #F59E0B;">
-                    <i class="fas fa-eye card-icon"></i>
-                    <h2 class="card-title">认知提升</h2>
-                    <p class="card-subtitle">拓展思维，升级认知</p>
-                </div>
-                <div class="card-body">
-                    <ul class="card-list">
-                        <li class="card-list-item">
-                            <i class="fas fa-glasses card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">多元视角</h3>
-                                <p class="text-sm text-secondary">从不同角度看待问题，避免认知偏见</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-question-circle card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">批判思维</h3>
-                                <p class="text-sm text-secondary">质疑假设，独立思考，形成自己的判断</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-sitemap card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">系统思维</h3>
-                                <p class="text-sm text-secondary">理解事物间的关联，把握整体规律</p>
-                            </div>
-                        </li>
-                        <li class="card-list-item">
-                            <i class="fas fa-sync-alt card-list-icon"></i>
-                            <div>
-                                <h3 class="font-bold mb-1">持续更新</h3>
-                                <p class="text-sm text-secondary">保持开放心态，不断更新知识结构</p>
-                            </div>
-                        </li>
-                    </ul>
+                <!-- 折叠/展开按钮 -->
+                <div class="text-center mt-1">
+                    <i id="toggle-tag-cloud-btn" class="fas fa-angle-double-down tag-cloud-toggle-btn"></i>
                 </div>
             </div>
         </div>
+
+        <!-- 文章列表 -->
+        <div class="mb-16">
+            <div class="mb-8">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-left text-main mb-2">
+                        <span id="articles-title">学习相关文章</span>
+                    </h2>
+                    <div class="text-left">
+                        <span id="articles-count" class="text-base text-secondary font-context"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 使用iframe预览组件替代简单的文章卡片 -->
+            <div data-component="iframe-previews" id="iframe-previews">
+                <div class="text-center text-gray-500 py-12">
+                    <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                    <p>正在加载文章...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分页控制 -->
+        <div id="article-controls" class="text-center mt-12 mb-16">
+            <div id="pagination-controls" class="mt-8" style="display: none;">
+                <div class="pagination-wrapper">
+                    <button id="first-page" class="pagination-btn pagination-btn-disabled" disabled title="第一页">
+                        <i class="fas fa-angle-double-left"></i>
+                    </button>
+                    <button id="prev-page" class="pagination-btn pagination-btn-disabled" disabled title="上一页">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="page-info">
+                        <span id="page-info" class="text-secondary font-context">第 1 页，共 1 页</span>
+                    </div>
+                    <button id="next-page" class="pagination-btn pagination-btn-disabled" disabled title="下一页">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button id="last-page" class="pagination-btn pagination-btn-disabled" disabled title="最后一页">
+                        <i class="fas fa-angle-double-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- 页脚 -->
     <footer class="footer" data-component="footer"></footer>
+
     <!-- 加载组件脚本 -->
     <script src="../../js/main.js"></script>
+    <!-- 标签云折叠逻辑 -->
+    <script>
+        (function() {
+            const tagCloud = document.getElementById('tag-cloud');
+            const toggleBtn = document.getElementById('toggle-tag-cloud-btn');
+            if (!tagCloud || !toggleBtn) return;
+            toggleBtn.addEventListener('click', () => {
+                const collapsed = tagCloud.classList.toggle('collapsed');
+                // 根据状态添加/移除旋转，使箭头方向正确
+                toggleBtn.classList.toggle('rotate', !collapsed);
+            });
+        })();
+    </script>
 </body>
 </html>
