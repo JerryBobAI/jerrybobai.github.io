@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>告别物欲：一场心智的雕塑</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 自定义字体和全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+            color: #1a202c; /* 深色文字 */
+            overflow-x: hidden;
+        }
+
+        /* 核心标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 勾线风格图标 */
+        .icon-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid currentColor;
+            color: #3b82f6; /* System Blue */
+        }
+        .icon-outline i {
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem; /* large border-radius */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(8px); /* subtle blur for semi-transparency */
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* 特定卡片的半透明玻璃拟物效果 */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.6); /* 更透明 */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 强调色 */
+        .system-blue { color: #3b82f6; } /* Apple System Blue */
+        .action-green { color: #34c759; } /* Apple Action Green */
+        .vibrant-pink { color: #ec4899; }
+        .vibrant-orange { color: #f59e0b; }
+        .vibrant-purple { color: #8b5cf6; }
+
+        /* 超大字体背景文字 */
+        .absolute-text {
+            position: absolute;
+            font-size: clamp(10rem, 25vw, 20rem);
+            font-weight: 900;
+            line-height: 1;
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+            color: #cbd5e0; /* light gray */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        /* 勾线路径SVG动画 */
+        .path-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s ease-out forwards;
+            animation-delay: var(--delay, 0s);
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-900 leading-relaxed">
+
+    <div class="container mx-auto px-6 lg:px-8 py-16 lg:py-24 max-w-screen-2xl">
+
+        <section class="min-h-screen flex flex-col justify-center items-center text-center relative pt-24 pb-12 reveal">
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-extrabold holographic-text leading-tight tracking-tighter mb-6">
+                告别物欲
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 uppercase tracking-widest mb-12">
+                FROM CONSUMER TO INVESTOR
+            </p>
+            <p class="text-2xl md:text-3xl lg:text-4xl max-w-4xl mx-auto font-light text-gray-800">
+                这并非十个孤立的知识点，而是一个完整的精神脉络，<br class="hidden md:block">旨在引导我们从消费主义的迷雾中走出。
+            </p>
+            <div class="absolute-text">心智</div>
+        </section>
+
+        <section class="py-24 lg:py-32 text-center reveal">
+            <h2 class="text-5xl md:text-7xl font-bold mb-16 leading-tight">
+                三道工序：<br>观其骨、填其肉、得其神
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
+                <div class="card p-8 flex flex-col items-center">
+                    <div class="icon-outline text-system-blue mb-6"><i class="fas fa-bone"></i></div>
+                    <h3 class="text-3xl font-bold mb-2">观其骨</h3>
+                    <p class="text-lg text-gray-600">先读薄，俯瞰整体轮廓</p>
+                </div>
+                <div class="card p-8 flex flex-col items-center">
+                    <div class="icon-outline text-vibrant-purple mb-6"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="text-3xl font-bold mb-2">填其肉</h3>
+                    <p class="text-lg text-gray-600">再读深，精雕细琢填充血肉</p>
+                </div>
+                <div class="card p-8 flex flex-col items-center">
+                    <div class="icon-outline text-action-green mb-6"><i class="fas fa-gem"></i></div>
+                    <h3 class="text-3xl font-bold mb-2">得其神</h3>
+                    <p class="text-lg text-gray-600">再读薄，内化提炼核心箴言</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 lg:py-32 relative reveal">
+            <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">FIRST STAGE</p>
+            <h2 class="text-5xl md:text-7xl font-black mb-12 leading-tight">
+                第一境：<span class="system-blue">观其骨</span>
+            </h2>
+            <p class="text-2xl lg:text-3xl font-light max-w-4xl mb-16">
+                像雄鹰盘旋于空，俯瞰这片知识大地的整体轮廓。<br>这并非一张平面的清单，而是一幅立体的三层路线图。
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <div class="card p-8 relative flex flex-col justify-between overflow-hidden">
+                    <div class="absolute-text opacity-5 text-vibrant-pink top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2">破幻</div>
+                    <p class="text-sm text-vibrant-pink font-bold uppercase mb-2 z-10">LAYER 01</p>
+                    <h3 class="text-3xl font-bold mb-4 z-10">破幻：解构骗局</h3>
+                    <p class="text-lg text-gray-700 font-light z-10">
+                        揭露那些让我们无节制消费的外部力量。你的许多欲望并非天生，而是被精心设计和植入的。
+                    </p>
+                    <ul class="mt-6 text-gray-600 space-y-2 text-sm z-10">
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《无节制消费的元凶》</li>
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《超级顾客》</li>
+                        <li><i class="fas fa-video mr-2 system-blue"></i>《美容的真相》</li>
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《维生素狂热》</li>
+                    </ul>
+                    <p class="mt-4 text-xs italic text-gray-500 z-10">诊断书：我们为何深陷其中？</p>
+                </div>
+
+                <div class="card p-8 relative flex flex-col justify-between overflow-hidden">
+                    <div class="absolute-text opacity-5 text-vibrant-purple top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2">见我</div>
+                    <p class="text-sm text-vibrant-purple font-bold uppercase mb-2 z-10">LAYER 02</p>
+                    <h3 class="text-3xl font-bold mb-4 z-10">见我：重塑价值</h3>
+                    <p class="text-lg text-gray-700 font-light z-10">
+                        挑战我们对“贫穷”与“富足”的定义。引导你向内探索，审视何为“必需品”。
+                    </p>
+                    <ul class="mt-6 text-gray-600 space-y-2 text-sm z-10">
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《我的物品》</li>
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《生活的减法》</li>
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《富哥哥，穷弟弟》</li>
+                        <li><i class="fas fa-video mr-2 system-blue"></i>《为什么贫穷》</li>
+                    </ul>
+                    <p class="mt-4 text-xs italic text-gray-500 z-10">哲学课：我们到底需要什么？</p>
+                </div>
+
+                <div class="card p-8 relative flex flex-col justify-between overflow-hidden">
+                    <div class="absolute-text opacity-5 text-action-green top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2">立行</div>
+                    <p class="text-sm text-action-green font-bold uppercase mb-2 z-10">LAYER 03</p>
+                    <h3 class="text-3xl font-bold mb-4 z-10">立行：构建路径</h3>
+                    <p class="text-lg text-gray-700 font-light z-10">
+                        从消极的“不消费”转向积极的“价值创造”，掌握新的行为模式。
+                    </p>
+                    <ul class="mt-6 text-gray-600 space-y-2 text-sm z-10">
+                        <li><i class="fas fa-video mr-2 system-blue"></i>《成为沃伦·巴菲特》</li>
+                        <li><i class="fas fa-book mr-2 system-blue"></i>《金钱与我》</li>
+                    </ul>
+                    <p class="mt-4 text-xs italic text-gray-500 z-10">行动指南：我们应该怎么做？</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-20 relative">
+                <h3 class="text-4xl md:text-5xl font-bold mb-8">第一境产出：心智地图</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-8">
+                    <div class="flex flex-col items-center">
+                        <span class="text-6xl font-black text-vibrant-pink">破幻</span>
+                        <p class="text-sm text-gray-500">（看清敌人）</p>
+                    </div>
+                    <svg class="w-24 md:w-32 h-8 text-gray-400" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="path-line" d="M5 10 H95" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="--delay: 0.2s;"></path>
+                        <polygon points="95,10 85,5 85,15" fill="currentColor" class="reveal" style="transition-delay: 2.5s;"></polygon>
+                    </svg>
+                    <div class="flex flex-col items-center">
+                        <span class="text-6xl font-black text-vibrant-purple">见我</span>
+                        <p class="text-sm text-gray-500">（认清自己）</p>
+                    </div>
+                    <svg class="w-24 md:w-32 h-8 text-gray-400" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="path-line" d="M5 10 H95" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="--delay: 0.4s;"></path>
+                        <polygon points="95,10 85,5 85,15" fill="currentColor" class="reveal" style="transition-delay: 2.7s;"></polygon>
+                    </svg>
+                    <div class="flex flex-col items-center">
+                        <span class="text-6xl font-black text-action-green">立行</span>
+                        <p class="text-sm text-gray-500">（掌握工具）</p>
+                    </div>
+                </div>
+                 <p class="mt-8 text-xl max-w-3xl mx-auto text-gray-700 font-light">
+                    你不再面对十个散点，而是清晰地看到了一条从“解构外部世界”到“重建内部秩序”再到“实践财务策略”的完整路径。
+                </p>
+            </div>
+        </section>
+
+        <section class="py-24 lg:py-32 relative reveal">
+            <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">SECOND STAGE</p>
+            <h2 class="text-5xl md:text-7xl font-black mb-12 leading-tight">
+                第二境：<span class="vibrant-purple">填其肉</span>
+            </h2>
+            <p class="text-2xl lg:text-3xl font-light max-w-4xl mb-16">
+                有了骨架，现在开始精雕细琢，用思考和关联为这座雕塑填充血肉。<br>让它们彼此“争鸣”。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                <div class="glass-card p-8 lg:p-10 flex flex-col items-start relative overflow-hidden">
+                    <div class="absolute-text opacity-5 text-system-blue top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">关联</div>
+                    <h3 class="text-3xl font-bold mb-4 system-blue z-10">关联与辩论</h3>
+                    <p class="text-lg text-gray-700 mb-6 z-10">
+                        让知识彼此对话、碰撞，形成一张网。
+                    </p>
+                    <ul class="text-gray-700 space-y-4 text-base z-10">
+                        <li><i class="fas fa-link mr-3 text-system-blue"></i>
+                            <span class="font-semibold">《元凶》 vs 《超级顾客》：</span> 心理定价与识破促销陷阱，原理与对策的正反两面。
+                        </li>
+                        <li><i class="fas fa-link mr-3 text-system-blue"></i>
+                            <span class="font-semibold">《我的物品》 vs 《生活的减法》：</span> 极限剥离实验能否成为“减法”的起点？
+                        </li>
+                        <li><i class="fas fa-link mr-3 text-system-blue"></i>
+                            <span class="font-semibold">巴菲特 vs 《穷弟弟》：</span> “长期价值”与“即时回报”的鲜明对比。耐心是抗冲动武器？
+                        </li>
+                        <li><i class="fas fa-link mr-3 text-system-blue"></i>
+                            <span class="font-semibold">《美容的真相》 vs 《金钱与我》：</span> 容貌焦虑如何影响家庭财务健康？
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 lg:p-10 flex flex-col items-start relative overflow-hidden">
+                    <div class="absolute-text opacity-5 text-vibrant-orange top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">挖掘</div>
+                    <h3 class="text-3xl font-bold mb-4 vibrant-orange z-10">深入与挖掘</h3>
+                    <p class="text-lg text-gray-700 mb-6 z-10">
+                        带着问题阅读，挖掘更深层含义。
+                    </p>
+                    <ul class="text-gray-700 space-y-4 text-base z-10">
+                        <li><i class="fas fa-magnifying-glass mr-3 text-vibrant-orange"></i>
+                            <span class="font-semibold">“贫穷”到底是什么？</span> 是账户数字，还是“稀缺心态”的禁锢？
+                        </li>
+                        <li><i class="fas fa-magnifying-glass mr-3 text-vibrant-orange"></i>
+                            <span class="font-semibold">“减法”的本质是什么？</span> 不仅是扔东西，更是精力的聚焦。巴菲特的“能力圈”也是一种“减法”智慧。
+                        </li>
+                    </ul>
+                    <div class="mt-8 text-center w-full z-10">
+                        <span class="text-8xl font-black text-gray-300 opacity-40">?</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-20">
+                <h3 class="text-4xl md:text-5xl font-bold mb-8">第二境产出：你的“工作文本”</h3>
+                <p class="text-xl max-w-3xl mx-auto text-gray-700 font-light">
+                    经过精雕细琢，这十本书在你脑中不再是独立的书目。它们已经开始对话、碰撞、融合。<br>知识变得有机关联，血肉丰满。
+                </p>
+            </div>
+        </section>
+
+        <section class="min-h-screen py-24 lg:py-32 flex flex-col justify-center items-center text-center relative reveal">
+            <p class="text-sm text-gray-500 uppercase tracking-widest mb-4">THIRD STAGE</p>
+            <h2 class="text-5xl md:text-7xl font-black mb-12 leading-tight">
+                第三境：<span class="action-green">得其神</span>
+            </h2>
+            <p class="text-2xl lg:text-3xl font-light max-w-4xl mb-16">
+                雕塑已然成型，现在是最后一步——打磨抛光。<br>将所有复杂纹理内化，只留下一件浑然天成的作品。
+            </p>
+
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-4xl md:text-5xl font-bold mb-8 holographic-text">核心箴言</h3>
+                <div class="space-y-6 text-xl md:text-2xl text-gray-800 font-light leading-relaxed">
+                    <p>真正的自由，始于看穿消费主义为你编织的牢笼。</p>
+                    <p>真正的富足，源于内心价值尺度的重建，而非物质的堆砌。</p>
+                    <p>最终，将你的身份从<span class="font-bold text-vibrant-pink">“消费者”</span>切换为<span class="font-bold text-action-green">“投资者”</span>——<br>不仅投资于资产，更投资于有价值的人生体验和长久的安宁。</p>
+                </div>
+            </div>
+
+            <div class="mt-20 max-w-5xl mx-auto card p-10 lg:p-12 text-center relative overflow-hidden">
+                <div class="absolute-text text-action-green opacity-5 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">自由</div>
+                <h3 class="text-4xl md:text-5xl font-black mb-8 leading-tight holographic-text">
+                    一分钟概括它的灵魂：
+                </h3>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed font-light z-10">
+                    “这套书单的核心，是引导你完成一次<span class="font-bold text-action-green">身份转变</span>。它首先让你识破商业社会如何系统性地让你成为一名‘优秀的消费者’。然后，它通过极简主义哲学，帮你重塑内心，让你明白幸福与物质无关。最后，它为你指明出路——别再当消费者了，像巴菲特一样，成为一名<span class="font-bold text-action-green">‘人生的投资者’</span>，把有限的资源（金钱、时间、精力）投向真正能让你增值的地方。”
+                </p>
+            </div>
+
+            <div class="text-center mt-20">
+                <h3 class="text-4xl md:text-5xl font-bold mb-8">第三境产出：你的“精神浓汤”</h3>
+                <p class="text-xl max-w-3xl mx-auto text-gray-700 font-light">
+                    至此，这十本书不再是你外部的“知识客体”，它已经化为你内心的“心智工具”。<br>你已经完成了这次从厚到薄，再到薄的旅程。
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // 当元素10%可见时触发
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // 如果希望动画只播放一次，可以取消注释下面这行
+                        // observer.unobserve(entry.target);
+                    } else {
+                        // 如果需要元素滚出视口时恢复初始状态，可以添加下面这行
+                        // entry.target.classList.remove('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

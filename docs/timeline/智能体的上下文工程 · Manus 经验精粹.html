@@ -1,0 +1,252 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1024, initial-scale=1, maximum-scale=1">
+  <title>智能体的上下文工程 · Manus 经验精粹</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Noto Sans SC -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background-color: #f0f2f5;
+      background-image:
+        radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+        radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+        radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+        radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+    }
+    .holographic-text {
+      background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .chart-container {
+      position: relative;
+      height: 250px;
+      width: 100%;
+    }
+    .icon-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 1.25rem;
+      border: 1px solid currentColor;
+      color: #3b82f6;
+    }
+    .icon-outline i {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start">
+
+  <!-- 顶部标题区 -->
+  <header class="w-full max-w-6xl mx-auto px-8 pt-16 pb-8">
+    <div class="flex flex-col md:flex-row items-center justify-between">
+      <div>
+        <h1 class="holographic-text text-5xl md:text-7xl font-extrabold tracking-tight mb-2">智能体的上下文工程</h1>
+        <div class="text-xl md:text-2xl font-bold text-gray-800 mb-2">Manus 经验精粹</div>
+        <div class="text-base text-gray-500">Context Engineering for AI Agents · Hybrid Layout Demo</div>
+      </div>
+      <div class="flex space-x-4 mt-6 md:mt-0">
+        <span class="icon-outline bg-white/80 shadow-lg"><i class="fa-solid fa-brain"></i></span>
+        <span class="icon-outline bg-white/80 shadow-lg"><i class="fa-solid fa-rocket"></i></span>
+        <span class="icon-outline bg-white/80 shadow-lg"><i class="fa-solid fa-layer-group"></i></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 内容主卡片区 -->
+  <main class="w-full max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    <!-- 左侧：核心理念与故事 -->
+    <section class="bg-white/90 rounded-3xl shadow-xl p-10 flex flex-col justify-between reveal">
+      <div>
+        <div class="text-4xl font-extrabold text-gray-900 mb-4">背景故事</div>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+          <span class="font-bold text-blue-600">“我们要做自己的模型，还是借力大模型？”</span>
+          <br>
+          7年前的我，曾在自研与借力之间反复挣扎。<span class="font-bold text-green-600">BERT</span> 和 <span class="font-bold text-pink-600">GPT</span> 的出现，让我们明白：<span class="font-bold text-blue-600">上下文工程</span>才是智能体进化的关键。<br>
+          <span class="text-gray-500 text-sm">（Peak · Manus 创始人）</span>
+        </p>
+        <div class="flex items-center space-x-4 mb-4">
+          <span class="icon-outline"><i class="fa-solid fa-lightbulb"></i></span>
+          <span class="text-lg font-bold text-gray-800">核心理念：用上下文塑造智能体行为</span>
+        </div>
+      </div>
+      <div class="mt-8">
+        <div class="text-base text-gray-400">关键词：<span class="font-bold text-blue-500">缓存</span>、<span class="font-bold text-green-500">文件系统</span>、<span class="font-bold text-pink-500">复述</span>、<span class="font-bold text-yellow-500">失败学习</span>、<span class="font-bold text-purple-500">多样性</span></div>
+      </div>
+    </section>
+
+    <!-- 右侧：超大数字与高亮要点 -->
+    <section class="bg-white/90 rounded-3xl shadow-xl p-10 flex flex-col justify-between reveal">
+      <div>
+        <div class="flex items-center space-x-4 mb-6">
+          <span class="text-7xl font-extrabold text-blue-500 leading-none">10x</span>
+          <span class="text-lg font-bold text-gray-700">缓存命中率提升<br><span class="text-blue-400">KV Cache Hit Rate</span></span>
+        </div>
+        <div class="flex items-center space-x-4 mb-6">
+          <span class="text-6xl font-extrabold text-green-500 leading-none">128K</span>
+          <span class="text-lg font-bold text-gray-700">Token 窗口<br><span class="text-green-400">Context Window</span></span>
+        </div>
+        <div class="flex items-center space-x-4 mb-6">
+          <span class="text-6xl font-extrabold text-pink-500 leading-none">50+</span>
+          <span class="text-lg font-bold text-gray-700">平均工具调用<br><span class="text-pink-400">Tool Calls/Task</span></span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-5xl font-extrabold text-yellow-500 leading-none">∞</span>
+          <span class="text-lg font-bold text-gray-700">外部记忆空间<br><span class="text-yellow-400">External Memory</span></span>
+        </div>
+      </div>
+      <div class="mt-8">
+        <div class="text-base text-gray-400">数据来源：Manus 真实生产环境</div>
+      </div>
+    </section>
+
+    <!-- 左下：设计原则卡片 -->
+    <section class="bg-white/90 rounded-3xl shadow-xl p-10 flex flex-col space-y-6 reveal">
+      <div class="flex items-center space-x-4">
+        <span class="icon-outline text-blue-500"><i class="fa-solid fa-database"></i></span>
+        <span class="text-2xl font-bold text-gray-900">缓存优先</span>
+      </div>
+      <p class="text-gray-700">保持提示词前缀稳定，避免上下文中无意义的变化（如时间戳），最大化 KV 缓存命中率，<span class="font-bold text-blue-500">降低延迟与成本</span>。</p>
+      <div class="flex items-center space-x-4">
+        <span class="icon-outline text-green-500"><i class="fa-solid fa-folder-open"></i></span>
+        <span class="text-2xl font-bold text-gray-900">文件系统即上下文</span>
+      </div>
+      <p class="text-gray-700">用文件系统作为智能体的“外部记忆宫殿”，实现信息的可恢复压缩与无限扩展。</p>
+      <div class="flex items-center space-x-4">
+        <span class="icon-outline text-pink-500"><i class="fa-solid fa-list-check"></i></span>
+        <span class="text-2xl font-bold text-gray-900">复述目标</span>
+      </div>
+      <p class="text-gray-700">通过持续重写 todo 列表，把全局目标推向注意力前沿，<span class="font-bold text-pink-500">防止迷失</span>。</p>
+      <div class="flex items-center space-x-4">
+        <span class="icon-outline text-yellow-500"><i class="fa-solid fa-bug"></i></span>
+        <span class="text-2xl font-bold text-gray-900">保留失败</span>
+      </div>
+      <p class="text-gray-700">记录每一次失败尝试，让模型真正学会“记住伤疤”，实现自我进化。</p>
+    </section>
+
+    <!-- 右下：数据可视化与创新实践 -->
+    <section class="bg-white/90 rounded-3xl shadow-xl p-10 flex flex-col space-y-8 reveal">
+      <div>
+        <div class="flex items-center space-x-4 mb-4">
+          <span class="icon-outline text-purple-500"><i class="fa-solid fa-chart-line"></i></span>
+          <span class="text-2xl font-bold text-gray-900">KV 缓存命中率对比</span>
+        </div>
+        <div class="chart-container mb-4">
+          <canvas id="kvCacheChart"></canvas>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center space-x-4 mb-4">
+          <span class="icon-outline text-orange-500"><i class="fa-solid fa-random"></i></span>
+          <span class="text-2xl font-bold text-gray-900">多样性防止模式陷阱</span>
+        </div>
+        <p class="text-gray-700">通过引入结构化变动，打破少样本学习的“机械模仿”，让智能体始终保持创造力与适应性。</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 底部 Call to Action -->
+  <footer class="w-full max-w-6xl mx-auto px-8 py-12 flex flex-col items-center">
+    <div class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">精心雕琢每一段上下文</div>
+    <div class="holographic-text text-2xl md:text-3xl font-bold mb-4">Co-create the Future of AI Agents</div>
+    <a href="https://baoyu.io/translations/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus" target="_blank"
+      class="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-green-400 text-white font-bold text-lg shadow-lg hover:scale-105 transition-transform"
+      style="backdrop-filter: blur(8px);">阅读全文 / Read More</a>
+  </footer>
+
+  <script>
+    // Reveal 动画
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      for (const el of reveals) {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
+        if (elementTop < windowHeight - 60) {
+          el.classList.add('visible');
+        }
+      }
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('DOMContentLoaded', revealOnScroll);
+
+    // Chart.js KV Cache 命中率对比
+    window.addEventListener('DOMContentLoaded', function () {
+      const ctx = document.getElementById('kvCacheChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['未优化', 'Manus 优化'],
+          datasets: [{
+            label: 'KV 缓存命中率 (%)',
+            data: [10, 90],
+            backgroundColor: [
+              'rgba(59, 130, 246, 0.3)',
+              'rgba(16, 185, 129, 0.7)'
+            ],
+            borderColor: [
+              'rgba(59, 130, 246, 1)',
+              'rgba(16, 185, 129, 1)'
+            ],
+            borderWidth: 2,
+            borderRadius: 16,
+            maxBarThickness: 60
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                color: '#222',
+                font: { size: 16, weight: 'bold' }
+              },
+              grid: { color: 'rgba(0,0,0,0.05)' }
+            },
+            x: {
+              ticks: {
+                color: '#222',
+                font: { size: 16, weight: 'bold' }
+              },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    });
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
+

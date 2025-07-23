@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>与意义的隔绝 - The Disconnection from Meaning</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Noto+Sans+SC:wght@400;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Base styles from prompt, adapted for Tailwind */
+        body {
+            font-family: 'Noto Sans SC', 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                              linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色 */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Custom utility classes */
+        .font-display {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        .font-sans-en {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+
+        .text-connecting {
+            font-size: clamp(1.25rem, 3vw, 2.5rem); /* Responsive size */
+            font-weight: 400;
+            color: #6B5D55; /* Softer color */
+            letter-spacing: normal;
+        }
+
+        .text-colossus {
+            font-size: clamp(4.5rem, 15vw, 12rem); /* Responsive colossal text */
+        }
+
+        /* Memphis-style background accents */
+        .memphis-accent {
+            position: fixed; /* Use fixed to stay in viewport */
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform; /* Performance hint for animation */
+        }
+
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(8px, -12px) rotate(2deg); }
+            75% { transform: translate(-8px, 12px) rotate(-2deg); }
+        }
+        
+        @keyframes slowDriftReverse {
+           0%, 100% { transform: translate(0, 0) rotate(0deg); }
+           25% { transform: translate(-6px, 10px) rotate(-1.5deg); }
+           75% { transform: translate(6px, -10px) rotate(1.5deg); }
+       }
+
+        .animate-slow-drift {
+            animation: slowDrift 20s ease-in-out infinite;
+        }
+        .animate-slow-drift-reverse {
+           animation: slowDriftReverse 25s ease-in-out infinite;
+        }
+        
+        /* Animation for text reveal */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="w-full min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+
+    <svg class="memphis-accent animate-slow-drift" style="top: 10%; left: 15%; width: 200px; height: 200px;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" stroke="#4A3B31" stroke-width="4"/>
+    </svg>
+    <div class="memphis-accent animate-slow-drift-reverse" style="bottom: 15%; right: 10%; width: 300px; height: 4px; background-color: #4A3B31;"></div>
+
+    <main class="w-full max-w-7xl mx-auto z-10">
+        <div class="space-y-16 md:space-y-24 lg:space-y-32 text-center flex flex-col items-center">
+
+            <div class="reveal-item">
+                <p class="font-sans-en text-lg md:text-xl font-light text-[#6B5D55] tracking-widest">THE GENESIS</p>
+                <h1 class="font-display text-colossus">
+                    工作
+                </h1>
+                <p class="font-display text-connecting">最值钱的，是它还没变成<span class="text-highlight-gradient">“工作”</span>的那一刻。</p>
+            </div>
+
+            <div class="reveal-item flex flex-col items-center">
+                <p class="font-sans-en text-lg md:text-xl font-light text-[#6B5D55] tracking-widest">THE CYCLE</p>
+                <h2 class="font-display text-colossus leading-none">
+                    创新
+                </h2>
+                <div class="flex items-center justify-center gap-4 mt-4">
+                    <svg class="w-12 h-12 md:w-16 md:h-16 text-[#6B5D55] opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v4"/> <path d="M12 18v4"/> <path d="m4.93 4.93 2.83 2.83"/> <path d="m16.24 16.24 2.83 2.83"/> <path d="M2 12h4"/> <path d="M18 12h4"/> <path d="m4.93 19.07 2.83-2.83"/> <path d="m16.24 7.76 2.83-2.83"/> <path d="M12 6a6 6 0 1 0 6 6"/> <polyline points="12 10 12 12 14 12"/>
+                    </svg>
+                    <p class="font-display text-connecting">终将归于<span class="text-highlight-gradient">流程与分工</span></p>
+                </div>
+            </div>
+
+            <div class="reveal-item">
+                <p class="font-sans-en text-lg md:text-xl font-light text-[#6B5D55] tracking-widest">THE REALITY</p>
+                <h2 class="font-display text-connecting">大多数人，只能拧螺丝、补漏洞、擦残局</h2>
+                <h1 class="font-display text-colossus leading-tight">
+                    离<span class="text-highlight-gradient">「为什么」</span><br class="md:hidden">渐行渐远
+                </h1>
+            </div>
+
+            <div class="reveal-item pt-12">
+                <h3 class="font-display text-4xl sm:text-5xl md:text-6xl text-center leading-tight">
+                    虚无感的根源
+                    <br>
+                    <span class="text-connecting">是与</span>
+                    <span class="text-colossus font-display text-highlight-gradient">意义</span>
+                    <span class="text-connecting">的隔绝</span>
+                </h3>
+                 <p class="font-sans-en text-lg md:text-xl font-light text-[#6B5D55] tracking-widest mt-6">THE ROOT OF NIHILISM</p>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealItems = document.querySelectorAll('.reveal-item');
+            
+            let delay = 300; // initial delay
+
+            revealItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('revealed');
+                }, delay);
+                // Increase delay for the next item to create a sequence
+                delay += 800; 
+            });
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
