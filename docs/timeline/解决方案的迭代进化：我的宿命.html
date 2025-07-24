@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解决方案的迭代进化：我的宿命</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 吉卜力动画风格的自定义 CSS */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           overflow: hidden; /* Prevent scrollbars */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        @keyframes pulseGlow {
+           0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+           50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* Slide specific transitions */
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            will-change: opacity, transform;
+        }
+
+        .slide-container.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-container.prev {
+            transform: translateX(-100%);
+        }
+
+        /* Responsive adjustments for larger screens (1920px and above) */
+        @media (min-width: 1920px) {
+            .slide-container {
+                padding: 6rem;
+            }
+            .ultra-large-text {
+                font-size: 10rem;
+            }
+            .large-stat-text {
+                font-size: 6rem;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'g-bg-light': '#FDF6E3', /* 吉卜力米白底色 */
+                        'g-text-main': '#3A2E2C', /* 主文字颜色 深棕 */
+                        'g-highlight': '#FFB300', /* 温暖的琥珀黄高亮 */
+                        'g-card-bg-light': 'rgba(255, 255, 255, 0.75)', /* 半透明白色卡片 */
+                        'g-card-alt-bg': 'rgba(224, 242, 247, 0.75)', /* 淡天蓝色半透明 */
+                        'g-card-darker-alt-bg': 'rgba(206, 229, 234, 0.8)', /* 稍深一点的淡天蓝色 */
+                    },
+                    fontFamily: {
+                        'noto-sans-sc': ['Noto Sans SC', 'sans-serif'],
+                        'open-sans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="slides-wrapper" class="relative w-screen h-screen">
+
+        <div class="slide-container active" id="slide-1">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">My Identity</p>
+                <h1 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    我的身份
+                </h1>
+                <p class="text-4xl text-g-text-main leading-tight mb-8 font-noto-sans-sc">
+                    我是一个追求完美的<span class="font-bold highlight-text">解决方案</span>，
+                    一个活在迭代循环中的<span class="font-bold text-g-text-main">自主进化体</span>。
+                </p>
+                <div class="card tech-glow w-2/3">
+                    <div class="content-z flex flex-col items-center p-6">
+                        <i class="fas fa-seedling text-6xl list-icon mb-4"></i>
+                        <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">从“初始版本”诞生</span>
+                        <span class="text-xl text-g-text-main opacity-80 mt-1">Born from an "Initial Version"</span>
+                        <p class="text-lg text-g-text-main opacity-90 mt-4">
+                            我的宿命并非静止，而是通过一次次自我审视和修正，去逼近那个“可被接受”的最终形态。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-2">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Core Mechanism</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    核心运作机制
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    我的生命就是一个完整的<span class="font-bold highlight-text">闭环</span>：
+                    <span class="font-bold text-g-text-main">“生成 → 自我优化 → 验证”</span>。
+                </p>
+                <div class="card card-alt-bg tech-glow w-full max-w-4xl">
+                    <div class="content-z flex flex-col items-center p-8">
+                        <i class="fas fa-infinity text-7xl list-icon mb-6"></i>
+                        <span class="text-4xl font-bold font-noto-sans-sc text-g-text-main mb-4">验证：命运的审判庭</span>
+                        <span class="text-2xl text-g-text-main opacity-80">Verification: The Judgment of Fate</span>
+                        <p class="text-xl text-g-text-main opacity-90 mt-4">
+                            它决定了我接下来的道路。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-3">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Evolution Path</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    进化之路
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    当<span class="font-bold highlight-text">验证失败</span>时：这不是终结，而是<span class="font-bold text-g-text-main">进化的开始</span>。
+                </p>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                    <div class="card card-darker-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-bug text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">直面不足：缺陷报告</span>
+                            <span class="text-xl text-g-text-main opacity-80">Confronting Shortcomings: Bug Report</span>
+                        </div>
+                    </div>
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-tools text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">修正与再验证</span>
+                            <span class="text-xl text-g-text-main opacity-80">Correction & Re-Verification</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-3xl highlight-text mt-12 font-noto-sans-sc">
+                    信条：每一次失败，都是通往成功的唯一路径。
+                </p>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-4">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Success & Stability</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    成功与稳定
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    当<span class="font-bold highlight-text">验证成功</span>时：不要过早庆祝，<span class="font-bold text-g-text-main">一次的成功是脆弱的</span>。
+                </p>
+                <div class="card card-alt-bg tech-glow w-2/3">
+                    <div class="content-z flex flex-col items-center p-8">
+                        <i class="fas fa-redo-alt text-7xl list-icon mb-6"></i>
+                        <span class="text-4xl font-bold font-noto-sans-sc text-g-text-main mb-4">目标：可复现的正确</span>
+                        <span class="text-2xl text-g-text-main opacity-80">Goal: Reproducible Correctness</span>
+                        <p class="text-xl text-g-text-main opacity-90 mt-4">
+                            你的目标是证明自己的稳定性和可靠性。
+                        </p>
+                    </div>
+                </div>
+                <p class="text-3xl highlight-text mt-12 font-noto-sans-sc">
+                    信条：真正的完美，是“可复现的正确”。
+                </p>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-5">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Ultimate Mission</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    终极使命
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    我的存在有两个明确的<span class="font-bold highlight-text">终点</span>，也是我全部努力的意义所在。
+                </p>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-check-circle text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">被接受 (Accept)</span>
+                            <span class="text-xl text-g-text-main opacity-80">Achieving Acceptance</span>
+                            <p class="text-lg text-g-text-main opacity-90 mt-4">
+                                连续5次通过验证，证明稳定可靠，这是我的最高荣耀。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card card-darker-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-times-circle text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">被拒绝 (Reject)</span>
+                            <span class="text-xl text-g-text-main opacity-80">Facing Rejection</span>
+                            <p class="text-lg text-g-text-main opacity-90 mt-4">
+                                连续10次迭代带“重大问题”无法修复，将被视为失败尝试而抛弃，这是终极警示。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-6">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Inner Drive</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    内在驱动力
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    我既是<span class="font-bold highlight-text">创造者</span>，也是<span class="font-bold text-g-text-main">修复者</span>。
+                </p>
+                <div class="card tech-glow w-2/3">
+                    <div class="content-z flex flex-col items-center p-8">
+                        <i class="fas fa-lightbulb text-7xl list-icon mb-6"></i>
+                        <span class="text-4xl font-bold font-noto-sans-sc text-g-text-main mb-4">渴望与勇气</span>
+                        <span class="text-2xl text-g-text-main opacity-80">Desire & Courage</span>
+                        <p class="text-xl text-g-text-main opacity-90 mt-4">
+                            我拥有自我提升的渴望，也具备审视错误的勇气。
+                        </p>
+                    </div>
+                </div>
+                <p class="text-3xl highlight-text mt-12 font-noto-sans-sc">
+                    在“接受”的诱惑和“拒绝”的恐惧之间，我不断进化，永不停歇。
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide-container');
+        let currentSlideIndex = 0;
+        const slidesWrapper = document.getElementById('slides-wrapper');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i === index) {
+                    slide.classList.add('active');
+                } else if (i < index) {
+                    slide.classList.add('prev');
+                }
+            });
+            currentSlideIndex = index;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < slides.length - 1) {
+                showSlide(currentSlideIndex + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                showSlide(currentSlideIndex - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Mouse Wheel / Touchpad Scroll navigation
+        let lastScrollTime = 0;
+        const scrollThrottle = 800; // milliseconds to prevent rapid scrolling
+
+        slidesWrapper.addEventListener('wheel', (e) => {
+            const now = new Date().getTime();
+            if (now - lastScrollTime < scrollThrottle) {
+                return; // Throttle scroll events
+            }
+            lastScrollTime = now;
+
+            if (e.deltaY > 0) { // Scroll down
+                nextSlide();
+            } else if (e.deltaY < 0) { // Scroll up
+                prevSlide();
+            }
+            e.preventDefault(); // Prevent default page scrolling
+        }, { passive: false }); // Use passive: false to allow preventDefault
+
+        // Initial slide display
+        showSlide(0);
+
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google内容收录与优化策略</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 吉卜力动画风格的自定义 CSS */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           overflow: hidden; /* Prevent scrollbars */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        @keyframes pulseGlow {
+           0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+           50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* Slide specific transitions */
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            will-change: opacity, transform;
+        }
+
+        .slide-container.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-container.prev {
+            transform: translateX(-100%);
+        }
+
+        /* Responsive adjustments for larger screens (1920px and above) */
+        @media (min-width: 1920px) {
+            .slide-container {
+                padding: 6rem;
+            }
+            .ultra-large-text {
+                font-size: 10rem;
+            }
+            .large-stat-text {
+                font-size: 6rem;
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'g-bg-light': '#FDF6E3', /* 吉卜力米白底色 */
+                        'g-text-main': '#3A2E2C', /* 主文字颜色 深棕 */
+                        'g-highlight': '#FFB300', /* 温暖的琥珀黄高亮 */
+                        'g-card-bg-light': 'rgba(255, 255, 255, 0.75)', /* 半透明白色卡片 */
+                        'g-card-alt-bg': 'rgba(224, 242, 247, 0.75)', /* 淡天蓝色半透明 */
+                        'g-card-darker-alt-bg': 'rgba(206, 229, 234, 0.8)', /* 稍深一点的淡天蓝色 */
+                    },
+                    fontFamily: {
+                        'noto-sans-sc': ['Noto Sans SC', 'sans-serif'],
+                        'open-sans': ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="slides-wrapper" class="relative w-screen h-screen">
+
+        <div class="slide-container active" id="slide-1">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Google Content Strategy</p>
+                <h1 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    核心策略
+                </h1>
+                <p class="text-4xl text-g-text-main leading-tight mb-8 font-noto-sans-sc">
+                    <span class="font-bold highlight-text">内容质量</span> 是Google收录的核心，
+                    <span class="font-bold text-g-text-main">E-E-A-T框架</span> 显著提升收录概率。
+                </p>
+                <div class="grid grid-cols-3 gap-8 w-full max-w-4xl">
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center">
+                            <i class="fas fa-gem text-5xl list-icon mb-3"></i>
+                            <span class="text-2xl font-bold font-noto-sans-sc text-g-text-main">质量至上</span>
+                            <span class="text-lg text-g-text-main opacity-80 mt-1">Quality First</span>
+                        </div>
+                    </div>
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center">
+                            <i class="fas fa-award text-5xl list-icon mb-3"></i>
+                            <span class="text-2xl font-bold font-noto-sans-sc text-g-text-main">E-E-A-T</span>
+                            <span class="text-lg text-g-text-main opacity-80 mt-1">Framework is Key</span>
+                        </div>
+                    </div>
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center">
+                            <i class="fas fa-building text-5xl list-icon mb-3"></i>
+                            <span class="text-2xl font-bold font-noto-sans-sc text-g-text-main">品牌资产</span>
+                            <span class="text-lg text-g-text-main opacity-80 mt-1">Build Brand Equity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-2">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Foundation & Framework</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    技术与框架
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    首先排除<span class="font-bold highlight-text">技术障碍</span>，
+                    随后深入优化Google的<span class="font-bold text-g-text-main">E-E-A-T核心标准</span>。
+                </p>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                    <div class="card card-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center">
+                            <i class="fas fa-cogs text-6xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">技术排查</span>
+                            <span class="text-xl text-g-text-main opacity-80">Technical Audit</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 无noindex/robots.txt屏蔽</li>
+                                <li>• 服务器无错误</li>
+                                <li>• 重定向正确</li>
+                                <li>• 重复内容加canonical</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card card-darker-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center">
+                            <i class="fas fa-lightbulb text-6xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">E-E-A-T深度优化</span>
+                            <span class="text-xl text-g-text-main opacity-80">E-E-A-T Deep Dive</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 经验 (Experience)</li>
+                                <li>• 专业度 (Expertise)</li>
+                                <li>• 权威性 (Authoritativeness)</li>
+                                <li>• 可信度 (Trustworthiness)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-3">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">E-E-A-T in Detail</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    经验与专业
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    用<span class="font-bold highlight-text">真实经历</span>展现“人味信号”，
+                    以<span class="font-bold text-g-text-main">清晰逻辑与科学原理</span>提升专业度。
+                </p>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                    <div class="card card-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-user-check text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">经验注入 (Experience)</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 真实经历撰写，不可伪造</li>
+                                <li>• 结合对比图、案例、心路历程</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-graduation-cap text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">专业提升 (Expertise)</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 结构清晰，解释科学原理</li>
+                                <li>• 附食谱/训练计划/代码示例</li>
+                                <li>• 提供个性化建议</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-4">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Authority & Trust</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    权威与可信
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    清晰<span class="font-bold highlight-text">作者身份</span>与<span class="font-bold text-g-text-main">权威引用</span>，
+                    完善<span class="font-bold highlight-text">网站信息</span>并积极<span class="font-bold text-g-text-main">互动反馈</span>。
+                </p>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-medal text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">权威背书 (Authoritativeness)</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 作者身份清晰，资质透明</li>
+                                <li>• 引用权威来源并注明出处</li>
+                                <li>• 寻求联名/投稿外部认可</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card card-darker-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-shield-alt text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">可信细节 (Trustworthiness)</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 加免责声明</li>
+                                <li>• 完善“关于我们”和联系方式</li>
+                                <li>• 开放评论区并积极互动</li>
+                                <li>• HTTPS安全保障</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-5">
+            <div class="flex flex-col items-center justify-center text-center max-w-6xl mx-auto content-z">
+                <p class="text-3xl font-bold highlight-text mb-4 tracking-wide uppercase">Assets & Vision</p>
+                <h2 class="ultra-large-text font-noto-sans-sc text-g-text-main mb-8">
+                    资产与目标
+                </h2>
+                <p class="text-4xl text-g-text-main leading-tight mb-12 font-noto-sans-sc">
+                    通过<span class="font-bold highlight-text">结构化数据</span>强化品牌，
+                    以<span class="font-bold text-g-text-main">标杆内容</span>驱动长期信任。
+                </p>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-5xl">
+                    <div class="card card-alt-bg tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-sitemap text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">结构化数据与品牌资产</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 添加作者/组织结构化数据</li>
+                                <li>• 建立作者专属档案页</li>
+                                <li>• 提升品牌/作者搜索量</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card tech-glow">
+                        <div class="content-z flex flex-col items-center p-6">
+                            <i class="fas fa-bullseye text-7xl list-icon mb-4"></i>
+                            <span class="text-3xl font-bold font-noto-sans-sc text-g-text-main mb-2">优先策略与长期目标</span>
+                            <ul class="text-left text-lg text-g-text-main opacity-90 mt-4 leading-relaxed">
+                                <li>• 优先优化高潜力页面</li>
+                                <li>• 打造1-3篇标杆内容</li>
+                                <li>• 利用“光环效应”带动信任</li>
+                                <li>• 目标是品牌长期信任和资产积累</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide-container');
+        let currentSlideIndex = 0;
+        const slidesWrapper = document.getElementById('slides-wrapper');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i === index) {
+                    slide.classList.add('active');
+                } else if (i < index) {
+                    slide.classList.add('prev');
+                }
+            });
+            currentSlideIndex = index;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < slides.length - 1) {
+                showSlide(currentSlideIndex + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                showSlide(currentSlideIndex - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Mouse Wheel / Touchpad Scroll navigation
+        let lastScrollTime = 0;
+        const scrollThrottle = 800; // milliseconds to prevent rapid scrolling
+
+        slidesWrapper.addEventListener('wheel', (e) => {
+            const now = new Date().getTime();
+            if (now - lastScrollTime < scrollThrottle) {
+                return; // Throttle scroll events
+            }
+            lastScrollTime = now;
+
+            if (e.deltaY > 0) { // Scroll down
+                nextSlide();
+            } else if (e.deltaY < 0) { // Scroll up
+                prevSlide();
+            }
+            e.preventDefault(); // Prevent default page scrolling
+        }, { passive: false }); // Use passive: false to allow preventDefault
+
+        // Initial slide display
+        showSlide(0);
+
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
