@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西游记反转真相：一场权力的游戏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            overflow-x: hidden; /* Prevent horizontal scroll from overflow */
+            line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 2.5rem; /* Increased padding */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+            border: 1px solid rgba(210, 180, 140, 0.2); /* Subtle border for Ghibli feel */
+        }
+        .card:hover {
+            transform: translateY(-8px); /* More pronounced lift effect on hover */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 - Sky/Cloud like */
+            border: 1px solid rgba(173, 216, 230, 0.3);
+        }
+        .card-darker-alt-bg {
+             background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 - Deeper Sky */
+             border: 1px solid rgba(173, 216, 230, 0.4);
+        }
+        .tech-glow::before { /* Reinterpreted as a soft Ghibli-style light glow */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%; /* Smaller glow area */
+            height: 150%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.2) 0%, rgba(255,179,0,0.08) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 10s infinite ease-in-out; /* Slower, gentler pulse */
+            border-radius: 50%; /* Ensure it's a soft circle */
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.98); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+            color: rgba(58, 46, 44, 0.1); /* Very subtle, earthy background text */
+            user-select: none;
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            white-space: nowrap; /* Prevent breaking */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Handle overflow gracefully */
+            z-index: 0;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.75rem; /* More space */
+        }
+
+        /* Custom line graphics - subtle hand-drawn feel */
+        .line-graphic {
+            stroke: #8B4513; /* SaddleBrown for earthy lines */
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.7;
+            transition: stroke-dashoffset 2s ease-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 2s forwards;
+            animation-delay: var(--delay, 0s);
+        }
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Custom highlight gradients for a "glow" with transparency */
+        .highlight-gradient-light {
+            background: linear-gradient(90deg, rgba(255,179,0,0.4), rgba(255,179,0,0));
+            height: 4px;
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .highlight-gradient-dark {
+            background: linear-gradient(90deg, rgba(139,69,19,0.4), rgba(139,69,19,0));
+            height: 3px;
+            width: 100%;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Scroll reveal animation */
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments for larger screens (1920px+) */
+        @media (min-width: 1920px) {
+            .container-xl {
+                max-width: 1600px; /* Max width for content */
+            }
+            .card {
+                padding: 3.5rem; /* Even more padding */
+            }
+            .text-7xl {
+                font-size: 8rem;
+            }
+            .text-6xl {
+                font-size: 7rem;
+            }
+            .ultra-large-text {
+                font-size: 10rem; /* Max size for background text */
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-[#FFB300] selection:text-[#3A2E2C]">
+
+    <div class="container-xl mx-auto p-8 lg:p-12 space-y-24 relative">
+
+        <section class="text-center py-16 relative">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-black font-noto-sans-sc mb-4 leading-tight fade-in-on-scroll">
+                西游记：真相之书
+                <span class="block text-3xl md:text-4xl lg:text-5xl font-bold text-[#8B4513] mt-4">Journey to the West: The Book of Truth (Inverted)</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-[#5A4F4D] max-w-4xl mx-auto fade-in-on-scroll delay-1">
+                《西游记》倒过来看，是一部彻底颠覆我们惯常认知的“真相之书”。
+                <span class="block text-lg mt-2 italic text-[#6A5F5D]">Viewed in reverse, "Journey to the West" is a "Book of Truth" that completely overturns our usual perceptions.</span>
+            </p>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="ultra-large-text font-noto-sans-sc">TRUTH</span>
+            </div>
+        </section>
+
+        <section class="card content-z fade-in-on-scroll delay-2">
+            <div class="tech-glow"></div>
+            <h2 class="text-5xl md:text-6xl font-bold font-noto-sans-sc mb-6 leading-tight highlight-text">
+                第一境：观其骨
+                <span class="block text-3xl font-light text-[#8B4513] mt-2">Realm 1: Observe the Bones</span>
+            </h2>
+            <p class="text-xl text-[#3A2E2C] mb-6">
+                我们熟悉的“取经之路”，其实是一场安排好的局。
+                <span class="block text-lg italic text-[#6A5F5D]">Our familiar "Journey to the Scriptures" is, in fact, a pre-arranged game.</span>
+            </p>
+            <div class="highlight-gradient-light"></div>
+            <ul class="text-xl text-[#3A2E2C] space-y-4 mt-6">
+                <li>
+                    <i class="list-icon fas fa-chess-board"></i>
+                    <span class="font-bold highlight-text">有靠山的棋子：</span>
+                    <span class="text-[#6A5F5D] text-lg">师徒四人带着天书与小白龙，表面上是斩妖除魔、传播佛法，实则每一次劫难背后，都有权力的影子。妖怪们不是无主的恶，而是有靠山的棋子。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">Backed Pawns: The four disciples, with the heavenly scriptures and the white dragon, ostensibly slay demons and spread Buddhism. In reality, behind every tribulation lies the shadow of power. The demons are not ownerless evil, but pawns with backing.</span>
+                </li>
+                <li>
+                    <i class="list-icon fas fa-hand-fist"></i>
+                    <span class="font-bold highlight-text">亮出后台，规则即变：</span>
+                    <span class="text-[#6A5F5D] text-lg">每当大圣遇到难解之敌，亮出后台，游戏规则就变了。所谓“九九八十一难”，本质上是天庭与西天联手设下的考验，也是利益分配的舞台。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">Reveal the Patron, Rules Change: Whenever the Great Sage encounters an intractable foe, and reveals their backing, the rules of the game change. The so-called "eighty-one tribulations" are essentially tests set jointly by the Heavenly Court and the Western Heaven, and a stage for vested interests.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="card card-alt-bg content-z fade-in-on-scroll delay-3">
+            <div class="tech-glow"></div>
+            <h2 class="text-5xl md:text-6xl font-bold font-noto-sans-sc mb-6 leading-tight highlight-text">
+                第二境：填其肉
+                <span class="block text-3xl font-light text-[#8B4513] mt-2">Realm 2: Fill the Flesh</span>
+            </h2>
+            <p class="text-xl text-[#3A2E2C] mb-6">
+                细读每一场劫难，你会发现隐藏的抗议与幻灭。
+                <span class="block text-lg italic text-[#6A5F5D]">Delve into each tribulation, and you'll uncover hidden protests and disillusionment.</span>
+            </p>
+            <div class="highlight-gradient-dark"></div>
+            <ul class="text-xl text-[#3A2E2C] space-y-4 mt-6">
+                <li>
+                    <i class="list-icon fas fa-times-circle"></i>
+                    <span class="font-bold highlight-text">无声的抗议：</span>
+                    <span class="text-[#6A5F5D] text-lg">八戒、沙僧的退场，不是懦弱，而是对黑暗规则的无声抗议。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">Silent Protest: Pigsy and Sandy's departure was not cowardice, but a silent protest against the dark rules.</span>
+                </li>
+                <li>
+                    <i class="list-icon fas fa-fist-raised"></i>
+                    <span class="font-bold highlight-text">正义的宿命：</span>
+                    <span class="text-[#6A5F5D] text-lg">悟空的坚持，是对正义最后的守望，却也因此成为体制的“眼中钉”。天庭与如来的协议，是对理想的背叛。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">The Fate of Justice: Monkey King's persistence was the last vigil for justice, yet it made him a "thorn in the side" of the system. The agreement between the Heavenly Court and Buddha was a betrayal of ideals.</span>
+                </li>
+                <li>
+                    <i class="list-icon fas fa-handshake-alt-slash"></i>
+                    <span class="font-bold highlight-text">合作者的奖赏：</span>
+                    <span class="text-[#6A5F5D] text-lg">唐僧的独自赴长安，享尽荣华，不过是“合作者”的奖赏。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">The Collaborator's Reward: Tripitaka's solo journey to Chang'an, enjoying all the glory, was merely a reward for being a "collaborator."</span>
+                </li>
+                <li>
+                    <i class="list-icon fas fa-mountain"></i>
+                    <span class="font-bold highlight-text">理想的崩塌：</span>
+                    <span class="text-[#6A5F5D] text-lg">悟空被压五指山，是理想主义者的宿命——当他终于挣脱枷锁，世界已变，兄弟反目，信仰崩塌。最终，他选择归隐，封印修为，把金箍棒还于大海，回归平凡，化为石头。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">Collapse of Ideals: Monkey King's imprisonment under the Five Elements Mountain was the fate of an idealist—when he finally broke free, the world had changed, brothers turned against each other, and faith crumbled. Ultimately, he chose to retreat, seal his powers, return his golden cudgel to the sea, revert to normalcy, and become a stone.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="card card-darker-alt-bg content-z fade-in-on-scroll delay-4">
+            <div class="tech-glow"></div>
+            <h2 class="text-5xl md:text-6xl font-bold font-noto-sans-sc mb-6 leading-tight highlight-text">
+                第三境：得其神
+                <span class="block text-3xl font-light text-[#8B4513] mt-2">Realm 3: Obtain the Spirit</span>
+            </h2>
+            <p class="text-xl text-[#3A2E2C] mb-6">
+                真正的《西游记》，是权力的游戏，是理想的幻灭，是人生的真相。
+                <span class="block text-lg italic text-[#6A5F5D]">The true "Journey to the West" is a game of power, the disillusionment of ideals, and the truth of life.</span>
+            </p>
+            <div class="highlight-gradient-light"></div>
+            <ul class="text-xl text-[#3A2E2C] space-y-4 mt-6">
+                <li>
+                    <i class="list-icon fas fa-eye"></i>
+                    <span class="font-bold highlight-text">看清世间的局：</span>
+                    <span class="text-[#6A5F5D] text-lg">只有反着看，才能看清：这世间的局，早已布好；正义者难以全身而退，合作者方能安享其成。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">See Through the Game: Only by looking in reverse can one see clearly: the game of this world is already set; the righteous rarely escape unscathed, while collaborators enjoy their rewards.</span>
+                </li>
+                <li>
+                    <i class="list-icon fas fa-ghost"></i>
+                    <span class="font-bold highlight-text">规则的产物：</span>
+                    <span class="text-[#6A5F5D] text-lg">你以为的“修行得道”，不过是被天庭与西天合谋的棋子；你以为的“妖魔作恶”，其实是规则的产物。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">Product of Rules: What you thought was "cultivating to enlightenment" was merely being a pawn in the Heavenly Court and Western Heaven's conspiracy; what you thought was "demons doing evil" was actually a product of the rules.</span>
+                </li>
+                <li>
+                    <i class="list-icon fas fa-tree"></i>
+                    <span class="font-bold highlight-text">归于平凡：</span>
+                    <span class="text-[#6A5F5D] text-lg">最后，能全身而退的，唯有看破红尘、归于平凡的悟空。</span>
+                    <span class="block text-sm italic text-[#6A5F5D] ml-8">Return to Normalcy: In the end, the only one who truly escapes unscathed is Monkey King, who sees through the mortal world and returns to an ordinary existence.</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="text-center py-16 relative fade-in-on-scroll delay-5">
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-black font-noto-sans-sc mb-8 leading-tight text-[#3A2E2C]">
+                一句话讲透其魂：
+                <span class="block text-2xl md:text-3xl font-bold text-[#8B4513] mt-3">One Sentence Reveals Its Soul:</span>
+            </h2>
+            <p class="text-5xl md:text-6xl lg:text-7xl font-black font-noto-sans-sc highlight-text mb-4 leading-tight">
+                真正的西游，不是取经的胜利，
+                <span class="block text-3xl md:text-4xl lg:text-5xl font-bold text-[#6A5F5D]">The true Journey to the West is not the victory of obtaining scriptures,</span>
+            </p>
+            <p class="text-5xl md:text-6xl lg:text-7xl font-black font-noto-sans-sc highlight-text leading-tight">
+                而是看清这世间的局，选择做自己的主人。
+                <span class="block text-3xl md:text-4xl lg:text-5xl font-bold text-[#6A5F5D]">but seeing through the game of this world and choosing to be your own master.</span>
+            </p>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="ultra-large-text font-noto-sans-sc opacity-5">FREEDOM</span>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Intersection Observer for fade-in-on-scroll animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.fade-in-on-scroll');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // When 10% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // No specific line animations for this content, but keep if needed for future
+                        // const drawLines = entry.target.querySelectorAll('.draw-line');
+                        // drawLines.forEach((line, index) => {
+                        //     line.style.setProperty('--delay', `${index * 0.2}s`);
+                        //     line.style.animationPlayState = 'running';
+                        // });
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

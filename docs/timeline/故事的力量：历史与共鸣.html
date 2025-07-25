@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事的力量：历史与共鸣</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            overflow-x: hidden; /* Prevent horizontal scroll from overflow */
+            line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 2.5rem; /* Increased padding */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+            border: 1px solid rgba(210, 180, 140, 0.2); /* Subtle border for Ghibli feel */
+        }
+        .card:hover {
+            transform: translateY(-8px); /* More pronounced lift effect on hover */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 - Sky/Cloud like */
+            border: 1px solid rgba(173, 216, 230, 0.3);
+        }
+        .card-darker-alt-bg {
+             background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 - Deeper Sky */
+             border: 1px solid rgba(173, 216, 230, 0.4);
+        }
+        .tech-glow::before { /* Reinterpreted as a soft Ghibli-style light glow */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%; /* Smaller glow area */
+            height: 150%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.2) 0%, rgba(255,179,0,0.08) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 10s infinite ease-in-out; /* Slower, gentler pulse */
+            border-radius: 50%; /* Ensure it's a soft circle */
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.98); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+            color: rgba(58, 46, 44, 0.1); /* Very subtle, earthy background text */
+            user-select: none;
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            text-align: center;
+            white-space: nowrap; /* Prevent breaking */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Handle overflow gracefully */
+            z-index: 0;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.75rem; /* More space */
+        }
+
+        /* Custom line graphics - subtle hand-drawn feel */
+        .line-graphic {
+            stroke: #8B4513; /* SaddleBrown for earthy lines */
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.7;
+            transition: stroke-dashoffset 2s ease-out;
+        }
+        .draw-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 2s forwards;
+            animation-delay: var(--delay, 0s);
+        }
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Custom highlight gradients for a "glow" with transparency */
+        .highlight-gradient-light {
+            background: linear-gradient(90deg, rgba(255,179,0,0.4), rgba(255,179,0,0));
+            height: 4px;
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .highlight-gradient-dark {
+            background: linear-gradient(90deg, rgba(139,69,19,0.4), rgba(139,69,19,0));
+            height: 3px;
+            width: 100%;
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Scroll reveal animation */
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments for larger screens (1920px+) */
+        @media (min-width: 1920px) {
+            .container-xl {
+                max-width: 1600px; /* Max width for content */
+            }
+            .card {
+                padding: 3.5rem; /* Even more padding */
+            }
+            .text-7xl {
+                font-size: 8rem;
+            }
+            .text-6xl {
+                font-size: 7rem;
+            }
+            .ultra-large-text {
+                font-size: 10rem; /* Max size for background text */
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-[#FFB300] selection:text-[#3A2E2C]">
+
+    <div class="container-xl mx-auto p-8 lg:p-12 space-y-24 relative">
+
+        <section class="text-center py-16 relative">
+            <h1 class="text-6xl md:text-7xl lg:text-8xl font-black font-noto-sans-sc mb-4 leading-tight fade-in-on-scroll">
+                故事的力量
+                <span class="block text-3xl md:text-4xl lg:text-5xl font-bold text-[#8B4513] mt-4">The Power of Story</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-[#5A4F4D] max-w-4xl mx-auto fade-in-on-scroll delay-1">
+                <span class="font-bold highlight-text">最终，留下名字的，往往不是最强者，而是最会讲述的人。</span>
+                <span class="block text-lg mt-2 italic text-[#6A5F5D]">In the end, it is often not the strongest who leave their names, but those who tell their stories best.</span>
+            </p>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <span class="ultra-large-text font-noto-sans-sc">NARRATIVE</span>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-in-on-scroll delay-2">
+            <div class="card content-z">
+                <div class="tech-glow"></div>
+                <h2 class="text-5xl md:text-6xl font-bold font-noto-sans-sc mb-6 leading-tight">
+                    历史的笔触
+                    <span class="block text-3xl font-light text-[#8B4513] mt-2">The Brushstrokes of History</span>
+                </h2>
+                <p class="text-xl text-[#3A2E2C] mb-6">
+                    <span class="highlight-text font-bold">胜利者主导了历史的笔，</span>
+                    <span class="block text-lg italic text-[#6A5F5D]">Victors wield the pen of history,</span>
+                </p>
+                <div class="highlight-gradient-light"></div>
+                <p class="text-xl text-[#3A2E2C]">
+                    但能让历史长久发光的，是那些能把事实变成共鸣、把事件讲成传奇的人。
+                    <span class="block text-lg italic text-[#6A5F5D]">Yet, what truly illuminates history are those who transform facts into resonance, and events into legends.</span>
+                </p>
+            </div>
+            <div class="relative flex justify-center items-center h-full min-h-[300px]">
+                <i class="fas fa-feather-alt text-[10rem] text-[#D2B48C] opacity-40 absolute z-0"></i>
+                <svg class="w-full h-full max-w-sm relative z-10" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 100 C75 50, 125 50, 150 100 C125 150, 75 150, 50 100 Z" class="line-graphic draw-line" style="--delay: 0.5s;"></path>
+                    <path d="M70 100 C80 80, 120 80, 130 100 C120 120, 80 120, 70 100 Z" class="line-graphic draw-line" style="--delay: 1s;"></path>
+                    <circle cx="100" cy="100" r="15" stroke="#FFB300" stroke-width="3" fill="none" class="draw-line" style="--delay: 1.5s;"></circle>
+                    <text x="100" y="105" text-anchor="middle" fill="#3A2E2C" font-size="18" font-weight="bold" class="font-noto-sans-sc">共鸣</text>
+                </svg>
+            </div>
+        </section>
+
+        <section class="card card-alt-bg text-center py-10 relative fade-in-on-scroll delay-3">
+            <div class="tech-glow"></div>
+            <p class="text-4xl md:text-5xl lg:text-6xl font-black font-noto-sans-sc mb-4 leading-tight content-z">
+                故事，是历史最持久的容器。
+                <span class="block text-2xl md:text-3xl font-bold text-[#6A5F5D] mt-3">Story: History's Most Enduring Vessel.</span>
+            </p>
+            <div class="highlight-gradient-dark content-z mx-auto w-1/2"></div>
+            <p class="text-xl text-[#3A2E2C] content-z max-w-3xl mx-auto">
+                它超越时间，承载着人类的记忆、经验与情感，让它们代代相传，永不褪色。
+                <span class="block text-lg italic text-[#6A5F5D] mt-2">It transcends time, carrying human memories, experiences, and emotions, passing them down through generations, never fading.</span>
+            </p>
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <i class="fas fa-book-open text-[15rem] text-[#D2B48C] opacity-20 absolute z-0"></i>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-in-on-scroll delay-4">
+            <div class="relative flex justify-center items-center h-full min-h-[300px] order-2 lg:order-1">
+                <i class="fas fa-microphone text-[10rem] text-[#ADD8E6] opacity-40 absolute z-0"></i>
+                <svg class="w-full h-full max-w-sm relative z-10" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 100 A80 80 0 0 1 180 100" stroke="#8B4513" stroke-width="2" class="line-graphic draw-line" style="--delay: 0.5s;"></path>
+                    <text x="100" y="85" text-anchor="middle" fill="#3A2E2C" font-size="16" font-weight="bold" class="font-noto-sans-sc">听众</text>
+
+                    <polygon points="100,20 120,80 180,80 130,120 150,180 100,150 50,180 70,120 20,80 80,80" stroke="#FFB300" stroke-width="2" fill="none" class="draw-line" style="--delay: 1s;"></polygon>
+                    <text x="100" y="115" text-anchor="middle" fill="#3A2E2C" font-size="18" font-weight="bold" class="font-noto-sans-sc">影响力</text>
+                </svg>
+            </div>
+            <div class="card card-darker-alt-bg content-z order-1 lg:order-2">
+                <div class="tech-glow"></div>
+                <h2 class="text-5xl md:text-6xl font-bold font-noto-sans-sc mb-6 leading-tight">
+                    讲述者之名
+                    <span class="block text-3xl font-light text-[#8B4513] mt-2">The Name of the Storyteller</span>
+                </h2>
+                <ul class="text-xl text-[#3A2E2C] space-y-4">
+                    <li><i class="list-icon fas fa-award"></i>
+                        <span class="font-bold highlight-text">超越强者：</span>
+                        <span class="text-[#6A5F5D] text-lg">武力或财富带来的短暂荣耀，抵不过叙事带来的永恒印记。</span>
+                        <span class="block text-sm italic text-[#6A5F5D] ml-8">Beyond the Strongest: Transient glory from power or wealth pales in comparison to the eternal mark left by narrative.</span>
+                    </li>
+                    <li><i class="list-icon fas fa-lightbulb"></i>
+                        <span class="font-bold highlight-text">点亮事实：</span>
+                        <span class="text-[#6A5F5D] text-lg">用情感和意义赋予冰冷的数据与事件以生命。</span>
+                        <span class="block text-sm italic text-[#6A5F5D] ml-8">Illuminating Facts: Breathing life into cold data and events with emotion and meaning.</span>
+                    </li>
+                    <li><i class="list-icon fas fa-users-cog"></i>
+                        <span class="font-bold highlight-text">引发共鸣：</span>
+                        <span class="text-[#6A5F5D] text-lg">触动人心，连接过去与现在，构建共同的理解与未来。</span>
+                        <span class="block text-sm italic text-[#6A5F5D] ml-8">Evoking Resonance: Touching hearts, connecting past and present, building shared understanding and future.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="text-center py-16 fade-in-on-scroll delay-5">
+            <p class="text-2xl md:text-3xl text-[#5A4F4D] max-w-4xl mx-auto mb-8">
+                你的故事，将如何被记住？
+                <span class="block text-xl italic text-[#6A5F5D] mt-2">How will your story be remembered?</span>
+            </p>
+            <button class="bg-[#FFB300] hover:bg-[#E6A300] text-[#3A2E2C] font-bold py-4 px-8 rounded-full text-xl shadow-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-play-circle mr-3"></i>开始讲述你的传奇
+            </button>
+        </section>
+
+    </div>
+
+    <script>
+        // Intersection Observer for fade-in-on-scroll animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.fade-in-on-scroll');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // When 10% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

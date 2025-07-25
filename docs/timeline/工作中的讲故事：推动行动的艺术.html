@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作中的讲故事：推动行动的艺术</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from Style 5, with adjustments for overall theme */
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #050810; /* Darker, deep background */
+            color: #E0E0E0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll from blobs */
+        }
+
+        /* Liquid Glass Card Style */
+        .glass-card {
+            background: rgba(25, 30, 50, 0.4); /* Slightly darker glass for contrast */
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px); /* Lift effect on hover */
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+        }
+
+        .glass-card > * {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Blurry Gradient Background (Blob Container) */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            filter: blur(100px); /* Adjust blur for desired softness */
+            pointer-events: none; /* Ensure blobs don't interfere with mouse events */
+        }
+
+        /* Individual Blobs with Animations */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            will-change: transform;
+        }
+        .blob-1 {
+            background: #00A3FF; /* Cyan/Blue */
+            width: 30vw;
+            height: 30vw;
+            top: 10vh;
+            left: 10vw;
+            animation: move-blob-1 30s ease-in-out infinite alternate; /* Added alternate */
+        }
+        .blob-2 {
+            background: #D946EF; /* Purple/Magenta */
+            width: 35vw;
+            height: 35vw;
+            top: 40vh;
+            left: 60vw;
+            animation: move-blob-2 35s ease-in-out infinite alternate; /* Added alternate */
+        }
+        .blob-3 { /* Added a third blob for more dynamic color */
+            background: #FFD700; /* Gold/Yellow */
+            width: 25vw;
+            height: 25vw;
+            top: 70vh;
+            left: 30vw;
+            animation: move-blob-3 25s ease-in-out infinite alternate;
+        }
+
+
+        @keyframes move-blob-1 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(15vw, 20vh) scale(1.2) rotate(10deg); } /* Added slight rotation */
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes move-blob-2 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-20vw, -15vh) scale(0.8) rotate(-15deg); } /* Added slight rotation */
+            100% { transform: translate(0, 0) scale(1); }
+        }
+        @keyframes move-blob-3 {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10vw, -25vh) scale(1.1) rotate(20deg); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* Huge Text for Emphasis */
+        .huge-text {
+            font-size: clamp(6rem, 15vw, 12rem); /* Adjusted for better responsiveness */
+            line-height: 1;
+            font-weight: 900;
+            /* position: absolute; */ /* Removed absolute positioning to allow flow in layout */
+            /* top: 50%; left: 50%; transform: translate(-50%, -50%); */
+            opacity: 0.08; /* Slightly more visible */
+            z-index: 1;
+            pointer-events: none;
+            text-align: center;
+            width: 100%;
+            color: white; /* Ensure it's white for the opacity effect */
+            user-select: none;
+        }
+
+        /* Network Line (for data flow/connections) - SVG specific */
+        .network-line {
+            stroke-dasharray: 500;
+            stroke-dashoffset: 500;
+            animation: draw-line 4s ease-out forwards;
+            stroke-width: 2; /* Make lines a bit thicker */
+            stroke: rgba(0, 255, 255, 0.7); /* Cyan highlight */
+        }
+        .network-node {
+            opacity: 0;
+            animation: pulse-node 2s ease-in-out infinite;
+            fill: #00A3FF; /* Node color */
+        }
+        @keyframes draw-line {
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes pulse-node {
+            0%, 100% { opacity: 0.8; r: 4; }
+            50% { opacity: 1; r: 6; }
+        }
+
+        /* Binary Stream (as a subtle background texture/highlight) */
+        .binary-stream {
+            position: absolute;
+            top: -20px;
+            font-family: monospace;
+            font-size: 1rem;
+            color: rgba(0, 255, 255, 0.5); /* Cyan with transparency */
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            user-select: none;
+            z-index: 1;
+            animation: fall 10s linear infinite;
+            white-space: nowrap; /* Prevent breaking lines */
+        }
+        @keyframes fall {
+            to { transform: translateY(120vh); }
+        }
+
+        /* Scroll-triggered fade-in animation (similar to Apple keynote) */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Delay utilities for staggered animations */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        .delay-6 { animation-delay: 1.2s; }
+        .delay-7 { animation-delay: 1.4s; }
+        .delay-8 { animation-delay: 1.6s; }
+
+
+        /* Custom gradients for line-like elements or accents */
+        .gradient-line-blue {
+            background: linear-gradient(to right, rgba(0, 163, 255, 0.7), rgba(0, 163, 255, 0));
+            height: 2px;
+            width: 80%; /* Adjust as needed */
+            margin: 1rem auto;
+        }
+
+        /* Responsive Adjustments for large screens (1920px and above) */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px; /* Constrain content width on very large screens */
+            }
+            .glass-card {
+                padding: 3rem;
+            }
+            .text-7xl {
+                font-size: 7.5rem; /* Larger font for main titles */
+            }
+            .huge-text {
+                font-size: 15rem; /* Even larger for background text */
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-cyan-600 selection:text-white">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="relative min-h-screen flex flex-col items-center justify-center p-8 overflow-hidden">
+        <div class="binary-stream left-10">01010011010101000100111101010010010110010010000001010100010001010100110001001100010010010100111001000111</div>
+        <div class="binary-stream right-10 delay-3" style="animation-delay: 15s; top: -50px; transform: scale(0.8);">10010111001000010100110001001001010100010101010001001001010011100100011100100000010000010100001101010100010010010100111101001110</div>
+
+        <div class="container mx-auto max-w-7xl relative z-10 space-y-24 py-16">
+
+            <section class="glass-card text-center fade-in delay-1">
+                <p class="text-xl text-gray-400 mb-2">The Art of Connection</p>
+                <h1 class="text-6xl md:text-7xl lg:text-8xl font-black mb-4 tracking-tight leading-tight">
+                    什么是讲故事？
+                    <span class="block text-4xl lg:text-5xl font-extrabold text-cyan-400 mt-4">WHAT IS STORYTELLING?</span>
+                </h1>
+                <p class="text-xl max-w-3xl mx-auto text-gray-300">
+                    <span class="font-bold text-white">经常被误解，被低估。</span>
+                    <br class="hidden md:block">
+                    Often misunderstood, undervalued.
+                </p>
+                <div class="relative w-full h-48 my-8 flex items-center justify-center">
+                    <div class="huge-text absolute">STORY</div>
+                    <p class="text-4xl font-black text-cyan-300 relative z-20">
+                        “如何成为人”
+                        <span class="block text-2xl font-light text-gray-400 mt-2">"HOW TO BE HUMAN"</span>
+                    </p>
+                </div>
+            </section>
+
+            <section class="glass-card p-10 fade-in delay-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-5xl font-bold mb-4 text-white">
+                            决策过程
+                            <span class="block text-3xl font-light text-gray-400 mt-2">Decision Process</span>
+                        </h2>
+                        <ul class="list-disc list-inside space-y-3 text-lg text-gray-200">
+                            <li>由我们的边缘系统控制，
+                                <span class="block text-sm text-gray-400">Controlled by our limbic system,</span>
+                            </li>
+                            <li>情绪在那里产生和处理。
+                                <span class="block text-sm text-gray-400">Emotions are generated and processed there.</span>
+                            </li>
+                            <li class="mt-4 text-cyan-300 font-bold text-xl">
+                                决策是一个情感过程。
+                                <span class="block text-sm text-gray-400">Decision-making is an emotional process.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="relative flex justify-center items-center">
+                        <i class="fas fa-brain text-[10rem] text-purple-400 opacity-30 animate-pulse"></i>
+                        <svg class="absolute w-48 h-48 text-cyan-300" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 10 C150 10 190 50 190 100 C190 150 150 190 100 190 C50 190 10 150 10 100 C10 50 50 10 100 10Z" class="network-line" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+                            <circle cx="100" cy="100" r="6" class="network-node delay-1"></circle>
+                            <circle cx="50" cy="50" r="6" class="network-node delay-2"></circle>
+                            <circle cx="150" cy="50" r="6" class="network-node delay-3"></circle>
+                            <circle cx="50" cy="150" r="6" class="network-node delay-4"></circle>
+                            <circle cx="150" cy="150" r="6" class="network-node delay-5"></circle>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gradient-line-blue mt-8"></div>
+            </section>
+
+            <section class="glass-card text-center fade-in delay-3">
+                <h2 class="text-6xl md:text-7xl lg:text-8xl font-black text-white mb-6">
+                    工作中的讲故事
+                    <span class="block text-3xl lg:text-4xl font-extrabold text-purple-400 mt-4">STORYTELLING AT WORK</span>
+                </h2>
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <p class="text-3xl text-gray-300 italic">
+                        “如果你想激励或影响他人，你确实需要在你的论证中融入情感元素。”
+                        <span class="block text-lg text-gray-400 mt-2 not-italic">"If you want to inspire or influence others, you absolutely need to weave emotional elements into your arguments."</span>
+                    </p>
+                    <p class="text-xl text-gray-200 flex items-center justify-center space-x-4">
+                        <i class="far fa-smile-beam text-4xl text-yellow-300"></i>
+                        <span>例如：让人开怀大笑，让他们记住！</span>
+                        <span class="block text-lg text-gray-400">(e.g., make them laugh, make them remember!)</span>
+                    </p>
+                </div>
+            </section>
+
+            <section class="glass-card fade-in delay-4 p-10">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-8 text-center">
+                    演讲的三个主要组成部分
+                    <span class="block text-2xl font-light text-gray-400 mt-2">THREE MAIN COMPONENTS OF A SPEECH</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="text-7xl text-cyan-400 font-extrabold mb-4">1</div>
+                        <h3 class="text-3xl font-bold text-white mb-3">观众 <span class="block text-xl font-light text-gray-400">Audience</span></h3>
+                        <ul class="text-lg text-gray-200 list-disc list-inside space-y-2">
+                            <li><i class="fas fa-question-circle mr-2 text-blue-300"></i>他们是谁？<span class="block text-sm text-gray-400">Who are they?</span></li>
+                            <li><i class="fas fa-bullhorn mr-2 text-blue-300"></i>他们为什么要听你说话？<span class="block text-sm text-gray-400">Why should they listen?</span></li>
+                            <li><i class="fas fa-lightbulb mr-2 text-blue-300"></i>他们能学到什么好处？<span class="block text-sm text-gray-400">What benefits can they gain?</span></li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="text-7xl text-purple-400 font-extrabold mb-4">2</div>
+                        <h3 class="text-3xl font-bold text-white mb-3">演讲者 <span class="block text-xl font-light text-gray-400">Speaker</span></h3>
+                        <ul class="text-lg text-gray-200 list-disc list-inside space-y-2">
+                            <li><i class="fas fa-heart mr-2 text-pink-300"></i>你相信吗？<span class="block text-sm text-gray-400">Do you believe it?</span></li>
+                            <li><i class="fas fa-handshake mr-2 text-pink-300"></i>你对你的观众有同理心？<span class="block text-sm text-gray-400">Do you empathize with your audience?</span></li>
+                            <li><i class="fas fa-check-circle mr-2 text-pink-300"></i>做好准备，减少干扰。<span class="block text-sm text-gray-400">Be prepared, reduce distractions.</span></li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="text-7xl text-green-400 font-extrabold mb-4">3</div>
+                        <h3 class="text-3xl font-bold text-white mb-3">故事与叙述 <span class="block text-xl font-light text-gray-400">Story & Narrative</span></h3>
+                        <ul class="text-lg text-gray-200 list-disc list-inside space-y-2">
+                            <li><i class="fas fa-pen-fancy mr-2 text-teal-300"></i>添加情感成分。<span class="block text-sm text-gray-400">Add emotional components.</span></li>
+                            <li><i class="fas fa-users mr-2 text-teal-300"></i>在人性和情感上的双向建立联系。<span class="block text-sm text-gray-400">Build connections on humanity and emotion.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass-card p-10 fade-in delay-5">
+                <h2 class="text-4xl lg:text-5xl font-bold text-white mb-8 text-center">
+                    故事的框架
+                    <span class="block text-2xl font-light text-gray-400 mt-2">STORY FRAMEWORK</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-question text-3xl text-blue-300"></i>
+                            <p class="text-xl text-gray-200">发生了什么？<span class="block text-sm text-gray-400">What happened?</span></p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-question-circle text-3xl text-green-300"></i>
+                            <p class="text-xl text-gray-200">为什么会发生？<span class="block text-sm text-gray-400">Why did it happen?</span></p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-exclamation-triangle text-3xl text-red-300"></i>
+                            <p class="text-xl text-gray-200">如果什么都不改变，会发生什么？<span class="block text-sm text-gray-400">What happens if nothing changes?</span></p>
+                        </div>
+                        <div class="flex items-center space-x-4 text-purple-300 font-bold">
+                            <i class="fas fa-lightbulb text-3xl"></i>
+                            <p class="text-xl">提出你的论点 <span class="block text-sm text-gray-400">Propose your point.</span></p>
+                        </div>
+                    </div>
+                    <div class="relative flex justify-center items-center h-full">
+                        <svg width="100%" height="250" viewBox="0 0 300 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 20 H250 V230 H50 Z" stroke="rgba(255,255,255,0.2)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+
+                            <circle cx="150" cy="50" r="8" fill="#00A3FF" class="network-node delay-1"></circle>
+                            <text x="150" y="55" text-anchor="middle" fill="#E0E0E0" font-size="12" font-weight="bold">起点</text>
+                            <path d="M150 58 V120" stroke="#00A3FF" stroke-width="2" class="network-line delay-2"></path>
+
+                            <circle cx="150" cy="130" r="8" fill="#D946EF" class="network-node delay-3"></circle>
+                            <text x="150" y="135" text-anchor="middle" fill="#E0E0E0" font-size="12" font-weight="bold">发展</text>
+                            <path d="M150 138 V200" stroke="#D946EF" stroke-width="2" class="network-line delay-4"></path>
+
+                            <circle cx="150" cy="210" r="8" fill="#FFD700" class="network-node delay-5"></circle>
+                            <text x="150" y="215" text-anchor="middle" fill="#E0E0E0" font-size="12" font-weight="bold">高潮</text>
+
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#E0E0E0" />
+                                </marker>
+                            </defs>
+                             <line x1="160" y1="70" x2="230" y2="70" stroke="rgba(255,255,255,0.2)" stroke-width="1" marker-end="url(#arrowhead)"></line>
+                             <text x="240" y="65" fill="#E0E0E0" font-size="12">事件1</text>
+                             <line x1="160" y1="150" x2="230" y2="150" stroke="rgba(255,255,255,0.2)" stroke-width="1" marker-end="url(#arrowhead)"></line>
+                             <text x="240" y="145" fill="#E0E0E0" font-size="12">事件2</text>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass-card p-10 text-center fade-in delay-6">
+                <h2 class="text-5xl font-bold text-white mb-6">
+                    目标: 推动行动
+                    <span class="block text-3xl font-light text-gray-400 mt-2">GOAL: PROMOTE ACTION</span>
+                </h2>
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="text-4xl text-cyan-400">
+                        <i class="fas fa-arrow-alt-circle-right"></i>
+                    </div>
+                    <p class="text-2xl text-gray-200 font-bold">解决冲突 <span class="block text-lg text-gray-400 font-normal">Resolve Conflict</span></p>
+                </div>
+                <div class="huge-text my-8">IMPACT</div>
+            </section>
+
+            <section class="glass-card p-10 fade-in delay-7">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-4xl lg:text-5xl font-bold text-white mb-4">
+                            明确目的
+                            <span class="block text-2xl font-light text-gray-400 mt-2">CLEAR PURPOSE</span>
+                        </h2>
+                        <p class="text-xl text-gray-200">
+                            演讲的目的是什么？这就是你必须吸引观众的地方！
+                            <span class="block text-sm text-gray-400 mt-2">What is the purpose of the presentation? This is where you must engage the audience!</span>
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center space-y-6">
+                        <i class="fas fa-bullseye text-7xl text-red-400 opacity-70 animate-pulse"></i>
+                        <div class="gradient-line-blue rotate-90 w-24 h-1"></div>
+                        <i class="fas fa-hand-pointer text-7xl text-yellow-400 opacity-70 animate-bounce"></i>
+                    </div>
+                </div>
+                <div class="gradient-line-blue mt-8"></div>
+                <div class="mt-8 text-center">
+                    <p class="text-3xl font-bold text-white mb-4">
+                        将你的论点和支持的决策整合在一起，
+                        <span class="block text-xl font-light text-gray-400 mt-2">Integrate your arguments and supporting decisions,</span>
+                    </p>
+                    <p class="text-3xl font-bold text-white mb-4">
+                        使这些信息更容易用于：
+                        <span class="block text-xl font-light text-gray-400 mt-2">making this information easier to:</span>
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-6 mt-8">
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl glass-card-small">
+                            <i class="fas fa-brain text-5xl text-blue-300 mb-2"></i>
+                            <p class="text-xl font-bold">理解 <span class="block text-sm font-normal text-gray-400">Understand</span></p>
+                        </div>
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl glass-card-small">
+                            <i class="fas fa-flask text-5xl text-green-300 mb-2"></i>
+                            <p class="text-xl font-bold">消化 <span class="block text-sm font-normal text-gray-400">Digest</span></p>
+                        </div>
+                        <div class="flex flex-col items-center text-center p-4 rounded-xl glass-card-small">
+                            <i class="fas fa-cogs text-5xl text-red-300 mb-2"></i>
+                            <p class="text-xl font-bold">操作 <span class="block text-sm font-normal text-gray-400">Operate</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-center text-gray-500 text-sm mt-16 fade-in delay-8">
+                <p>Adapted from Kathy Wetzel & Karin Wietecki</p>
+                <p>Inspired by Getaki Vaidya & Bijan Ghorbani</p>
+                <p class="mt-4">&copy; 2025 Dynamic Presentation Design. All Rights Reserved.</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for scroll-triggered animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        // Apply additional animation classes if needed, e.g., network-line animation
+                        const networkLines = entry.target.querySelectorAll('.network-line');
+                        networkLines.forEach(line => {
+                            line.style.animationPlayState = 'running';
+                        });
+                        const networkNodes = entry.target.querySelectorAll('.network-node');
+                        networkNodes.forEach(node => {
+                            node.style.animationPlayState = 'running';
+                        });
+                        observer.unobserve(entry.target); // Stop observing once animated
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Simple blob animation logic for more dynamic movement if needed (optional, CSS handles most)
+        // This is a placeholder if more complex JS-driven blob movement is desired
+        // function moveBlobs() {
+        //     document.querySelectorAll('.blob').forEach(blob => {
+        //         const x = Math.random() * window.innerWidth * 0.7 - window.innerWidth * 0.15;
+        //         const y = Math.random() * window.innerHeight * 0.7 - window.innerHeight * 0.15;
+        //         blob.style.transform = `translate(${x}px, ${y}px) scale(${1 + Math.random() * 0.2})`;
+        //     });
+        // }
+        // setInterval(moveBlobs, 12000); // Move blobs every 12 seconds
+        // moveBlobs(); // Initial positioning
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
