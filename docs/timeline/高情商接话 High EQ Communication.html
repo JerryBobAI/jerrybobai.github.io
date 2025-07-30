@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高情商接话 | High EQ Communication</title>
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-linen: #DCD6CC; /* 褪色的亚麻色 */
+            --text-earth: #4A3B31; /* 更深的陶土色 */
+            --text-subtle: #6B5D55; /* 柔和的关联色 */
+            --highlight-teal: rgba(104, 144, 148, 0.8); /* 高亮色 */
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-linen);
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                              linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: var(--text-earth);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            padding: 2rem 0;
+        }
+        
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: var(--text-subtle);
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        
+        .technique-card {
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .technique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .technique-number {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--highlight-teal);
+            opacity: 0.8;
+            position: absolute;
+            top: -1rem;
+            right: 1rem;
+        }
+        
+        .simple-line {
+            stroke: var(--text-subtle);
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.5;
+        }
+        
+        .simple-shape {
+            fill: var(--highlight-teal);
+            opacity: 0.1;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-subtle);
+            border-radius: 4px;
+        }
+        
+        .section-divider {
+            position: relative;
+            margin: 4rem 0 3rem;
+            text-align: center;
+        }
+        
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--text-subtle);
+            opacity: 0.3;
+        }
+        
+        .section-divider span {
+            background: var(--bg-linen);
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="w-full max-w-7xl px-4 md:px-8">
+    <!-- 孟菲斯风格装饰元素 -->
+    <div class="memphis-accent animate-slow-drift" style="top: 5%; left: 5%; width: 150px; height: 150px;">
+        <svg viewBox="0 0 150 150">
+            <rect x="10" y="10" width="130" height="130" class="simple-shape" />
+            <circle cx="75" cy="75" r="50" class="simple-shape" />
+        </svg>
+    </div>
+    
+    <div class="memphis-accent animate-slow-drift" style="bottom: 10%; right: 5%; width: 120px; height: 120px; animation-delay: 2s;">
+        <svg viewBox="0 0 120 120">
+            <polygon points="60,10 110,110 10,110" class="simple-shape" />
+            <rect x="30" y="30" width="60" height="60" class="simple-shape" />
+        </svg>
+    </div>
+    
+    <div class="memphis-accent animate-slow-drift" style="top: 40%; left: 80%; width: 100px; height: 100px; animation-delay: 5s;">
+        <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" class="simple-shape" />
+            <line x1="10" y1="50" x2="90" y2="50" class="simple-line" />
+            <line x1="50" y1="10" x2="50" y2="90" class="simple-line" />
+        </svg>
+    </div>
+    
+    <!-- 主标题 -->
+    <header class="w-full mb-12 mt-8 relative z-10">
+        <h1 class="font-display text-colossus text-center mb-2">高情商接话</h1>
+        <p class="text-center text-lg md:text-xl opacity-70">High EQ Communication Skills</p>
+    </header>
+    
+    <!-- 副标题 -->
+    <div class="w-full mb-10 relative z-10">
+        <p class="text-center text-connecting">提升沟通质量的<span class="text-highlight-gradient">十八大技巧</span></p>
+    </div>
+    
+    <!-- 技巧卡片容器 -->
+    <main class="w-full relative z-10">
+        <!-- 第一部分技巧 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 技巧1 -->
+            <div class="technique-card">
+                <div class="technique-number">01</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-handshake text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人对你说：谢谢你</h3>
+                </div>
+                <p class="pl-10 text-lg">可以回：<span class="font-semibold">嗨，别这么见外，以后我可能还得找你帮忙呢。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧2 -->
+            <div class="technique-card">
+                <div class="technique-number">02</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-smile text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人夸你：性格好！</h3>
+                </div>
+                <p class="pl-10 text-lg">你就回：<span class="font-semibold">那也要看是对谁，你对我那么好，我当然要温柔啊，其他人就没这待遇了。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧3 -->
+            <div class="technique-card">
+                <div class="technique-number">03</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-clock text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当你耽误了别人时间</h3>
+                </div>
+                <p class="pl-10 text-lg">不要说对不起，是我的错；可换成：<span class="font-semibold">谢谢你愿意花时间陪我。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧4 -->
+            <div class="technique-card">
+                <div class="technique-number">04</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-comments text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">别人说：我不太会聊天</h3>
+                </div>
+                <p class="pl-10 text-lg">你就回：<span class="font-semibold">不是不会聊，只是没碰到对的人，你看，我们聊得多好。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧5 -->
+            <div class="technique-card">
+                <div class="technique-number">05</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-heart text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">夫妻之间，征求意见</h3>
+                </div>
+                <p class="pl-10 text-lg">不要回复：随便。可以这样回：<span class="font-semibold">你做主吧，我喜欢听你的意见。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧6 -->
+            <div class="technique-card">
+                <div class="technique-number">06</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-check-circle text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">对别人讲完一件事情</h3>
+                </div>
+                <p class="pl-10 text-lg">不要问：你听懂没有；要问：<span class="font-semibold">我讲明白没有。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧7 -->
+            <div class="technique-card">
+                <div class="technique-number">07</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-home text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">别人说你是宅女</h3>
+                </div>
+                <p class="pl-10 text-lg">幽默高情商回复：<span class="font-semibold">不要叫我宅女，叫我居里夫人。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧8 -->
+            <div class="technique-card">
+                <div class="technique-number">08</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-phone text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">别人问：电话怎么一直打不通？</h3>
+                </div>
+                <p class="pl-10 text-lg">你就回：<span class="font-semibold">最近在谈一个100块的大生意，资金不够，欠费了。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧9 -->
+            <div class="technique-card">
+                <div class="technique-number">09</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-heart text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">别人问：你喜欢什么类型的？</h3>
+                </div>
+                <p class="pl-10 text-lg">你可以回：<span class="font-semibold">我喜欢的就你这个类型的！</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 分隔线 -->
+        <div class="section-divider">
+            <span class="text-xl font-bold opacity-70">更多技巧 More Tips</span>
+        </div>
+        
+        <!-- 第二部分技巧 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 技巧10 -->
+            <div class="technique-card">
+                <div class="technique-number">10</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-bed text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你看起来很累</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">谢谢关心，今天确实有点忙，但看到你我就精神多了。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧11 -->
+            <div class="technique-card">
+                <div class="technique-number">11</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-tshirt text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你这件衣服真好看</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">谢谢！你的眼光真好，我正愁没人欣赏呢。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧12 -->
+            <div class="technique-card">
+                <div class="technique-number">12</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-user-friends text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你最近怎么样？</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">挺好的，就是有点想你。你呢？最近过得开心吗？</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧13 -->
+            <div class="technique-card">
+                <div class="technique-number">13</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-gift text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你太客气了</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">跟你在一起，不客气都不行，因为你值得最好的对待。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧14 -->
+            <div class="technique-card">
+                <div class="technique-number">14</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-hands-helping text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你帮了我大忙了</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">别这么说，能帮到你我也很开心，以后有事尽管开口。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧15 -->
+            <div class="technique-card">
+                <div class="technique-number">15</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-award text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你真是个好人</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">被你这么一说，我都想给自己颁个奖了。不过，好人只对你一个人哦。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧16 -->
+            <div class="technique-card">
+                <div class="technique-number">16</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-sun text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你今天气色真好</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">托你的福，一想到要见你，我就忍不住开心。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧17 -->
+            <div class="technique-card">
+                <div class="technique-number">17</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-star text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你真厉害</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">哪里哪里，都是跟你学的，你才是真正厉害的人。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,30 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- 技巧18 -->
+            <div class="technique-card">
+                <div class="technique-number">18</div>
+                <div class="flex items-start mb-3">
+                    <i class="fas fa-laugh text-2xl mr-3 opacity-60"></i>
+                    <h3 class="font-bold text-xl">当别人说：你太幽默了</h3>
+                </div>
+                <p class="pl-10 text-lg">回复：<span class="font-semibold">那是因为跟你在一起，灵感源源不断。</span></p>
+                <div class="mt-4 flex justify-end">
+                    <svg width="80" height="40" viewBox="0 0 80 40">
+                        <path d="M10,20 Q40,10 70,20" class="simple-line" />
+                        <circle cx="70" cy="20" r="5" fill="var(--highlight-teal)" opacity="0.3" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 底部总结 -->
+    <footer class="w-full mt-16 mb-8 relative z-10">
+        <div class="text-center">
+            <p class="text-lg mb-2">掌握这十八大技巧，<span class="text-highlight-gradient font-bold">提升沟通质量</span></p>
+            <p class="text-sm opacity-60">Master these skills to enhance communication quality</p>
+        </div>
+    </footer>
+    
+    <script>
+        // 添加平滑滚动效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有技巧卡片添加进入动画
+            const cards = document.querySelectorAll('.technique-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
