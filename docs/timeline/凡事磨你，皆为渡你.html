@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凡事磨你，皆为渡你</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-y: auto; /* Allow vertical scrolling */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: flex-start; /* Adjust to allow content to start from top */
+            text-align: center;
+            padding: 2rem 0; /* Add some padding for overall content */
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+
+        /* Responsive container for text */
+        .content-container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .text-content {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            line-height: 1.8;
+            text-align: justify;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div class="memphis-accent top-10 left-10 w-32 h-32 bg-gray-600 rounded-full animate-slow-drift"></div>
+    <div class="memphis-accent bottom-20 right-20 w-48 h-48 border-4 border-gray-500 rounded-xl animate-slow-drift" style="animation-delay: 2s;"></div>
+    <div class="memphis-accent top-1/4 right-1/4 w-24 h-24 bg-gray-700 rounded-lg transform rotate-45 animate-slow-drift" style="animation-delay: 4s;"></div>
+
+    <div class="content-container">
+        <div class="py-12 px-6 lg:px-24 flex flex-col items-center">
+            <h1 class="font-display text-colossus text-highlight-gradient">凡事磨你</h1>
+            <span class="text-connecting">EVERY EXPERIENCE REFINE YOU</span>
+            <h2 class="font-display text-colossus text-highlight-gradient">皆为渡你</h2>
+            <span class="text-connecting mb-12">ALL FOR YOUR LIBERATION</span>
+
+            <div class="text-content">
+                <p>
+                    <strong class="text-xl">凡事磨你，皆为渡你。</strong> 身体不经磨难，福禄难以深得；内心不经磨练，智慧难以开启。人生的经历，尤其是那些磨难，虽然当下痛苦难耐，但回头再看，轻舟已过万重山，都是对自己的修行。
+                </p>
+            </div>
+
+            <div class="section-title text-highlight-gradient">
+                <i class="fas fa-mountain"></i> 解脱之路
+                <span class="text-connecting text-base block mt-2">THE PATH TO LIBERATION</span>
+            </div>
+            <div class="text-content">
+                <p>
+                    所有大彻大悟的人，都曾无药可救过。心不死则道不生，人的末路就是开端。胸有天地宽，自有渡人船。
+                </p>
+                <p>
+                    这种自我解脱和渡人之路，都需要亲自在生活中去感受和体验。只有经历过甜与苦，才能真正明白和领悟。正所谓：人教人教不会，事教人一教就会。只有亲身体验过苦痛，才能真正理解解痛的深度，才能从中找到坚强和力量，置之死地而后生。
+                </p>
+            </div>
+
+            <div class="section-title text-highlight-gradient">
+                <i class="fas fa-seedling"></i> 人生实苦
+                <span class="text-connecting text-base block mt-2">THE BITTERNESS OF LIFE</span>
+            </div>
+            <div class="text-content">
+                <p>
+                    人生实苦，我们常在自苦中挣扎。
+                </p>
+                <p>
+                    但只有放高心境，不再盯着得失，才能在自渡的路上熬过无数的苦，通过黑夜迎来黎明。
+                </p>
+                <p>
+                    王阳明曾说：“人间道场，淤泥浊世间磨难，皆是砥砺琢磨我也。”
+                </p>
+            </div>
+
+
+
+            <div class="text-center mt-12 mb-6 text-gray-600 text-sm">
+                <p>PROJECT WABI-SABI MINIMALISM</p>
+                <p>&copy; 2025 极简侘寂. ALL RIGHTS RESERVED.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真正的幸福，源于对外界的无所求</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+
+        /* Pagination styles */
+        .page-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .page-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pagination-dots {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(74, 59, 49, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: rgba(74, 59, 49, 0.8);
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <div class="memphis-accent top-10 left-10 w-32 h-32 bg-gray-600 rounded-full animate-slow-drift"></div>
+    <div class="memphis-accent bottom-20 right-20 w-48 h-48 bg-teal-700 rounded-lg transform rotate-45 animate-slow-drift" style="animation-delay: 2s;"></div>
+    <div class="memphis-accent top-1/4 right-1/4 w-24 h-24 bg-red-600 rounded-full animate-slow-drift" style="animation-delay: 4s;"></div>
+    <div class="memphis-accent bottom-1/3 left-1/3 w-40 h-16 bg-blue-600 rounded-full animate-slow-drift" style="animation-delay: 6s;"></div>
+
+    <div class="page-container active" id="page1">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full relative z-10">
+            <h1 class="font-display text-colossus text-highlight-gradient text-center uppercase leading-none">
+                无期待
+            </h1>
+            <p class="text-connecting font-light text-center mt-4">ZERO EXPECTATIONS</p>
+            <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mt-8">
+                “If you want to be happy, have zero expectations of others...”
+            </p>
+            <div class="mt-12 w-24 h-24 border-4 border-dashed rounded-full flex items-center justify-center border-gray-600 opacity-70">
+                <i class="fas fa-hand-holding-box text-5xl text-gray-600"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-container" id="page2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full relative z-10">
+            <h1 class="font-display text-colossus text-highlight-gradient text-center uppercase leading-none">
+                全责任
+            </h1>
+            <p class="text-connecting font-light text-center mt-4">100% RESPONSIBILITY</p>
+            <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mt-8">
+                “...take 100% responsibility for life...”
+            </p>
+            <div class="mt-12 w-32 h-32 relative">
+                <div class="absolute inset-0 border-4 border-solid border-gray-600 rounded-full animate-pulse-slow"></div>
+                <div class="absolute inset-2 border-4 border-solid border-gray-600 rounded-full opacity-50 animate-pulse-slow" style="animation-delay: 0.5s;"></div>
+                <div class="flex items-center justify-center w-full h-full">
+                    <i class="fas fa-check-double text-6xl text-gray-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-container" id="page3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full relative z-10">
+            <h1 class="font-display text-colossus text-highlight-gradient text-center uppercase leading-none">
+                常感恩
+            </h1>
+            <p class="text-connecting font-light text-center mt-4">BE GRATEFUL</p>
+            <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-center mt-8">
+                “...and be grateful for what you have.”
+            </p>
+            <div class="mt-12 flex items-center space-x-8">
+                <div class="w-24 h-24 flex items-center justify-center border-4 border-gray-600 rounded-lg transform rotate-6">
+                    <i class="fas fa-heart text-5xl text-gray-600"></i>
+                </div>
+                <div class="w-24 h-24 flex items-center justify-center border-4 border-gray-600 rounded-full transform -rotate-3">
+                    <i class="fas fa-star text-5xl text-gray-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-container" id="page4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full relative z-10">
+            <h1 class="font-display text-colossus text-highlight-gradient text-center leading-none mb-8">
+                幸福真谛
+            </h1>
+            <p class="text-connecting font-light text-center">THE ESSENCE OF HAPPINESS</p>
+            <p class="text-2xl sm:text-3xl md:text-4xl font-light text-center mt-12 max-w-2xl">
+                真正的幸福，源于对外界的无所求，对自己生命的全然承担，以及对所拥有的一切心怀感激。
+                <br><span class="text-xl opacity-70">True happiness stems from having zero expectations of others, taking 100% responsibility for your life, and being grateful for what you have.</span>
+            </p>
+            <div class="mt-16 text-lg text-gray-600 opacity-80">
+                <p>— Overmind —</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination-dots"></div>
+
+    <script>
+        const pages = document.querySelectorAll('.page-container');
+        const totalPages = pages.length;
+        let currentPageIndex = 0;
+        const paginationDotsContainer = document.querySelector('.pagination-dots');
+
+        function createDots() {
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                dot.dataset.index = i;
+                dot.addEventListener('click', () => goToPage(i));
+                paginationDotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index === currentPageIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function goToPage(index) {
+            if (index < 0 || index >= totalPages) return;
+
+            pages[currentPageIndex].classList.remove('active');
+            currentPageIndex = index;
+            pages[currentPageIndex].classList.add('active');
+            updateDots();
+        }
+
+        function nextPage() {
+            goToPage(currentPageIndex + 1);
+        }
+
+        function prevPage() {
+            goToPage(currentPageIndex - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === ' ') {
+                nextPage();
+            } else if (event.key === 'ArrowLeft') {
+                prevPage();
+            }
+        });
+
+        // Swipe navigation
+        let startX;
+        let startY;
+
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            let endX = e.changedTouches[0].clientX;
+            let endY = e.changedTouches[0].clientY;
+
+            let deltaX = endX - startX;
+            let deltaY = endY - startY;
+
+            // Determine if it's a horizontal swipe
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) { // Threshold for horizontal swipe
+                if (deltaX < 0) {
+                    nextPage(); // Swiped left
+                } else {
+                    prevPage(); // Swiped right
+                }
+            } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50) { // Threshold for vertical swipe
+                 if (deltaY < 0) {
+                    nextPage(); // Swiped up
+                 } else {
+                    prevPage(); // Swiped down
+                 }
+            }
+        });
+
+        // Initialize
+        createDots();
+        updateDots();
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
