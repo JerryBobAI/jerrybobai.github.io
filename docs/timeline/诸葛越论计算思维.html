@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>诸葛越论计算思维</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* 自定义字体和全局样式 */
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            /* 柔和的多彩角落渐变背景 */
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+            color: #1d1d1f;
+            overflow-x: hidden;
+        }
+
+        /* 核心标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 勾线风格图标容器 */
+        .icon-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem; /* 64px */
+            height: 4rem; /* 64px */
+            border-radius: 1.5rem; /* 24px */
+            border: 1px solid currentColor;
+        }
+        .icon-outline i {
+            font-size: 1.75rem; /* 28px */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+
+        <section class="text-center min-h-[50vh] flex flex-col items-center justify-center reveal">
+            <p class="text-lg md:text-xl text-gray-500 font-light tracking-widest uppercase mb-4">A Dialogue with a Master</p>
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter leading-tight">
+                诸葛越论 <span class="holographic-text">计算思维</span>
+            </h1>
+        </section>
+
+        <section class="text-center my-24 md:my-40 reveal">
+            <p class="text-lg md:text-xl text-gray-600 mb-6">诸葛老师，能否用一句话概括它的核心？</p>
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold max-w-5xl mx-auto leading-tight text-gray-800">
+                “把问题<span class="text-blue-500">拆开来</span>、<span class="text-purple-500">找规律</span>、<span class="text-orange-500">抓本质</span>、再写成<span class="text-teal-500">可执行的步骤</span>”
+            </h2>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+
+            <div class="reveal bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-8 lg:p-12 border border-white">
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="icon-outline text-blue-500">
+                        <i class="fa-solid fa-sitemap"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-blue-500 tracking-widest uppercase">DECOMPOSITION</p>
+                        <h3 class="text-4xl font-black text-gray-800">分解</h3>
+                    </div>
+                </div>
+                <p class="font-semibold text-gray-500 mb-4">“在兵法里讲‘分进合击’，在计算思维里又该怎么理解？”</p>
+                <p class="text-gray-700 leading-relaxed">同理。大军不可一拥而上，算法不能一次解决全部。把大问题切成若干子问题，每个子问题简单明晰，才有可能精准击破。例如要做一款出行 App，与其直接喊“我要做滴滴”，不如先拆：<strong class="font-bold text-gray-900">定位 → 车辆匹配 → 计价 → 支付</strong>。每一块都能独立开发、迭代、压测。</p>
+            </div>
+
+            <div class="reveal bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-8 lg:p-12 border border-white" style="transition-delay: 0.1s;">
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="icon-outline text-purple-500">
+                        <i class="fa-solid fa-wave-square"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-purple-500 tracking-widest uppercase">PATTERN RECOGNITION</p>
+                        <h3 class="text-4xl font-black text-gray-800">模式</h3>
+                    </div>
+                </div>
+                <p class="font-semibold text-gray-500 mb-4">“分好了块，接下来是找‘模式’？”</p>
+                <p class="text-gray-700 leading-relaxed">对。人类能预见未来，靠的就是识别模式。刘备三请诸葛亮，我看的是他求贤若渴这条“模式”，推算出他会给我充分主导权。写程序更是如此：<strong class="font-bold text-gray-900">浏览器里 70% 的报错出在输入不合法，这就是模式。</strong>因此在接口层统一做校验，比到处 try-catch 高效得多。</p>
+            </div>
+
+            <div class="reveal bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-8 lg:p-12 border border-white" style="transition-delay: 0.2s;">
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="icon-outline text-orange-500">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-orange-500 tracking-widest uppercase">ABSTRACTION</p>
+                        <h3 class="text-4xl font-black text-gray-800">抽象</h3>
+                    </div>
+                </div>
+                <p class="font-semibold text-gray-500 mb-4">“有人说抽象最难。为什么？”</p>
+                <p class="text-gray-700 leading-relaxed">因为要“舍”。抽象是隔绝细节，只留下本质——就像经典象棋残局，只保留关键子力。设计一个“支付接口”，真正要暴露的也许只有<strong class="font-bold text-gray-900">金额、支付方式、回调 URL</strong>；至于加密、风控、记账，都藏在实现里，调用方无需也不该知道。</p>
+            </div>
+
+            <div class="reveal bg-white/70 backdrop-blur-sm rounded-3xl shadow-lg p-8 lg:p-12 border border-white" style="transition-delay: 0.3s;">
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="icon-outline text-teal-500">
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-teal-500 tracking-widest uppercase">ALGORITHM</p>
+                        <h3 class="text-4xl font-black text-gray-800">算法</h3>
+                    </div>
+                </div>
+                <p class="font-semibold text-gray-500 mb-4">“最后是算法，这一步是不是程序员专利？”</p>
+                <p class="text-gray-700 leading-relaxed">未必。算法只是“可重复执行的步骤”。诸葛连弩的装填、发射到冷却，本质也是算法。好的算法关注两点：<strong class="font-bold text-gray-900">正确性</strong>（不走火）和<strong class="font-bold text-gray-900">效率</strong>（射速）。现代工程里从排序到路径规划，无不是在二者之间权衡。</p>
+            </div>
+        </div>
+
+        <section class="my-24 md:my-40 text-center reveal">
+            <h2 class="text-4xl md:text-5xl font-black text-gray-800 mb-4">诸葛小结</h2>
+            <p class="text-2xl md:text-3xl text-gray-600 max-w-3xl mx-auto mb-12">
+                计算思维像一把<span class="font-bold">四刃剑</span>
+            </p>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto text-center">
+                <div class="p-4 rounded-xl bg-blue-100/80"><p class="font-bold text-blue-800">分解开锋</p></div>
+                <div class="p-4 rounded-xl bg-purple-100/80"><p class="font-bold text-purple-800">模式定向</p></div>
+                <div class="p-4 rounded-xl bg-orange-100/80"><p class="font-bold text-orange-800">抽象护身</p></div>
+                <div class="p-4 rounded-xl bg-teal-100/80"><p class="font-bold text-teal-800">算法制胜</p></div>
+            </div>
+            <p class="mt-8 text-xl md:text-2xl text-gray-600">拿它去破题，无论是软件系统还是人生难局，皆可“兵以正合，奇以制胜”。</p>
+        </section>
+
+        <section class="reveal bg-white rounded-3xl shadow-xl p-8 lg:p-16 text-center border border-white">
+            <p class="text-2xl md:text-3xl font-medium text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                “算法写不出，永远停留在抽象；<br class="hidden sm:block">问题不拆开，永远被复杂吞没。”
+            </p>
+            <p class="mt-8 text-lg text-gray-500">受教了！</p>
+            <div class="mt-12">
+                <a href="#" class="inline-block bg-green-500 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105">
+                    愿君善用此剑，攻城拔寨
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1 // 元素可见10%时触发
+            });
+
+            const hiddenElements = document.querySelectorAll('.reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

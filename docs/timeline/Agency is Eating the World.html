@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, initial-scale=1.0">
+  <title>Agency is Eating the World</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <!-- Noto Sans SC 字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans SC', 'sans-serif';
+      color: #e5e7eb;
+      background-color: #0c001f;
+      background-image:
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.3) 0, rgba(0,0,0,0.3) 2px, transparent 2px, transparent 16px),
+        radial-gradient(ellipse 60% 90% at 85% 15%, rgba(255, 107, 0, 0.35), transparent),
+        radial-gradient(ellipse 50% 80% at 15% 80%, rgba(0, 150, 255, 0.45), transparent);
+      background-attachment: fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+    .highlight-glow { color: #fb923c; }
+    .highlight-glow-pink { color: #f472b6; }
+    .title-underline {
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    .title-underline::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, rgba(251, 146, 60, 0) 0%, rgba(251, 146, 60, 1) 50%, rgba(251, 146, 60, 0) 100%);
+      border-radius: 2px;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .super-title {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+    @media (max-width: 1024px) {
+      .super-title { font-size: 2.5rem; }
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      z-index: 0;
+    }
+    .orb-blue { background: linear-gradient(135deg,#38bdf8 0%,#6366f1 100%); width: 600px; height: 600px; top: -100px; left: 60vw;}
+    .orb-pink { background: linear-gradient(135deg,#f472b6 0%,#fb7185 100%); width: 400px; height: 400px; top: 40vh; left: 10vw;}
+    .orb-green { background: linear-gradient(135deg,#34d399 0%,#0ea5e9 100%); width: 350px; height: 350px; top: 70vh; left: 70vw;}
+    .section-number {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #38bdf8;
+      opacity: 0.15;
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .data-icon {
+      font-size: 2.5rem;
+      color: #38bdf8;
+      margin-right: 0.75rem;
+    }
+    .chart-container {
+      height: 260px;
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border-radius: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- 动态背景光球 -->
+  <div class="orb orb-blue"></div>
+  <div class="orb orb-pink"></div>
+  <div class="orb orb-green"></div>
+  <main class="max-w-6xl mx-auto px-8 py-12 relative z-10">
+    <!-- 标题 -->
+    <section class="mb-20 flex flex-col items-center">
+      <div class="super-title text-white font-black mb-6 tracking-tight leading-tight text-center">
+        Agency<br><span class="highlight-glow-pink">is Eating</span><br><span class="highlight-glow">the World</span>
+      </div>
+      <div class="text-lg text-gray-300 font-medium mb-2 text-center">—— 2025年4月 / Featured on <span class="text-[#38bdf8]">WSJ</span> & Pirate Wires</div>
+      <div class="title-underline"></div>
+    </section>
+    <!-- 1. 预测正在实现 -->
+    <section class="glass-card mb-16 p-12 relative overflow-hidden">
+      <span class="section-number">01</span>
+      <div class="flex flex-col lg:flex-row items-center gap-10 relative z-10">
+        <div class="flex-1">
+          <div class="text-4xl font-bold mb-6 text-white">“一个人十亿美元公司”<span class="text-base font-normal text-gray-400 ml-3">1-person billion-dollar company</span></div>
+          <div class="text-lg text-gray-200 mb-4">
+            2023年，Sam Altman 预言“很快会有一个人创造十亿美元公司”。两年后，这一幕正在现实中上演——不仅源于AI，更因那些善用AI的高主动性个体。
+          </div>
+          <div class="flex items-center mt-6">
+            <i class="fa-solid fa-rocket data-icon"></i>
+            <span class="text-xl font-bold text-[#38bdf8]">公司形态变革：</span>
+            <span class="ml-2 text-gray-300">极精干、无传统部门、数人胜百人</span>
+          </div>
+        </div>
+        <div class="flex-1 flex flex-col items-center justify-center">
+          <div class="chart-container">
+            <!-- 数据可视化图表（可用Echarts等JS组件动态渲染） -->
+            <canvas id="chart1"></canvas>
+          </div>
+          <div class="text-sm text-gray-400 text-center">AI杠杆下的生产力提升</div>
+        </div>
+      </div>
+    </section>
+    <!-- 2. 真正的主动性 Agency -->
+    <section class="glass-card mb-16 p-12 relative overflow-hidden">
+      <span class="section-number">02</span>
+      <div class="flex flex-col lg:flex-row items-center gap-10 relative z-10">
+        <div class="flex-1">
+          <div class="text-4xl font-bold mb-6 text-white">主动性 <span class="text-base font-normal text-gray-400 ml-3">Agency</span></div>
+          <div class="text-lg text-gray-200 mb-4">
+            真正的主动性是一种心理特质：无需许可、敢于行动。<br/>
+            高主动性个体敢于打破常规，推动创新——这正是AI时代最稀缺的能力。
+          </div>
+          <ul class="list-disc ml-6 mt-4 text-gray-300 space-y-2">
+            <li>不等待指令，主动创造</li>
+            <li>敢于跨界、即兴、反叛</li>
+            <li>突破专业壁垒，聚集于高影响力环境</li>
+          </ul>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+          <i class="fa-solid fa-bolt-lightning text-8xl text-[#f472b6]"></i>
+        </div>
+      </div>
+    </section>
+    <!-- 3. 专业化的瓦解与通才崛起 -->
+    <section class="glass-card mb-16 p-12 relative overflow-hidden">
+      <span class="section-number">03</span>
+      <div class="flex flex-col lg:flex-row items-center gap-10 relative z-10">
+        <div class="flex-1">
+          <div class="text-4xl font-bold mb-6 text-white">AI削弱专业壁垒</div>
+          <div class="text-lg text-gray-200 mb-4">
+            过去，专业技能和学历是成功的关键。<br/>
+            AI 让“通才”也能独当一面：<br/>
+            <span class="highlight-glow-pink font-bold">9个月→1周，完成原型开发</span>，<br/>
+            许多领域的门槛骤降。
+          </div>
+          <div class="flex items-center mt-6">
+            <i class="fa-solid fa-chart-line data-icon"></i>
+            <span class="text-xl font-bold text-[#38bdf8]">专业化→架构化</span>
+            <span class="ml-2 text-gray-300">关注全局，轻实施</span>
+          </div>
+        </div>
+        <div class="flex-1 flex flex-col items-center justify-center">
+          <div class="chart-container">
+            <!-- 数据可视化图表（可用Echarts等JS组件动态渲染） -->
+            <canvas id="chart2"></canvas>
+          </div>
+          <div class="text-sm text-gray-400 text-center">AI赋能下的“通才”崛起</div>
+        </div>
+      </div>
+    </section>
+    <!-- 4. 结构性变化与数据 -->
+    <section class="glass-card mb-16 p-12 relative overflow-hidden">
+      <span class="section-number">04</span>
+      <div class="flex flex-col lg:flex-row items-center gap-10 relative z-10">
+        <div class="flex-1">
+          <div class="text-4xl font-bold mb-6 text-white">结构性转变<br><span class="text-base text-gray-400 font-normal">Structural Shift</span></div>
+          <div class="text-lg text-gray-200 mb-4">
+            <span class="highlight-glow font-bold">独立创始人比例翻倍</span>，<br/>
+            <span class="highlight-glow-pink font-bold">单人公司营收可达数亿美元</span>，<br/>
+            <span class="text-[#38bdf8] font-bold">Midjourney</span>：40人团队，年收入5亿美元。
+          </div>
+          <ul class="list-disc ml-6 mt-4 text-gray-300 space-y-2">
+            <li>人均产值≈苹果公司</li>
+            <li>高主动性者驱动新型企业</li>
+            <li>“资历主义”正在瓦解</li>
+          </ul>
+        </div>
+        <div class="flex-1 flex flex-col items-center justify-center">
+          <div class="chart-container">
+            <!-- 数据可视化图表（可用Echarts等JS组件动态渲染） -->
+            <canvas id="chart3"></canvas>
+          </div>
+          <div class="text-sm text-gray-400 text-center">独立公司与传统企业对比</div>
+        </div>
+      </div>
+    </section>
+    <!-- 5. 新世界观、主动性可习得 -->
+    <section class="glass-card mb-16 p-12 relative overflow-hidden">
+      <span class="section-number">05</span>
+      <div class="flex flex-col lg:flex-row items-center gap-10 relative z-10">
+        <div class="flex-1">
+          <div class="text-4xl font-bold mb-6 text-white">主动性为王<br><span class="text-base text-gray-400 font-normal">Agency First</span></div>
+          <div class="text-lg text-gray-200 mb-4">
+            世界观归结为一条：<span class="highlight-glow font-bold">有主动性/无主动性</span>。<br/>
+            体制变革虽有阵痛，但高主动性可习得——<br/>
+            <span class="highlight-glow-pink font-bold">“你觉得你现在呼吸的是空气吗？”</span>（《黑客帝国》）
+          </div>
+          <div class="flex items-center mt-6">
+            <i class="fa-solid fa-arrow-up-right-dots data-icon"></i>
+            <span class="text-xl font-bold text-[#38bdf8]">打破限制，主动行动</span>
+          </div>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+          <i class="fa-solid fa-user-astronaut text-8xl text-[#fb923c]"></i>
+        </div>
+      </div>
+    </section>
+    <!-- 结语 -->
+    <section class="glass-card mb-10 p-12 text-center relative overflow-hidden">
+      <span class="section-number">06</span>
+      <div class="text-3xl font-bold text-white mb-4">像 Neo 一样，<span class="highlight-glow-pink">相信你可以跳出去</span></div>
+      <div class="text-lg text-gray-300 mb-6">主动性是未来个人与企业的核心竞争力。</div>
+      <div class="flex items-center justify-center space-x-6">
+        <span class="text-sm text-gray-500">© 2025 Agency is Eating the World</span>
+        <span class="text-xs text-gray-700">Hybrid Layout / Apple Style PPT Inspired</span>
+      </div>
+    </section>
+  </main>
+  <!-- Echarts CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script>
+    // 动画入场
+    document.querySelectorAll('.glass-card').forEach((el, i) => {
+      setTimeout(() => { el.classList.add('reveal', 'visible'); }, 150 * i);
+    });
+
+    // 示例数据可视化
+    function renderCharts() {
+      // chart1: AI杠杆下的生产效率提升
+      var c1 = echarts.init(document.getElementById('chart1'));
+      c1.setOption({
+        grid: { left: 0, right: 0, top: 10, bottom: 0, containLabel: true },
+        xAxis: { show: false }, yAxis: { show: false },
+        series: [{
+          type: 'gauge',
+          startAngle: 180, endAngle: 0,
+          min: 0, max: 100,
+          progress: { show: true, width: 18, itemStyle: { color: '#38bdf8' } },
+          pointer: { show: false },
+          axisLine: { lineStyle: { width: 18, color: [[1, '#6366f1']] } },
+          axisTick: { show: false }, splitLine: { show: false }, axisLabel: { show: false },
+          detail: { valueAnimation: true, fontSize: 36, color: '#38bdf8', offsetCenter: [0, '-10%'], formatter: () => 'x10' },
+          data: [{ value: 90 }]
+        }]
+      });
+      // chart2: 通才崛起
+      var c2 = echarts.init(document.getElementById('chart2'));
+      c2.setOption({
+        grid: { left: 0, right: 0, top: 10, bottom: 0, containLabel: true },
+        xAxis: { type: 'category', data: ['2015', '2020', '2025'], axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#a5b4fc' } },
+        yAxis: { show: false },
+        series: [{
+          data: [1, 2, 9],
+          type: 'bar',
+          itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#f472b6'},{offset:1,color:'#38bdf8'}]) },
+          barWidth: 32,
+          label: { show: true, position: 'top', color: '#f472b6', fontWeight: 'bold', fontSize: 20 }
+        }]
+      });
+      // chart3: 独立公司与传统企业对比
+      var c3 = echarts.init(document.getElementById('chart3'));
+      c3.setOption({
+        grid: { left: 0, right: 0, top: 20, bottom: 0, containLabel: true },
+        xAxis: { type: 'category', data: ['独立公司', '苹果', '传统企业'], axisLabel: { color: '#38bdf8', fontWeight: 'bold' }, axisLine: { show: false } },
+        yAxis: { show: false },
+        series: [{
+          data: [2.8, 2.8, 0.5],
+          type: 'bar',
+          itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:'#fb923c'},{offset:1,color:'#f472b6'}]) },
+          barWidth: 42,
+          label: { show: true, position: 'top', color: '#fb923c', fontWeight: 'bold', fontSize: 20, formatter: '{c}M/人' }
+        }]
+      });
+    }
+    window.onload = renderCharts;
+  </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

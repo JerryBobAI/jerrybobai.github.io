@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康的自律 - 温柔的成全</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* 自定义全局样式 */
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa; /* 极浅灰色背景 */
+            color: #1d1d1f; /* 接近苹果的深灰色文本 */
+            overflow-x: hidden;
+        }
+
+        /* 核心：色彩云雾/极光渐变背景 */
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px); /* 关键的模糊效果 */
+            opacity: 0.2;
+            animation: move 30s infinite alternate;
+        }
+
+        .blob-1 { top: -25%; left: -25%; width: 55vw; height: 55vw; background: #d83bff; animation-duration: 35s; } /* 粉紫 */
+        .blob-2 { top: 25%; right: -25%; width: 45vw; height: 45vw; background: #6a82fb; animation-duration: 28s; } /* 静蓝 */
+        .blob-3 { bottom: -25%; left: 30%; width: 50vw; height: 50vw; background: #ff7e5f; animation-duration: 40s; } /* 暖橘 */
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            to {
+                transform: translate(15vw, 10vh) scale(1.2) rotate(30deg);
+            }
+        }
+
+        /* 滚动触发动画的基础样式 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 延迟动画 */
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+        .delay-3 { transition-delay: 0.6s; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="aurora-background">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+    </div>
+
+    <main class="relative z-10">
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal">
+                <p class="text-xl md:text-2xl text-gray-500 mb-6 tracking-widest uppercase">Healthy Self-Discipline</p>
+                <h1 class="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-gray-800 leading-none">
+                    健康的自律
+                </h1>
+                <p class="mt-8 text-3xl md:text-4xl lg:text-5xl max-w-4xl mx-auto text-gray-600">
+                    从不是<span class="opacity-50">苦行僧式的自我惩罚</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal">
+                <p class="text-3xl md:text-4xl lg:text-5xl max-w-4xl mx-auto text-gray-600 mb-12">
+                    而是对<span class="font-bold text-pink-500">热爱</span>的事物<br>悉心浇灌、<span class="font-bold text-blue-500">温柔</span>守护。
+                </p>
+            </div>
+            <div class="scroll-reveal delay-1">
+                <svg class="w-32 h-32 text-gray-400 mx-auto" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 95V70" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M50 70C66.5685 70 80 56.5685 80 40C80 23.4315 66.5685 10 50 10C33.4315 10 20 23.4315 20 40C20 56.5685 33.4315 70 50 70Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 70C41.7157 70 35 63.2843 35 55C35 46.7157 41.7157 40 50 40C58.2843 40 65 46.7157 65 55C65 63.2843 58.2843 70 50 70Z" stroke="currentColor" stroke-width="2" stroke-dasharray="2 4"/>
+                    <path d="M30 80C36.6667 75 43.3333 75 50 80L70 80C63.3333 75 56.6667 75 50 80" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="scroll-reveal delay-2">
+                <p class="mt-12 text-xl md:text-2xl text-gray-500 max-w-2xl mx-auto">
+                    它像园丁修剪枝叶，不是为了折磨树木，而是让它开出更美的花。
+                </p>
+            </div>
+        </section>
+        
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="max-w-5xl mx-auto">
+                <div class="scroll-reveal">
+                    <p class="text-xl md:text-2xl text-gray-500 mb-6 tracking-widest uppercase">Resonance</p>
+                    <h2 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-8">
+                        真正的自律和努力
+                    </h2>
+                </div>
+                <div class="scroll-reveal delay-1">
+                    <svg class="w-48 h-48 text-purple-400 mx-auto my-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="5" fill="currentColor" opacity="0.8"/>
+                        <circle cx="50" cy="50" r="15" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+                        <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+                        <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="1.5" opacity="0.2"/>
+                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="1.5" opacity="0.1"/>
+                    </svg>
+                </div>
+                <div class="scroll-reveal delay-2">
+                     <p class="text-3xl md:text-4xl lg:text-5xl text-gray-700 leading-relaxed">
+                        都是与内心的<span class="font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">热爱</span>同频共振
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="max-w-6xl mx-auto">
+                 <div class="scroll-reveal">
+                     <p class="text-2xl md:text-3xl lg:text-4xl text-gray-600 mb-8">
+                        成全那个渴望成长、渴望发光的自己
+                    </p>
+                </div>
+                <div class="scroll-reveal delay-1">
+                    <h2 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-gray-800 leading-tight">
+                        是对梦想最<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-orange-400">温柔的成全</span>
+                    </h2>
+                </div>
+                <div class="scroll-reveal delay-2">
+                    <i class="far fa-paper-plane text-4xl text-gray-400 mt-20"></i>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2 // 元素可见20%时触发
+            });
+
+            const hiddenElements = document.querySelectorAll('.scroll-reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
