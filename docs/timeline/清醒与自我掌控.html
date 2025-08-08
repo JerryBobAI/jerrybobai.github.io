@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>清醒与自我掌控</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f8f9fa; /* Very light gray page background */
+        }
+
+        .memphis-card {
+            padding: 2rem; /* 32px */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px; /* Minimum height for cards */
+        }
+
+        .memphis-bg-yellow { background-color: #FFD166; color: #000000; }
+        .memphis-bg-pink   { background-color: #EF476F; color: #FFFFFF; }
+        .memphis-bg-green  { background-color: #06D6A0; color: #000000; }
+        .memphis-bg-blue   { background-color: #118AB2; color: #FFFFFF; }
+        .memphis-bg-white  { background-color: #FFFFFF; color: #000000; }
+        .memphis-bg-lightgray { background-color: #e9ecef; color: #000000; }
+
+
+        .text-super-xl { font-size: clamp(3.5rem, 10vw, 8rem); line-height: 1; font-weight: 900; }
+        .text-super-lg { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.1; font-weight: 800; }
+        .text-super-md { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2; font-weight: 700; }
+
+        .chinese-title { font-weight: 900; }
+        .english-subtitle { font-size: 0.8em; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 0.25rem; }
+
+        .highlight-text-pink {
+            background: linear-gradient(to right, #EF476F, rgba(239, 71, 111, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-green {
+            background: linear-gradient(to right, #06D6A0, rgba(6, 214, 160, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-blue {
+            background: linear-gradient(to right, #118AB2, rgba(17, 138, 178, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-yellow { /* For dark backgrounds */
+            background: linear-gradient(to right, #FFD166, rgba(255, 209, 102, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        /* Memphis decorative elements */
+        .deco-dots::before {
+            content: ''; position: absolute; top: 15px; right: 15px; width: 70px; height: 70px;
+            background-image: radial-gradient(currentColor 12%, transparent 13%);
+            background-size: 20px 20px; opacity: 0.15;
+        }
+        .memphis-bg-pink .deco-dots::before, .memphis-bg-blue .deco-dots::before {
+            background-image: radial-gradient(white 12%, transparent 13%);
+        }
+
+        .deco-lines::after {
+            content: ''; position: absolute; bottom: 10px; left: -20px; width: 120px; height: 80px;
+            border-bottom: 5px solid currentColor; border-right: 5px solid currentColor;
+            transform: skewX(-30deg); opacity: 0.1;
+        }
+        .memphis-bg-pink .deco-lines::after, .memphis-bg-blue .deco-lines::after {
+            border-color: white;
+        }
+        .icon-large { font-size: 3rem; margin-bottom: 0.75rem; opacity: 0.6; }
+
+        .w-full.h-screen {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="container mx-auto p-4 md:p-8 lg:p-12 max-w-screen-xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="col-span-1 md:col-span-2 lg:col-span-3 memphis-card memphis-bg-yellow deco-dots text-center p-8 lg:p-16">
+                <p class="text-super-lg chinese-title mb-2">
+                    不入局，是一种<span class="highlight-text-pink">清醒</span>
+                </p>
+                <p class="text-xl md:text-2xl font-light mb-4 max-w-3xl mx-auto">
+                    不关注，是一种<span class="font-bold">选择</span>。
+                </p>
+            </div>
+
+            <div class="col-span-1 md:col-span-1 lg:col-span-1 memphis-card memphis-bg-pink p-6 md:p-8">
+                <i class="fas fa-hat-wizard icon-large text-white"></i>
+                <h2 class="text-super-md chinese-title mb-2">
+                    独处的<br>仪式
+                    <span class="english-subtitle">
+                        Rituals of Solitude
+                    </span>
+                </h2>
+                <p class="text-lg md:text-xl font-light leading-snug">
+                    独处、喝茶、品香、悟道，是与自我深度对话的仪式。
+                </p>
+            </div>
+
+            <div class="col-span-1 md:col-span-1 lg:col-span-1 memphis-card memphis-bg-green p-6 md:p-8">
+                <i class="fas fa-eye icon-large text-white"></i>
+                <h2 class="text-super-md chinese-title mb-2">
+                    屏蔽喧嚣
+                    <span class="english-subtitle">
+                        Block the Noise
+                    </span>
+                </h2>
+                <p class="text-lg md:text-xl font-light leading-snug">
+                    屏蔽外界喧嚣，专注于内心世界，远离浮躁，培养钝感力。
+                </p>
+            </div>
+
+            <div class="col-span-1 md:col-span-2 lg:col-span-1 memphis-card memphis-bg-blue deco-lines p-6 md:p-8">
+                <i class="fas fa-shield-alt icon-large text-white"></i>
+                <h2 class="text-super-md chinese-title mb-2">
+                    极致的<br>自我掌控
+                    <span class="english-subtitle">
+                        Ultimate Self-Control
+                    </span>
+                </h2>
+                <p class="text-lg md:text-xl font-light leading-snug">
+                    穿透表象，决绝于繁杂，无情于诱惑——这是对真实本质的坚定追寻。
+                </p>
+            </div>
+
+            <div class="col-span-1 md:col-span-2 lg:col-span-3 memphis-card memphis-bg-white p-8 lg:p-16 text-center">
+                <p class="text-super-lg chinese-title mb-2">
+                    让生活<span class="highlight-text-blue">回归简单</span>
+                </p>
+                <p class="text-xl md:text-2xl font-light max-w-3xl mx-auto">
+                    让生活回归简单与淡然。
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI时代教育范式转变 - The New Education Paradigm</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 全局及背景核心样式 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030014; /* 深邃的底色 */
+            color: #e5e7eb; /* 默认文字颜色 */
+            overflow-x: hidden;
+        }
+
+        /* 动态霓虹光晕背景容器 */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -10;
+        }
+
+        /* 霓虹光球 */
+        .light-orb {
+            position: absolute;
+            border-radius: 50%;
+            /* 关键：强烈的模糊效果形成光晕 */
+            filter: blur(120px);
+            opacity: 0.6;
+        }
+
+        @keyframes animate-float {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            25% { transform: translate(var(--mid-x), var(--mid-y)) scale(1.3); }
+            50% { transform: translate(var(--end-x), var(--end-y)) scale(0.9); }
+            75% { transform: translate(var(--mid-y), var(--mid-x)) scale(1.2); }
+            100% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+        }
+
+        .orb-1 { animation: animate-float 38s ease-in-out infinite; }
+        .orb-2 { animation: animate-float 48s ease-in-out infinite reverse; }
+        .orb-3 { animation: animate-float 42s ease-in-out infinite; }
+
+        /* 前景长虹玻璃效果叠加层 */
+        main::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* 关键：用重复线性渐变模拟粗犷的竖向棱纹 */
+            background-image: repeating-linear-gradient(90deg,
+                rgba(0, 0, 0, 0.2) 0px,
+                rgba(0, 0, 0, 0.2) 4px, /* 增加棱的粗度 */
+                transparent 4px,
+                transparent 10px /* 增加棱的间距 */
+            );
+            /* 关键：用 backdrop-filter 扭曲后方光晕 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        /* --- 前景元素及动画 --- */
+
+        /* 滚动入场动画 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* "液态"毛玻璃卡片 */
+        .liquid-card {
+            background: rgba(20, 20, 35, 0.25);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* 关键：圆润的边角营造流动感 */
+            border-radius: 32px;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .liquid-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 高亮色 & 渐变效果 */
+        .highlight-pink {
+            color: #f472b6; /* 赛博朋克粉 */
+        }
+        .highlight-blue {
+            color: #60a5fa; /* 电光蓝 */
+        }
+        .highlight-yellow {
+            color: #facc15; /* 荧光黄 */
+        }
+        .highlight-green {
+            color: #34d399; /* 荧光绿 */
+        }
+
+        /* 标题下划线 - 模拟辉光 */
+        .title-underline {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            /* 关键：使用高亮色，两端透明度为0，中间为1，制造科技感渐变 */
+            background: linear-gradient(90deg, rgba(244, 114, 182, 0) 0%, rgba(244, 114, 182, 1) 50%, rgba(244, 114, 182, 0) 100%);
+            border-radius: 2px;
+            filter: blur(2px); /* 轻微模糊增加辉光感 */
+        }
+        .title-underline.blue::after {
+            background: linear-gradient(90deg, rgba(96, 165, 250, 0) 0%, rgba(96, 165, 250, 1) 50%, rgba(96, 165, 250, 0) 100%);
+        }
+
+        /* 独特的引用/重点框样式 */
+        .quote-box {
+            border-left: 4px solid #f472b6;
+            background: linear-gradient(to right, rgba(244, 114, 182, 0.15), rgba(244, 114, 182, 0));
+        }
+
+        /* 勾线动画 */
+        .line-drawing {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw-line 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes draw-line { to { stroke-dashoffset: 0; } }
+        
+        .line-drawing.delay-1 { animation-delay: 0.5s; }
+        .line-drawing.delay-2 { animation-delay: 1.0s; }
+        .line-drawing.delay-3 { animation-delay: 1.5s; }
+        .line-drawing.delay-4 { animation-delay: 2.0s; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="background-container">
+        <div class="light-orb orb-1" style="width: 60vw; height: 60vw; background-color: #ec4899; --start-x: -20vw; --start-y: -20vh; --mid-x: 50vw; --mid-y: 80vh; --end-x: 10vw; --end-y: 10vh;"></div>
+        <div class="light-orb orb-2" style="width: 50vw; height: 50vw; background-color: #3b82f6; --start-x: 70vw; --start-y: 10vh; --mid-x: 0vw; --mid-y: 60vh; --end-x: 80vw; --end-y: 90vh;"></div>
+        <div class="light-orb orb-3" style="width: 40vw; height: 40vw; background-color: #34d399; --start-x: 10vw; --start-y: 70vh; --mid-x: 80vw; --mid-y: 20vh; --end-x: -10vw; --end-y: 50vh;"></div>
+    </div>
+
+    <main class="relative z-10">
+        <div class="container mx-auto px-6 lg:px-8 py-24 lg:py-40 space-y-24 lg:space-y-48">
+
+            <section class="text-center min-h-screen flex flex-col justify-center items-center scroll-animate">
+                <p class="text-xl lg:text-2xl font-light text-gray-400 uppercase tracking-widest mb-4">THE NEW EDUCATION PARADIGM</p>
+                <h1 class="text-5xl md:text-7xl lg:text-9xl font-black leading-tight tracking-tighter">
+                    AI时代<br>教育范式转变
+                </h1>
+                <p class="mt-8 max-w-3xl mx-auto text-lg lg:text-2xl text-gray-300 font-light">
+                    这是今年在推特所见最强洞察，指出了学习的终极目的与新路径。
+                </p>
+            </section>
+            
+            <section class="max-w-7xl mx-auto scroll-animate">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-6xl font-black title-underline">新范式的核心</h2>
+                    <p class="mt-4 text-xl lg:text-2xl text-gray-300 font-light">
+                        学习的终极目的：超越信息，抵达洞察。
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    <div class="liquid-card p-8 lg:p-12 flex flex-col items-start justify-center">
+                        <i class="fas fa-brain text-5xl highlight-blue mb-6"></i>
+                        <h3 class="text-3xl lg:text-5xl font-black leading-tight mb-2">判断力</h3>
+                        <p class="text-xl lg:text-2xl text-gray-300 font-light">
+                            在信息爆炸的时代，甄别真伪、评估价值的能力。
+                        </p>
+                    </div>
+                    <div class="liquid-card p-8 lg:p-12 flex flex-col items-start justify-center">
+                        <i class="fas fa-lightbulb text-5xl highlight-yellow mb-6"></i>
+                        <h3 class="text-3xl lg:text-5xl font-black leading-tight mb-2">创造力</h3>
+                        <p class="text-xl lg:text-2xl text-gray-300 font-light">
+                            整合信息，产生独到见解和创新成果的能力。
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-center max-w-4xl mx-auto scroll-animate">
+                <h2 class="text-4xl md:text-6xl lg:text-8xl font-black my-6">
+                    <span class="highlight-pink">刷题</span>的死穴
+                </h2>
+                <p class="text-lg lg:text-xl text-gray-300">
+                    信息堆积过载，却不能调用。
+                </p>
+                <div class="mt-12 p-8 quote-box">
+                    <p class="text-2xl lg:text-4xl font-bold leading-relaxed">
+                        “过拟合”
+                    </p>
+                    <p class="mt-4 text-gray-300 lg:text-xl">
+                        困在外界评价里：考试-升学-找工作。
+                    </p>
+                </div>
+                <div class="mt-12">
+                    <svg class="w-full h-24 max-w-lg mx-auto" viewBox="0 0 500 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="60" height="60" class="stroke-gray-600 fill-transparent scroll-animate" style="animation-delay: 0s;"></rect>
+                        <rect x="100" y="20" width="60" height="60" class="stroke-gray-600 fill-transparent scroll-animate" style="animation-delay: 0.2s;"></rect>
+                        <rect x="180" y="20" width="60" height="60" class="stroke-gray-600 fill-transparent scroll-animate" style="animation-delay: 0.4s;"></rect>
+                        <line x1="250" y1="50" x2="330" y2="50" class="stroke-gray-600 opacity-50 scroll-animate line-drawing delay-1"></line>
+                        <circle cx="330" cy="50" r="10" class="fill-red-500 opacity-80 scroll-animate" style="animation-delay: 1.5s;"></circle>
+                    </svg>
+                    <p class="mt-4 text-sm text-gray-500">
+                        信息堆积 <span class="mx-4">→</span> 无效调用
+                    </p>
+                </div>
+            </section>
+
+            <section class="scroll-animate">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-6xl font-black title-underline blue">教育三层次</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 text-center">
+                    <div class="liquid-card p-8 lg:p-12 flex flex-col justify-between">
+                        <div>
+                            <p class="text-lg text-gray-400 font-bold mb-2">Level A</p>
+                            <h3 class="text-3xl font-black tracking-tight mb-4 text-gray-200">生存教育</h3>
+                            <p class="text-gray-300 font-light">盯题、竞争、抓取、焦虑</p>
+                        </div>
+                        <div class="mt-8">
+                             <p class="text-4xl font-black highlight-pink">过拟合</p>
+                             <p class="mt-2 text-sm text-gray-500">Overfitting</p>
+                        </div>
+                    </div>
+                    <div class="liquid-card p-8 lg:p-12 flex flex-col justify-between">
+                        <div>
+                            <p class="text-lg text-gray-400 font-bold mb-2">Level B</p>
+                            <h3 class="text-3xl font-black tracking-tight mb-4 text-gray-200">生活教育</h3>
+                            <p class="text-gray-300 font-light">中产家庭快乐成长，缺乏前沿智识与力量</p>
+                        </div>
+                        <div class="mt-8">
+                            <p class="text-4xl font-black highlight-blue">缺乏力量</p>
+                            <p class="mt-2 text-sm text-gray-500">Lacking Edge</p>
+                        </div>
+                    </div>
+                    <div class="liquid-card p-8 lg:p-12 flex flex-col justify-between">
+                        <div>
+                            <p class="text-lg text-gray-400 font-bold mb-2">Level C</p>
+                            <h3 class="text-3xl font-black tracking-tight mb-4 text-gray-200">生命力教育</h3>
+                            <p class="text-gray-300 font-light">独立思考的个体，有鲜明的个人兴趣</p>
+                        </div>
+                        <div class="mt-8">
+                            <p class="text-4xl font-black highlight-green">自驱力</p>
+                            <p class="mt-2 text-sm text-gray-500">Self-driven</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-center max-w-4xl mx-auto scroll-animate py-24">
+                <p class="text-2xl lg:text-3xl font-light text-gray-200 leading-relaxed">
+                    AI时代下，教育的终极目标，<br>是唤醒每个个体的
+                </p>
+                <div class="my-12">
+                     <p class="text-8xl md:text-9xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-yellow-400 to-green-400">
+                        自驱力
+                     </p>
+                </div>
+                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-white">
+                    自信果敢，创造未来。
+                </h3>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- 滚动入场动画 Intersection Observer ---
+        const scrollElements = document.querySelectorAll('.scroll-animate');
+
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (
+                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+            );
+        };
+
+        const displayScrollElement = (element) => {
+            element.classList.add('is-visible');
+        };
+
+        const hideScrollElement = (element) => {
+            element.classList.remove('is-visible');
+        };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                }
+            })
+        }
+
+        window.addEventListener('scroll', () => {
+            handleScrollAnimation();
+        });
+
+        handleScrollAnimation();
+
+
+        // --- 背景光球随机化 ---
+        const orbs = document.querySelectorAll('.light-orb');
+        orbs.forEach(orb => {
+            orb.style.animationDelay = `${Math.random() * -10}s`;
+        });
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

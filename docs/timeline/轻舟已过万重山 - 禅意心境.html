@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轻舟已过万重山 - 禅意心境</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f5f0; /* 素雅的宣纸色 */
+            color: #3a3a3a; /* 沉稳的墨色 */
+            font-family: 'Inter', 'Noto Serif SC', serif;
+        }
+
+        .wabi-sabi-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='800' height='800' viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a' filterUnits='userSpaceOnUse' x='0' y='0' width='800' height='800'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2' result='b'/%3E%3CfeColorMatrix in='b' type='saturate' values='0' result='c'/%3E%3CfeComponentTransfer in='c' result='d'%3E%3CfeFuncA type='linear' slope='0.08'/%3E%3C/feComponentTransfer%3E%3CfeBlend in='SourceGraphic' in2='d' mode='multiply'/%3E%3C/filter%3E%3Crect width='800' height='800' fill='%23f8f5f0' filter='url(%23a)'/%3E%3C/svg%3E");
+            background-size: cover;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(140, 98, 57, 0.1); /* 淡赭石色边框 */
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-title-large {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.2;
+            color: #3a3a3a;
+        }
+        .card-title-main {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #8c6239; /* 赭石色 */
+        }
+        .text-accent-blue { color: #7a9e9f; } /* 石青色 */
+        .text-accent-red { color: #c06c56; } /* 胭脂色 */
+        .text-accent-purple { color: #a59cc0; } /* 淡藕荷色 */
+
+        .text-colossus {
+            font-size: clamp(4rem, 15vw, 10rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+        .text-sub-small {
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .icon-large { font-size: 3rem; margin-bottom: 12px; color: #8c6239; opacity: 0.6; }
+        .line-graphic {
+            height: 2px;
+            background-color: #a59cc0;
+            margin: 1rem auto;
+            width: 50%;
+            opacity: 0.5;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="wabi-sabi-bg">
+    <div class="container mx-auto p-4 lg:p-8 max-w-screen-xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="card p-6 lg:p-8 animate-on-scroll md:col-span-2 lg:col-span-3">
+                <div class="flex items-center justify-center mb-6">
+                    <i class="fas fa-mountain-sun text-4xl mr-3 text-accent-blue opacity-70"></i>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-accent-blue">轻舟已过万重山</h1>
+                </div>
+                <div class="text-center">
+                    <p class="text-lg md:text-xl text-gray-600 font-serif italic mb-4">Wabi Sabi Philosophy</p>
+                    <p class="text-sm md:text-base text-gray-500">
+                        生活是一种过程，而非固定的实体。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-1">
+                <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">错过的未必是<span class="text-accent-red">遗憾</span></h2>
+                    <div class="my-4">
+                        <i class="fas fa-heart-crack text-5xl text-accent-red opacity-50"></i>
+                        <p class="text-sm mt-2 text-gray-500">THE THINGS WE MISSED</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-1">
+                <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">拥有的要<span class="text-accent-blue">珍惜</span></h2>
+                    <div class="my-4">
+                        <i class="fas fa-hand-holding-heart text-5xl text-accent-blue opacity-50"></i>
+                        <p class="text-sm mt-2 text-gray-500">THE THINGS WE HOLD</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-2">
+                <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">遇见离别皆<span class="text-accent-purple">因果</span></h2>
+                    <p class="text-base text-gray-600 max-w-xl mx-auto">
+                        所有相遇和分离，都有其自然的发生和发展。
+                    </p>
+                    <div class="my-6 w-full">
+                        <svg class="mx-auto" width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 5C25 25 75 25 95 5" stroke="#a59cc0" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+                            <path d="M5 55C25 35 75 35 95 55" stroke="#a59cc0" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+                            <circle cx="50" cy="30" r="10" stroke="#a59cc0" stroke-width="2" opacity="0.8"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-sub-small">CAUSE AND EFFECT</p>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-1">
+                <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">心无挂碍便<span class="text-accent-blue">释然</span></h2>
+                    <p class="text-base text-gray-600">
+                        放下执念，心境便会豁然开朗。
+                    </p>
+                    <div class="my-4">
+                        <i class="fas fa-unlock-keyhole text-5xl text-accent-blue opacity-50"></i>
+                        <p class="text-sm mt-2 text-gray-500">NO ATTACHMENTS, JUST PEACE</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-1">
+                <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">凡我所<span class="text-accent-red">失</span>，皆非我所有</h2>
+                    <div class="my-4">
+                        <i class="fas fa-balance-scale text-5xl text-accent-red opacity-50"></i>
+                        <p class="text-sm mt-2 text-gray-500">WHAT I LOSE WAS NEVER MINE</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-1">
+                <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">凡我所<span class="text-accent-blue">求</span>，皆受其所困</h2>
+                    <div class="my-4">
+                         <i class="fas fa-hand-fist text-5xl text-accent-blue opacity-50"></i>
+                         <p class="text-sm mt-2 text-gray-500">WHAT I SEEK IS A BONDAGE</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 animate-on-scroll lg:col-span-2">
+                 <div class="flex flex-col items-center text-center">
+                    <h2 class="card-title-main mb-3">纵有岁月可回首</h2>
+                    <p class="card-title-large my-3 text-accent-purple font-serif italic">
+                         <i class="fas fa-book text-3xl opacity-50 mr-2"></i> 且以深情共白头
+                    </p>
+                    <div class="my-4 w-full">
+                        <svg class="mx-auto" width="100" height="40" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 30 C30 10 70 10 90 30" stroke="#c06c56" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+                            <circle cx="20" cy="30" r="5" fill="#c06c56" opacity="0.8"/>
+                            <circle cx="80" cy="30" r="5" fill="#c06c56" opacity="0.8"/>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-sub-small">A LIFETIME OF CHERISHED MEMORIES</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <script>
+        const cards = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交易与慈悲：欲望的本质</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --background: oklch(0.9818 0.0054 95.0986);
+            --foreground: oklch(0.3438 0.0269 95.7226);
+            --primary: #c96442;
+            --primary-foreground: #ffffff;
+            --muted: oklch(0.9341 0.0153 90.2390);
+            --muted-foreground: oklch(0.6059 0.0075 97.4233);
+            --border: oklch(0.8847 0.0069 97.3627);
+        }
+        body {
+            background-color: var(--background);
+            color: var(--foreground);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .text-primary { color: var(--primary); }
+        .bg-primary { background-color: var(--primary); }
+        .text-muted-foreground { color: var(--muted-foreground); }
+        .border-border { border-color: var(--border); }
+        .font-sans { font-family: var(--font-sans); }
+        .container {
+            max-width: 1280px;
+        }
+        .hero-section {
+            min-height: 100vh;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <section class="hero-section w-full flex items-center justify-center p-8 text-center fade-in">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-7xl md:text-9xl font-bold tracking-tight mb-4 leading-tight">
+                <span class="block">交易，</span>
+                <span class="block">还是慈悲？</span>
+            </h1>
+            <p class="text-lg md:text-xl text-muted-foreground mt-4 font-light">The Exchange or The Compassion</p>
+        </div>
+    </section>
+
+    <section class="w-full py-24 md:py-32 px-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 items-center">
+                
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.5s;">
+                    <span class="text-9xl md:text-[16rem] font-bold text-gray-200 leading-none">01</span>
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tight mt-4">
+                        <span class="block">双向奔赴，</span>
+                        <span class="text-primary block">名为交易</span>
+                    </h2>
+                    <p class="text-lg md:text-xl text-muted-foreground mt-6 font-light">
+                        你对我好，我才对你好，这是一种基于回报的逻辑。每一份善意，都期待着另一份等价的善意。这是一种高效的社会契约，但它并非无条件的给予。
+                    </p>
+                    <div class="w-full mt-10">
+                        <div class="flex items-center justify-between py-4 border-b border-border">
+                            <span class="text-xl font-semibold">你对我好</span>
+                            <i class="fas fa-arrow-right text-3xl text-primary opacity-50"></i>
+                        </div>
+                        <div class="flex items-center justify-between py-4 border-b border-border">
+                            <span class="text-xl font-semibold">我才对你好</span>
+                            <i class="fas fa-check text-3xl text-primary opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.7s;">
+                    <span class="text-9xl md:text-[16rem] font-bold text-gray-200 leading-none">02</span>
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tight mt-4">
+                        <span class="block">无问西东，</span>
+                        <span class="text-primary block">方为慈悲</span>
+                    </h2>
+                    <p class="text-lg md:text-xl text-muted-foreground mt-6 font-light">
+                        不管你对我好不好，我都对你好，这是一种超越功利的心境。它不计较得失，不寻求回报。这是一种更深层次的同理心，源于对众生的平等关爱。
+                    </p>
+                    <div class="w-full mt-10">
+                        <div class="flex items-center justify-between py-4 border-b border-border">
+                            <span class="text-xl font-semibold">你对我好？</span>
+                            <i class="fas fa-question text-3xl text-primary opacity-50"></i>
+                        </div>
+                        <div class="flex items-center justify-between py-4 border-b border-border">
+                            <span class="text-xl font-semibold">我依然对你好</span>
+                            <i class="fas fa-heart text-3xl text-primary opacity-50"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full py-24 md:py-32 px-8 text-center">
+        <div class="container mx-auto max-w-4xl fade-in" style="animation-delay: 1s;">
+            <h3 class="text-8xl md:text-[10rem] font-bold text-primary opacity-10">THE REVELATION</h3>
+            <h2 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight mt-8">
+                <span class="block">所有达不到慈悲的</span>
+                <span class="block text-primary">都是化妆的欲望</span>
+            </h2>
+            <p class="text-lg md:text-xl text-muted-foreground mt-6 font-light">
+                当你认为的"好"是有条件的，那它就不是纯粹的善，而是为了满足自身期待的<span class="font-bold">欲望</span>。这份欲望被美化成“好”，实际上只是“交易”的另一种伪装。
+            </p>
+            <button class="mt-12 bg-primary text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                <i class="fas fa-hand-holding-heart mr-2"></i> 探索更多关于慈悲
+            </button>
+        </div>
+    </section>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

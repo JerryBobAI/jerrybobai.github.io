@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱自己的顺序 - The Path to Self-Love</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Playfair Display', serif;
+            background-color: #f8f5f0; /* 素雅的宣纸色 */
+            color: #3a3a3a; /* 墨色文字 */
+        }
+        .chinese-title {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 900;
+        }
+        .english-subtext {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: #8c6239; /* 赭石色 */
+        }
+        .text-gradient-orange {
+            background: linear-gradient(to right, #FF7F50, rgba(255, 127, 80, 0.5));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .card-item {
+            background-color: rgba(255, 255, 255, 0.7); /* 半透明卡片背景 */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(140, 98, 57, 0.15); /* 浅赭石色边框 */
+            border-radius: 1.5rem; /* 24px */
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .card-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(140, 98, 57, 0.1);
+        }
+        .super-number {
+            font-size: clamp(4rem, 10vw, 8rem);
+            line-height: 1;
+            font-weight: 900;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-10%, -10%);
+            pointer-events: none;
+            color: #c06c56; /* 胭脂色 */
+        }
+        .large-icon {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: #c06c56;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        .text-胭脂色 { color: #c06c56; }
+        .text-石青色 { color: #7a9e9f; }
+        .text-墨色 { color: #3a3a3a; }
+        .text-赭石色 { color: #8c6239; }
+
+        .line-art-shape {
+            position: absolute;
+            bottom: -20%;
+            right: -20%;
+            width: 70%;
+            height: 70%;
+            opacity: 0.05;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-screen-2xl mx-auto">
+        
+        <header class="text-center mb-16 md:mb-24">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl chinese-title mb-4">
+                爱自己的<span class="text-gradient-orange">顺序</span>
+            </h1>
+            <p class="english-subtext text-lg md:text-xl text-赭石色">THE ESSENTIAL PATH TO SELF-LOVE</p>
+            <p class="mt-4 text-墨色 max-w-3xl mx-auto text-base md:text-lg">
+                这不是一句口号，而是一个需要我们终身践行的七个层次，干万不能反。
+            </p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            
+            <div class="card-item animate-on-scroll lg:col-span-2">
+                <span class="super-number text-胭脂色">1</span>
+                <i class="fas fa-heartbeat large-icon text-胭脂色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第1层：<span class="text-胭脂色">生存</span></h2>
+                <p class="english-subtext mt-1 text-base">TO SURVIVE</p>
+                <p class="mt-4 text-墨色 text-base">
+                    好好吃、好好喝、好好睡、好好玩，冷暖照顾好，健康、拥有交配权。
+                </p>
+                <i class="fas fa-seedling text-9xl line-art-shape text-胭脂色" style="right: 5%; bottom: 5%; transform: rotate(-20deg);"></i>
+            </div>
+            
+            <div class="card-item animate-on-scroll">
+                <span class="super-number text-石青色">2</span>
+                <i class="fas fa-palette large-icon text-石青色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第2层：<span class="text-石青色">爱美</span></h2>
+                <p class="english-subtext mt-1 text-base">TO BE LOVELY</p>
+                <p class="mt-4 text-墨色 text-base">
+                    收拾打扮好自己、补充自己的知识面，去接受文化艺术的熏陶、卫生得体、有礼貌、有美感、热爱成长。
+                </p>
+                <i class="fas fa-paint-brush text-9xl line-art-shape text-石青色" style="right: -10%; bottom: -10%;"></i>
+            </div>
+
+            <div class="card-item animate-on-scroll">
+                <span class="super-number text-赭石色">3</span>
+                <i class="fas fa-balance-scale-left large-icon text-赭石色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第3层：<span class="text-赭石色">接受因果</span></h2>
+                <p class="english-subtext mt-1 text-base">TO ACCEPT CAUSE & EFFECT</p>
+                <p class="mt-4 text-墨色 text-base">
+                    真正接受自己的基因、自己的原生家庭、自己的出身，接受自己的容貌，有自己的优缺点，接受自己目前的状况。
+                </p>
+                <i class="fas fa-dna text-9xl line-art-shape text-赭石色" style="right: 5%; bottom: 5%; transform: rotate(15deg);"></i>
+            </div>
+
+            <div class="card-item animate-on-scroll lg:col-span-2">
+                <span class="super-number text-胭脂色">4</span>
+                <i class="fas fa-spa large-icon text-胭脂色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第4层：<span class="text-胭脂色">内观情绪</span></h2>
+                <p class="english-subtext mt-1 text-base">TO OBSERVE EMOTIONS</p>
+                <p class="mt-4 text-墨色 text-base">
+                    正确对待自己的情绪，并允许它的存在。去重视它们我的表达，也接受它们的爆发慢慢学习与情绪相处，并尝试去疏导它，不抗拒不评判，放松观察它们的流动，任它穿过身体。
+                </p>
+                <i class="fas fa-cloud text-9xl line-art-shape text-胭脂色" style="left: -10%; top: 50%; transform: rotate(10deg);"></i>
+            </div>
+
+            <div class="card-item animate-on-scroll">
+                <span class="super-number text-石青色">5</span>
+                <i class="fas fa-search large-icon text-石青色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第5层：<span class="text-石青色">追溯根源并拥抱他</span></h2>
+                <p class="english-subtext mt-1 text-base">TO TRACE & EMBRACE</p>
+                <p class="mt-4 text-墨色 text-base">
+                    自观、觉察情绪背后的原因，知道这些原因来自哪里，那原始的伤痛，能直视伤痛并拥抱伤痛。
+                </p>
+                <i class="fas fa-search-plus text-9xl line-art-shape text-石青色" style="right: -10%; top: -10%; transform: rotate(-15deg);"></i>
+            </div>
+
+            <div class="card-item animate-on-scroll">
+                <span class="super-number text-赭石色">6</span>
+                <i class="fas fa-hand-holding-heart large-icon text-赭石色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第6层：<span class="text-赭石色">识别情绪接受情绪</span></h2>
+                <p class="english-subtext mt-1 text-base">TO RECOGNIZE & ACCEPT EMOTIONS</p>
+                <p class="mt-4 text-墨色 text-base">
+                    与每个情绪和解，深深地爱上每个情绪，我们身体的每个细胞，都有许多记忆和印痕。每一个情绪都是这些印痕的表达，所以每一个情绪就是一个人。我们爱上这些情绪，也就是爱上我们内在的众生。
+                </p>
+                <i class="fas fa-heart text-9xl line-art-shape text-赭石色" style="left: -10%; bottom: -10%;"></i>
+            </div>
+
+            <div class="card-item animate-on-scroll xl:col-span-2">
+                <span class="super-number text-胭脂色">7</span>
+                <i class="fas fa-hands-holding large-icon text-胭脂色"></i>
+                <h2 class="text-3xl chinese-title text-墨色">第7层：<span class="text-胭脂色">拥有大爱不争不辩任其流淌</span></h2>
+                <p class="english-subtext mt-1 text-base">TO HAVE GREAT LOVE</p>
+                <p class="mt-4 text-墨色 text-base">
+                    我们由爱自己走向内在，爱自己体内的众生。再由爱从内在走向外在，爱外在的芸芸众生。从这里开始，真正合一。
+                </p>
+                <i class="fas fa-dove text-9xl line-art-shape text-胭脂色" style="right: 5%; bottom: 5%;"></i>
+            </div>
+
+            <div class="card-item animate-on-scroll lg:col-span-2 xl:col-span-2">
+                <div class="text-center">
+                    <h2 class="text-4xl md:text-5xl chinese-title text-墨色 mb-4">
+                        <span class="text-gradient-orange">重要提醒</span>
+                    </h2>
+                    <h3 class="text-4xl md:text-5xl chinese-title text-胭脂色 leading-tight">
+                         爱自己的顺序<br/>千万不能反
+                    </h3>
+                    <p class="english-subtext mt-4 text-base">THE ORDER OF SELF-LOVE MUST NOT BE REVERSED.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    
+    <footer class="text-center mt-16 py-8 text-sm text-赭石色">
+        <p>&copy; 2025 All Rights Reserved.</p>
+        <p>设计灵感源于对身心成长的思考。</p>
+    </footer>
+
+    <script>
+        const cards = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

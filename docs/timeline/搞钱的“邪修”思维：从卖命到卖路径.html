@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搞钱的“邪修”思维：从卖命到卖路径</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #0f172a; /* bg-slate-900 */
+            color: #e2e8f0; /* text-slate-200 */
+            overflow-x: hidden;
+        }
+        .brand-orange { color: #f97316; } /* text-orange-500 */
+        .tech-blue { color: #60a5fa; } /* text-blue-400 */
+        .text-gradient-orange {
+            background: linear-gradient(to right, #fbbf24, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-subtitle-en {
+            font-size: 1.125rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .highlight-text-huge {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+        .content-card {
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2);
+        }
+
+        .icon-feature {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+            color: #f97316;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .tech-glow-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20 max-w-screen-2xl">
+
+        <section class="min-h-screen flex flex-col justify-center items-center text-center p-4 relative overflow-hidden animate-on-scroll">
+            <div class="tech-glow-circle"></div>
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-extrabold mb-4 leading-tight">
+                你不是没有那个命<br/><br class="sm:hidden">你只是没有打通那个
+            </h1>
+            <p class="highlight-text-huge text-gradient-orange mt-4 md:mt-8">
+                闭环
+            </p>
+            <p class="text-xl sm:text-2xl font-semibold text-slate-400 mt-6 md:mt-10">
+                A Closed-Loop System to Win
+            </p>
+            <div class="absolute bottom-10 text-slate-500 animate-bounce">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </div>
+        </section>
+
+        <section class="animate-on-scroll">
+            <h2 class="section-title">传统的“打工”模式</h2>
+            <p class="section-subtitle-en">THE CONVENTIONAL "WAGE SLAVERY" MODEL</p>
+            <div class="content-card p-6 md:p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-lg mb-4 text-slate-300">
+                            打工模式，是一张精心设计的网。它让你相信只要努力就能往上爬，但真正的逻辑是：你一有积蓄，就会有人跳出来劝你<strong class="brand-orange">消费</strong>。
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400">
+                            <li>换手机、买车、买房...</li>
+                            <li>他们不怕你上进，只怕你<strong class="brand-orange font-semibold">不花钱</strong>。</li>
+                            <li>你一旦没钱，就只能回到工位，继续为系统输送燃料。</li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-hand-holding-dollar text-9xl text-slate-700/50"></i>
+                        <p class="text-3xl font-bold mt-4 text-slate-500">
+                            你以为你在努力<br>其实一直在<span class="text-gradient-orange">阳修</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-on-scroll">
+            <h2 class="section-title">真正的“<span class="text-gradient-orange">搞钱</span>”</h2>
+            <p class="section-subtitle-en">THE "HETERODOX" MINDSET</p>
+            <div class="content-card p-6 md:p-8 text-center bg-gradient-to-br from-orange-900/50 to-orange-900/10 border-orange-500">
+                <p class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight text-gradient-orange">
+                    不是卖命<br>而是<span class="highlight-text-huge mt-4">卖路径</span>
+                </p>
+                <p class="text-lg text-slate-400 mt-6">
+                    THE REAL GAME IS NOT SELLING YOUR LIFE, BUT SELLING THE PATH.
+                </p>
+            </div>
+        </section>
+
+        <section class="animate-on-scroll">
+            <h2 class="section-title">这套“邪修”思维，包含<span class="brand-orange">三个</span>核心步骤</h2>
+            <p class="section-subtitle-en">THREE CORE STEPS</p>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="content-card p-6 md:p-8">
+                    <p class="highlight-text-huge brand-orange text-left">1.</p>
+                    <h3 class="text-2xl font-bold mt-2 mb-2"><i class="fas fa-lightbulb icon-feature"></i>洞察信息差</h3>
+                    <p class="text-sm text-slate-400 uppercase mb-4">INSIGHT INTO INFORMATION GAP</p>
+                    <p class="text-lg text-slate-300">
+                        当别人把信息当消遣时，你把它<strong class="tech-blue">做成产品</strong>。你卖的不是信息本身，而是信息的<span class="font-bold brand-orange">整理、结构和呈现方式</span>。
+                    </p>
+                    <p class="text-sm text-slate-500 italic mt-3">
+                        e.g., 翻译国外小众推文，整理成PDF、思维导图、案例集。
+                    </p>
+                </div>
+                <div class="content-card p-6 md:p-8">
+                    <p class="highlight-text-huge brand-orange text-left">2.</p>
+                    <h3 class="text-2xl font-bold mt-2 mb-2"><i class="fas fa-rocket icon-feature"></i>行动，打通第一个闭环</h3>
+                    <p class="text-sm text-slate-400 uppercase mb-4">ACTION, COMPLETE THE FIRST LOOP</p>
+                    <p class="text-lg text-slate-300">
+                        “闭环”不是靠创意，是<strong class="tech-blue">干出来</strong>的。先“干一遍 → 拆一遍 → 卖一遍”。关键在于敢于踏出<span class="font-bold brand-orange">“卖”的第一步</span>。
+                    </p>
+                    <p class="text-sm text-slate-500 italic mt-3">
+                        就算销量是0，都无所谓，只要你卖出第一单，这个闭环就通了。
+                    </p>
+                </div>
+                <div class="content-card p-6 md:p-8">
+                    <p class="highlight-text-huge brand-orange text-left">3.</p>
+                    <h3 class="text-2xl font-bold mt-2 mb-2"><i class="fas fa-sitemap icon-feature"></i>构建结构，从“黑奴”到“奴隶主”</h3>
+                    <p class="text-sm text-slate-400 uppercase mb-4">BUILD THE SYSTEM, FROM SLAVE TO MASTER</p>
+                    <p class="text-lg text-slate-300">
+                        一旦你的路径打通，你卖的就是<strong class="tech-blue">赚钱的路径本身</strong>。将经验变成可复制的系统，招募兼职来<span class="font-bold brand-orange">复制你的劳力</span>。
+                    </p>
+                    <p class="text-sm text-slate-500 italic mt-3">
+                        你将从一个“黑奴”——为自己打工，转变为一个“奴隶主”——掌控路径的人。
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="animate-on-scroll my-16">
+            <div class="grid md:grid-cols-2 gap-8 items-center text-center">
+                <div class="p-6 md:p-8 bg-slate-800 rounded-xl border border-slate-700/50">
+                    <h3 class="text-3xl font-bold mb-3 text-slate-400">打工</h3>
+                    <p class="text-xl text-slate-500 uppercase">WAGE SLAVERY</p>
+                    <p class="text-5xl md:text-6xl font-extrabold mt-6 brand-orange">卖命</p>
+                </div>
+                <div class="p-6 md:p-8 bg-orange-900/30 rounded-xl border border-orange-500/50">
+                    <h3 class="text-3xl font-bold mb-3 brand-orange">搞钱</h3>
+                    <p class="text-xl brand-orange uppercase">MONEY GAME</p>
+                    <p class="text-5xl md:text-6xl font-extrabold mt-6 text-gradient-orange">卖路径</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-on-scroll text-center relative overflow-hidden">
+            <div class="tech-glow-circle opacity-50"></div>
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+                别再沉迷于宏大叙事<br>先跑通一个能变现的<span class="brand-orange">结构化小路径</span>
+            </h2>
+            <p class="text-2xl font-semibold text-slate-400 max-w-2xl mx-auto mt-6">
+                找到一个信息差，干出你的第一单，建立一个能<strong class="brand-orange">复制的结构</strong>。
+            </p>
+            <div class="my-10">
+                <i class="fas fa-key text-9xl brand-orange opacity-80 animate-pulse"></i>
+            </div>
+            <p class="text-3xl font-bold text-slate-300 max-w-3xl mx-auto">
+                你就能找到那把，<br class="sm:hidden">打开“打工牢笼”的钥匙。
+            </p>
+        </section>
+    </div>
+
+    <footer class="text-center py-8 border-t border-slate-800 mt-20">
+        <p class="text-xs text-slate-500">内容启发自网络创作者的观点</p>
+        <p class="text-xs text-slate-600 mt-1">Design inspired by modern keynote presentations.</p>
+    </footer>
+
+    <script>
+        // Simple scroll animation
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

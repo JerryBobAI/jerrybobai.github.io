@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勇敢：最被误解但最稀缺的能力</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: #0a0a0a; /* 深邃的碳黑色 */
+            color: #fafafa; /* 亮白色 */
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 核心高亮色 */
+        .highlight-blue { color: #00C6FF; } /* 电光蓝 */
+        .bg-highlight-blue { background-color: #00C6FF; }
+        .highlight-orange { color: #FF7A00; } /* 警戒橘红 */
+        .bg-highlight-orange { background-color: #FF7A00; }
+        .border-highlight-orange { border-color: #FF7A00; }
+
+        /* 文本和字体样式 */
+        .chinese-title { font-family: 'Noto Sans SC', sans-serif; font-weight: 900; }
+        .english-subtext { font-size: 0.9em; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.1em; }
+        .text-huge { font-size: clamp(3rem, 10vw, 8rem); line-height: 1; font-weight: 900; }
+        .text-massive { font-size: clamp(4rem, 15vw, 12rem); line-height: 1; font-weight: 900; }
+
+        /* 卡片和网格布局 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            padding: 2.5rem;
+            transition: transform 0.3s ease-out;
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .section-glow {
+            position: relative;
+        }
+        .section-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(0, 198, 255, 0.1) 0%, rgba(0, 198, 255, 0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 自定义勾线图标动画 */
+        .icon-pulse-outline {
+            animation: pulse-outline 2.5s infinite cubic-bezier(0.66, 0, 0.34, 1);
+        }
+        @keyframes pulse-outline {
+            0%, 100% { stroke-width: 2px; opacity: 0.8; }
+            50% { stroke-width: 4px; opacity: 1; }
+        }
+
+        /* 滚动入场动画 */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100">
+
+    <div class="container mx-auto px-4 md:px-8 max-w-screen-xl py-12 space-y-16">
+
+        <header class="min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute w-full h-full bg-[radial-gradient(circle_at_50%_0,_rgba(0,198,255,0.1)_0%,_rgba(0,198,255,0.02)_50%,_transparent_100%)]"></div>
+            </div>
+            <div class="relative z-10 animate-on-scroll">
+                <p class="english-subtext text-lg md:text-xl text-neutral-400 mb-2">A MISUNDERSTOOD, YET RAREST ABILITY</p>
+                <h1 class="text-huge md:text-massive chinese-title text-neutral-50 mb-4">
+                    <span class="highlight-blue">勇敢</span>
+                </h1>
+                <p class="text-2xl md:text-4xl chinese-title max-w-3xl mx-auto">
+                    所有成长型的能力，都以<span class="highlight-blue">勇敢</span>为起点。
+                </p>
+            </div>
+        </header>
+
+        <section class="grid md:grid-cols-2 gap-8 items-center animate-on-scroll section-glow">
+            <div class="relative">
+                <div class="glass-card flex flex-col items-center text-center">
+                    <h2 class="text-2xl md:text-3xl chinese-title mb-4">勇敢的本质是什么？</h2>
+                    <p class="text-lg text-neutral-300 mb-8">情绪与行动脱钩的经典案例</p>
+                    <div class="flex items-center justify-center space-x-6">
+                        <div class="text-center">
+                            <i class="fas fa-exclamation-triangle text-5xl highlight-orange mb-2"></i>
+                            <p class="text-lg font-bold">害怕</p>
+                        </div>
+                        <i class="fas fa-plus text-lg text-neutral-400"></i>
+                        <div class="text-center">
+                            <i class="fas fa-eye text-5xl highlight-blue mb-2"></i>
+                            <p class="text-lg font-bold">察觉</p>
+                        </div>
+                        <i class="fas fa-plus text-lg text-neutral-400"></i>
+                        <div class="text-center">
+                            <i class="fas fa-running text-5xl highlight-orange mb-2"></i>
+                            <p class="text-lg font-bold">行动</p>
+                        </div>
+                    </div>
+                    <p class="text-lg mt-6 font-bold text-neutral-200">
+                        <span class="highlight-blue">我知道我害怕</span>，<span class="highlight-orange">并且采取行动</span>。
+                    </p>
+                </div>
+            </div>
+            <div class="relative h-full flex items-center justify-center">
+                <div class="w-full h-full absolute inset-0 flex items-center justify-center opacity-10">
+                    <i class="fas fa-shield-alt text-[20rem] highlight-blue"></i>
+                </div>
+                <div class="relative z-10 grid grid-cols-1 gap-6 text-center">
+                    <p class="text-4xl md:text-6xl chinese-title">
+                        <span class="highlight-blue">勇敢者</span>
+                    </p>
+                    <p class="text-2xl md:text-4xl text-neutral-400 font-semibold">
+                         <span class="highlight-orange">害怕</span> <i class="fas fa-arrow-right mx-2"></i> <span class="highlight-blue">察觉</span> <i class="fas fa-arrow-right mx-2"></i> <span class="highlight-orange">行动</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid md:grid-cols-3 gap-6 animate-on-scroll">
+            <div class="glass-card p-6 border-l-4 border-highlight-blue">
+                <h3 class="text-3xl chinese-title highlight-blue mb-2">勇敢者</h3>
+                <p class="text-sm english-subtext text-neutral-400 mb-4">THE BRAVE</p>
+                <div class="space-y-2">
+                    <p class="flex items-center"><i class="fas fa-check-circle mr-2 highlight-blue"></i>有害怕</p>
+                    <p class="flex items-center"><i class="fas fa-check-circle mr-2 highlight-blue"></i>能察觉</p>
+                    <p class="flex items-center"><i class="fas fa-check-circle mr-2 highlight-blue"></i>能行动</p>
+                </div>
+            </div>
+            <div class="glass-card p-6 border-l-4 border-highlight-orange">
+                <h3 class="text-3xl chinese-title highlight-orange mb-2">鲁莽者</h3>
+                <p class="text-sm english-subtext text-neutral-400 mb-4">THE RECKLESS</p>
+                <div class="space-y-2">
+                    <p class="flex items-center"><i class="fas fa-times-circle mr-2 text-red-500"></i>不害怕</p>
+                    <p class="flex items-center"><i class="fas fa-times-circle mr-2 text-red-500"></i>不察觉</p>
+                    <p class="flex items-center"><i class="fas fa-check-circle mr-2 highlight-orange"></i>行动</p>
+                </div>
+            </div>
+            <div class="glass-card p-6 border-l-4 border-neutral-600">
+                <h3 class="text-3xl chinese-title text-neutral-400 mb-2">逃避者</h3>
+                <p class="text-sm english-subtext text-neutral-400 mb-4">THE AVOIDER</p>
+                <div class="space-y-2">
+                    <p class="flex items-center"><i class="fas fa-check-circle mr-2 text-neutral-400"></i>害怕</p>
+                    <p class="flex items-center"><i class="fas fa-check-circle mr-2 text-neutral-400"></i>察觉</p>
+                    <p class="flex items-center"><i class="fas fa-times-circle mr-2 text-red-500"></i>不行动</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-on-scroll">
+            <h2 class="text-4xl md:text-5xl chinese-title text-center mb-10 section-glow">
+                勇敢为什么如此<span class="highlight-orange">稀缺</span>？
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-heart-crack text-3xl highlight-orange mr-3"></i>
+                        <h3 class="text-2xl chinese-title">情绪难度大</h3>
+                    </div>
+                    <p class="text-neutral-300">
+                        人类天然抗拒痛苦，逃避是默认模式。<br/>
+                        <span class="english-subtext text-neutral-500 block mt-2">Emotional Difficulty: We are naturally averse to pain.</span>
+                    </p>
+                </div>
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-brain text-3xl highlight-blue mr-3"></i>
+                        <h3 class="text-2xl chinese-title">认知门槛高</h3>
+                    </div>
+                    <p class="text-neutral-300">
+                        要看清恐惧来源，主动接触而非冲动。<br/>
+                        <span class="english-subtext text-neutral-500 block mt-2">Cognitive Barrier: Requires self-awareness and rational choice.</span>
+                    </p>
+                </div>
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-bolt text-3xl highlight-orange mr-3"></i>
+                        <h3 class="text-2xl chinese-title">行动门槛也高</h3>
+                    </div>
+                    <p class="text-neutral-300">
+                        行动无掌声，结果无保证。<br/>
+                        <span class="english-subtext text-neutral-500 block mt-2">Action Barrier: No guarantee, no immediate reward.</span>
+                    </p>
+                </div>
+            </div>
+             <blockquote class="text-center mt-12 text-2xl md:text-3xl font-light text-neutral-300 max-w-4xl mx-auto">
+                “多数人都是等<span class="highlight-blue">准备好了</span>才行动，但勇敢的人是在<span class="highlight-orange">不确定的情况下</span>也行动。”
+            </blockquote>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-8 items-center animate-on-scroll">
+            <div class="glass-card">
+                 <div class="flex items-center mb-4">
+                    <i class="fas fa-mask text-3xl highlight-orange mr-3"></i>
+                    <h3 class="text-2xl chinese-title">被误解的“勇敢”</h3>
+                 </div>
+                 <p class="text-lg text-neutral-300 mb-4">
+                    被强迫练胆子不是培养勇敢，而是训练<span class="highlight-orange">脱敏加服从</span>。
+                </p>
+                <div class="mt-6 flex flex-col space-y-4">
+                     <div class="p-4 rounded-lg bg-neutral-800">
+                        <h4 class="text-lg font-bold text-neutral-200">❌ 逼迫的勇敢</h4>
+                        <p class="text-sm text-neutral-400 mt-1">掐灭感知力，走向两个极端：讨好型人格或逆反式勇敢。</p>
+                     </div>
+                     <div class="p-4 rounded-lg bg-neutral-800">
+                         <h4 class="text-lg font-bold text-neutral-200">✅ 真正的勇敢</h4>
+                         <p class="text-sm text-neutral-400 mt-1">我知道你怕，但我们一起看看怕的是什么。</p>
+                     </div>
+                </div>
+            </div>
+            <div class="flex justify-center items-center relative">
+                 <div class="absolute w-full h-full top-0 left-0 flex items-center justify-center opacity-10">
+                     <i class="fas fa-ghost text-[15rem] highlight-orange animate-pulse"></i>
+                 </div>
+                 <div class="z-10 flex flex-col items-center text-center p-6">
+                    <h3 class="text-4xl md:text-6xl chinese-title highlight-blue mb-4">“别怕”</h3>
+                    <p class="text-lg md:text-xl font-light text-neutral-400 max-w-xs">不是简单的强迫，而是共同面对。</p>
+                 </div>
+            </div>
+        </section>
+
+        <section class="glass-card text-center relative animate-on-scroll section-glow">
+             <div class="z-10 relative">
+                <p class="english-subtext text-neutral-400 mb-2">IN SUMMARY</p>
+                <h2 class="text-massive chinese-title mb-4">
+                    <span class="highlight-blue">勇敢</span>
+                </h2>
+                <p class="text-3xl md:text-5xl font-extralight max-w-4xl mx-auto">
+                    比<span class="highlight-orange">聪明</span>更难，比<span class="highlight-orange">勤奋</span>更深。
+                </p>
+                 <p class="text-lg mt-8 text-neutral-400 max-w-2xl mx-auto">
+                    聪明靠天赋，勤奋靠习惯，<br/>
+                    但勇敢只能靠你一次又一次做了就知道的<span class="highlight-blue font-bold">选择</span>。
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center py-10 text-xs text-neutral-600 border-t border-neutral-800">
+        <p>&copy; 2025 Creative Design. All rights reserved. | Inspired by deep insights and dark tech aesthetics.</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animation
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // optional: observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        animatedElements.forEach(el => observer.observe(el));
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

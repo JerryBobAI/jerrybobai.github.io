@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>你以为的世界，也许只是别人设计的“剧本”</title>
+   <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <style>
+       body {
+           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+           background-color: #0a0a0a; /* Deep dark base */
+           color: #e0e0e0; /* Light gray for base text */
+           overflow-x: hidden;
+           /* Subtle grid pattern background */
+           background-image: linear-gradient(0deg, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+           background-size: 20px 20px;
+       }
+
+       .glassmorphic-card {
+           background: rgba(255, 255, 255, 0.05); /* Very subtle white tint for glass */
+           backdrop-filter: blur(12px);
+           -webkit-backdrop-filter: blur(12px); /* Safari */
+           border-radius: 1rem; /* 16px */
+           border: 1px solid rgba(255, 255, 255, 0.1);
+           box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+           transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+       }
+       .glassmorphic-card:hover {
+           transform: translateY(-5px) scale(1.01);
+           box-shadow: 0 12px 40px 0 rgba(0,0,0,0.5);
+       }
+
+       .highlight-blue { color: #00A1FF; } /* Electric Blue */
+       .highlight-purple { color: #A855F7; } /* Cyber Purple */
+       .highlight-orange { color: #FF7A00; } /* Alert Orange */
+       .highlight-green { color: #39FF14; } /* Neon Green */
+
+       /* For glow effects */
+       .glow-blue { box-shadow: 0 0 10px #00A1FF; }
+       .glow-purple { box-shadow: 0 0 10px #A855F7; }
+       .glow-orange { box-shadow: 0 0 10px #FF7A00; }
+       .glow-green { box-shadow: 0 0 10px #39FF14; }
+
+       /* For gradient highlights on text or borders */
+       .text-gradient-blue {
+           background: linear-gradient(90deg, #00A1FF, #00C6FF);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           background-clip: text;
+           text-fill-color: transparent;
+       }
+        .text-gradient-purple {
+           background: linear-gradient(90deg, #A855F7, #D8B4FE);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           background-clip: text;
+           text-fill-color: transparent;
+       }
+        .text-gradient-orange {
+           background: linear-gradient(90deg, #FF7A00, #FBBF24);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           background-clip: text;
+           text-fill-color: transparent;
+       }
+        .text-gradient-green {
+           background: linear-gradient(90deg, #39FF14, #8CFCE0);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           background-clip: text;
+           text-fill-color: transparent;
+       }
+
+
+       .ultra-large-text {
+           font-size: clamp(3rem, 8vw, 6rem); /* Responsive large font */
+           font-weight: 800; /* extrabold */
+           line-height: 1.1;
+       }
+       .super-large-num {
+           font-size: clamp(4rem, 12vw, 10rem);
+           font-weight: 900;
+           line-height: 1;
+       }
+       .section-icon {
+           font-size: 3rem; /* 48px */
+           margin-bottom: 0.75rem; /* 12px */
+       }
+
+       /* Simple line-art graphic */
+       .line-graphic {
+           width: 100%;
+           height: auto;
+           stroke-width: 2px;
+           stroke: #e0e0e0;
+           fill: none;
+           opacity: 0.3;
+       }
+        .line-graphic-colored {
+           stroke: #00A1FF;
+           opacity: 1;
+       }
+
+       /* Adjusted button style */
+       .action-button-container {
+           grid-column: span 2; /* Make it span both columns */
+           display: flex;
+           justify-content: center; /* Center the button */
+           padding-top: 2rem;
+       }
+       .action-button {
+           padding: 1rem 3rem;
+           background-color: #1a1a1a;
+           color: #39FF14;
+           font-weight: bold;
+           border-radius: 2rem;
+           border: 2px solid #39FF14;
+           transition: all 0.3s ease-in-out;
+           box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+       }
+       .action-button:hover {
+           background-color: #39FF14;
+           color: #0a0a0a;
+           box-shadow: 0 0 20px rgba(57, 255, 20, 0.8);
+       }
+       .action-button i {
+           margin-right: 0.5rem;
+       }
+   </style>
+</head>
+<body class="bg-neutral-950 text-gray-200 antialiased">
+
+   <div class="container mx-auto px-4 py-8 md:px-8 md:py-16 max-w-screen-2xl">
+
+       <header class="text-center mb-16 md:mb-24">
+           <h1 class="ultra-large-text mb-4">
+               你以为的世界，也许只是别人设计的<span class="text-gradient-blue">“剧本”</span>
+           </h1>
+           <p class="text-xl md:text-2xl text-gray-400 font-light max-w-3xl mx-auto">
+                WHAT YOU THINK THE WORLD IS,<br class="sm:hidden"> MIGHT JUST BE SOMEONE ELSE'S <span class="highlight-blue">SCRIPT</span>.
+           </p>
+       </header>
+
+       <main class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+
+           <div class="glassmorphic-card p-6 md:p-8 xl:col-span-2">
+               <i class="fas fa-divide section-icon highlight-orange"></i>
+               <h2 class="text-3xl font-bold mb-3">这世界有两套<span class="text-gradient-orange">秩序</span></h2>
+               <p class="text-sm text-gray-500 mb-4">TWO SETS OF ORDERS, ONE PUBLIC, ONE HIDDEN.</p>
+               <div class="space-y-4 text-gray-300">
+                   <div class="border-l-2 border-orange-500/50 pl-4">
+                       <p class="text-xl font-bold highlight-orange">台前 PUBLIC</p>
+                       <p>宣扬着仁义道德、公平竞争。我们从小学习并遵守这套规则，希望通过努力就能改变命运。</p>
+                       <span class="block text-xs text-gray-500 mt-1">The front stage: promoting morality and fair competition.</span>
+                   </div>
+                   <div class="border-l-2 border-orange-500/50 pl-4">
+                       <p class="text-xl font-bold highlight-orange">幕后 BEHIND THE SCENES</p>
+                       <p>围绕着价值和利益运转。富人的孩子从小学习，明白关系和资本远比努力更重要。</p>
+                       <span class="block text-xs text-gray-500 mt-1">The backstage: operating on value and self-interest.</span>
+                   </div>
+               </div>
+               <div class="mt-6 flex flex-col items-center">
+                   <div class="relative w-full h-16">
+                       <i class="fas fa-cogs absolute left-0 top-1/2 -translate-y-1/2 text-5xl highlight-orange animate-spin-slow"></i>
+                       <i class="fas fa-gavel absolute right-0 top-1/2 -translate-y-1/2 text-5xl highlight-orange animate-pulse-slow"></i>
+                   </div>
+                   <h3 class="text-2xl font-bold highlight-orange mt-4">规则，是为<span class="text-white">赢家</span>服务的。</h3>
+                   <p class="text-center text-sm text-gray-500 mt-1 max-w-sm">
+                       Winners make the rules, and then ask others to follow them.
+                   </p>
+               </div>
+           </div>
+
+           <div class="glassmorphic-card p-6 md:p-8">
+               <i class="fas fa-shopping-bag section-icon highlight-purple"></i>
+               <h2 class="text-3xl font-bold mb-3">消费主义的<span class="text-gradient-purple">陷阱</span></h2>
+               <p class="text-sm text-gray-500 mb-4">THE TRAP OF CONSUMERISM</p>
+               <div class="text-center mb-4">
+                   <h3 class="super-large-num text-gradient-purple">1%</h3>
+                   <p class="text-xl font-bold mb-2">你的真实需求</p>
+                   <p class="text-xs text-gray-500">Your real needs</p>
+               </div>
+               <p class="text-lg text-gray-300">
+                   商家卖给你的不仅仅是商品，更是附着其上的<span class="font-bold highlight-purple">虚假价值</span>和<span class="font-bold highlight-purple">“意义”</span>。
+               </p>
+               <ul class="list-disc list-inside mt-4 text-gray-300 text-sm space-y-2">
+                   <li><i class="fas fa-circle-notch fa-spin text-purple-400 mr-2"></i>让你沉溺于短暂的虚荣和快乐。</li>
+                   <li><i class="fas fa-circle-notch fa-spin text-purple-400 mr-2"></i>让你忽视自己真正的内心需求。</li>
+                   <li><i class="fas fa-circle-notch fa-spin text-purple-400 mr-2"></i>悄无声息地掏空你的钱包。</li>
+               </ul>
+           </div>
+
+           <div class="glassmorphic-card p-6 md:p-8 md:col-span-2 xl:col-span-1">
+                <i class="fas fa-dice section-icon highlight-blue"></i>
+               <h2 class="text-3xl font-bold mb-3">人生是一场<span class="text-gradient-blue">赌场</span></h2>
+               <p class="text-sm text-gray-500 mb-4">LIFE IS A CASINO</p>
+               <div class="space-y-4 text-gray-300">
+                   <div class="border-l-2 border-blue-500/50 pl-4">
+                       <p class="text-xl font-bold highlight-blue">1. 开场子的人 <span class="text-sm text-gray-500 font-normal">The House</span></p>
+                       <p>他们设计游戏规则，决定赌局如何运行。属于“1%中的1%”。</p>
+                   </div>
+                   <div class="border-l-2 border-blue-500/50 pl-4">
+                       <p class="text-xl font-bold highlight-blue">2. 坐庄的人 <span class="text-sm text-gray-500 font-normal">The Croupier</span></p>
+                       <p>他们控制着局面，确保游戏在掌控之中。占据1%的份额。</p>
+                   </div>
+                   <div class="border-l-2 border-blue-500/50 pl-4">
+                       <p class="text-xl font-bold highlight-blue">3. 下注者 <span class="text-sm text-gray-500 font-normal">The Gambler</span></p>
+                       <p>我们努力工作，把时间和金钱投入，却只是在为赌场“输血”。占据99%的份额。</p>
+                   </div>
+               </div>
+           </div>
+
+            <div class="glassmorphic-card p-6 md:p-8 md:col-span-2 xl:col-span-2">
+                <div class="flex items-center justify-between mb-4">
+                   <div class="flex items-center">
+                       <i class="fas fa-chart-line section-icon highlight-green mr-3"></i>
+                       <h2 class="text-3xl font-bold text-gradient-green">成为规则制定者</h2>
+                   </div>
+                   <i class="fas fa-arrow-alt-circle-right text-4xl highlight-green"></i>
+               </div>
+               <div class="grid md:grid-cols-2 gap-6 text-gray-300">
+                   <div>
+                       <h3 class="text-xl font-bold mb-2">学校教育 vs. 现实</h3>
+                       <p class="text-sm">学校培养标准化的社会螺丝钉，教你如何“懂事”，却很少教你如何“致富”。</p>
+                        <p class="text-xs text-gray-500 mt-1">Education teaches conformity, not wealth creation.</p>
+                   </div>
+                   <div>
+                       <h3 class="text-xl font-bold mb-2">你的选择</h3>
+                       <p class="text-sm">你的人生，是想继续做那个<span class="font-bold highlight-blue">下注的人</span>，还是有勇气去争取成为那个<span class="font-bold highlight-green">开场子的人</span>？</p>
+                       <p class="text-xs text-gray-500 mt-1">Gamble or own the house?</p>
+                   </div>
+               </div>
+                <div class="action-button-container">
+                   <button class="action-button">
+                       <i class="fas fa-bolt"></i>
+                       采取行动，打破剧本
+                   </button>
+               </div>
+           </div>
+
+       </main>
+
+       <footer class="text-center mt-16 md:mt-24 py-8">
+           <p class="text-gray-600 text-sm">
+               DESIGN INSPIRED BY CYBER-TECH & DARK AESTHETICS.
+           </p>
+       </footer>
+
+   </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
