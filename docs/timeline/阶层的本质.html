@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阶层的本质</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            stroke: #4A3B31;
+            fill: none;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 lg:p-24 overflow-y-auto">
+    <div class="absolute inset-0 z-0">
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="top: 10%; left: 10%; width: 250px; height: 250px; animation-duration: 22s;">
+            <path d="M125 0 L250 125 L125 250 L0 125 Z" stroke-width="15" />
+        </svg>
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="bottom: 5%; right: 10%; width: 200px; height: 200px; animation-duration: 18s; animation-delay: 2s;">
+            <rect x="50" y="50" width="100" height="100" stroke-width="15" />
+        </svg>
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="top: 50%; left: 15%; width: 150px; height: 150px; animation-duration: 25s; animation-delay: 5s;">
+            <circle cx="75" cy="75" r="65" stroke-width="10" />
+        </svg>
+    </div>
+
+    <main class="relative z-10 max-w-screen-xl mx-auto flex flex-col items-center space-y-24 w-full">
+
+        <section class="fade-in w-full flex flex-col items-center mt-12 mb-12">
+            <h1 class="font-display text-7xl md:text-9xl lg:text-[12rem] text-colossus leading-none">阶层</h1>
+            <p class="font-display text-4xl md:text-6xl text-highlight-gradient mt-4">HIERARCHY</p>
+            <p class="mt-8 md:mt-12 max-w-2xl text-xl md:text-2xl lg:text-3xl font-light leading-snug text-[#6B5D55]">
+                阶层，是一道无形的墙，将人类划分成不同的<span class="font-bold text-[#4A3B31]">资源和机会池</span>。
+            </p>
+        </section>
+
+        <section class="fade-in w-full text-left space-y-16">
+            <h2 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none text-highlight-gradient">真相颗粒</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-16">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-cube mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">现实</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">阶层是一个物理现实</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        它由你拥有的资产、人脉、认知和权力构成，而非你的品德或努力。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-sitemap mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">信息</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">信息与机会的稀缺性</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        上层社会信息互通，机会是<span class="font-bold">复利增长</span>；下层社会信息滞后，机会是<span class="font-bold">零和博弈</span>。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-arrows-up-down mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">固化</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">阶层固化是资源的复利效应</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        普通人难以跨越的，不是鸿沟，而是被<span class="font-bold">复利</span>拉开的巨大加速度。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-hand-holding-heart mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">工具</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">道德是维系阶层的表层工具</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        多数人被灌输的价值观，旨在让他们<span class="font-bold">安于自己的位置</span>，而非质疑和反抗。
+                    </p>
+                </div>
+                 <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-hard-hat mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">事实</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">阶层的本质是社会分工</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        它不是一个“好”或“坏”的问题，而是一个<span class="font-bold">存在和运行的残酷事实</span>。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in w-full text-left space-y-16 mt-16 mb-24">
+            <h2 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none text-highlight-gradient">行动建议</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-crosshairs mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">接受</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">接受现实，但不要屈服</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        认清你当前的阶层是打破它的<span class="font-bold">第一步</span>。专注于如何利用有限资源创造正向复利。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-head-side-brain mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">投资</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">投资于你的“认知资产”</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        阶层间的最大壁垒是<span class="font-bold">认知</span>。通过阅读和交流，打破思维定势，获取高质量信息。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-chart-area mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">构建</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">构建你自己的“小复利系统”</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        任何能让你持续获得正向回报的行动，都是在为你的未来搭建上升的<span class="font-bold">阶梯</span>。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Optional: Add scroll-based animations or other interactivity
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('opacity-0');
+            observer.observe(section);
+        });
+
+        // Add a class to body once all content is loaded to start overall animations
+        window.addEventListener('load', () => {
+            document.body.classList.add('content-loaded');
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

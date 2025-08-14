@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>凡是劝不动，拦不住的，那就是命。</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif SC', 'Inter', serif;
+            background-color: #F8F5F0; /* 素雅的宣纸色 */
+            color: #4A3B31; /* 沉静的陶土色 */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .text-huge {
+            font-size: clamp(2rem, 10vw, 6rem);
+            line-height: 1.1;
+            font-weight: 900;
+        }
+        .text-colossal {
+            font-size: clamp(3rem, 18vw, 10rem);
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+        .text-wabi-sabi-main {
+            color: #4A3B31;
+        }
+        .text-wabi-sabi-sub {
+            color: #796A62;
+        }
+        .highlight-wabi-sabi {
+            /* 孟菲斯设计色系中没有侘寂，此处使用灰白和自然的低饱和度色，如枯木色、淡藕荷色 */
+            background: linear-gradient(to right, rgba(140, 98, 57, 0.7), rgba(140, 98, 57, 0.3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtle-texture::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23C8C4BE' fill-opacity='0.15' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .line-art-shape {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            border: 2px solid rgba(121, 106, 98, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation: rotate-slow 20s infinite linear;
+            pointer-events: none;
+        }
+        .line-art-shape::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 150px;
+            border: 2px solid rgba(121, 106, 98, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        @keyframes rotate-slow {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="relative subtle-texture">
+
+    <div class="line-art-shape"></div>
+
+    <main class="container mx-auto px-4 md:px-6 lg:px-8 max-w-screen-xl relative z-10 text-center">
+        <h1 class="text-huge text-wabi-sabi-main">
+            凡是<span class="highlight-wabi-sabi">劝不动</span>，
+            <br>
+            <span class="highlight-wabi-sabi">拦不住</span>的，
+            <br>
+            那就是<span class="text-colossal highlight-wabi-sabi">命</span>。
+        </h1>
+
+        <div class="mt-12 max-w-4xl mx-auto px-4">
+            <p class="text-wabi-sabi-sub text-lg md:text-2xl leading-relaxed font-normal">
+                但凡有一个人拼死都不听劝，说明这条弯路，他必须走，
+                这个劫，他必须渡，生命这堂课，他也必须上。
+            </p>
+        </div>
+
+        <div class="mt-12 max-w-2xl mx-auto px-4">
+            <h2 class="text-wabi-sabi-main text-huge md:text-7xl font-bold">
+                <span class="highlight-wabi-sabi">你帮不了他的，</span>
+                <br>
+                不如<span class="highlight-wabi-sabi">随缘</span>。
+            </h2>
+        </div>
+
+        <p class="mt-8 text-wabi-sabi-sub text-xs md:text-sm uppercase tracking-wider opacity-70">
+            WHAT CANNOT BE PREVENTED, IS FATE.
+            <br>
+            LET IT BE.
+        </p>
+    </main>
+
+    <footer class="absolute bottom-4 left-0 right-0 text-center">
+        <p class="text-wabi-sabi-sub text-xs opacity-50">An insight into the flow of life.</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

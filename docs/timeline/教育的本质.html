@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教育的本质</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            stroke: #4A3B31;
+            fill: none;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 lg:p-24 overflow-y-auto">
+    <div class="absolute inset-0 z-0">
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="top: 10%; left: 10%; width: 200px; height: 200px; animation-duration: 22s;">
+            <circle cx="100" cy="100" r="90" stroke-width="20" />
+        </svg>
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="bottom: 5%; right: 5%; width: 150px; height: 150px; animation-duration: 18s; animation-delay: 2s;">
+            <rect x="25" y="25" width="100" height="100" stroke-width="15" />
+        </svg>
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="top: 50%; left: 5%; width: 100px; height: 100px; animation-duration: 25s; animation-delay: 5s;">
+            <polygon points="50,5 95,95 5,95" stroke-width="10" />
+        </svg>
+    </div>
+
+    <main class="relative z-10 max-w-screen-xl mx-auto flex flex-col items-center space-y-24 w-full">
+
+        <section class="fade-in w-full flex flex-col items-center mt-12 mb-12">
+            <h1 class="font-display text-7xl md:text-9xl lg:text-[12rem] text-colossus leading-none">教育</h1>
+            <p class="font-display text-4xl md:text-6xl text-highlight-gradient mt-4">EDUCATION</p>
+            <p class="mt-8 md:mt-12 max-w-2xl text-xl md:text-2xl lg:text-3xl font-light leading-snug text-[#6B5D55]">
+                教育，是一场<span class="font-bold text-[#4A3B31]">信息与价值观的传递仪式</span>，它既是开启机会的钥匙，也可能是<span class="font-bold text-[#4A3B31]">固化思维的枷锁</span>。
+            </p>
+        </section>
+
+        <section class="fade-in w-full text-left space-y-16">
+            <h2 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none text-highlight-gradient">真相颗粒</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-16">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-layer-group mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">分层</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">教育的本质是社会分层</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        你的学历是进入某个特定游戏场的<span class="font-bold">第一张门票</span>，而非能力的唯一证明。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-graduation-cap mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">驯化</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">应试教育的核心是驯化</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        它培养的是<span class="font-bold">服从性</span>，而非独立思考和创造力。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-brain mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">学习</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">学习能力远比学历重要</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        真正拉开差距的，是<span class="font-bold">终身学习的能力</span>——不断获取新知、迭代认知、解决新问题的能力。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-hourglass-half mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">复利</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">教育的代价是时间的复利</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        多数人把时间花在毫无价值的知识上，却错过了在现实中积累经验、建立人脉、创造<span class="font-bold">复利</span>的机会。
+                    </p>
+                </div>
+                 <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-cubes-stacked mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">打破</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">教育的最高境界是打破教育</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        真正的教育，是让你学会<span class="font-bold">独立思考</span>，质疑权威，创造属于自己的独特路径。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in w-full text-left space-y-16 mt-16 mb-24">
+            <h2 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none text-highlight-gradient">行动建议</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-book-open mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">分清</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">分清“学历”和“能力”</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        停止将你的价值与学历画等号。将精力从“拿文凭”转移到“解决实际问题”上。你的价值由你为市场提供的<span class="font-bold">价值</span>决定。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-infinity mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">终身</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">成为一个终身学习者</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        停止将学习视为一个阶段性任务，将它内化为你生活的一部分。用<span class="font-bold">行动来驱动学习</span>。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-puzzle-piece mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">跳出</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">主动跳出信息茧房</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        接触不同的思想，阅读那些挑战你认知体系的书籍。未来的机会往往隐藏在<span class="font-bold">跨界</span>和非主流的领域。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Optional: Add scroll-based animations or other interactivity
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('opacity-0');
+            observer.observe(section);
+        });
+
+        // Add a class to body once all content is loaded to start overall animations
+        window.addEventListener('load', () => {
+            document.body.classList.add('content-loaded');
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

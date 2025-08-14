@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>当下的本质</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                              linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            max-width: 1920px;
+            margin: auto;
+            padding: 2rem;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .line-art {
+            stroke: #4A3B31;
+            stroke-width: 1.5;
+            fill: none;
+            opacity: 0.2;
+        }
+        .point-icon {
+            color: #6B5D55;
+        }
+        .content-section {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16">
+
+    <div class="memphis-accent top-1/4 left-1/4 w-32 h-32 md:w-64 md:h-64 rounded-full bg-indigo-200 animate-slow-drift"></div>
+    <div class="memphis-accent bottom-1/4 right-1/4 w-24 h-24 md:w-48 md:h-48 bg-teal-200 transform rotate-45 animate-slow-drift" style="animation-delay: -5s;"></div>
+    <div class="memphis-accent top-1/2 left-0 w-20 h-20 md:w-40 md:h-40 bg-gray-300 rounded-lg animate-slow-drift" style="animation-delay: -10s;"></div>
+
+    <div class="container flex flex-col justify-center min-h-screen space-y-20">
+
+        <div class="content-section flex flex-col items-center justify-center pt-20 pb-10">
+            <h1 class="font-display text-colossus leading-none">
+                当下
+            </h1>
+            <p class="text-xl md:text-3xl text-gray-700 mt-6 md:mt-10 max-w-3xl leading-relaxed">
+                当下的本质，是一场无法逃避的 <span class="font-bold text-highlight-gradient">时间复利</span>。
+            </p>
+        </div>
+
+        <div class="w-full h-px bg-gray-400 opacity-20 my-10"></div>
+
+        <div class="content-section flex flex-col items-center justify-center text-left pt-10 pb-10">
+            <h2 class="font-display text-5xl md:text-7xl lg:text-8xl text-highlight-gradient">真相颗粒</h2>
+            <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16 mt-12 md:mt-20 max-w-6xl">
+                
+                <div class="flex flex-col space-y-4 items-start">
+                    <div class="w-full text-center">
+                        <i class="fa-solid fa-seedling text-5xl point-icon opacity-70"></i>
+                    </div>
+                    <p class="text-xl md:text-2xl font-bold leading-snug">
+                        当下是你这辈子最年轻的时刻。<br>
+                        <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                            你所有关于未来的恐惧和犹豫，都是基于对当下行动的逃避。
+                        </span>
+                    </p>
+                </div>
+                
+                <div class="flex flex-col space-y-4 items-start">
+                    <div class="w-full text-center">
+                        <i class="fa-solid fa-bolt text-5xl point-icon opacity-70"></i>
+                    </div>
+                    <p class="text-xl md:text-2xl font-bold leading-snug">
+                        行动是解决焦虑的唯一解药。<br>
+                        <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                            所谓“活在当下”，不是躺平享受，而是在当下拼尽全力，为未来创造复利。
+                        </span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col space-y-4 items-start">
+                    <div class="w-full text-center">
+                        <i class="fa-solid fa-mountain-sun text-5xl point-icon opacity-70"></i>
+                    </div>
+                    <p class="text-xl md:text-2xl font-bold leading-snug">
+                        你感受到的痛苦，大部分是价值观带来的。<br>
+                        <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                            沉溺于过去或担忧未来，是在用虚拟的“二手人生”消耗你最宝贵的当下。
+                        </span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col space-y-4 items-start">
+                    <div class="w-full text-center">
+                        <i class="fa-solid fa-cubes text-5xl point-icon opacity-70"></i>
+                    </div>
+                    <p class="text-xl md:text-2xl font-bold leading-snug">
+                        普通人的一生，是无数个“当下”的叠加。<br>
+                        <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                            你在每个当下所做的选择，累积起来就是你的命运。那些看似巨大的阶层鸿沟，不过是日积月累的微小决策差异。
+                        </span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col space-y-4 items-start">
+                    <div class="w-full text-center">
+                        <i class="fa-solid fa-infinity text-5xl point-icon opacity-70"></i>
+                    </div>
+                    <p class="text-xl md:text-2xl font-bold leading-snug">
+                        所谓的成功，不是一蹴而就的终点。<br>
+                        <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                            它不是一个结果，而是一个持续的、正向复利的过程。
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full h-px bg-gray-400 opacity-20 my-10"></div>
+        
+        <div class="content-section flex flex-col items-center justify-center text-left pt-10 pb-20">
+            <h2 class="font-display text-5xl md:text-7xl lg:text-8xl text-highlight-gradient">行动建议</h2>
+            <div class="w-full space-y-12 mt-12 md:mt-20 max-w-6xl">
+                
+                <div class="flex items-start md:items-center space-x-6">
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-700 opacity-30">01</span>
+                    <div class="flex-1">
+                        <p class="text-2xl md:text-3xl font-bold leading-snug">
+                            停止内耗，开始行动。<br>
+                            <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                                无论是学习一项技能、健身、还是开拓副业，所有能为你带来正向复利的事情，都只存在于“当下”。
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start md:items-center space-x-6">
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-700 opacity-30">02</span>
+                    <div class="flex-1">
+                        <p class="text-2xl md:text-3xl font-bold leading-snug">
+                            量化你的当下。<br>
+                            <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                                把你的时间当成最稀缺的资源。记录你一天的时间都花在了哪里，你会发现自己有多少“当下”被无意义的刷手机、社交和抱怨所吞噬。
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start md:items-center space-x-6">
+                    <span class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-700 opacity-30">03</span>
+                    <div class="flex-1">
+                        <p class="text-2xl md:text-3xl font-bold leading-snug">
+                            拥抱不适。<br>
+                            <span class="block text-base md:text-lg font-light text-gray-600 mt-2 leading-relaxed">
+                                真正能带来成长的行动，往往伴随着痛苦和不适。当你感到难受时，请意识到这正是你在对抗惰性、创造复利的过程。
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

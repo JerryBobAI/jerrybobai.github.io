@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作的本质</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            stroke: #4A3B31;
+            fill: none;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 lg:p-24 overflow-y-auto">
+    <div class="absolute inset-0 z-0">
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="top: 10%; left: 10%; width: 200px; height: 200px; animation-duration: 20s;">
+            <circle cx="100" cy="100" r="90" stroke-width="20" />
+        </svg>
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="bottom: 5%; right: 5%; width: 150px; height: 150px; animation-duration: 18s; animation-delay: 2s;">
+            <rect x="25" y="25" width="100" height="100" stroke-width="15" />
+        </svg>
+        <svg class="memphis-accent w-full h-full animate-slow-drift" style="top: 50%; left: 5%; width: 100px; height: 100px; animation-duration: 25s; animation-delay: 5s;">
+            <polygon points="50,5 95,95 5,95" stroke-width="10" />
+        </svg>
+    </div>
+
+    <main class="relative z-10 max-w-screen-xl mx-auto flex flex-col items-center space-y-24 w-full">
+
+        <section class="fade-in w-full flex flex-col items-center mt-12 mb-12">
+            <h1 class="font-display text-7xl md:text-9xl lg:text-[12rem] text-colossus leading-none">工作</h1>
+            <p class="font-display text-4xl md:text-6xl text-highlight-gradient mt-4">WORK</p>
+            <p class="mt-8 md:mt-12 max-w-2xl text-xl md:text-2xl lg:text-3xl font-light leading-snug text-[#6B5D55]">
+                工作是一个残酷的价值游戏，它与你的情感和理想无关，只与你能为市场提供的
+                <span class="font-bold text-[#4A3B31]">稀缺价值</span>有关。
+            </p>
+        </section>
+
+        <section class="fade-in w-full text-left space-y-16">
+            <h2 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none text-highlight-gradient">真相颗粒</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-handshake mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">交易</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">工作的本质是交易</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        你出卖自己的时间、技能和精力，换取生存所需的报酬。你的薪水永远取决于你的<span class="font-bold">可替代性</span>。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-chart-line mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">回报</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">回报只为结果买单</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        公司只关心你创造了多少利润，解决了多少问题。你的价值只体现在你的<span class="font-bold">产出</span>上。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-layer-group mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">分层</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">能力分层决定命运</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        顶尖的1%的人拿走99%的红利，这是<span class="font-bold">马太效应</span>在工作中的体现。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-sync-alt mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">复利</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">复利是最大的鸿沟</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        真正拉开差距的，是你的<span class="font-bold">学习曲线</span>和<span class="font-bold">知识复利</span>。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in w-full text-left space-y-16 mt-16 mb-24">
+            <h2 class="font-display text-6xl md:text-7xl lg:text-8xl leading-none text-highlight-gradient">行动建议</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-shield-alt mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">护城河</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">找到你的护城河</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        深化你的<span class="font-bold">不可替代性</span>，打造一个独属于你的<span class="font-bold">技能组合</span>。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-bullseye mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">结果</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">结果导向思维</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        停止自我感动，开始思考如何用最高效的方式交付<span class="font-bold">高质量的结果</span>。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-coins mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">投资</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">持续投资自己</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        将收入用于学习新知识。你的<span class="font-bold">认知升级</span>，是你职业生涯最重要的投资。
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-start text-4xl md:text-5xl text-[#6B5D55]">
+                        <i class="fa-solid fa-mountain mr-4"></i>
+                        <span class="font-display text-[#4A3B31]">选择</span>
+                    </div>
+                    <h3 class="font-bold text-2xl md:text-3xl text-[#4A3B31]">选择比努力更重要</h3>
+                    <p class="text-lg md:text-xl font-light leading-relaxed text-[#6B5D55]">
+                        选择一个有潜力的行业和公司，<span class="font-bold">风口</span>会带你飞得更高。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Optional: Add scroll-based animations or other interactivity
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('opacity-0');
+            observer.observe(section);
+        });
+
+        // Add a class to body once all content is loaded to start overall animations
+        window.addEventListener('load', () => {
+            document.body.classList.add('content-loaded');
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
