@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微软韦青：不是人类没有未来</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* CSS 样式参考自知识库中的光晕高斯整合样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Roboto:wght@300;400&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #08080A; /* 意识之海的深邃蓝黑 */
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(20, 25, 40, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 2rem;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+        }
+
+        .huge-text {
+            font-size: clamp(8rem, 20vw, 18rem);
+            line-height: 1;
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.05;
+            z-index: 1;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(100px);
+        }
+
+        .blob {
+            position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform;
+        }
+        .blob-1 { background: #EC4899; width: 35vw; height: 35vw; top: 10vh; left: 10vw; animation: move-blob-1 30s ease-in-out infinite; }
+        .blob-2 { background: #3B82F6; width: 40vw; height: 40vw; top: 40vh; left: 60vw; animation: move-blob-2 35s ease-in-out infinite; }
+
+        @keyframes move-blob-1 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(15vw,20vh) scale(1.2)} 100%{transform:translate(0,0) scale(1)} }
+        @keyframes move-blob-2 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-20vw,-15vh) scale(.8)} 100%{transform:translate(0,0) scale(1)} }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="relative z-10 px-4 md:px-8 py-16">
+        <div class="container mx-auto max-w-7xl">
+
+            <section class="min-h-screen flex flex-col items-center justify-center text-center relative mb-32 md:mb-48">
+                <p class="text-xl md:text-2xl font-light text-gray-400 uppercase tracking-widest fade-in">WEIQING'S INSIGHT</p>
+                <h1 class="text-4xl md:text-7xl lg:text-[10rem] font-black leading-tight tracking-tighter my-8 fade-in">
+                    不是人类没有未来<br>
+                    <span class="text-3xl md:text-6xl lg:text-8xl text-pink-500 block mt-4">是活成机器的人类没有未来</span>
+                </h1>
+                <p class="text-lg md:text-xl font-light text-gray-300 max-w-4xl fade-in" style="transition-delay: 0.5s;">
+                    微软中国首席技术官韦青，关于AI时代的深度思考。
+                </p>
+                <span class="huge-text">HUMANITY</span>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 md:mb-48">
+                <div class="glass-card fade-in">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <i class="fas fa-robot text-4xl text-pink-400"></i>
+                        <h3 class="text-3xl md:text-4xl font-bold">培养机器人的节奏</h3>
+                    </div>
+                    <p class="text-xl md:text-2xl font-black text-white">听话、勤奋、苦干，卷死别人</p>
+                    <p class="mt-4 text-gray-300">
+                        这是在按照机器人的标准来要求自己。<span class="text-pink-400">AI只会替代机器人的工作，不会替代人的工作。</span>
+                    </p>
+                </div>
+                <div class="glass-card fade-in" style="transition-delay: 0.2s;">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <i class="fas fa-hands-holding-child text-4xl text-blue-400"></i>
+                        <h3 class="text-3xl md:text-4xl font-bold">救孩子的关键</h3>
+                    </div>
+                    <p class="text-xl md:text-2xl font-black text-white">在家长，在人性</p>
+                    <p class="mt-4 text-gray-300">
+                        不要拼命学习，要刻苦学习。<span class="text-blue-400">找回自己的人性，是家长们最重要的功课。</span>
+                    </p>
+                </div>
+            </section>
+            
+            <section class="mb-24 md:mb-48">
+                <div class="glass-card relative text-center p-8 lg:p-16 fade-in" style="transition-delay: 0.4s;">
+                    <p class="text-xl md:text-2xl font-light text-gray-300 uppercase tracking-widest">AI & HUMANITY</p>
+                    <h2 class="text-4xl md:text-6xl font-black mt-2 leading-tight">
+                        AI是<span class="text-pink-500">概率机</span>，不是<span class="text-blue-500">真理机</span>
+                    </h2>
+                    <p class="mt-8 text-lg lg:text-xl max-w-4xl mx-auto font-light text-gray-300">
+                        它只会替代机器人的工作，而<span class="font-bold text-white">人的工作是创新</span>。
+                    </p>
+                    <div class="flex flex-col md:flex-row items-center justify-center mt-8 space-y-8 md:space-y-0 md:space-x-16">
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-xmark text-4xl text-red-500"></i>
+                            <p class="text-2xl font-bold">替代不了人的工作</p>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i class="fas fa-check-circle text-4xl text-green-500"></i>
+                            <p class="text-2xl font-bold">替代机器人的工作</p>
+                        </div>
+                    </div>
+                     <span class="huge-text text-pink-500/10">ERR</span>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-24 md:mb-48">
+                <div class="glass-card fade-in" style="transition-delay: 0.6s;">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <i class="fas fa-question text-4xl text-blue-400"></i>
+                        <h3 class="text-3xl md:text-4xl font-bold">提问成关键</h3>
+                    </div>
+                    <p class="text-xl md:text-2xl font-black text-white">答案随手可得</p>
+                    <p class="mt-4 text-gray-300">
+                        AI负责解释，而孩子要学会<span class="text-blue-400">利用AI探索</span>。这才是AI时代的新学习范式。
+                    </p>
+                </div>
+                <div class="glass-card fade-in" style="transition-delay: 0.8s;">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <i class="fas fa-lightbulb text-4xl text-pink-400"></i>
+                        <h3 class="text-3xl md:text-4xl font-bold">AI时代建议</h3>
+                    </div>
+                    <ul class="space-y-4 text-lg text-gray-300">
+                        <li>
+                            <i class="fas fa-mobile-screen-button text-xl text-pink-400 mr-3"></i>
+                            <span class="font-bold">降低信息消费量</span>
+                            <p class="text-sm mt-1 ml-6 text-gray-400">每天留出不受打扰的“空白时段”对抗焦虑。</p>
+                        </li>
+                        <li>
+                             <i class="fas fa-seedling text-xl text-pink-400 mr-3"></i>
+                            <span class="font-bold">找到你的“初心”</span>
+                            <p class="text-sm mt-1 ml-6 text-gray-400">你到底想活成什么样的人？</p>
+                        </li>
+                        <li>
+                             <i class="fas fa-handshake-angle text-xl text-pink-400 mr-3"></i>
+                            <span class="font-bold">守住你的“本分”</span>
+                            <p class="text-sm mt-1 ml-6 text-gray-400">还原人性的享受，抵御AI制成的幻象。</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="min-h-[50vh] flex flex-col items-center justify-center text-center fade-in py-24">
+                 <h2 class="text-4xl md:text-6xl font-black mb-8 max-w-4xl mx-auto leading-tight">
+                    我们的未来，<br>
+                    取决于我们选择<span class="text-blue-500">成为谁</span>。
+                 </h2>
+                <p class="text-xl md:text-2xl font-light text-gray-300 max-w-4xl">
+                    是继续被动的机器，还是主动创造的人。
+                </p>
+                 <span class="huge-text text-blue-500/10">FUTURE</span>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.2 // 元素可见20%时触发
+        });
+
+        const hiddenElements = document.querySelectorAll('.fade-in');
+        hiddenElements.forEach(el => observer.observe(el));
+    });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

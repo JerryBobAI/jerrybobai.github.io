@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间管理：一场勇敢的断舍离</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                              linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 16px; /* Base font size */
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        /* Tailwind responsive adjustments */
+        .container {
+            width: 100%;
+            max-width: 1920px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        .w-full-lg {
+            width: 100%;
+        }
+
+        /* Revised button style */
+        .wabi-sabi-btn {
+            background-color: #4A3B31; /* 深色调，与背景形成对比 */
+            color: #DCD6CC; /* 浅色文字，强调质朴感 */
+            font-weight: 900; /* 加粗字体 */
+            padding: 1.25rem 3rem; /* 增加内边距 */
+            border-radius: 0.5rem; /* 微圆角 */
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .wabi-sabi-btn:hover {
+            background-color: #3B2D25; /* 悬停时颜色略深 */
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 lg:p-24">
+    <div class="memphis-accent top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#7A989C] rounded-full animate-slow-drift"></div>
+    <div class="memphis-accent bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 w-48 h-48 bg-[#6B5D55] rounded-xl animate-slow-drift"></div>
+
+    <div class="container mx-auto px-4 py-8 relative z-10 flex flex-col items-center justify-center min-h-screen">
+        <div class="text-center w-full-lg">
+            <p class="text-xl md:text-2xl lg:text-3xl tracking-wide uppercase text-gray-600 font-display">THE ART OF SUBTRACTION</p>
+            <h1 class="font-display text-colossus text-gray-800">
+                <span class="text-highlight-gradient">少做</span>
+            </h1>
+            <p class="text-connecting font-light">而非多做</p>
+            <h2 class="font-display text-3xl md:text-5xl lg:text-7xl mt-4 max-w-4xl mx-auto leading-tight">
+                真正的效率，藏在<br/><span class="text-highlight-gradient">“不做什么”</span>的秘密里。
+            </h2>
+        </div>
+
+        <div class="mt-20 md:mt-32 w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 text-left">
+            <div class="p-6 md:p-8 bg-white bg-opacity-30 rounded-2xl backdrop-filter backdrop-blur-sm border border-white border-opacity-20 shadow-lg">
+                <div class="flex items-center mb-4">
+                    <span class="text-4xl md:text-5xl font-display font-black text-highlight-gradient mr-4">01</span>
+                    <h3 class="font-display text-2xl md:text-3xl uppercase leading-none">尖锐提问</h3>
+                </div>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed tracking-wide">
+                    你今天的时间表里，有什么是你明明知道<strong>没价值</strong>，却还在继续坚持的？<br>
+                    你敢不敢把它<strong>彻底删除</strong>？
+                </p>
+            </div>
+            
+            <div class="p-6 md:p-8 bg-white bg-opacity-30 rounded-2xl backdrop-filter backdrop-blur-sm border border-white border-opacity-20 shadow-lg">
+                <div class="flex items-center mb-4">
+                    <span class="text-4xl md:text-5xl font-display font-black text-highlight-gradient mr-4">02</span>
+                    <h3 class="font-display text-2xl md:text-3xl uppercase leading-none">警示焦虑</h3>
+                </div>
+                <p class="text-lg md:text-xl text-gray-700 leading-relaxed tracking-wide">
+                    如果你不学会<strong>主动放弃</strong>，你的未来只会被无数琐事和伪目标吞噬。<br>
+                    真正让你停滞不前的，不是你没做够什么，而是你没勇气<strong>舍弃什么</strong>。
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-20 md:mt-32 w-full max-w-6xl mx-auto">
+            <h3 class="font-display text-2xl md:text-3xl lg:text-4xl uppercase text-center mb-8 tracking-wide text-gray-600">
+                内幕揭秘：高手的秘密武器
+            </h3>
+            <div class="relative w-full">
+                <div class="flex flex-col justify-center items-center h-96 w-full">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                            <g fill="none" stroke="#6B5D55" stroke-width="0.5" opacity="0.1">
+                                <circle cx="50" cy="50" r="45"></circle>
+                                <path d="M 50 10 L 50 90" stroke-linecap="round"></path>
+                                <path d="M 10 50 L 90 50" stroke-linecap="round"></path>
+                            </g>
+                            <path d="M 50 50 A 40 40 0 0 1 90 50" stroke="#4A3B31" stroke-width="0.75" opacity="0.2" fill="none" class="animate-slow-drift" style="animation-duration: 20s;"/>
+                            <path d="M 50 50 A 40 40 0 0 0 10 50" stroke="#4A3B31" stroke-width="0.75" opacity="0.2" fill="none" class="animate-slow-drift" style="animation-duration: 22s; animation-delay: 2s;"/>
+                        </svg>
+                    </div>
+                    <div class="relative z-10 flex flex-col justify-center items-center text-center">
+                        <p class="font-display text-colossus text-highlight-gradient mt-0 md:mt-10 lg:mt-20">
+                            <span class="block">放弃</span>
+                        </p>
+                        <p class="text-xl md:text-3xl font-light text-gray-700 mt-0">
+                            他们只告诉你<strong>待办清单</strong>
+                        </p>
+                        <i class="fas fa-arrow-down text-3xl mt-4 text-gray-500 animate-bounce"></i>
+                        <p class="text-xl md:text-3xl font-light text-gray-700 mt-8">
+                            真正拉开差距的是<br>
+                            <strong class="font-display text-4xl md:text-6xl text-highlight-gradient">放弃清单</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-20 md:mt-32 w-full max-w-6xl mx-auto text-center">
+            <h3 class="font-display text-2xl md:text-3xl lg:text-4xl uppercase text-gray-600 mb-6">行动指令</h3>
+            <div class="flex flex-col items-center">
+                <i class="fas fa-eraser text-6xl md:text-8xl text-highlight-gradient mb-6 animate-slow-drift"></i>
+                <p class="text-lg md:text-xl lg:text-2xl max-w-2xl mx-auto leading-relaxed text-gray-700 mb-6">
+                    拿出你的时间表，<strong>划掉</strong>一项你可以放弃的任务。<br>
+                    别再让无意义的忙碌，偷走你的人生主导权。
+                </p>
+                <button class="wabi-sabi-btn font-display text-2xl md:text-3xl">
+                    立即舍弃
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-20 md:mt-32 w-full max-w-6xl mx-auto text-center">
+            <p class="text-xl md:text-2xl lg:text-3xl font-display max-w-3xl mx-auto leading-relaxed text-gray-700">
+                下次你想加一项新任务，不妨先问自己：<br>
+                <span class="text-highlight-gradient text-3xl md:text-4xl font-black">我愿意为它放弃什么？</span>
+            </p>
+            <p class="text-2xl md:text-3xl lg:text-4xl font-display mt-8 text-gray-800">
+                真正的时间管理，是<span class="text-highlight-gradient">一场勇敢的断舍离。</span>
+            </p>
+        </div>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共识套现：高效赚钱的底层逻辑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f8f9fa; /* Very light gray page background */
+        }
+
+        .memphis-card {
+            padding: 2rem; /* 32px */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px; /* Minimum height for cards */
+        }
+
+        .memphis-bg-yellow { background-color: #FFD166; color: #000000; }
+        .memphis-bg-pink   { background-color: #EF476F; color: #FFFFFF; }
+        .memphis-bg-green  { background-color: #06D6A0; color: #000000; }
+        .memphis-bg-blue   { background-color: #118AB2; color: #FFFFFF; }
+        .memphis-bg-white  { background-color: #FFFFFF; color: #000000; }
+        .memphis-bg-lightgray { background-color: #e9ecef; color: #000000; }
+
+
+        .text-super-xl { font-size: clamp(3.5rem, 10vw, 8rem); line-height: 1; font-weight: 900; }
+        .text-super-lg { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 1.1; font-weight: 800; }
+        .text-super-md { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.2; font-weight: 700; }
+
+        .chinese-title { font-weight: 900; }
+        .english-subtitle { font-size: 0.8em; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-top: 0.25rem; }
+
+        .highlight-text-pink {
+            background: linear-gradient(to right, #EF476F, rgba(239, 71, 111, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-green {
+            background: linear-gradient(to right, #06D6A0, rgba(6, 214, 160, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-blue {
+            background: linear-gradient(to right, #118AB2, rgba(17, 138, 178, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .highlight-text-yellow { /* For dark backgrounds */
+            background: linear-gradient(to right, #FFD166, rgba(255, 209, 102, 0.5));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+
+        /* Memphis decorative elements */
+        .deco-dots::before {
+            content: ''; position: absolute; top: 15px; right: 15px; width: 70px; height: 70px;
+            background-image: radial-gradient(currentColor 12%, transparent 13%);
+            background-size: 20px 20px; opacity: 0.15;
+        }
+        .memphis-bg-pink .deco-dots::before, .memphis-bg-blue .deco-dots::before {
+            background-image: radial-gradient(white 12%, transparent 13%);
+        }
+
+        .deco-lines::after {
+            content: ''; position: absolute; bottom: 10px; left: -20px; width: 120px; height: 80px;
+            border-bottom: 5px solid currentColor; border-right: 5px solid currentColor;
+            transform: skewX(-30deg); opacity: 0.1;
+        }
+        .memphis-bg-pink .deco-lines::after, .memphis-bg-blue .deco-lines::after {
+            border-color: white;
+        }
+        .icon-large { font-size: 3rem; margin-bottom: 0.75rem; opacity: 0.6; }
+
+    </style>
+</head>
+<body class="bg-white text-gray-800 p-8 md:p-16 antialiased">
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div class="col-span-full text-center py-16">
+            <h1 class="text-super-lg chinese-title mb-4">
+                <span class="highlight-text-green">高效赚钱的底层逻辑</span>
+            </h1>
+            <h2 class="text-4xl md:text-5xl font-bold">
+                <span class="highlight-text-blue">共识套现</span>
+            </h2>
+            <p class="mt-4 text-gray-500 text-lg">CASHING OUT ON CONSENSUS: THE CORE LOGIC OF EFFICIENT WEALTH</p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div class="md:col-span-2 lg:col-span-2 memphis-card memphis-bg-pink deco-lines flex flex-col justify-center">
+            <h3 class="text-super-md chinese-title text-white">
+                <span class="text-super-xl text-white">高效赚钱</span>靠什么？
+            </h3>
+            <span class="english-subtitle">The real secret to making money</span>
+            <p class="mt-4 text-lg md:text-xl leading-relaxed text-white">
+                你以为靠的是天赋、努力、资源？其实，真正的高手只做一件事：精准捕捉“蠢人（或懒人）”的共识，把这种集体心理提炼成可交易的产品或服务，然后快速变现。
+            </p>
+        </div>
+
+        <div class="memphis-card memphis-bg-yellow deco-dots">
+            <i class="fas fa-bullseye icon-large mb-4"></i>
+            <h3 class="text-super-md chinese-title">直击<br/>痛点</h3>
+            <span class="english-subtitle">HITTING THE PAIN POINT</span>
+            <p class="mt-auto text-lg md:text-xl leading-relaxed">
+                为什么有些看似“无脑”的产品却能大卖？答案很残酷——市场不是奖励最聪明的人，而是奖励最懂“共识套现”玩法的人。
+            </p>
+        </div>
+
+        <div class="memphis-card memphis-bg-blue deco-lines">
+            <i class="fas fa-chart-line icon-large mb-4 text-white"></i>
+            <h3 class="text-super-md chinese-title text-white">放大<br/>焦虑</h3>
+            <span class="english-subtitle text-white">AMPLIFYING ANXIETY</span>
+            <p class="mt-auto text-lg md:text-xl leading-relaxed text-white">
+                如果你还在自嗨式地“做自己觉得牛的东西”，却忽略了大众的真实需求和心理，你的努力很可能只是自娱自乐。你不懂共识，就赚不到大钱。
+            </p>
+        </div>
+
+        <div class="memphis-card memphis-bg-green deco-dots">
+            <i class="fas fa-eye icon-large mb-4"></i>
+            <h3 class="text-super-md chinese-title">内幕<br/>揭秘</h3>
+            <span class="english-subtitle">INSIDER REVELATION</span>
+            <p class="mt-auto text-lg md:text-xl leading-relaxed">
+                那些年入百万、千万的项目，背后都有一个共性——他们不是在教育用户，而是在迎合、放大、甚至制造用户的“集体幻觉”。他们把“蠢人共识”变成了流量池。
+            </p>
+        </div>
+
+        <div class="memphis-card memphis-bg-lightgray deco-lines">
+            <i class="fas fa-bolt icon-large mb-4"></i>
+            <h3 class="text-super-md chinese-title">行动<br/>指令</h3>
+            <span class="english-subtitle">CALL TO ACTION</span>
+            <p class="mt-auto text-lg md:text-xl leading-relaxed">
+                想高效赚钱？别再闭门造车。去观察、去提炼、去迎合大众的“低门槛共识”，然后用最快的方式把它变现。赚钱的本质，从来不是“改变世界”，而是“利用世界”。
+            </p>
+        </div>
+        
+        <div class="md:col-span-2 lg:col-span-2 memphis-card memphis-bg-pink deco-dots flex flex-col justify-center">
+            <h3 class="text-super-md chinese-title text-white">
+                <span class="text-super-xl text-white">下次，<br/></span>
+                <span class="highlight-text-yellow text-white">你问问自己...</span>
+            </h3>
+            <span class="english-subtitle">THE NEXT TIME...</span>
+            <p class="mt-auto text-lg md:text-xl leading-relaxed text-white">
+                下次你看到一个你觉得“low”的爆款产品，不妨问问自己——它到底提炼了哪种共识？你能不能也做一次“共识套现”？
+            </p>
+        </div>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

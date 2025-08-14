@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>藏与显：内在的锋芒</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', 'Noto Serif SC', serif;
+            background-color: #f4f4f2; /* 极浅的米灰色，带有侘寂感 */
+            color: #3a3a3a; /* 深炭灰色文字 */
+            --highlight-color-rgb: 157, 90, 69; /* 陶土色 #9d5a45 的 RGB 值 */
+        }
+        .chinese-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        .text-super-xl {
+            font-size: clamp(6rem, 18vw, 15rem);
+            line-height: 1;
+            font-weight: 900;
+        }
+        .text-super-lg {
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 1.1;
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(var(--highlight-color-rgb), 0.7);
+        }
+        .highlight-text-gradient {
+            background: linear-gradient(to right, rgb(var(--highlight-color-rgb)) 0%, rgba(var(--highlight-color-rgb), 0.4) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .wabi-sabi-card {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 0.75rem; /* 12px */
+            padding: 2rem; /* 32px */
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .wabi-sabi-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .abstract-line-art {
+            stroke: rgba(var(--highlight-color-rgb), 0.4);
+            stroke-width: 1.5;
+            fill: none;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-6 lg:p-8">
+
+    <div class="max-w-[1920px] mx-auto">
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+
+            <div class="wabi-sabi-card xl:col-span-2 flex flex-col justify-center items-center text-center min-h-[400px]">
+                <h1 class="text-super-lg chinese-serif">真正的才华<br><span class="highlight-text-gradient">不必说</span></h1>
+                <p class="english-subtitle mt-4">THE ELOQUENCE OF SILENCE</p>
+            </div>
+
+            <div class="wabi-sabi-card lg:col-span-2">
+                <h2 class="text-3xl font-bold mb-4 chinese-serif">气质与故事感</h2>
+                <p class="english-subtitle mb-6">TEMPERAMENT & AURA OF STORY</p>
+                <p class="text-lg leading-relaxed text-gray-700 mb-4">一个女人无论穿得多么普通，<strong class="font-semibold" style="color: #6d4c41;">气质</strong>自会流露；</p>
+                <p class="text-lg leading-relaxed text-gray-700">一个男人即使沉默不语，<strong class="font-semibold" style="color: #6d4c41;">故事感</strong>便已在空气中弥漫。</p>
+                <div class="flex justify-end mt-8">
+                    <svg class="abstract-line-art w-24 h-24" viewBox="0 0 100 100">
+                        <path d="M 20 80 C 40 20, 60 20, 80 80" />
+                        <circle cx="50" cy="50" r="5" fill="rgba(var(--highlight-color-rgb), 0.1)" stroke-width="0"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="wabi-sabi-card md:col-span-2 xl:col-span-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-center md:text-left">
+                <div class="md:pr-8">
+                    <h2 class="text-3xl font-bold mb-4 chinese-serif">藏与显</h2>
+                    <p class="english-subtitle mb-6">TO HIDE OR TO SHOW</p>
+                    <p class="text-lg leading-relaxed text-gray-700">有才者<strong style="color: #6d4c41;">藏</strong>，无才者<strong style="color: #6d4c41;">显</strong>。</p>
+                    <p class="text-lg leading-relaxed text-gray-700 mt-2">越是缺什么，越想显摆什么；真正拥有的人，反而淡然无求，不在意别人的目光。</p>
+                </div>
+                <div class="flex justify-around items-center h-full">
+                    <span class="text-super-xl chinese-serif highlight-text-gradient">藏</span>
+                    <span class="text-super-xl chinese-serif opacity-20">显</span>
+                </div>
+            </div>
+
+            <div class="wabi-sabi-card lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-3xl font-bold mb-4 chinese-serif">心理需求</h2>
+                    <p class="english-subtitle mb-6">PSYCHOLOGICAL NEEDS</p>
+                    <div class="mb-6">
+                        <p class="font-semibold text-lg text-gray-800 mb-2">普通人 <span class="english-subtitle text-xs">ORDINARY PEOPLE</span></p>
+                        <p class="text-gray-600">被看见、被认同、被包裹在热闹的氛围里，借外在的喧嚣填补内心的空白。</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-lg text-gray-800 mb-2">高手 <span class="english-subtitle text-xs">MASTERS</span></p>
+                        <p class="text-gray-600">“<span class="highlight-text-gradient font-bold text-xl">别来打扰</span>”，只愿和懂得的人低调相遇，宁愿和光同尘，也不愿被分外的人窥见。</p>
+                    </div>
+                </div>
+                <div class="mt-8 text-right">
+                    <i class="fas fa-users text-4xl opacity-10"></i>
+                    <i class="fas fa-user-ninja text-4xl opacity-30 ml-4"></i>
+                </div>
+            </div>
+
+            <div class="wabi-sabi-card flex items-center justify-center text-center">
+                <p class="text-super-lg chinese-serif opacity-30">暴露</p>
+            </div>
+
+            <div class="wabi-sabi-card flex items-center justify-center text-center">
+                <p class="text-super-lg chinese-serif opacity-30">吸引力</p>
+            </div>
+
+            <div class="wabi-sabi-card lg:col-span-2">
+                <h2 class="text-3xl font-bold mb-4 chinese-serif">表象的悖论</h2>
+                <p class="english-subtitle mb-6">THE PARADOX OF APPEARANCE</p>
+                <p class="text-lg leading-relaxed text-gray-700">坏人可以道貌岸然，坐在那里一言不发，旁人未必能识破；有才华的人也是如此。</p>
+                <blockquote class="mt-6 border-l-2 pl-4 italic" style="border-color: rgba(var(--highlight-color-rgb), 0.5)">
+                    <p class="text-2xl font-semibold chinese-serif" style="color: #6d4c41;">真正的锋芒，<br>往往藏在<span class="highlight-text-gradient">沉默</span>里。</p>
+                </blockquote>
+            </div>
+
+            <div class="wabi-sabi-card md:col-span-2 xl:col-span-4 flex items-center justify-center text-center min-h-[300px] bg-gray-800 text-white">
+                <p class="text-super-lg chinese-serif" style="color: #f4f4f2;">锋芒藏于<span class="highlight-text-gradient">沉默</span></p>
+                <p class="english-subtitle absolute bottom-8">TRUE BRILLIANCE IS HIDDEN IN SILENCE</p>
+            </div>
+
+        </main>
+    </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const cards = document.querySelectorAll('.wabi-sabi-card');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Optional: stop observing after it's visible
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+    });
+</script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
