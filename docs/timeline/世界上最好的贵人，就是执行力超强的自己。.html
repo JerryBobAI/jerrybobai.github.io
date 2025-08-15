@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界上最好的贵人，就是执行力超强的自己。</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #0f172a; /* bg-slate-900 */
+            color: #e2e8f0; /* text-slate-200 */
+            overflow-x: hidden;
+        }
+        .brand-orange { color: #f97316; } /* text-orange-500 */
+        .bg-brand-orange { background-color: #f97316; }
+        .border-brand-orange { border-color: #f97316; }
+        .tech-blue { color: #60a5fa; } /* text-blue-400 */
+
+        .section-title {
+            font-size: 3rem; /* text-5xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-subtitle-en {
+            font-size: 1.125rem; /* text-lg */
+            color: #94a3b8; /* text-slate-400 */
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .highlight-text-huge {
+            font-size: clamp(3rem, 10vw, 10rem); /* Responsive ultra large */
+            font-weight: 800; /* font-extrabold */
+            line-height: 1;
+        }
+        .highlight-text-large {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+        }
+
+        .content-card {
+            background-color: rgba(30, 41, 59, 0.7); /* bg-slate-800 with opacity */
+            border: 1px solid rgba(249, 115, 22, 0.3); /* border-orange-500/30 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(249, 115, 22, 0.2);
+        }
+
+        .icon-feature {
+            font-size: 1.5rem; /* text-2xl */
+            margin-right: 0.75rem; /* mr-3 */
+        }
+
+        /* Animation for elements scrolling into view */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-gradient-orange {
+            background: linear-gradient(to right, #fbbf24, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .chip-bg-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(249, 115, 22, 0.0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        @media (min-width: 1024px) {
+             .chip-bg-effect {
+                width: 500px;
+                height: 500px;
+            }
+        }
+
+        .line-art-icon {
+            stroke: #60a5fa; /* tech-blue */
+            stroke-width: 1.5;
+            fill: none;
+            width: 150px;
+            height: 150px;
+            animation: rotate-icon 10s linear infinite;
+        }
+
+        @keyframes rotate-icon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-200">
+
+    <section class="min-h-screen flex flex-col justify-center items-center text-center p-4 relative overflow-hidden">
+        <div class="chip-bg-effect"></div>
+        <h1 class="highlight-text-huge text-gradient-orange mb-6">
+            最好的贵人
+        </h1>
+        <p class="text-xl sm:text-2xl md:text-3xl text-slate-300 mb-2">THE BEST BENEFACTOR</p>
+        <p class="highlight-text-huge tech-blue mb-4 leading-none">
+            就是<br class="sm:hidden"/>执行力超强的自己
+        </p>
+        <p class="text-lg sm:text-xl md:text-2xl text-slate-400">
+            A SELF WITH SUPERIOR EXECUTION POWER
+        </p>
+        <div class="absolute bottom-10 text-slate-500 animate-bounce">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+
+        <section id="self-drive" class="animate-on-scroll">
+            <h2 class="section-title text-gradient-orange">
+                内生驱动力
+            </h2>
+            <p class="section-subtitle-en">INTERNAL DRIVE & SELF-MOTIVATION</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="content-card text-center">
+                     <i class="fas fa-fingerprint text-6xl tech-blue mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">独一无二的潜力</h3>
+                    <p class="text-lg text-slate-300 mb-4">
+                        你无需等待外部的机遇，因为你自身就拥有最强大的引擎。
+                    </p>
+                    <p class="text-sm text-slate-400">
+                        You don't need to wait for external opportunities, as you possess the most powerful engine within yourself.
+                    </p>
+                </div>
+                 <div class="content-card text-center">
+                    <svg class="line-art-icon mx-auto mb-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="40" stroke-width="2" stroke-dasharray="10 5" stroke-dashoffset="0"/>
+                        <circle cx="50" cy="50" r="20" fill="#60a5fa" fill-opacity="0.2" stroke="none"/>
+                        <path d="M50 10 V40 M50 60 V90 M10 50 H40 M60 50 H90" stroke-width="2" stroke="#60a5fa"/>
+                        <text x="50" y="55" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="bold">DRIVE</text>
+                    </svg>
+                    <h3 class="text-2xl font-semibold mb-2">持续进化的循环</h3>
+                    <p class="text-lg text-slate-300 mb-4">
+                        行动产生结果，结果带来反馈，反馈激发更强的行动。
+                    </p>
+                     <p class="text-sm text-slate-400">
+                        Action leads to results, results provide feedback, and feedback fuels stronger actions.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="execution-core" class="animate-on-scroll text-center">
+            <h2 class="section-title text-gradient-orange">
+                <span class="tech-blue">执行力</span>的秘密
+            </h2>
+            <p class="section-subtitle-en">THE SECRET OF EXECUTION POWER</p>
+
+            <div class="flex flex-col items-center my-10">
+                <p class="highlight-text-huge tech-blue">100<span class="text-4xl align-super">%</span></p>
+                <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mt-4">
+                    伟大的想法，若没有<span class="brand-orange font-bold">100%</span>的执行，其价值为零。
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="content-card">
+                    <i class="fas fa-check-circle text-4xl brand-orange mb-3"></i>
+                    <h3 class="text-xl font-semibold mb-2">化繁为简</h3>
+                    <p class="text-lg text-slate-300">
+                        将宏大目标拆解为可立即执行的微小步骤。
+                    </p>
+                     <p class="text-sm text-slate-400 mt-2">Simplify complex goals into small, actionable steps.</p>
+                </div>
+                <div class="content-card">
+                    <i class="fas fa-calendar-check text-4xl brand-orange mb-3"></i>
+                    <h3 class="text-xl font-semibold mb-2">即刻行动</h3>
+                    <p class="text-lg text-slate-300">
+                        不要等待“完美时机”，最好的时机就是现在。
+                    </p>
+                     <p class="text-sm text-slate-400 mt-2">Don't wait for the "perfect moment"; the best time is now.</p>
+                </div>
+                <div class="content-card">
+                    <i class="fas fa-robot text-4xl brand-orange mb-3"></i>
+                    <h3 class="text-xl font-semibold mb-2">自动化习惯</h3>
+                    <p class="text-lg text-slate-300">
+                        通过建立系统化的习惯，让执行成为本能。
+                    </p>
+                     <p class="text-sm text-slate-400 mt-2">Build systematic habits to make execution instinctive.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="the-benefactor" class="animate-on-scroll">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="content-card text-center md:text-left md:pr-10">
+                    <h2 class="highlight-text-large brand-orange mb-4">
+                        贵人
+                    </h2>
+                    <p class="text-sm text-slate-400 uppercase tracking-widest mb-6">
+                        THE BENEFACTOR
+                    </p>
+                    <p class="text-lg text-slate-300 mb-4">
+                        贵人，并非遥不可及的外力，而是通过行动，在每一个清晨和深夜，自我成就的缩影。
+                    </p>
+                    <div class="mt-6">
+                        <p class="text-xl font-bold tech-blue">
+                             “世界上最好的贵人，就是执行力超强的自己。”
+                        </p>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center">
+                    <i class="fas fa-crown text-[10rem] md:text-[15rem] text-orange-500/30"></i>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="animate-on-scroll text-center py-12">
+            <h2 class="section-title text-gradient-orange">
+                行动，创造无限可能
+            </h2>
+            <p class="section-subtitle-en">ACTION, CREATING INFINITE POSSIBILITIES</p>
+            <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-6">
+                不要再等待，不要再羡慕。把注意力从寻找“贵人”转向提升“执行力”。从现在开始，成为自己的贵人。
+            </p>
+             <button class="bg-brand-orange text-white py-3 px-8 rounded-full text-lg font-bold hover:bg-orange-600 transition-colors">
+                即刻行动
+            </button>
+        </section>
+
+    </div>
+
+    <footer class="text-center py-8 border-t border-slate-700">
+        <p class="text-slate-400">&copy; 2025 Self-Drive. All rights reserved.</p>
+        <p class="text-xs text-slate-500 mt-1">Design inspired by modern tech conference keynote.</p>
+    </footer>
+
+    <script>
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
