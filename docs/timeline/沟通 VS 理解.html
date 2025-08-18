@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沟通 VS 理解</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1rem;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .grid-item {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="w-full">
+    <div class="section" id="section-1">
+        <svg class="memphis-accent animate-slow-drift left-1/4 top-1/4 w-32 md:w-64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 0C44.772 0 0 44.772 0 100c0 55.228 44.772 100 100 100s100-44.772 100-100C200 44.772 155.228 0 100 0z" fill="#689094"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/4 bottom-1/4 w-24 md:w-48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="#689094"/>
+        </svg>
+
+        <h1 class="font-display text-colossus text-highlight-gradient">无效沟通</h1>
+        <p class="text-connecting text-xl md:text-2xl lg:text-3xl font-light">比沉默更可怕</p>
+        <p class="mt-8 max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl leading-relaxed opacity-80">
+            你曾以为<strong class="font-bold">滔滔不绝</strong>就能改变世界，但你忘了，如果对方<strong class="font-bold">听不懂</strong>或<strong class="font-bold">不想懂</strong>，那一切都只是<strong class="font-bold">噪音</strong>。
+        </p>
+    </div>
+
+    <div class="section" id="section-2">
+        <svg class="memphis-accent animate-slow-drift left-1/3 top-1/3 w-28 md:w-56" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 200C44.772 200 0 155.228 0 100 0 44.772 44.772 0 100 0c55.228 0 100 44.772 100 100s-44.772 100-100 100z" fill="#90A8A4"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/4 bottom-1/4 w-32 md:w-64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,0 100,100 0,100" fill="#90A8A4"/>
+        </svg>
+
+        <h2 class="font-display text-colossus text-highlight-gradient">理解</h2>
+        <p class="text-connecting text-xl md:text-2xl lg:text-3xl font-light">才是核心</p>
+        <div class="mt-8 max-w-4xl mx-auto text-left grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                <h3 class="font-bold text-xl md:text-2xl mb-2">沟通的本质：能量匹配</h3>
+                <p class="text-sm md:text-base opacity-80">
+                    每一次对话都是一场能量交换。当你与一个不在同一频道的人交流时，你消耗的能量远大于你所获得的价值。这是一种无谓的<strong class="font-bold">损耗</strong>。
+                </p>
+            </div>
+            <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                <h3 class="font-bold text-xl md:text-2xl mb-2">无效的努力：说服与争论</h3>
+                <p class="text-sm md:text-base opacity-80">
+                    试图说服一个认知不同的人，就如同试图在沙漠中种下稻米。他们不是不懂，只是他们的<strong class="font-bold">世界观</strong>没有为你的想法留下空间。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section-3">
+        <svg class="memphis-accent animate-slow-drift left-1/4 top-1/4 w-28 md:w-56" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="50" fill="#B7A79D"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/3 bottom-1/3 w-24 md:w-48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100" height="100" rx="30" ry="30" fill="#B7A79D"/>
+        </svg>
+
+        <h2 class="font-display text-colossus text-highlight-gradient">停止内耗</h2>
+        <p class="text-connecting text-xl md:text-2xl lg:text-3xl font-light">从选择听众开始</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 w-full max-w-4xl">
+            <div class="flex flex-col items-center">
+                <i class="material-icons text-4xl mb-2 opacity-50">person_search</i>
+                <h3 class="font-bold text-2xl mb-2">寻找同频者</h3>
+                <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                    你的时间宝贵，把精力留给那些能与你<strong class="font-bold">共同成长</strong>的人。
+                </p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="material-icons text-4xl mb-2 opacity-50">filter_alt</i>
+                <h3 class="font-bold text-2xl mb-2">过滤信息</h3>
+                <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                    不是所有的话都值得说，也不是所有的声音都值得听。学会<strong class="font-bold">沉默</strong>是一种智慧。
+                </p>
+            </div>
+            <div class="flex flex-col items-center">
+                <i class="material-icons text-4xl mb-2 opacity-50">model_training</i>
+                <h3 class="font-bold text-2xl mb-2">提升自己</h3>
+                <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                    当你足够强大，你的<strong class="font-bold">存在本身</strong>就是最好的沟通。
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

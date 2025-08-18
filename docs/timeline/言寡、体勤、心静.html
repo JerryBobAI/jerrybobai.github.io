@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>言寡、体勤、心静</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1rem;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="w-full">
+
+    <div class="section" id="section-1">
+        <svg class="memphis-accent animate-slow-drift left-1/4 top-1/4 w-32 md:w-64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 0C44.772 0 0 44.772 0 100c0 55.228 44.772 100 100 100s100-44.772 100-100C200 44.772 155.228 0 100 0z" fill="#689094"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/4 bottom-1/4 w-24 md:w-48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="#689094"/>
+        </svg>
+
+        <h1 class="font-display text-2xl md:text-3xl lg:text-4xl uppercase mb-4 opacity-75 tracking-wider">
+            Reality check
+        </h1>
+        <div class="flex flex-col items-center justify-center space-y-4 md:space-y-8">
+            <h2 class="font-display text-colossus text-highlight-gradient">言寡</h2>
+            <p class="text-connecting text-xl md:text-2xl lg:text-3xl font-light">真相是</p>
+            <h2 class="font-display text-colossus text-highlight-gradient">认知壁垒</h2>
+        </div>
+        <p class="mt-8 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
+            <strong class="font-bold">言寡</strong> 并非简单的少说多做，而是你的<strong class="font-bold">认知</strong>、<strong class="font-bold">资源</strong>和<strong class="font-bold">层次</strong>远超你所处的环境时，与大多数人沟通是无效且低效的。
+        </p>
+    </div>
+
+    <div class="section" id="section-2">
+        <svg class="memphis-accent animate-slow-drift left-1/3 top-1/3 w-28 md:w-56" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 200C44.772 200 0 155.228 0 100 0 44.772 44.772 0 100 0c55.228 0 100 44.772 100 100s-44.772 100-100 100z" fill="#90A8A4"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/4 bottom-1/4 w-32 md:w-64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,0 100,100 0,100" fill="#90A8A4"/>
+        </svg>
+
+        <div class="flex flex-col items-center justify-center space-y-4 md:space-y-8">
+            <h2 class="font-display text-colossus text-highlight-gradient">体勤</h2>
+            <p class="text-connecting text-xl md:text-2xl lg:text-3xl font-light">真相是</p>
+            <h2 class="font-display text-colossus text-highlight-gradient">行动复利</h2>
+        </div>
+        <p class="mt-8 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
+            <strong class="font-bold">体勤</strong> 不是简单的盲目忙碌，而是将精力投入到能带来<strong class="font-bold">正向复利</strong>的事情上。每一次行动都累积成了<strong class="font-bold">时间的复利</strong>。
+        </p>
+    </div>
+
+    <div class="section" id="section-3">
+        <svg class="memphis-accent animate-slow-drift left-1/4 top-1/4 w-28 md:w-56" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="50" fill="#B7A79D"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/3 bottom-1/3 w-24 md:w-48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100" height="100" rx="30" ry="30" fill="#B7A79D"/>
+        </svg>
+
+        <div class="flex flex-col items-center justify-center space-y-4 md:space-y-8">
+            <h2 class="font-display text-colossus text-highlight-gradient">心静</h2>
+            <p class="text-connecting text-xl md:text-2xl lg:text-3xl font-light">真相是</p>
+            <h2 class="font-display text-colossus text-highlight-gradient">价值确定</h2>
+        </div>
+        <p class="mt-8 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
+            <strong class="font-bold">心静</strong> 并非修养的结果，而是源于对自身<strong class="font-bold">价值</strong>、<strong class="font-bold">能力</strong>和<strong class="font-bold">方向</strong>的深度确定性。这种确定感让你不再受外界噪音干扰。
+        </p>
+    </div>
+    
+    <div class="section" id="section-4">
+        <div class="flex flex-col items-center justify-center space-y-8">
+            <h2 class="font-display text-4xl md:text-6xl lg:text-8xl text-highlight-gradient">Action is all</h2>
+            <p class="max-w-4xl mx-auto text-xl md:text-2xl lg:text-3xl font-display leading-snug tracking-wide">
+                不要去追求表象，而是去挖掘背后的<span class="text-highlight-gradient">核心驱动力</span>。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 w-full max-w-4xl">
+                <div class="bg-gray-200 bg-opacity-30 p-8 rounded-lg">
+                    <i class="material-icons text-4xl mb-4 opacity-50">trending_up</i>
+                    <h3 class="text-2xl font-bold mb-2">提升认知</h3>
+                    <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                        超越现有环境，制造<span class="font-bold">言寡</span>的必要性。
+                    </p>
+                </div>
+                <div class="bg-gray-200 bg-opacity-30 p-8 rounded-lg">
+                    <i class="material-icons text-4xl mb-4 opacity-50">flight_takeoff</i>
+                    <h3 class="text-2xl font-bold mb-2">立刻行动</h3>
+                    <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                        停止幻想，启动<span class="font-bold">体勤</span>的复利效应。
+                    </p>
+                </div>
+                <div class="bg-gray-200 bg-opacity-30 p-8 rounded-lg">
+                    <i class="material-icons text-4xl mb-4 opacity-50">verified</i>
+                    <h3 class="text-2xl font-bold mb-2">专注价值</h3>
+                    <p class="text-sm md:text-base opacity-80 leading-relaxed">
+                        积累硬实力，获得<span class="font-bold">心静</span>的确定感。
+                    </p>
+                </div>
+            </div>
+            <p class="mt-12 text-md md:text-lg opacity-60 max-w-2xl mx-auto leading-relaxed">
+                真正的变好，不是靠情绪或心态的调整，而是靠<strong class="font-bold">硬价值</strong>的积累。
+            </p>
+        </div>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

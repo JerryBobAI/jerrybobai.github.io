@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>改善生活的斯多葛</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1rem;
+            position: relative;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="w-full">
+    <div class="section" id="section-1">
+        <svg class="memphis-accent animate-slow-drift left-1/4 top-1/4 w-32 md:w-64" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 0C44.772 0 0 44.772 0 100c0 55.228 44.772 100 100 100s100-44.772 100-100C200 44.772 155.228 0 100 0z" fill="#689094"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/4 bottom-1/4 w-24 md:w-48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="#689094"/>
+        </svg>
+
+        <h1 class="font-display text-4xl md:text-6xl lg:text-8xl text-highlight-gradient">改善生活的斯多葛</h1>
+        <p class="mt-8 max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl leading-relaxed opacity-80">
+            A practical guide to a Stoic life.
+        </p>
+    </div>
+
+    <div class="section" id="section-2">
+        <svg class="memphis-accent animate-slow-drift left-1/3 top-1/3 w-28 md:w-56" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 200C44.772 200 0 155.228 0 100 0 44.772 44.772 0 100 0c55.228 0 100 44.772 100 100s-44.772 100-100 100z" fill="#90A8A4"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/4 bottom-1/4 w-32 md:w-64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,0 100,100 0,100" fill="#90A8A4"/>
+        </svg>
+
+        <h2 class="font-display text-colossus text-highlight-gradient">学派原则</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 w-full max-w-4xl text-left">
+            <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                <i class="material-icons text-4xl mb-2 opacity-50">directions_run</i>
+                <h3 class="font-bold text-2xl mb-2">采取行动</h3>
+                <p class="text-sm md:text-base opacity-80">
+                    「我们在想象中遭受的痛苦比在现实中更多。」— 塞内加
+                </p>
+                <ul class="list-disc list-inside mt-4 text-sm md:text-base opacity-80">
+                    <li>坚持出勤</li>
+                    <li>养成规律</li>
+                    <li>克服恐惧</li>
+                    <li>承担经过计算的风险</li>
+                </ul>
+            </div>
+            <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                <i class="material-icons text-4xl mb-2 opacity-50">lock_open</i>
+                <h3 class="font-bold text-2xl mb-2">释放负面情绪</h3>
+                <p class="text-sm md:text-base opacity-80">
+                    「与我们关心的人一起沉溺于错误的情绪，并非对他们表现出善意或友谊。」— 马库斯
+                </p>
+                <ul class="list-disc list-inside mt-4 text-sm md:text-base opacity-80">
+                    <li>恐惧、愤怒、嫉妒，以及有害的羞耻感和内疚感。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section-3">
+        <svg class="memphis-accent animate-slow-drift left-1/4 top-1/4 w-28 md:w-56" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="50" fill="#B7A79D"/>
+        </svg>
+        <svg class="memphis-accent animate-slow-drift right-1/3 bottom-1/3 w-24 md:w-48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="100" height="100" rx="30" ry="30" fill="#B7A79D"/>
+        </svg>
+
+        <h2 class="font-display text-colossus text-highlight-gradient">专注可控</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 w-full max-w-4xl text-left">
+            <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                <i class="material-icons text-4xl mb-2 opacity-50">public_off</i>
+                <h3 class="font-bold text-2xl mb-2">放下你无法控制的事情</h3>
+                <p class="text-sm md:text-base opacity-80">
+                    「你越是试图控制外部事件，你对自己生活的控制就越少。」— 爱比克泰德
+                </p>
+                <ul class="list-disc list-inside mt-4 text-sm md:text-base opacity-80">
+                    <li>外部因素</li>
+                    <li>他人的想法与行为</li>
+                    <li>他人的感受与言论</li>
+                    <li>过去与未来</li>
+                </ul>
+            </div>
+            <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                <i class="material-icons text-4xl mb-2 opacity-50">person_pin</i>
+                <h3 class="font-bold text-2xl mb-2">专注于你能控制的事情</h3>
+                <p class="text-sm md:text-base opacity-80">
+                    「你能掌控的是你的思想，而不是外在事件。」— 马可·奥勒留
+                </p>
+                <ul class="list-disc list-inside mt-4 text-sm md:text-base opacity-80">
+                    <li>你的想法与思维</li>
+                    <li>行动与行为</li>
+                    <li>态度、承诺</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="section-4">
+        <div class="flex flex-col items-center justify-center space-y-8 w-full max-w-4xl">
+            <h2 class="font-display text-colossus text-highlight-gradient">自律与感恩</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 w-full text-left">
+                <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                    <i class="material-icons text-4xl mb-2 opacity-50">self_improvement</i>
+                    <h3 class="font-bold text-2xl mb-2">自律</h3>
+                    <p class="text-sm md:text-base opacity-80">
+                        「自律是连接目标和成就的桥梁。」— 塞内加
+                    </p>
+                    <ul class="list-disc list-inside mt-4 text-sm md:text-base opacity-80">
+                        <li>练习自我控制</li>
+                        <li>避免干扰</li>
+                        <li>设定优先事项</li>
+                        <li>坚持</li>
+                    </ul>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-200 bg-opacity-30">
+                    <i class="material-icons text-4xl mb-2 opacity-50">favorite</i>
+                    <h3 class="font-bold text-2xl mb-2">感恩</h3>
+                    <p class="text-sm md:text-base opacity-80">
+                        「一个明智的人不会为自己没有的东西悲伤，而是会为自己拥有的东西感到高兴。」— 爱比克泰德
+                    </p>
+                    <ul class="list-disc list-inside mt-4 text-sm md:text-base opacity-80">
+                        <li>身体健康</li>
+                        <li>财务保障</li>
+                        <li>美好的经历</li>
+                        <li>智慧、意外的祝福</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
