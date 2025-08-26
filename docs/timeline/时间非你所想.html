@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间非你所想</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC;
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .pagination-dot {
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-[#DCD6CC] text-[#4A3B31] min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="memphis-accent top-1/4 left-1/4 w-32 h-32 md:w-64 md:h-64 rounded-full bg-[#A8B7B0] animate-slow-drift"></div>
+    <div class="memphis-accent bottom-1/4 right-1/4 w-40 h-40 md:w-80 md:h-80 bg-[#C8B896] animate-slow-drift"></div>
+    <div class="memphis-accent top-1/2 left-0 w-24 h-24 md:w-48 md:h-48 rounded-lg bg-[#DCD6CC] border border-[#6B5D55] animate-slow-drift"></div>
+    <div class="memphis-accent bottom-0 left-1/2 w-28 h-28 md:w-56 md:h-56 bg-[#6B5D55] rounded-full animate-slow-drift"></div>
+
+    <main id="content-wrapper" class="relative z-10 w-full max-w-7xl mx-auto flex flex-col justify-center items-center h-screen overflow-hidden">
+        <div data-page="0" class="page-content absolute inset-0 flex flex-col justify-center items-center p-8 transition-opacity duration-700 ease-in-out">
+            <h1 class="font-display text-colossus text-center mb-4 leading-none">
+                <span class="text-highlight-gradient block">时间</span>
+                <span class="text-connecting">可能非你所想</span>
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl max-w-2xl font-light text-[#6B5D55] mt-4 tracking-wide">
+                “真正的问题在于，我们不知不觉地继承了一套关于如何利用我们有限时间的麻烦想法。”
+            </p>
+        </div>
+
+        <div data-page="1" class="page-content absolute inset-0 flex flex-col justify-center items-center p-8 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
+            <div class="relative w-full">
+                <div class="absolute inset-0 flex items-center justify-center -top-24 opacity-20">
+                    <svg class="w-64 h-64 md:w-96 md:h-96" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" stroke="#6B5D55" stroke-width="2" stroke-dasharray="10 5" />
+                        <path d="M100 10V190" stroke="#6B5D55" stroke-width="2" stroke-dasharray="10 5"/>
+                        <path d="M10 100H190" stroke="#6B5D55" stroke-width="2" stroke-dasharray="10 5"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12 z-10 relative">
+                    <div class="w-full md:w-1/2 flex flex-col items-start text-left">
+                        <h2 class="font-display text-5xl md:text-6xl lg:text-8xl text-highlight-gradient">生物钟</h2>
+                        <span class="font-light text-base md:text-xl lg:text-2xl text-[#6B5D55] mt-2">
+                            THE RHYTHM OF NATURE
+                        </span>
+                        <p class="font-light text-base md:text-xl max-w-lg mt-4 text-[#6B5D55] leading-relaxed">
+                            植物和动物们，通过演化之手，发明了<span class="font-bold">生物钟</span>。神奇的节律，让生命沐浴阳光、规律进食、享受睡眠，一切的运作都如此自然。
+                        </p>
+                    </div>
+                    <div class="w-full md:w-1/2 flex items-center justify-center">
+                        <i class="fas fa-leaf text-9xl md:text-[10rem] lg:text-[15rem] text-[#A8B7B0] opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-page="2" class="page-content absolute inset-0 flex flex-col justify-center items-center p-8 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
+            <h2 class="font-display text-colossus text-center mb-4 leading-none">
+                <span class="text-highlight-gradient block">钟表</span>
+                <span class="text-connecting">文明的尺度</span>
+            </h2>
+            <div class="w-full flex justify-center mt-8">
+                <div class="w-3/4 sm:w-1/2 md:w-1/3 p-4 border border-[#6B5D55] rounded-lg bg-white bg-opacity-10 backdrop-filter backdrop-blur-sm">
+                    <p class="font-light text-sm sm:text-base md:text-lg text-[#6B5D55]">
+                        文明不过短短一万多年，农业时代才有了历法，中世纪发明了钟表。时间的文化意义被稳固下来，工作和作息被统一安排，时间变成了<span class="font-bold">可度量的抽象实体</span>。
+                    </p>
+                    <div class="mt-4 border-t border-[#6B5D55] pt-4">
+                        <p class="font-light text-sm sm:text-base md:text-lg text-[#6B5D55]">
+                            工业革命将钟表技术发扬光大，时间被赋予了「流逝」和「浪费」的资源感知。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-page="3" class="page-content absolute inset-0 flex flex-col justify-center items-center p-8 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
+            <h2 class="font-display text-7xl md:text-8xl lg:text-9xl text-highlight-gradient mb-4">
+                偏差的感知
+            </h2>
+            <span class="font-light text-xl md:text-2xl lg:text-3xl text-[#6B5D55] tracking-wide">
+                THE FLAWED PERCEPTION
+            </span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 w-full max-w-4xl">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-sync fa-spin text-5xl text-[#C8B896] opacity-70"></i>
+                    <p class="mt-4 text-base md:text-lg text-[#6B5D55] font-light">
+                        社会学上，时间是一种文化上的共识，一种<span class="font-bold">社会实在</span>。它让我们误以为时间是资源，是消耗品。
+                    </p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-user-tie text-5xl text-[#C8B896] opacity-70"></i>
+                    <p class="mt-4 text-base md:text-lg text-[#6B5D55] font-light">
+                        现代文化将<span class="font-bold">“忙碌”</span>视为美德。人们不断追求时间线的“填充感”，导致无法<span class="font-bold">“活在当下”</span>。
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div data-page="4" class="page-content absolute inset-0 flex flex-col justify-center items-center p-8 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
+            <h2 class="font-display text-colossus text-center mb-4 leading-none">
+                <span class="text-highlight-gradient block">深度时间</span>
+                <span class="text-connecting">DEEP TIME</span>
+            </h2>
+            <div class="w-full max-w-3xl flex justify-center mt-8">
+                <p class="font-light text-base md:text-lg lg:text-xl text-[#6B5D55] leading-relaxed">
+                    心理学家用<span class="font-bold">“深度时间”</span>来替代人造的、刻度化的时间，它和生命的<span class="font-bold">体验和情感</span>紧密相连。
+                </p>
+            </div>
+            <div class="mt-8 flex flex-row space-x-8 items-center justify-center">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-headphones-alt text-5xl text-[#A8B7B0] opacity-70"></i>
+                    <p class="mt-2 text-sm text-[#6B5D55]">音乐与心流</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-tree text-5xl text-[#A8B7B0] opacity-70"></i>
+                    <p class="mt-2 text-sm text-[#6B5D55]">沉静于自然</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-heartbeat text-5xl text-[#A8B7B0] opacity-70"></i>
+                    <p class="mt-2 text-sm text-[#6B5D55]">情感体验</p>
+                </div>
+            </div>
+        </div>
+
+        <div data-page="5" class="page-content absolute inset-0 flex flex-col justify-center items-center p-8 transition-opacity duration-700 ease-in-out opacity-0 pointer-events-none">
+            <h2 class="font-display text-7xl md:text-8xl lg:text-9xl text-highlight-gradient mb-4 leading-tight">
+                最难的环节
+            </h2>
+            <span class="font-light text-base md:text-lg lg:text-xl text-[#6B5D55] tracking-wide">
+                THE HARDEST PART IS NOT MANAGING YOUR WISHLIST
+            </span>
+            <p class="mt-8 text-base md:text-lg lg:text-xl max-w-4xl font-light text-[#6B5D55] leading-relaxed italic">
+                “我们穿越到一切皆为圆满的境界...在这里我们不必试图填充自己或世界的空洞...时间静止了。时钟不会停，不过我们听不到它的滴答声罢了”
+            </p>
+            <p class="mt-4 text-xs md:text-sm text-[#6B5D55]">— 加里·艾伯儿</p>
+            <div class="mt-8 text-xl md:text-2xl font-light text-[#6B5D55] tracking-wide">
+                愿你拥有更多这样<span class="font-bold">深度的时间</span>
+            </div>
+        </div>
+    </main>
+
+    <div class="fixed bottom-8 flex space-x-3 z-20">
+        <div class="pagination-dot w-3 h-3 rounded-full bg-[#6B5D55] opacity-50"></div>
+        <div class="pagination-dot w-3 h-3 rounded-full bg-[#6B5D55] opacity-50"></div>
+        <div class="pagination-dot w-3 h-3 rounded-full bg-[#6B5D55] opacity-50"></div>
+        <div class="pagination-dot w-3 h-3 rounded-full bg-[#6B5D55] opacity-50"></div>
+        <div class="pagination-dot w-3 h-3 rounded-full bg-[#6B5D55] opacity-50"></div>
+        <div class="pagination-dot w-3 h-3 rounded-full bg-[#6B5D55] opacity-50"></div>
+    </div>
+
+    <script>
+        const pages = document.querySelectorAll('.page-content');
+        const dots = document.querySelectorAll('.pagination-dot');
+        let currentPage = 0;
+        let isAnimating = false;
+
+        function updatePage(index) {
+            if (isAnimating || index < 0 || index >= pages.length) return;
+            isAnimating = true;
+
+            const oldPage = pages[currentPage];
+            const newPage = pages[index];
+
+            // Fade out the old page
+            oldPage.style.opacity = '0';
+            oldPage.style.pointerEvents = 'none';
+
+            // Fade in the new page
+            newPage.style.opacity = '1';
+            newPage.style.pointerEvents = 'auto';
+
+            // Update dots
+            dots[currentPage].style.backgroundColor = '#6B5D55';
+            dots[currentPage].style.opacity = '0.5';
+            dots[index].style.backgroundColor = '#4A3B31';
+            dots[index].style.opacity = '1';
+
+            currentPage = index;
+
+            setTimeout(() => {
+                isAnimating = false;
+            }, 700); // Match CSS transition duration
+        }
+
+        function nextPage() {
+            updatePage(currentPage + 1);
+        }
+
+        function prevPage() {
+            updatePage(currentPage - 1);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+                nextPage();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                prevPage();
+            }
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                updatePage(index);
+            });
+        });
+
+        // Initial setup
+        updatePage(0);
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

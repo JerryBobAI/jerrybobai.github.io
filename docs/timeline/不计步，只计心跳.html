@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不计步，只计心跳</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC;
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-y: auto;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            line-height: 1;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .container-main {
+            padding: 2rem;
+            max-width: 1400px;
+            position: relative;
+            z-index: 10;
+        }
+        .text-large {
+            font-size: clamp(2rem, 10vw, 8rem);
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <div class="memphis-accent top-1/4 right-1/4 transform -translate-x-1/2 -translate-y-1/2 animate-slow-drift text-colossus text-gray-500">
+        <i class="fas fa-heartbeat"></i>
+    </div>
+    <div class="memphis-accent bottom-1/4 left-1/4 transform translate-x-1/2 translate-y-1/2 animate-slow-drift text-colossus text-gray-500">
+        <i class="fas fa-mountain"></i>
+    </div>
+
+    <div class="container-main mx-auto min-h-screen flex flex-col justify-center items-center">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="w-full text-center">
+                <p class="text-xs md:text-sm lg:text-base mb-4 font-normal tracking-wide uppercase">THE WISDOM OF THE UNMEASURED</p>
+                <h1 class="font-display text-large tracking-tight mb-4 leading-tight">
+                    <span class="text-colossus text-highlight-gradient">不计步</span>
+                    <span class="text-connecting font-normal">只计</span>
+                    <span class="text-colossus text-highlight-gradient">心跳</span>
+                </h1>
+                <p class="font-light text-base md:text-lg lg:text-xl max-w-2xl mx-auto opacity-80 mt-4">
+                    你以为散步的奥秘在于步数？错。真正的秘密在于时间。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-main mx-auto py-12 flex-grow">
+        <div class="grid md:grid-cols-2 gap-12 mt-12 w-full max-w-5xl text-left mx-auto">
+            <div class="p-8 rounded-lg">
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                    <i class="fas fa-chart-line opacity-20 mr-4"></i>
+                    <span class="text-highlight-gradient">工业尺度</span><br>
+                    <span class="text-xl md:text-2xl lg:text-3xl text-gray-500">The Modern Trap</span>
+                </h2>
+                <div class="font-light text-sm md:text-base lg:text-lg leading-relaxed opacity-85">
+                    <p class="mb-4">
+                        现代人习惯用手环、APP去计步，仿佛每多走一步就能离幸福更近。但你有没有发现，走得再多，心却依然焦虑？
+                    </p>
+                    <p class="mb-4">
+                        因为你只是在移动身体，却没有让心灵参与。
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-lg">
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                    <i class="fas fa-feather-alt opacity-20 mr-4"></i>
+                    <span class="text-highlight-gradient">心流温床</span><br>
+                    <span class="text-xl md:text-2xl lg:text-3xl text-gray-500">The Space for Flow</span>
+                </h2>
+                <div class="font-light text-sm md:text-base lg:text-lg leading-relaxed opacity-85">
+                    <p class="mb-4">
+                        散步的力量，来自于你在林荫小道、鸟鸣啁啾之间，卸下防备，允许自己沉浸在宁静之中。那些无用的时刻，才是心流的温床。
+                    </p>
+                    <p class="mb-4">
+                        你不需要目的地，也不需要目标，只需要让自己真正“在场”，让时间变得柔软而深刻。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-3xl mx-auto text-center py-20">
+        <p class="font-light text-base md:text-lg lg:text-xl opacity-90">
+            放下计步器，试着感受脚下的土地、耳边的风声、树影的变化。
+        </p>
+        <p class="font-display text-2xl md:text-3xl lg:text-4xl tracking-tight mt-6 leading-tight">
+            你会遇见一个<span class="text-highlight-gradient">全新的自己</span>。
+        </p>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

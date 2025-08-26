@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>散步的隐秘力量</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-y: auto; /* 允许纵向滚动 */
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            line-height: 1;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .container-main {
+            padding: 2rem;
+            max-width: 1400px;
+            position: relative;
+            z-index: 10;
+        }
+        .text-large {
+            font-size: clamp(2rem, 10vw, 8rem);
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <div class="memphis-accent top-1/4 right-1/4 transform -translate-x-1/2 -translate-y-1/2 animate-slow-drift text-colossus text-gray-500">
+        <i class="fas fa-route"></i>
+    </div>
+    <div class="memphis-accent bottom-1/4 left-1/4 transform translate-x-1/2 translate-y-1/2 animate-slow-drift text-colossus text-gray-500">
+        <i class="fas fa-arrows-alt"></i>
+    </div>
+
+    <div class="container-main mx-auto min-h-screen flex flex-col justify-center items-center">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="w-full text-center">
+                <p class="text-xs md:text-sm lg:text-base mb-4 font-normal tracking-wide uppercase">THE JOURNEY IS THE DESTINATION</p>
+                <h1 class="font-display text-large tracking-tight mb-4 leading-tight">
+                    <span class="text-colossus text-highlight-gradient">无需到达</span>
+                    <span class="text-connecting font-normal">已然</span>
+                    <span class="text-colossus text-highlight-gradient">抵达</span>
+                </h1>
+                <p class="font-light text-base md:text-lg lg:text-xl max-w-2xl mx-auto opacity-80 mt-4">
+                    散步的隐秘力量。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-main mx-auto py-12 flex-grow">
+        <div class="grid md:grid-cols-2 gap-12 mt-12 w-full max-w-5xl text-left mx-auto">
+            <div class="p-8 rounded-lg">
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                    <i class="fas fa-walking opacity-20 mr-4"></i>
+                    <span class="text-highlight-gradient">松开死结</span><br>
+                    <span class="text-xl md:text-2xl lg:text-3xl text-gray-500">The Undoing</span>
+                </h2>
+                <div class="font-light text-sm md:text-base lg:text-lg leading-relaxed opacity-85">
+                    <p class="mb-4">
+                        你有没有发现，越是焦虑，越是想找个“解决方案”，但所有的效率工具、方法论，最终都把你困在了原地？试试散步——这种看似无用的行为，恰恰是破解内耗的钥匙。
+                    </p>
+                    <p class="mb-4">
+                        散步，不需要目的地，不需要计划。它让你的思绪自由流动，把那些死结悄悄松开。
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-lg">
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                    <i class="fas fa-gift opacity-20 mr-4"></i>
+                    <span class="text-highlight-gradient">隐秘礼物</span><br>
+                    <span class="text-xl md:text-2xl lg:text-3xl text-gray-500">The Unseen Reward</span>
+                </h2>
+                <div class="font-light text-sm md:text-base lg:text-lg leading-relaxed opacity-85">
+                    <p class="mb-4">
+                        灵感、安静、甚至勇气，往往在你走路的途中悄然降临。你以为自己在浪费时间，其实是在为大脑腾出空间。
+                    </p>
+                    <p class="mb-4">
+                        更本质地说，散步教会你如何与不确定性共处。你走着走着，突然发现：原来生活的隐秘礼物，就是那些被你忽视的、无用的时刻。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-3xl mx-auto text-center py-20">
+        <p class="font-light text-base md:text-lg lg:text-xl opacity-90">
+            下次想要逃离压力，不妨放下手机，走出去。
+        </p>
+        <p class="font-display text-2xl md:text-3xl lg:text-4xl tracking-tight mt-6 leading-tight">
+            <span class="text-highlight-gradient">无需到达，已然抵达。</span>
+        </p>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

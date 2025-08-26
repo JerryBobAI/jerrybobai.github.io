@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>睡眠与散步</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC;
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31;
+            /* 修复：移除 overflow: hidden; 允许滚动 */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            line-height: 1;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        /* Page-specific overrides */
+        .container-main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 1400px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        .text-large {
+            font-size: clamp(2rem, 10vw, 8rem);
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <div class="memphis-accent top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 animate-slow-drift text-colossus text-gray-500">
+        ∞
+    </div>
+    <div class="memphis-accent bottom-1/4 right-1/4 transform translate-x-1/2 translate-y-1/2 animate-slow-drift text-colossus text-gray-500">
+        ...
+    </div>
+
+    <div class="container-main mx-auto">
+        <div class="max-w-6xl mx-auto flex flex-col justify-center items-center px-4 py-8">
+            <div class="w-full text-center">
+                <p class="text-xs md:text-sm lg:text-base mb-4 font-normal tracking-wide uppercase">THE UN-PRODUCTIVE TRUTHS</p>
+                <h1 class="font-display text-large tracking-tight mb-4 leading-tight">
+                    <span class="text-colossus text-highlight-gradient">睡眠</span>
+                    <span class="text-connecting font-normal">与</span>
+                    <span class="text-colossus text-highlight-gradient">散步</span>
+                </h1>
+                <p class="font-light text-base md:text-lg lg:text-xl max-w-2xl mx-auto opacity-80 mt-4">
+                    现代人严重低估的两大法宝。
+                </p>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-12 mt-12 w-full max-w-5xl text-left">
+            <div class="p-8 rounded-lg">
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                    <i class="fas fa-moon opacity-20 mr-4"></i>
+                    <span class="text-highlight-gradient">睡眠</span><br>
+                    <span class="text-xl md:text-2xl lg:text-3xl text-gray-500">The Ultimate Reboot</span>
+                </h2>
+                <div class="font-light text-sm md:text-base lg:text-lg leading-relaxed opacity-85">
+                    <p class="mb-4">
+                        你以为缺的是效率，其实缺的是「空白」。睡眠，是你的大脑唯一的重启键。你熬夜赶进度，结果第二天效率更低，陷入死循环。
+                    </p>
+                    <p class="mb-4">
+                        科学家发现，睡眠不足不仅让你变笨，还让你变得冲动、易怒、判断力下降——你以为自己在拼命，其实是在自毁。
+                    </p>
+                    <div class="mt-8 text-center">
+                        <div class="text-6xl font-display text-highlight-gradient opacity-90">7-9h</div>
+                        <p class="text-sm font-light mt-2 opacity-70">
+                            理想的深度睡眠时间<br>
+                            THE BLANK CANVAS FOR YOUR BRAIN
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 rounded-lg">
+                <h2 class="font-display text-3xl md:text-4xl lg:text-5xl tracking-tight mb-4">
+                    <i class="fas fa-shoe-prints opacity-20 mr-4"></i>
+                    <span class="text-highlight-gradient">散步</span><br>
+                    <span class="text-xl md:text-2xl lg:text-3xl text-gray-500">The Creativity Incubator</span>
+                </h2>
+                <div class="font-light text-sm md:text-base lg:text-lg leading-relaxed opacity-85">
+                    <p class="mb-4">
+                        散步，是创造力的孵化器。那些灵感乍现的瞬间，往往不是在会议室、不是在屏幕前，而是在你漫无目的地走路时。
+                    </p>
+                    <p class="mb-4">
+                        牛顿的苹果、乔布斯的步行会议，都是「无用之用」的产物。你还在为「没时间散步」找借口？其实你每天都在浪费时间。
+                    </p>
+                    <div class="mt-8 text-center">
+                        <div class="text-6xl font-display text-highlight-gradient opacity-90">45min</div>
+                        <p class="text-sm font-light mt-2 opacity-70">
+                            每日无目的步行<br>
+                            THE ART OF PURPOSELESSNESS
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-20 w-full max-w-3xl mx-auto text-center">
+            <p class="font-light text-base md:text-lg lg:text-xl opacity-90">
+                别再相信那些「多做多得」的鸡汤了。真正的高手，懂得用<span class="text-highlight-gradient font-bold">留白</span>制造爆发力。
+            </p>
+            <p class="font-display text-2xl md:text-3xl lg:text-4xl tracking-tight mt-6 leading-tight">
+                真正的「生产力引擎」，<br>
+                从来不是工具，而是你给自己留出的<span class="text-highlight-gradient">空白</span>。
+            </p>
+        </div>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
