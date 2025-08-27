@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开学准备：给一年级新生的家长谈话</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 自定义字体和全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f0f2f5;
+            background-image:
+                radial-gradient(circle at 1% 1%, hsla(212, 96%, 89%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 1%, hsla(333, 86%, 82%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 1% 99%, hsla(149, 83%, 85%, 0.5) 0px, transparent 50%),
+                radial-gradient(circle at 99% 99%, hsla(50, 95%, 80%, 0.5) 0px, transparent 50%);
+        }
+
+        /* 核心标题的全息彩虹渐变 */
+        .holographic-text {
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chart.js 图表容器需要明确的宽高 */
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        /* 勾线风格图标 */
+        .icon-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid currentColor;
+            color: #3b82f6; /* System Blue */
+        }
+        .icon-outline i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="text-gray-900 leading-relaxed max-w-7xl mx-auto p-4 sm:p-8">
+
+    <main class="space-y-16 lg:space-y-24">
+
+        <header class="text-center reveal">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-4 holographic-text">开学前，这场谈话至关重要</h1>
+            <p class="text-xl md:text-2xl text-gray-700 font-medium">YOUR FIRST CONVERSATION BEFORE PRIMARY SCHOOL</p>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+            <div class="bg-white rounded-3xl p-8 shadow-xl space-y-6">
+                <div class="flex items-center space-x-4 mb-4">
+                    <span class="text-4xl font-black text-gray-400">01</span>
+                    <div class="icon-outline"><i class="fas fa-child"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800">心理准备</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">娃要升级：<span class="text-green-600">从“游乐场”到“训练营”</span></p>
+                            <p class="text-gray-600 mt-1">上午连上3-4节课，课间休息仅10分钟，需快速完成喝水、如厕和换书本。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-red-500 font-bold mr-2 text-2xl">✗</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">别指望老师像幼儿园一样事事关照。</p>
+                            <p class="text-gray-600 mt-1">提前给娃打预防针：课间先办“正事”，再玩！</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">家长要降低关注期待：<span class="text-green-600">“没消息就是好消息”</span></p>
+                            <p class="text-gray-600 mt-1">小学一个老师面对50+学生，无法做到只关注你家娃。信任老师，娃适应更快。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-xl space-y-6">
+                <div class="flex items-center space-x-4 mb-4">
+                    <span class="text-4xl font-black text-gray-400">02</span>
+                    <div class="icon-outline"><i class="fas fa-toilet"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800">上厕所的事</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">重中之重：<span class="text-green-600">带纸！</span></p>
+                            <p class="text-gray-600 mt-1">养成随身带小包纸巾的习惯，放进书包侧兜或口袋。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">课间黄金10分钟：<span class="text-green-600">撒尿优先</span></p>
+                            <p class="text-gray-600 mt-1">不要贪玩！如果上课憋不住，要勇敢、小声地告诉老师：“老师，我实在憋不住了！”</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-red-500 font-bold mr-2 text-2xl">✗</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">千万别硬憋！</p>
+                            <p class="text-gray-600 mt-1">湿裤子会带来尴尬和不适，容易给孩子留下心理阴影。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+            <div class="bg-white rounded-3xl p-8 shadow-xl space-y-6">
+                <div class="flex items-center space-x-4 mb-4">
+                    <span class="text-4xl font-black text-gray-400">03</span>
+                    <div class="icon-outline"><i class="fas fa-shield-alt"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800">保护自己</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="text-red-500 font-bold mr-2 text-2xl">✗</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">危险地带：严禁追逐打闹！</p>
+                            <p class="text-gray-600 mt-1">走廊、楼梯口、人群密集处，摔跤的后果不是闹着玩的。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-red-500 font-bold mr-2 text-2xl">✗</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">警惕“小暗器”：</p>
+                            <p class="text-gray-600 mt-1">看到同学拿着铅笔、尺子、剪刀当“武器”，要赶紧躲开，小心误伤！</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">勇敢说“不”！</p>
+                            <p class="text-gray-600 mt-1">同学拉你玩危险游戏（如爬高、扔石头）时，一定要大声拒绝。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-8 shadow-xl space-y-6">
+                <div class="flex items-center space-x-4 mb-4">
+                    <span class="text-4xl font-black text-gray-400">04</span>
+                    <div class="icon-outline"><i class="fas fa-comments"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800">家长别说空话</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">上课时：<span class="text-green-600">指令明确</span></p>
+                            <p class="text-gray-600 mt-1">“嘴巴像拉链拉上，有提问才开口；管好手，不玩文具；眼睛看老师和黑板。”</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-green-500 font-bold mr-2 text-2xl">✓</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-lg text-gray-800">见到老师：主动喊“老师好！”</p>
+                            <p class="text-gray-600 mt-1">嘴甜有礼貌的孩子，老师都喜欢。这是建立良好关系的第一步。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-3xl p-8 shadow-xl reveal">
+            <div class="flex items-center space-x-4 mb-8">
+                <span class="text-4xl font-black text-gray-400">05</span>
+                <div class="icon-outline"><i class="fas fa-book-reader"></i></div>
+                <h2 class="text-2xl font-bold text-gray-800">需要培养的习惯</h2>
+            </div>
+            <div class="space-y-6">
+                <p class="text-lg text-gray-600">阅读是受益终身的能力。每天精读15分钟，日积月累，丰富阅读量。阅读力是所有学科学习的基础，尤其是一二年级的孩子，越早熟悉，越早打好基础。</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center mt-6">
+                    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl font-bold text-red-500">✗</span>
+                            <p class="font-bold text-lg text-gray-800">纯粹读名著</p>
+                        </div>
+                        <p class="text-gray-600">对小娃太难，常常导致他们上课打瞌睡或溜号，效果不佳。</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xl font-bold text-green-500">✓</span>
+                            <p class="font-bold text-lg text-gray-800">线上精读课</p>
+                        </div>
+                        <p class="text-gray-600">专业老师带领，每天仅需15分钟，教授识字和理解故事的方法，培养扎实的阅读能力。</p>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <p class="text-xl font-black text-gray-800">坚持的力量</p>
+                    <p class="text-gray-600 mt-2">坚持小半年后，孩子的识字量暴增，阅读速度显著提升，写看图写话也更加得心应手，常受老师表扬。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+            <div class="bg-white rounded-3xl p-8 shadow-xl">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="icon-outline"><i class="fas fa-chart-line"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800">识字量增长趋势</h2>
+                </div>
+                <div class="chart-container mt-4">
+                    <canvas id="wordCountChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl p-8 shadow-xl">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="icon-outline"><i class="fas fa-feather-alt"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800">写作能力对比</h2>
+                </div>
+                <div class="chart-container mt-4">
+                    <canvas id="writingSkillChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        // Reveal on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // Charts
+        const createChart = (ctx, type, labels, data, label, color) => {
+            new Chart(ctx, {
+                type: type,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: color,
+                        backgroundColor: color.replace(')', ', 0.2)'),
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 5,
+                        pointBackgroundColor: color
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            cornerRadius: 8,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#9ca3af'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: '#e5e7eb'
+                            },
+                            ticks: {
+                                color: '#9ca3af'
+                            }
+                        }
+                    }
+                }
+            });
+        };
+
+        const wordCountCtx = document.getElementById('wordCountChart').getContext('2d');
+        const writingSkillCtx = document.getElementById('writingSkillChart').getContext('2d');
+
+        createChart(
+            wordCountCtx,
+            'line',
+            ['第1个月', '第2个月', '第3个月', '第4个月', '第5个月', '第6个月'],
+            [200, 350, 600, 850, 1100, 1500],
+            '识字量',
+            'rgb(59, 130, 246)' // System Blue
+        );
+
+        createChart(
+            writingSkillCtx,
+            'bar',
+            ['开学前', '3个月后', '6个月后'],
+            [30, 70, 95],
+            '写作能力进步',
+            'rgb(245, 158, 11)' // Orange from holographic-text
+        );
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

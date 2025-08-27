@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职场沟通之道</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                              linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            /* 移除 `overflow: hidden;` 以启用滚动 */
+            /* 移除垂直居中属性，使其可以正常滚动 */
+            /* display: flex; */
+            /* flex-direction: column; */
+            /* min-height: 100vh; */
+            align-items: center;
+            /* justify-content: center; */
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .icon-accent {
+            color: #6B5D55;
+            opacity: 0.4;
+        }
+        .responsive-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        .line-graph {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            position: relative;
+            opacity: 0.7;
+        }
+        .line-point {
+            width: 8px;
+            height: 8px;
+            background-color: #689094;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+        }
+        .line-path {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            stroke: #6B5D55;
+            fill: none;
+            stroke-width: 2px;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: dash 5s linear forwards;
+            opacity: 0.5;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 flex flex-col items-center"> <svg class="memphis-accent top-[10%] left-[5%] w-24 h-24 animate-slow-drift" viewBox="0 0 100 100" fill="none" stroke="#689094" stroke-width="3">
+        <circle cx="50" cy="50" r="48"/>
+    </svg>
+    <svg class="memphis-accent bottom-[15%] right-[8%] w-32 h-32 animate-slow-drift" viewBox="0 0 100 100" fill="none" stroke="#689094" stroke-width="3">
+        <rect x="2" y="2" width="96" height="96"/>
+    </svg>
+    <div class="memphis-accent top-[50%] left-[50%] w-20 h-20 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-[#689094] animate-slow-drift"></div>
+
+    <div class="w-full max-w-6xl mx-auto flex flex-col items-center text-center pt-12 md:pt-24 pb-12 md:pb-24 space-y-8 z-10">
+
+        <div class="flex flex-col items-center">
+            <h1 class="font-display text-colossus leading-none mb-4 tracking-tight">
+                驯服沟通
+            </h1>
+            <p class="text-2xl md:text-4xl font-light text-connecting opacity-80 mt-4">
+                The Logic of Workplace Communication
+            </p>
+        </div>
+
+        <div class="w-full mt-16 md:mt-24 max-w-5xl">
+            <p class="font-display text-4xl md:text-6xl text-highlight-gradient">
+                可预测性与服从性
+            </p>
+            <p class="text-lg md:text-xl font-light mt-4 leading-relaxed">
+                最被欣赏的职场沟通，不是“情商”，而是能够让上级确认你是一个能稳定、高效执行他们意志的工具。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mt-16 max-w-5xl">
+            <div class="flex flex-col items-center p-6">
+                <i class="fas fa-chart-line text-5xl icon-accent"></i>
+                <h3 class="font-display text-5xl md:text-7xl mt-4 text-highlight-gradient">
+                    高效
+                </h3>
+                <p class="mt-2 text-sm md:text-base opacity-90">
+                    Efficiency Maximize.
+                </p>
+                <div class="line-graph mt-4">
+                    <svg class="line-path" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0,80 Q20,30 40,50 T80,20 T100,5" />
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="flex flex-col items-center p-6">
+                <i class="fas fa-lock text-5xl icon-accent"></i>
+                <h3 class="font-display text-5xl md:text-7xl mt-4 text-highlight-gradient">
+                    稳定
+                </h3>
+                <p class="mt-2 text-sm md:text-base opacity-90">
+                    Predictability First.
+                </p>
+                <div class="line-graph mt-4">
+                    <svg class="line-path" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0,50 L20,55 L40,48 L60,52 L80,49 L100,50" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center p-6">
+                <i class="fas fa-cogs text-5xl icon-accent"></i>
+                <h3 class="font-display text-5xl md:text-7xl mt-4 text-highlight-gradient">
+                    工具
+                </h3>
+                <p class="mt-2 text-sm md:text-base opacity-90">
+                    A Dependable Tool.
+                </p>
+                 <div class="line-graph mt-4">
+                    <svg class="line-path" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0,95 L20,70 Q50,10 80,40 L100,25" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full mt-16 md:mt-24 max-w-5xl">
+            <h2 class="font-display text-4xl md:text-6xl text-highlight-gradient">
+                直接传递信号
+            </h2>
+            <p class="text-lg md:text-xl font-light mt-4 leading-relaxed">
+                最被欣赏的沟通，是那种完全消除了所有不确定性和情绪干扰，直接传递“我可以为你解决这个问题”的信号。
+            </p>
+        </div>
+        
+        <div class="w-full mt-16 md:mt-24 max-w-5xl">
+            <div class="relative w-full h-auto p-8 border border-opacity-30 border-[#4A3B31] flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <i class="fas fa-handshake text-6xl icon-accent"></i>
+                    <p class="mt-4 font-display text-2xl md:text-4xl">
+                        契约表达
+                    </p>
+                    <p class="mt-2 text-sm md:text-base opacity-80">
+                        The Expression of Contract.
+                    </p>
+                </div>
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <i class="fas fa-hourglass-half text-6xl icon-accent"></i>
+                    <p class="mt-4 font-display text-2xl md:text-4xl">
+                        资源交换
+                    </p>
+                    <p class="mt-2 text-sm md:text-base opacity-80">
+                        A Resource Exchange.
+                    </p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold opacity-10">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+            </div>
+            <p class="text-sm md:text-base font-light mt-6 leading-relaxed opacity-90">
+                你的谦逊和积极，本质上是一种资源交换的契约表达：我以我的时间和精力换取你的认可和回报。
+            </p>
+        </div>
+
+    </div>
+
+    <div class="fixed bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 opacity-0">
+        <div class="w-2 h-2 rounded-full bg-gray-600"></div>
+        <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+        <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+    </div>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wabi-bg': '#DCD6CC',
+                        'wabi-text': '#4A3B31',
+                        'wabi-accent': '#689094',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
