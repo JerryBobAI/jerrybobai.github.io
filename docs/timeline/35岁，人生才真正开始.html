@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>35岁，人生才真正开始</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+    </style>
+</head>
+<body class="font-noto-sans-sc overflow-x-hidden">
+
+    <div class="min-h-screen flex items-center justify-center p-8 md:p-16 relative">
+        <div class="max-w-7xl mx-auto text-center z-10">
+            <h1 class="ultra-large-text font-black leading-tight mb-4 animate-fade-in-up">
+                35 岁，<br>人生<span class="highlight-text">才真正开始</span>
+            </h1>
+            <p class="text-lg md:text-2xl font-light max-w-2xl mx-auto opacity-90 animate-fade-in delay-200">
+                LIFE BEGINS AT 35
+                <br>
+                心理学大师荣格：40岁不是危机，而是黄金时代的开端。
+            </p>
+        </div>
+        <div class="absolute inset-0 z-0 flex items-center justify-center">
+            <div class="w-96 h-96 card tech-glow-hero" style="--tw-bg-opacity: 0.05; background: none; box-shadow: none;"></div>
+        </div>
+    </div>
+
+    <section class="py-16 md:py-24 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+            <div class="space-y-6">
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-snug">
+                    <span class="highlight-text">前半场：</span><br>为社会剧本打工
+                </h2>
+                <p class="text-base md:text-xl font-light opacity-80">
+                    THE FIRST HALF
+                    <br>
+                    我们努力打造一个符合外界期待的人设，一个闪闪发光的社会自我。
+                </p>
+                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="card p-6 tech-glow">
+                        <div class="content-z">
+                            <h3 class="text-xl font-bold mb-2">生存与立足</h3>
+                            <p class="text-sm opacity-80">名校录取、大厂Offer、体面地位</p>
+                        </div>
+                    </div>
+                    <div class="card p-6 tech-glow">
+                        <div class="content-z">
+                            <h3 class="text-xl font-bold mb-2">真实自我被压抑</h3>
+                            <p class="text-sm opacity-80">不符合标准的欲望和梦想</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="relative w-full h-96 md:h-[600px] order-first md:order-last">
+                <div class="card-alt-bg w-full h-full rounded-3xl p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-80">
+                        <i class="fas fa-mask text-9xl highlight-text opacity-30"></i>
+                    </div>
+                    <div class="absolute bottom-8 left-8 text-2xl md:text-3xl font-bold leading-tight">
+                        <p>完成社会化</p>
+                        <p class="text-sm font-normal opacity-80 mt-1">THE SOCIALIZED SELF</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 px-4 bg-opacity-70">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="ultra-large-text font-black leading-tight mb-8">
+                <span class="highlight-text">后半场：</span><br>从外求转向内求
+            </h2>
+            <p class="text-lg md:text-2xl font-light max-w-3xl mx-auto opacity-80">
+                THE SECOND HALF
+                <br>
+                从关注别人的评价，逐步转向关注内心的满足和真实的渴望。
+            </p>
+
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <div class="text-6xl large-stat-text highlight-stat font-bold mb-4">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">重新定义成功</h3>
+                        <p class="text-sm opacity-80">活得有多真实</p>
+                    </div>
+                </div>
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <div class="text-6xl large-stat-text highlight-stat font-bold mb-4">
+                            <i class="fas fa-adjust"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">完成阴影整合</h3>
+                        <p class="text-sm opacity-80">接纳自己的不完美</p>
+                    </div>
+                </div>
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <div class="text-6xl large-stat-text highlight-stat font-bold mb-4">
+                            <i class="fas fa-users-slash"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">优化人际资产</h3>
+                        <p class="text-sm opacity-80">断舍离无效社交</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 px-4">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+            <div class="relative w-full h-96 md:h-[600px] order-first md:order-last">
+                <div class="card-darker-alt-bg w-full h-full rounded-3xl p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-80">
+                        <i class="fas fa-mountain text-9xl highlight-text opacity-30"></i>
+                    </div>
+                    <div class="absolute top-8 left-8 text-2xl md:text-3xl font-bold leading-tight">
+                        <p>开启你的黄金时代</p>
+                        <p class="text-sm font-normal opacity-80 mt-1">THE GOLDEN AGE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-6 order-last md:order-first">
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-snug">
+                    <span class="highlight-text">如何开启？</span><br>三个关键动作
+                </h2>
+                <p class="text-base md:text-xl font-light opacity-80">
+                    HOW TO BEGIN
+                    <br>
+                    35岁不是下坡路，而是一道为你而活的分水岭。
+                </p>
+                <ul class="space-y-4 text-base md:text-lg">
+                    <li class="flex items-center">
+                        <i class="list-icon fas fa-palette"></i> 找到你的“无用之用”
+                    </li>
+                    <li class="flex items-center">
+                        <i class="list-icon fas fa-ruler-combined"></i> 建立清晰的个人边界
+                    </li>
+                    <li class="flex items-center">
+                        <i class="list-icon fas fa-brain"></i> 与自己进行深度对话
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <section class="py-16 md:py-24 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
+                        你人生最好的<br><span class="highlight-text">故事，序幕才刚刚拉开</span>
+                    </h2>
+                    <p class="text-lg md:text-2xl font-light opacity-80 mt-6">
+                        THE BEST CHAPTER IS YET TO COME
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

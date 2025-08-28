@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重新学会读书</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            line-height: 1.8;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        .text-brown-custom { color: #3A2E2C; }
+        .bg-custom-light-blue { background-color: rgba(224, 242, 247, 0.75); }
+
+        /* Custom SVG illustration style */
+        .illustration-stroke {
+            stroke: #3A2E2C;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .illustration-fill {
+            fill: #FFB300;
+            stroke: none;
+        }
+        .illustration-bg-fill {
+            fill: rgba(255, 179, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased text-brown-custom">
+
+<main class="container mx-auto p-4 md:p-8 max-w-7xl">
+    <header class="flex flex-col items-center justify-center text-center py-16 px-4">
+        <h1 class="font-noto-sans-sc ultra-large-text highlight-text mb-4 leading-tight">重新学会读书</h1>
+        <p class="text-xl md:text-2xl font-light max-w-3xl leading-relaxed">
+            Relearning to Read.
+            <br>
+            在这片被数字多巴胺浸润的世界里，我们如何找回专注，重新沉浸在书的温柔怀抱？
+        </p>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 md:py-16">
+        <div class="card p-6 md:p-10 text-center tech-glow">
+            <div class="content-z">
+                <p class="text-lg font-light mb-2">去年读完的书</p>
+                <p class="large-stat-text highlight-stat font-noto-sans-sc">4</p>
+                <p class="text-sm md:text-base font-light opacity-80">本</p>
+            </div>
+        </div>
+        <div class="card p-6 md:p-10 text-center tech-glow">
+            <div class="content-z">
+                <p class="text-lg font-light mb-2">平均每晚读</p>
+                <p class="large-stat-text highlight-stat font-noto-sans-sc">4</p>
+                <p class="text-sm md:text-base font-light opacity-80">句话</p>
+            </div>
+        </div>
+        <div class="card p-6 md:p-10 text-center tech-glow">
+            <div class="content-z">
+                <p class="text-lg font-light mb-2">多任务处理导致</p>
+                <p class="large-stat-text highlight-stat font-noto-sans-sc">-10</p>
+                <p class="text-sm md:text-base font-light opacity-80">点智商</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 py-8 md:py-16 items-center">
+        <div class="card p-8 md:p-12 h-full flex flex-col justify-center">
+            <div class="content-z">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-4 leading-tight">
+                    数字诱惑
+                    <span class="block text-2xl md:text-3xl font-light opacity-80 mt-2">The Digital Distraction</span>
+                </h2>
+                <p class="text-lg md:text-xl font-light leading-relaxed">
+                    读书难，源于数字世界无处不在的诱惑。我们的注意力被碎片化信息反复侵蚀，从亲子时光到工作专注，都难以幸免。
+                </p>
+                <div class="mt-8 space-y-4">
+                    <div class="flex items-start">
+                        <i class="fas fa-mobile-alt list-icon mt-1 text-2xl md:text-3xl"></i>
+                        <p class="ml-4 text-lg md:text-xl font-light">
+                            孩子表演时，忍不住刷手机，像是在偷吸毒。
+                        </p>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-envelope list-icon mt-1 text-2xl md:text-3xl"></i>
+                        <p class="ml-4 text-lg md:text-xl font-light">
+                            工作中，邮箱的“灵魂召唤”让人不断切换任务，效率骤降。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card p-8 md:p-12 h-full flex items-center justify-center card-alt-bg tech-glow">
+            <div class="content-z">
+                <svg viewBox="0 0 400 300" class="w-full max-w-sm" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="bookGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(255,179,0,0.5);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:rgba(255,179,0,0.1);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path class="illustration-stroke" d="M100,150 C50,150 50,250 100,250 H300 C350,250 350,150 300,150 H100 Z" />
+                    <circle class="illustration-stroke" cx="150" cy="180" r="10" />
+                    <circle class="illustration-stroke" cx="250" cy="180" r="10" />
+                    <path class="illustration-stroke" d="M180,220 Q200,230 220,220" />
+                    
+                    <rect x="175" y="50" width="50" height="70" rx="10" ry="10" class="illustration-stroke" />
+                    <line x1="175" y1="50" x2="225" y2="120" class="illustration-stroke" />
+                    <line x1="225" y1="50" x2="175" y2="120" class="illustration-stroke" />
+                    <path d="M180,40 Q200,30 220,40" class="illustration-stroke" />
+                    <path d="M175,30 Q200,20 225,30" class="illustration-stroke" />
+                    
+                    <path d="M100,150 Q50,160 50,190 V250" class="illustration-stroke" />
+                    <path d="M300,150 Q350,160 350,190 V250" class="illustration-stroke" />
+                    <rect x="110" y="160" width="180" height="80" rx="5" ry="5" class="illustration-fill" style="fill:url(#bookGradient);" />
+                    <line x1="150" y1="165" x2="150" y2="235" class="illustration-stroke" />
+                    
+                    <path d="M200,120 V150" class="illustration-stroke" />
+                    <circle cx="200" cy="135" r="15" class="illustration-stroke" />
+                    <line x1="190" y1="125" x2="210" y2="145" class="illustration-stroke" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 py-8 md:py-16 items-center">
+        <div class="card p-8 md:p-12 h-full flex items-center justify-center card-darker-alt-bg tech-glow">
+            <div class="content-z">
+                <svg viewBox="0 0 400 300" class="w-full max-w-sm" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="100" y="100" width="200" height="150" rx="10" ry="10" class="illustration-fill" />
+                    <rect x="95" y="105" width="200" height="150" rx="10" ry="10" class="illustration-stroke" />
+                    <path d="M100,100 L95,105 M100,250 L95,255" class="illustration-stroke" />
+                    <line x1="200" y1="100" x2="200" y2="250" class="illustration-stroke" />
+                    <path d="M200,100 C150,150 150,200 200,250" class="illustration-stroke" />
+
+                    <path d="M180,150 C160,160 160,190 180,200 M220,150 C240,160 240,190 220,200" class="illustration-stroke" />
+                    <path d="M180,150 Q200,140 220,150" class="illustration-stroke" />
+                    <path d="M180,200 Q200,210 220,200" class="illustration-stroke" />
+                    
+                    <path d="M150,250 C120,280 180,280 150,250" class="illustration-stroke" />
+                    <path d="M250,250 C280,280 220,280 250,250" class="illustration-stroke" />
+
+                    <circle cx="200" cy="50" r="15" class="illustration-fill illustration-bg-fill" />
+                    <circle cx="100" cy="50" r="10" class="illustration-fill illustration-bg-fill" />
+                    <circle cx="300" cy="50" r="10" class="illustration-fill illustration-bg-fill" />
+                    <line x1="200" y1="65" x2="200" y2="100" class="illustration-stroke" />
+                    <line x1="200" y1="65" x2="100" y2="100" class="illustration-stroke" />
+                    <line x1="200" y1="65" x2="300" y2="100" class="illustration-stroke" />
+                </svg>
+            </div>
+        </div>
+        <div class="card p-8 md:p-12 h-full flex flex-col justify-center">
+            <div class="content-z">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-4 leading-tight">
+                    书为何重要
+                    <span class="block text-2xl md:text-3xl font-light opacity-80 mt-2">Why Books Matter</span>
+                </h2>
+                <p class="text-lg md:text-xl font-light leading-relaxed">
+                    书，不仅仅是知识和情感的容器。它是让我们“平移自我”，走进他人思想的独特工具。
+                </p>
+                <ul class="mt-8 space-y-4 text-lg md:text-xl font-light">
+                    <li class="flex items-start">
+                        <i class="fas fa-splotch list-icon mt-1 text-2xl md:text-3xl"></i>
+                        <span class="ml-4">
+                            书是思想的“节点”，将自我编织起来。
+                        </span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-compass list-icon mt-1 text-2xl md:text-3xl"></i>
+                        <span class="ml-4">
+                            读书是“自我消融”的冥想，帮助我们找回专注。
+                        </span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-globe-asia list-icon mt-1 text-2xl md:text-3xl"></i>
+                        <span class="ml-4">
+                            书封背后，往往藏着真正美丽的“新世界”。
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8 md:py-16">
+        <div class="card p-8 md:p-12 text-center tech-glow">
+            <div class="content-z">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-4 leading-tight">
+                    于是，改变开始了
+                    <span class="block text-2xl md:text-3xl font-light opacity-80 mt-2">The Change Begins</span>
+                </h2>
+                <p class="text-lg md:text-xl font-light max-w-4xl mx-auto leading-relaxed">
+                    从今年一月起，通过一些简单的习惯调整，大脑的专注力正在慢慢复苏。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+                    <div class="bg-custom-light-blue p-6 rounded-2xl flex flex-col items-center shadow-inner">
+                        <i class="fas fa-ban list-icon text-4xl mb-4"></i>
+                        <p class="text-lg font-bold font-noto-sans-sc mb-2">减少数字输入</p>
+                        <p class="text-sm opacity-80">工作时间不刷社交媒体，不看新闻。</p>
+                    </div>
+                    <div class="bg-custom-light-blue p-6 rounded-2xl flex flex-col items-center shadow-inner">
+                        <i class="fas fa-bed list-icon text-4xl mb-4"></i>
+                        <p class="text-lg font-bold font-noto-sans-sc mb-2">卧室不带设备</p>
+                        <p class="text-sm opacity-80">睡前远离手机和电脑，营造安静环境。</p>
+                    </div>
+                    <div class="bg-custom-light-blue p-6 rounded-2xl flex flex-col items-center shadow-inner">
+                        <i class="fas fa-tv list-icon text-4xl mb-4"></i>
+                        <p class="text-lg font-bold font-noto-sans-sc mb-2">晚饭后不看电视</p>
+                        <p class="text-sm opacity-80">将消遣时间重新分配给更有价值的活动。</p>
+                    </div>
+                    <div class="bg-custom-light-blue p-6 rounded-2xl flex flex-col items-center shadow-inner">
+                        <i class="fas fa-book-open list-icon text-4xl mb-4"></i>
+                        <p class="text-lg font-bold font-noto-sans-sc mb-2">直接上床读书</p>
+                        <p class="text-sm opacity-80">用电子阅读器替代手机，建立新的习惯。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 md:py-24 text-center">
+        <h2 class="text-3xl md:text-4xl font-noto-sans-sc font-bold mb-4">
+            书，依然是那个熟悉的世界。
+        </h2>
+        <p class="text-lg md:text-xl font-light max-w-3xl mx-auto leading-relaxed opacity-90">
+            现在，我比过去几年读书都多，精力更充沛，注意力也更集中。
+            <br class="hidden md:inline">
+            读书正在帮我重新训练专注力，找回曾经的自己。
+        </p> 
+    </footer>
+</main>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
