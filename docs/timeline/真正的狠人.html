@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真正的狠人</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        .icon-small-circle {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            background-color: rgba(255, 179, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .icon-large-circle {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 9999px;
+            background-color: rgba(255, 179, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .border-dashed-g {
+            border: 2px dashed #999;
+            border-radius: 1rem;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 lg:p-24">
+
+    <header class="text-center mb-16">
+        <h1 class="ultra-large-text font-noto-sans-sc highlight-text animate-fade-in">真正的狠人</h1>
+        <p class="text-xl md:text-2xl mt-4 font-noto-sans-sc">WHAT MAKES A TRUE 'SAVAGE'?</p>
+    </header>
+
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">01</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">情绪稳定</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    真正的狠人，外表温和，内心强大。他们能洞悉世事，看透本质，因此情绪的张力会变弱，面对泰山崩于前也能面不改色。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">02</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">核心稳定</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    允许一切发生，专注自身。目标感强烈，内心平静，做事高效。不因外界的挫折而自乱阵脚，不给自己施加不必要的压力。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">03</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">最高法则</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    内心比任何男人都刚毅果断，外表比任何女人都明媚温柔。以柔克刚，从此世间无人是你的对手。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">04</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">不为烂事浪费</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    人生苦短，不纠缠于烂人烂事，将时间与精力都浪费在美好的人和事物上。
+                </p>
+            </div>
+        </div>
+        
+        <div class="card card-alt-bg p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">05</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">零内耗</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    不让思绪过度反刍，不为未来过度焦虑。反思是为了吸取教训，总结经验，然后立刻停止，不再钻牛角尖。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">06</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">永不抱怨</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    将“为什么发生在我身上”的抱怨，转变为“这件事教会了我什么”的觉醒。一切都是最好的安排。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-darker-alt-bg p-6 tech-glow lg:col-span-2">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">07</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">100% 自控</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    不为人师，没有助人情结。点醒一个人不是靠说教，而是磨难。你永远叫不醒一个装睡的人，何况很多人根本不值得教。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">08</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">不要多管闲事</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    心理学“100-1=0”原则：帮人100次，错一次，之前的好事都白费。在职场上，你热心肠帮助同事，可能被当做理所当然，下次不帮，反而被记恨。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">09</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">很能“熬”</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    低级欲望通过放纵获得，高级欲望通过自律获得。只有顶级欲望，需要通过熬炼才能获得。要独自穿过黑暗丛林，忍受不被认可，不被理解，付出没有结果。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">10</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">对自己狠，对别人更狠</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    “知行合一”，说到做到，拥有超强执行力。对别人也毫不留情，在商业决策上干脆利索，不怒自威。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">11</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">巨大能量</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    能成事的人，体内都有巨大能量，能够杀伐果断，能量极高，绝不是那些温文尔雅、懂事听话的人。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">12</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">看破不说破</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    遇到事情不急躁，先看清情况，不轻易发表意见，不随便指责别人，静观其变，看破不说破。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">13</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">脸皮要厚</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    不怕在任何场合被嘲笑、看不起、遭白眼。你越怕，小人越得意。脸皮厚一点，就能战胜很多困难。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">14</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">不要到处诉苦</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    这个世界上没有真正的感同身受。你说的多了，别人只会觉得你很烦。
+                </p>
+            </div>
+        </div>
+        
+        <div class="card p-6 tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-4">
+                    <span class="large-stat-text highlight-text font-bold mr-4">15</span>
+                    <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">闷声发大财</h3>
+                </div>
+                <p class="mt-2 text-lg">
+                    做人要低调，做事要高调。你越炫耀什么，越容易失去什么。真正厉害的人，都是闷声发大财。
+                </p>
+            </div>
+        </div>
+
+    </main>
+    
+    <footer class="text-center mt-16 text-gray-600 text-sm">
+        <p>A Ghibli-inspired design concept. | &copy; 2024</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
