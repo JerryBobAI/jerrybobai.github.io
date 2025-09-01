@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真正的动力</title>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC;
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)), linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em;
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem);
+            font-weight: 400;
+            color: #6B5D55;
+            display: block;
+            margin: 0.3em 0;
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem);
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#DCD6CC] text-[#4A3B31] overflow-hidden">
+
+    <svg class="memphis-accent top-10 left-10 w-24 h-24 animate-slow-drift" viewBox="0 0 100 100">
+        <path d="M50,5 A45,45 0 1,1 50,95 A45,45 0 1,1 50,5" stroke="#689094" stroke-width="2" fill="none"/>
+    </svg>
+    <svg class="memphis-accent bottom-10 right-10 w-32 h-32 animate-slow-drift" style="animation-delay: 2s;" viewBox="0 0 100 100">
+        <rect x="10" y="10" width="80" height="80" stroke="#689094" stroke-width="2" fill="none"/>
+    </svg>
+    <svg class="memphis-accent top-1/4 right-1/4 w-20 h-20 animate-slow-drift" style="animation-delay: 4s;" viewBox="0 0 100 100">
+        <line x1="10" y1="90" x2="90" y2="10" stroke="#689094" stroke-width="2"/>
+        <line x1="10" y1="10" x2="90" y2="90" stroke="#689094" stroke-width="2"/>
+    </svg>
+
+    <div class="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-screen">
+        <div class="text-center space-y-8 max-w-4xl mx-auto">
+            <h1 class="font-display text-5xl md:text-6xl lg:text-7xl fade-in" style="animation-delay: 0.2s;">
+                <span class="text-highlight-gradient">千万不要相信</span>
+            </h1>
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl fade-in" style="animation-delay: 0.4s;">
+                <span class="text-connecting">压力可以转化为动力</span>
+            </h2>
+            <p class="text-xl md:text-2xl lg:text-3xl max-w-2xl mx-auto leading-relaxed fade-in" style="animation-delay: 0.6s;">
+                <span class="block">你的压力只会转化成<strong class="font-bold text-highlight-gradient">病历</strong></span>
+            </p>
+            <div class="mt-8 pt-8 border-t border-[#6B5D55]/30">
+                <p class="text-sm md:text-base lg:text-lg uppercase text-[#6B5D55] tracking-widest fade-in" style="animation-delay: 0.8s;">TRUE MOTIVATION IS FROM WITHIN</p>
+                <h3 class="font-display text-4xl md:text-5xl lg:text-6xl mt-2 fade-in" style="animation-delay: 1s;">
+                    <span class="text-highlight-gradient">人真正的动力</span>
+                </h3>
+                <h4 class="font-display text-colossus text-5xl md:text-6xl lg:text-8xl mt-4 fade-in" style="animation-delay: 1.2s;">
+                    源于内心深处
+                </h4>
+                <p class="text-lg md:text-xl lg:text-2xl mt-4 max-w-2xl mx-auto leading-relaxed fade-in" style="animation-delay: 1.4s;">
+                    对于<strong class="font-bold text-highlight-gradient">快乐和兴趣</strong>的追求。
+                </p>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-[#6B5D55]/30 text-xs md:text-sm text-[#6B5D55] fade-in" style="animation-delay: 1.6s;">
+                <p class="font-bold">毛姆 (W. Somerset Maugham)</p>
+                <p>英国小说家·剧作家·代表作《人生的枷锁》</p>
+            </div>
+        </div>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苹果百科全书</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'Poppins', serif;
+            background-color: #f7f3ed;
+            color: #4b3d32;
+            animation: fadeIn 1s ease-in-out;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><rect width="20" height="20" fill="%23f7f3ed"/><path d="M0 0h10v10H0zM10 10h10v10H10z" fill-opacity=".1" fill="%23e8dcca"/></svg>');
+            background-size: 10px 10px;
+        }
+
+        .text-brown-900 {
+            color: #4b3d32;
+        }
+
+        .text-highlight-red {
+            color: #cc5454;
+        }
+        
+        .text-highlight-orange {
+            color: #e59345;
+        }
+
+        .text-highlight-green {
+            color: #637f59;
+        }
+
+        .font-handwritten {
+            font-family: 'Poppins', serif;
+        }
+
+        .icon-circle {
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f7f3ed;
+        }
+        .icon-red {
+            background-color: #cc5454;
+        }
+        .icon-orange {
+            background-color: #e59345;
+        }
+        .icon-green {
+            background-color: #637f59;
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .gradient-red {
+            background: radial-gradient(circle at 10% 20%, rgba(204, 84, 84, 0.4) 0%, rgba(204, 84, 84, 0) 70%);
+        }
+
+        .gradient-orange {
+            background: radial-gradient(circle at 80% 90%, rgba(229, 147, 69, 0.4) 0%, rgba(229, 147, 69, 0) 70%);
+        }
+
+        .gradient-green {
+            background: radial-gradient(circle at 50% 50%, rgba(99, 127, 89, 0.4) 0%, rgba(99, 127, 89, 0) 70%);
+        }
+
+        .border-dashed-light {
+            border-style: dashed;
+            border-color: rgba(75, 61, 50, 0.2);
+        }
+
+        /* Custom scrollbar style */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1efe8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c3b7a5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a89d8f;
+        }
+
+        /* Custom animation for visual elements */
+        .pop-in {
+            animation: popIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body class="overflow-y-scroll">
+
+    <div class="relative min-h-screen flex items-center justify-center p-8 overflow-hidden">
+        <div class="gradient-overlay gradient-red"></div>
+        <div class="z-10 text-center max-w-7xl mx-auto">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-apple-alt text-7xl text-brown-900 pop-in"></i>
+                    <h1 class="text-brown-900 font-handwritten text-7xl md:text-8xl lg:text-9xl font-bold pop-in" style="animation-delay: 0.2s;">
+                        <span class="text-highlight-red">Apple</span>
+                        <span class="text-highlight-orange"> </span>
+                        <span class="text-highlight-green">Encyclopedia</span>
+                    </h1>
+                </div>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-brown-900 pop-in" style="animation-delay: 0.4s;">
+                    儿童<span class="text-highlight-red">苹果</span>小百科
+                </h2>
+                <p class="mt-4 text-xl md:text-2xl text-brown-900 max-w-2xl pop-in" style="animation-delay: 0.6s;">
+                    一个关于<span class="font-handwritten text-highlight-orange">颜色</span>、<span class="font-handwritten text-highlight-orange">味道</span>和<span class="font-handwritten text-highlight-orange">健康</span>的奇妙世界。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="relative py-24 px-8 md:px-16 lg:px-24 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div class="lg:order-2 text-center lg:text-left">
+                <div class="relative inline-block">
+                    <p class="text-[12rem] md:text-[18rem] lg:text-[20rem] font-bold font-handwritten leading-none text-brown-900 opacity-20 z-0">TREE</p>
+                </div>
+                <h3 class="text-5xl md:text-6xl lg:text-7xl font-bold text-highlight-red mt-[-4rem] md:mt-[-6rem] lg:mt-[-8rem] z-10 relative pop-in" style="animation-delay: 0.8s;">
+                    From Blossom to Fruit
+                </h3>
+                <h4 class="text-3xl md:text-4xl font-bold text-brown-900 mt-4 pop-in" style="animation-delay: 1s;">
+                    苹果从哪里来？
+                </h4>
+            </div>
+            <div class="lg:order-1 text-brown-900 pop-in" style="animation-delay: 1.2s;">
+                <p class="text-xl md:text-2xl mt-4 max-w-xl mx-auto lg:mx-0">
+                    苹果不是凭空出现的哦！它生长在一种叫做<b class="text-highlight-orange">苹果树</b>的大树上。春天，苹果树会开出美丽的小花，吸引小蜜蜂来帮忙授粉。夏天，小花就会慢慢变成小小的苹果，藏在绿叶里。
+                </p>
+                <div class="mt-8 flex flex-col space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="icon-circle icon-red"><i class="fas fa-tree"></i></div>
+                        <p class="text-xl md:text-2xl font-bold">苹果树 Apple Tree</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="icon-circle icon-orange"><i class="fas fa-cloud-sun"></i></div>
+                        <p class="text-xl md:text-2xl font-bold">阳光 Sunshine</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="icon-circle icon-green"><i class="fas fa-tint"></i></div>
+                        <p class="text-xl md:text-2xl font-bold">雨水 Rain</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    ---
+
+    <div class="relative py-24 px-8 md:px-16 lg:px-24 max-w-7xl mx-auto">
+        <div class="gradient-overlay gradient-orange"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div class="text-center lg:text-left pop-in" style="animation-delay: 1.4s;">
+                <h3 class="text-5xl md:text-6xl lg:text-7xl font-bold text-highlight-orange z-10 relative">
+                    Inside & Out
+                </h3>
+                <h4 class="text-3xl md:text-4xl font-bold text-brown-900 mt-4">
+                    苹果的秘密
+                </h4>
+            </div>
+            <div class="text-brown-900 pop-in" style="animation-delay: 1.6s;">
+                <p class="text-xl md:text-2xl mt-4 max-w-xl mx-auto lg:mx-0">
+                    一个苹果，就像一个藏着小秘密的宝盒。它的外面是光滑的<b class="text-highlight-orange">果皮</b>，里面是甜甜脆脆的<b class="text-highlight-red">果肉</b>，中间是藏着新生命的<b class="text-highlight-green">果核</b>。
+                </p>
+                <div class="mt-8 flex flex-col space-y-6">
+                    <div class="flex items-center space-x-4 border-dashed-light border-b-2 pb-4">
+                        <div class="icon-circle icon-red"><i class="fas fa-apple-alt"></i></div>
+                        <p class="text-xl font-bold text-highlight-red">果皮 Peel</p>
+                        <span class="text-sm text-brown-900 opacity-70">保护果肉的小外套</span>
+                    </div>
+                    <div class="flex items-center space-x-4 border-dashed-light border-b-2 pb-4">
+                        <div class="icon-circle icon-orange"><i class="fas fa-heart"></i></div>
+                        <p class="text-xl font-bold text-highlight-orange">果肉 Flesh</p>
+                        <span class="text-sm text-brown-900 opacity-70">又甜又多汁的部分</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="icon-circle icon-green"><i class="fas fa-seedling"></i></div>
+                        <p class="text-xl font-bold text-highlight-green">果核 Core</p>
+                        <span class="text-sm text-brown-900 opacity-70">藏着苹果宝宝的家</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    ---
+
+    <div class="relative py-24 px-8 md:px-16 lg:px-24 max-w-7xl mx-auto">
+        <div class="gradient-overlay gradient-green"></div>
+        <div class="text-center pop-in" style="animation-delay: 1.8s;">
+            <h3 class="text-5xl md:text-6xl lg:text-7xl font-bold text-highlight-green">
+                A Rainbow of Flavors
+            </h3>
+            <h4 class="text-3xl md:text-4xl font-bold text-brown-900 mt-4">
+                苹果家族的颜色
+            </h4>
+        </div>
+        
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="p-8 border-dashed-light border-2 rounded-lg text-center pop-in" style="animation-delay: 2s;">
+                <div class="flex justify-center mb-4">
+                    <i class="fas fa-apple-alt text-6xl text-highlight-red"></i>
+                </div>
+                <h5 class="text-2xl md:text-3xl font-bold text-highlight-red">红苹果 Red</h5>
+                <p class="mt-4 text-brown-900">
+                    最常见的苹果，通常<b class="font-handwritten text-highlight-orange">又甜又脆</b>，就像一个害羞的小脸蛋。
+                </p>
+            </div>
+            <div class="p-8 border-dashed-light border-2 rounded-lg text-center pop-in" style="animation-delay: 2.2s;">
+                <div class="flex justify-center mb-4">
+                    <i class="fas fa-apple-alt text-6xl text-highlight-green"></i>
+                </div>
+                <h5 class="text-2xl md:text-3xl font-bold text-highlight-green">青苹果 Green</h5>
+                <p class="mt-4 text-brown-900">
+                    有点<b class="font-handwritten text-highlight-orange">酸酸的</b>，非常清爽，是夏天的味道。
+                </p>
+            </div>
+            <div class="p-8 border-dashed-light border-2 rounded-lg text-center pop-in" style="animation-delay: 2.4s;">
+                <div class="flex justify-center mb-4">
+                    <i class="fas fa-apple-alt text-6xl text-highlight-orange"></i>
+                </div>
+                <h5 class="text-2xl md:text-3xl font-bold text-highlight-orange">黄苹果 Yellow</h5>
+                <p class="mt-4 text-brown-900">
+                    闻起来特别<b class="font-handwritten text-highlight-orange">香甜</b>，口感软软糯糯，像个温柔的小伙伴。
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    ---
+
+    <div class="relative py-24 px-8 md:px-16 lg:px-24 max-w-7xl mx-auto">
+        <div class="gradient-overlay gradient-red"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            <div class="text-center lg:text-left pop-in" style="animation-delay: 2.6s;">
+                <h3 class="text-5xl md:text-6xl lg:text-7xl font-bold text-highlight-red z-10 relative">
+                    An Apple a Day...
+                </h3>
+                <h4 class="text-3xl md:text-4xl font-bold text-brown-900 mt-4">
+                    每天一个苹果
+                </h4>
+                <p class="text-xl md:text-2xl mt-4 max-w-xl mx-auto lg:mx-0">
+                    苹果不只是好吃，它还是一个“<b class="font-handwritten text-highlight-orange">健康小超人</b>”。让我们看看它藏着哪些神奇的力量吧！
+                </p>
+            </div>
+            <div class="chart-container relative mt-8 lg:mt-0 pop-in" style="animation-delay: 2.8s;">
+                <canvas id="appleBenefitsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    ---
+
+    <div class="relative py-24 px-8 md:px-16 lg:px-24 max-w-7xl mx-auto">
+        <div class="gradient-overlay gradient-orange"></div>
+        <div class="text-center pop-in" style="animation-delay: 3s;">
+            <h3 class="text-5xl md:text-6xl lg:text-7xl font-bold text-highlight-orange">
+                How an Apple Reaches You
+            </h3>
+            <h4 class="text-3xl md:text-4xl font-bold text-brown-900 mt-4">
+                苹果的奇妙旅程
+            </h4>
+        </div>
+        
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8 border-dashed-light border-2 rounded-lg pop-in" style="animation-delay: 3.2s;">
+                <div class="text-6xl text-brown-900 mb-4">
+                    <i class="fas fa-hand-sparkles text-highlight-green"></i>
+                </div>
+                <h5 class="text-2xl font-bold text-highlight-green">采摘 Picking</h5>
+                <p class="mt-4 text-brown-900">
+                    农场叔叔阿姨们把成熟的苹果小心翼翼地从树上摘下来。
+                </p>
+            </div>
+            <div class="text-center p-8 border-dashed-light border-2 rounded-lg pop-in" style="animation-delay: 3.4s;">
+                <div class="text-6xl text-brown-900 mb-4">
+                    <i class="fas fa-truck text-highlight-orange"></i>
+                </div>
+                <h5 class="text-2xl font-bold text-highlight-orange">运输 Transport</h5>
+                <p class="mt-4 text-brown-900">
+                    苹果坐上大卡车，长途跋涉，去往不同的城市。
+                </p>
+            </div>
+            <div class="text-center p-8 border-dashed-light border-2 rounded-lg pop-in" style="animation-delay: 3.6s;">
+                <div class="text-6xl text-brown-900 mb-4">
+                    <i class="fas fa-shopping-basket text-highlight-red"></i>
+                </div>
+                <h5 class="text-2xl font-bold text-highlight-red">购买 Buying</h5>
+                <p class="mt-4 text-brown-900">
+                    最后，苹果来到了超市或者菜市场，等着被你带回家！
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center py-16 text-brown-900 opacity-60">
+        <p>希望你喜欢这个关于苹果的奇妙旅程！</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartConfig = {
+                type: 'bar',
+                data: {
+                    labels: ['维生素C', '膳食纤维', '抗氧化物'],
+                    datasets: [{
+                        label: '苹果的健康成分',
+                        data: [8, 4, 6],
+                        backgroundColor: [
+                            'rgba(204, 84, 84, 0.7)',
+                            'rgba(229, 147, 69, 0.7)',
+                            'rgba(99, 127, 89, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(204, 84, 84)',
+                            'rgb(229, 147, 69)',
+                            'rgb(99, 127, 89)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 10,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: '#4b3d32',
+                            titleColor: '#f7f3ed',
+                            bodyColor: '#f7f3ed',
+                            titleFont: {
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                weight: 'normal'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#4b3d32',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            border: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(75, 61, 50, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#4b3d32',
+                                font: {
+                                    size: 14
+                                }
+                            },
+                            border: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            };
+            const ctx = document.getElementById('appleBenefitsChart').getContext('2d');
+            new Chart(ctx, chartConfig);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重新思考信息表征、AI 和人类能动性</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #050810;
+            color: #E0E0E0;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(25, 30, 50, 0.4);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, box-shadow;
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+        }
+
+        .glass-card > * { text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+
+        .blob-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; z-index: -1; filter: blur(120px);
+        }
+
+        .blob {
+            position: absolute; border-radius: 50%; opacity: 0.6; will-change: transform;
+        }
+        .blob-1 { background: #00A3FF; width: 35vw; height: 35vw; top: 5vh; left: 10vw; animation: move-blob-1 32s ease-in-out infinite; }
+        .blob-2 { background: #D946EF; width: 40vw; height: 40vw; top: 50vh; left: 60vw; animation: move-blob-2 38s ease-in-out infinite; }
+        .blob-3 { background: #F59E0B; width: 30vw; height: 30vw; top: 60vh; left: -5vw; animation: move-blob-3 28s ease-in-out infinite; }
+
+        @keyframes move-blob-1 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(20vw,25vh) scale(1.3)} 100%{transform:translate(0,0) scale(1)} }
+        @keyframes move-blob-2 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(-25vw,-20vh) scale(.8)} 100%{transform:translate(0,0) scale(1)} }
+        @keyframes move-blob-3 { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(15vw,-30vh) scale(1.1)} 100%{transform:translate(0,0) scale(1)} }
+
+        .huge-text {
+            font-size: clamp(8rem, 22vw, 22rem);
+            line-height: 1;
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.07;
+            z-index: 1;
+            pointer-events: none;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .highlight-cyan { color: #22d3ee; }
+        .highlight-purple { color: #e879f9; }
+        .highlight-amber { color: #fbbf24; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="relative z-10 container mx-auto px-4 lg:px-8 py-24 lg:py-32 space-y-32 lg:space-y-48">
+
+        <section class="min-h-[80vh] flex flex-col justify-center items-center text-center relative reveal">
+            <div class="z-10">
+                <p class="text-lg md:text-xl text-gray-400 mb-2">【洞见】Linus Lee</p>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
+                    重新思考信息表征、<br>AI 和人类能动性
+                </h1>
+                <p class="mt-8 text-lg md:text-2xl text-gray-300 font-light">
+                    我们看到的世界，是被信息<span class="highlight-cyan font-bold">“表征”</span>塑造的
+                </p>
+                 <div class="mt-16 animate-bounce">
+                    <p class="text-sm text-gray-500">🔝向上滑动阅览</p>
+                    <i class="fa-solid fa-chevron-up text-gray-600 mt-1"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="text-center mb-12">
+                 <h2 class="text-3xl md:text-5xl font-black">核心要点</h2>
+                 <p class="mt-3 text-lg text-gray-400">Key Takeaways</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card p-6"><p class="font-bold">不同的信息呈现方式，会导向完全不同的决策。</p></div>
+                <div class="glass-card p-6"><p class="font-bold">好的可视化，能帮人类在复杂系统中夺回主导权。</p></div>
+                <div class="glass-card p-6"><p class="font-bold">AI 时代的“用户代理权”，正变得模糊不清。</p></div>
+                <div class="glass-card p-6"><p class="font-bold">完美的表征不存在，所有呈现都是一种“取舍”。</p></div>
+                <div class="glass-card p-6"><p class="font-bold">信息表征，是人与复杂系统之间沟通的桥梁。</p></div>
+                <div class="glass-card p-6 bg-purple-500/20 border-purple-400/50"><p class="font-black text-white text-lg">除了“超级智能”，我们更需要“超级代理权”的工具。</p></div>
+            </div>
+        </section>
+
+        <section class="relative reveal">
+            <span class="huge-text select-none">设计</span>
+            <div class="text-center mb-12 z-10 relative">
+                 <p class="text-lg highlight-cyan font-bold">1 & 2</p>
+                 <h2 class="text-3xl md:text-5xl font-black mt-2">表征与符号</h2>
+                 <p class="mt-3 text-lg text-gray-400">你看待世界的方式，早已被设计</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-card p-8">
+                    <h3 class="text-2xl font-bold mb-4">信息表征：一种强大的<span class="highlight-cyan">技术</span></h3>
+                    <p class="text-gray-300">它并非简单地“反映”现实，而是在“塑造”我们所能感知的现实。从财报到 App 界面，每一种设计都带有明确的“立场”，引导我们的注意力，影响我们的判断。</p>
+                    <div class="mt-6 flex justify-around items-center bg-black/20 rounded-2xl p-4">
+                        <div class="text-center"><i class="fas fa-map-marked-alt text-4xl"></i><p class="mt-2 font-bold">地理地图</p></div>
+                        <i class="fas fa-arrow-right-long text-gray-500 text-2xl"></i>
+                        <div class="text-center"><i class="fas fa-subway text-4xl"></i><p class="mt-2 font-bold">地铁线路图</p></div>
+                    </div>
+                </div>
+                <div class="glass-card p-8">
+                    <h3 class="text-2xl font-bold mb-4">符号系统：智能的<span class="highlight-purple">外部硬盘</span></h3>
+                    <p class="text-gray-300">从文字、数学公式到音乐乐谱，这些都是我们智慧的放大器。通过将思考过程“外化”，我们得以克服大脑短期记忆的限制，进行更深度的推理和创造。</p>
+                     <div class="mt-6 flex justify-around items-center bg-black/20 rounded-2xl p-4">
+                        <div class="text-center"><i class="fas fa-wave-square text-4xl"></i><p class="mt-2 font-bold">声波</p></div>
+                        <i class="fas fa-arrow-right-long text-gray-500 text-2xl"></i>
+                        <div class="text-center"><i class="fas fa-file-audio text-4xl"></i><p class="mt-2 font-bold">乐谱</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="relative reveal text-center">
+            <span class="huge-text select-none">代理权</span>
+            <div class="relative z-10">
+                <p class="text-lg highlight-amber font-bold">3 & 4</p>
+                <h2 class="text-3xl md:text-5xl font-black mt-2">可视化与代理权危机</h2>
+                <p class="mt-3 text-lg text-gray-400 max-w-2xl mx-auto">看清复杂系统内部的“幽灵”，但你的手机到底听谁的？</p>
+            </div>
+            <div class="mt-12 glass-card p-8 lg:p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="text-left">
+                        <h3 class="font-bold text-2xl mb-4">代理权<span class="highlight-amber"> (Agency) </span>危机</h3>
+                        <p class="text-gray-200">一个理想的工具应是用户的“代理人”，精确执行其意图。但社交媒体的算法，其目标是最大化平台利益，而非满足你的需求。你的代理权在不知不觉中被削弱和转移。</p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                         <i class="fas fa-mobile-screen-button text-9xl text-gray-400 relative">
+                            <i class="fas fa-hand-paper text-4xl text-purple-400 absolute -top-8 -right-4 transform -rotate-45"></i>
+                            <i class="fas fa-dollar-sign text-4xl text-amber-400 absolute -top-8 -left-4 transform rotate-45"></i>
+                         </i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative reveal">
+             <span class="huge-text select-none">控制</span>
+             <div class="text-center mb-12 z-10 relative">
+                 <p class="text-lg highlight-cyan font-bold">5 & 6</p>
+                 <h2 class="text-3xl md:text-5xl font-black mt-2">夺回主导权与反馈循环</h2>
+                 <p class="mt-3 text-lg text-gray-400">让系统状态“可见”，同时警惕“地图”改变“现实”</p>
+            </div>
+            <div class="glass-card p-8 lg:p-10">
+                <h3 class="text-2xl font-bold mb-6 text-center">解决方案：让算法<span class="highlight-cyan">“透明”</span>和<span class="highlight-cyan">“可控”</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-black/20 p-4 rounded-xl">
+                        <i class="fas fa-question-circle text-4xl highlight-cyan mb-2"></i>
+                        <h4 class="font-bold">算法归因</h4>
+                        <p class="text-sm text-gray-300">“为什么我看到了这个？”</p>
+                    </div>
+                    <div class="bg-black/20 p-4 rounded-xl">
+                        <i class="fas fa-chart-pie text-4xl highlight-cyan mb-2"></i>
+                        <h4 class="font-bold">行为分析</h4>
+                        <p class="text-sm text-gray-300">“我的时间花在了哪里？”</p>
+                    </div>
+                    <div class="bg-black/20 p-4 rounded-xl">
+                        <i class="fas fa-sliders-h text-4xl highlight-cyan mb-2"></i>
+                        <h4 class="font-bold">参数控制</h4>
+                        <p class="text-sm text-gray-300">“如果我调整权重会怎样？”</p>
+                    </div>
+                </div>
+                <div class="mt-8 border-t border-white/10 pt-6">
+                    <h3 class="text-2xl font-bold text-amber-500 text-center">警惕：意想不到的<span class="highlight-amber">反馈循环</span></h3>
+                    <p class="text-center text-gray-300 mt-2">当“地图”（如股价图）开始主动塑造“领土”（市场），“模拟物”便取代了“真实”。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="relative reveal">
+            <span class="huge-text select-none">原则</span>
+            <div class="text-center z-10 relative">
+                 <p class="text-lg highlight-purple font-bold">7 & 8</p>
+                 <h2 class="text-3xl md:text-5xl font-black mt-2">抽象的艺术与设计三大原则</h2>
+                 <p class="mt-3 text-lg text-gray-400">没有完美的表征，所有呈现都是一种取舍</p>
+            </div>
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="glass-card p-8 flex flex-col justify-center">
+                    <i class="fas fa-lightbulb text-4xl highlight-purple mb-4"></i>
+                    <h3 class="text-xl font-bold">1. 有意识地选择抽象内容</h3>
+                    <p class="text-gray-300 mt-2 text-sm">每一次简化和省略，都应是深思熟虑的决定，避免导致关键信息丢失。</p>
+                </div>
+                 <div class="glass-card p-8 flex flex-col justify-center">
+                    <i class="fas fa-gamepad text-4xl highlight-purple mb-4"></i>
+                    <h3 class="text-xl font-bold">2. 有意识地设计代理权</h3>
+                    <p class="text-gray-300 mt-2 text-sm">你的设计是让用户更有掌控力（赋予），还是更像被动接受者（剥夺）？</p>
+                </div>
+                 <div class="glass-card p-8 flex flex-col justify-center">
+                    <i class="fas fa-comments text-4xl highlight-purple mb-4"></i>
+                    <h3 class="text-xl font-bold">3. 视表征为沟通</h3>
+                    <p class="text-gray-300 mt-2 text-sm">最终目的是清晰、准确、高效地在人与人、人与系统间建立共识。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-[80vh] flex flex-col justify-center items-center text-center relative reveal">
+            <div class="absolute inset-0 flex items-center justify-center z-0">
+                <i class="fa-solid fa-rocket text-white text-[25rem] opacity-5 transform -rotate-45"></i>
+            </div>
+            <div class="z-10 relative">
+                <p class="text-lg highlight-cyan font-bold mb-8">9. 超越代理权：AI时代的终极工具</p>
+                <p class="text-2xl md:text-3xl font-bold max-w-4xl">在致力于构建“超级智能”的同时，我们应该并行地投入精力...</p>
+                <h2 class="my-8 text-4xl md:text-6xl lg:text-7xl font-black max-w-5xl">
+                    去构建<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-amber-300">“超级代理权的工具”</span>
+                </h2>
+                <p class="text-xl lg:text-2xl text-gray-400 uppercase tracking-widest">Instruments of Super Agency</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            const hiddenElements = document.querySelectorAll('.reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

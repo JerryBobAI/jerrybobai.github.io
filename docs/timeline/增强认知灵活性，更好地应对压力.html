@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>增强认知灵活性，更好地应对压力</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f8f9fa; /* 极浅灰色背景 */
+            color: #1d1d1f; /* 接近苹果的深灰色文本 */
+            overflow-x: hidden;
+        }
+
+        /* 核心：色彩云雾/极光渐变背景 */
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .aurora-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px); /* 关键的模糊效果 */
+            opacity: 0.2;
+            animation: move 30s infinite alternate;
+        }
+
+        .blob-1 { top: -25%; left: -20%; width: 55vw; height: 55vw; background: #ff7e5f; animation-duration: 35s; }
+        .blob-2 { top: 20%; right: -25%; width: 45vw; height: 45vw; background: #6a82fb; animation-duration: 25s; }
+        .blob-3 { bottom: -25%; left: 30%; width: 50vw; height: 50vw; background: #d83bff; animation-duration: 40s; }
+        .blob-4 { bottom: 10%; right: 10%; width: 35vw; height: 35vw; background: #feca57; animation-duration: 20s; }
+
+
+        @keyframes move {
+            from {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            to {
+                transform: translate(15vw, 10vh) scale(1.2) rotate(45deg);
+            }
+        }
+
+        /* 滚动触发动画的基础样式 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 半透明卡片样式 */
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.15);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="aurora-background">
+        <div class="aurora-blob blob-1"></div>
+        <div class="aurora-blob blob-2"></div>
+        <div class="aurora-blob blob-3"></div>
+        <div class="aurora-blob blob-4"></div>
+    </div>
+
+    <main class="relative z-10">
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-gray-800 leading-tight">
+                    拓宽生活边界<br>增强<span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-500">认知灵活性</span>
+                </h1>
+                <p class="mt-8 text-2xl md:text-3xl max-w-3xl mx-auto text-gray-600">
+                    从而更好地应对压力
+                </p>
+                 <div class="text-6xl text-purple-400 mt-12">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 overflow-hidden">
+            <div class="text-center max-w-4xl mx-auto scroll-reveal">
+                <p class="text-lg text-blue-600 font-bold tracking-widest uppercase">STEP 1</p>
+                <h2 class="text-4xl md:text-6xl font-black tracking-tight mt-2">行为上的尝试与探索</h2>
+                <p class="mt-4 text-xl text-gray-600">通过涉足新的领域，可以打破固有的思维模式。</p>
+            </div>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center">
+                    <i class="fa-solid fa-guitar text-5xl text-blue-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">培养新的兴趣爱好</h3>
+                    <p class="text-gray-700">学习乐器、语言或运动，迫使大脑建立新的连接，脱离惯性。</p>
+                </div>
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 150ms;">
+                    <i class="fa-solid fa-suitcase-rolling text-5xl text-blue-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">尝试不同的生活方式</h3>
+                    <p class="text-gray-700">独自旅行、短期旅居或参与志愿活动，挑战你对“正常”的定义。</p>
+                </div>
+                 <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 300ms;">
+                    <i class="fa-solid fa-route text-5xl text-blue-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">挑战你的日常习惯</h3>
+                    <p class="text-gray-700">走不同的上班路线、尝试陌生的菜系、与不同圈子的人交流。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 overflow-hidden">
+            <div class="text-center max-w-4xl mx-auto scroll-reveal">
+                <p class="text-lg text-purple-600 font-bold tracking-widest uppercase">STEP 2</p>
+                <h2 class="text-4xl md:text-6xl font-black tracking-tight mt-2">思维上的训练与调整</h2>
+                <p class="mt-4 text-xl text-gray-600">除了行动上的探索，更重要的是有意识地训练你的思维。</p>
+            </div>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center">
+                    <i class="fa-solid fa-spa text-5xl text-purple-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">练习正念</h3>
+                    <p class="text-gray-700">活在当下，不评判、不执着。学会观察并接受念头，而不是被它困住。</p>
+                </div>
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 150ms;">
+                    <i class="fa-solid fa-people-arrows text-5xl text-purple-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">换位思考</h3>
+                    <p class="text-gray-700">有意识地从对方或一个全新的角度来审视问题，减少认知偏见。</p>
+                </div>
+                 <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 300ms;">
+                    <i class="fa-solid fa-book-open-reader text-5xl text-purple-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">多元化摄入信息</h3>
+                    <p class="text-gray-700">主动阅读不同观点和文化背景的文章，让你看到事物的多面性。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 overflow-hidden">
+            <div class="text-center max-w-4xl mx-auto scroll-reveal">
+                <p class="text-lg text-orange-600 font-bold tracking-widest uppercase">STEP 3</p>
+                <h2 class="text-4xl md:text-6xl font-black tracking-tight mt-2">面对压力的具体方法</h2>
+                <p class="mt-4 text-xl text-gray-600">当压力真正来临时，运用一些技巧来直接对抗“思维固化”。</p>
+            </div>
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center">
+                    <i class="fa-solid fa-pencil text-5xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">写下你的负面想法</h3>
+                    <p class="text-gray-700">将负面念头“外化”在纸上，让你更容易分析和处理它们。</p>
+                </div>
+                <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 150ms;">
+                    <i class="fa-solid fa-arrows-rotate text-5xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">进行认知重评</h3>
+                    <p class="text-gray-700">将“失败”重新定义为“宝贵的学习机会”，改变情绪反应。</p>
+                </div>
+                 <div class="scroll-reveal glass-card rounded-3xl p-8 text-center" style="transition-delay: 300ms;">
+                    <i class="fa-solid fa-pause-circle text-5xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-3">给自己一个“暂停键”</h3>
+                    <p class="text-gray-700">立即停下，做无关的事。给大脑一个喘息的机会，防止陷入恶性循环。</p>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="min-h-screen w-full flex flex-col items-center justify-center p-8 text-center overflow-hidden">
+            <div class="scroll-reveal max-w-4xl">
+                 <h2 class="text-5xl md:text-7xl font-bold tracking-tight mb-8">
+                    一个持续的过程，<br>一种更丰富的人生
+                </h2>
+                <p class="text-2xl md:text-3xl text-gray-700 leading-relaxed">
+                    提高认知灵活性要求我们保持<span class="font-bold text-purple-600">好奇心</span>，<span class="font-bold text-blue-600">勇于尝试</span>，并且有意识地<span class="font-bold text-orange-600">训练自己的思维</span>。这不仅能帮助我们应对压力，也能让我们的人生变得更丰富和有趣。
+                </p>
+                 <svg class="w-48 h-16 mx-auto mt-16 text-gray-400" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 45 C 35 5, 65 45, 100 25 S 165 5, 195 25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="195" cy="25" r="4" fill="currentColor"/>
+                </svg>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2 // 元素可见20%时触发
+            });
+
+            const hiddenElements = document.querySelectorAll('.scroll-reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

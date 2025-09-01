@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人性的核心维度</title>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #DCD6CC; /* 褪色的亚麻色 */
+            /* Slightly more textured background */
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01)),
+                            linear-gradient(45deg, rgba(0,0,0,0.01) 25%, transparent 25%, transparent 75%, rgba(0,0,0,0.01) 75%, rgba(0,0,0,0.01));
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #4A3B31; /* 更深的陶土色，近乎褪色的墨黑 */
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1440px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+        .font-display {
+            font-weight: 900;
+            line-height: 1.05; /* Adjusted for stacking */
+            letter-spacing: -0.03em;
+        }
+        .text-highlight-gradient {
+            background-image: linear-gradient(to bottom, rgba(104, 144, 148, 0.8) 0%, rgba(104, 144, 148, 0.4) 70%, rgba(104, 144, 148, 0.15) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding-bottom: 0.1em; /* Ensure gradient covers descenders */
+        }
+        .text-connecting {
+            font-size: clamp(1.5rem, 5vw, 3.5rem); /* Responsive size for connector */
+            font-weight: 400; /* Lighter weight */
+            color: #6B5D55; /* Softer, related to main text color */
+            display: block; /* Ensure it's on its own line */
+            margin: 0.3em 0; /* Vertical spacing */
+            letter-spacing: normal;
+        }
+        .text-colossus {
+            font-size: clamp(4rem, 18vw, 15rem); /* Even larger for key words */
+        }
+        .memphis-accent {
+            position: absolute;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes slowDrift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(5px, -8px) rotate(1deg); }
+            75% { transform: translate(-5px, 8px) rotate(-1deg); }
+        }
+        .animate-slow-drift {
+            animation: slowDrift 15s ease-in-out infinite;
+        }
+        .section-separator {
+            border-top: 1px solid #B0A79E;
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+        .line-chart-svg {
+            stroke: #4A3B31;
+            stroke-width: 2;
+            fill: none;
+        }
+        .axis-label {
+            font-size: 0.875rem;
+            fill: #4A3B31;
+        }
+        .bar-chart-bar {
+            fill: #6B5D55;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .bar-chart-bar:hover {
+            opacity: 1;
+        }
+        .chart-container {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-[#DCD6CC] text-[#4A3B31] antialiased min-h-screen p-8">
+    <div class="container mx-auto">
+        <header class="text-center py-16 lg:py-24 relative overflow-hidden">
+            <h1 class="font-display text-colossus leading-none mb-4 tracking-tight">
+                <span class="text-highlight-gradient">人性</span>
+                <span class="text-connecting block text-lg lg:text-3xl font-normal leading-tight">THE HUMAN CONDITION</span>
+                <span class="text-colossus font-normal">核心维度</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg lg:text-xl font-normal opacity-80">
+                理解人性的五大基本原则，洞察行为背后的真实动机与规律。
+                <br>
+                Exploring the core dimensions of human nature to understand the motives and patterns behind behavior.
+            </p>
+            <div class="memphis-accent w-48 h-48 lg:w-96 lg:h-96 top-10 left-10 rounded-full border border-[#B0A79E] animate-slow-drift"></div>
+            <div class="memphis-accent w-32 h-32 lg:w-64 lg:h-64 bottom-20 right-20 border-2 border-[#B0A79E] transform rotate-45 animate-slow-drift animation-delay-2s"></div>
+        </header>
+
+        <section id="principles" class="grid lg:grid-cols-2 gap-12 lg:gap-24 mb-16">
+            <div class="flex flex-col">
+                <div class="text-colossus font-display text-left mb-4 opacity-50">01.</div>
+                <h2 class="text-3xl lg:text-5xl font-bold font-display leading-tight mb-2">
+                    <span class="text-highlight-gradient">利益驱动</span> 原则
+                </h2>
+                <h3 class="text-base lg:text-lg font-normal mb-4 text-[#6B5D55]">INTEREST-DRIVEN PRINCIPLE</h3>
+                <p class="text-lg lg:text-xl font-normal mb-4 opacity-90">
+                    所有行动的根本动机都与利益相关，涵盖物质、情感、地位和自尊。理解这一点，便能更好地理解他人的行为，并预测其反应。
+                </p>
+                <div class="flex items-center text-xl font-normal text-[#6B5D55] mt-auto">
+                    <i class="fas fa-arrow-right mr-2 opacity-50"></i>
+                    <span class="opacity-80">绝大多数行为背后都有一个“回报”预期。</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="text-colossus font-display text-left mb-4 opacity-50">02.</div>
+                <h2 class="text-3xl lg:text-5xl font-bold font-display leading-tight mb-2">
+                    <span class="text-highlight-gradient">自我保护</span> 原则
+                </h2>
+                <h3 class="text-base lg:text-lg font-normal mb-4 text-[#6B5D55]">SELF-PRESERVATION PRINCIPLE</h3>
+                <p class="text-lg lg:text-xl font-normal mb-4 opacity-90">
+                    人有强烈的自我保护意识，本能地规避风险、减少损失、避免伤害。这种保护不仅是身体上的，也包括情感、自尊和名誉。
+                </p>
+                <div class="flex items-center text-xl font-normal text-[#6B5D55] mt-auto">
+                    <i class="fas fa-shield-alt mr-2 opacity-50"></i>
+                    <span class="opacity-80">风险规避是人的天性。</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="text-colossus font-display text-left mb-4 opacity-50">03.</div>
+                <h2 class="text-3xl lg:text-5xl font-bold font-display leading-tight mb-2">
+                    <span class="text-highlight-gradient">社会认同</span> 原则
+                </h2>
+                <h3 class="text-base lg:text-lg font-normal mb-4 text-[#6B5D55]">SOCIAL ACCEPTANCE PRINCIPLE</h3>
+                <p class="text-lg lg:text-xl font-normal mb-4 opacity-90">
+                    作为社会性动物，人有寻求认同、融入群体、获得尊重的需求。许多行为并非出于个人意愿，而是为了符合社会规范或获得群体认可。
+                </p>
+                <div class="flex items-center text-xl font-normal text-[#6B5D55] mt-auto">
+                    <i class="fas fa-users mr-2 opacity-50"></i>
+                    <span class="opacity-80">寻求归属感是人的基本需求。</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="text-colossus font-display text-left mb-4 opacity-50">04.</div>
+                <h2 class="text-3xl lg:text-5xl font-bold font-display leading-tight mb-2">
+                    <span class="text-highlight-gradient">情绪与非理性</span> 原则
+                </h2>
+                <h3 class="text-base lg:text-lg font-normal mb-4 text-[#6B5D55]">EMOTION & IRRATIONALITY</h3>
+                <p class="text-lg lg:text-xl font-normal mb-4 opacity-90">
+                    情绪往往是决策的主导力量。恐惧、愤怒、喜悦、嫉妒等情绪会深刻影响一个人的判断和行为，使其偏离理性分析。
+                </p>
+                <div class="flex items-center text-xl font-normal text-[#6B5D55] mt-auto">
+                    <i class="fas fa-brain mr-2 opacity-50"></i>
+                    <span class="opacity-80">人不总是理性的，情感影响巨大。</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col">
+                <div class="text-colossus font-display text-left mb-4 opacity-50">05.</div>
+                <h2 class="text-3xl lg:text-5xl font-bold font-display leading-tight mb-2">
+                    <span class="text-highlight-gradient">稀缺性与可变性</span> 原则
+                </h2>
+                <h3 class="text-base lg:text-lg font-normal mb-4 text-[#6B5D55]">SCARCITY & VARIABILITY</h3>
+                <p class="text-lg lg:text-xl font-normal mb-4 opacity-90">
+                    人性是动态且复杂的。同一个人的行为在不同情境下、不同时间点都可能发生变化，并受到环境、文化和教育的深刻影响。
+                </p>
+                <div class="flex items-center text-xl font-normal text-[#6B5D55] mt-auto">
+                    <i class="fas fa-sync-alt mr-2 opacity-50"></i>
+                    <span class="opacity-80">人性并非固定不变，而是动态和可塑的。</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-separator">
+
+        <section id="insights" class="py-16">
+            <div class="text-center mb-12">
+                <h2 class="font-display text-5xl lg:text-7xl font-bold leading-none mb-2">
+                    <span class="text-highlight-gradient">洞察</span>与<span class="text-highlight-gradient">反思</span>
+                </h2>
+                <h3 class="text-lg lg:text-2xl font-normal text-[#6B5D55]">INSIGHTS & REFLECTIONS</h3>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">价值决定待遇</h4>
+                    <p class="text-lg opacity-80">人们对你的态度，取决于你对他们是否有用。你的价值，决定了你的待遇。
+                        <br><span class="text-sm italic opacity-50">The value you bring determines how you are treated.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">情绪驱动决策</h4>
+                    <p class="text-lg opacity-80">情绪是比理性更强大的驱动力。很多人在做决定时，并非分析利弊，而是在回应自己的情绪。
+                        <br><span class="text-sm italic opacity-50">Emotions are a more powerful driver than reason.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">寻求认可</h4>
+                    <p class="text-lg opacity-80">人性的基本需求是得到尊重和认可。许多冲突的根源，都源于觉得自己被轻视或否定。
+                        <br><span class="text-sm italic opacity-50">The fundamental need for respect and recognition.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">认知偏差</h4>
+                    <p class="text-lg opacity-80">人们往往只相信自己愿意相信的事。事实和真相，在强大的认知偏差面前，常常不堪一击。
+                        <br><span class="text-sm italic opacity-50">People believe what they want to believe.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">害怕改变</h4>
+                    <p class="text-lg opacity-80">大多数人害怕改变，哪怕现状并不好。维持现状的风险，对他们来说比改变的不确定性要小。
+                        <br><span class="text-sm italic opacity-50">The fear of the unknown often outweighs dissatisfaction.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">“公平”的幻觉</h4>
+                    <p class="text-lg opacity-80">“公平”只存在于想象中。每个人都有自己的一套标准，所以真正的公平永远无法达成。
+                        <br><span class="text-sm italic opacity-50">"Fairness" is an elusive concept.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">施予者的回报</h4>
+                    <p class="text-lg opacity-80">人们对你的慷慨，往往是因为他们对自己更慷慨。施予者在付出时，也常常在满足自己的成就感。
+                        <br><span class="text-sm italic opacity-50">Generosity often serves the giver's own needs.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">不完美的连接</h4>
+                    <p class="text-lg opacity-80">你的弱点，是你与他人建立连接的桥梁。完美会让人敬而远之，而适当的脆弱反而能拉近距离。
+                        <br><span class="text-sm italic opacity-50">Vulnerability creates connection.</span>
+                    </p>
+                </div>
+                <div class="bg-white bg-opacity-5 p-6 rounded-lg border border-gray-400 border-opacity-20 backdrop-blur-sm">
+                    <h4 class="text-2xl font-bold mb-2">关系的流动性</h4>
+                    <p class="text-lg opacity-80">没有人是永恒的。人际关系是流动的，会随着时间、环境和利益的变化而改变。
+                        <br><span class="text-sm italic opacity-50">Relationships are fluid and ever-changing.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 opacity-50 text-sm">
+            <p>&copy; 2025 ALL RIGHTS RESERVED.</p>
+        </footer>
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
