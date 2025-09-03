@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光影之外的价值</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+           font-family: 'Noto Sans SC', sans-serif;
+           background-color: #f5f0e1; /* 暖米白色 */
+           color: #3e2723; /* 深灰褐色 */
+           position: relative;
+        }
+
+        /* 虚线网格背景 */
+        body::before {
+           content: '';
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           z-index: -1;
+           background-image:
+             linear-gradient(to right, #e0d9cc 1px, transparent 1px),
+             linear-gradient(to bottom, #e0d9cc 1px, transparent 1px);
+           background-size: 20px 20px;
+           opacity: 0.8;
+           pointer-events: none;
+        }
+
+        /* 核心高亮色 - 暖红色 */
+        .highlight-red {
+           color: #d32f2f;
+        }
+
+        /* 辅助色 - 橄榄绿色 */
+        .accent-green {
+           color: #827717;
+        }
+
+        /* 独特字体风格的深蓝色 - 用于引用 */
+        .brand-blue {
+           color: #1a237e;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .scroll-animate {
+           opacity: 0;
+           transform: translateY(40px);
+           transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+           transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+           opacity: 1;
+           transform: translateY(0);
+        }
+
+        /* 勾线图形化容器 */
+        .outline-svg {
+           stroke: #3e2723;
+           stroke-width: 1.5;
+           fill: none;
+        }
+
+        /* 关键数字的圆章效果 */
+        .stamp-badge {
+           background-color: #d32f2f;
+           color: #f5f0e1;
+           border-radius: 9999px; /* Tailwind's rounded-full */
+           width: 3.5rem;
+           height: 3.5rem;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           font-weight: 700;
+           font-size: 1.5rem;
+        }
+
+        /* 混合色彩渐变效果 */
+        .gradient-text-red {
+           background: linear-gradient(90deg, #d32f2f 0%, rgba(211, 47, 47, 0.5) 100%);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+        }
+
+        @media (min-width: 1920px) {
+            .max-w-7xl {
+                max-width: 1600px;
+            }
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+
+    <main class="container mx-auto px-4 md:px-8 py-20">
+
+        <header class="text-center mb-24 scroll-animate">
+            <h1 class="text-6xl md:text-8xl font-black mb-4 leading-tight">光影之外的<span class="highlight-red">价值</span></h1>
+            <p class="text-xl md:text-2xl font-light opacity-80">FINDING VALUE BEYOND THE SPOTLIGHTS</p>
+        </header>
+
+        <section class="max-w-7xl mx-auto mb-28 scroll-animate">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="flex flex-col items-start space-y-8">
+                    <h2 class="text-5xl md:text-6xl font-extrabold leading-tight">探照灯下的<br>PROJECTION</h2>
+                    <p class="text-2xl font-light leading-relaxed opacity-90">
+                        职场的目光，聚焦之处人声鼎沸，<br>拼搏如潮。真正的价值，<br>往往只在那一束光下闪现。
+                    </p>
+                </div>
+                <div class="relative w-full h-96 flex items-center justify-center">
+                    <svg class="outline-svg w-full h-full" viewBox="0 0 400 300">
+                        <path d="M50,250 C100,100,300,100,350,250" class="w-full h-full stroke-current" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="200" cy="150" r="80" class="stroke-current opacity-20" />
+                        <text x="200" y="150" dominant-baseline="middle" text-anchor="middle" class="text-9xl font-extrabold highlight-red" fill="#d32f2f" stroke="none" opacity="0.1">
+                           <tspan x="200" dy="0" text-anchor="middle" class="text-9xl font-extrabold highlight-red">S</tspan>
+                        </text>
+                        <text x="200" y="160" dominant-baseline="middle" text-anchor="middle" class="text-lg font-normal" fill="#3e2723">Spotlight</text>
+                    </svg>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-yellow-400 opacity-20 blur-xl"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="max-w-7xl mx-auto mb-28 scroll-animate">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1 flex flex-col items-start space-y-8">
+                    <h2 class="text-5xl md:text-6xl font-extrabold leading-tight">光影之外的<br>NEGLECT</h2>
+                    <p class="text-2xl font-light leading-relaxed opacity-90">
+                        而在光影之外，无尽的<span class="font-bold highlight-red">躺平与消磨</span>，<br>像黑夜般蔓延。
+                    </p>
+                    <div class="w-full flex justify-between items-center text-center">
+                        <div class="flex flex-col items-center">
+                            <span class="text-6xl md:text-8xl font-bold gradient-text-red">99%</span>
+                            <span class="text-sm font-light">OF THE UNSEEN</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-3xl font-bold accent-green">躺平</span>
+                            <span class="text-sm font-light">LYING FLAT</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-3xl font-bold brand-blue">消磨</span>
+                            <span class="text-sm font-light">WEARING AWAY</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 w-full h-96 flex items-center justify-center relative">
+                    <svg class="outline-svg w-full h-full" viewBox="0 0 400 300">
+                        <path d="M50,150 Q150,50,250,150 T350,150" class="stroke-current opacity-60" stroke-linecap="round" stroke-dasharray="8, 8" />
+                        <line x1="50" y1="150" x2="350" y2="150" class="stroke-current opacity-30" />
+                        <text x="200" y="150" dominant-baseline="middle" text-anchor="middle" class="text-9xl font-extrabold highlight-red" fill="#d32f2f" stroke="none" opacity="0.1">
+                            <tspan x="200" dy="0" text-anchor="middle" class="text-9xl font-extrabold highlight-red">Z</tspan>
+                        </text>
+                        <text x="200" y="160" dominant-baseline="middle" text-anchor="middle" class="text-lg font-normal" fill="#3e2723">The Void</text>
+                        <rect x="250" y="200" width="50" height="5" class="fill-current highlight-red" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto mb-28 scroll-animate">
+            <div class="flex flex-col items-center text-center space-y-8">
+                <h2 class="text-5xl md:text-6xl font-extrabold leading-tight">
+                    真正的价值<br>
+                    <span class="text-2xl font-light tracking-widest text-gray-500">THE TRUE VALUE</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-12 w-full">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="stamp-badge mb-4">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Unseen Growth</h3>
+                        <p class="text-lg opacity-80">
+                            非线性的积累与沉淀。<br>
+                            THE QUIET ACCUMULATION.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="stamp-badge mb-4">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Sustainable Impact</h3>
+                        <p class="text-lg opacity-80">
+                            持久而深远的影响。<br>
+                            LASTING AND PROFOUND EFFECT.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="stamp-badge mb-4">
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Hidden Potential</h3>
+                        <p class="text-lg opacity-80">
+                            等待被发现的可能。<br>
+                            POTENTIAL WAITING TO BE UNLOCKED.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.scroll-animate').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

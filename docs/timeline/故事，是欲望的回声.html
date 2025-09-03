@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事，是欲望的回声</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* --- 全局及背景核心样式 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #030014; /* 深邃的底色 */
+            color: #e5e7eb; /* 默认文字颜色 */
+            overflow-x: hidden;
+        }
+
+        /* 动态霓虹光晕背景容器 */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -10;
+        }
+
+        /* 霓虹光球 */
+        .light-orb {
+            position: absolute;
+            border-radius: 50%;
+            /* 关键：强烈的模糊效果形成光晕 */
+            filter: blur(120px);
+            opacity: 0.6;
+        }
+
+        @keyframes animate-float {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            25% { transform: translate(var(--mid-x), var(--mid-y)) scale(1.3); }
+            50% { transform: translate(var(--end-x), var(--end-y)) scale(0.9); }
+            75% { transform: translate(var(--mid-y), var(--mid-x)) scale(1.2); }
+            100% { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+        }
+
+        .orb-1 { animation: animate-float 38s ease-in-out infinite; }
+        .orb-2 { animation: animate-float 48s ease-in-out infinite reverse; }
+        .orb-3 { animation: animate-float 42s ease-in-out infinite; }
+
+        /* 前景长虹玻璃效果叠加层 */
+        main::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* 关键：用重复线性渐变模拟粗犷的竖向棱纹 */
+            background-image: repeating-linear-gradient(90deg,
+                rgba(0, 0, 0, 0.2) 0px,
+                rgba(0, 0, 0, 0.2) 4px, /* 增加棱的粗度 */
+                transparent 4px,
+                transparent 10px /* 增加棱的间距 */
+            );
+            /* 关键：用 backdrop-filter 扭曲后方光晕 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        /* --- 前景元素及动画 --- */
+
+        /* 滚动入场动画 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* "液态"毛玻璃卡片 */
+        .liquid-card {
+            background: rgba(20, 20, 35, 0.25);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* 关键：圆润的边角营造流动感 */
+            border-radius: 32px;
+            box-shadow: 0 16px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .liquid-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 高亮色 & 渐变效果 */
+        .highlight-pink {
+            color: #f472b6; /* 赛博朋克粉 */
+        }
+        .highlight-blue {
+            color: #60a5fa; /* 电光蓝 */
+        }
+
+        .highlight-gradient-text {
+            background-image: linear-gradient(to right, #f472b6, #60a5fa, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* 标题下划线 - 模拟辉光 */
+        .title-underline {
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            /* 关键：使用高亮色，两端透明度为0，中间为1，制造科技感渐变 */
+            background: linear-gradient(90deg, rgba(244, 114, 182, 0) 0%, rgba(244, 114, 182, 1) 50%, rgba(244, 114, 182, 0) 100%);
+            border-radius: 2px;
+            filter: blur(2px); /* 轻微模糊增加辉光感 */
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="background-container">
+        <div class="light-orb orb-1" style="width: 60vw; height: 60vw; background-color: #ec4899; --start-x: -20vw; --start-y: -20vh; --mid-x: 50vw; --mid-y: 80vh; --end-x: 10vw; --end-y: 10vh;"></div>
+        <div class="light-orb orb-2" style="width: 50vw; height: 50vw; background-color: #3b82f6; --start-x: 70vw; --start-y: 10vh; --mid-x: 0vw; --mid-y: 60vh; --end-x: 80vw; --end-y: 90vh;"></div>
+        <div class="light-orb orb-3" style="width: 40vw; height: 40vw; background-color: #a855f7; --start-x: 10vw; --start-y: 70vh; --mid-x: 80vw; --mid-y: 20vh; --end-x: -10vw; --end-y: 50vh;"></div>
+    </div>
+
+    <main class="relative z-10">
+        <div class="container mx-auto px-6 lg:px-8 py-24 lg:py-40 space-y-24 lg:space-y-48">
+
+            <section class="min-h-screen flex flex-col justify-center items-center text-center scroll-animate">
+                <p class="text-xl lg:text-2xl font-light text-gray-400 uppercase tracking-widest mb-4">THE ECHO OF DESIRE</p>
+                <h1 class="text-5xl md:text-7xl lg:text-9xl font-black leading-tight tracking-tighter">
+                    故事，<span class="highlight-gradient-text">是欲望的回声</span>
+                </h1>
+                <p class="mt-8 max-w-3xl mx-auto text-lg lg:text-2xl text-gray-300 font-light">
+                    每一个人物的渴望，都像石子投入心湖，激起听众内心的涟漪。
+                </p>
+            </section>
+
+            <section class="scroll-animate">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center">
+                    <div class="liquid-card p-8 lg:p-12 text-center md:text-left">
+                        <p class="text-base text-gray-400 mb-2 tracking-widest uppercase">THE STONE OF DESIRE</p>
+                        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">欲望的石子</h2>
+                        <p class="text-lg md:text-xl text-gray-300 mb-8">
+                            当人物的渴望被呈现，它就像一颗石子，被投入我们内心深处的湖泊。
+                        </p>
+                        <i class="fas fa-hand-holding-heart text-5xl highlight-pink"></i>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="w-64 h-64 relative">
+                            <svg class="w-full h-full text-blue-400 opacity-70 absolute top-0 left-0 animate-pulse" style="animation-duration: 4s;" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="15" stroke="currentColor" stroke-width="2" />
+                                <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="2" />
+                                <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="2" />
+                                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <i class="fas fa-gem text-5xl highlight-pink absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"></i>
+                        </div>
+                        <p class="mt-8 text-lg font-light text-gray-300">激起听众内心的涟漪。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="min-h-screen flex flex-col justify-center items-center text-center scroll-animate">
+                <div class="liquid-card p-8 lg:p-16 max-w-5xl mx-auto">
+                    <p class="text-xl lg:text-2xl font-light text-gray-400 uppercase tracking-widest mb-8">A SECRET DIALOGUE</p>
+                    <h2 class="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter mb-8">
+                        共鸣，让故事不再只是叙述
+                    </h2>
+                    <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-200 leading-normal">
+                        而成为灵魂间的秘密对话。
+                    </h3>
+                </div>
+                <div class="mt-16 relative">
+                    <svg class="w-64 h-24 text-pink-400 opacity-60" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 40 C 40 10, 80 70, 100 40 S 160 10, 190 40" stroke="currentColor" stroke-width="2" />
+                        <circle cx="10" cy="40" r="5" fill="currentColor" class="animate-pulse" style="animation-delay: 0s;" />
+                        <circle cx="100" cy="40" r="5" fill="currentColor" class="animate-pulse" style="animation-delay: 1.5s;" />
+                        <circle cx="190" cy="40" r="5" fill="currentColor" class="animate-pulse" style="animation-delay: 3s;" />
+                    </svg>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- 滚动入场动画 Intersection Observer ---
+        const scrollElements = document.querySelectorAll('.scroll-animate');
+
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (
+                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+            );
+        };
+
+        const displayScrollElement = (element) => {
+            element.classList.add('is-visible');
+        };
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                }
+            })
+        }
+
+        window.addEventListener('scroll', handleScrollAnimation);
+        handleScrollAnimation();
+
+        // --- 背景光球随机化 ---
+        const orbs = document.querySelectorAll('.light-orb');
+        orbs.forEach(orb => {
+            orb.style.animationDelay = `${Math.random() * -10}s`;
+        });
+    });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

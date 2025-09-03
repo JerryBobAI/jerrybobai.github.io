@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创业想法筛选清单</title>
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 自定义样式，参考“光晕高斯整合”风格 */
+        body {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            background-color: #0D0D0F; /* 深邃的背景色 */
+            color: #EAEAEA;
+            overflow-x: hidden;
+        }
+
+        /* 动态光晕背景容器 */
+        #blurry-gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(120px); /* 强高斯模糊 */
+            overflow: hidden;
+        }
+
+        /* 光球元素 */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: all 5s ease-in-out;
+            animation: move-blob 25s infinite alternate;
+        }
+        
+        /* blob 动画 */
+        @keyframes move-blob {
+            from { transform: translate(var(--start-x), var(--start-y)) scale(1); }
+            to { transform: translate(var(--end-x), var(--end-y)) scale(1.1); }
+        }
+
+        /* 玻璃卡片的高亮边框，使用伪元素实现渐变效果 */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1.5rem; /* 对应 rounded-3xl */
+            border: 1px solid transparent;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* 滚动入场动画 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .highlight-text {
+            color: #87CEEB;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="blurry-gradient-bg">
+        <div class="blob" style="background: #a855f7; width: 60vw; height: 60vw; top: -10vh; left: -10vw; --start-x: 0vw; --start-y: 0vh; --end-x: 20vw; --end-y: 15vh;"></div>
+        <div class="blob" style="background: #3b82f6; width: 50vw; height: 50vw; top: 40vh; left: 60vw; --start-x: 0vw; --start-y: 0vh; --end-x: -30vw; --end-y: -20vh;"></div>
+        <div class="blob" style="background: #ec4899; width: 45vw; height: 45vw; top: 80vh; left: -20vw; --start-x: 0vw; --start-y: 0vh; --end-x: 10vw; --end-y: 20vh;"></div>
+    </div>
+
+    <main class="relative z-10 min-h-screen flex items-center justify-center">
+        <div class="container mx-auto px-6 py-24 lg:py-32 space-y-24">
+
+            <section class="text-center scroll-reveal">
+                <p class="text-xl md:text-2xl text-gray-400 uppercase tracking-widest mb-2">
+                    THE STARTUP IDEA CHECKLIST
+                </p>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter">
+                    帮你筛选靠谱的<br><span class="highlight-text">创业想法</span>
+                </h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg lg:text-xl text-gray-300 font-light">
+                    在全身心投入之前，请用这四个核心问题来拷问你的商业点子：
+                </p>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                <div class="glass-card relative p-8 rounded-3xl backdrop-blur-3xl border border-white/10 hover:transform hover:scale-105 transition-transform duration-300 scroll-reveal">
+                    <div class="absolute inset-0 rounded-3xl bg-white/5 opacity-50 pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <p class="text-gray-400 mb-2 font-medium">Question 01</p>
+                        <h2 class="text-5xl md:text-7xl lg:text-9xl font-black highlight-text leading-none">1</h2>
+                        <h3 class="text-2xl md:text-3xl font-bold my-4">它能赚钱吗？</h3>
+                        <p class="text-sm md:text-base text-gray-300 flex-grow">
+                            <span class="font-bold block mb-2">问题:</span> 用户真的愿意为此付费吗？我们多久能看到收入？
+                        </p>
+                        <div class="mt-4 border-t border-gray-700 pt-4">
+                            <p class="text-xs md:text-sm text-gray-400">
+                                <i class="fas fa-lightbulb text-purple-400 mr-2"></i>
+                                好的商业模式能快速、直接地从用户身上获得回报。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card relative p-8 rounded-3xl backdrop-blur-3xl border border-white/10 hover:transform hover:scale-105 transition-transform duration-300 scroll-reveal" style="transition-delay: 150ms;">
+                    <div class="absolute inset-0 rounded-3xl bg-white/5 opacity-50 pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <p class="text-gray-400 mb-2 font-medium">Question 02</p>
+                        <h2 class="text-5xl md:text-7xl lg:text-9xl font-black highlight-text leading-none">2</h2>
+                        <h3 class="text-2xl md:text-3xl font-bold my-4">它能自己长大吗？</h3>
+                        <p class="text-sm md:text-base text-gray-300 flex-grow">
+                            <span class="font-bold block mb-2">问题:</span> 用户在使用我们产品的过程中，会自然而然地带来新用户吗？
+                        </p>
+                        <div class="mt-4 border-t border-gray-700 pt-4">
+                            <p class="text-xs md:text-sm text-gray-400">
+                                <i class="fas fa-seedling text-green-400 mr-2"></i>
+                                真正有生命力的产品，会实现自我裂变式增长。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card relative p-8 rounded-3xl backdrop-blur-3xl border border-white/10 hover:transform hover:scale-105 transition-transform duration-300 scroll-reveal" style="transition-delay: 300ms;">
+                    <div class="absolute inset-0 rounded-3xl bg-white/5 opacity-50 pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <p class="text-gray-400 mb-2 font-medium">Question 03</p>
+                        <h2 class="text-5xl md:text-7xl lg:text-9xl font-black highlight-text leading-none">3</h2>
+                        <h3 class="text-2xl md:text-3xl font-bold my-4">我能把它做出来吗？</h3>
+                        <p class="text-sm md:text-base text-gray-300 flex-grow">
+                            <span class="font-bold block mb-2">问题:</span> 至少在初期，我或我的小团队有独立完成核心产品开发的能力吗？
+                        </p>
+                        <div class="mt-4 border-t border-gray-700 pt-4">
+                            <p class="text-xs md:text-sm text-gray-400">
+                                <i class="fas fa-tools text-blue-400 mr-2"></i>
+                                从你和团队能掌控的范围开始，成功率会更高。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card relative p-8 rounded-3xl backdrop-blur-3xl border border-white/10 hover:transform hover:scale-105 transition-transform duration-300 scroll-reveal" style="transition-delay: 450ms;">
+                    <div class="absolute inset-0 rounded-3xl bg-white/5 opacity-50 pointer-events-none"></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <p class="text-gray-400 mb-2 font-medium">Question 04</p>
+                        <h2 class="text-5xl md:text-7xl lg:text-9xl font-black highlight-text leading-none">4</h2>
+                        <h3 class="text-2xl md:text-3xl font-bold my-4">我能爱它十年吗？</h3>
+                        <p class="text-sm md:text-base text-gray-300 flex-grow">
+                            <span class="font-bold block mb-2">问题:</span> 创业是一场长途旅行。我真的对这个领域充满热情吗？
+                        </p>
+                        <div class="mt-4 border-t border-gray-700 pt-4">
+                            <p class="text-xs md:text-sm text-gray-400">
+                                <i class="fas fa-heart text-pink-400 mr-2"></i>
+                                找到你真正热爱的领域，才能在面对挫折时保持动力和初心。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for scroll-reveal animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2 // Trigger when 20% of the element is visible
+            });
+
+            const hiddenElements = document.querySelectorAll('.scroll-reveal');
+            hiddenElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

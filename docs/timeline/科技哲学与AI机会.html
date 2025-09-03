@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技哲学与AI机会</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- 全局样式及背景 --- */
+        body {
+           font-family: 'Noto Serif SC', 'Roboto', sans-serif;
+           background-color: #F5F0E6; /* 暖米白色 */
+           color: #4B3B3B; /* 深灰褐色 */
+           overflow-x: hidden;
+           line-height: 1.6;
+        }
+
+        /* 虚线网格背景 */
+        .dotted-grid-bg {
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           z-index: -1;
+           background-image: radial-gradient(#d3ccc2 1px, transparent 1px);
+           background-size: 15px 15px;
+           opacity: 0.8;
+        }
+
+        /* 核心高亮色 */
+        .highlight-red {
+           color: #E64C3B;
+        }
+
+        /* 橄榄绿色辅助色 */
+        .aux-green {
+           color: #828C51;
+        }
+
+        /* 独特的深蓝色 */
+        .brand-blue {
+           color: #2A426B;
+           font-family: 'Roboto', sans-serif;
+        }
+
+        /* 标题和正文的字体风格 */
+        h1, h2, h3 {
+           font-family: 'Noto Serif SC', sans-serif;
+        }
+
+        .section-title {
+           font-size: clamp(2.5rem, 8vw, 6rem);
+           font-weight: 900;
+           line-height: 1.1;
+        }
+
+        /* 滚动入场动画 */
+        .scroll-animate {
+           opacity: 0;
+           transform: translateY(30px);
+           transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .scroll-animate.is-visible {
+           opacity: 1;
+           transform: translateY(0);
+        }
+
+        /* 卡片容器 */
+        .content-card {
+           background-color: rgba(255, 255, 255, 0.7);
+           backdrop-filter: blur(8px);
+           border-radius: 1.5rem;
+           border: 1px solid rgba(0,0,0,0.1);
+           box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+           transition: transform 0.3s ease-out;
+           will-change: transform;
+        }
+
+        .content-card:hover {
+           transform: translateY(-8px);
+        }
+
+        .highlight-fade {
+            background-image: linear-gradient(to right, #E64C3B, rgba(230, 76, 59, 0.2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="selection:bg-gray-400 selection:text-white">
+    <div class="dotted-grid-bg"></div>
+    <main class="container mx-auto px-4 md:px-8 py-16 max-w-7xl">
+
+        <section class="min-h-[60vh] flex flex-col justify-center items-center text-center scroll-animate">
+            <h1 class="section-title text-gray-800 tracking-tight leading-tight mb-4">
+                <span class="highlight-fade">AI 时代的</span><br>
+                <span class="font-black text-gray-800">科技哲学</span>
+            </h1>
+            <p class="text-xl md:text-2xl max-w-2xl text-gray-600 font-serif leading-relaxed">
+                The Philosophy of Technology in the AI Era
+            </p>
+        </section>
+
+        <section class="py-20">
+            <div class="flex flex-col lg:flex-row items-center lg:items-start space-y-12 lg:space-y-0 lg:space-x-16 scroll-animate">
+                <div class="w-full lg:w-1/2">
+                    <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
+                        <span class="highlight-red">AI 悖论</span>：丰收与稀缺
+                    </h2>
+                    <p class="text-lg md:text-xl font-serif text-gray-700">
+                        Everyone talks about an "AI harvest," but the real profits go to those who control the "scarcity."
+                    </p>
+                    <div class="mt-8 flex items-center space-x-4">
+                        <span class="text-5xl font-bold highlight-red">NVIDIA</span>
+                        <p class="text-gray-600 text-sm">
+                            <i class="fas fa-microchip text-xl aux-green"></i> 芯片供不应求，市值狂飙
+                        </p>
+                    </div>
+                    <div class="mt-4 flex items-center space-x-4">
+                        <span class="text-5xl font-bold highlight-red">TALENT</span>
+                        <p class="text-gray-600 text-sm">
+                            <i class="fas fa-user-graduate text-xl aux-green"></i> AI 顶级人才，身价直追球星
+                        </p>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <div class="content-card p-8 md:p-12">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">为什么？ Why?</h3>
+                        <p class="text-lg text-gray-700">
+                           AI人才争夺战的核心，是同一种技术。谁出钱多，谁使命感强，谁就能网罗顶尖高手。不愿下重注的公司，注定被淘汰。
+                        </p>
+                        <div class="mt-6 flex flex-wrap items-center space-x-4">
+                            <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fas fa-fist-raised aux-green mr-1"></i> Talent War</span>
+                            <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fas fa-hand-holding-usd highlight-red mr-1"></i> High Stakes</span>
+                            <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fas fa-bullseye brand-blue mr-1"></i> Shared Tech</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-12 border-gray-300">
+
+        <section class="py-20">
+            <div class="flex flex-col lg:flex-row items-center lg:items-start space-y-12 lg:space-y-0 lg:space-x-16 scroll-animate">
+                <div class="w-full lg:w-1/2 content-card p-8 md:p-12">
+                    <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">
+                        <span class="brand-blue">苹果的犹豫</span>：
+                        <br>
+                        <span class="aux-green text-3xl md:text-4xl font-normal">A Cautious Approach</span>
+                    </h2>
+                    <p class="text-lg md:text-xl font-serif text-gray-700">
+                       错失GPU采购时机，AI核心人才被高薪挖走。<br>
+                       Apple's conservatism stems from its core philosophy.
+                    </p>
+                    <ul class="list-disc list-inside mt-8 text-lg space-y-2">
+                        <li>AI短期内对硬件业务影响有限。</li>
+                        <li>公司哲学：<span class="highlight-red font-bold">技术是“工具”</span>，而非替代人类。</li>
+                    </ul>
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <div class="flex justify-center items-center h-full">
+                        <div class="w-full h-80 bg-gray-200 rounded-lg flex items-center justify-center">
+                            <p class="text-gray-500 italic">
+                                Placeholder for a simple data chart <br>
+                                E.g., Apple vs. Meta R&D Spending on AI
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-12 border-gray-300">
+
+        <section class="py-20">
+            <div class="text-center scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-black mb-4">
+                    <span class="highlight-fade">两种</span>科技哲学
+                </h2>
+                <p class="text-xl md:text-2xl max-w-2xl mx-auto text-gray-600 font-serif">
+                    The Two Philosophies of Technology
+                </p>
+                <div class="flex flex-col lg:flex-row justify-center items-center mt-12 space-y-10 lg:space-y-0 lg:space-x-16">
+                    <div class="w-full lg:w-1/2 content-card p-8 md:p-12 scroll-animate">
+                        <div class="text-left">
+                            <i class="fas fa-robot text-4xl highlight-red mb-4"></i>
+                            <h3 class="text-2xl md:text-3xl font-black mb-4">机器替你做事</h3>
+                            <p class="text-lg text-gray-700">
+                                AI越强，人越省心。<br>
+                                <span class="text-sm aux-green">The machine does the work for you.</span>
+                            </p>
+                            <div class="mt-4 text-left">
+                                <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fab fa-google brand-blue mr-1"></i> Google</span>
+                                <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fab fa-meta brand-blue mr-1"></i> Meta</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 content-card p-8 md:p-12 scroll-animate">
+                        <div class="text-left">
+                            <i class="fas fa-bicycle text-4xl aux-green mb-4"></i>
+                            <h3 class="text-2xl md:text-3xl font-black mb-4">工具增能</h3>
+                            <p class="text-lg text-gray-700">
+                                技术是人的自行车，让你骑得更远。<br>
+                                <span class="text-sm highlight-red">Technology as a tool to augment human ability.</span>
+                            </p>
+                            <div class="mt-4 text-left">
+                                <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fab fa-apple brand-blue mr-1"></i> Apple</span>
+                                <span class="bg-gray-200 text-sm px-3 py-1 rounded-full"><i class="fab fa-microsoft brand-blue mr-1"></i> Microsoft</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 scroll-animate">
+                    <p class="text-lg text-gray-700 italic">
+                        “计算机是心灵的自行车。” - 
+                        <span class="font-bold brand-blue">Steve Jobs</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-12 border-gray-300">
+
+        <section class="py-20">
+            <div class="text-center scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-black mb-4">
+                    <span class="highlight-fade">创新的分野</span>：
+                    <br>
+                    <span class="aux-green text-3xl md:text-4xl font-normal">Paths of Innovation</span>
+                </h2>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="content-card p-8 scroll-animate">
+                        <i class="fab fa-google text-4xl brand-blue mb-4"></i>
+                        <h3 class="text-2xl font-black mb-2">谷歌：理想主义者</h3>
+                        <p class="text-sm aux-green">Incremental Innovation</p>
+                        <p class="text-gray-700 mt-2">
+                           提升现有产品，但AI助手可能影响广告收入。相信技术极致能解决商业问题。
+                        </p>
+                    </div>
+                    <div class="content-card p-8 scroll-animate">
+                        <i class="fab fa-meta text-4xl highlight-red mb-4"></i>
+                        <h3 class="text-2xl font-black mb-2">Meta：颠覆者</h3>
+                        <p class="text-sm highlight-red">Disruptive Innovation</p>
+                        <p class="text-gray-700 mt-2">
+                           用生成式AI重塑业务，押注AI是绝佳增长引擎，值得不惜代价投入。
+                        </p>
+                    </div>
+                    <div class="content-card p-8 scroll-animate">
+                        <i class="fab fa-microsoft text-4xl brand-blue mb-4"></i>
+                        <h3 class="text-2xl font-black mb-2">微软 & OpenAI</h3>
+                        <p class="text-sm aux-green">Tool & Business Synergy</p>
+                        <p class="text-gray-700 mt-2">
+                           重金押宝OpenAI，用<span class="font-bold">Copilot</span>推向企业市场。
+                        </p>
+                    </div>
+                    <div class="content-card p-8 scroll-animate lg:col-span-3 lg:w-1/3 lg:mx-auto">
+                        <i class="fas fa-brain text-4xl highlight-red mb-4"></i>
+                        <h3 class="text-2xl font-black mb-2">Anthropic：智能代理</h3>
+                        <p class="text-sm highlight-red">AI Agent</p>
+                        <p class="text-gray-700 mt-2">
+                           主攻<span class="font-bold">“智能代理”</span>，目标是直接替代人工，成为企业降本增效利器。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-12 border-gray-300">
+
+        <section class="py-20 text-center scroll-animate">
+            <h2 class="section-title text-gray-800 tracking-tight leading-tight mb-4">
+                <span class="highlight-fade">AI 人才</span>
+            </h2>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto text-gray-600 font-serif">
+                The battle for AI talent is ultimately a contest of corporate mission.
+            </p>
+            <p class="mt-8 text-2xl font-bold highlight-red">
+                <i class="fas fa-arrow-down mr-2 animate-bounce"></i>
+                谁能让顶级高手相信自己的愿景，
+                <br>
+                谁就能在AI时代脱颖而出。
+            </p>
+        </section>
+        
+    </main>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.scroll-animate').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

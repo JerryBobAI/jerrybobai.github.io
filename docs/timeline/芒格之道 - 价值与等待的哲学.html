@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芒格之道 - 价值与等待的哲学</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --paper-color: #f7f3e8;
+            --dark-brown: #4d443e;
+            --accent-ochre: #b57a3d;
+            --soft-grey: #e0d9c4;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--paper-color);
+            color: var(--dark-brown);
+        }
+
+        .font-serif-title {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 900;
+        }
+        .font-english {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-brown);
+        }
+        .accent-border {
+            border-left: 4px solid var(--accent-ochre);
+        }
+        .accent-bg {
+            background-color: var(--accent-ochre);
+        }
+        .accent-text {
+            color: var(--accent-ochre);
+        }
+        .text-soft-grey {
+            color: var(--soft-grey);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--soft-grey);
+            margin: 4rem 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animated-line {
+            width: 0;
+            transition: width 0.8s ease-out;
+        }
+        .line-animate-in {
+            width: 100%;
+        }
+
+        .list-item-circle::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-ochre);
+            border-radius: 50%;
+            margin-right: 12px;
+            vertical-align: middle;
+            transform: translateY(-2px);
+        }
+
+        .data-viz-item {
+            position: relative;
+            padding-left: 20px;
+        }
+        .data-viz-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-ochre);
+        }
+
+        .highlight-number {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--accent-ochre);
+            line-height: 0.8;
+        }
+
+        .text-shadow-light {
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1440px;
+            }
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 lg:p-24 overflow-x-hidden">
+
+    <div class="container mx-auto">
+        <header class="mb-16 md:mb-24 fade-in">
+            <h1 class="font-serif-title text-6xl md:text-8xl lg:text-9xl tracking-tight leading-tight">
+                <span class="text-soft-grey text-xl font-english block opacity-70 mb-2">The Wisdom of Munger</span>
+                芒格之道
+            </h1>
+        </header>
+
+        <section class="mb-16 md:mb-24 fade-in" style="animation-delay: 0.2s;">
+            <div class="lg:w-3/4">
+                <blockquote class="accent-border pl-6 pr-4 py-2 text-xl italic font-light leading-relaxed">
+                    <p>
+                        芒格之道，如清流润物，深藏于故事的细节。一人以五万美元，欲换芒格门下磨砺之机，芒格淡然拒绝，却道此举并非全无道理。世间少有值得追随之人，若能遇见，五万美元或许是通往智慧的门票。
+                    </p>
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="mb-16 md:mb-24 fade-in" style="animation-delay: 0.4s;">
+            <div class="flex flex-col lg:flex-row items-start lg:space-x-16">
+                <div class="lg:w-2/3">
+                    <h2 class="font-serif-title text-4xl md:text-5xl leading-tight mb-4">
+                        <span class="font-english block text-lg font-light mb-1">THE PHILOSOPHY</span>
+                        不为溢价买单
+                    </h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        这故事揭示了芒格的投资哲学：不为溢价买单，只在价值低估时果断出手。溢价如同星巴克的咖啡，平凡之物因环境、品牌而身价倍增。热门股票亦然，市场情绪推高价格，远超其本质。
+                    </p>
+                </div>
+                <div class="lg:w-1/3 w-full mt-8 lg:mt-0 flex flex-col items-center justify-center">
+                    <div class="accent-bg rounded-full p-8 md:p-12 lg:p-16 w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 flex items-center justify-center text-white text-4xl">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <p class="text-sm mt-4 text-center opacity-70">
+                        A cup of coffee <br> The price is not the value.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="mb-16 md:mb-24 fade-in" style="animation-delay: 0.6s;">
+            <h2 class="font-serif-title text-5xl md:text-6xl lg:text-7xl leading-tight mb-8 text-center">
+                <span class="font-english text-xl md:text-2xl block mb-2 font-light">
+                    THE TWO CORE RULES
+                </span>
+                逆向与等待
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-16">
+                <div class="p-6 border-2 border-soft-grey rounded-lg">
+                    <h3 class="font-serif-title text-3xl accent-text mb-4">
+                        <span class="highlight-number text-6xl block">01</span>
+                        逆向思维
+                    </h3>
+                    <p class="text-lg leading-relaxed">
+                        众人问涨，他问跌，负面能力让他在不确定中保持冷静。内在价值的衡量，需洞察现金流、确定性与时间价值，考验着耐心与智慧。
+                    </p>
+                </div>
+                <div class="p-6 border-2 border-soft-grey rounded-lg">
+                    <h3 class="font-serif-title text-3xl accent-text mb-4">
+                        <span class="highlight-number text-6xl block">02</span>
+                        延迟满足
+                    </h3>
+                    <p class="text-lg leading-relaxed">
+                        等待，是芒格的修行。少数正确的决定，胜过频繁的交易。延迟满足，是卓越的分水岭。芒格在等待中精进自我，只为抓住真正的机会。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="mb-16 md:mb-24 fade-in" style="animation-delay: 0.8s;">
+            <div class="flex flex-col-reverse lg:flex-row items-center lg:space-x-16">
+                <div class="lg:w-2/3 mt-8 lg:mt-0">
+                    <h2 class="font-serif-title text-4xl md:text-5xl leading-tight mb-4">
+                        <span class="font-english block text-lg font-light mb-1">THE ONLY PREMIUM</span>
+                        唯有“人”值得溢价
+                    </h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        多数人随波逐流，为情绪和预期买单。芒格却承认，唯有“人”值得溢价。巴菲特初创时，投资者买的是他的未来和品格，而非眼前业绩。
+                    </p>
+                </div>
+                <div class="lg:w-1/3 w-full flex justify-center lg:justify-end">
+                    <div class="relative w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80">
+                        <div class="absolute inset-0 border-4 border-accent-ochre rounded-full opacity-20"></div>
+                        <div class="absolute inset-2 border-4 border-accent-ochre rounded-full opacity-40"></div>
+                        <div class="absolute inset-4 border-4 border-accent-ochre rounded-full opacity-60"></div>
+                        <div class="absolute inset-6 border-4 border-accent-ochre rounded-full opacity-80"></div>
+                        <div class="absolute inset-8 border-4 border-accent-ochre rounded-full"></div>
+                        <i class="fas fa-user-circle absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-accent-ochre text-6xl md:text-7xl lg:text-8xl"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="mb-16 md:mb-24 fade-in" style="animation-delay: 1s;">
+            <div class="flex flex-col lg:flex-row items-start lg:space-x-16">
+                <div class="lg:w-1/2">
+                    <h2 class="font-serif-title text-4xl md:text-5xl lg:text-6xl leading-tight mb-4 text-accent-text">
+                        <span class="font-english block text-lg font-light mb-1 text-dark-brown">LIFE AS INVESTMENT</span>
+                        成功的本质
+                    </h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        成功的本质，是识别价值，耐心守候，少犯错误。人生亦如投资，最值得下注的，是那些能让你成长的人和事。
+                    </p>
+                </div>
+                <div class="lg:w-1/2 w-full mt-8 lg:mt-0">
+                    <ul class="space-y-4">
+                        <li class="data-viz-item text-lg">识别价值<span class="font-english text-sm opacity-60 ml-2"> | Identify Value</span></li>
+                        <li class="data-viz-item text-lg">耐心守候<span class="font-english text-sm opacity-60 ml-2"> | Wait Patiently</span></li>
+                        <li class="data-viz-item text-lg">少犯错误<span class="font-english text-sm opacity-60 ml-2"> | Make Fewer Mistakes</span></li>
+                        <li class="data-viz-item text-lg">下注于成长<span class="font-english text-sm opacity-60 ml-2"> | Invest in Growth</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-soft-grey text-sm mt-24">
+            <div class="divider"></div>
+            <p class="font-english opacity-70">A Glimpse into the Wisdom of Munger. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

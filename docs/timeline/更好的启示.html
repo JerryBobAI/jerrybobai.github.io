@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更好的启示</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --paper-color: #f7f3e8;
+            --dark-brown: #4d443e;
+            --accent-ochre: #b57a3d;
+            --soft-grey: #e0d9c4;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--paper-color);
+            color: var(--dark-brown);
+        }
+
+        .font-serif-title {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 900;
+        }
+        .font-english {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--dark-brown);
+        }
+        .accent-border {
+            border-left: 4px solid var(--accent-ochre);
+        }
+        .accent-bg {
+            background-color: var(--accent-ochre);
+        }
+        .accent-text {
+            color: var(--accent-ochre);
+        }
+        .text-soft-grey {
+            color: var(--soft-grey);
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--soft-grey);
+            margin: 4rem 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .animated-line {
+            width: 0;
+            transition: width 0.8s ease-out;
+        }
+        .line-animate-in {
+            width: 100%;
+        }
+
+        .list-item-circle::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-ochre);
+            border-radius: 50%;
+            margin-right: 12px;
+            vertical-align: middle;
+            transform: translateY(-2px);
+        }
+
+        .data-viz-item {
+            position: relative;
+            padding-left: 20px;
+        }
+        .data-viz-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-ochre);
+        }
+
+        .highlight-number {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--accent-ochre);
+            line-height: 0.8;
+        }
+
+        .text-shadow-light {
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body class="p-8 md:p-16 lg:p-24 antialiased leading-relaxed overflow-x-hidden">
+
+    <header class="flex justify-between items-start mb-16 max-w-7xl mx-auto">
+        <h1 class="text-4xl lg:text-5xl font-english tracking-tight leading-none text-soft-grey">A Better <br class="lg:hidden"> Revelation.</h1>
+        <div class="text-xs text-right opacity-75 leading-tight tracking-wider">
+            <span class="font-bold text-soft-grey">Insight</span> / September, 2025
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+        <section class="mb-24">
+            <h2 class="font-serif-title text-5xl md:text-6xl lg:text-7xl mb-8 leading-tight">
+                我们始终低估了一件事：<br>
+                <span class="block mt-4 lg:mt-8 text-2xl md:text-3xl lg:text-4xl font-english">The underestimated power.</span>
+            </h2>
+            <p class="text-xl md:text-2xl font-light">
+                只要让大语言模型（LLM）多花点时间“思考”，它们能迸发出的潜力远超想象。回想AlphaGo的故事，突破不是靠精巧的特征工程，而是靠把简单方法做到极致、推理时大规模搜索、结合深度强化学习。
+            </p>
+        </section>
+
+        <section class="mb-24 flex">
+            <div class="pl-4 accent-border flex-1 ml-0 md:ml-16">
+                <p class="italic text-xl md:text-2xl">
+                    正如AI领域著名的“痛苦教训”所说，最有效的往往不是精雕细琢的架构，而是不断扩展算力和数据、让模型有更长的推理时间，并让它与环境深度融合。
+                </p>
+            </div>
+        </section>
+
+        <section class="mb-24 flex flex-col lg:flex-row items-start lg:items-center">
+            <div class="lg:w-1/2 pr-0 lg:pr-12 mb-8 lg:mb-0">
+                <h2 class="font-serif-title text-4xl md:text-5xl lg:text-6xl leading-tight mb-6">
+                    从“聊天机器人”<br>到“智能组织”
+                </h2>
+                <div class="text-lg md:text-xl space-y-4">
+                    <p>如今，AI能力的进化路径越来越清晰：从最初的<strong class="accent-text font-bold">“聊天机器人”</strong>，到能拆解问题的<strong class="accent-text font-bold">“推理者”</strong>，再到能主动行动的<strong class="accent-text font-bold">“智能体”</strong>，最终这些智能体会协作，形成分布式的<strong class="accent-text font-bold">“智能组织”</strong>。</p>
+                    <p>这条路径，正是整个行业的缩影。我们正从<strong class="font-bold">“把AGI当单一模型”</strong>，走向<strong class="font-bold">“把AGI当系统”</strong>——能协同、能执行、能大规模运作。</p>
+                </div>
+            </div>
+            <div class="lg:w-1/2 flex justify-center items-center relative">
+                <div class="absolute w-full h-full transform scale-150 rotate-3 z-0 rounded-full" style="background: rgba(181, 122, 61, 0.1);"></div>
+                <div class="relative w-full z-10 p-8 md:p-12 border-2 border-dashed rounded-xl" style="border-color: var(--accent-ochre); background: rgba(255, 255, 255, 0.3);">
+                    <div class="flex flex-col space-y-4 text-center text-xl md:text-2xl font-english">
+                        <div class="relative group">
+                            <span class="text-soft-grey tracking-wider text-sm">PATH</span>
+                            <div class="relative py-2 px-4 rounded-full border-2 border-accent-ochre transition-all duration-300 transform group-hover:scale-105 group-hover:bg-accent-ochre group-hover:text-white">
+                                <span class="font-bold">Chatbot</span>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <span class="text-soft-grey tracking-wider text-sm">→</span>
+                            <div class="relative py-2 px-4 rounded-full border-2 border-accent-ochre transition-all duration-300 transform group-hover:scale-105 group-hover:bg-accent-ochre group-hover:text-white">
+                                <span class="font-bold">Reasoner</span>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <span class="text-soft-grey tracking-wider text-sm">→</span>
+                            <div class="relative py-2 px-4 rounded-full border-2 border-accent-ochre transition-all duration-300 transform group-hover:scale-105 group-hover:bg-accent-ochre group-hover:text-white">
+                                <span class="font-bold">Agent</span>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <span class="text-soft-grey tracking-wider text-sm">→</span>
+                            <div class="relative py-2 px-4 rounded-full border-2 border-accent-ochre transition-all duration-300 transform group-hover:scale-105 group-hover:bg-accent-ochre group-hover:text-white">
+                                <span class="font-bold">Intelligent Organization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <section class="mb-24">
+            <h2 class="font-serif-title text-4xl md:text-5xl lg:text-6xl mb-12 text-center leading-tight">
+                o1 模型：更强的“链式思考”
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
+                <div class="flex flex-col items-center text-center">
+                    <div class="relative mb-6">
+                        <span class="highlight-number text-8xl md:text-9xl leading-none">89</span>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-20 transform scale-125" style="background: radial-gradient(circle, var(--accent-ochre) 0%, transparent 70%);"></div>
+                    </div>
+                    <p class="text-2xl md:text-3xl font-english tracking-wide mb-2">PERCENTILE</p>
+                    <p class="text-lg">Codeforces 编程竞赛</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="relative mb-6">
+                        <span class="highlight-number text-8xl md:text-9xl leading-none">500</span>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-20 transform scale-125" style="background: radial-gradient(circle, var(--accent-ochre) 0%, transparent 70%);"></div>
+                    </div>
+                    <p class="text-2xl md:text-3xl font-english tracking-wide mb-2">TOP</p>
+                    <p class="text-lg">美国数学奥赛 (AIME)</p>
+                </div>
+                <div class="flex flex-col items-center text-center">
+                    <div class="relative mb-6">
+                        <span class="highlight-number text-8xl md:text-9xl leading-none">&gt;</span>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-20 transform scale-125" style="background: radial-gradient(circle, var(--accent-ochre) 0%, transparent 70%);"></div>
+                    </div>
+                    <p class="text-2xl md:text-3xl font-english tracking-wide mb-2">HUMAN LEVEL</p>
+                    <p class="text-lg">博士级题库 (GPQA) 平均水平</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <h2 class="font-serif-title text-4xl md:text-5xl lg:text-6xl leading-tight mb-8">
+                “推理时计算”：新时代的软件工程
+            </h2>
+            <div class="flex flex-col lg:flex-row items-start space-y-12 lg:space-y-0 lg:space-x-12">
+                <div class="lg:w-1/2">
+                    <p class="text-xl md:text-2xl font-light mb-6">
+                        对企业来说，这种转变并不遥远。过去我们让模型“总结文档”，现在它们能“推理文档”，很快就能成为<strong class="accent-text font-bold">“内部顾问”</strong>，自动梳理代码库、审查合同、编排整个工作流。
+                    </p>
+                    <p class="text-lg">
+                        这种新形态的“推理时计算”，意味着模型可以调动上下文、调用专用工具、跨多步管理复杂任务。换句话说，我们正在解决“约束”难题——如何让强大的系统始终对齐人类目标、既安全又好用。
+                    </p>
+                </div>
+                <div class="lg:w-1/2 relative p-8 rounded-xl" style="background-color: rgba(224, 217, 196, 0.5);">
+                    <div class="absolute top-0 left-0 text-3xl font-english opacity-30 mt-4 ml-4">
+                        NEW PARADIGM
+                    </div>
+                    <div class="space-y-6">
+                        <div class="data-viz-item relative">
+                            <h3 class="font-serif-title text-2xl md:text-3xl mb-2">From "Artisan"</h3>
+                            <p class="text-base text-gray-700">写代码的成本大大降低，像有了文字处理器后写作变容易一样。</p>
+                        </div>
+                        <div class="data-viz-item relative">
+                            <h3 class="font-serif-title text-2xl md:text-3xl mb-2">To "High-level Design"</h3>
+                            <p class="text-base text-gray-700">重心上移：你要清楚想造什么，难的是设计、策略和系统行为对齐。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <section class="mb-24">
+            <h2 class="font-serif-title text-4xl md:text-5xl lg:text-6xl mb-12 text-center leading-tight">
+                各行各业的变革
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-6 rounded-xl border-t-4 border-accent-ochre">
+                    <i class="fas fa-medkit text-4xl accent-text mb-4"></i>
+                    <h3 class="font-serif-title text-xl mb-2">医疗</h3>
+                    <p class="text-base text-gray-700">从“记录”到“初步诊断”再到“辅助临床决策”，确保安全可靠。</p>
+                </div>
+                <div class="p-6 rounded-xl border-t-4 border-accent-ochre">
+                    <i class="fas fa-shield-alt text-4xl accent-text mb-4"></i>
+                    <h3 class="font-serif-title text-xl mb-2">安全</h3>
+                    <p class="text-base text-gray-700">从“静态查漏洞”到“动态渗透测试”和“自动防御”，更广更深。</p>
+                </div>
+                <div class="p-6 rounded-xl border-t-4 border-accent-ochre">
+                    <i class="fas fa-gamepad text-4xl accent-text mb-4"></i>
+                    <h3 class="font-serif-title text-xl mb-2">游戏</h3>
+                    <p class="text-base text-gray-700">AI不只是聊天，还能“即兴生成整个世界”，创造独特体验。</p>
+                </div>
+                <div class="p-6 rounded-xl border-t-4 border-accent-ochre">
+                    <i class="fas fa-graduation-cap text-4xl accent-text mb-4"></i>
+                    <h3 class="font-serif-title text-xl mb-2">教育</h3>
+                    <p class="text-base text-gray-700">从“更聪明的家教”到动态适应学生个性，量身定制知识呈现方式。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <h2 class="font-serif-title text-5xl md:text-6xl lg:text-7xl leading-tight mb-8">
+                智能，<span class="accent-text">可以被工程化</span>
+            </h2>
+            <p class="text-xl md:text-2xl font-light mb-8">
+                所有进步背后，有一个核心洞见：智能，不再只是生物大脑的专属，而是一种可以被工程化、被规模化的“物理属性”。<strong class="accent-text font-bold">深度学习，就是“有用”。</strong>
+            </p>
+            <div class="text-center">
+                <p class="text-2xl md:text-3xl font-english tracking-wider leading-none text-soft-grey opacity-70">
+                    "WE ARE JUST AT THE BEGINNING."
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-7xl mx-auto text-center text-sm mt-24 text-soft-grey opacity-75">
+        <p>&copy; 2025 A Better Revelation. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(el => {
+                el.classList.add('fade-in');
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
