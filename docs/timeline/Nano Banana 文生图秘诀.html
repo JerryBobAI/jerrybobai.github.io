@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nano Banana 文生图秘诀</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f5f0e1; /* 暖米白色 */
+            color: #3e2723; /* 深灰褐色 */
+            position: relative;
+        }
+
+        /* 虚线网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, #e0d9cc 1px, transparent 1px),
+                linear-gradient(to bottom, #e0d9cc 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* 核心高亮色 - 暖红色 */
+        .highlight-red {
+            color: #d32f2f;
+        }
+
+        /* 辅助色 - 橄榄绿色 */
+        .accent-green {
+            color: #827717;
+        }
+
+        /* 独特字体风格的深蓝色 - 用于引用 */
+        .brand-blue {
+            color: #1a237e;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 勾线图形化容器 */
+        .outline-svg {
+            stroke: #3e2723;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* 关键数字的圆章效果 */
+        .stamp-badge {
+            background-color: #d32f2f;
+            color: #f5f0e1;
+            border-radius: 9999px; /* Tailwind's rounded-full */
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        /* 强调大字体的自定义样式 */
+        .giant-text {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* 新增：分隔线样式 */
+        .divider {
+            border-top: 2px dashed #e0d9cc;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <header class="container mx-auto px-6 py-16 text-center scroll-animate">
+        <h1 class="giant-text uppercase leading-none">
+            <span class="highlight-red">NANO BANANA</span>
+            <br>
+            <span class="text-3xl md:text-5xl font-bold block mt-4">文生图秘诀</span>
+        </h1>
+        <p class="text-xl md:text-2xl mt-4 font-bold max-w-2xl mx-auto">
+            <span class="highlight-red">快如闪电，能文能图</span> <br>
+            <span class="brand-blue font-light text-base md:text-lg tracking-widest">
+                GEMINI 2.5 FLASH
+            </span>
+        </p>
+    </header>
+
+    <section class="container mx-auto px-6 py-12 scroll-animate">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="relative inline-block mb-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold relative z-10">核心原则</h2>
+                <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 giant-text opacity-5">PRINCIPLES</span>
+            </div>
+            <p class="text-lg md:text-xl font-bold mt-4">
+                <span class="highlight-red">描述场景，不仅仅列关键词。</span>
+            </p>
+            <p class="mt-4 leading-relaxed max-w-2xl mx-auto">
+                模型理解语言，叙述性描述远胜零散词组。
+            </p>
+            <div class="mt-8 text-left">
+                <h3 class="text-2xl font-bold mb-4">主要玩法</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-pen-nib text-xl highlight-red mr-4"></i>
+                        <div>
+                            <span class="font-bold">文生图：</span>输入描述，生成高质量图片，简单复杂皆可。
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-image text-xl highlight-red mr-4"></i>
+                        <div>
+                            <span class="font-bold">图文编辑：</span>上传图片，用文字调整元素、风格、色彩，增删改随心。
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-layer-group text-xl highlight-red mr-4"></i>
+                        <div>
+                            <span class="font-bold">多图合成：</span>多张图片拼场景，或迁移风格，创意组合。
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-comment-dots text-xl highlight-red mr-4"></i>
+                        <div>
+                            <span class="font-bold">对话精修：</span>多轮交互，逐步微调，直到满意为止。
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-font text-xl highlight-red mr-4"></i>
+                        <div>
+                            <span class="font-bold">文字渲染：</span>生成含清晰文字的图片，适合 logo、海报、图表。
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12 scroll-animate">文生图实战</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12 scroll-animate">
+            <div class="flex flex-col text-left col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="stamp-badge mb-4">1</div>
+                <h3 class="text-xl md:text-2xl font-bold">拍照片</h3>
+                <span class="accent-green text-sm md:text-base font-medium tracking-widest">拟真场景</span>
+                <p class="mt-4 text-sm md:text-base leading-relaxed">
+                    想要逼真，学摄影师：机位、镜头、光线、细节都要点明。
+                </p>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 w-full text-left">
+                    <p class="font-bold highlight-red">模板:</p>
+                    <p class="mt-1 font-mono text-sm md:text-base">一张逼真的[镜头类型][主体][动作或表情]，[环境]。光线[描述]，营造[氛围]。用[相机/镜头]拍摄，突出[质感细节]。[比例]。</p>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 flex items-center justify-center bg-gray-100 p-6 rounded-lg scroll-animate" style="transition-delay: 0.3s;">
+                <p class="font-mono text-xs md:text-sm leading-relaxed max-w-lg italic">
+                    <i class="fa-solid fa-quote-left text-2xl text-gray-400 mr-2"></i>
+                    特写日本老陶匠，岁月刻皱，微笑温和，正细致端详新釉茶碗。背景是阳光斜洒的木工坊。柔和金色光线透窗而入，泥土纹理尽显。85mm人像镜头拍摄，背景虚化。整体氛围宁静大师气。竖幅。
+                </p>
+            </div>
+        </div>
+        <hr class="divider mb-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12 scroll-animate">
+            <div class="flex flex-col text-left col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="stamp-badge mb-4">2</div>
+                <h3 class="text-xl md:text-2xl font-bold">插画贴纸</h3>
+                <span class="accent-green text-sm md:text-base font-medium tracking-widest">风格定制</span>
+                <p class="mt-4 text-sm md:text-base leading-relaxed">
+                    做贴纸、icon，风格要说清，需白底记得标明。
+                </p>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 w-full text-left">
+                    <p class="font-bold highlight-red">模板:</p>
+                    <p class="mt-1 font-mono text-sm md:text-base">[风格]贴纸，[主体]，[特征][色彩]，[线条][明暗]。背景白色。</p>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 flex items-center justify-center bg-gray-100 p-6 rounded-lg scroll-animate" style="transition-delay: 0.3s;">
+                <p class="font-mono text-xs md:text-sm leading-relaxed max-w-lg italic">
+                    <i class="fa-solid fa-quote-left text-2xl text-gray-400 mr-2"></i>
+                    可爱风红熊猫贴纸，戴小竹帽，啃翠竹叶。线条粗细分明，色彩鲜亮，背景白色。
+                </p>
+            </div>
+        </div>
+        <hr class="divider mb-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12 scroll-animate">
+            <div class="flex flex-col text-left col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="stamp-badge mb-4">3</div>
+                <h3 class="text-xl md:text-2xl font-bold">图片文字</h3>
+                <span class="accent-green text-sm md:text-base font-medium tracking-widest">准确渲染</span>
+                <p class="mt-4 text-sm md:text-base leading-relaxed">
+                    Gemini擅长文字，字体、风格、配色需交代清楚。
+                </p>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 w-full text-left">
+                    <p class="font-bold highlight-red">模板:</p>
+                    <p class="mt-1 font-mono text-sm md:text-base">[图片类型]，[品牌/概念]，文字“[内容]”，[字体]，[设计风格]，[配色]。</p>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 flex items-center justify-center bg-gray-100 p-6 rounded-lg scroll-animate" style="transition-delay: 0.3s;">
+                <p class="font-mono text-xs md:text-sm leading-relaxed max-w-lg italic">
+                    <i class="fa-solid fa-quote-left text-2xl text-gray-400 mr-2"></i>
+                    咖啡店logo，“The Daily Grind”，简洁粗体无衬线。设计融入咖啡豆图标，黑白配色。
+                </p>
+            </div>
+        </div>
+        <hr class="divider mb-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12 scroll-animate">
+            <div class="flex flex-col text-left col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="stamp-badge mb-4">4</div>
+                <h3 class="text-xl md:text-2xl font-bold">产品拍摄</h3>
+                <span class="accent-green text-sm md:text-base font-medium tracking-widest">商业展示</span>
+                <p class="mt-4 text-sm md:text-base leading-relaxed">
+                    电商广告，产品照片要干净专业。
+                </p>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 w-full text-left">
+                    <p class="font-bold highlight-red">模板:</p>
+                    <p class="mt-1 font-mono text-sm md:text-base">高清棚拍[产品][背景]，[布光]，[机位]突出[细节]，[比例]。</p>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 flex items-center justify-center bg-gray-100 p-6 rounded-lg scroll-animate" style="transition-delay: 0.3s;">
+                <p class="font-mono text-xs md:text-sm leading-relaxed max-w-lg italic">
+                    <i class="fa-solid fa-quote-left text-2xl text-gray-400 mr-2"></i>
+                    极简黑色陶瓷咖啡杯，放在磨砂水泥台面。三点柔光消除阴影，45度俯拍展现线条。重点突出咖啡蒸汽，方图。
+                </p>
+            </div>
+        </div>
+        <hr class="divider mb-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12 scroll-animate">
+            <div class="flex flex-col text-left col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="stamp-badge mb-4">5</div>
+                <h3 class="text-xl md:text-2xl font-bold">极简留白</h3>
+                <span class="accent-green text-sm md:text-base font-medium tracking-widest">背景设计</span>
+                <p class="mt-4 text-sm md:text-base leading-relaxed">
+                    做网页、海报背景，留白方便加字。
+                </p>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 w-full text-left">
+                    <p class="font-bold highlight-red">模板:</p>
+                    <p class="mt-1 font-mono text-sm md:text-base">极简构图，[主体][画面角落]，[背景色]大面积留白，[光线]，[比例]。</p>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 flex items-center justify-center bg-gray-100 p-6 rounded-lg scroll-animate" style="transition-delay: 0.3s;">
+                <p class="font-mono text-xs md:text-sm leading-relaxed max-w-lg italic">
+                    <i class="fa-solid fa-quote-left text-2xl text-gray-400 mr-2"></i>
+                    一片红枫叶，画面右下角。背景米白留白，左上柔光，方图。
+                </p>
+            </div>
+        </div>
+        <hr class="divider mb-12">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12 scroll-animate">
+            <div class="flex flex-col text-left col-span-1 md:col-span-2 lg:col-span-1">
+                <div class="stamp-badge mb-4">6</div>
+                <h3 class="text-xl md:text-2xl font-bold">连环画分镜</h3>
+                <span class="accent-green text-sm md:text-base font-medium tracking-widest">叙事分镜</span>
+                <p class="mt-4 text-sm md:text-base leading-relaxed">
+                    做漫画、故事板，场景要清晰。
+                </p>
+                <div class="bg-gray-100 p-4 rounded-lg mt-4 w-full text-left">
+                    <p class="font-bold highlight-red">模板:</p>
+                    <p class="mt-1 font-mono text-sm md:text-base">单幅漫画，[画风]。前景[人物动作]，背景[场景]，[对白/旁白]“[文本]”，[光线][氛围]，[比例]。</p>
+                </div>
+            </div>
+            <div class="col-span-1 md:col-span-2 lg:col-span-2 flex items-center justify-center bg-gray-100 p-6 rounded-lg scroll-animate" style="transition-delay: 0.3s;">
+                <p class="font-mono text-xs md:text-sm leading-relaxed max-w-lg italic">
+                    <i class="fa-solid fa-quote-left text-2xl text-gray-400 mr-2"></i>
+                    黑白硬核分镜，侦探雨夜立灯下，背景酒吧霓虹映水洼。旁白：“这城市，秘密难藏。”光线强烈，氛围沉郁，横幅。
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="container mx-auto px-6 py-12 text-center scroll-animate">
+        <div class="relative inline-block mb-4">
+            <h2 class="text-3xl md:text-4xl font-extrabold relative z-10">开始创作</h2>
+            <span class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 giant-text opacity-5">CREATE</span>
+        </div>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto">
+            立即前往 Google AI Studio 体验。
+        </p>
+        <p class="mt-2 text-sm">
+            <a href="https://ai.studio/banana" target="_blank" class="brand-blue hover:underline">ai.studio/banana</a>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.scroll-animate').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

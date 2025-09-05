@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验光师的AI创业奇迹</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f5f0e1; /* 暖米白色 */
+            color: #3e2723; /* 深灰褐色 */
+            position: relative;
+        }
+
+        /* 虚线网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, #e0d9cc 1px, transparent 1px),
+                linear-gradient(to bottom, #e0d9cc 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* 核心高亮色 - 暖红色 */
+        .highlight-red {
+            color: #d32f2f;
+        }
+
+        /* 辅助色 - 橄榄绿色 */
+        .accent-green {
+            color: #827717;
+        }
+
+        /* 独特字体风格的深蓝色 - 用于引用 */
+        .brand-blue {
+            color: #1a237e;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 勾线图形化容器 */
+        .outline-svg {
+            stroke: #3e2723;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* 关键数字的圆章效果 */
+        .stamp-badge {
+            background-color: #d32f2f;
+            color: #f5f0e1;
+            border-radius: 9999px; /* Tailwind's rounded-full */
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 antialiased">
+
+    <main class="max-w-7xl mx-auto">
+        <section class="mb-24 flex flex-col lg:flex-row items-start justify-between scroll-animate">
+            <div class="lg:w-3/4">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-tight mb-4">
+                    <span class="highlight-red">普通人</span>的AI创业神话
+                </h1>
+                <h2 class="text-3xl md:text-5xl font-extrabold leading-snug">
+                    一个<span class="accent-green">法国验光师</span>，<br>如何用AI工具<br>重做SaaS，<span class="highlight-red">月入25万美元</span>
+                </h2>
+            </div>
+            <div class="lg:w-1/4 mt-8 lg:mt-0 flex flex-col items-start lg:items-end">
+                <div class="bg-gray-200 p-6 rounded-lg shadow-xl relative transform -rotate-2">
+                    <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">founder story</p>
+                    <p class="text-xl font-bold">Samuel</p>
+                    <p class="text-sm text-gray-700">Ophthalmologist turned SaaS Entrepreneur</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-24 grid md:grid-cols-3 gap-12 scroll-animate">
+            <div class="relative p-6">
+                <h3 class="text-xl font-bold mb-2">Monthly Revenue</h3>
+                <p class="text-6xl md:text-7xl lg:text-9xl font-black highlight-red leading-none">$250K</p>
+                <p class="text-lg text-gray-600 font-light">约180万人民币</p>
+            </div>
+            <div class="relative p-6">
+                <h3 class="text-xl font-bold mb-2">Development Cost</h3>
+                <div class="flex items-center space-x-4">
+                    <p class="text-6xl md:text-7xl lg:text-9xl font-black accent-green leading-none">100</p>
+                    <p class="text-4xl md:text-5xl font-bold">元/月</p>
+                </div>
+                <p class="text-lg text-gray-600 font-light">极简成本，极致效率</p>
+            </div>
+            <div class="relative p-6">
+                <h3 class="text-xl font-bold mb-2">Team Size</h3>
+                <p class="text-6xl md:text-7xl lg:text-9xl font-black brand-blue leading-none">1</p>
+                <p class="text-lg text-gray-600 font-light">一人团队，全部搞定</p>
+            </div>
+        </section>
+
+        <section class="my-24 scroll-animate">
+            <div class="mb-12">
+                <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">His Philosophy</p>
+                <h3 class="text-4xl md:text-5xl font-black mb-4">
+                    <span class="highlight-red">不创新，只优化。</span>
+                </h3>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <p class="text-2xl lg:text-3xl font-bold leading-relaxed mb-4">
+                        不迷信“从0到1”的颠覆式创新，而是专注于
+                        <span class="text-4xl md:text-5xl font-black highlight-red">“抄作业+微创新”</span>。
+                    </p>
+                    <p class="text-xl text-gray-700 leading-relaxed font-light">
+                        <span class="accent-green">与其闭门造车，不如用AI把现有产品做得更好、更易用。</span>
+                    </p>
+                    <blockquote class="mt-8 text-2xl brand-blue border-l-4 border-brand-blue pl-4 italic">
+                        <p>“你不需要覆盖全世界，只要把轮子做得更圆一点。”</p>
+                    </blockquote>
+                </div>
+                <div class="flex justify-center items-center">
+                    <svg class="outline-svg w-full max-w-lg h-auto" viewBox="0 0 400 300">
+                        <path d="M50,150 Q100,50 200,50 T350,150" stroke-dasharray="8 8"/>
+                        <circle cx="50" cy="150" r="15" class="highlight-red fill-current stroke-none"/>
+                        <text x="50" y="150" text-anchor="middle" dy="5" class="text-sm font-bold fill-current text-white">0</text>
+                        <path d="M350,150 Q300,250 200,250 T50,150" stroke-dasharray="8 8"/>
+                        <circle cx="350" cy="150" r="15" class="accent-green fill-current stroke-none"/>
+                        <text x="350" y="150" text-anchor="middle" dy="5" class="text-sm font-bold fill-current text-white">1</text>
+                        <text x="200" y="140" text-anchor="middle" class="text-2xl font-bold">Copy</text>
+                        <text x="200" y="170" text-anchor="middle" class="text-2xl font-bold">Refine</text>
+                        <circle cx="200" cy="150" r="50" class="outline-svg"/>
+                        <text x="200" y="160" text-anchor="middle" class="text-4xl font-black">AI</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-24 scroll-animate">
+            <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Products</p>
+            <h3 class="text-4xl md:text-5xl font-black mb-12">
+                三款核心工具，<span class="highlight-red">月入$250K</span>
+            </h3>
+            <div class="grid gap-12 lg:grid-cols-3">
+                <div class="p-8 rounded-lg border-2 border-gray-300 shadow-xl relative">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-link fa-2x brand-blue mr-4"></i>
+                        <h4 class="text-2xl font-bold">Artemis</h4>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-4 font-light">
+                        <span class="font-bold">LinkedIn获客自动化工具</span>，简化B2B获客流程。
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600 font-light">
+                        <li>自动查找潜在客户、批量导出联系人信息。</li>
+                        <li>集成多种数据优化算法。</li>
+                        <li>
+                            <span class="highlight-red font-bold">效率提升30%</span>
+                            vs. 同类产品。
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-8 rounded-lg border-2 border-gray-300 shadow-xl relative">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-video fa-2x brand-blue mr-4"></i>
+                        <h4 class="text-2xl font-bold">StoryShort</h4>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-4 font-light">
+                        <span class="font-bold">AI自动化短视频生成平台</span>，抓住内容风口。
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600 font-light">
+                        <li>无需出镜、无需剪辑，自动生成“无脸”短视频。</li>
+                        <li>AI脚本、AI配音、自动发布至TikTok/YouTube。</li>
+                        <li>
+                            <span class="highlight-red font-bold">单月收入最高$250K</span>。
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-8 rounded-lg border-2 border-gray-300 shadow-xl relative">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-tasks fa-2x brand-blue mr-4"></i>
+                        <h4 class="text-2xl font-bold">Capacity.so</h4>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-4 font-light">
+                        <span class="font-bold">AI驱动的任务与关系管理工具</span>，强调自动化。
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600 font-light">
+                        <li>智能分配任务、自动提醒、数据分析。</li>
+                        <li>AI自动生成工作计划、优化流程。</li>
+                        <li>
+                            <span class="highlight-red font-bold">工作效率最高提升50%</span>。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-24 scroll-animate">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">Growth Strategy</p>
+                    <h3 class="text-4xl md:text-5xl font-black mb-4">
+                        <span class="accent-green">内容驱动，</span><br><span class="highlight-red">用户裂变。</span>
+                    </h3>
+                    <p class="text-xl text-gray-700 leading-relaxed font-light mb-8">
+                        不靠融资，不烧广告，而是建立在<span class="font-bold">用户口碑和推荐</span>之上。
+                    </p>
+                    <ul class="space-y-4 text-gray-700 font-light">
+                        <li class="flex items-start">
+                            <span class="text-2xl highlight-red mr-3">&bull;</span>
+                            <span class="flex-1">通过<span class="font-bold">SEO优化</span>和<span class="font-bold">社交平台</span>（YouTube, TikTok）分发内容。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-2xl highlight-red mr-3">&bull;</span>
+                            <span class="flex-1">通过<span class="font-bold">FAQ、教程和案例分享</span>，降低学习成本，提升转化。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-2xl highlight-red mr-3">&bull;</span>
+                            <span class="flex-1">激励用户推荐产品，形成<span class="font-bold">自然裂变</span>。</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex justify-center items-center">
+                    <svg class="outline-svg w-full max-w-md h-auto" viewBox="0 0 300 300">
+                        <circle cx="150" cy="150" r="140" class="outline-svg stroke-dashed" stroke-dasharray="5 5" />
+                        <circle cx="150" cy="150" r="100" class="highlight-red fill-current opacity-10 stroke-none" />
+                        <circle cx="150" cy="150" r="100" class="outline-svg" />
+
+                        <text x="150" y="150" text-anchor="middle" class="text-3xl font-bold brand-blue">USER</text>
+
+                        <path d="M150,50 L150,150" class="outline-svg" />
+                        <text x="150" y="40" text-anchor="middle" class="text-xl font-bold accent-green">SEO</text>
+                        <path d="M250,150 L150,150" class="outline-svg" />
+                        <text x="260" y="150" text-anchor="start" class="text-xl font-bold accent-green">TikTok</text>
+                        <path d="M150,250 L150,150" class="outline-svg" />
+                        <text x="150" y="270" text-anchor="middle" class="text-xl font-bold accent-green">YouTube</text>
+                        <path d="M50,150 L150,150" class="outline-svg" />
+                        <text x="40" y="150" text-anchor="end" class="text-xl font-bold accent-green">口碑</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-24 scroll-animate">
+            <div class="mb-12">
+                <p class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-2">The Takeaway</p>
+                <h3 class="text-4xl md:text-5xl font-black mb-4">
+                    <span class="brand-blue">小而美</span>，<span class="accent-green">持续微创新。</span>
+                </h3>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <p class="text-xl lg:text-2xl font-bold leading-relaxed mb-4">
+                        没有技术背景、没有团队、没有资本，也能在SaaS领域获得成功。
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed font-light">
+                        Samuel用一人之力，利用AI和自动化工具，将开发和运营流程<span class="font-bold">极度简化</span>。每月成本仅需100元，却能稳定运营多个产品，持续优化。
+                    </p>
+                </div>
+                <div>
+                    <blockquote class="mt-8 text-2xl brand-blue border-l-4 border-brand-blue pl-4 italic">
+                        <p>“复杂的产品可以赚快钱，简单的产品也能赚大钱。”</p>
+                    </blockquote>
+                    <p class="text-lg text-gray-700 leading-relaxed font-light mt-4">
+                        他的故事证明，在AI时代，创业的门槛正在被无限降低。关键是<span class="font-bold">敏锐的市场眼光</span>、<span class="font-bold">极致的产品打磨</span>，以及<span class="font-bold">持续的微创新</span>。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const elements = document.querySelectorAll('.scroll-animate');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

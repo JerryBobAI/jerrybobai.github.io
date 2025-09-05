@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自媒体变现的底层逻辑</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f5f0e1;
+            color: #3e2723;
+            position: relative;
+        }
+
+        /* 虚线网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, #e0d9cc 1px, transparent 1px),
+                linear-gradient(to bottom, #e0d9cc 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* 核心高亮色 - 暖红色 */
+        .highlight-red {
+            color: #d32f2f;
+        }
+
+        /* 辅助色 - 橄榄绿色 */
+        .accent-green {
+            color: #827717;
+        }
+
+        /* 独特字体风格的深蓝色 - 用于引用 */
+        .brand-blue {
+            color: #1a237e;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 勾线图形化容器 */
+        .outline-svg {
+            stroke: #3e2723;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* 关键数字的圆章效果 */
+        .stamp-badge {
+            background-color: #d32f2f;
+            color: #f5f0e1;
+            border-radius: 9999px; /* Tailwind's rounded-full */
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        /* 文本渐变效果 */
+        .highlight-gradient {
+            background: linear-gradient(90deg, #d32f2f 0%, rgba(211, 47, 47, 0.2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 antialiased leading-relaxed">
+
+    <div class="container mx-auto max-w-7xl">
+
+        <header class="mb-16 scroll-animate">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black mb-4 leading-tight">
+                <span class="highlight-gradient">让经历成为产品的核心</span><br>
+                <span class="text-3xl lg:text-4xl text-right block mt-2 ml-auto max-w-prose">
+                    自媒体变现的底层逻辑
+                </span>
+            </h1>
+            <p class="text-xl sm:text-2xl mt-8 max-w-4xl font-light">
+                <span class="highlight-red">洞见：</span>自媒体的本质不是贩卖技巧，而是贩卖你真实的人生样本。
+            </p>
+        </header>
+
+        <main>
+            <section class="mb-20 grid md:grid-cols-2 gap-12 items-center scroll-animate">
+                <div>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 leading-tight">
+                        <span class="highlight-red">真实经历，才有识别力</span>
+                        <br>
+                        <span class="text-lg sm:text-xl lg:text-2xl font-light opacity-80 block mt-2">Authentic experience, true insight.</span>
+                    </h2>
+                    <p class="text-lg font-light leading-relaxed mb-4">
+                        用户愿意为情感咨询买单，不是因为缺少套路，而是渴望有人能看穿他们的困局，甚至帮他们“解绑”那些无形的心理枷锁。
+                    </p>
+                    <p class="text-lg font-light leading-relaxed">
+                        这种识别力，只能来自你亲身走过的路。你没有经历过的关系，不会有深刻的同理心，也无法给出真正有效的建议。
+                    </p>
+                </div>
+                <div class="flex justify-center md:justify-end">
+                    <svg class="outline-svg" width="100%" height="auto" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+                        <rect x="20" y="20" width="360" height="260" rx="30" ry="30"/>
+                        <circle cx="200" cy="100" r="40"/>
+                        <path d="M100 200 Q 200 150, 300 200"/>
+                        <text x="200" y="105" text-anchor="middle" class="text-6xl font-black highlight-red" fill="#d32f2f" stroke="none">心</text>
+                        <text x="200" y="230" text-anchor="middle" class="text-2xl font-black opacity-80" fill="#3e2723" stroke="none">THE JOURNEY WITHIN</text>
+                    </svg>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-animate">
+                <div class="bg-white p-8 md:p-12 rounded-3xl shadow-lg border border-gray-200">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-quote-left text-2xl accent-green mr-4"></i>
+                        <h3 class="text-2xl sm:text-3xl font-bold brand-blue">案例解析</h3>
+                    </div>
+                    <p class="text-lg font-light leading-relaxed mb-4">
+                        以《姐姐当家》中的董璇为例：事业有成的女性，却在关系中反复妥协，面对PUA和不对等的情感模式，旁观者都能看出问题，但她却难以自拔。
+                    </p>
+                    <p class="text-lg font-light leading-relaxed">
+                        这种人格层面的<span class="highlight-red font-bold">“寄生共生”</span>，只有经历过类似关系的人，才能一眼识破，并提出根本性的解决策略。表面操作永远无法触及深层困境。
+                    </p>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-animate">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-2 leading-tight">
+                        <span class="highlight-red">痛苦/卡点即选题</span>
+                    </h2>
+                    <p class="text-2xl sm:text-3xl font-light opacity-80">
+                        经历即护城河
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6">
+                        <div class="stamp-badge mx-auto mb-4">1</div>
+                        <p class="text-lg font-bold mb-2">经历越多</p>
+                        <p class="text-base font-light opacity-80">The more you live</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="stamp-badge mx-auto mb-4">2</div>
+                        <p class="text-lg font-bold mb-2">卡点越多</p>
+                        <p class="text-base font-light opacity-80">The more you struggle</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="stamp-badge mx-auto mb-4">3</div>
+                        <p class="text-lg font-bold mb-2">选题越丰富</p>
+                        <p class="text-base font-light opacity-80">The richer your content</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="mb-20 scroll-animate">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 leading-tight">
+                    <span class="accent-green">实操建议</span>
+                    <span class="text-xl sm:text-2xl font-light opacity-80 block mt-2">Actionable Steps</span>
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="p-8 bg-gray-100 rounded-2xl border-l-4 border-l-gray-400">
+                        <div class="flex items-start mb-4">
+                            <i class="fas fa-brain text-2xl highlight-red mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">深度复盘卡点</h4>
+                                <p class="text-base font-light opacity-80">Deep reflection on every bottleneck</p>
+                            </div>
+                        </div>
+                        <p class="text-lg font-light leading-relaxed">
+                            每一次“过不去”的情感、职业、成长节点，都要沉淀为方法论。
+                        </p>
+                    </div>
+                    <div class="p-8 bg-gray-100 rounded-2xl border-l-4 border-l-gray-400">
+                        <div class="flex items-start mb-4">
+                            <i class="fas fa-road text-2xl highlight-red mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">主动拓展体验</h4>
+                                <p class="text-base font-light opacity-80">Proactively expand your horizons</p>
+                            </div>
+                        </div>
+                        <p class="text-lg font-light leading-relaxed">
+                            刻意走出舒适区，积累多样化的人生经历。
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20 scroll-animate">
+                <div class="bg-gray-200 p-8 md:p-12 rounded-3xl">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-6 brand-blue">内容结构建议</h3>
+                    <ul class="list-none space-y-6">
+                        <li class="flex items-start">
+                            <span class="stamp-badge w-8 h-8 text-base shrink-0 mr-4 mt-1">1</span>
+                            <div>
+                                <p class="text-xl font-bold">开篇金句，直击痛点</p>
+                                <p class="text-sm font-light opacity-80">Hook with a sharp opening sentence</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stamp-badge w-8 h-8 text-base shrink-0 mr-4 mt-1">2</span>
+                            <div>
+                                <p class="text-xl font-bold">真实案例，激发共鸣</p>
+                                <p class="text-sm font-light opacity-80">Use real cases to create empathy</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stamp-badge w-8 h-8 text-base shrink-0 mr-4 mt-1">3</span>
+                            <div>
+                                <p class="text-xl font-bold">机制剖析，提供洞察</p>
+                                <p class="text-sm font-light opacity-80">Analyze the underlying mechanisms</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stamp-badge w-8 h-8 text-base shrink-0 mr-4 mt-1">4</span>
+                            <div>
+                                <p class="text-xl font-bold">行动清单，便于落地</p>
+                                <p class="text-sm font-light opacity-80">Provide an actionable checklist</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="text-center scroll-animate">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 leading-tight">
+                    <span class="highlight-red">你的经历，决定了你的价值</span>
+                </h2>
+                <p class="text-lg sm:text-xl font-light max-w-2xl mx-auto mb-6">
+                    自媒体变现的终极秘密，就是用你亲历的痛苦与成长，去照亮别人的路。
+                </p>
+                <p class="text-2xl sm:text-3xl font-light brand-blue">
+                    内容的深度，来自人生的厚度。
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.scroll-animate').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

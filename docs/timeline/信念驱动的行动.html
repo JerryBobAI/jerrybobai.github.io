@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信念驱动的行动</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Montserrat:wght@700&display=swap');
+
+        body {
+            background-color: #F8F4E6;
+            font-family: 'Noto Sans SC', sans-serif;
+            overflow-x: hidden;
+            color: #121212;
+        }
+
+        .container-fluid {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 1920px) {
+            .container-fluid {
+                max-width: 1700px;
+            }
+        }
+
+        .card {
+            border-radius: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .bg-gradient-1 {
+            background-image: linear-gradient(135deg, #FFD2A8 0%, #FFB6C1 100%);
+        }
+
+        .bg-gradient-2 {
+            background-image: linear-gradient(135deg, #B2EBF2 0%, #C8E6C9 100%);
+        }
+
+        .bg-gradient-3 {
+            background-image: linear-gradient(135deg, #C5CAE9 0%, #E1BEE7 100%);
+        }
+
+        .bg-gradient-4 {
+            background-image: linear-gradient(135deg, #FFE0B2 0%, #FFECB3 100%);
+        }
+
+        .text-huge {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8rem;
+            line-height: 0.9;
+        }
+        @media (min-width: 768px) {
+            .text-huge {
+                font-size: 12rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .text-huge {
+                font-size: 16rem;
+            }
+        }
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 2px #333;
+        }
+
+        .label {
+            background-color: #FFFFFF;
+            border: 1px solid #d1d5db;
+        }
+
+        .line-art {
+            stroke: #121212;
+            stroke-width: 2px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .highlight-line {
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16">
+
+    <header class="container-fluid flex justify-between items-center mb-16">
+        <div class="flex items-center space-x-2">
+            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 12L12 22L22 12L12 2Z" class="line-art" />
+            </svg>
+            <span class="font-bold text-lg">Home</span>
+        </div>
+        <nav class="hidden md:flex space-x-8 text-sm font-semibold text-gray-700">
+            <a href="#" class="hover:text-black">概述</a>
+            <a href="#" class="hover:text-black">机制</a>
+            <a href="#" class="hover:text-black">结论</a>
+        </nav>
+    </header>
+
+    <main class="container-fluid">
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-24 items-center">
+            <div class="col-span-1">
+                <div class="flex items-center mb-4">
+                    <span class="label px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mr-2">Core Concept</span>
+                    <span class="text-gray-600">相信自己</span>
+                </div>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-extrabold leading-tight text-black mb-6">
+                    相信自己
+                    <span class="block text-gray-500 text-3xl md:text-4xl lg:text-5xl font-normal mt-2 tracking-wide">Believe in Yourself</span>
+                </h1>
+                <p class="text-lg md:text-xl lg:text-2xl text-gray-700">
+                    所谓“相信自己”与“选择出发”，是用主观信念填补信息不对称与资源不确定，驱动行动以争夺生存机会。
+                </p>
+            </div>
+            <div class="col-span-1 relative flex justify-center items-center">
+                <div class="w-full h-auto max-w-sm lg:max-w-md">
+                    <svg class="w-full h-full" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#FFD2A8" />
+                                <stop offset="100%" style="stop-color:#FFB6C1" />
+                            </linearGradient>
+                            <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#B2EBF2" />
+                                <stop offset="100%" style="stop-color:#C8E6C9" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="200" cy="150" r="120" stroke="url(#g1)" stroke-width="8" fill="none" />
+                        <path d="M120 150 L200 70 L280 150 L200 230 Z" stroke="url(#g2)" stroke-width="8" fill="none" />
+                        <text x="200" y="150" font-size="20" font-weight="bold" text-anchor="middle" alignment-baseline="central" fill="#121212">不确定性</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+        
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-24">
+            <div class="card bg-gradient-1 p-8 lg:p-12 flex flex-col justify-between">
+                <div class="mb-8">
+                    <span class="label px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 inline-block">MECHANISM</span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
+                        风险承担
+                        <span class="block text-lg md:text-xl font-normal mt-1 text-gray-800">Risk Taking</span>
+                    </h2>
+                </div>
+                <div class="relative">
+                    <p class="text-xl md:text-2xl font-bold leading-relaxed text-black">
+                        在缺乏确定性时，最大化博弈中的主动权和可能性。
+                    </p>
+                    <div class="absolute inset-0 flex items-end justify-end -bottom-8 -right-8 opacity-20">
+                        <div class="text-huge text-outline font-extrabold leading-none">01</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-white p-8 lg:p-12 flex flex-col justify-between">
+                <div class="mb-8">
+                    <span class="label px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 inline-block">DRIVING FORCE</span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
+                        自我激励
+                        <span class="block text-lg md:text-xl font-normal mt-1 text-gray-800">Self-Motivation</span>
+                    </h2>
+                </div>
+                <div class="relative">
+                    <p class="text-xl md:text-2xl font-bold leading-relaxed text-black">
+                        驱动行动以争夺生存机会。
+                    </p>
+                    <div class="absolute inset-0 flex items-end justify-end -bottom-8 -right-8 opacity-20">
+                        <div class="text-huge text-outline font-extrabold leading-none">02</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-gradient-2 p-8 lg:p-12 flex flex-col justify-between">
+                <div class="mb-8">
+                    <span class="label px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 inline-block">OUTPUT</span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
+                        行动优先级
+                        <span class="block text-lg md:text-xl font-normal mt-1 text-gray-800">Action First</span>
+                    </h2>
+                </div>
+                <div class="relative">
+                    <p class="text-xl md:text-2xl font-bold leading-relaxed text-black">
+                        “先动手，后分配”的核心逻辑。
+                    </p>
+                    <div class="absolute inset-0 flex items-end justify-end -bottom-8 -right-8 opacity-20">
+                        <div class="text-huge text-outline font-extrabold leading-none">03</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-24 items-center">
+            <div class="col-span-1 relative">
+                <div class="bg-gradient-3 p-8 lg:p-12 rounded-3xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 lg:w-64 lg:h-64 opacity-30 pointer-events-none">
+                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 0L100 50L50 100L0 50L50 0Z" class="line-art" style="stroke-dasharray: 200; stroke-dashoffset: 0; animation: dash 2s linear infinite;"></path>
+                         </svg>
+                    </div>
+                    <div class="relative z-10">
+                         <span class="label px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 inline-block">CONCLUSION</span>
+                         <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight">
+                            励志叙事<span class="block text-gray-800 text-lg md:text-xl font-normal mt-2">The Narrative of Motivation</span>
+                         </h2>
+                         <p class="text-lg md:text-xl lg:text-2xl font-bold leading-relaxed mb-6">
+                            本质是对<span class="text-white-800 text-opacity-80">行动成本</span>的合理化。
+                         </p>
+                         <p class="text-lg md:text-xl lg:text-2xl font-bold leading-relaxed">
+                            以概率<span class="text-white-800 text-opacity-80">换取资源流入窗口</span>。
+                         </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <div class="w-full h-80 bg-white rounded-3xl flex items-center justify-center p-8 lg:p-12">
+                     <div class="relative w-full h-full">
+                        <div class="flex items-center justify-center h-full">
+                            <div class="text-center">
+                                <p class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">资源流入</p>
+                                <div class="w-full h-8 bg-gray-200 rounded-full overflow-hidden mb-2">
+                                    <div class="h-full bg-gradient-4 transition-all duration-1000 ease-out" style="width: 75%;"></div>
+                                </div>
+                                <p class="text-sm text-gray-500">
+                                    <span class="font-bold">75%</span> 概率的资源流入窗口
+                                </p>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-4 left-4 p-2 rounded-full border-2 border-gray-400">
+                            <i class="fas fa-chart-line text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="container-fluid text-center text-gray-500 py-8 text-sm">
+        <p>Dynamic Web Page Design Based on Hybrid Layout Style</p>
+        <p class="mt-2">© 2023. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card, .hero-content, .conclusion-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        const progressBar = document.querySelector('.bg-gradient-4');
+        setTimeout(() => {
+            progressBar.style.width = '75%';
+        }, 500);
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
