@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>进窄门，走暗路，耕瘦田</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 自定义全局样式 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #f5f0e1; /* 暖米白色 */
+            color: #3e2723; /* 深灰褐色 */
+            position: relative;
+        }
+
+        /* 虚线网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, #e0d9cc 1px, transparent 1px),
+                linear-gradient(to bottom, #e0d9cc 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* 核心高亮色 - 暖红色 */
+        .highlight-red {
+            color: #d32f2f;
+        }
+
+        /* 辅助色 - 橄榄绿色 */
+        .accent-green {
+            color: #827717;
+        }
+
+        /* 独特字体风格的深蓝色 - 用于引用 */
+        .brand-blue {
+            color: #1a237e;
+        }
+
+        /* 动画效果：滚动进入时触发 */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition-delay: 0.2s;
+        }
+        .scroll-animate.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 勾线图形化容器 */
+        .outline-svg {
+            stroke: #3e2723;
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* 关键数字的圆章效果 */
+        .stamp-badge {
+            background-color: #d32f2f;
+            color: #f5f0e1;
+            border-radius: 9999px; /* Tailwind's rounded-full */
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 antialiased">
+
+    <section class="max-w-7xl mx-auto mb-20 md:mb-32">
+        <h1 class="text-4xl md:text-7xl lg:text-8xl font-black leading-tight scroll-animate">
+            <span class="highlight-red">进窄门，</span><br>
+            <span class="ml-0 md:ml-12">走暗路，</span><br>
+            <span class="ml-0 md:ml-24">耕瘦田。</span>
+        </h1>
+        <p class="mt-8 text-lg md:text-2xl font-bold scroll-animate">
+            真正适合普通人的<span class="highlight-red">“赚钱之路”</span>。
+        </p>
+    </section>
+
+    <section class="max-w-7xl mx-auto mb-20 md:mb-32 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="scroll-animate">
+            <div class="flex items-center space-x-4 mb-6">
+                <span class="stamp-badge">01</span>
+                <h2 class="text-2xl md:text-3xl font-black">选择窄门</h2>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-black leading-snug">
+                别挤热闹的<br><span class="highlight-red">独木桥</span>。
+            </h3>
+            <p class="mt-6 text-base md:text-lg leading-relaxed">
+                你有没有发现，越是热门行业，越是容易把人卷死。互联网、短视频、直播带货……蜂拥而入的结果是：<span class="font-bold highlight-red">99%的人血本无归，1%的人卷成狗。</span>
+            </p>
+            <p class="mt-4 text-base md:text-lg leading-relaxed">
+                越是人多的地方，越容易被替代；越是拥挤的赛道，越容易沦为打工人。而那些真正赚大钱的人，往往从<span class="font-bold">“窄门”</span>切入。
+            </p>
+            <p class="mt-6 text-sm md:text-base accent-green border-l-4 border-l-current pl-4">
+                <i class="fas fa-quote-left mr-2"></i>
+                <span class="brand-blue font-bold">教员在《反对本本主义》中强调：</span><br>
+                “没有调查，就没有发言权。”
+            </p>
+        </div>
+        <div class="scroll-animate relative flex justify-center items-center p-8">
+            <svg class="w-full max-w-sm" viewBox="0 0 400 300">
+                <path class="outline-svg" d="M 50 250 Q 200 100, 350 250" />
+                <circle cx="50" cy="250" r="15" fill="#d32f2f" />
+                <circle cx="350" cy="250" r="15" fill="#827717" />
+                <text x="50" y="240" text-anchor="middle" font-size="14" fill="#f5f0e1" font-weight="bold">大众</text>
+                <text x="350" y="240" text-anchor="middle" font-size="14" fill="#f5f0e1" font-weight="bold">小众</text>
+                <text x="200" y="150" text-anchor="middle" font-size="30" font-weight="bold" fill="#3e2723">
+                    <tspan x="200" dy="0">窄门</tspan>
+                </text>
+            </svg>
+        </div>
+    </section>
+
+    <hr class="border-t border-gray-300 w-1/2 mx-auto mb-20 md:mb-32">
+
+    <section class="max-w-7xl mx-auto mb-20 md:mb-32 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="scroll-animate">
+            <div class="flex items-center space-x-4 mb-6">
+                <span class="stamp-badge">02</span>
+                <h2 class="text-2xl md:text-3xl font-black">坚持走暗路</h2>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-black leading-snug">
+                没人鼓掌的地方<br>
+                往往藏着<span class="highlight-red">金矿</span>。
+            </h3>
+            <p class="mt-6 text-base md:text-lg leading-relaxed">
+                这个时代有个错觉：赚钱要热闹、要曝光、要上台面。但真正起来的人，他们干的都是<span class="font-bold">“暗活”</span>。没人看见的底层搬运工，悄悄做供应链整合，逆袭成年入千万的批发商。这些都不是朋友圈晒出的“光鲜职业”，但他们有一个共同点：<span class="font-bold highlight-red">在别人看不见的地方，默默默默地耕耘。</span>
+            </p>
+            <p class="mt-6 text-sm md:text-base accent-green border-l-4 border-l-current pl-4">
+                <i class="fas fa-quote-left mr-2"></i>
+                <span class="brand-blue font-bold">教员在《中国革命战争的战略问题》中指出：</span><br>
+                “没有事先的计划和准备，就不能获得战争的胜利。”
+            </p>
+        </div>
+        <div class="scroll-animate relative flex justify-center items-center p-8">
+            <svg class="w-full max-w-sm" viewBox="0 0 400 300">
+                <path class="outline-svg" d="M 50 250 L 350 250 L 350 50 L 50 50 Z" />
+                <path class="outline-svg" d="M 200 250 C 150 200, 250 200, 200 150" />
+                <text x="200" y="220" text-anchor="middle" font-size="20" fill="#3e2723" font-weight="bold">
+                    <tspan x="200" dy="0">金矿</tspan>
+                </text>
+                <text x="200" y="270" text-anchor="middle" font-size="14" fill="#3e2723">（隐藏的金矿）</text>
+                <circle cx="200" cy="180" r="10" fill="#d32f2f" />
+                <rect x="185" y="195" width="30" height="15" fill="#d32f2f" transform="rotate(45 200 200)" />
+            </svg>
+        </div>
+    </section>
+
+    <hr class="border-t border-gray-300 w-1/2 mx-auto mb-20 md:mb-32">
+
+    <section class="max-w-7xl mx-auto mb-20 md:mb-32 grid lg:grid-cols-2 gap-12 items-center">
+        <div class="scroll-animate">
+            <div class="flex items-center space-x-4 mb-6">
+                <span class="stamp-badge">03</span>
+                <h2 class="text-2xl md:text-3xl font-black">耐心耕瘦田</h2>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-black leading-snug">
+                <span class="highlight-red">慢</span>就是快，<br>
+                <span class="highlight-red">冷</span>就是热。
+            </h3>
+            <p class="mt-6 text-base md:text-lg leading-relaxed">
+                什么是<span class="font-bold">“瘦田”</span>？就是你看起来毫无资源、毫无优势、回报周期又长的领域。但奇怪的是，真正爆发的个人品牌、赚钱项目，几乎都从<span class="font-bold">“瘦田”</span>起步。
+            </p>
+            <p class="mt-4 text-base md:text-lg leading-relaxed">
+                要长期赚钱，就要选择难的；要跑赢平均线，就要吃别人不愿吃的苦。真正的高手，不是靠运气吃饭，而是靠<span class="highlight-red font-bold">眼光吃饭、靠耐心赚钱。</span>
+            </p>
+            <p class="mt-6 text-sm md:text-base accent-green border-l-4 border-l-current pl-4">
+                <i class="fas fa-quote-left mr-2"></i>
+                <span class="brand-blue font-bold">教员曾说：</span><br>
+                “在战略上我们要藐视一切敌人，在战术上我们要重视一切敌人。”
+            </p>
+        </div>
+        <div class="scroll-animate relative flex justify-center items-center p-8">
+            <svg class="w-full max-w-sm" viewBox="0 0 400 300">
+                <rect x="50" y="100" width="300" height="150" class="outline-svg" />
+                <line x1="50" y1="150" x2="350" y2="150" class="outline-svg" />
+                <line x1="125" y1="100" x2="125" y2="250" class="outline-svg" />
+                <line x1="275" y1="100" x2="275" y2="250" class="outline-svg" />
+                <path d="M 125 150 Q 150 170, 175 150" class="outline-svg stroke-2" />
+                <path d="M 175 150 Q 200 170, 225 150" class="outline-svg stroke-2" />
+                <path d="M 225 150 Q 250 170, 275 150" class="outline-svg stroke-2" />
+                <text x="200" y="140" text-anchor="middle" font-size="20" font-weight="bold" fill="#3e2723">
+                    <tspan x="200" dy="0">瘦田</tspan>
+                </text>
+                <circle cx="100" cy="180" r="8" fill="#d32f2f" />
+                <circle cx="150" cy="200" r="8" fill="#d32f2f" />
+                <circle cx="200" cy="220" r="8" fill="#d32f2f" />
+                <circle cx="250" cy="200" r="8" fill="#d32f2f" />
+            </svg>
+        </div>
+    </section>
+
+    <hr class="border-t border-gray-300 w-1/2 mx-auto mb-20 md:mb-32">
+
+    <section class="max-w-7xl mx-auto mb-20 md:mb-32">
+        <div class="scroll-animate">
+            <div class="flex items-center space-x-4 mb-6">
+                <span class="stamp-badge">04</span>
+                <h2 class="text-2xl md:text-3xl font-black">掏心窝子的话</h2>
+            </div>
+            <p class="mt-6 text-base md:text-lg leading-relaxed">
+                我知道，你可能现在还在为每个月的收入发愁；你可能在做一个冷门账号，没人点赞、没人转发；你甚至被身边人“劝退”。
+            </p>
+            <p class="mt-4 text-base md:text-lg leading-relaxed font-bold">
+                但请你一定记住：想赚大钱，就不能走大路。天幕红尘中有句话，叫<span class="highlight-red">“见路不走”。</span>
+            </p>
+            <p class="mt-4 text-base md:text-lg leading-relaxed">
+                <span class="font-bold">热闹的地方，是别人的战场；冷门的地方，才是你突破的方向。</span>真正赚大钱的人，都是从没人看好的地方开始的。他们用一股狠劲，守住了冷门赛道；用一次次坚持，耕出了贫瘠土地；用看不见的努力，撑起了今天的收入自由。
+            </p>
+            <p class="mt-4 text-base md:text-lg leading-relaxed">
+                别急，慢慢来。先选一个<span class="highlight-red font-bold">“瘦田”</span>深耕三年，再来谈什么“年入百万”。
+            </p>
+            <p class="mt-4 text-base md:text-lg leading-relaxed">
+                这世界从不奖励焦虑，而是奖励那些<span class="font-bold">认准一件事、默默耕耘、长期耐心</span>的人。愿你也能找到那块属于你的<span class="highlight-red font-bold">“瘦田”</span>，在那里，扎根、发芽、结果。
+            </p>
+        </div>
+    </section>
+
+    <footer class="text-center text-sm md:text-base text-gray-500 py-8 scroll-animate">
+        <p>© 2025 新中式美学. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        const scrollAnimate = document.querySelectorAll('.scroll-animate');
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        scrollAnimate.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小朋友学习秘籍20招</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        @keyframes pulseGlow {
+           0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+           50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        .responsive-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+        .glow-circle {
+            background: rgba(255, 179, 0, 0.2);
+            border-radius: 50%;
+            position: absolute;
+            animation: pulse 4s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1); opacity: 0.8; }
+        }
+        .pattern-dots {
+            background-image: radial-gradient(#FFB300 1px, transparent 1px);
+            background-size: 8px 8px;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16">
+
+    <header class="text-center mb-24">
+        <h1 class="ultra-large-text font-noto-sans-sc leading-tight mb-4">
+            <span class="highlight-text">学习魔法</span>
+            <span class="block text-4xl md:text-5xl font-extralight text-black text-opacity-75">Ghibli Learning Method</span>
+        </h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto font-noto-sans-sc text-black text-opacity-80">
+            这20招超级好玩的学习秘籍，专为6-9岁的小朋友打造！
+            <span class="block mt-2 font-bold highlight-text text-sm md:text-lg">Make Learning Fun & Magical</span>
+        </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="card tech-glow">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">01</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">先懂，再记</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Don't memorize what you don't understand.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">用自己的话讲一遍学到的内容，能讲清了，再制作小卡片。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">02</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">从全局到细节</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? See the forest before the trees.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">快速翻阅书籍，画一张“知识地图”，理解整体脉络后再深入学习。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">03</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">打好地基</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? A strong foundation builds a tall building.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">找出3个最重要的核心词，用大字写下来贴在墙上，完全掌握后再添加新内容。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">04</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">小步快跑</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Small problems are easier to win.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">将复杂知识点拆解成迷你卡片，例如“水星是什么？”</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">05</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">填空魔法</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? One small gap for one small fact.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">将句子中的关键信息挖空，让小朋友自己填入，例如：“地球最外层是（<span class="highlight-text">大气层</span>）。”</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">06</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">画出知识</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? The brain loves pictures.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">给概念（如“火山”）画一张图，标注重要部分，直观又好记。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">07</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">好玩才好记</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Fun is the best memory trick.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">用歌谣、故事或一套动作来记忆枯燥的内容，如行星顺序。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">08</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">位置记忆</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Visual-spatial memory is powerful.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">在地图上盖住一个国家，让小朋友猜猜是哪里，锻炼空间记忆。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">09</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">整理大师</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Order makes things clear.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">将一堆杂乱的词语按时间线、大小等规则排列，使其变得井然有序。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">10</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">小口慢品</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Don't try to eat it all at once.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">将长篇古诗分段，做成“三句卡片”，循序渐进地练习。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">11</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">对比记忆</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Confusion happens with similar things.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">将容易混淆的概念（如“historic”和“historical”）放在一起，通过例子进行对比学习。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">12</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">精准提问</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? A good question is a key to the mind.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">把长长的“请说出……”变成简短有力的“谁赢了？”“为什么？”</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">13</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">知识交友</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? New knowledge loves making friends.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">学习“蒸发”时，联想“晒衣服变干”，将两者画在一起加深印象。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">14</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">我的故事</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Personal memories stick the best.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">学习“斜坡”时，画出自家门口的斜坡，并配上滑板车从上滑下的场景。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">15</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">情感连接</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Feelings make memories last.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">将“电闪雷鸣”与一次难忘的暴雨经历联系起来，让知识充满感情。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">16</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">分类整理</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Labels are like drawer names.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">在每张卡片前加上“科学：”或“历史：”等标签，让知识归类清晰。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">17</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">多角度复习</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? True mastery is a 360-degree view.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">正向、反向都练习，例如“中文→英文”和“英文→中文”各做一张卡片。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">18</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">追本溯源</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? It's good to know the source.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">在卡片角落标注知识的出处，如“来自xx书第3章”。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">19</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">与时俱进</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Some knowledge can change.</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">在卡片上写下制作日期，定期检查知识是否需要更新。</p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg">
+            <div class="content-z">
+                <div class="flex items-center mb-2">
+                    <span class="large-stat-text highlight-text font-bold leading-none">20</span>
+                    <span class="ml-4 text-2xl font-bold font-noto-sans-sc">优先复习</span>
+                </div>
+                <p class="text-gray-600 mb-4">Why? Time is limited, prioritize!</p>
+                <p class="text-black text-opacity-80 font-noto-sans-sc">用星星标记卡片的重要性，先复习“三颗星”的必学内容。</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="my-24 text-center">
+        <div class="relative inline-block px-8 py-4 bg-white bg-opacity-75 rounded-full shadow-lg backdrop-filter backdrop-blur-md">
+            <h2 class="text-2xl md:text-3xl font-bold font-noto-sans-sc text-black text-opacity-80 relative z-10">
+                <i class="fas fa-magic list-icon mr-2"></i>
+                <span class="highlight-text">迷你练习</span>路线
+            </h2>
+            <div class="absolute inset-0 pattern-dots rounded-full"></div>
+        </div>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto mt-6 font-noto-sans-sc text-black text-opacity-70">
+            每天只需<span class="font-bold highlight-text">10-15分钟</span>，坚持下来就是小小的魔法师！
+        </p>
+        <div class="flex flex-col md:flex-row justify-center items-stretch space-y-6 md:space-y-0 md:space-x-8 mt-12">
+            
+            <div class="flex-1 card p-8 card-darker-alt-bg flex flex-col justify-center items-center text-center">
+                <div class="glow-circle w-24 h-24 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <span class="text-6xl font-bold font-noto-sans-sc highlight-stat">01-06<span class="text-2xl text-black text-opacity-80">min</span></span>
+                <p class="mt-4 text-black text-opacity-80 font-noto-sans-sc">
+                    <b>看全图，做小卡片</b><br>
+                    快速浏览，圈出今天的三个核心词，并为它们制作1-2张迷你信息卡。
+                </p>
+            </div>
+
+            <div class="flex-1 card p-8 card-darker-alt-bg flex flex-col justify-center items-center text-center">
+                <div class="glow-circle w-24 h-24 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <span class="text-6xl font-bold font-noto-sans-sc highlight-stat">07-10<span class="text-2xl text-black text-opacity-80">min</span></span>
+                <p class="mt-4 text-black text-opacity-80 font-noto-sans-sc">
+                    <b>情感记忆</b><br>
+                    用图片、故事或动作给其中一个知识点加上“情绪记忆”或“生活例子”。
+                </p>
+            </div>
+
+            <div class="flex-1 card p-8 card-darker-alt-bg flex flex-col justify-center items-center text-center">
+                <div class="glow-circle w-24 h-24 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                <span class="text-6xl font-bold font-noto-sans-sc highlight-stat">11-15<span class="text-2xl text-black text-opacity-80">min</span></span>
+                <p class="mt-4 text-black text-opacity-80 font-noto-sans-sc">
+                    <b>分级复习</b><br>
+                    按照星级复习旧卡片：先是三颗星的，再是两颗星，最后是一颗星。
+                </p>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="my-24">
+        <div class="card p-8 md:p-12 card-alt-bg text-center">
+            <h2 class="text-3xl md:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                <span class="highlight-text">魔法口令</span>
+                <span class="block text-xl md:text-2xl font-light text-black text-opacity-70">Magic Spell</span>
+            </h2>
+            <ul class="list-none p-0 text-xl md:text-2xl font-noto-sans-sc text-black text-opacity-80 space-y-4 max-w-4xl mx-auto">
+                <li><i class="fas fa-hand-sparkles list-icon"></i> 我先懂，再记。<span class="text-sm font-extralight text-black text-opacity-50 block">I understand first, then remember.</span></li>
+                <li><i class="fas fa-puzzle-piece list-icon"></i> 我把大问题拆成小块。<span class="text-sm font-extralight text-black text-opacity-50 block">I break down big problems into small pieces.</span></li>
+                <li><i class="fas fa-paint-brush list-icon"></i> 我用图、故事、动作帮大脑记住它。<span class="text-sm font-extralight text-black text-opacity-50 block">I use pictures, stories, and actions to help my brain remember.</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

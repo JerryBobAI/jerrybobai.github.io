@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>写作的本质：主动认知与思维壁垒</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16 antialiased">
+
+    <div class="container mx-auto max-w-7xl text-center md:text-left mb-20 mt-8">
+        <h1 class="ultra-large-text font-noto-sans-sc text-center md:text-left leading-none mb-4">
+            <span class="highlight-text">写作的本质</span>
+        </h1>
+        <h2 class="text-3xl md:text-5xl font-bold font-noto-sans-sc text-center md:text-left mb-4">
+            The Essence of Writing
+        </h2>
+        <p class="text-xl md:text-2xl leading-relaxed max-w-4xl mx-auto md:mx-0">
+            写作，是用 <b class="highlight-text">主动认知</b> 铸就思维壁垒，在AI无法触及的高地，守护人类的主权与尊严。
+        </p>
+    </div>
+
+    <div class="container mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+
+        <div class="card p-8 lg:p-12 tech-glow">
+            <div class="content-z">
+                <div class="text-center mb-6">
+                    <div class="large-stat-text font-noto-sans-sc highlight-stat mb-2">1</div>
+                    <p class="text-xl font-bold font-noto-sans-sc">主动认知</p>
+                    <p class="text-lg text-gray-500">Active Cognition</p>
+                </div>
+                <p class="text-base leading-relaxed">
+                    写作不是简单的信息搬运，而是一场主动的认知构建。它是思想的炼金术，让你成为认知的主人，而非信息的奴隶。每一个字词的选择，都是对世界的再创造。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-8 lg:p-12 tech-glow">
+            <div class="content-z">
+                <div class="text-center mb-6">
+                    <div class="large-stat-text font-noto-sans-sc highlight-stat mb-2">2</div>
+                    <p class="text-xl font-bold font-noto-sans-sc">结构为骨</p>
+                    <p class="text-lg text-gray-500">Logical Structure</p>
+                </div>
+                <p class="text-base leading-relaxed">
+                    好的写作如同有骨有肉的建筑，结构是其骨架与逻辑轨道。清晰的结构让表达行云流水，引领读者在复杂信息中找到清晰路径，避免迷失在信息的汪洋大海。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-8 lg:p-12 tech-glow">
+            <div class="content-z">
+                <div class="text-center mb-6">
+                    <div class="large-stat-text font-noto-sans-sc highlight-stat mb-2">3</div>
+                    <p class="text-xl font-bold font-noto-sans-sc">高效压缩</p>
+                    <p class="text-lg text-gray-500">Cognitive Compression</p>
+                </div>
+                <p class="text-base leading-relaxed">
+                    在信息过载时代，冗余是最大敌人。写作是对认知的高效压缩，提炼出最具穿透力的表达。每一个词语都不可替代，在注意力稀缺的时代，赢得读者的目光与思考。
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container mx-auto max-w-7xl mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div class="card card-darker-alt-bg p-8 lg:p-12">
+            <div class="content-z">
+                <p class="text-sm uppercase tracking-wider mb-2 font-semibold text-gray-500">AI Role</p>
+                <h3 class="text-3xl lg:text-4xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                    AI是外脑，但<span class="highlight-text">没有主权</span>
+                </h3>
+                <p class="text-lg leading-relaxed mb-4">
+                    AI可以高效地搜集、整理和加工信息。它的优势在于速度和规模，是强大的助手，但永远无法替代人类在核心环节的决策。
+                </p>
+                <ul class="text-base list-disc list-inside space-y-2 text-gray-700">
+                    <li><i class="fas fa-robot list-icon"></i> 擅长数据处理与信息整合</li>
+                    <li><i class="fas fa-tools list-icon"></i> 无法进行价值判断与情感共鸣</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card p-8 lg:p-12">
+            <div class="content-z">
+                <p class="text-sm uppercase tracking-wider mb-2 font-semibold text-gray-500">Human Role</p>
+                <h3 class="text-3xl lg:text-4xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                    人类主权：<span class="highlight-text">三大核心竞争力</span>
+                </h3>
+                <p class="text-lg leading-relaxed mb-4">
+                    写作中，人类的核心价值在于对创作的主导权。这三点，正是人与AI的根本分野。
+                </p>
+                <ul class="text-base list-disc list-inside space-y-2 text-gray-700">
+                    <li><i class="fas fa-crosshairs list-icon"></i> 目标设定：决定“去哪里”</li>
+                    <li><i class="fas fa-sitemap list-icon"></i> 结构搭建：规划“如何抵达”</li>
+                    <li><i class="fas fa-palette list-icon"></i> 品味塑造：赋予作品灵魂</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto max-w-7xl mt-20">
+        <div class="card p-8 lg:p-12 text-center tech-glow">
+            <div class="content-z">
+                <h3 class="text-3xl md:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                    思想的护城河
+                </h3>
+                <p class="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto">
+                    写作，不仅仅是为了表达，更是为了理解。每一次写作都是一次自我对话，不断打磨思维，提升认知深度，最终在生存博弈中，<b class="highlight-text">构筑起属于自己的思维壁垒。</b>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

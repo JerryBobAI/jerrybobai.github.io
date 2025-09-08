@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业增长的极限 - Max MRR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Montserrat:wght@700&display=swap');
+
+        body {
+           background-color: #F8F4E6;
+           font-family: 'Noto Sans SC', sans-serif;
+           overflow-x: hidden;
+           color: #121212;
+        }
+
+        .container-fluid {
+           width: 100%;
+           padding-right: 15px;
+           padding-left: 15px;
+           margin-right: auto;
+           margin-left: auto;
+        }
+
+        @media (min-width: 1920px) {
+           .container-fluid {
+              max-width: 1700px;
+           }
+        }
+
+        .card {
+           border-radius: 2rem;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+           transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+           transform: translateY(-10px);
+           box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .bg-gradient-1 {
+           background-image: linear-gradient(135deg, #FFD2A8 0%, #FFB6C1 100%);
+        }
+
+        .bg-gradient-2 {
+           background-image: linear-gradient(135deg, #B2EBF2 0%, #C8E6C9 100%);
+        }
+
+        .bg-gradient-3 {
+           background-image: linear-gradient(135deg, #C5CAE9 0%, #E1BEE7 100%);
+        }
+
+        .bg-gradient-4 {
+           background-image: linear-gradient(135deg, #FFE0B2 0%, #FFECB3 100%);
+        }
+
+        .text-huge {
+           font-family: 'Montserrat', sans-serif;
+           font-size: 8rem;
+           line-height: 0.9;
+        }
+        @media (min-width: 768px) {
+           .text-huge {
+              font-size: 12rem;
+           }
+        }
+        @media (min-width: 1024px) {
+           .text-huge {
+              font-size: 16rem;
+           }
+        }
+        .text-outline {
+           color: transparent;
+           -webkit-text-stroke: 2px #333;
+        }
+
+        .label {
+           background-color: #FFFFFF;
+           border: 1px solid #d1d5db;
+        }
+
+        .line-art {
+           stroke: #121212;
+           stroke-width: 2px;
+           fill: none;
+           stroke-linecap: round;
+           stroke-linejoin: round;
+        }
+
+        .highlight-line {
+           background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+        }
+    </style>
+</head>
+<body class="bg-[#F8F4E6] text-[#121212]">
+
+    <div class="container-fluid mx-auto px-4 py-16">
+
+        <div class="flex flex-col items-start lg:items-center text-left lg:text-center mb-24">
+            <div class="relative w-full overflow-hidden">
+                <span class="absolute top-0 left-0 text-huge opacity-5 text-[#88A0A8] font-black pointer-events-none -translate-x-1/4 -translate-y-1/3 z-0 lg:text-center lg:left-1/2 lg:-translate-x-1/2">Insight</span>
+            </div>
+            <h1 class="text-5xl lg:text-7xl font-bold leading-tight z-10 relative">
+                <span class="text-[#053F5C] font-extrabold">你的公司</span>
+                <span class="text-[#88A0A8]">会</span>
+                <br class="lg:hidden">
+                <span class="text-[#053F5C] font-extrabold">在某处</span>
+                <span class="text-[#88A0A8]">触顶。</span>
+            </h1>
+            <p class="mt-6 text-xl lg:text-2xl text-gray-600 font-light max-w-2xl text-left lg:text-center">
+                企业增长的极限，早已写在账本里。
+            </p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between mb-24">
+            <div class="w-full lg:w-1/2 p-8">
+                <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-4 text-[#053F5C]">
+                    Max MRR
+                </h2>
+                <h3 class="text-2xl lg:text-3xl font-bold text-[#FF6347] mb-6">增长的“天花板”</h3>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    这项指标，用来预测企业因客户流失与新收入增长而注定遇到的<b class="text-[#FF6347]">营收天花板</b>。它是一把切开自我麻醉的利刃，让你直观地看到未来会撞上的极限。
+                </p>
+            </div>
+            <div class="w-full lg:w-1/2 p-8 flex items-center justify-center relative">
+                <div class="absolute w-full h-full bg-[#E1BEE7] rounded-full opacity-50 blur-3xl z-0"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-huge text-black font-bold -translate-y-1/4 z-10">
+                        MAX
+                    </span>
+                    <span class="text-huge text-outline font-bold -mt-24 z-0">
+                        MRR
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between mb-24 lg:space-x-16">
+            <div class="w-full lg:w-1/2 bg-[#C8E6C9] p-8 lg:p-12 rounded-3xl shadow-lg relative">
+                <div class="text-center mb-6">
+                    <span class="text-huge text-[#4A6E55] font-extrabold">
+                        N / C
+                    </span>
+                </div>
+                <div class="text-left">
+                    <p class="text-lg lg:text-xl font-medium mb-2 text-[#2C3E50]">
+                        <span class="text-3xl lg:text-4xl font-extrabold text-[#4A6E55]">N</span> = 每月新增 MRR
+                    </p>
+                    <p class="text-lg lg:text-xl font-medium mb-6 text-[#2C3E50]">
+                        <span class="text-3xl lg:text-4xl font-extrabold text-[#4A6E55]">C</span> = 月流失率
+                    </p>
+                    <p class="text-2xl font-bold text-[#2C3E50]">
+                        最大 MRR = 每月新增 MRR / 月流失率
+                    </p>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 mt-8 lg:mt-0 p-8">
+                <h3 class="text-2xl lg:text-3xl font-bold mb-4 text-[#FFB6C1]">一个冷酷的真相。</h3>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    假设每月新增 <b class="text-[#FFB6C1]">1000美元</b>，流失率 <b class="text-[#FFB6C1]">5%</b>，那么你的最大 MRR 就是 <b class="text-[#FF6347] font-bold">2万美元</b>。
+                    无论你怎么努力，最终都只能在这个天花板下徘徊。
+                </p>
+                <div class="flex items-center justify-start mt-8">
+                    <div class="flex-shrink-0 w-20 h-20 rounded-full bg-[#C8E6C9] flex items-center justify-center mr-4">
+                        <i class="fas fa-chart-line text-3xl text-[#4A6E55]"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm uppercase tracking-wide text-gray-500">The Hard Truth</p>
+                        <p class="text-xl font-bold text-[#2C3E50]">增长的尽头，早已注定。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between mb-24 lg:space-x-16">
+            <div class="w-full lg:w-1/2 p-8">
+                <h3 class="text-2xl lg:text-3xl font-bold mb-4 text-[#88A0A8]">不止于此。</h3>
+                <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-4 text-[#053F5C]">
+                    增长，为何总在<br>
+                    <span class="text-[#88A0A8]">半途而废？</span>
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    创业初期增长很快，但很快就慢下来。不是市场小，而是客户一多，<b class="text-[#88A0A8]">流失的力量成倍放大</b>，新增再多也填不满流失的黑洞。
+                </p>
+            </div>
+            <div class="w-full lg:w-1/2 mt-8 lg:mt-0 p-8 bg-[#FFD2A8] rounded-3xl shadow-lg relative flex items-center justify-center">
+                <div class="text-center z-10 relative">
+                    <span class="text-huge text-[#FF6347] font-extrabold">
+                        +
+                    </span>
+                    <span class="text-huge text-outline font-bold -mt-24">
+                        -
+                    </span>
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center z-0">
+                    <svg class="w-full h-full" viewBox="0 0 400 300">
+                        <path d="M 50 250 Q 150 50 250 150 T 350 50" class="line-art stroke-[#FFB6C1] stroke-2" />
+                        <circle cx="50" cy="250" r="10" class="fill-[#FFB6C1]" />
+                        <circle cx="350" cy="50" r="10" class="fill-[#FFB6C1]" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between mb-24 lg:space-x-16">
+            <div class="w-full lg:w-1/2 p-8">
+                <h3 class="text-2xl lg:text-3xl font-bold mb-4 text-[#FFB6C1]">Buffer Case Study</h3>
+                <h2 class="text-3xl lg:text-5xl font-bold leading-tight mb-4 text-[#053F5C]">
+                    象背曲线
+                </h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    Buffer 前七年一路高歌猛进，直到营收在疫情前触顶，经历波动后才再度回升。表面看是波动，实际却是<b class="text-[#FF6347]">“象背曲线”</b>——增长、停滞、下滑、再反弹。
+                </p>
+            </div>
+            <div class="w-full lg:w-1/2 mt-8 lg:mt-0 p-8 bg-[#C5CAE9] rounded-3xl shadow-lg relative flex items-center justify-center">
+                <div class="w-full h-64">
+                    <div class="w-full h-full flex items-end relative">
+                        <div class="absolute bottom-0 left-0 w-full h-2 bg-gray-300"></div>
+                        <div class="absolute bottom-0 left-0 flex items-end">
+                            <div class="w-10 h-10 bg-[#E1BEE7] rounded-full absolute -bottom-2 -left-2 animate-pulse"></div>
+                            <div class="w-20 h-40 bg-[#9FA8DA] rounded-t-full mb-2"></div>
+                            <div class="w-20 h-56 bg-[#7986CB] rounded-t-full mb-2"></div>
+                            <div class="w-20 h-48 bg-[#9FA8DA] rounded-t-full mb-2"></div>
+                            <div class="w-20 h-32 bg-[#C5CAE9] rounded-t-full mb-2"></div>
+                            <div class="w-20 h-48 bg-[#9FA8DA] rounded-t-full mb-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between mb-24 lg:space-x-16">
+            <div class="w-full lg:w-1/2 p-8 bg-[#FFE0B2] rounded-3xl shadow-lg relative">
+                <div class="relative w-full h-auto">
+                    <div class="absolute w-1/2 h-full bg-[#FFECB3] blur-3xl rounded-full opacity-50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"></div>
+                    <div class="text-center relative z-10">
+                        <span class="text-huge text-[#FF6347] font-extrabold">
+                            -50%
+                        </span>
+                        <p class="text-3xl lg:text-4xl font-bold text-[#8B4513] mt-4">
+                            流失率每降一半
+                        </p>
+                        <p class="text-3xl lg:text-4xl font-bold text-[#8B4513] mt-2">
+                            Max MRR 翻一倍
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 mt-8 lg:mt-0 p-8">
+                <h3 class="text-2xl lg:text-3xl font-bold mb-4 text-[#8B4513]">真正的增长杠杆。</h3>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    真正的增长，不在于拼命<b class="text-[#8B4513] font-bold">拉新</b>，而在于死磕<b class="text-[#8B4513] font-bold">留存</b>。Max MRR是领先指标，它能提前预警好消息和坏消息。
+                </p>
+                <div class="flex flex-col mt-8">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-sync-alt text-2xl text-[#8B4513] mr-4"></i>
+                        <p class="text-xl font-bold text-[#8B4513]">
+                            NRR > 100%
+                        </p>
+                        <p class="ml-auto text-sm text-gray-500">
+                            (净收入留存)
+                        </p>
+                    </div>
+                    <div class="text-sm text-gray-700 leading-relaxed mb-4">
+                        如果公司NRR超过100%，公司就能自我增长，天花板消失。
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-tachometer-alt text-2xl text-[#8B4513] mr-4"></i>
+                        <p class="text-xl font-bold text-[#8B4513]">
+                            Quick Ratio
+                        </p>
+                        <p class="ml-auto text-sm text-gray-500">
+                            (快比)
+                        </p>
+                    </div>
+                    <div class="text-sm text-gray-700 leading-relaxed">
+                        高成长公司应在3-4，成熟公司1.5-2，低于1公司收缩。但它无法预测增长拐点。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center justify-between mb-24 lg:space-x-16">
+            <div class="w-full p-8 rounded-3xl bg-white shadow-lg relative">
+                <div class="text-center">
+                    <div class="relative w-full overflow-hidden mb-6">
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 text-huge opacity-5 text-[#88A0A8] font-black pointer-events-none -translate-y-1/2 z-0">Path</span>
+                    </div>
+                    <p class="text-2xl lg:text-3xl font-bold text-[#053F5C] mb-4 relative z-10">
+                        突破增长极限，
+                    </p>
+                    <p class="text-4xl lg:text-5xl font-extrabold text-[#FF6347] mb-8 relative z-10">
+                        <span class="text-outline">先</span>
+                        <span class="text-[#FF6347]">降流失率</span>，
+                        <span class="text-outline">再</span>
+                        <span class="text-[#FF6347]">提NRR</span>。
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed relative z-10">
+                        没有哪个指标能解释一切，但Max MRR简单、直观、可预测，适用于所有阶段的企业。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
