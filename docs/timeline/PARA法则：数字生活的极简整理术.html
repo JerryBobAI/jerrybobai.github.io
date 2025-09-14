@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARA法则：数字生活的极简整理术</title>
+    <!-- Google Fonts: Open Sans for general, Noto Sans SC for Chinese -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 - 移除了 text-shadow */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+             background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+    <div class="container mx-auto px-4 py-12 max-w-screen-xl">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-24">
+            <h1 class="ultra-large-text font-noto-sans-sc text-center mb-4">
+                <span class="block highlight-text">PARA法则</span>
+                <span class="block text-4xl lg:text-6xl font-bold mt-4">数字生活的极简整理术</span>
+            </h1>
+            <p class="text-xl lg:text-2xl text-gray-700 max-w-3xl mx-auto">
+                <span class="font-noto-sans-sc font-medium">告别信息过载，掌控你的数字世界。</span>
+                <br>
+                <span class="text-base opacity-75">Master Your Digital Life, Conquer Information Overload.</span>
+            </p>
+        </section>
+
+        <!-- Introduction Section -->
+        <section class="mb-24">
+            <div class="card tech-glow p-8 lg:p-12 max-w-5xl mx-auto content-z">
+                <h2 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-6 text-center">
+                    <span class="highlight-text">极简</span>，却能掌控一切
+                </h2>
+                <p class="text-lg lg:text-xl mb-6 text-gray-700">
+                    想象一下，世上有这样一套整理系统——无论你手头有多少文件、笔记、资料、计划，统统都能轻松归类、随取随用。它无需复杂设置，维护也毫不费力。越简单，越能长久。它既能灵活应对人生的不同阶段，又能覆盖你所有的信息库——无论是电脑文件夹、云盘，还是笔记软件。最重要的是，这套系统能帮你更快实现目标，助你事业生活步步高升。
+                </p>
+                <p class="text-lg lg:text-xl font-bold highlight-text text-center">
+                    这套系统，叫做 <span class="text-3xl lg:text-4xl font-black">PARA</span>。
+                </p>
+                <p class="text-base text-gray-600 text-center mt-2">
+                    A simple, comprehensive, and flexible system for all your information.
+                </p>
+            </div>
+        </section>
+
+        <!-- Four Categories Section -->
+        <section class="mb-24">
+            <h2 class="ultra-large-text font-noto-sans-sc text-center mb-12">
+                <span class="highlight-text">四大类</span>
+                <span class="block text-4xl lg:text-6xl font-bold mt-4">囊括人生全部信息</span>
+            </h2>
+            <p class="text-lg lg:text-xl text-center mb-12 max-w-4xl mx-auto text-gray-700">
+                PARA的核心，是只用四个顶层文件夹，就能归纳你生活的所有信息。复杂的人生，其实可极简归类。
+                <span class="block text-base opacity-75 mt-2">Four core categories to organize your entire life.</span>
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Project Card -->
+                <div class="card content-z p-6 flex flex-col items-center text-center">
+                    <div class="list-icon text-6xl mb-4"><i class="fas fa-rocket"></i></div>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-2 highlight-text">项目</h3>
+                    <p class="text-sm text-gray-600 mb-4">Projects</p>
+                    <p class="text-base text-gray-700">你正在推进的短期目标，有明确的终点。</p>
+                    <ul class="text-sm text-gray-600 mt-4 text-left w-full">
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>网页设计</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>购置电脑</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>撰写报告</li>
+                    </ul>
+                </div>
+
+                <!-- Areas Card -->
+                <div class="card content-z p-6 flex flex-col items-center text-center card-alt-bg">
+                    <div class="list-icon text-6xl mb-4"><i class="fas fa-globe-americas"></i></div>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-2 highlight-text">领域</h3>
+                    <p class="text-sm text-gray-600 mb-4">Areas of Responsibility</p>
+                    <p class="text-base text-gray-700">你需持续关注的责任领域，无明确终点。</p>
+                    <ul class="text-sm text-gray-600 mt-4 text-left w-full">
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>健康与健身</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>财务管理</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>家庭生活</li>
+                    </ul>
+                </div>
+
+                <!-- Resources Card -->
+                <div class="card content-z p-6 flex flex-col items-center text-center">
+                    <div class="list-icon text-6xl mb-4"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-2 highlight-text">资源</h3>
+                    <p class="text-sm text-gray-600 mb-4">Resources</p>
+                    <p class="text-base text-gray-700">你正在学习、感兴趣的主题或知识库。</p>
+                    <ul class="text-sm text-gray-600 mt-4 text-left w-full">
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>平面设计</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>效率提升</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>咖啡文化</li>
+                    </ul>
+                </div>
+
+                <!-- Archives Card -->
+                <div class="card content-z p-6 flex flex-col items-center text-center card-alt-bg">
+                    <div class="list-icon text-6xl mb-4"><i class="fas fa-archive"></i></div>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-2 highlight-text">档案</h3>
+                    <p class="text-sm text-gray-600 mb-4">Archives</p>
+                    <p class="text-base text-gray-700">已不活跃但需保留的信息。</p>
+                    <ul class="text-sm text-gray-600 mt-4 text-left w-full">
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>已完成项目</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>不再关注领域</li>
+                        <li class="mb-1"><i class="list-icon fas fa-check-circle text-sm"></i>历史资料</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action-Oriented Principle Section -->
+        <section class="mb-24">
+            <div class="card tech-glow p-8 lg:p-12 max-w-5xl mx-auto content-z card-darker-alt-bg">
+                <h2 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-6 text-center">
+                    <span class="highlight-text">行动导向</span>的整理原则
+                </h2>
+                <p class="text-lg lg:text-xl mb-6 text-gray-700">
+                    我们习惯按“学科”归类信息——数学、历史、化学……成年后，这种方式却不再适用。职场没有考试、没有老师，只有你想达成的目标。
+                </p>
+                <div class="flex flex-col lg:flex-row items-center justify-around my-8">
+                    <div class="text-center mb-8 lg:mb-0">
+                        <p class="large-stat-text font-noto-sans-sc highlight-text">学科导向</p>
+                        <p class="text-lg text-gray-600">Discipline-Oriented</p>
+                        <p class="text-base text-gray-500 mt-2">（传统，低效）</p>
+                    </div>
+                    <div class="text-6xl text-gray-400 mb-8 lg:mb-0 lg:mx-12">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="text-center">
+                        <p class="large-stat-text font-noto-sans-sc highlight-text">行动导向</p>
+                        <p class="text-lg text-gray-600">Action-Oriented</p>
+                        <p class="text-base text-gray-500 mt-2">（PARA核心，高效）</p>
+                    </div>
+                </div>
+                <p class="text-lg lg:text-xl text-gray-700">
+                    此时，按“行动”而非“学科”整理信息才高效。比如做网页设计时，相关资料都集中在一起，随时可用。只要一开始就按项目归类，日后取用就一目了然。
+                </p>
+            </div>
+        </section>
+
+        <!-- Power of Projects Section -->
+        <section class="mb-24">
+            <h2 class="ultra-large-text font-noto-sans-sc text-center mb-12">
+                <span class="highlight-text">项目归类</span>的威力
+            </h2>
+            <p class="text-lg lg:text-xl text-center mb-12 max-w-4xl mx-auto text-gray-700">
+                许多人将“责任领域”误认为“项目”，导致目标模糊，难以推进。PARA法则教你如何将广阔的责任拆解为具体可行的项目。
+                <span class="block text-base opacity-75 mt-2">Transform broad responsibilities into actionable projects.</span>
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="card content-z p-8">
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-4 highlight-text">
+                        <i class="list-icon fas fa-exclamation-triangle"></i> 常见误区：领域即项目
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-4">
+                        “战略规划”、“假期安排”、“招聘”……这些都是没有明确终点的责任领域，容易让人感到无从下手，缺乏成就感。
+                    </p>
+                    <div class="flex items-center justify-center bg-red-50 bg-opacity-70 p-4 rounded-lg">
+                        <span class="text-5xl text-red-500 mr-4"><i class="fas fa-times-circle"></i></span>
+                        <span class="text-2xl font-bold font-noto-sans-sc text-red-700">模糊目标</span>
+                    </div>
+                </div>
+                <div class="card content-z p-8 card-alt-bg">
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-4 highlight-text">
+                        <i class="list-icon fas fa-check-circle"></i> PARA解法：拆解为项目
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-4">
+                        将责任领域拆分成具体项目，如将“招聘”细化为“春季招聘”、“技术岗位招聘”、“入职流程优化”。
+                    </p>
+                    <div class="flex items-center justify-center bg-green-50 bg-opacity-70 p-4 rounded-lg">
+                        <span class="text-5xl text-green-500 mr-4"><i class="fas fa-check-circle"></i></span>
+                        <span class="text-2xl font-bold font-noto-sans-sc text-green-700">清晰进展</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-lg lg:text-xl text-center mt-12 max-w-4xl mx-auto text-gray-700">
+                这样每天都能看到进展，收获阶段性胜利，保持动力。无论责任多广，都能拆解成项目，步步为营。
+            </p>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section class="mb-12">
+            <div class="card tech-glow p-8 lg:p-12 max-w-5xl mx-auto content-z">
+                <h2 class="ultra-large-text font-noto-sans-sc text-center mb-6">
+                    <span class="highlight-text">掌控</span>你的生活
+                </h2>
+                <p class="text-lg lg:text-xl text-gray-700 mb-6 text-center">
+                    PARA法则，不只是文件夹，更是人生结构的映射。它让你聚焦承诺、变革、目标。
+                </p>
+                <div class="flex flex-wrap justify-center gap-6 my-8">
+                    <div class="flex flex-col items-center text-center">
+                        <div class="list-icon text-5xl mb-2"><i class="fas fa-bullseye"></i></div>
+                        <p class="text-xl font-bold font-noto-sans-sc highlight-text">聚焦目标</p>
+                        <p class="text-sm text-gray-600">Focus on Goals</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="list-icon text-5xl mb-2"><i class="fas fa-cogs"></i></div>
+                        <p class="text-xl font-bold font-noto-sans-sc highlight-text">驱动行动</p>
+                        <p class="text-sm text-gray-600">Drive Action</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <div class="list-icon text-5xl mb-2"><i class="fas fa-seedling"></i></div>
+                        <p class="text-xl font-bold font-noto-sans-sc highlight-text">持续成长</p>
+                        <p class="text-sm text-gray-600">Sustain Growth</p>
+                    </div>
+                </div>
+                <p class="text-2xl lg:text-3xl font-bold font-noto-sans-sc highlight-text text-center mt-8">
+                    极简整理，拒绝拖延，助你迈向理想生活。
+                </p>
+                <p class="text-base text-gray-600 text-center mt-4">
+                    Minimalist organization, eliminate procrastination, achieve your ideal life.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer (Optional, simple) -->
+        <footer class="text-center text-gray-500 text-sm mt-24 pb-8">
+            <p>&copy; 2023 PARA法则. All rights reserved.</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
