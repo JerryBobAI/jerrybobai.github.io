@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛人的三个特性</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16">
+    <main class="max-w-7xl mx-auto">
+        <div class="text-center mb-16 mt-8">
+            <h1 class="ultra-large-text font-noto-sans-sc highlight-text animate-fade-in-up">
+                牛人<span class="text-3xl md:text-5xl font-normal text-gray-700">The Masters</span>
+            </h1>
+            <h2 class="text-xl md:text-2xl mt-4 font-noto-sans-sc font-bold">
+                超凡脱俗的<span class="highlight-text">三个特性</span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="card p-8 md:p-10 tech-glow">
+                <div class="content-z flex flex-col h-full">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl md:text-4xl highlight-stat font-bold font-noto-sans-sc">❶</span>
+                        <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold ml-4">目标超清晰</h3>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-600 mb-6">
+                        Goal-Oriented<br>
+                        <span class="text-sm">他们深知自己要往哪里去。</span>
+                    </p>
+                    <div class="flex-grow flex items-center justify-center">
+                        <div class="w-full">
+                            <canvas id="goalChart"></canvas>
+                        </div>
+                    </div>
+                    <ul class="text-base mt-auto space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-bullseye list-icon mt-1"></i>
+                            <span>方向感极强，不随波逐流</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-pin list-icon mt-1"></i>
+                            <span>路径可量化，可追踪</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb list-icon mt-1"></i>
+                            <span>清晰的愿景，内在驱动力</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-8 md:p-10 card-alt-bg tech-glow">
+                <div class="content-z flex flex-col h-full">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl md:text-4xl highlight-stat font-bold font-noto-sans-sc">❷</span>
+                        <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold ml-4">执行力超快</h3>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-600 mb-6">
+                        Rapid Execution<br>
+                        <span class="text-sm">他们相信行动是检验真理的唯一标准。</span>
+                    </p>
+                    <div class="flex-grow flex items-center justify-center">
+                        <div class="w-full">
+                            <canvas id="executionChart"></canvas>
+                        </div>
+                    </div>
+                    <ul class="text-base mt-auto space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-rocket list-icon mt-1"></i>
+                            <span>从不拖延，立即开始</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bolt list-icon mt-1"></i>
+                            <span>高效迭代，小步快跑</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle list-icon mt-1"></i>
+                            <span>结果导向，绝不空谈</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-8 md:p-10 card-darker-alt-bg tech-glow">
+                <div class="content-z flex flex-col h-full">
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl md:text-4xl highlight-stat font-bold font-noto-sans-sc">❸</span>
+                        <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold ml-4">学习力超强</h3>
+                    </div>
+                    <p class="text-lg md:text-xl text-gray-600 mb-6">
+                        Hyper-Learning<br>
+                        <span class="text-sm">他们将每一次经历都转化为宝贵的经验。</span>
+                    </p>
+                    <div class="flex-grow flex items-center justify-center">
+                        <div class="w-full">
+                            <canvas id="learningChart"></canvas>
+                        </div>
+                    </div>
+                    <ul class="text-base mt-auto space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-brain list-icon mt-1"></i>
+                            <span>快速吸收新知，融会贯通</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-book-open list-icon mt-1"></i>
+                            <span>主动反思，从失败中成长</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-sync-alt list-icon mt-1"></i>
+                            <span>持续更新认知，与时俱进</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-16 mb-8">
+            <p class="text-xl md:text-2xl italic text-gray-600">
+                “伟大的成就，源于平凡的积累与不凡的坚持。”
+            </p>
+            <p class="mt-4 text-base text-gray-500">- <span class="font-bold">吉卜力工作室</span></p>
+        </div>
+    </main>
+
+    <script>
+        // Chart.js Configuration
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    enabled: false,
+                }
+            },
+            scales: {
+                x: { display: false },
+                y: { display: false }
+            },
+            elements: {
+                line: {
+                    tension: 0.4
+                }
+            }
+        };
+
+        const goalCtx = document.getElementById('goalChart').getContext('2d');
+        const goalChart = new Chart(goalCtx, {
+            type: 'line',
+            data: {
+                labels: ['Vision', 'Plan', 'Action', 'Result'],
+                datasets: [{
+                    label: 'Clarity',
+                    data: [20, 70, 90, 100],
+                    borderColor: '#FFB300',
+                    backgroundColor: 'rgba(255, 179, 0, 0.2)',
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#FFB300',
+                    pointBorderColor: 'white',
+                    pointBorderWidth: 2,
+                }]
+            },
+            options: { ...commonOptions }
+        });
+
+        const executionCtx = document.getElementById('executionChart').getContext('2d');
+        const executionChart = new Chart(executionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Idea', 'Start', 'Iterate', 'Launch'],
+                datasets: [{
+                    label: 'Speed',
+                    data: [100, 95, 80, 70],
+                    backgroundColor: '#A8D8EA',
+                    borderColor: '#71A9BF',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    x: { display: false },
+                    y: {
+                        display: false,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        const learningCtx = document.getElementById('learningChart').getContext('2d');
+        const learningChart = new Chart(learningCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['吸收', '反思', '实践', '应用'],
+                datasets: [{
+                    data: [85, 90, 80, 95],
+                    backgroundColor: [
+                        'rgba(255, 179, 0, 0.4)',
+                        'rgba(240, 230, 140, 0.4)',
+                        'rgba(175, 215, 230, 0.4)',
+                        'rgba(180, 230, 200, 0.4)'
+                    ],
+                    borderColor: [
+                        '#FFB300',
+                        '#E6C47A',
+                        '#A8D8EA',
+                        '#B4E6C8'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    r: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

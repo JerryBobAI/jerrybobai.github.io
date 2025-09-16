@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>和自己的关系</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                          linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                          linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                          linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 - 移除了 text-shadow */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1440px;
+            }
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="col-span-1 lg:col-span-2">
+            <div class="h-full flex flex-col justify-end">
+                <h1 class="font-noto-sans-sc ultra-large-text leading-tight highlight-text text-shadow-sm">
+                    世界的本质
+                </h1>
+                <p class="font-noto-sans-sc text-xl md:text-2xl mt-4 font-bold">
+                    The Essence of Connections
+                </p>
+                <p class="mt-4 text-lg md:text-xl font-medium max-w-2xl">
+                    世间一切关系的本质，终究是我和自己的关系。
+                </p>
+            </div>
+        </div>
+
+        <div class="col-span-1 lg:col-span-1 row-span-2">
+            <div class="card h-full flex flex-col justify-between p-8 tech-glow">
+                <div class="content-z">
+                    <p class="text-3xl font-noto-sans-sc font-bold leading-relaxed">
+                        我与自己和解，
+                        <br>
+                        才能与世界温柔相处。
+                    </p>
+                    <p class="text-xl italic mt-6 opacity-75">
+                        Embrace yourself, embrace the world.
+                    </p>
+                    <i class="fa-solid fa-cloud-moon fa-beat-fade absolute bottom-8 right-8 text-5xl opacity-20" style="--fa-beat-fade-opacity: 0.67; --fa-beat-fade-scale: 1.075;"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 lg:col-span-1">
+            <div class="card h-full p-8 flex flex-col justify-between">
+                <div class="content-z">
+                    <p class="text-3xl font-noto-sans-sc font-bold mb-4">
+                        对自己满意
+                    </p>
+                    <p class="text-lg opacity-80">
+                        就会对别人满意。
+                    </p>
+                    <div class="mt-6">
+                        <i class="fa-solid fa-heart list-icon"></i><span class="font-noto-sans-sc font-medium">Self-Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-1 lg:col-span-1">
+            <div class="card h-full p-8 flex flex-col justify-between">
+                <div class="content-z">
+                    <p class="text-3xl font-noto-sans-sc font-bold mb-4">
+                        对自己苛刻
+                    </p>
+                    <p class="text-lg opacity-80">
+                        就会对别人苛刻。
+                    </p>
+                    <div class="mt-6">
+                        <i class="fa-solid fa-circle-xmark list-icon"></i><span class="font-noto-sans-sc font-medium">Self-Criticism</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-1 lg:col-span-1">
+            <div class="card h-full p-8 flex flex-col justify-between">
+                <div class="content-z">
+                    <p class="text-3xl font-noto-sans-sc font-bold mb-4">
+                        信任自己
+                    </p>
+                    <p class="text-lg opacity-80">
+                        才会尊重别人的决定。
+                    </p>
+                    <div class="mt-6">
+                        <i class="fa-solid fa-hands-holding-child list-icon"></i><span class="font-noto-sans-sc font-medium">Trust & Respect</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-1 lg:col-span-1">
+            <div class="card h-full p-8 flex flex-col justify-between">
+                <div class="content-z">
+                    <p class="text-3xl font-noto-sans-sc font-bold mb-4">
+                        接纳不完美
+                    </p>
+                    <p class="text-lg opacity-80">
+                        才会包容别人的小瑕疵。
+                    </p>
+                    <div class="mt-6">
+                        <i class="fa-solid fa-seedling list-icon"></i><span class="font-noto-sans-sc font-medium">Acceptance & Patience</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-2 lg:col-span-1">
+            <div class="card h-full p-8 flex flex-col justify-between card-alt-bg">
+                <div class="content-z">
+                    <p class="text-3xl font-noto-sans-sc font-bold mb-4">
+                        懂得爱自己
+                    </p>
+                    <p class="text-lg opacity-80">
+                        才有余力去真诚地爱别人。
+                    </p>
+                    <div class="mt-6">
+                        <i class="fa-solid fa-hands-praying list-icon"></i><span class="font-noto-sans-sc font-medium">Self-Love & Empathy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-1 lg:col-span-1">
+            <div class="card h-full flex items-center justify-center p-8 card-darker-alt-bg">
+                <div class="content-z grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <i class="fa-solid fa-leaf text-4xl highlight-text mb-2"></i>
+                        <p class="text-sm font-medium opacity-80">Growth</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-droplet text-4xl highlight-text mb-2"></i>
+                        <p class="text-sm font-medium opacity-80">Purity</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-feather-pointed text-4xl highlight-text mb-2"></i>
+                        <p class="text-sm font-medium opacity-80">Lightness</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-sun text-4xl highlight-text mb-2"></i>
+                        <p class="text-sm font-medium opacity-80">Warmth</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-moon text-4xl highlight-text mb-2"></i>
+                        <p class="text-sm font-medium opacity-80">Serenity</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-mound text-4xl highlight-text mb-2"></i>
+                        <p class="text-sm font-medium opacity-80">Foundation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

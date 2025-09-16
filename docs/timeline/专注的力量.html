@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专注的力量</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3;
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75);
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8);
+        }
+        .tech-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-16 antialiased">
+
+    <div class="max-w-7xl mx-auto">
+
+        <header class="flex flex-col items-start mb-16">
+            <h1 class="ultra-large-text font-noto-sans-sc leading-none mb-4">
+                <span class="highlight-text">专注力</span>
+                <br>
+                就是力量
+            </h1>
+            <p class="text-xl md:text-2xl font-light max-w-2xl text-gray-700">
+                The Power of Focus.
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hand-fist text-4xl highlight-text"></i>
+                        <h2 class="ml-4 text-2xl font-bold font-noto-sans-sc">爆发</h2>
+                    </div>
+                    <p class="text-lg font-light">力量的爆发，来自于<br><strong class="font-noto-sans-sc text-xl">注意力聚焦。</strong></p>
+                </div>
+            </div>
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-filter text-4xl highlight-text"></i>
+                        <h2 class="ml-4 text-2xl font-bold font-noto-sans-sc">减法</h2>
+                    </div>
+                    <p class="text-lg font-light">注意力聚焦，来自<br><strong class="font-noto-sans-sc text-xl">做减法。</strong></p>
+                </div>
+            </div>
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-question text-4xl highlight-text"></i>
+                        <h2 class="ml-4 text-2xl font-bold font-noto-sans-sc">自省</h2>
+                    </div>
+                    <p class="text-lg font-light">做减法，来自于<br><strong class="font-noto-sans-sc text-xl">理解自己是谁。</strong></p>
+                </div>
+            </div>
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-seedling text-4xl highlight-text"></i>
+                        <h2 class="ml-4 text-2xl font-bold font-noto-sans-sc">实践</h2>
+                    </div>
+                    <p class="text-lg font-light">理解自己，来自<br><strong class="font-noto-sans-sc text-xl">不断实践获得反馈。</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <div class="card p-8 card-alt-bg tech-glow">
+                <div class="content-z">
+                    <h2 class="text-4xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                        人类的<br>超参数优化
+                    </h2>
+                    <p class="text-xl font-light text-gray-700">
+                        Human 'Hyperparameter Optimization'
+                    </p>
+                    <div class="mt-6 space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-eye list-icon text-xl"></i>
+                            <p class="text-lg font-noto-sans-sc font-medium">睁眼行动</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-rotate list-icon text-xl"></i>
+                            <p class="text-lg font-noto-sans-sc font-medium">闭环反馈</p>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-base font-light text-gray-600">
+                        世界是面镜子，你只要在动，就会有反馈。<br>
+                        "睁眼看世界" 这就是总结，是人类版本的强化学习（RL）。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-8 card-darker-alt-bg tech-glow">
+                <div class="content-z">
+                    <h2 class="text-4xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                        AI的<br>暴力搜索
+                    </h2>
+                    <p class="text-xl font-light text-gray-700">
+                        AI's Brute Force Search
+                    </p>
+                    <div class="mt-6 space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-microchip list-icon text-xl"></i>
+                            <p class="text-lg font-noto-sans-sc font-medium">算力驱动</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-brain list-icon text-xl"></i>
+                            <p class="text-lg font-noto-sans-sc font-medium">海量数据</p>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-base font-light text-gray-600">
+                        AI与人不同，它依靠强大的算力进行暴力搜索。<br>
+                        而人类则通过“做减法”来找到最优路径，这是一种更高效的生存策略。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8 mb-16">
+            <div class="ultra-large-text font-noto-sans-sc highlight-stat flex-shrink-0 text-center lg:text-left">
+                90%
+            </div>
+            <div class="flex-grow">
+                <h2 class="text-3xl lg:text-4xl font-bold font-noto-sans-sc mb-4 leading-tight">
+                    砍掉 90% 的想法
+                </h2>
+                <p class="text-lg font-light text-gray-700 max-w-3xl">
+                    这解释了为什么很多成功的创业者，最终的项目往往是他们砍掉了<br>
+                    <strong>90%</strong> 的想法后剩下的那 <span class="highlight-text font-bold">10%</span>。
+                </p>
+                <p class="mt-4 text-base font-light text-gray-600">
+                    因为他们专注于少数几个最有前景的方向，将有限的精力投入到最关键的事情上。
+                </p>
+            </div>
+        </div>
+
+        <div class="card p-8 lg:p-12 tech-glow text-center">
+            <div class="content-z">
+                <p class="text-2xl md:text-3xl font-light italic font-noto-sans-sc">
+                    "力量的爆发，源于注意力聚焦。"
+                </p>
+                <div class="flex items-center justify-center mt-6">
+                    <i class="fas fa-quote-left text-2xl highlight-text mr-2"></i>
+                    <p class="text-lg font-light text-gray-600">
+                        This principle applies to both AI and human evolution.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
