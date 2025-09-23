@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>持续行动，自然吸引同频的人</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Ghibli style simple vector graphics */
+        .vector-path {
+            stroke: #3A2E2C;
+            stroke-width: 2;
+            fill: transparent;
+        }
+        .vector-fill {
+            fill: rgba(255, 215, 0, 0.2); /* Soft gold fill */
+        }
+        @keyframes sun-rise {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .sun-rise-anim {
+            animation: sun-rise 2s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-scroll min-h-screen flex flex-col items-center py-16 px-4 md:px-12 lg:px-24 font-noto-sans-sc">
+
+    <header class="w-full max-w-7xl mx-auto text-center mb-16">
+        <h1 class="ultra-large-text font-bold leading-tight text-center mb-4">
+            <span class="highlight-text">Run</span>. Don't Wait.
+            <br>持续。前行。
+        </h1>
+        <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed max-w-4xl mx-auto opacity-80">
+            你父亲的那句话，道出了一个朴素而深刻的真理。
+            <br>人生就像一场马拉松，重要的不是起点有没有人同行，而是你有没有迈出第一步。
+        </p>
+    </header>
+
+    <main class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+
+        <div class="card p-8 flex flex-col items-center text-center tech-glow">
+            <div class="content-z">
+                <div class="large-stat-text font-bold highlight-stat">01</div>
+                <h3 class="text-2xl md:text-3xl font-bold mt-4 mb-2">迈出第一步</h3>
+                <p class="text-lg opacity-80">
+                    <i class="fa-solid fa-person-running list-icon"></i>
+                    从不等待，开始行动。<br>
+                    <i class="fa-solid fa-seedling list-icon"></i>
+                    播下种子，耐心灌溉。
+                </p>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-8 text-center flex flex-col items-center">
+            <div class="content-z">
+                <div class="ultra-large-text font-bold highlight-stat">
+                    5
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold mt-4 mb-2">第五次</h3>
+                <p class="text-lg opacity-80">
+                    这是你与自己独处的旅程。在第5次，第10次，你专注于自我。
+                    如同《千与千寻》中的白龙，在孤独中寻找自我，学会独立。
+                </p>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+                <svg class="w-2/3 h-2/3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path class="vector-path" d="M 50 150 Q 100 50, 150 150 T 250 150" stroke-dasharray="10, 5" />
+                    <circle cx="50" cy="150" r="8" class="vector-path vector-fill" />
+                    <circle cx="150" cy="150" r="8" class="vector-path vector-fill" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="card p-8 flex flex-col items-center text-center tech-glow">
+            <div class="content-z">
+                <div class="large-stat-text font-bold highlight-stat">20+</div>
+                <h3 class="text-2xl md:text-3xl font-bold mt-4 mb-2">第二十次</h3>
+                <p class="text-lg opacity-80">
+                    <i class="fa-solid fa-users list-icon"></i>
+                    志同道合的人，找到了你。<br>
+                    <i class="fa-solid fa-hands-holding list-icon"></i>
+                    你吸引了与你同频的伙伴。
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <section class="w-full max-w-7xl mx-auto my-16 text-center">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-tight">
+            <span class="highlight-text">吸引力法则。</span><br>
+            It's a Magnetism.
+        </h2>
+        <div class="card card-darker-alt-bg p-8 md:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 relative overflow-hidden">
+            <div class="content-z flex-1">
+                <p class="text-2xl md:text-3xl lg:text-4xl font-light italic leading-snug">
+                    “当你真正开始为自己而活，世界便会以意想不到的方式回应你。”
+                </p>
+            </div>
+            <div class="relative w-40 h-40 md:w-64 md:h-64 flex-shrink-0">
+                <svg class="absolute inset-0 m-auto w-24 h-24 md:w-36 md:h-36 sun-rise-anim" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="30" r="10" class="vector-path vector-fill" />
+                    <path d="M 50 40 L 50 75 Q 40 85, 30 75 M 50 75 Q 60 85, 70 75 M 30 60 Q 40 70, 50 60 M 70 60 Q 60 70, 50 60" class="vector-path" />
+                </svg>
+                <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="40" class="vector-path" />
+                    <path d="M 100 60 L 100 20 M 140 100 L 180 100 M 100 140 L 100 180 M 60 100 L 20 100 M 128.28 71.72 L 156.57 43.43 M 128.28 128.28 L 156.57 156.57 M 71.72 128.28 L 43.43 156.57 M 71.72 71.72 L 43.43 43.43" class="vector-path" />
+                </svg>
+            </div>
+            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                <i class="fa-solid fa-mountain text-[20vw] text-zinc-400 -rotate-12"></i>
+                <i class="fa-solid fa-cloud text-[15vw] text-zinc-300 rotate-6 translate-x-12 translate-y-8"></i>
+                <i class="fa-solid fa-tree text-[25vw] text-zinc-500 -rotate-6 -translate-x-8 -translate-y-10"></i>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full max-w-4xl mx-auto text-center my-16">
+        <blockquote class="text-2xl md:text-3xl lg:text-4xl font-light italic leading-relaxed text-gray-700 opacity-90">
+            “如果你想跑步，就去跑，不用一定要等着有人陪你一起。因为只要坚持跑下去，迟早在你第五次或第二十次跑步的时候，会有志同道合的人找到你，来到你身边。”
+        </blockquote>
+        <p class="text-lg md:text-xl mt-8 font-light italic opacity-70">- 来自一位父亲的智慧</p>
+    </section>
+
+    <footer class="w-full max-w-7xl mx-auto text-center mt-16 text-sm opacity-60">
+        <p>&copy; 2025. Inspired by a story and Ghibli Studio. Designed with TailwindCSS.</p>
+    </footer>
+    
+    <script>
+        // Data visualization placeholder (can be replaced with a real chart library like Chart.js)
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded successfully. Ghibli-inspired design ready.');
+            
+            // Example of a simple interactive element
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('hover-effect');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('hover-effect');
+                });
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

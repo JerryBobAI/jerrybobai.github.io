@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>观点至上：改变认知的力量</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300;
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 lg:p-24 overflow-x-hidden">
+
+    <section class="max-w-7xl mx-auto mb-20">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+            <div class="flex-1 text-center lg:text-left">
+                <h1 class="ultra-large-text font-noto-sans-sc leading-tight">
+                    内容，<br/><span class="highlight-text">
+                        说服力</span>。
+                </h1>
+                <p class="text-xl md:text-2xl mt-4 font-noto-sans-sc max-w-2xl mx-auto lg:mx-0">
+                    好的内容是销售，更是<b class="highlight-text">认知的改造。</b>
+                </p>
+            </div>
+            <div class="flex-1 w-full lg:w-auto relative">
+                <div class="card card-darker-alt-bg p-8 text-center tech-glow w-full h-96 flex items-center justify-center">
+                    <div class="content-z">
+                        <span class="block text-6xl md:text-8xl highlight-stat mb-4">
+                            95%
+                        </span>
+                        <p class="text-xl md:text-2xl font-noto-sans-sc">
+                            的内容只有热闹，没有转化。
+                        </p>
+                    </div>
+                </div>
+                <div class="absolute inset-0 z-0">
+                    <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M 10 50 Q 30 10, 50 50 Q 70 90, 90 50" stroke="#FFB300" fill="transparent" stroke-width="2" stroke-dasharray="5,5" />
+                        <circle cx="90" cy="50" r="2" fill="#FFB300" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto mb-20">
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="card p-8">
+                <div class="content-z">
+                    <h2 class="text-4xl font-noto-sans-sc font-bold mb-4">
+                        观点至上
+                    </h2>
+                    <p class="text-lg leading-relaxed">
+                        Content as a point of view. <br/><span class="highlight-text">我们不只是提供信息，我们制造触动。</span> 让用户心智被引导，不再只是“乱风过耳”，而是产生深刻记忆。
+                    </p>
+                </div>
+            </div>
+            <div class="card card-alt-bg p-8">
+                <div class="content-z">
+                    <h2 class="text-4xl font-noto-sans-sc font-bold mb-4">
+                        销售精髓
+                    </h2>
+                    <p class="text-lg leading-relaxed">
+                        Every piece of content is a sale. <br/><span class="highlight-text">内容即销售，其核心在于说服。</span> 只有转化，才是衡量内容价值的最终标准。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto mb-20">
+        <h2 class="ultra-large-text font-noto-sans-sc text-center mb-16">
+            落地，<span class="highlight-text">
+                六大心法。</span>
+        </h2>
+        <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-balance-scale text-4xl highlight-text"></i>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold ml-4">制造对比</h3>
+                    </div>
+                    <p class="text-lg text-gray-700">
+                        SHOW THE GAP. <br> 描绘使用前后差异，突出不用会<b class="highlight-text">损失什么</b>，用了能<b class="highlight-text">获得什么</b>。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-8 card-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-paint-brush text-4xl highlight-text"></i>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold ml-4">植入场景</h3>
+                    </div>
+                    <p class="text-lg text-gray-700">
+                        LIVE THE FUTURE. <br> 描绘理想状态，让用户想象自己<b class="highlight-text">成功后的样子</b>，产生共鸣与渴望。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hourglass-half text-4xl highlight-text"></i>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold ml-4">增强紧迫性</h3>
+                    </div>
+                    <p class="text-lg text-gray-700">
+                        FEAR OF MISSING OUT. <br> 通过<b class="highlight-text">限时、限量、涨价</b>，暗示不立即行动就会失去机会。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-8 card-darker-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-4xl highlight-text"></i>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold ml-4">提供证据</h3>
+                    </div>
+                    <p class="text-lg text-gray-700">
+                        DATA & TRUST. <br> 用<b class="highlight-text">数据、案例、用户反馈</b>，让你的说服力有理有据，提升信赖。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-handshake text-4xl highlight-text"></i>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold ml-4">降低门槛</h3>
+                    </div>
+                    <p class="text-lg text-gray-700">
+                        EASY ENTRY. <br> 提供<b class="highlight-text">试用、退款保证</b>，消除用户的决策阻力，降低风险感。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-8 card-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-brain text-4xl highlight-text"></i>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold ml-4">改变行为</h3>
+                    </div>
+                    <p class="text-lg text-gray-700">
+                        ACTION OVER THOUGHT. <br> 好的内容不是信息的堆砌，而是<b class="highlight-text">改变用户的行为。</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto text-center mt-20">
+        <div class="p-8 card-darker-alt-bg">
+            <h2 class="large-stat-text font-noto-sans-sc mb-4">
+                <span class="highlight-text">内容=销售，</span>
+                <br>
+                改变认知，驱动行为。
+            </h2>
+            <p class="text-lg md:text-xl font-noto-sans-sc">
+                这是内容创作的<span class="highlight-text font-bold">真正奥义</span>。
+            </p>
+        </div>
+    </section>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

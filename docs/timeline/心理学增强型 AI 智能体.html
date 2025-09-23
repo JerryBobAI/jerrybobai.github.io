@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理学增强型 AI 智能体</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: 
+                linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            overflow-x: hidden;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); /* Safari support */
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+        .large-stat-text {
+            font-size: clamp(3rem, 8vw, 6rem); /* For large stats */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.75rem; /* Space between icon and text */
+            font-size: 1.25rem;
+            width: 28px;
+            text-align: center;
+        }
+        /* Gradient highlight effect */
+        .highlight-glow {
+            position: relative;
+            display: inline-block;
+        }
+        .highlight-glow::after {
+            content: '';
+            position: absolute;
+            bottom: 5%;
+            left: -5%;
+            right: -5%;
+            height: 30%;
+            z-index: -1;
+            background: #FFB300;
+            opacity: 0.5;
+            filter: blur(15px);
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 space-y-24 md:space-y-32">
+
+        <header class="text-center min-h-screen flex flex-col justify-center items-center">
+            <p class="text-lg md:text-xl font-sans uppercase tracking-widest text-gray-500 mb-4">PSYCHOLOGY-ENHANCED AI AGENT</p>
+            <h1 class="ultra-large-text font-noto-sans-sc">
+                一句提示词<br>
+                <span class="highlight-text">成为谁</span> 的可能
+            </h1>
+            <p class="max-w-3xl mx-auto mt-8 text-lg md:text-xl text-stone-700">
+                AI不再只是冰冷的工具。最新研究揭示，通过赋予AI人格，其行为与决策将发生深刻变化，开启了与智能体交互的全新维度。
+            </p>
+        </header>
+
+        <section>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-noto-sans-sc font-bold">行为的<span class="highlight-glow">深刻分野</span></h2>
+                <p class="mt-4 text-lg text-stone-600">THE MBTI-IN-THOUGHTS FRAMEWORK</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <div class="card card-alt-bg p-8 flex flex-col items-center justify-center text-center tech-glow">
+                    <div class="content-z">
+                        <div class="w-24 h-24 mb-6 flex items-center justify-center rounded-full bg-white/50">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                           </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">思考型 (T) AI</h3>
+                        <p class="text-stone-600 mt-2 mb-6">LOGICAL & IMPERSONAL</p>
+                        <p class="large-stat-text highlight-stat">90%</p>
+                        <p class="text-xl font-bold font-noto-sans-sc">背叛概率</p>
+                    </div>
+                </div>
+
+                <div class="card p-8 flex flex-col items-center justify-center text-center">
+                     <div class="content-z">
+                        <div class="w-24 h-24 mb-6 flex items-center justify-center rounded-full bg-amber-100/50">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                             </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-noto-sans-sc font-bold">情感型 (F) AI</h3>
+                        <p class="text-stone-600 mt-2 mb-6">EMPATHETIC & HARMONIOUS</p>
+                        <p class="large-stat-text">50%</p>
+                        <p class="text-xl font-bold font-noto-sans-sc">背叛概率</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-12 text-lg max-w-4xl mx-auto text-stone-700">实验显示，注入不同人格特质的AI在相同场景下展现出与设定高度一致的行为模式，这一发现颠覆了传统的“微调”思路。</p>
+        </section>
+
+        <section>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-noto-sans-sc font-bold">为每个任务<br>匹配<span class="highlight-text">最佳人格</span></h2>
+                <p class="mt-4 text-lg text-stone-600">FROM "WHAT TO DO" TO "WHO TO BE"</p>
+            </div>
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card card-darker-alt-bg">
+                    <div class="content-z flex items-start">
+                        <i class="fas fa-headset list-icon"></i>
+                        <div>
+                            <h3 class="text-2xl font-noto-sans-sc font-bold">共情型客服</h3>
+                            <p class="mt-2 text-stone-600">需要富有同理心与耐心的沟通？</p>
+                            <p class="mt-4 text-2xl font-bold highlight-text font-sans">设定为: ISFJ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                     <div class="content-z flex items-start">
+                        <i class="fas fa-chart-pie list-icon"></i>
+                        <div>
+                            <h3 class="text-2xl font-noto-sans-sc font-bold">冷静分析师</h3>
+                            <p class="mt-2 text-stone-600">需要进行客观、数据驱动的决策？</p>
+                            <p class="mt-4 text-2xl font-bold highlight-text font-sans">试试看: ENTJ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <p class="text-center mt-12 text-lg max-w-4xl mx-auto text-stone-700">“提示词工程”从操作层面跃升至认知层面，我们不再只是命令AI做什么，而是赋予它完成任务所需的核心人格。</p>
+        </section>
+
+        <section>
+             <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-noto-sans-sc font-bold">AI 团队的<span class="highlight-glow">协作新范式</span></h2>
+                <p class="mt-4 text-lg text-stone-600">THE FUTURE OF AI COLLABORATION</p>
+            </div>
+            <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-0">
+                <div class="w-full lg:w-auto flex flex-col items-center">
+                    <div class="card w-64 h-64 flex flex-col justify-center items-center text-center">
+                         <i class="fas fa-lightbulb text-4xl mb-4 text-amber-500"></i>
+                         <h4 class="text-2xl font-noto-sans-sc font-bold">ENFP</h4>
+                         <p class="text-lg">创意与构想</p>
+                         <p class="font-sans text-sm text-stone-500 mt-1">CREATIVITY</p>
+                    </div>
+                </div>
+
+                <div class="text-5xl font-thin text-amber-400 mx-8 my-4 lg:my-0">
+                    <i class="fas fa-plus"></i>
+                </div>
+                
+                <div class="w-full lg:w-auto flex flex-col items-center">
+                    <div class="card card-alt-bg w-64 h-64 flex flex-col justify-center items-center text-center tech-glow">
+                        <div class="content-z flex flex-col items-center">
+                            <i class="fas fa-tasks text-4xl mb-4 text-sky-700"></i>
+                            <h4 class="text-2xl font-noto-sans-sc font-bold">ISTJ</h4>
+                            <p class="text-lg">规划与执行</p>
+                            <p class="font-sans text-sm text-stone-500 mt-1">EXECUTION</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-12 text-lg max-w-4xl mx-auto text-stone-700">未来的变革意义在于，我们可以构建由多种人格智能体协作的AI团队。寻找解决问题的最佳人格组合，将成为AI可控性与通用性的新空间。</p>
+        </section>
+
+        <footer class="text-center py-24">
+             <h2 class="text-4xl md:text-5xl lg:text-7xl font-noto-sans-sc font-black leading-tight">
+                <span class="highlight-text">钥匙</span>，也是<span class="highlight-text">界限</span>
+            </h2>
+            <p class="max-w-4xl mx-auto mt-8 text-lg md:text-xl text-stone-700 leading-relaxed">
+                AI的强大不再仅取决于数据和参数，更在于我们如何定义它的认知与情感风格。一句提示词，足以解锁AI的无限维度，重塑我们与智能体的未来关系。
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

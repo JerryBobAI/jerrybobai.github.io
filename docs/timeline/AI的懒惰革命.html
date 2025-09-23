@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI的懒惰革命</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 - 移除了 text-shadow */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+             background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        .outline-icon {
+            stroke: #FFB300;
+            stroke-width: 2;
+            fill: none;
+            width: 48px;
+            height: 48px;
+        }
+        .gradient-highlight {
+            background: linear-gradient(135deg, rgba(255, 179, 0, 0.2) 0%, rgba(255, 179, 0, 0.05) 100%);
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(253, 246, 227, 0.8) 0%, rgba(224, 242, 247, 0.6) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0 0L50 100L100 0Z" fill="rgba(255,179,0,0.02)"/><path d="M0 100L50 0L100 100Z" fill="rgba(210,180,140,0.01)"/></svg>') repeat;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="min-h-screen overflow-x-hidden">
+    <!-- Hero Section -->
+    <section class="hero-bg py-20 px-4 md:px-8 lg:px-16 relative z-10">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="fade-in">
+                <h1 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C] mb-4">偷懒革命</h1>
+                <p class="text-2xl md:text-3xl font-bold font-noto-sans-sc highlight-text mb-8">The Laziness Revolution</p>
+                <div class="flex justify-center items-center space-x-4 mb-12">
+                    <svg class="outline-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <p class="text-lg font-noto-sans-sc">AI 不是为了更聪明，而是为了更轻松 | Not Smarter, But Lazier</p>
+                    <svg class="outline-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <section class="py-16 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto space-y-12">
+        <!-- Key Insight Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="card tech-glow fade-in card-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line list-icon text-2xl"></i>
+                        <h2 class="text-xl font-bold font-noto-sans-sc">ChatGPT 最常用场景</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Helping Users Slack Off, Not Tech Tasks</p>
+                    <p class="font-noto-sans-sc">OpenAI 最新报告显示，ChatGPT 最常用场景是帮用户偷懒，而非复杂技术任务。</p>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card tech-glow fade-in">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-users list-icon text-2xl"></i>
+                        <h2 class="text-xl font-bold font-noto-sans-sc">普通用户在意</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Light Cognitive Needs Over Tech Hype</p>
+                    <p class="font-noto-sans-sc">技术圈关注 AI 未来和模型能力，但普通用户更在意“润色”、“解释”、“给思路”等轻认知需求。</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card tech-glow fade-in card-darker-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-edit list-icon text-2xl"></i>
+                        <h2 class="text-xl font-bold font-noto-sans-sc">对话主流</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Writing, Advice, Queries Dominate</p>
+                    <p class="font-noto-sans-sc">写作、实用建议、信息查询占据对话主流，远超图像生成、代码开发等高技术场景。</p>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card tech-glow fade-in card-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-brain list-icon text-2xl"></i>
+                        <h2 class="text-xl font-bold font-noto-sans-sc">高认知人群</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Save Brainpower, Not Learn New Skills</p>
+                    <p class="font-noto-sans-sc">高认知人群用 AI 省脑力，不是因为不会做，而是为了降低精力消耗。</p>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card tech-glow fade-in">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-lightbulb list-icon text-2xl"></i>
+                        <h2 class="text-xl font-bold font-noto-sans-sc">AI 价值</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Understand Moments of Mental Laziness</p>
+                    <p class="font-noto-sans-sc">AI 应用价值不在于智能极限，而在于理解人类不想动脑的瞬间。</p>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="card tech-glow fade-in card-darker-alt-bg">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-hand-holding-heart list-icon text-2xl"></i>
+                        <h2 class="text-xl font-bold font-noto-sans-sc">用户需要</h2>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Cognitive Assistants, Not Omnipotent AIs</p>
+                    <p class="font-noto-sans-sc">用户更需要能帮忙“垫一脚”的认知助理，而非全能智能体。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full-Width Insights Section -->
+        <div class="space-y-8">
+            <!-- Insight 7 -->
+            <div class="card tech-glow fade-in max-w-4xl mx-auto">
+                <div class="content-z text-center">
+                    <i class="fas fa-trophy list-icon text-4xl mb-4"></i>
+                    <h2 class="large-stat-text font-noto-sans-sc highlight-text mb-2">成功的 AI 产品</h2>
+                    <p class="text-sm text-gray-600">Solve One Laziness Problem</p>
+                    <p class="font-noto-sans-sc mt-4 text-lg">成功的 AI 产品往往只解决一个偷懒问题，比如“懒得写”。</p>
+                </div>
+            </div>
+
+            <!-- Insight 8 -->
+            <div class="card tech-glow fade-in card-alt-bg max-w-4xl mx-auto">
+                <div class="content-z">
+                    <div class="flex items-start space-x-4">
+                        <svg class="outline-icon mt-1" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                        <div>
+                            <h3 class="text-xl font-bold font-noto-sans-sc">商业机会</h3>
+                            <p class="text-sm text-gray-600">Capture Lazy Moments</p>
+                            <p class="font-noto-sans-sc">商业机会在于捕捉常见偷懒瞬间，设计轻决策路径和可修改半成品输出。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insight 9 -->
+            <div class="card tech-glow fade-in max-w-4xl mx-auto">
+                <div class="content-z">
+                    <div class="flex items-start space-x-4">
+                        <i class="fas fa-memory list-icon text-2xl mt-1"></i>
+                        <div>
+                            <h3 class="text-xl font-bold font-noto-sans-sc">习惯性 AI</h3>
+                            <p class="text-sm text-gray-600">AI Muscle Memory</p>
+                            <p class="font-noto-sans-sc">频繁触发的偷懒动作会变成习惯性 AI 肌肉记忆，产品成为大脑外挂。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insight 10 -->
+            <div class="card tech-glow fade-in card-darker-alt-bg max-w-4xl mx-auto">
+                <div class="content-z text-center">
+                    <i class="fas fa-plug list-icon text-4xl mb-4"></i>
+                    <h3 class="large-stat-text font-noto-sans-sc">AI 产品价值</h3>
+                    <p class="text-sm text-gray-600 mb-4">Do What You Can But Won't</p>
+                    <p class="font-noto-sans-sc text-lg">AI 产品价值在于替用户完成“可以做但不想做”的任务。</p>
+                </div>
+            </div>
+
+            <!-- Insight 11 & 12 Combined for Impact -->
+            <div class="card tech-glow fade-in max-w-6xl mx-auto grid md:grid-cols-2 gap-8 p-8">
+                <div class="content-z">
+                    <i class="fas fa-chart-bar list-icon text-3xl mb-4"></i>
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">市场机会</h3>
+                    <p class="text-sm text-gray-600">Not Ceiling, But Floor of Laziness</p>
+                    <div class="gradient-highlight">
+                        <p class="font-noto-sans-sc">市场机会不仅在智能天花板，更在懒惰地板。</p>
+                    </div>
+                </div>
+                <div class="content-z">
+                    <i class="fas fa-balance-scale list-icon text-3xl mb-4"></i>
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">AI 革命</h3>
+                    <p class="text-sm text-gray-600">Easier, Not Just Stronger</p>
+                    <div class="gradient-highlight">
+                        <p class="font-noto-sans-sc">AI 革命应关注让人更轻松，而不仅仅是更强大。人类愿为轻松买单，值得做的 AI 应用是能替人类懒一次的小工具。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ 
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Fade-in Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Chart.js for Data Viz (Mock data based on insights: Writing/Advice/Queries ~70%, Tech ~30%)
+        const ctx = document.getElementById('usageChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['写作/建议/查询\n(Writing/Advice/Queries)', '高技术场景\n(Tech Scenes)'],
+                datasets: [{
+                    data: [70, 30],
+                    backgroundColor: ['rgba(255, 179, 0, 0.8)', 'rgba(58, 46, 44, 0.6)'],
+                    borderColor: ['rgba(255, 179, 0, 1)', 'rgba(58, 46, 44, 1)'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { family: 'Noto Sans SC' }, color: '#3A2E2C' }
+                    }
+                },
+                cutout: '50%'
+            }
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

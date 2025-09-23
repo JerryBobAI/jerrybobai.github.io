@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>告别拖延症</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 勾线图形 */
+        .procrastination-line-art {
+            stroke: #3A2E2C;
+            stroke-width: 2px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .procrastination-fill-art {
+            fill: #E3F2FD;
+            stroke: #3A2E2C;
+            stroke-width: 2px;
+        }
+        .svg-container {
+            width: 100%;
+            height: auto;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-24 flex flex-col items-center justify-start min-h-screen">
+
+    <div class="max-w-7xl w-full space-y-24">
+
+        <header class="text-center mb-16 mt-8 md:mt-0">
+            <h1 class="ultra-large-text font-noto-sans-sc highlight-text">告别拖延症</h1>
+            <p class="mt-4 text-xl md:text-2xl font-semibold">Procrastination Is A Complex Defense Mechanism</p>
+            <p class="mt-2 text-md md:text-lg opacity-80">深入冰山之下，构建你的行动闭环系统。</p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div class="card p-8 md:p-12 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-2xl md:text-3xl font-noto-sans-sc font-bold mb-6">冰山之上：看得见的拖延行为</h2>
+                    <ul class="space-y-6 text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-stopwatch"></i></span>
+                            <span class="flex-1">
+                                <strong class="font-semibold">无限期等待“完美时机”</strong><br>
+                                Always waiting for the "perfect moment".
+                            </span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-list-ul"></i></span>
+                            <span class="flex-1">
+                                <strong class="font-semibold">从琐碎小事开始</strong><br>
+                                Focusing on trivial tasks instead of the important ones.
+                            </span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-sync-alt"></i></span>
+                            <span class="flex-1">
+                                <strong class="font-semibold">频繁中断，转移注意力</strong><br>
+                                Constant interruptions and distractions.
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-8 md:p-12">
+                <div class="content-z">
+                    <h2 class="text-2xl md:text-3xl font-noto-sans-sc font-bold mb-6">冰山之下：深层心理根源</h2>
+                    <div class="space-y-6 text-lg">
+                        <div class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-times-circle"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">对失败的恐惧</strong><br>
+                                <span class="text-sm opacity-70">Fear of failure</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-gem"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">完美主义的桎梏</strong><br>
+                                <span class="text-sm opacity-70">The paralysis of perfectionism</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-question-circle"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">目标模糊与价值感缺失</strong><br>
+                                <span class="text-sm opacity-70">Vague goals and lack of value</span>
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </section>
+
+        <div class="w-full h-px bg-gray-300 opacity-50 my-16"></div>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div class="card card-alt-bg p-8 md:p-12">
+                <div class="content-z">
+                    <h2 class="text-2xl md:text-3xl font-noto-sans-sc font-bold mb-6">构建“开始”的触发器</h2>
+                    <p class="text-lg mb-8 opacity-80">Strategies to Lower the Barrier of Action.</p>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 highlight-text">微小行动点</h3>
+                    <ul class="space-y-4">
+                        <li class="bg-white p-4 rounded-lg shadow-sm">
+                            <strong class="font-semibold">写报告</strong><br>
+                            <span class="text-sm opacity-70">拆解为：打开文档, 输入标题, 列出三个主要部分, 写下第一个小标题。</span>
+                        </li>
+                        <li class="bg-white p-4 rounded-lg shadow-sm">
+                            <strong class="font-semibold">准备演讲</strong><br>
+                            <span class="text-sm opacity-70">拆解为：找到主题, 打开PPT, 选择背景, 输入一句话。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card card-darker-alt-bg p-8 md:p-12">
+                <div class="content-z">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 highlight-text">情绪接纳机制</h3>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-handshake"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">承认你的感受</strong><br>
+                                <span class="text-sm opacity-70">Acknowledge your feelings without judgment.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-hourglass-start"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">使用“5分钟规则”</strong><br>
+                                <span class="text-sm opacity-70">The "5-minute rule" to break inertia.</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mt-8 p-6 bg-white rounded-xl shadow-inner text-center">
+                        <p class="large-stat-text font-noto-sans-sc highlight-stat">5<span class="text-base highlight-text font-bold ml-2">分钟规则</span></p>
+                        <p class="text-sm opacity-80 mt-2">Just start for 5 minutes, you can stop anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="w-full h-px bg-gray-300 opacity-50 my-16"></div>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div class="card p-8 md:p-12">
+                <div class="content-z">
+                    <h2 class="text-2xl md:text-3xl font-noto-sans-sc font-bold mb-6">建立“完成”的内在循环</h2>
+                    <p class="text-lg mb-8 opacity-80">Turning Completion into Intrinsic Reward.</p>
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 highlight-text">即时奖励与可视化</h3>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-trophy"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">即时奖励机制</strong><br>
+                                <span class="text-sm opacity-70">Reinforce the link between "completion" and "pleasure".</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-chart-line"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">可视化你的进步</strong><br>
+                                <span class="text-sm opacity-70">Use checklists or Kanban boards to see progress.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-8 md:p-12">
+                <div class="content-z">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 highlight-text">应对“半途而废”的方案</h3>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-pause-circle"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">停下来，重新评估</strong><br>
+                                <span class="text-sm opacity-70">Identify the most difficult part of the task.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-sitemap"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">再次拆分困难点</strong><br>
+                                <span class="text-sm opacity-70">Break down the difficult part into smaller steps.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon text-2xl mt-1"><i class="fas fa-user-friends"></i></span>
+                            <div class="flex-1">
+                                <strong class="font-semibold">寻求外部支持</strong><br>
+                                <span class="text-sm opacity-70">Don't be afraid to ask for help.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="w-full h-px bg-gray-300 opacity-50 my-16"></div>
+
+        <section class="text-center p-8 md:p-12 lg:p-16 card card-alt-bg tech-glow">
+            <h2 class="ultra-large-text font-noto-sans-sc highlight-text">终极法则</h2>
+            <p class="mt-4 text-2xl md:text-3xl font-bold font-noto-sans-sc leading-tight">
+                不求完美地开始
+            </p>
+            <p class="mt-2 text-2xl md:text-3xl font-bold font-noto-sans-sc leading-tight">
+                才能不费力地完成
+            </p>
+            <p class="mt-8 text-md md:text-lg opacity-80">
+                "Don't seek a perfect beginning, and you will find an effortless completion."
+            </p>
+        </section>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
