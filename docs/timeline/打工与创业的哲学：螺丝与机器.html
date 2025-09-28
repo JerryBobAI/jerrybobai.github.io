@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>打工与创业的哲学：螺丝与机器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS 样式严格参考系统提示词实现 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        @keyframes pulseGlow {
+           0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+           50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 自定义勾线图形样式 */
+        .sketch-line {
+            stroke: #3A2E2C; /* 深棕色勾线 */
+            stroke-width: 3;
+            fill: none;
+        }
+        .sketch-fill-accent {
+            fill: rgba(255, 179, 0, 0.4); /* 稍深的琥珀黄填充 */
+        }
+        /* 响应式大屏优化 */
+        .container-xl {
+            max-width: 1920px;
+            padding: 0 4rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mx-auto container-xl py-16 px-4 space-y-20">
+
+    <section class="text-center">
+        <p class="text-sm uppercase tracking-widest text-gray-500 mb-4">Ghibli Philosophy / WORK VS. STARTUP</p>
+        <h1 class="ultra-large-text font-noto-sans-sc text-[#2C4A3A]">
+            <span class="highlight-stat">打工</span>
+            <span class="text-gray-400"> vs. </span>
+            <span class="highlight-text">创业</span>
+        </h1>
+        <p class="text-3xl mt-6 font-light max-w-4xl mx-auto">
+            打工学<span class="font-bold">力集中</span>。创业学<span class="font-bold">力分配</span>。<br>
+            <span class="text-lg text-gray-500 mt-2 block">The Screw and The Machine: Focus vs. Distribution.</span>
+        </p>
+    </section>
+
+    <div class="grid lg:grid-cols-2 gap-10">
+        <div class="card card-alt-bg p-8 shadow-xl tech-glow">
+            <div class="content-z">
+                <div class="flex items-center space-x-4 mb-4">
+                    <i class="fas fa-screwdriver text-4xl highlight-text"></i>
+                    <h2 class="text-4xl font-noto-sans-sc font-bold text-[#3A2E2C]">工作流：<span class="highlight-text">螺丝</span></h2>
+                </div>
+                
+                <p class="text-lg mb-6 text-gray-600">
+                    <span class="font-bold">你像一颗拧得很紧的螺丝。</span> 
+                    在既定边界里，把那一点点力，发挥到最大。
+                </p>
+
+                <div class="mt-8">
+                    <p class="large-stat-text highlight-stat font-noto-sans-sc">单轴 <span class="text-3xl font-normal">极致</span></p>
+                    <p class="text-xl mt-2 tracking-wider uppercase text-gray-500">MAXIMIZING ONE AXIS</p>
+                </div>
+
+                <svg viewBox="0 0 400 200" class="w-full h-48 mt-6">
+                    <line x1="50" y1="150" x2="350" y2="150" class="sketch-line"/>
+                    <line x1="350" y1="150" x2="340" y2="145" class="sketch-line"/>
+                    <line x1="350" y1="150" x2="340" y2="155" class="sketch-line"/>
+                    <circle cx="200" cy="150" r="10" class="sketch-line sketch-fill-accent"/>
+                    <line x1="50" y1="150" x2="350" y2="150" stroke="#FFB300" stroke-width="5" stroke-linecap="round" stroke-dasharray="10, 5" opacity="0.6"/>
+                    <text x="360" y="145" class="text-sm font-noto-sans-sc" fill="#3A2E2C">数值拉满</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="card p-8 shadow-xl">
+            <div class="content-z">
+                <h3 class="text-2xl font-bold mb-4 font-noto-sans-sc">如果只学“螺丝技巧”？</h3>
+                <p class="text-xl mb-6 font-light text-gray-700">
+                    你会站在散落一地的零件中间，<span class="font-bold">手指很巧，视野很窄。</span>
+                </p>
+                
+                <ul class="space-y-4 text-lg">
+                    <li class="flex items-start">
+                        <i class="list-icon fas fa-lightbulb mt-1"></i>
+                        <span><span class="font-bold">光亮不够：</span>亮不够，得会<span class="font-bold">配</span>。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="list-icon fas fa-fist-raised mt-1"></i>
+                        <span><span class="font-bold">硬度不够：</span>硬不够，得会<span class="font-bold">柔</span>。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="list-icon fas fa-crosshairs mt-1"></i>
+                        <span><span class="font-bold">精度不够：</span>精不够，得会<span class="font-bold">粗</span>。</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-10 mt-20">
+        
+        <div class="lg:col-span-1 card card-darker-alt-bg p-8 shadow-2xl">
+            <div class="content-z">
+                <div class="flex items-center space-x-4 mb-4">
+                    <i class="fas fa-cogs text-4xl highlight-stat"></i>
+                    <h2 class="text-4xl font-noto-sans-sc font-bold text-[#3A2E2C]">创业轴：<span class="highlight-stat">机器</span></h2>
+                </div>
+                <p class="text-lg mb-6 text-gray-600">
+                    <span class="font-bold">你是一整台正在拼装的机器。</span> 
+                    定义维度、权衡权重、设定边界。
+                </p>
+                <p class="large-stat-text highlight-text font-noto-sans-sc">多轴 <span class="text-3xl font-normal">协同</span></p>
+                <p class="text-xl mt-2 tracking-wider uppercase text-gray-500">COORDINATING MULTIPLE AXES</p>
+            </div>
+        </div>
+        
+        <div class="lg:col-span-2 card p-8 shadow-2xl">
+             <div class="content-z">
+                <h3 class="text-3xl font-bold mb-6 font-noto-sans-sc text-[#2C4A3A]">
+                    打工时，悄悄扩大<span class="font-bold">责任半径</span> (Radius of Responsibility)
+                </h3>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center p-4">
+                        <i class="fas fa-project-diagram text-5xl highlight-text mb-3"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">系统感</p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            看见整条链路，知道一拧一动的牵引。
+                        </p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fas fa-balance-scale text-5xl highlight-text mb-3"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">选择力</p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            在有限资源下，决定装什么、为什么。
+                        </p>
+                    </div>
+                    <div class="text-center p-4">
+                        <i class="fas fa-hand-holding-box text-5xl highlight-text mb-3"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">承压与复盘</p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            问题来了不躲，做完了能复盘，将工作变实验。
+                        </p>
+                    </div>
+                </div>
+                
+                <svg viewBox="0 0 400 200" class="w-full h-48 mt-8">
+                    <line x1="50" y1="150" x2="350" y2="150" class="sketch-line"/>
+                    <text x="360" y="145" class="text-sm font-noto-sans-sc" fill="#3A2E2C">系统</text>
+                    <line x1="50" y1="150" x2="50" y2="50" class="sketch-line"/>
+                    <text x="40" y="45" class="text-sm font-noto-sans-sc" fill="#3A2E2C">选择</text>
+                    <line x1="50" y1="150" x2="150" y2="90" class="sketch-line" stroke-dasharray="5, 5"/>
+                    <text x="155" y="90" class="text-sm font-noto-sans-sc" fill="#3A2E2C">承压</text>
+                    <circle cx="250" cy="80" r="15" class="sketch-line sketch-fill-accent"/>
+                    <text x="250" y="85" text-anchor="middle" class="text-xs font-bold" fill="#3A2E2C">转</text>
+                </svg>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="card card-alt-bg p-10 shadow-2xl tech-glow mt-20">
+        <div class="content-z">
+            <h2 class="text-4xl font-noto-sans-sc font-extrabold text-[#2C4A3A] mb-6">
+                练习：做一位<span class="highlight-text">“微小的产品经理”</span>
+            </h2>
+            <p class="text-xl font-light mb-8 text-gray-700">
+                当你开始像一个产品经理工作，你已经在创业的门口试灯。
+            </p>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="p-4 border-l-4 border-[#FFB300] bg-white bg-opacity-70 rounded-lg">
+                    <p class="text-2xl font-bold mb-2">
+                        <i class="list-icon fas fa-arrow-alt-circle-right"></i>
+                        <span class="font-noto-sans-sc">延伸视野</span>
+                    </p>
+                    <p class="text-lg text-gray-600">
+                        将任务<span class="font-bold">向前多看一环，向后多走一步。</span> (Upstream & Downstream)
+                    </p>
+                </div>
+                <div class="p-4 border-l-4 border-[#FFB300] bg-white bg-opacity-70 rounded-lg">
+                    <p class="text-2xl font-bold mb-2">
+                        <i class="list-icon fas fa-puzzle-piece"></i>
+                        <span class="font-noto-sans-sc">跨界搭配</span>
+                    </p>
+                    <p class="text-lg text-gray-600">
+                        把手边螺丝，故意与<span class="font-bold">两颗陌生件做搭配。</span> (Cross-Functional Mix)
+                    </p>
+                </div>
+                <div class="p-4 border-l-4 border-[#FFB300] bg-white bg-opacity-70 rounded-lg">
+                    <p class="text-2xl font-bold mb-2">
+                        <i class="list-icon fas fa-book-spells"></i>
+                        <span class="font-noto-sans-sc">可复用说明书</span>
+                    </p>
+                    <p class="text-lg text-gray-600">
+                        把每次失误，写成一份<span class="font-bold">“微型说明书”</span>。 (Reusable Lessons)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="text-center pt-16 pb-8">
+        <h2 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C]">
+            <span class="highlight-stat">针</span>
+            <span class="text-gray-400"> 到 </span>
+            <span class="highlight-text">网</span>
+        </h2>
+        <p class="text-3xl mt-6 font-light max-w-4xl mx-auto">
+            打工学到的，是把力<span class="font-bold">集中</span>。创业需要的，是把力<span class="font-bold">分配</span>。
+        </p>
+        <p class="text-xl mt-4 tracking-wider uppercase text-gray-500">
+            Learn to be the Needle. Learn to Weave the Net.
+        </p>
+    </section>
+    
+    <footer class="text-center text-sm text-gray-500 pt-10">
+        <p>© STUDIO GHIBLI INSPIRED LAYOUT. 2025</p>
+    </footer>
+</div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

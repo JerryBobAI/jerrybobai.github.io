@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阅读自我觉醒</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        @keyframes pulseGlow {
+           0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+           50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom Keyframe for subtle floating animation (like a Ghibli leaf) */
+        @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-5px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: subtleFloat 5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8 lg:p-16">
+
+    <header class="text-center mb-16 max-w-7xl mx-auto">
+        <h1 class="ultra-large-text font-noto-sans-sc leading-none mb-4">
+            <span class="highlight-text">阅读</span>
+            <span class="block">自我觉醒</span>
+        </h1>
+        <p class="text-xl md:text-2xl font-light text-gray-700 italic max-w-3xl mx-auto">
+            THE AWAKENING.
+            <span class="font-noto-sans-sc ml-2">好书像镜子，不替你思考，却逼你诚实。</span>
+        </p>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+
+        <section class="card lg:col-span-2 p-10 relative card-alt-bg tech-glow">
+            <div class="content-z">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-6 font-noto-sans-sc">
+                    <i class="fas fa-book-reader list-icon"></i>
+                    顿然共鸣的句子
+                </h2>
+                <blockquote class="text-2xl md:text-3xl font-light italic leading-relaxed border-l-4 border-amber-500 pl-4 text-gray-800">
+                    “那些让你顿然共鸣的句子，不是巧合，而是你在另一种人生版本里，忽然认出了自己。那一刻，不是被谁打动，而是被自己唤醒。”
+                </blockquote>
+                <div class="mt-8 pt-4 border-t border-gray-300">
+                    <p class="text-lg font-medium text-gray-600">
+                        <span class="list-icon"><i class="fas fa-feather-alt"></i></span>
+                        <span class="font-noto-sans-sc">它提醒了我什么？</span>
+                    </p>
+                    <p class="text-xl font-medium mt-2 font-noto-sans-sc text-deep-blue-ghibli">
+                        我的本质早有定型，但被日常的“噪声”所掩盖，我需要更主动地<span class="font-bold">寻找和倾听内心那个“更高版本”的自己</span>，而不是等待外部的认可。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-8 card-darker-alt-bg">
+            <div class="content-z">
+                <h2 class="text-3xl font-extrabold mb-6 font-noto-sans-sc text-indigo-900">
+                    <i class="fas fa-question-circle list-icon"></i>
+                    <span class="text-gray-800">灵魂拼图</span>
+                </h2>
+                <p class="text-sm uppercase text-gray-600 mb-4">CURRENT LIFE QUESTIONS</p>
+
+                <div class="space-y-6">
+                    <div class="p-4 bg-white/70 rounded-xl">
+                        <p class="text-sm font-semibold text-gray-700">01 / 方向</p>
+                        <p class="font-noto-sans-sc text-lg">如何平衡“外求”（技能/经验）与“内返”（目标/意义），确保路径不偏离核心价值？</p>
+                    </div>
+                    <div class="p-4 bg-white/70 rounded-xl">
+                        <p class="text-sm font-semibold text-gray-700">02 / 诚实</p>
+                        <p class="font-noto-sans-sc text-lg">我目前的努力，是基于真正的热情，还是仅仅为了获得外部世界的“掌声”？</p>
+                    </div>
+                    <div class="p-4 bg-white/70 rounded-xl">
+                        <p class="text-sm font-semibold text-gray-700">03 / 行动</p>
+                        <p class="font-noto-sans-sc text-lg">哪些被我一再拖延的核心任务，才是今天必须启动的那个“第一块拼图”？</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="max-w-7xl mx-auto mb-16">
+        <div class="card p-10 flex flex-col md:flex-row items-center justify-between bg-yellow-50/70">
+            <div class="flex-grow">
+                <p class="text-sm uppercase font-semibold text-gray-600 mb-2">Bridge to the Soul</p>
+                <h2 class="ultra-large-text leading-tight font-noto-sans-sc text-green-700">
+                    <span class="highlight-stat">TODAY</span>
+                    <span class="block text-4xl md:text-5xl lg:text-6xl text-deep-blue-ghibli">即刻行动</span>
+                </h2>
+            </div>
+            <div class="w-full md:w-2/5 mt-6 md:mt-0 p-6 border-l-4 border-green-600 md:pl-8">
+                <p class="text-xl font-bold mb-3 font-noto-sans-sc">限定任务（仅限今天）:</p>
+                <div class="p-4 bg-green-100/80 rounded-lg shadow-inner animate-float">
+                    <span class="text-3xl list-icon"><i class="fas fa-stopwatch"></i></span>
+                    <span class="font-noto-sans-sc text-2xl font-bold text-green-800 ml-2">写下 300 字“内返”清单。</span>
+                    <p class="text-base mt-2 text-gray-700">
+                        利用 30 分钟，写出你“<span class="font-bold">真正想做而非应该做</span>”的五件长期目标，并为其中一个目标<span class="font-bold">制定一个今晚睡前必须完成的微小步骤</span>。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center pt-8 text-gray-500 text-sm font-light border-t border-gray-300 max-w-7xl mx-auto">
+        停止被动刷信息。START READING YOURSELF. <i class="fas fa-leaf text-green-500"></i>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

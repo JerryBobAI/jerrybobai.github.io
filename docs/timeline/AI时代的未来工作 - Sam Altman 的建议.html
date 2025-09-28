@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI时代的未来工作 - Sam Altman 的建议</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* Subtle hand-drawn/watercolor texture effect */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* Gradient with self-transparency to create tech feel */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        @keyframes pulseGlow {
+           0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+           50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em; /* Tighten up for impact */
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.75rem; /* Space between icon and text */
+        }
+        /* Custom Tailwind Configuration (for better responsiveness and typography) */
+        .max-w-7xl-plus {
+            max-width: 90rem; /* Custom wide container */
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 lg:p-12">
+
+    <header class="text-center mb-16 lg:mb-24 pt-8">
+        <h1 class="mt-4 font-noto-sans-sc ultra-large-text text-[#3A2E2C]">
+            <span class="highlight-text">未来的工作</span><br>
+            <span class="text-gray-500 text-opacity-70">WHAT TO LEARN?</span>
+        </h1>
+        <p class="mt-4 text-lg md:text-xl max-w-4xl mx-auto text-[#6B4423]">
+            OpenAI CEO Sam Altman 关于 AI 时代下，<strong>孩子如何不被取代</strong>的建议。
+        </p>
+    </header>
+
+    <section class="max-w-7xl-plus mx-auto mb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            
+            <div class="lg:col-span-1 card card-alt-bg p-8 md:p-12 tech-glow text-center order-2 lg:order-1">
+                <div class="content-z">
+                    <i class="fas fa-robot text-6xl highlight-text mb-4 opacity-75"></i>
+                    <div class="font-noto-sans-sc large-stat-text highlight-stat">
+                        40%
+                    </div>
+                    <p class="mt-2 text-lg md:text-xl font-semibold text-[#3A2E2C] font-noto-sans-sc">
+                        任务将被取代
+                    </p>
+                    <p class="mt-2 text-sm text-gray-600">
+                        WORK TASKS REPLACED BY AI
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 order-1 lg:order-2">
+                <p class="font-noto-sans-sc text-3xl md:text-4xl font-bold leading-snug mb-6">
+                    <span class="text-[#6B4423]">“我很容易想象，在不远的将来，我们经济体系里</span> 
+                    <span class="highlight-text">40%的工作任务</span>
+                    <span class="text-[#6B4423]">会被AI取代。”</span>
+                </p>
+                <p class="font-noto-sans-sc text-lg md:text-xl text-gray-600 mb-4">
+                    这不是第一次巨变。
+                </p>
+                <div class="card p-6 border-l-4 border-[#D2B48C]">
+                    <p class="font-noto-sans-sc text-lg text-gray-700 italic">
+                        “实际上，社会上的工作大约每隔 <strong>75年</strong> 就会更新换代一半。这种情况在AI还没出现之前就已经发生过好多次了。有了AI之后，我觉得这种变化的速度只会<strong>更快</strong>。”
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <section class="max-w-7xl-plus mx-auto mb-20 text-center">
+        <h2 class="font-noto-sans-sc text-5xl md:text-6xl font-bold mb-12 text-[#6B4423]">
+            <span class="highlight-text">五大核心能力</span>
+            <p class="text-xl mt-2 text-gray-500 font-normal">
+                THE 5 CORE SKILLS FOR AI AGE
+            </p>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            
+            <div class="card p-6 md:p-8 flex flex-col justify-center items-center text-center">
+                <i class="fas fa-graduation-cap text-4xl highlight-stat mb-3"></i>
+                <h3 class="font-noto-sans-sc text-xl font-bold mb-1 text-[#3A2E2C]">学习的能力</h3>
+                <p class="text-sm font-semibold text-gray-500">
+                    Learning How to Learn
+                </p>
+                <p class="mt-3 text-sm text-gray-700">
+                    知识指数级增长的时代，有自我更新的能力是首要的<strong>生存法则</strong>。
+                </p>
+            </div>
+            
+            <div class="card card-alt-bg p-6 md:p-8 flex flex-col justify-center items-center text-center">
+                <i class="fas fa-sync-alt text-4xl highlight-stat mb-3"></i>
+                <h3 class="font-noto-sans-sc text-xl font-bold mb-1 text-[#3A2E2C]">适应性</h3>
+                <p class="text-sm font-semibold text-gray-500">
+                    Adapt to Change
+                </p>
+                <p class="mt-3 text-sm text-gray-700">
+                    变化是常态。快速调整、拥抱新环境的人，才更有可能在洪流中<strong>立于不败之地</strong>。
+                </p>
+            </div>
+            
+            <div class="card p-6 md:p-8 flex flex-col justify-center items-center text-center lg:scale-110 lg:z-10 bg-white shadow-2xl">
+                <i class="fas fa-shield-alt text-4xl highlight-stat mb-3"></i>
+                <h3 class="font-noto-sans-sc text-2xl font-black mb-1 text-highlight-stat">韧性</h3>
+                <p class="text-base font-bold text-gray-600">
+                    Resilience
+                </p>
+                <p class="mt-3 text-sm text-gray-700 font-noto-sans-sc">
+                    面对挫折和不确定性，保持积极心态和解决问题的<strong>勇气与毅力</strong>。
+                </p>
+            </div>
+
+            <div class="card card-alt-bg p-6 md:p-8 flex flex-col justify-center items-center text-center">
+                <i class="fas fa-lightbulb text-4xl highlight-stat mb-3"></i>
+                <h3 class="font-noto-sans-sc text-xl font-bold mb-1 text-[#3A2E2C]">洞察需求</h3>
+                <p class="text-sm font-semibold text-gray-500">
+                    What People Want
+                </p>
+                <p class="mt-3 text-sm text-gray-700">
+                    创造有用的产品，归根结底是为了满足人类的需求，这是AI难以企及的<strong>人性洞察</strong>。
+                </p>
+            </div>
+            
+            <div class="card p-6 md:p-8 flex flex-col justify-center items-center text-center">
+                <i class="fas fa-hands-helping text-4xl highlight-stat mb-3"></i>
+                <h3 class="font-noto-sans-sc text-xl font-bold mb-1 text-[#3A2E2C]">人际互动</h3>
+                <p class="text-sm font-semibold text-gray-500">
+                    Interact in the World
+                </p>
+                <p class="mt-3 text-sm text-gray-700">
+                    “人与人之间”仍是<strong>故事</strong>核心。建立连接、有效沟通，是<strong>人类独有的宝藏</strong>。
+                </p>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto mb-20 text-center">
+        <div class="card card-darker-alt-bg p-8 md:p-16 tech-glow">
+            <div class="content-z">
+                <h2 class="font-noto-sans-sc text-4xl md:text-5xl font-black leading-tight text-[#3A2E2C]">
+                    <span class="highlight-text">永恒的驱动力</span>
+                    <span class="text-gray-600 text-opacity-80"> | ETERNAL DRIVERS</span>
+                </h2>
+                
+                <p class="mt-6 font-noto-sans-sc text-xl md:text-2xl max-w-4xl mx-auto text-[#3A2E2C] font-semibold">
+                    <strong>人类对新事物的渴望、对与他人连接的向往、以及表达自身创造力的冲动，<br/>将永无止境。</strong>
+                </p>
+                
+                <ul class="mt-8 space-y-4 text-left inline-block max-w-xl mx-auto">
+                    <li class="text-lg font-noto-sans-sc text-gray-700">
+                        <i class="fas fa-rocket list-icon"></i> <span class="font-bold">新事物的渴望：</span> 推动科技与文明的进步。
+                    </li>
+                    <li class="text-lg font-noto-sans-sc text-gray-700">
+                        <i class="fas fa-heart list-icon"></i> <span class="font-bold">人际连接：</span> 建立社会、文化和意义。
+                    </li>
+                    <li class="text-lg font-noto-sans-sc text-gray-700">
+                        <i class="fas fa-paint-brush list-icon"></i> <span class="font-bold">创造力冲动：</span> 我们的终极价值所在。
+                    </li>
+                </ul>
+                
+                <p class="mt-8 text-sm text-gray-500">
+                    这些深层的人类特质，是推动社会进步的永恒动力，也是我们<strong>超越AI、与AI共存</strong>的关键所在。
+                </p>
+            </div>
+        </div>
+    </section>
+     
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
