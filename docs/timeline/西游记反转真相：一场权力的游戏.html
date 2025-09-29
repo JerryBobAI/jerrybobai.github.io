@@ -59,17 +59,14 @@
             background-image: radial-gradient(circle, rgba(255,179,0,0.2) 0%, rgba(255,179,0,0.08) 40%, transparent 70%);
             transform: translate(-50%, -50%);
             z-index: 0;
-            animation: pulseGlow 10s infinite ease-in-out; /* Slower, gentler pulse */
+
             border-radius: 50%; /* Ensure it's a soft circle */
         }
         .content-z {
             position: relative;
             z-index: 1;
         }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.98); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
-        }
+
         .ultra-large-text {
             font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
             font-weight: 900; /* Noto Sans SC Black */

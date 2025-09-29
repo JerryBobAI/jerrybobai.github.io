@@ -88,12 +88,9 @@
             z-index: -1;
             border-radius: 50%;
             pointer-events: none;
-            animation: pulseGlow 10s infinite ease-in-out;
+
         }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.95); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
-        }
+
         .pseudo-glow-purple::before {
             background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.0) 70%);
         }

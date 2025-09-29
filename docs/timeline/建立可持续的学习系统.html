@@ -66,16 +66,13 @@
             background-image: radial-gradient(circle, rgba(135,206,235,0.1) 0%, rgba(135,206,235,0.05) 40%, transparent 70%);
             transform: translate(-50%, -50%);
             z-index: 0;
-            animation: pulseGlow 10s infinite ease-in-out;
+
         }
         .content-z {
             position: relative;
             z-index: 1;
         }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-        }
+
         .ultra-large-text {
             font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
             font-weight: 900; /* Noto Sans SC Black */

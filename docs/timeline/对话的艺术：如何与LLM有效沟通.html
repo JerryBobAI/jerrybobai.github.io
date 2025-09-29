@@ -1,86 +1,112 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>对话的艺术：如何与LLM有效沟通</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
-            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-color: #FDF6E3;
+            /* 吉卜力米白底色 */
             background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
-                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
-                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
-                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+                linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
             background-size: 20px 20px;
-            color: #3A2E2C; /* 主文字颜色 深棕 */
+            color: #3A2E2C;
+            /* 主文字颜色 深棕 */
         }
+
         .font-noto-sans-sc {
             font-family: 'Noto Sans SC', sans-serif;
         }
-        .highlight-text, .highlight-stat {
-            color: #FFB300; /* 温暖的琥珀黄高亮 */
+
+        .highlight-text,
+        .highlight-stat {
+            color: #FFB300;
+            /* 温暖的琥珀黄高亮 */
         }
+
         .card {
-            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            background-color: rgba(255, 255, 255, 0.75);
+            /* 半透明白色卡片 */
             backdrop-filter: blur(12px);
-            border-radius: 1.5rem; /* 苹果风格圆角 */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
-            padding: 1.5rem; /* 24px */
+            border-radius: 1.5rem;
+            /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            /* 24px */
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
             position: relative;
-            overflow: hidden; /* For glow effects */
+            overflow: hidden;
+            /* For glow effects */
         }
+
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0, 0, 0, 0.05);
         }
+
         .card-alt-bg {
-            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+            background-color: rgba(224, 242, 247, 0.75);
+            /* 淡天蓝色半透明 */
         }
+
         .card-darker-alt-bg {
-            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+            background-color: rgba(206, 229, 234, 0.8);
+            /* 稍深一点的淡天蓝色 */
         }
-        .tech-glow::before { /* 卡片背景光晕效果保留 */
+
+        .tech-glow::before {
+            /* 卡片背景光晕效果保留 */
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
             width: 250%;
             height: 250%;
-            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            background-image: radial-gradient(circle, rgba(255, 179, 0, 0.15) 0%, rgba(255, 179, 0, 0.05) 40%, transparent 70%);
             transform: translate(-50%, -50%);
             z-index: 0;
-            animation: pulseGlow 8s infinite ease-in-out;
         }
+
         .content-z {
             position: relative;
             z-index: 1;
         }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
-            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
-        }
+
         .ultra-large-text {
-            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
-            font-weight: 900; /* Noto Sans SC Black */
+            font-size: clamp(3rem, 10vw, 8rem);
+            /* Responsive ultra large text */
+            font-weight: 900;
+            /* Noto Sans SC Black */
             line-height: 1;
         }
+
         .large-stat-text {
-            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            /* For large stats like subscriber count */
             font-weight: 700;
         }
+
         .list-icon {
-            color: #FFB300; /* Highlight color for list icons */
-            margin-right: 0.5rem; /* Space between icon and text */
+            color: #FFB300;
+            /* Highlight color for list icons */
+            margin-right: 0.5rem;
+            /* Space between icon and text */
         }
     </style>
 </head>
+
 <body class="p-8 md:p-12 lg:p-16 antialiased">
 
     <div class="container mx-auto max-w-7xl text-center md:text-left mb-20 mt-8">
@@ -91,7 +117,8 @@
             如何与LLM有效沟通
         </h2>
         <p class="text-xl md:text-2xl leading-relaxed max-w-4xl mx-auto md:mx-0">
-            Inspired by the <b class="highlight-text">Mom Test</b>, the key is not to ask for opinions or future hypotheticals. Instead, ask for <b class="highlight-text">facts, evidence, and specific behaviors.</b>
+            Inspired by the <b class="highlight-text">Mom Test</b>, the key is not to ask for opinions or future
+            hypotheticals. Instead, ask for <b class="highlight-text">facts, evidence, and specific behaviors.</b>
         </p>
     </div>
 
@@ -103,7 +130,8 @@
                 <h3 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
                     <i class="fas fa-search list-icon"></i> 避免意见，<span class="highlight-text">追问证据</span>
                 </h3>
-                <p class="text-lg mb-6">Bad prompts lead to polite but useless feedback. Push for concrete, verifiable facts instead.</p>
+                <p class="text-lg mb-6">Bad prompts lead to polite but useless feedback. Push for concrete, verifiable
+                    facts instead.</p>
                 <div class="bg-red-500 bg-opacity-10 p-4 rounded-xl mb-4 border border-red-200">
                     <p class="font-bold mb-2 text-red-700"><i class="fas fa-times-circle mr-2"></i> 坏 Prompt</p>
                     <ul class="text-red-600">
@@ -127,7 +155,8 @@
                 <h3 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
                     <i class="fas fa-history list-icon"></i> 避免假设，<span class="highlight-text">回溯历史</span>
                 </h3>
-                <p class="text-lg mb-6">Don't let the model fantasize about the future. Anchor its response in its existing knowledge base.</p>
+                <p class="text-lg mb-6">Don't let the model fantasize about the future. Anchor its response in its
+                    existing knowledge base.</p>
                 <div class="bg-red-500 bg-opacity-10 p-4 rounded-xl mb-4 border border-red-200">
                     <p class="font-bold mb-2 text-red-700"><i class="fas fa-times-circle mr-2"></i> 坏 Prompt</p>
                     <ul class="text-red-600">
@@ -150,7 +179,8 @@
                 <h3 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
                     <i class="fas fa-bullseye list-icon"></i> 避免模糊，<span class="highlight-text">要求具体</span>
                 </h3>
-                <p class="text-lg mb-6">Vague instructions yield generic results. Be precise about the output you need.</p>
+                <p class="text-lg mb-6">Vague instructions yield generic results. Be precise about the output you need.
+                </p>
                 <div class="bg-red-500 bg-opacity-10 p-4 rounded-xl mb-4 border border-red-200">
                     <p class="font-bold mb-2 text-red-700"><i class="fas fa-times-circle mr-2"></i> 坏 Prompt</p>
                     <ul class="text-red-600">
@@ -167,14 +197,15 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="card p-8 lg:p-12 tech-glow">
             <div class="content-z">
                 <p class="text-sm uppercase tracking-wider mb-2 font-semibold text-gray-500">Principle 4</p>
                 <h3 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
                     <i class="fas fa-running list-icon"></i> 行为驱动，<span class="highlight-text">而非态度</span>
                 </h3>
-                <p class="text-lg mb-6">It's easy for models to lie about their "feelings". It's much harder to generate a realistic behavior flow.</p>
+                <p class="text-lg mb-6">It's easy for models to lie about their "feelings". It's much harder to generate
+                    a realistic behavior flow.</p>
                 <div class="bg-red-500 bg-opacity-10 p-4 rounded-xl mb-4 border border-red-200">
                     <p class="font-bold mb-2 text-red-700"><i class="fas fa-times-circle mr-2"></i> 坏 Prompt</p>
                     <ul class="text-red-600">
@@ -196,7 +227,8 @@
                 <h3 class="text-4xl lg:text-5xl font-bold font-noto-sans-sc mb-4 leading-tight">
                     <i class="fas fa-shield-alt list-icon"></i> 验证逻辑，<span class="highlight-text">而不是求赞美</span>
                 </h3>
-                <p class="text-lg mb-6">A model's tendency to agree can lead to false confidence. Force it to be critical and find flaws in your logic.</p>
+                <p class="text-lg mb-6">A model's tendency to agree can lead to false confidence. Force it to be
+                    critical and find flaws in your logic.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-red-500 bg-opacity-10 p-4 rounded-xl border border-red-200">
                         <p class="font-bold mb-2 text-red-700"><i class="fas fa-times-circle mr-2"></i> 坏 Prompt</p>
@@ -215,9 +247,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container mx-auto max-w-7xl mt-20 text-center">
-        <div class="relative inline-block px-6 py-4 rounded-full bg-yellow-400 bg-opacity-30 border border-yellow-500 backdrop-filter backdrop-blur-sm">
+        <div
+            class="relative inline-block px-6 py-4 rounded-full bg-yellow-400 bg-opacity-30 border border-yellow-500 backdrop-filter backdrop-blur-sm">
             <p class="text-lg md:text-xl font-semibold font-noto-sans-sc leading-tight">
                 <i class="fas fa-lightbulb list-icon"></i>
                 总结：把 Mom Test 反“礼貌”的思维套到LLM上，就是 <span class="highlight-text font-bold">逼它不要给面子话，而要给事实、行为、反例和限制。</span>
@@ -228,4 +261,5 @@
     <!-- 加载组件脚本 -->
     <script src="../../js/main.js"></script>
 </body>
+
 </html>
