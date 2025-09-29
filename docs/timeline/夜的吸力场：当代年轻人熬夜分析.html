@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夜的吸力场：当代年轻人熬夜分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 手绘纹理感背景，浅棕色点状/网格 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 已移除 pulseGlow 动画，固定光晕效果 */
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           opacity: 0.7; /* 固定亮度，消除闪烁 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em; /* Tighten for visual impact */
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 响应式兼容更大的显示器宽度 */
+        .container {
+            max-width: 1920px;
+        }
+
+        /* 勾线图形化 - 简化模拟 */
+        .line-art {
+            stroke: #3A2E2C;
+            stroke-width: 2;
+            fill: none;
+        }
+        .fill-highlight {
+            fill: rgba(255, 179, 0, 0.1);
+            stroke: #FFB300;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 lg:p-12 transition-colors duration-500">
+
+    <div class="container mx-auto">
+
+        <header class="text-center mb-16 lg:mb-24 pt-8">
+            <h1 class="font-noto-sans-sc ultra-large-text highlight-text mb-4 leading-none">
+                夜的吸力场
+            </h1>
+            <p class="text-2xl md:text-3xl font-light text-gray-700 font-open-sans">
+                THE NIGHT'S GRAVITATIONAL PULL
+            </p>
+            <p class="mt-6 text-xl md:text-2xl max-w-4xl mx-auto font-noto-sans-sc">
+                当代年轻人难以戒断熬夜，不是单一原因，而是<strong>生理、心理、技术与制度</strong>共同作用，形成稳定的<strong>“夜间吸力场”</strong>。
+            </p>
+        </header>
+
+        <section class="mb-16 lg:mb-24">
+            <div class="card card-darker-alt-bg p-8 lg:p-16 text-center tech-glow">
+                <div class="content-z">
+                    <p class="text-xl md:text-3xl font-noto-sans-sc mb-4 text-gray-800">本质上，夜晚被年轻人视为</p>
+                    <div class="ultra-large-text font-noto-sans-sc text-[#2C5F2D] dark:text-[#3A2E2C] leading-tight">
+                        唯一可控的<span class="highlight-text">自由</span>
+                    </div>
+                    <p class="text-xl md:text-3xl font-open-sans mt-4 text-gray-700">
+                        THE ONLY CONTROLLABLE FREEDOM
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 lg:mb-24">
+            <div class="card p-6 md:p-8 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-4xl font-extrabold font-noto-sans-sc mb-4 flex items-center">
+                        <i class="fas fa-brain list-icon text-3xl"></i> 生理错配
+                    </h2>
+                    <p class="text-lg font-open-sans text-gray-600 mb-4">BIOLOGICAL MISALIGNMENT</p>
+                    <ul class="space-y-3 font-noto-sans-sc text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-moon"></i></span>
+                            <span class="flex-1"><strong>清醒红利</strong>：昼夜节律让大脑在晚间<strong>情绪更敏感、灵感更活跃</strong>。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-bolt"></i></span>
+                            <span class="flex-1"><strong>多巴胺补偿</strong>：长期压力下，夜晚用短视频、社交的<strong>即时快感</strong>进行自我补偿。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-hand-paper"></i></span>
+                            <span class="flex-1">结果是：白天被外界支配，夜晚用多巴胺补偿，形成<strong>“报复性熬夜”</strong>。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 card-alt-bg">
+                <div class="content-z">
+                    <h2 class="text-4xl font-extrabold font-noto-sans-sc mb-4 flex items-center">
+                        <i class="fas fa-comment-dots list-icon text-3xl"></i> 心理焦虑
+                    </h2>
+                    <p class="text-lg font-open-sans text-gray-600 mb-4">PSYCHOLOGICAL FEARS</p>
+                    <ul class="space-y-3 font-noto-sans-sc text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-hourglass-half"></i></span>
+                            <span class="flex-1"><strong>效率崇拜</strong>：休息被视为低效，自我价值捆绑在输出与在线存在上。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-check-double"></i></span>
+                            <span class="flex-1"><strong>补齐窗口</strong>：夜晚成为补工作、补社交、补娱乐的<strong>“把今天补齐”</strong>时间。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-link"></i></span>
+                            <span class="flex-1"><strong>错失恐惧</strong>：错失恐惧与持续连接感让人很难主动退出。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 card-darker-alt-bg">
+                <div class="content-z">
+                    <h2 class="text-4xl font-extrabold font-noto-sans-sc mb-4 flex items-center">
+                        <i class="fas fa-code list-icon text-3xl"></i> 算法陷阱
+                    </h2>
+                    <p class="text-lg font-open-sans text-gray-600 mb-4">TECHNOLOGY & ALGORITHMS</p>
+                    <ul class="space-y-3 font-noto-sans-sc text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-infinity"></i></span>
+                            <span class="flex-1"><strong>无终点流</strong>：内容被设计成无限滚动，缺乏<strong>“完成感”</strong>，只有滑动的惯性。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-retweet"></i></span>
+                            <span class="flex-1"><strong>可变奖励</strong>：算法与通知以<strong>精准的可变奖励</strong>延长停留时长。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-bell-slash"></i></span>
+                            <span class="flex-1"><strong>最佳捕获时段</strong>：晚间安静、外界少打扰，使这类产品进入最佳<strong>“捕获时段”</strong>。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 md:p-8 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-4xl font-extrabold font-noto-sans-sc mb-4 flex items-center">
+                        <i class="fas fa-building list-icon text-3xl"></i> 制度挤压
+                    </h2>
+                    <p class="text-lg font-open-sans text-gray-600 mb-4">ECONOMIC & SYSTEMIC PRESSURE</p>
+                    <ul class="space-y-3 font-noto-sans-sc text-lg">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-user-clock"></i></span>
+                            <span class="flex-1"><strong>隐性加班</strong>：不确定性与竞争把“可被替代”的焦虑转化为延长工时与隐性加班。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-traffic-light"></i></span>
+                            <span class="flex-1"><strong>通勤成本</strong>：住房通勤与育儿成本挤压白天的个人时间。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-key"></i></span>
+                            <span class="flex-1">当制度不给白天留空，夜晚成为唯一能自由调度的<strong>“自留地”</strong>。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card p-6 md:p-8 card-alt-bg lg:col-span-2">
+                <div class="content-z grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1">
+                        <h2 class="text-4xl font-extrabold font-noto-sans-sc mb-4 flex items-center">
+                            <i class="fas fa-globe-asia list-icon text-3xl"></i> 社会时区错位
+                        </h2>
+                        <p class="text-lg font-open-sans text-gray-600">SOCIAL TIMEZONE MISMATCH</p>
+                    </div>
+                    <ul class="space-y-3 font-noto-sans-sc text-lg md:col-span-2">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-users-cog"></i></span>
+                            <span class="flex-1">城市生活把人分散到不同节奏上：同事客户跨时区、朋友零碎在线。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-exchange-alt"></i></span>
+                            <span class="flex-1">现实与数字世界的<strong>“时区叠加”</strong>，把夜晚变成各条时间线的交汇口。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 lg:mb-24">
+            <h2 class="text-5xl font-extrabold font-noto-sans-sc mb-10 text-center">
+                <span class="border-b-4 border-amber-400 pb-1">因果闭环</span>：为什么戒不掉？
+            </h2>
+            <div class="card p-8 md:p-12 tech-glow card-darker-alt-bg">
+                <div class="content-z">
+                    <div class="flex flex-col items-center">
+                        <div class="large-stat-text highlight-stat mb-6">
+                            <i class="fas fa-redo-alt fa-2x"></i>
+                        </div>
+                        <p class="text-xl md:text-2xl font-noto-sans-sc mb-6 text-gray-800 text-center">
+                            周而复始，形成稳定的<strong>负反馈闭环</strong>。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                        <div class="p-4 border-2 border-[#D2B48C] rounded-lg bg-white/70">
+                            <p class="text-xl font-bold font-noto-sans-sc">1. 白天失控</p>
+                            <p class="text-sm font-open-sans text-gray-600">(需求与他人)</p>
+                        </div>
+                        <div class="p-4 border-2 border-[#D2B48C] rounded-lg bg-white/70 relative">
+                            <i class="fas fa-arrow-right absolute top-1/2 -left-3 hidden md:block text-2xl text-[#D2B48C] -translate-y-1/2"></i>
+                            <i class="fas fa-arrow-down absolute left-1/2 -bottom-3 block md:hidden text-2xl text-[#D2B48C] -translate-x-1/2"></i>
+                            <p class="text-xl font-bold font-noto-sans-sc">2. 夜晚补偿</p>
+                            <p class="text-sm font-open-sans text-gray-600">(自我与快感)</p>
+                        </div>
+                        <div class="p-4 border-2 border-[#D2B48C] rounded-lg bg-white/70 relative">
+                            <i class="fas fa-arrow-right absolute top-1/2 -left-3 hidden md:block text-2xl text-[#D2B48C] -translate-y-1/2"></i>
+                            <i class="fas fa-arrow-down absolute left-1/2 -bottom-3 block md:hidden text-2xl text-[#D2B48C] -translate-x-1/2"></i>
+                            <p class="text-xl font-bold font-noto-sans-sc">3. 强化习惯</p>
+                            <p class="text-sm font-open-sans text-gray-600">(短期愉悦 & 算法助推)</p>
+                        </div>
+                        <div class="p-4 border-2 border-[#D2B48C] rounded-lg bg-white/70 relative">
+                            <i class="fas fa-arrow-right absolute top-1/2 -left-3 hidden lg:block text-2xl text-[#D2B48C] -translate-y-1/2"></i>
+                            <i class="fas fa-arrow-down absolute left-1/2 -bottom-3 block lg:hidden text-2xl text-[#D2B48C] -translate-x-1/2"></i>
+                            <p class="text-xl font-bold font-noto-sans-sc">4. 睡眠受损</p>
+                            <p class="text-sm font-open-sans text-gray-600">(第二天效率更差 → 回到 1)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-16 lg:pb-24">
+            <h2 class="text-5xl font-extrabold font-noto-sans-sc mb-10 text-center">
+                <span class="border-b-4 border-emerald-400 pb-1">破局微调</span>：现实可行的微调
+            </h2>
+            <p class="text-center text-xl max-w-3xl mx-auto mb-12 font-noto-sans-sc">
+                本质上，熬夜是对失去控制的白天做出的自我调度。与其和熬夜正面刚，不如<strong>改造闭环的入口与出口</strong>。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+
+                <div class="card p-6 md:p-8 card-alt-bg lg:col-span-2">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat mb-3">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">1. 奖励时段前置</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-3">FRONT-LOAD REWARDS</p>
+                        <p class="font-noto-sans-sc">把最想做的自由事移到<strong>晚饭后首小时</strong>，给夜晚设置一个“完成点”，降低拖延到深夜的概率。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 md:p-8 tech-glow lg:col-span-1">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat mb-3">
+                            <i class="fas fa-door-closed"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">2. 设“硬边界”的软仪式</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-3">SOFT RITUAL, HARD BOUNDARY</p>
+                        <p class="font-noto-sans-sc">固定一件可感知的关机动作（洗杯、拉窗），让身体知道<strong>“今天结束了”</strong>。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 md:p-8 card-alt-bg lg:col-span-2">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat mb-3">
+                            <i class="fas fa-splotch"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">3. 用“任务切点”而非时间点</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-3">TASK POINTS, NOT TIME POINTS</p>
+                        <p class="font-noto-sans-sc">停止在<strong>“可完成的节点”</strong>（一节课、一页笔记），避免被无终点流的拖拽。</p>
+                    </div>
+                </div>
+                
+                <div class="card p-6 md:p-8 tech-glow">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat mb-3">
+                            <i class="fas fa-minus-circle"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">4. 缩短而非戒断</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-3">SHORTEN, NOT QUIT</p>
+                        <p class="font-noto-sans-sc">先把“熬到1点”改为<strong>“熬到12点”</strong>，从时长减半开始，切断负反馈环的强度。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 md:p-8 card-darker-alt-bg lg:col-span-4">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat mb-3">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">5. 白天预留15分钟“自留地”</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-3">DAYTIME "ME TIME" SLOT</p>
+                        <p class="font-noto-sans-sc">中午或傍晚固定微自由，将可控性一点点搬回白天，从而<strong>减少夜晚的补偿压力源</strong>。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="text-center py-8 border-t border-dashed border-[#D2B48C] mt-12">
+            <p class="text-sm text-gray-500 font-open-sans">
+                GHIBLI STYLE PRESENTATION | ANALYSIS OF THE NIGHT'S GRAVITATIONAL PULL
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

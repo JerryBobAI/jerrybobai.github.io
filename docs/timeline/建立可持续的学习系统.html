@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>建立可持续的学习系统 </title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            scroll-behavior: smooth;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text {
+            color: #D35400; /* 更沉稳的南瓜橙色 */
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .highlight-text-glow {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+            text-shadow: 0 0 15px rgba(255, 179, 0, 0.5);
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 2rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.65); /* 淡天蓝色半透明 */
+        }
+        .tech-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-image: radial-gradient(circle, rgba(135,206,235,0.1) 0%, rgba(135,206,235,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 10s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.9); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+            letter-spacing: -0.03em;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1;
+        }
+        .outline-text {
+            -webkit-text-stroke: 1px #3A2E2C;
+            color: transparent;
+        }
+        .list-icon {
+            color: #D35400; /* Highlight color for list icons */
+            margin-right: 0.75rem; /* Space between icon and text */
+        }
+        /* Reveal on scroll animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        <header class="min-h-screen flex flex-col justify-center text-center py-20">
+            <h1 class="font-noto-sans-sc ultra-large-text mb-4 reveal">
+                建立可持续的<br class="md:hidden"><br/><span class="highlight-text">学习系统</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-700/80 mb-8 uppercase tracking-widest reveal" style="transition-delay: 100ms;">
+                Build a Sustainable Learning System
+            </p>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-lg text-gray-600/90 font-noto-sans-sc font-light reveal" style="transition-delay: 200ms;">
+                <span>明确目标</span> &middot;
+                <span>刻意练习</span> &middot;
+                <span>间隔复习</span> &middot;
+                <span>快速输出</span> &middot;
+                <span>持续迭代</span>
+            </div>
+        </header>
+
+        <section class="py-24">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-noto-sans-sc text-5xl md:text-6xl font-bold">原则 <span class="text-xl align-middle">PRINCIPLES</span></h2>
+                <p class="mt-4 text-xl text-gray-600/90">先把方法定型</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card reveal">
+                    <div class="content-z">
+                        <i class="fa-solid fa-rocket text-3xl highlight-text mb-4"></i>
+                        <h3 class="font-noto-sans-sc text-2xl font-bold mb-2">输出优先</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-4">OUTPUT FIRST</p>
+                        <p>学习不是收藏信息，而是生产可验证的结果。学到的第一步就是“用”：写一段解说、做一道题、讲给同事听。</p>
+                    </div>
+                </div>
+                <div class="card reveal" style="transition-delay: 100ms;">
+                    <div class="content-z">
+                        <i class="fa-solid fa-bullseye text-3xl highlight-text mb-4"></i>
+                        <h3 class="font-noto-sans-sc text-2xl font-bold mb-2">刻意练习</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-4">DELIBERATE PRACTICE</p>
+                        <p>把能力拆到最小颗粒，在明确标准下反复练。只练“会错的点”和“最难的1%”。</p>
+                    </div>
+                </div>
+                <div class="card reveal" style="transition-delay: 200ms;">
+                     <div class="content-z">
+                        <i class="fa-solid fa-repeat text-3xl highlight-text mb-4"></i>
+                        <h3 class="font-noto-sans-sc text-2xl font-bold mb-2">间隔重复</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-4">SPACED REPETITION</p>
+                        <p>用“忘记曲线”做朋友。1、3、7、30天的复盘卡点，借助题库/卡片实现低摩擦复习。</p>
+                    </div>
+                </div>
+                <div class="card lg:col-span-2 reveal" style="transition-delay: 300ms;">
+                     <div class="content-z flex items-start gap-6">
+                        <i class="fa-solid fa-lightbulb text-4xl highlight-text mt-1 flex-shrink-0"></i>
+                        <div>
+                            <h3 class="font-noto-sans-sc text-2xl font-bold mb-2">费曼技巧</h3>
+                            <p class="uppercase text-sm text-gray-500/80 mb-4">FEYNMAN TECHNIQUE</p>
+                            <p>迫使自己用“白话+例子+类比”讲清一个概念。讲不清等于没懂，等于立刻需要补上漏洞。</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card reveal" style="transition-delay: 400ms;">
+                     <div class="content-z">
+                        <i class="fa-solid fa-wand-magic-sparkles text-3xl highlight-text mb-4"></i>
+                        <h3 class="font-noto-sans-sc text-2xl font-bold mb-2">单点突破</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-4">SINGLE POINT BREAKTHROUGH</p>
+                        <p>任何领域选一个“可衡量的单技能”，用8–12周打穿。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-noto-sans-sc text-5xl md:text-6xl font-bold">流程 <span class="text-xl align-middle">PROCESS</span></h2>
+                <p class="mt-4 text-xl text-gray-600/90">把学习转成生产流水线</p>
+            </div>
+            
+            <div class="relative grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="card card-alt-bg tech-glow reveal">
+                    <div class="content-z">
+                        <div class="absolute top-4 right-6 large-stat-text opacity-10 outline-text">01</div>
+                        <h3 class="font-noto-sans-sc text-3xl font-bold mb-2">设定战果</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-6">DEFINE OBJECTIVE</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>不是“学会X”，而是“产出3篇教程”或“上线一个Demo”。</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>战果必须可数、可测、可验。</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-alt-bg tech-glow reveal" style="transition-delay: 150ms;">
+                    <div class="content-z">
+                         <div class="absolute top-4 right-6 large-stat-text opacity-10 outline-text">02</div>
+                        <h3 class="font-noto-sans-sc text-3xl font-bold mb-2">设计训练集</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-6">DESIGN TRAINING SET</p>
+                         <ul class="space-y-3">
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>标准：成功的样子（阅读完成率、用户反馈分）。</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>样例：收集10个最佳样例做“金标准”。</span></li>
+                             <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>错题本：记录“假设—操作—结果—改进”。</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-alt-bg tech-glow reveal" style="transition-delay: 300ms;">
+                    <div class="content-z">
+                        <div class="absolute top-4 right-6 large-stat-text opacity-10 outline-text">03</div>
+                        <h3 class="font-noto-sans-sc text-3xl font-bold mb-2">建立节奏</h3>
+                        <p class="uppercase text-sm text-gray-500/80 mb-6">ESTABLISH RHYTHM</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>每日微任务（25分钟）：攻克一个薄弱点。</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>每周冲刺：交付一个可评价的作品。</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check list-icon mt-1"></i><span>每月回顾：强化高杠杆动作。</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24">
+             <div class="text-center mb-16 reveal">
+                <h2 class="font-noto-sans-sc text-5xl md:text-6xl font-bold">工具与系统 <span class="text-xl align-middle">TOOLS & SYSTEMS</span></h2>
+                <p class="mt-4 text-xl text-gray-600/90">让好习惯自动发生</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                <div class="card p-6 reveal"><i class="fa-solid fa-layer-group text-4xl highlight-text mb-4"></i><h4 class="font-noto-sans-sc font-bold">卡片系统</h4></div>
+                <div class="card p-6 reveal" style="transition-delay: 100ms;"><i class="fa-solid fa-clone text-4xl highlight-text mb-4"></i><h4 class="font-noto-sans-sc font-bold">模板库</h4></div>
+                <div class="card p-6 reveal" style="transition-delay: 200ms;"><i class="fa-solid fa-home text-4xl highlight-text mb-4"></i><h4 class="font-noto-sans-sc font-bold">薄弱点雷达</h4></div>
+                <div class="card p-6 reveal" style="transition-delay: 300ms;"><i class="fa-solid fa-users text-4xl highlight-text mb-4"></i><h4 class="font-noto-sans-sc font-bold">评价闭环</h4></div>
+                <div class="card p-6 reveal col-span-2 md:col-span-1 lg:col-span-1" style="transition-delay: 400ms;"><i class="fa-solid fa-chart-line text-4xl highlight-text mb-4"></i><h4 class="font-noto-sans-sc font-bold">数据化</h4></div>
+            </div>
+        </section>
+        
+        <section class="py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div class="reveal">
+                <h3 class="font-noto-sans-sc text-4xl font-bold mb-2">时间与注意力</h3>
+                <p class="uppercase text-gray-500/80 mb-8">TIME & ATTENTION: TACTICS FOR THE FRAGMENTED ERA</p>
+                <ul class="space-y-4">
+                    <li class="flex items-start"><i class="fa-solid fa-mobile-screen list-icon mt-1"></i><div><strong class="font-noto-sans-sc">微学习栈: </strong> 任务拆到25分钟颗粒，随时推进。</div></li>
+                    <li class="flex items-start"><i class="fa-solid fa-moon list-icon mt-1"></i><div><strong class="font-noto-sans-sc">走路与睡眠: </strong> 步行重组思想，睡眠固化记忆。</div></li>
+                    <li class="flex items-start"><i class="fa-solid fa-toggle-on list-icon mt-1"></i><div><strong class="font-noto-sans-sc">环境开关: </strong> 物理切换（输入位/输出位）等于心智切换。</div></li>
+                    <li class="flex items-start"><i class="fa-solid fa-list-check list-icon mt-1"></i><div><strong class="font-noto-sans-sc">清单极简: </strong> 每天只容纳三件事：一练、一产、一复。</div></li>
+                </ul>
+            </div>
+            <div class="reveal" style="transition-delay: 150ms;">
+                <h3 class="font-noto-sans-sc text-4xl font-bold mb-2">认知与心态</h3>
+                <p class="uppercase text-gray-500/80 mb-8">COGNITION & MINDSET: MAKING GROWTH SUSTAINABLE</p>
+                 <ul class="space-y-4">
+                    <li class="flex items-start"><i class="fa-solid fa-vial list-icon mt-1"></i><div><strong class="font-noto-sans-sc">假设→实验→证据: </strong> 用最小实验验证，用真实结果决策。</div></li>
+                    <li class="flex items-start"><i class="fa-solid fa-map-pin list-icon mt-1"></i><div><strong class="font-noto-sans-sc">拥抱错误: </strong> 错误是地图，不是污点。把“失败样例集”做成资产。</div></li>
+                    <li class="flex items-start"><i class="fa-solid fa-infinity list-icon mt-1"></i><div><strong class="font-noto-sans-sc">复利视角: </strong> 优先积累“可复用、可组合”的技能。</div></li>
+                    <li class="flex items-start"><i class="fa-solid fa-trash-can list-icon mt-1"></i><div><strong class="font-noto-sans-sc">删除比增加更重要: </strong> 定期砍掉低杠杆资源和工具。</div></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="py-24">
+             <div class="text-center mb-16 reveal">
+                <h2 class="font-noto-sans-sc text-5xl md:text-6xl font-bold">一套可直接开跑的计划</h2>
+                <p class="mt-4 text-xl text-gray-600/90">A READY-TO-RUN PLAN</p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16">
+                <div class="text-center reveal">
+                    <p class="ultra-large-text highlight-text-glow">12</p>
+                    <p class="text-4xl font-bold -mt-4">周</p>
+                    <p class="uppercase tracking-widest">WEEKS</p>
+                </div>
+                <div class="w-full md:w-2/3 space-y-6">
+                    <div class="card card-alt-bg reveal" style="transition-delay: 100ms;">
+                        <div class="content-z">
+                            <h4 class="font-noto-sans-sc font-bold text-xl mb-1">第 1–2 周：启动与奠基</h4>
+                            <p>确定战果与金标准；搭建卡片与模板；完成3次小产出。</p>
+                        </div>
+                    </div>
+                    <div class="card card-alt-bg reveal" style="transition-delay: 200ms;">
+                        <div class="content-z">
+                            <h4 class="font-noto-sans-sc font-bold text-xl mb-1">第 3–8 周：冲刺与迭代</h4>
+                            <p>每周一个可评价作品；每次只改一个薄弱点；引入外部反馈。</p>
+                        </div>
+                    </div>
+                    <div class="card card-alt-bg reveal" style="transition-delay: 300ms;">
+                        <div class="content-z">
+                            <h4 class="font-noto-sans-sc font-bold text-xl mb-1">第 9–10 周：整合与沉淀</h4>
+                            <p>整合最佳实践，写一份“给别人也能用”的操作手册。</p>
+                        </div>
+                    </div>
+                    <div class="card card-alt-bg reveal" style="transition-delay: 400ms;">
+                        <div class="content-z">
+                            <h4 class="font-noto-sans-sc font-bold text-xl mb-1">第 11–12 周：升级与复盘</h4>
+                            <p>做一次“升级版产出”；复盘并规划下一轮。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-20">
+            <div class="reveal">
+                <p class="font-noto-sans-sc text-3xl md:text-4xl font-bold max-w-4xl mx-auto">
+                    把学习当成“产品迭代”：<br/>每次发布都更清晰、更好用、更接近真实世界的问题。
+                </p>
+                <p class="mt-4 text-lg text-gray-500/90">MAKE LEARNING AN ITERATIVE PRODUCT</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Simple scroll reveal animation
+        document.addEventListener("DOMContentLoaded", function() {
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optional: unobserve after revealing to save resources
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            revealElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

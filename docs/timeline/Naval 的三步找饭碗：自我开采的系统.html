@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naval 的三步找饭碗：自我开采的系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Base Ghibli-inspired styles */
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            scroll-behavior: smooth;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: pulseGlow 8s infinite ease-in-out;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(0.95); }
+            50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+        }
+        .ultra-large-text {
+            font-size: clamp(4rem, 12vw, 10rem); /* Ultra large text for impact */
+            font-weight: 900;
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300;
+            margin-right: 0.5rem;
+        }
+        /* Custom diagram styling */
+        .diagram-arrow {
+            color: #4CAF50; /* 草地绿 */
+            animation: arrow-bounce 2s infinite ease-in-out;
+        }
+        @keyframes arrow-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .step-circle {
+            width: 4.5rem;
+            height: 4.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            border: 4px solid #FFB300;
+            background-color: rgba(255, 179, 0, 0.1);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #FFB300;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="container mx-auto max-w-7xl">
+        
+        <header class="text-center mb-16 pt-8">
+            <h1 class="ultra-large-text font-noto-sans-sc mb-4 leading-tight">
+                <span class="highlight-text">自我开采</span>
+            </h1>
+            <p class="text-xl md:text-3xl max-w-4xl mx-auto font-light mt-4">
+                Naval's 3 Steps: <span class="font-semibold">找饭碗，不是选行业，是选赛道 + 打法</span>
+            </p>
+            <p class="text-lg mt-4 max-w-3xl mx-auto">
+                先把虚头巴脑撕掉，直看三步。你的“这碗饭”，是你用专长、杠杆和复利，亲手熬出来的。
+            </p>
+        </header>
+
+        <section class="mb-16">
+            <h2 class="text-5xl md:text-7xl font-black font-noto-sans-sc mb-12 text-center">
+                <span class="highlight-text">三步</span>找饭碗
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="card p-8 text-center tech-glow card-darker-alt-bg">
+                    <div class="content-z">
+                        <div class="step-circle mx-auto">1</div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">发掘天赋</h3>
+                        <p class="text-lg font-light italic mb-4">Uncover Unique Skill</p>
+                        <p class="text-base text-left">
+                            发掘被忽视的天赋——那些你做得<strong class="font-bold">异常轻松</strong>、别人做得异常吃力的东西。不靠证书，靠<strong class="font-bold highlight-text">长期可重复的优势</strong>。
+                        </p>
+                        <div class="mt-4 text-left">
+                             <i class="list-icon fas fa-mountain"></i> <span class="font-semibold">优势壁垒：</span> 轻松完成，他人吃力。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:hidden text-center text-5xl py-4">
+                    <i class="fas fa-arrow-down diagram-arrow"></i>
+                </div>
+                
+                <div class="card p-8 text-center card-alt-bg">
+                    <div class="content-z">
+                        <div class="step-circle mx-auto">2</div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">验证真需</h3>
+                        <p class="text-lg font-light italic mb-4">Validate Market Fit</p>
+                        <p class="text-base text-left">
+                            验证市场真需——用<strong class="font-bold">最小样本接单、收钱、复盘</strong>，把“自我感觉良好”打回“用户愿意付费”的原形。
+                        </p>
+                        <div class="mt-4 text-left">
+                             <i class="list-icon fas fa-money-bill-wave"></i> <span class="font-semibold">最小闭环：</span> 样本测试，现金流反馈。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:hidden text-center text-5xl py-4">
+                    <i class="fas fa-arrow-down diagram-arrow"></i>
+                </div>
+
+                <div class="card p-8 text-center tech-glow card-darker-alt-bg">
+                    <div class="content-z">
+                        <div class="step-circle mx-auto">3</div>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">搭建系统</h3>
+                        <p class="text-lg font-light italic mb-4">Build Compounding System</p>
+                        <p class="text-base text-left">
+                            搭建能复利的系统——<strong class="font-bold">流程化、产品化、资产化</strong>，让今天的努力能给明天持续供能，而不是一次性燃烧。
+                        </p>
+                        <div class="mt-4 text-left">
+                             <i class="list-icon fas fa-industry"></i> <span class="font-semibold">持续供能：</span> 资产化，避免一次性燃烧。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-5xl md:text-7xl font-black font-noto-sans-sc mb-12 text-center">
+                <span class="highlight-text">财富</span>公式
+            </h2>
+            <div class="card p-8 bg-white max-w-5xl mx-auto tech-glow">
+                <div class="content-z text-center">
+                    <p class="large-stat-text font-black mb-6">
+                        <span class="font-noto-sans-sc">财富</span> = 专长 x 杠杆 x 复利
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 text-left">
+                        
+                        <div class="border-l-4 border-amber-500 pl-4">
+                            <h3 class="text-2xl font-bold highlight-stat mb-1">专长 (Specific Knowledge)</h3>
+                            <p class="text-lg">
+                                独特、稀缺、可被识别。不是“会用工具”，而是<strong class="font-bold">“能定义问题”</strong>。
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-amber-500 pl-4">
+                            <h3 class="text-2xl font-bold highlight-stat mb-1">杠杆 (Leverage)</h3>
+                            <p class="text-lg">
+                                <strong class="font-bold">代码、媒体、资本</strong>三类放大器。选你能掌控、不求人也能跑的那一类。
+                            </p>
+                        </div>
+                        
+                        <div class="border-l-4 border-amber-500 pl-4">
+                            <h3 class="text-2xl font-bold highlight-stat mb-1">复利 (Compounding)</h3>
+                            <p class="text-lg">
+                                时间的同盟军。靠<strong class="font-bold">系统与信誉</strong>，把一次成功变成惯性成功。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-5xl md:text-7xl font-black font-noto-sans-sc mb-12 text-center">
+                <span class="highlight-text">今日</span>三刀
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <div class="card p-6 text-center card-alt-bg">
+                    <div class="content-z">
+                        <i class="fas fa-list-ol large-stat-text highlight-stat mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2">切割虚荣</h3>
+                        <p class="text-base">列出<strong class="font-bold">3个</strong>你轻松他人吃力的技能，<strong class="font-bold">删去</strong>带来虚荣无现金流的那一个。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center">
+                    <div class="content-z">
+                        <i class="fas fa-hand-holding-usd large-stat-text highlight-stat mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2">七日收钱</h3>
+                        <p class="text-base">设计一个能在<strong class="font-bold">7天</strong>收钱的最小服务/产品，价格低但<strong class="font-bold">标准硬</strong>。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center card-alt-bg">
+                    <div class="content-z">
+                        <i class="fas fa-clipboard-list large-stat-text highlight-stat mb-3"></i>
+                        <h3 class="text-xl font-bold mb-2">流程固化</h3>
+                        <p class="text-base">把交付流程固化为<strong class="font-bold">清单与模板</strong>，让第二个客户的<strong class="font-bold">边际成本下降</strong>。</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="text-center pt-10 pb-8 mt-16 border-t-2 border-dashed border-gray-300">
+            <p class="text-3xl font-bold font-noto-sans-sc mb-4">
+                <span class="highlight-text">点火。</span>
+            </p>
+            <p class="text-xl max-w-4xl mx-auto font-light">
+                别再把“找饭碗”当选行业，现在就行动：<br/>在你天然优势里找能被杠杆放大的动作，用系统让它越跑越快。
+            </p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
