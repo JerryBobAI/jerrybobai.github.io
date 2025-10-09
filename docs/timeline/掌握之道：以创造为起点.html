@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掌握之道：以创造为起点</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 核心吉卜力 & 苹果风格样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 柔和手绘纹理效果：浅棕色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-create {
+           color: #FFB300; /* 琥珀黄，代表创造/行动 */
+        }
+        .highlight-wall {
+            color: #E6B0AA; /* 浅粉/珊瑚色，代表障碍/真知 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.85); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; 
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.85); /* 淡天蓝色半透明 */
+        }
+        .tech-glow-yellow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255, 179, 0, 0.15) 0%, rgba(255, 179, 0, 0.05) 40%, transparent 70%); /* 黄色光晕 */
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); 
+           font-weight: 900; 
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-quote {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            line-height: 1.3;
+        }
+        .emphasis {
+            font-weight: bold; /* 使用CSS类实现强调 */
+        }
+        .step-number {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: #8CC63F; /* 嫩草绿 */
+            margin-right: 1.5rem;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 lg:p-16">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <section class="mb-16 pt-10 text-center">
+            <h1 class="font-noto-sans-sc ultra-large-text">
+                <span class="highlight-create">创 造</span> 
+                <span class="text-gray-400 font-light text-6xl block my-2 lg:inline-block lg:mx-8">→</span> 
+                <span class="highlight-wall">掌 握</span>
+            </h1>
+            <h2 class="text-2xl sm:text-3xl font-normal text-[#3A2E2C] mt-4 mb-8">
+                Dan Koe：如何真正掌握一项技能
+            </h2>
+            <p class="text-xl max-w-4xl mx-auto text-gray-600 font-light">
+                真正的学习，始于你愿意将知识付诸行动的那一刻。
+            </p>
+        </section>
+        
+        <section class="mb-20">
+            <h3 class="font-noto-sans-sc text-center text-4xl font-bold mb-12 text-[#3A2E2C]">
+                <i class="fas fa-hammer text-3xl mr-2 highlight-create"></i> 创造驱动的学习路径
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                
+                <div class="lg:col-span-1 card p-6 flex flex-col items-center justify-center text-center border-t-4 border-red-300">
+                    <span class="step-number text-red-400">01</span>
+                    <p class="text-lg font-bold mt-2">停止埋头苦读</p>
+                    <p class="text-sm text-gray-600">别再消耗在教程的迷宫里。</p>
+                </div>
+
+                <div class="lg:col-span-2 card card-alt-bg tech-glow-yellow p-8 flex flex-col justify-center border-t-4 border-amber-500">
+                    <div class="content-z flex items-center">
+                        <span class="step-number">02</span>
+                        <div>
+                            <p class="text-xl font-bold highlight-create mb-2">真正的学习始于创造</p>
+                            <p class="text-lg text-gray-700">勾勒一个你想做的东西——<span class="emphasis">小项目、作品、任何具体的事物</span>。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 card p-6 flex flex-col items-center justify-center text-center border-t-4 border-green-500">
+                    <span class="step-number">03</span>
+                    <p class="text-lg font-bold mt-2">立刻动手</p>
+                    <p class="text-sm text-gray-600">从理论到实践，直接启动。</p>
+                </div>
+
+                <div class="lg:col-span-1 card p-6 flex flex-col items-center justify-center text-center border-t-4 border-red-500">
+                    <span class="step-number text-red-500">04</span>
+                    <p class="text-lg font-bold highlight-wall mt-2">撞 墙</p>
+                    <p class="text-sm text-gray-600">很快你会遭遇障碍，这是<span class="emphasis">好事</span>。</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="font-noto-sans-sc text-center text-4xl font-bold mb-12 text-[#3A2E2C]">
+                <i class="fas fa-map-marker-alt text-3xl mr-2 text-gray-500"></i> 真知与终点
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="card p-8 border-l-8 border-red-400">
+                    <h4 class="text-2xl font-bold font-noto-sans-sc mb-3 highlight-wall">障碍的意义</h4>
+                    <p class="text-lg">这堵墙不是失败，它告诉你：你<span class="emphasis">真正需要学什么</span>。</p>
+                    <p class="text-sm mt-4 text-gray-600">（此时返回书籍或教程，目标清晰且高效。）</p>
+                </div>
+
+                <div class="card card-alt-bg p-8 border-l-8 border-green-500">
+                    <h4 class="text-2xl font-bold font-noto-sans-sc mb-3 text-green-700">终极掌握之道</h4>
+                    <p class="text-lg"><span class="emphasis">如此往复</span>，直到项目完成。</p>
+                    <p class="text-sm mt-4 text-gray-600">当你能创造出成品，就真正掌握了技能，而非停留在理论。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10 card p-10 bg-[#E6B0AA]/[0.15] border-t-8 border-red-400 text-center">
+            <h3 class="font-noto-sans-sc text-3xl font-bold mb-4 highlight-wall">最大的陷阱：准备的迷宫</h3>
+            <p class="text-xl max-w-4xl mx-auto text-gray-700">
+                大多数人的问题在于，他们在<span class="emphasis">教程的迷宫里转了好几年</span>，却两手空空——因为他们一直在为<span class="emphasis">「某一天」</span>做准备，而那一天<span class="emphasis">从未到来</span>。
+            </p>
+        </section>
+        
+        <footer class="text-center text-gray-500 text-sm py-10 border-t border-gray-300">
+            <p>&copy; 2025 Mastery by Creation. 由行动定义的技能。</p>
+            <p>A Ghibli-Inspired Take on Dan Koe's Wisdom.</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

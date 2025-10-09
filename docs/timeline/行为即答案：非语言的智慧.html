@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行为即答案：非语言的智慧</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 核心吉卜力 & 苹果风格样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 柔和手绘纹理效果：浅棕色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-action {
+           color: #FFB300; /* 琥珀黄，代表行动/真相 */
+        }
+        .highlight-calm {
+            color: #5DADE2; /* 淡蓝色，代表冷静/智慧 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.85); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; 
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(255, 248, 225, 0.85); /* 淡黄色背景 */
+        }
+        .tech-glow-yellow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255, 179, 0, 0.15) 0%, rgba(255, 179, 0, 0.05) 40%, transparent 70%); /* 黄色光晕 */
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); 
+           font-weight: 900; 
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); 
+           font-weight: 700;
+           line-height: 1.1;
+        }
+        .emphasis {
+            font-weight: bold; /* 使用CSS类实现强调 */
+        }
+        .quote-icon {
+            color: #E6B0AA; /* 浅粉/珊瑚色 */
+            font-size: clamp(4rem, 8vw, 6rem);
+            margin-bottom: 1rem;
+        }
+        .large-quote {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 lg:p-16">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <section class="mb-20 pt-10 text-center">
+            <h1 class="font-noto-sans-sc ultra-large-text">
+                <span class="highlight-action">行 为</span> 
+                <span class="text-gray-400 font-light text-6xl block my-2 lg:inline-block lg:mx-8">即</span> 
+                <span class="highlight-calm">答 案</span>
+            </h1>
+            <h2 class="text-2xl sm:text-3xl font-normal text-[#3A2E2C] mt-4 mb-12">
+                非语言的智慧：真相不需逼问
+            </h2>
+            
+            <div class="card p-8 max-w-4xl mx-auto border-b-4 border-amber-500">
+                <i class="fas fa-quote-left quote-icon opacity-50"></i>
+                <p class="font-noto-sans-sc large-quote text-[#3A2E2C]">
+                    <span class="emphasis">不要逼别人说真话</span>，他的<span class="emphasis">行为举止</span>就是答案。
+                </p>
+                <i class="fas fa-quote-right quote-icon opacity-50 mt-4 block ml-auto"></i>
+            </div>
+        </section>
+        
+        <section class="mb-20">
+            <h3 class="font-noto-sans-sc text-center text-4xl font-bold mb-12 text-[#3A2E2C]">
+                <i class="fas fa-sitemap text-3xl mr-2 text-gray-500"></i> 非 语 言 的 逻 辑
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="card p-8 border-l-4 border-blue-500">
+                    <h4 class="text-2xl font-bold font-noto-sans-sc mb-3 highlight-calm">逼问的陷阱</h4>
+                    <p class="text-sm uppercase text-gray-600 mb-4">Why Asking is Futile</p>
+                    <ul class="space-y-3 mt-4 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-user-lock list-icon mt-1 text-blue-500"></i>
+                            <div class="ml-3 text-lg">言语可以<span class="emphasis">伪装</span>，用于维护自尊或社交需求。</div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle list-icon mt-1 text-blue-500"></i>
+                            <div class="ml-3 text-lg">逼问只会得到你<span class="emphasis">想听的答案</span>，而非真相。</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card card-alt-bg tech-glow-yellow p-8 border-l-4 border-amber-500">
+                    <div class="content-z">
+                        <h4 class="text-2xl font-bold font-noto-sans-sc mb-3 highlight-action">行为的铁证</h4>
+                        <p class="text-sm uppercase text-gray-600 mb-4">Actions Are The Ultimate Data</p>
+                        <ul class="space-y-3 mt-4 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-running list-icon mt-1 text-amber-500"></i>
+                                <div class="ml-3 text-lg"><span class="emphasis">行动成本</span>高，无法长期作假。</div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon mt-1 text-amber-500"></i>
+                                <div class="ml-3 text-lg">行为反映了<span class="emphasis">潜意识的优先排序</span>。</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="font-noto-sans-sc text-center text-4xl font-bold mb-12 text-[#3A2E2C]">
+                <i class="fas fa-eye text-3xl mr-2 text-gray-500"></i> 观 察 的 维 度
+            </h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="card p-6 border-t-4 border-amber-500">
+                    <i class="fas fa-stopwatch text-3xl highlight-action mb-2 opacity-75"></i>
+                    <h4 class="font-noto-sans-sc text-xl font-bold mb-2">时间分配</h4>
+                    <p class="text-sm">看他将时间<span class="emphasis">花在哪里</span>。他为谁腾出空闲，对谁总说“忙”。</p>
+                    <p class="text-xs text-gray-600 border-l-2 border-amber-500 pl-2 italic mt-2">“他总说很爱我，却从不接电话。”</p>
+                </div>
+
+                <div class="card p-6 border-t-4 border-blue-500">
+                    <i class="fas fa-hand-holding-usd text-3xl highlight-calm mb-2 opacity-75"></i>
+                    <h4 class="font-noto-sans-sc text-xl font-bold mb-2">资源投入</h4>
+                    <p class="text-sm">看他将金钱、精力和<span class="emphasis">注意力投向何处</span>。真心在哪里，资源就流向哪里。</p>
+                    <p class="text-xs text-gray-600 border-l-2 border-blue-500 pl-2 italic mt-2">“他说支持我的梦想，但从不愿帮忙。”</p>
+                </div>
+
+                <div class="card p-6 border-t-4 border-red-400">
+                    <i class="fas fa-exclamation-triangle text-3xl text-red-400 mb-2 opacity-75"></i>
+                    <h4 class="font-noto-sans-sc text-xl font-bold mb-2">危机反应</h4>
+                    <p class="text-sm">看他<span class="emphasis">在压力或冲突时的反应</span>。本能反应比任何承诺都真实。</p>
+                    <p class="text-xs text-gray-600 border-l-2 border-red-400 pl-2 italic mt-2">“嘴上说关心，一有麻烦就躲开了。”</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-10 card p-10 bg-[#5DADE2]/[0.1] border-t-8 border-blue-400 text-center">
+            <h3 class="font-noto-sans-sc large-stat-text mb-4 text-[#3A2E2C]">
+                <span class="highlight-calm">接 纳</span> 无 声 的 真 相
+            </h3>
+            <p class="text-xl max-w-4xl mx-auto text-gray-700">
+                <span class="emphasis">智者观察行为，而非听信言辞。</span>学会阅读非语言的语言，活得更通透。
+            </p>
+        </section>
+        
+        <footer class="text-center text-gray-500 text-sm py-10 border-t border-gray-300">
+            <p>&copy; 2025 Silent Wisdom. 洞察人性的真谛。</p>
+            <p>A Ghibli-Inspired Reflection on Non-Verbal Communication.</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

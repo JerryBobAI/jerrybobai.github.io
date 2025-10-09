@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代思想根基的层级结构</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 核心吉卜力 & 苹果风格样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 柔和手绘纹理效果：浅棕色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-title {
+           color: #5DADE2; /* 淡蓝色，代表智慧与高层级 */
+        }
+        .highlight-meta {
+            color: #FFB300; /* 琥珀黄，代表核心结构/信息 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.85); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; 
+        }
+        .card-level-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .emphasis {
+            font-weight: bold; /* 使用CSS类实现强调 */
+        }
+        .level-tag {
+            font-weight: 700;
+            color: #8CC63F; /* 嫩草绿 */
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .theory-title {
+            font-weight: 900;
+            color: #3A2E2C;
+            font-size: 1.5rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .tag-ontology { background-color: #E6B0AA; color: #3A2E2C; } /* 珊瑚红 */
+        .tag-epistemology { background-color: #FFD580; color: #3A2E2C; } /* 浅橙 */
+        .tag-methodology { background-color: #A0D796; color: #3A2E2C; } /* 浅绿 */
+        .tag-significance { background-color: #ADD8E6; color: #3A2E2C; } /* 浅蓝 */
+        .tag-meta { background-color: #D2B48C; color: #3A2E2C; } /* 浅棕 */
+        .tag-style {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 lg:p-16">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <section class="mb-20 pt-10 text-center">
+            <h1 class="font-noto-sans-sc text-6xl sm:text-7xl font-bold highlight-title">
+                现代思想根基
+            </h1>
+            <h2 class="text-4xl sm:text-5xl font-normal text-[#3A2E2C] mt-4 mb-8">
+                十五个维度，定义 <span class="emphasis">“如何看”</span>
+            </h2>
+            <p class="text-xl max-w-4xl mx-auto text-gray-600 font-light">
+                从物理学到语言学，从存在到网络，这些思想构成了我们理解世界和指导行动的层级结构。
+            </p>
+        </section>
+        
+        <section class="mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="card card-level-bg p-8 border-t-8 border-[#E6B0AA]">
+                    <div class="level-tag text-[#E6B0AA]">第一层：本体论革命 (Reality)</div>
+                    <div class="mt-4 space-y-5">
+                        <div class="theory-item">
+                            <span class="theory-title">1. 相对性思维</span>
+                            <p class="text-sm text-gray-700">没有绝对参照系，真理依赖于观察者和语境。</p>
+                            <span class="tag-style tag-ontology">爱因斯坦</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">2. 量子思维</span>
+                            <p class="text-sm text-gray-700">观察者与被观察者不可分割，影响结果。</p>
+                            <span class="tag-style tag-ontology">波粒二象性</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">3. 系统思维</span>
+                            <p class="text-sm text-gray-700">整体大于部分之和，理解连接而非孤立实体。</p>
+                            <span class="tag-style tag-ontology">复杂性/控制论</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-8 border-t-8 border-[#FFB300]">
+                    <div class="level-tag text-[#FFB300]">第二层：认识论革命 (Knowledge)</div>
+                    <div class="mt-4 space-y-5">
+                        <div class="theory-item">
+                            <span class="theory-title">4. 贝叶斯思维</span>
+                            <p class="text-sm text-gray-700">知识是概率的持续更新过程，而非绝对真理。</p>
+                            <span class="tag-style tag-epistemology">概率更新</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">5. 涌现思维</span>
+                            <p class="text-sm text-gray-700">复杂特性源于简单规则的迭代和互动。</p>
+                            <span class="tag-style tag-epistemology">进化论延伸</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">6. 计算思维</span>
+                            <p class="text-sm text-gray-700">一切信息处理皆可计算和形式化。</p>
+                            <span class="tag-style tag-epistemology">图灵机</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-level-bg p-8 border-t-8 border-[#8CC63F]">
+                    <div class="level-tag text-[#8CC63F]">第三层：方法论革命 (Action)</div>
+                    <div class="mt-4 space-y-5">
+                        <div class="theory-item">
+                            <span class="theory-title">7. 实证主义</span>
+                            <p class="text-sm text-gray-700">科学的边界在于“可证伪性”。</p>
+                            <span class="tag-style tag-methodology">波普尔</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">8. 结构主义</span>
+                            <p class="text-sm text-gray-700">关系先于实体，结构决定了意义。</p>
+                            <span class="tag-style tag-methodology">关系分析</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">9. 博弈思维</span>
+                            <p class="text-sm text-gray-700">结果由策略互动和参与者的选择塑造。</p>
+                            <span class="tag-style tag-methodology">策略互动</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-8 border-t-8 border-[#5DADE2]">
+                    <div class="level-tag text-[#5DADE2]">第四层：意义论革命 (Meaning)</div>
+                    <div class="mt-4 space-y-5">
+                        <div class="theory-item">
+                            <span class="theory-title">10. 存在主义</span>
+                            <p class="text-sm text-gray-700">存在先于本质，人的意义由选择定义。</p>
+                            <span class="tag-style tag-significance">萨特</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">11. 语言学转向</span>
+                            <p class="text-sm text-gray-700">语言的边界，即世界的边界。</p>
+                            <span class="tag-style tag-significance">维特根斯坦</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">12. 建构主义</span>
+                            <p class="text-sm text-gray-700">现实不是发现的，而是社会建构的。</p>
+                            <span class="tag-style tag-significance">社会建构</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card card-level-bg p-8 border-t-8 border-[#D2B48C]">
+                    <div class="level-tag text-[#D2B48C]">第五层：元思想 (Meta)</div>
+                    <div class="mt-4 space-y-5">
+                        <div class="theory-item">
+                            <span class="theory-title">13. 递归性</span>
+                            <p class="text-sm text-gray-700">系统能够指涉自身，无限循环和自指。</p>
+                            <span class="tag-style tag-meta">哥德尔</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">14. 信息论</span>
+                            <p class="text-sm text-gray-700">信息是负熵，是系统内不确定性的消除。</p>
+                            <span class="tag-style tag-meta">香农</span>
+                        </div>
+                        <div class="theory-item">
+                            <span class="theory-title">15. 网络思维</span>
+                            <p class="text-sm text-gray-700">一切皆是网络中的节点，连接比节点本身更重要。</p>
+                            <span class="tag-style tag-meta">节点与连接</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card p-8 bg-gray-50 flex flex-col justify-center border-t-8 border-[#FFB300]">
+                    <i class="fas fa-search-location text-5xl highlight-meta mb-4"></i>
+                    <h4 class="text-3xl font-bold font-noto-sans-sc mb-3 text-[#3A2E2C]">一言以蔽之</h4>
+                    <p class="text-xl text-gray-700 leading-relaxed">
+                        这十五个思想，本质上都在回答同一个问题：
+                    </p>
+                    <p class="text-4xl font-extrabold highlight-meta mt-4">
+                        “如何看”
+                    </p>
+                </div>
+
+            </div>
+        </section>
+        
+        <footer class="text-center text-gray-500 text-sm py-10 border-t border-gray-300">
+            <p>&copy; 2025 Modern Thought Architecture. 思想是看世界的工具。</p>
+            <p>A Ghibli-Inspired Exploration on Cognitive Frameworks.</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
