@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI执行，人类决策：系统替你上班</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 自定义CSS：吉卜力/苹果风格混合实现 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的手绘纹理/水彩渲染效果 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 使用高亮色自身透明度渐变制造科技感 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不干扰点击事件 */
+           opacity: 0.5; /* 调整光晕强度 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大文本 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* 统计数字 */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 响应式布局调整 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px; /* 适应更大的显示器 */
+            }
+        }
+        /* 简洁的勾线图形化 - 示例样式 */
+        .outline-graphic {
+            border: 4px solid #3A2E2C; /* 深棕色边框 */
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            font-size: 3rem;
+            color: #4CAF50; /* 草地嫩绿 */
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        .outline-graphic:hover {
+            transform: scale(1.05) rotate(-3deg);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+<div class="container mx-auto max-w-7xl font-noto-sans-sc">
+
+    <header class="py-16 text-center">
+        <p class="text-xl md:text-2xl text-gray-700 mb-4">The New Definition of Work</p>
+        <h1 class="ultra-large-text highlight-text leading-none mx-auto max-w-4xl tracking-tighter">
+            真正聪明的人，<span class="block mt-4">早就不上班了。</span>
+        </h1>
+        <p class="mt-8 text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+            到了2025，自由感有了具体的形状—让系统替你上班，让你只做决策。
+        </p>
+    </header>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-2">
+                <p class="text-xl md:text-3xl text-gray-600 mb-4">Core Shift</p>
+                <h2 class="ultra-large-text leading-tight text-[#4CAF50]">
+                    AI <span class="text-gray-900">执行</span>
+                </h2>
+                <h2 class="ultra-large-text leading-tight highlight-text">
+                    人类 <span class="text-gray-900">决策</span>
+                </h2>
+            </div>
+            <div class="card card-alt-bg p-8 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-hand-pointer text-4xl mb-4 text-[#FFB300]"></i>
+                    <h3 class="text-2xl font-bold mb-3">从操作者到指挥者</h3>
+                    <p class="text-gray-700">“我现在的同事不会抱怨，也不会甩锅。” 不再延长工时，而是用系统放大结果。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-12">
+        <p class="text-2xl md:text-3xl text-gray-700 mb-10 text-center">系统化能力的五根梁 (The Five Pillars)</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <span class="large-stat-text highlight-stat mr-4">01</span>
+                        <h3 class="text-2xl font-bold">封面：心理实验</h3>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        AI能画图，但能判断“什么能让人多看三秒”的人，才握着流量的命门。
+                    </p>
+                    <ul class="text-gray-800 space-y-2 text-sm">
+                        <li><i class="fas fa-palette list-icon"></i> AI每日跑量生成几十张图。</li>
+                        <li><i class="fas fa-chart-line list-icon"></i> AI自选最“可停顿”的封面。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <span class="large-stat-text highlight-stat mr-4">02</span>
+                        <h3 class="text-2xl font-bold">内容：影响人心</h3>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        文章不仅写给人，更写给 AI。AI 正在重分配注意力与信任。
+                    </p>
+                    <ul class="text-gray-800 space-y-2 text-sm">
+                        <li><i class="fas fa-brain list-icon"></i> AI关键词策略与自动发布。</li>
+                        <li><i class="fas fa-quote-left list-icon"></i> 目标：被AI引用、进入回答列表。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <span class="large-stat-text highlight-stat mr-4">03</span>
+                        <h3 class="text-2xl font-bold">短视频：追跑量</h3>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        不要追十个完美视频，要追一万个能跑起来的视频。创作一旦量产，价值在“怎么选”。
+                    </p>
+                    <ul class="text-gray-800 space-y-2 text-sm">
+                        <li><i class="fas fa-robot list-icon"></i> 脚本到画面全自动完成。</li>
+                        <li><i class="fas fa-tachometer-alt list-icon"></i> AI管速度，人管方向。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-8 tech-glow md:col-span-2 lg:col-span-1">
+                <div class="content-z">
+                    <div class="flex items-center mb-4">
+                        <span class="large-stat-text highlight-stat mr-4">04</span>
+                        <h3 class="text-2xl font-bold">网站：数字房地产</h3>
+                    </div>
+                    <p class="text-gray-700 mb-4">
+                        网站首页是地皮，关键词是地段，流量是租金。数字世界的土地，正在重估。
+                    </p>
+                    <ul class="text-gray-800 space-y-2 text-sm">
+                        <li><i class="fas fa-globe list-icon"></i> AI几小时建站，一站式图文布局。</li>
+                        <li><i class="fas fa-sync list-icon"></i> 顺手接 AI 客服、AI SEO 持续续费。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-8 tech-glow md:col-span-2 lg:col-span-2">
+                <div class="content-z grid grid-cols-1 lg:grid-cols-3 gap-4 items-center">
+                    <div class="lg:col-span-2">
+                        <div class="flex items-center mb-4">
+                            <span class="large-stat-text highlight-stat mr-4">05</span>
+                            <h3 class="text-2xl font-bold">Agent：系统的复利</h3>
+                        </div>
+                        <p class="text-gray-700 mb-4 text-xl">
+                            几行 Prompt，一个 Agent 就能代替几个人。你在卖“系统的复利”，而不是“人时”。
+                        </p>
+                        <ul class="text-gray-800 space-y-2 text-sm">
+                            <li><i class="fas fa-handshake list-icon"></i> 客户问询、订单录入、报表整理全自动。</li>
+                            <li><i class="fas fa-dollar-sign list-icon"></i> 长期收入，项目费 + 持续续费模式。</li>
+                        </ul>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="outline-graphic">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-16 text-center">
+        <p class="text-xl md:text-2xl text-gray-700 mb-6">Final Insight</p>
+        <h2 class="ultra-large-text leading-none mx-auto max-w-4xl text-[#3A2E2C]">
+            自由，就是<span class="highlight-text block mt-4">让AI替你上班</span>
+        </h2>
+        <p class="mt-8 text-xl md:text-3xl font-light text-gray-800 max-w-4xl mx-auto">
+            当系统在后台默默运转，你的人生，才真正开始。
+        </p>
+        
+ 
+    </section>
+
+</div>
+
+<script>
+    // 示例：简单的卡片点击提示
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            // console.log('Card clicked: ', card.querySelector('h3').innerText);
+            // 实际应用中可用于页面滚动、数据加载等
+        });
+    });
+
+    // 响应式滚动指示器（如果需要多页模式）
+    // 鉴于要求默认一页内展示全部信息，此处不添加分页JS。
+</script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

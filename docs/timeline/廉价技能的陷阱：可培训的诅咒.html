@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>廉价技能的陷阱：可培训的诅咒</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 核心吉卜力 & 苹果风格样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 柔和手绘纹理效果：浅棕色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-danger {
+           color: #E6B0AA; /* 浅粉/珊瑚色，代表陷阱/廉价 */
+        }
+        .highlight-system {
+            color: #8CC63F; /* 嫩草绿，代表系统/壁垒 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.85); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; 
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-trap-bg {
+           background-color: rgba(255, 248, 225, 0.85); /* 淡黄色背景 */
+        }
+        .card-system-bg {
+           background-color: rgba(230, 245, 208, 0.85); /* 淡嫩绿半透明 */
+        }
+        .tech-glow-red::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(230, 176, 170, 0.15) 0%, rgba(230, 176, 170, 0.05) 40%, transparent 70%); /* 珊瑚红光晕 */
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); 
+           font-weight: 900; 
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); 
+           font-weight: 700;
+           line-height: 1.1;
+        }
+        .emphasis {
+            font-weight: bold; /* 使用CSS类实现强调 */
+        }
+        .command-icon {
+            color: #5DADE2; /* 淡蓝色 */
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-8 lg:p-16">
+
+    <div class="max-w-7xl mx-auto">
+        
+        <section class="mb-16 pt-10 text-center">
+            <h1 class="font-noto-sans-sc ultra-large-text">
+                <span class="highlight-danger">廉 价</span> 
+                <span class="text-gray-400 font-light text-6xl block my-2 lg:inline-block lg:mx-8">→</span> 
+                <span class="highlight-system">壁 垒</span>
+            </h1>
+            <h2 class="text-3xl sm:text-4xl font-normal text-[#3A2E2C] mt-4 mb-8">
+                可培训的技能，为什么注定廉价？
+            </h2>
+            <p class="text-xl max-w-4xl mx-auto text-gray-600 font-light">
+                纳瓦尔早已提醒：只要社会能培训你，社会就能<span class="emphasis">快速复制你</span>。<br/>可培训，意味着可替代；可替代，意味着你的价值被<span class="emphasis">按时间计价</span>。
+            </p>
+        </section>
+        
+        <section class="mb-20">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                
+                <div class="card card-trap-bg tech-glow-red p-8 lg:col-span-2">
+                    <div class="content-z">
+                        <i class="fas fa-handcuffs text-5xl highlight-danger mb-4"></i>
+                        <h3 class="text-3xl font-bold font-noto-sans-sc mb-3 highlight-danger">你的“确定性”正在榨干你</h3>
+                        <p class="text-xl text-gray-700">
+                            打工者思维的底层逻辑，就是永远追求<span class="emphasis">确定性</span>：有流程、有模板、有SOP。有了这些，老板就能<span class="emphasis">批量复制你</span>，快速评估你，只看“在规定时间内做完规定动作”。
+                        </p>
+                        <p class="text-lg mt-4 text-gray-600 italic">
+                            你的工作被塞进倒计时。你以为有不确定性？那只是基于既定流程的人为筛选——优胜劣汰的<span class="emphasis">“装配线游戏”</span>。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8 flex flex-col justify-between border-t-4 border-gray-400">
+                    <div>
+                        <i class="fas fa-book-dead text-5xl text-gray-400 mb-4"></i>
+                        <h4 class="text-2xl font-bold font-noto-sans-sc mb-2 text-[#3A2E2C]">你害怕面对的真相</h4>
+                        <p class="text-lg">
+                            人们把经典书当<span class="emphasis">家电说明书</span>：最好有人画重点、给模板。他们忘了：真正有价值的问题，<span class="emphasis">没有标准答案</span>。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="font-noto-sans-sc text-center text-4xl font-bold mb-12 text-[#3A2E2C]">
+                <i class="fas fa-flask text-3xl mr-2 highlight-system"></i> 反常识：从零件到系统
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="card p-8 border-l-8 border-red-400">
+                    <h4 class="text-2xl font-bold font-noto-sans-sc mb-3 highlight-danger">确定性是工业文明的枷锁</h4>
+                    <p class="text-lg">
+                        工业化协作需要标准化、可量化。你能学会，别人也能学会；新人学更快，薪资更低。<span class="emphasis">你被精准定价为“零件的平均工资”</span>。
+                    </p>
+                    <p class="text-sm mt-4 text-gray-600">想拿系统的收益？你必须不做零件，<span class="emphasis">改造生产线</span>。</p>
+                </div>
+
+                <div class="card card-system-bg p-8 border-l-8 border-green-500">
+                    <h4 class="text-2xl font-bold font-noto-sans-sc mb-3 highlight-system">唯一靠谱：非确定性系统</h4>
+                    <p class="text-lg">
+                        唯一靠谱的是一套<span class="emphasis">非确定性的工作法</span>：观察用户、测试内容、迭代策略。
+                    </p>
+                    <p class="text-sm mt-4 text-gray-600">打工者不喜欢它，因为它不保证结果；创业者拥抱它，因为它能创造<span class="emphasis">“别人复制也要付出同样时间”</span>的壁垒。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 card p-10 bg-[#E0F7FA] border-t-8 border-blue-500">
+            <h3 class="font-noto-sans-sc text-center text-4xl font-bold mb-10 highlight-system">
+                <i class="fas fa-bolt text-3xl mr-2"></i> 行动指令：把“可培训”踢出你的技能表
+            </h3>
+            
+            <ul class="space-y-4 max-w-4xl mx-auto">
+                <li class="flex items-start">
+                    <i class="fas fa-minus-circle command-icon"></i>
+                    <p class="text-lg">
+                        <span class="emphasis">识别并降权：</span> 把所有<span class="emphasis">“可被速成培训”</span>的技能列出来，标注它们的替代速度与市场饱和度，全部降权。
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-level-up-alt command-icon"></i>
+                    <p class="text-lg">
+                        <span class="emphasis">迁移至不可模板：</span> 把时间转向不可模板化的能力：用户洞察、问题定义、实验设计、策略迭代、叙事构建、品牌调度。
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-cogs command-icon"></i>
+                    <p class="text-lg">
+                        <span class="emphasis">搭系统，立壁垒：</span> 不做单点产出，做<span class="emphasis">“从观察到现金流”</span>的闭环。把流程、脚本、数据与复盘固化成你自己的操作系统。
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-bullseye command-icon"></i>
+                    <p class="text-lg">
+                        <span class="emphasis">定目标：</span> 不再以“完成任务”为目标，而是以<span class="emphasis">“提升系统产出率”</span>为目标——从计件工资，切换到系统收益。
+                    </p>
+                </li>
+            </ul>
+        </section>
+
+        <section class="mb-10 card p-10 bg-[#F5F5DC] border-t-8 border-green-500 text-center">
+            <h3 class="font-noto-sans-sc large-stat-text mb-4 highlight-system">
+                终局：系统替你工作
+            </h3>
+            <p class="text-xl max-w-4xl mx-auto text-gray-700">
+                可培训的技能，是社会批量化的工具；<span class="emphasis">不可培训的系统，才是你的护城河</span>。扔掉确定性的逻辑，接受反复试错的不确定性。等你跑通一次，你的收益不再来自“今天做了几件事”，<br/>而来自<span class="emphasis">“这套系统每天自己在赚钱”</span>。
+            </p>
+            <p class="text-2xl font-bold highlight-danger mt-6">
+                现在，就去拆掉你的说明书。把心智从装配线拉回实验室。
+            </p>
+        </section>
+        
+        <footer class="text-center text-gray-500 text-sm py-10 border-t border-gray-300">
+            <p>&copy; 2025 System Builder. 你的系统，就是你的资本。</p>
+            <p>A Ghibli-Inspired Manifesto on Value Creation.</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

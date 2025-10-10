@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挣钱的本质</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap">
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           padding-top: 4rem; /* For fixed header spacing */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.85); /* 稍微不那么透明的白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 2rem; /* 增加圆角 */
+           box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0,0,0,0.05);
+           padding: 2rem; /* 32px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden;
+        }
+        .card:hover {
+           transform: translateY(-7px); /* 增加悬停位移 */
+           box-shadow: 0 25px 40px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0,0,0,0.08);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.85); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.9); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 300%; /* 扩大光晕范围 */
+           height: 300%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.2) 0%, rgba(255,179,0,0.1) 40%, transparent 75%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           opacity: 0.6; /* 降低光晕透明度，更柔和 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3.5rem, 12vw, 9rem); /* 调整超大字体大小 */
+           font-weight: 900;
+           line-height: 0.95; /* 紧凑行高 */
+           letter-spacing: -0.06em;
+        }
+        .large-stat-text {
+           font-size: clamp(3rem, 7vw, 6rem);
+           font-weight: 800;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #008080;
+           margin-right: 0.75rem; /* 增加图标间距 */
+        }
+        .highlight-accent {
+            background-color: #008080;
+            color: #FDF6E3;
+            padding: 0.15rem 0.6rem;
+            border-radius: 0.6rem;
+            font-weight: 700;
+            white-space: nowrap; /* 确保高亮词语不被拆开 */
+        }
+        /* 优化排版：增加行距，特别是中文段落 */
+        .text-lg-improved {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.8; /* 增加行距 */
+        }
+        /* 响应式布局调整 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1700px; /* 进一步增加最大宽度 */
+            }
+        }
+    </style>
+</head>
+<body class="font-noto-sans-sc min-h-screen">
+
+    <div class="container mx-auto px-6 md:px-12 py-16 space-y-24">
+
+        <header class="text-center pb-12 border-b-2 border-gray-200">
+            <p class="text-xl md:text-3xl mb-4 text-[#008080] font-bold tracking-widest uppercase">Wealth Philosophy | 认知觉醒</p>
+            <h1 class="ultra-large-text highlight-text">
+                <span class="block">挣钱的本质</span>
+                <span class="block">是什么</span>
+            </h1>
+            <p class="text-xl md:text-2xl mt-8 max-w-4xl mx-auto text-gray-700">一次对财富、时间与人性的深度剖析，颠覆常人思维的九大核心洞察。</p>
+        </header>
+
+        <section id="section-1" class="grid lg:grid-cols-5 gap-12">
+            <div class="lg:col-span-3 card p-10 tech-glow">
+                <div class="content-z">
+                    <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 1 & 2: The Rich Mindset</p>
+                    <h2 class="large-stat-text mb-8">
+                        <span class="highlight-text block">富人思维</span>
+                        <span class="text-[#3A2E2C]">目标驱动的资源整合</span>
+                    </h2>
+                    <p class="text-lg-improved">普通人总是等到<span class="highlight-accent">“有十分资源”</span>才敢做十分事，永远处于<span class="highlight-text">被动准备</span>状态。而富人则先<span class="highlight-text">确定终极目标</span>，然后<span class="highlight-accent">主动匹配并整合资源</span>。目标在前，资源在后，执行力自然强大。</p>
+                </div>
+            </div>
+            <div class="lg:col-span-2 card card-darker-alt-bg p-10 flex flex-col justify-between">
+                <div>
+                    <i class="fas fa-cubes fa-4x list-icon mb-6"></i>
+                    <h3 class="text-3xl font-bold mb-4">财富运作升级公式</h3>
+                    <ul class="space-y-4 text-lg-improved">
+                        <li><i class="fas fa-hammer list-icon"></i> 体力赚钱：<span class="font-bold">灵活 (Agile)</span></li>
+                        <li><i class="fas fa-cogs list-icon"></i> 资源赚钱：<span class="font-bold">圆滑 (Resourceful)</span></li>
+                        <li><i class="fas fa-hand-holding-usd list-icon"></i> 资金赚钱：<span class="font-bold">狠心 (Decisive)</span></li>
+                        <li><i class="fas fa-users list-icon"></i> 用人赚钱：<span class="font-bold">豁达 (Magnanimous)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-2" class="grid lg:grid-cols-4 gap-12">
+            <div class="lg:col-span-2 card p-10">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 4 & 5: Time is the Ultimate Cost</p>
+                <h3 class="text-4xl font-extrabold mb-4 highlight-text">金钱，不是靠“一辈子”赚的</h3>
+                <p class="text-lg-improved">真正的财富，是在<span class="font-bold text-[#3A2E2C]">短时间内抓住关键机遇</span>所获得的爆发性增长。错过了，可能<span class="highlight-accent">一生不再有</span>。时刻准备着，不要停止脚步。</p>
+                <div class="mt-8 flex items-center space-x-6">
+                    <span class="large-stat-text text-[#008080]">COST</span>
+                    <p class="text-xl font-bold">时间成本，永远高于一切。</p>
+                </div>
+            </div>
+            <div class="lg:col-span-2 card card-alt-bg p-10 flex flex-col justify-center">
+                <i class="fas fa-brain fa-4x list-icon mb-6"></i>
+                <h2 class="text-4xl font-extrabold mb-4">花钱买效率，不解决短板</h2>
+                <p class="text-lg-improved">如果你能<span class="font-bold">花钱解决不擅长的问题</span>，就千万不要亲力亲为。自己解决短板是<span class="highlight-accent">低效且愚蠢</span>的行为。真正的财富创造者都是<span class="font-bold">全才</span>，懂得<span class="highlight-text">资源配置</span>。</p>
+            </div>
+        </section>
+
+        <section id="section-3" class="grid lg:grid-cols-3 gap-12">
+            <div class="lg:col-span-2 card p-10 tech-glow">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 7: Inner Peace</p>
+                <h2 class="ultra-large-text highlight-text mb-6">
+                    <span class="block">拒绝</span>
+                    <span class="block">被定义</span>
+                </h2>
+                <p class="text-lg-improved">永远不要在意他人对你的看法，尤其是无关紧要的人。他们的<span class="font-bold text-[#3A2E2C]">攻击只是嫉妒的投射</span>。你越是在乎，就越容易被情绪束缚，<span class="highlight-accent">注定失败</span>。内心，只与生死相关，其他都不重要。</p>
+            </div>
+            <div class="lg:col-span-1 card card-darker-alt-bg p-10 flex flex-col justify-center">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 6: Focus</p>
+                <i class="fas fa-mountain fa-4x list-icon mb-6"></i>
+                <h3 class="text-3xl font-extrabold mb-4">向上看，拉开差距</h3>
+                <p class="text-lg-improved">脱离现有圈子，只<span class="font-bold">关注最高处</span>。与平视或低视会让你<span class="highlight-accent">滋生惰性</span>甚至<span class="highlight-accent">倒退</span>。目标是缩小与顶尖的差距，而不是追求平庸的舒适。</p>
+            </div>
+        </section>
+
+        <section id="section-4" class="grid lg:grid-cols-5 gap-12">
+            <div class="lg:col-span-3 card p-10 card-alt-bg">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 10 & 11: Business is War</p>
+                <div class="flex items-start space-x-6">
+                    <i class="fas fa-skull-crossbones fa-4x list-icon flex-shrink-0 mt-2"></i>
+                    <div>
+                        <h2 class="text-4xl font-extrabold mb-4">商业，是<span class="highlight-text">残酷的零和游戏</span></h2>
+                        <p class="text-lg-improved">竞争的本质是<span class="font-bold">击垮对手</span>，如果可能，最好是彻底<span class="highlight-accent">断绝其后路</span>。真正的强者是<span class="highlight-text">无情的</span>。当对手向你求饶时，<span class="font-bold text-[#3A2E2C]">胜利才是唯一的答案</span>。你永远无法让所有人满意，更无法让别人比自己过得更好。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-2 card p-10 flex flex-col justify-between">
+                <div>
+                    <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 12 & 18: Predator vs. Prey</p>
+                    <i class="fas fa-paw fa-4x list-icon mb-6"></i>
+                    <h3 class="text-3xl font-bold mb-4">狼与羊的生存法则</h3>
+                    <p class="text-lg-improved">在社会丛林中，你只有两个选择：<span class="highlight-text">要么成为吃羊的狼</span>，<span class="highlight-text">要么做被吃的羊</span>。弱者沉浸在<span class="font-bold">美丽的假象</span>中。爱，不仅包括关怀，<span class="highlight-accent">更包括残酷</span>。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-5" class="grid lg:grid-cols-4 gap-12">
+            <div class="lg:col-span-2 card p-10 card-darker-alt-bg">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 15 & 14: Risk Control</p>
+                <i class="fas fa-gavel fa-4x list-icon mb-6"></i>
+                <h3 class="text-3xl font-extrabold mb-4">警惕：为他人担保</h3>
+                <p class="text-lg-improved">你<span class="font-bold">无法控制他人风险</span>。为他人担保可能导致你失去<span class="highlight-accent">所有财产</span>。投资亦然，凡是教你如何赚钱的，都是想<span class="font-bold">赚你的钱</span>，务必保持警惕。</p>
+            </div>
+            <div class="lg:col-span-2 card p-10 tech-glow">
+                <p class="text-sm uppercase tracking-widest text-gray-500 mb-3">Rule 17 & 16: Emotional Stability</p>
+                <div class="flex items-center space-x-6">
+                    <span class="large-stat-text highlight-text">ZERO</span>
+                    <h3 class="text-3xl font-extrabold">情绪波动，即是风险</h3>
+                </div>
+                <p class="text-lg-improved mt-4">经济形势不好时，<span class="font-bold">保持冷静</span>是第一要务。情绪过度紧张只会让事情更糟。要<span class="highlight-accent">关注自我感受</span>，远离负能量的人，保持心态平和。</p>
+            </div>
+        </section>
+
+        <footer class="text-center pt-20 mt-20 border-t-2 border-gray-200">
+            <h2 class="large-stat-text text-[#008080] mb-6">
+                <span class="block">财富的终局：<span class="highlight-text">适者生存</span></span>
+            </h2>
+            <p class="text-2xl max-w-5xl mx-auto mb-10 text-[#3A2E2C] leading-relaxed">
+                大自然的进化方式就是<span class="font-bold">留下强者，淘汰弱者</span>。这是生命不可逆的法则。
+            </p>
+            <p class="text-lg text-gray-500">
+                — 认识到残酷，才能在残酷中生存。爱不残酷，则不完整。 —
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>免疫的边界：从诺奖到东亚课堂的反思</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 自定义CSS：吉卜力/苹果风格混合实现 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的柔和纹理：淡蓝/米白 */
+           background-image: linear-gradient(45deg, rgba(173, 216, 230, 0.05) 25%, transparent 25%), 
+                         linear-gradient(-45deg, rgba(173, 216, 230, 0.05) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(173, 216, 230, 0.05) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(173, 216, 230, 0.05) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕/炭黑 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #64B5F6; /* 天空淡蓝高亮，代表新知与广阔 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; 
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(220, 237, 200, 0.85); /* 嫩绿/草地色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(197, 225, 165, 0.9); /* 稍深一点的嫩绿色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 使用高亮色自身透明度渐变制造科技感 (淡蓝色光晕) */
+           background-image: radial-gradient(circle, rgba(100, 181, 246, 0.15) 0%, rgba(100, 181, 246, 0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none;
+           opacity: 0.5;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大文本 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* 统计数字 */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #4CAF50; /* 嫩绿色点缀 */
+           margin-right: 0.5rem;
+        }
+        /* 响应式布局调整 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px; /* 适应更大的显示器 */
+            }
+        }
+        /* 简洁的勾线图形化 - 示例样式 */
+        .outline-graphic {
+            border: 4px solid #3A2E2C; /* 深棕色边框 */
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            font-size: 3rem;
+            color: #FFB300; /* 琥珀黄点缀 */
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        .outline-graphic:hover {
+            transform: scale(1.05) rotate(-3deg);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+<div class="container mx-auto max-w-7xl font-noto-sans-sc">
+
+    <header class="pt-16 pb-8 text-center">
+        <p class="text-xl md:text-2xl text-gray-700 mb-4">Immunological Tolerance & East Asian Education</p>
+        <h1 class="ultra-large-text text-[#3A2E2C] leading-none mx-auto max-w-5xl tracking-tighter">
+            边界的<span class="highlight-text">重写</span>
+        </h1>
+        <h2 class="text-3xl md:text-5xl text-[#4CAF50] mt-4 max-w-4xl mx-auto">
+            从免疫学诺奖到<span class="text-[#3A2E2C]">东亚课堂</span>的反思
+        </h2>
+    </header>
+    
+    <div class="flex justify-center mb-12">
+        <div class="text-center card card-alt-bg px-8 py-4">
+            <p class="text-lg font-medium text-gray-800">坂口志文的贡献：不是加法，而是必要的减法</p>
+            <p class="text-sm text-gray-600 mt-1">摸到人体“自我保护的边界”：指出体外存在特殊的T细胞进行“外周监管”。</p>
+        </div>
+    </div>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            
+            <div class="lg:col-span-2">
+                <p class="text-xl md:text-3xl text-gray-600 mb-4">Paradigm Shift / 范式更替</p>
+                <h2 class="ultra-large-text leading-tight text-[#3A2E2C] opacity-90">
+                    对<span class="highlight-text">筛选</span>上瘾
+                </h2>
+                <h2 class="ultra-large-text leading-tight text-[#3A2E2C] opacity-90">
+                    对<span class="text-[#FFB300]">培养</span>吝啬
+                </h2>
+            </div>
+
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-microscope text-5xl mb-4 text-[#64B5F6]"></i>
+                    <h3 class="text-3xl font-bold mb-3 highlight-text">边界束缚与制度</h3>
+                    <p class="text-gray-700 text-lg">
+                        有人在显微镜下，摸到了边界。有人在课堂里，仍被边界束缚。
+                    </p>
+                    <p class="text-sm mt-3 text-gray-600">中村修二的指控：大学入学考试像一台巨大机器，所有高中生被推着向名校奔跑，“浪费时间”。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-12">
+        <h3 class="text-2xl md:text-4xl text-center mb-12 text-[#3A2E2C]">结构性僵硬的四个根源 (The Four Roots)</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-columns list-icon text-3xl mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2">普鲁士的影子：秩序</h4>
+                    <p class="text-gray-700 text-sm">
+                        继续训练“把事情做对”，却越来越缺少“做对的事情”。目标与当下的需求方向相反。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-vihara list-icon text-3xl mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2">科举的误区：成品瓷</h4>
+                    <p class="text-gray-700 text-sm">
+                        把“选拔就绪者”误当“培养可塑者”。考试能测算术，难测志向、好奇、手作能力。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-industry list-icon text-3xl mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2">工业化追赶：流水线</h4>
+                    <p class="text-gray-700 text-sm">
+                        把未来的知识工作者，按体力工的方式管理。复习时间疯长，创造力被疲劳覆盖。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-hand-holding-usd list-icon text-3xl mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2">稀缺心态：内卷</h4>
+                    <p class="text-gray-700 text-sm">
+                        争夺教室，而忽略家庭的“隐形资源”：对世界的好奇、对失败的温度。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            
+            <div class="card card-darker-alt-bg p-8 tech-glow">
+                <div class="content-z">
+                    <h3 class="large-stat-text highlight-stat mb-4">微小而正确</h3>
+                    <h4 class="text-2xl font-bold mb-6 text-[#3A2E2C]">从“复习”到“复现”</h4>
+                    <ul class="text-gray-800 space-y-4 text-lg">
+                        <li><i class="fas fa-home list-icon"></i> 家庭层面：把知识变成手作、公式变成模型、历史变成走访。练习不止是重复，更是改写。</li>
+                        <li><i class="fas fa-book list-icon"></i> 学校层面：每周设置一份“长思考作业”：提出问题、设计实验、记录失败日志。</li>
+                        <li><i class="fas fa-university list-icon"></i> 社会层面：扩展录取维度，缩短一次考试的决定性。把“非标准才华”的入口做成常态。</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="flex justify-center">
+                        <div class="outline-graphic mb-6">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                    <h4 class="large-stat-text text-[#4CAF50] mb-4">免疫耐受式成长</h4>
+                    <p class="text-gray-700 text-lg mb-6">
+                        学会让不同学科在外周“互相监管”：知识之间，建立边界，但不筑墙。
+                    </p>
+                    <ul class="text-gray-800 space-y-3 text-base">
+                        <li><i class="fas fa-calculator list-icon"></i> 理科抑制臆测</li>
+                        <li><i class="fas fa-gavel list-icon"></i> 人文抑制偏见</li>
+                        <li><i class="fas fa-lightbulb list-icon"></i> 艺术抑制僵化</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-2 border-dashed border-[#D2B48C] my-12 opacity-50">
+
+    <section class="py-16 text-center">
+        <p class="text-xl md:text-3xl text-gray-700 mb-4">Final Call / 最终目标</p>
+        <h2 class="ultra-large-text leading-none mx-auto max-w-5xl text-[#3A2E2C] tracking-tighter">
+            把<span class="text-[#FFB300]">执行力强</span>
+        </h2>
+        <h2 class="ultra-large-text leading-none mx-auto max-w-5xl highlight-text tracking-tighter">
+            升级为<span class="text-[#3A2E2C]">判断力强</span>
+        </h2>
+        <p class="mt-8 text-xl md:text-3xl font-light text-gray-800 max-w-4xl mx-auto">
+            当课堂还在刻板训练“同一答案”时，请在生活里为孩子制造“不同路径”。
+            成为一个可以重写边界的人。
+        </p>
+    </section>
+
+</div>
+
+<script>
+    // 示例：简单的卡片点击提示
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => {
+            // 可在此添加更复杂的JS动画或功能
+        });
+    });
+</script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
