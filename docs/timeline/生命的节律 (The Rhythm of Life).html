@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命的节律 (The Rhythm of Life)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* 严格遵循系统提供的CSS样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           padding-top: 4rem; /* 顶部间距 */
+           padding-bottom: 4rem; /* 底部间距 */
+           min-height: 100vh; /* 确保内容不足时也能看到背景 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不影响点击 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 1920px+ 响应式兼容 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px;
+            }
+            .ultra-large-text {
+                font-size: 10rem;
+            }
+        }
+
+        /* 强调高亮色自身透明度渐变制造科技感（使用高亮色：#FFB300） */
+        .tech-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 179, 0, 0.7) 25%, rgba(255, 179, 0, 0.3) 75%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="selection:bg-[#D2B48C]/50 selection:text-[#3A2E2C]">
+
+<div class="container mx-auto px-4 md:px-8">
+    
+    <div class="text-center mb-20 md:mb-32">
+        <p class="text-lg md:text-xl mb-4 font-light text-gray-600 uppercase">THE RHYTHM OF LIFE</p>
+        <h1 class="ultra-large-text font-noto-sans-sc max-w-6xl mx-auto leading-none">
+            <span class="highlight-text block">松弛的丰盈</span>
+            <span class="block mt-4 md:mt-8 text-[#5C504E] text-5xl md:text-6xl font-extrabold">PATIENCE & PACE</span>
+        </h1>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-20 md:mb-32">
+        
+        <div class="lg:col-span-2 card p-6 md:p-8">
+            <div class="content-z">
+                <p class="text-lg uppercase tracking-wider mb-3 text-gray-600">The Ancient Wisdom</p>
+                <h3 class="text-3xl font-extrabold mb-4 font-noto-sans-sc">
+                    “博观而约取，厚积而薄发”
+                </h3>
+                <p class="text-xl italic text-[#5C504E] font-noto-sans-sc leading-relaxed">
+                    苏轼以田喻人：人与田地一样，只有耐心积累，才会有好的收获。急于求成，最终只会导致
+                    <span class="highlight-text font-bold">“地力竭矣”</span>。
+                </p>
+                <p class="text-sm mt-4 text-right text-gray-500">
+                    —《稼说送张琥》 (Su Shi)
+                </p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3 card card-alt-bg tech-glow p-8 md:p-12 flex flex-col justify-center">
+            <div class="content-z">
+                <p class="text-xl uppercase tracking-wider mb-2 text-gray-700">The Price of Rush</p>
+                <div class="flex items-end space-x-4 mb-4">
+                    <p class="large-stat-text highlight-stat font-noto-sans-sc leading-none">
+                        90%
+                    </p>
+                    <p class="text-2xl font-bold font-noto-sans-sc text-[#5C504E]">
+                        透支的风险
+                    </p>
+                </div>
+                <p class="text-lg md:text-xl font-noto-sans-sc text-[#3A2E2C]">
+                    很多人总想速成，总是急着赶路，总是焦虑地种下、匆忙地收割，最后往往是透支自己，换来
+                    <span class="font-bold highlight-text">一地荒芜</span>。
+                </p>
+                <svg class="w-full h-16 mt-6" viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 18 C 30 2, 70 2, 95 18" stroke="#D2B48C" stroke-width="2" stroke-dasharray="8 4"/>
+                    <path d="M45 18 L48 10 M50 18 L53 10 M55 18 L52 10" stroke="#FFB300" stroke-width="2" stroke-linecap="round"/>
+                    <text x="50" y="10" font-size="6" fill="#3A2E2C" text-anchor="middle" font-family="'Open Sans', sans-serif">EXHAUSTION</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto mb-20 md:mb-32">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-10 font-noto-sans-sc text-center">
+            顺时而为：<span class="highlight-text">生命的最佳节律</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card card-darker-alt-bg p-8 flex items-start space-x-4 content-z">
+                <i class="fa-solid fa-sun text-4xl list-icon flex-shrink-0 mt-1"></i>
+                <div>
+                    <h3 class="text-2xl font-bold mb-2 font-noto-sans-sc">
+                        尊重时序
+                    </h3>
+                    <p class="text-lg text-[#5C504E]">
+                        <span class="font-bold">FOLLOW THE SEASONS.</span>
+                        就像土地有自己的节气和四时，生命也有自己的节律与呼吸。顺时而为，才能得天时地利。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-8 flex items-start space-x-4 content-z">
+                <i class="fa-solid fa-leaf text-4xl list-icon flex-shrink-0 mt-1"></i>
+                <div>
+                    <h3 class="text-2xl font-bold mb-2 font-noto-sans-sc">
+                        等待与酝酿
+                    </h3>
+                    <p class="text-lg text-[#5C504E]">
+                        <span class="font-bold">GIVE IT TIME.</span>
+                        世界上最美好、最珍贵的东西，从来都需要时间的酝酿。不是你不够努力，只是美好需要耐心。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="max-w-4xl mx-auto text-center card card-alt-bg p-8 md:p-12 tech-glow">
+        <div class="content-z">
+            <h3 class="text-3xl md:text-4xl font-extrabold mb-4 font-noto-sans-sc leading-snug">
+                对自我多一点<span class="highlight-text">耐心和包容</span>。
+            </h3>
+            <p class="text-xl md:text-2xl text-[#5C504E] font-noto-sans-sc leading-relaxed">
+                <i class="fa-solid fa-heart list-icon"></i>
+                松弛一点，慢一点，不要因为焦虑就轻易透支自己。
+            </p>
+            <p class="text-xl md:text-2xl text-[#5C504E] font-noto-sans-sc leading-relaxed mt-4">
+                <i class="fa-solid fa-hands-holding list-icon"></i>
+                守护好自己的心力和节奏，只要土壤肥沃，<span class="highlight-text font-bold">生命自会慢慢丰盈</span>。
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-24 pt-8 text-center text-sm text-gray-500">
+        <div class="tech-line mb-4"></div>
+        <p class="font-noto-sans-sc">
+            © 2025 Studio Ghibli Inspired Philosophy. <span class="highlight-text">慢下来，为了走得更远 (Go slow, go far).</span>
+        </p>
+    </div>
+
+</div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
