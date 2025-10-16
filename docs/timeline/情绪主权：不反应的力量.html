@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪主权：不反应的力量</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 手绘/水彩纹理感的轻微点缀 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 琥珀黄的科技感光晕效果 */
+        .tech-glow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不影响点击 */
+        }
+        /* 墨绿色系的科技感光晕效果（用于特定区块） */
+        .tech-glow-green::before { 
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(58, 46, 44, 0.15) 0%, rgba(58, 46, 44, 0.05) 40%, transparent 70%); /* 深棕/墨绿的浅色变种 */
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 9rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 0.9;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1.1;
+        }
+        .list-icon {
+           color: #559955; /* 嫩绿色系作为列表点缀色 */
+           margin-right: 0.75rem; /* 间距调整 */
+           font-size: 1.25rem;
+        }
+        .simple-line-graphic {
+            border: 2px solid #3A2E2C;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+        }
+
+        /* 响应式布局调整 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px; /* 适应大屏幕 */
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="container mx-auto px-4 py-16 lg:px-24">
+        
+        <header class="text-center mb-24">
+            <p class="text-xl lg:text-3xl mb-4 font-open-sans tracking-tight text-gray-600">
+                The Mastery of Self-Possession
+            </p>
+            <h1 class="ultra-large-text font-noto-sans-sc highlight-text uppercase">
+                情绪主权
+            </h1>
+            <p class="text-2xl lg:text-4xl mt-6 font-noto-sans-sc font-medium">
+                拿捏人性最绝的一招：<span class="font-bold">情绪上的不反应。</span>
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24">
+            
+            <div class="card card-darker-alt-bg p-8 lg:col-span-1 tech-glow-green">
+                <div class="content-z">
+                    <p class="text-sm font-open-sans tracking-widest uppercase mb-4 text-gray-600">DEFINITION</p>
+                    <h2 class="large-stat-text font-noto-sans-sc highlight-stat mb-4">
+                        <span class="ultra-large-text highlight-stat block">01</span>
+                        <span class="text-4xl font-extrabold text-[#3A2E2C]">非冷漠</span>
+                    </h2>
+                    <p class="text-lg lg:text-xl text-[#3A2E2C] font-medium leading-relaxed">
+                        不反应，<span class="font-bold">不是冷漠</span>，是主权。
+                        是把「我是谁、我要什么」从对方的情绪里拿回来。
+                    </p>
+                </div>
+                <i class="fas fa-hand-paper absolute right-4 bottom-4 text-7xl opacity-10 text-[#559955] z-0"></i>
+            </div>
+
+            <div class="card p-8 lg:col-span-2 flex flex-col justify-center">
+                <div class="content-z">
+                    <p class="text-lg lg:text-xl mb-4 font-open-sans text-gray-600">The Ultimate Control</p>
+                    <h2 class="text-4xl lg:text-6xl font-noto-sans-sc font-bold mb-6 leading-tight">
+                        <span class="highlight-text">稳固的空白</span>，胜过更强的爆发。
+                    </h2>
+                    <p class="text-xl lg:text-2xl leading-relaxed text-[#3A2E2C]">
+                        人性里最精密的操控，靠的不是更强的爆发，而是<span class="font-extrabold">更稳的空白</span>—
+                        不给对方挂钩的点，不给情绪借梯上楼的机会。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-24">
+            <h2 class="text-3xl lg:text-5xl font-noto-sans-sc font-bold mb-10 text-center">
+                <span class="highlight-text">不反应，是一种“慢刀”。</span> <span class="text-gray-600 font-open-sans text-2xl">The Slow Blade</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="card p-6 flex flex-col items-center text-center tech-glow">
+                    <div class="simple-line-graphic mb-4">
+                        <i class="fas fa-feather-alt text-2xl text-[#3A2E2C]"></i>
+                    </div>
+                    <p class="text-2xl font-noto-sans-sc font-bold mb-2">重写框</p>
+                    <p class="text-lg text-gray-700">你不接框，你就能重写框。</p>
+                </div>
+
+                <div class="card p-6 flex flex-col items-center text-center tech-glow">
+                    <div class="simple-line-graphic mb-4">
+                        <i class="fas fa-chess-knight text-2xl text-[#3A2E2C]"></i>
+                    </div>
+                    <p class="text-2xl font-noto-sans-sc font-bold mb-2">重排局</p>
+                    <p class="text-lg text-gray-700">你不进局，你就能重排局。</p>
+                </div>
+
+                <div class="card p-6 flex flex-col items-center text-center tech-glow">
+                    <div class="simple-line-graphic mb-4">
+                        <i class="fas fa-eye text-2xl text-[#3A2E2C]"></i>
+                    </div>
+                    <p class="text-2xl font-noto-sans-sc font-bold mb-2">揭示真相</p>
+                    <p class="text-lg text-gray-700">在你的静默里，一览无遗。</p>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="mb-24">
+            <div class="card card-alt-bg p-8 lg:p-12 tech-glow-green">
+                <div class="content-z">
+                    <p class="text-xl font-open-sans tracking-widest uppercase mb-6 text-gray-700">METHODOLOGY</p>
+                    <h2 class="text-4xl lg:text-6xl font-noto-sans-sc font-extrabold mb-8 leading-tight">
+                        <span class="highlight-text">如何练：</span>延迟与抽离
+                    </h2>
+
+                    <ul class="space-y-6 text-xl lg:text-2xl font-noto-sans-sc leading-relaxed">
+                        <li class="flex items-start">
+                            <i class="fas fa-wind list-icon mt-2 flex-shrink-0"></i>
+                            <span class="font-bold">呼吸/Breathwork:</span> 情绪上来先把气往下送，像把滚烫的水移离火源。
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-tag list-icon mt-2 flex-shrink-0"></i>
+                            <span class="font-bold">命名/Labeling:</span> 在心里给对方的情绪贴签—愤怒、求认同、试探。命名让你不被拖进剧情。
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock list-icon mt-2 flex-shrink-0"></i>
+                            <span class="font-bold">延迟/Delay:</span> 把回应推迟十秒或隔夜。<span class="highlight-text">时间，是最好的清洗剂。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-reply list-icon mt-2 flex-shrink-0"></i>
+                            <span class="font-bold">复述/Reiterate:</span> 只复述事实与目标，不评价人。让讨论回到可操作的地面。
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-border-all list-icon mt-2 flex-shrink-0"></i>
+                            <span class="font-bold">边界/Boundary:</span> 明确你能给的与不给的，把“不”说得温和但坚决。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mb-20">
+            <p class="text-xl lg:text-3xl mb-4 font-open-sans tracking-tight text-gray-600">
+                The New Definition of Strength
+            </p>
+            <div class="inline-block relative">
+                <h2 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C] opacity-10 absolute inset-0 flex items-center justify-center pointer-events-none" style="font-size: clamp(6rem, 18vw, 15rem);">
+                    VICTORY
+                </h2>
+                <h3 class="text-5xl lg:text-7xl font-noto-sans-sc font-extrabold highlight-text relative z-10 p-4 leading-tight">
+                    赢在<span class="block">不动。</span>
+                </h3>
+            </div>
+            
+            <p class="mt-8 text-2xl lg:text-3xl font-noto-sans-sc font-medium max-w-4xl mx-auto">
+                你把<span class="font-extrabold">情绪</span>从对方手里取回的那一刻，<span class="text-[#559955]">局就已经改写了。</span>
+            </p>
+        </section>
+        
+        <footer class="text-center py-8 border-t border-gray-300/50 text-gray-600">
+            <p class="text-sm font-open-sans">© STUDIO G. - Inspired by the tranquility of Ghibli's world and Apple's design philosophy.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px' // 提前加载
+        });
+
+        cards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease-out';
+            observer.observe(card);
+        });
+
+        // 翻页功能（虽然是单页，但为了满足要求，可以模拟滚动到下一屏）
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                window.scrollBy({
+                    top: window.innerHeight * 0.7,
+                    behavior: 'smooth'
+                });
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                window.scrollBy({
+                    top: -window.innerHeight * 0.7,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

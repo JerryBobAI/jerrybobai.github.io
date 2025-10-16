@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>改命的专注</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4q5wzW9S7C+A7P4g6j2/aV0f6N9h4dJ1+jB2+8k4qF3+8uXnFm2+Wz3w5f4w4g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的手绘纹理/水彩渲染效果 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           padding-top: 1rem; /* 顶部间距 */
+           padding-bottom: 2rem; /* 底部间距 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 核心高亮光晕 - 使用琥珀黄 */
+        .tech-glow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        /* 替代高亮光晕 - 使用嫩绿 */
+        .tech-glow-green::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(144, 238, 144, 0.15) 0%, rgba(144, 238, 144, 0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        .figure-outline {
+            /* 简洁的勾线图形化风格 */
+            border: 2px solid #3A2E2C; 
+            border-radius: 1rem;
+            padding: 1rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <section id="intro" class="py-16 md:py-24 text-center">
+            <h1 class="font-noto-sans-sc ultra-large-text tracking-tight mb-4">
+                <span class="highlight-text">改命</span>的专注
+            </h1>
+            <p class="text-xl md:text-2xl font-light tracking-wide text-gray-600 mb-8">
+                The Focused Path to <span class="text-lg font-bold">Transformation.</span>
+            </p>
+            <div class="max-w-4xl mx-auto">
+                <p class="text-2xl md:text-3xl font-noto-sans-sc font-bold leading-snug">
+                    只有一种：<span class="highlight-text">饱和式实践</span> 
+                    <span class="text-4xl text-gray-400 mx-4">+</span> 
+                    <span class="highlight-text">戒断回报焦虑</span>。
+                </p>
+            </div>
+        </section>
+
+        <section id="saturation" class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <div class="lg:col-span-2 card card-darker-alt-bg p-8 md:p-12 tech-glow">
+                <div class="content-z">
+                    <p class="text-lg font-semibold uppercase tracking-widest text-gray-600 mb-4">Phase One</p>
+                    <h2 class="ultra-large-text font-noto-sans-sc tracking-tighter mb-6">
+                        饱和式<span class="highlight-text">实践</span>
+                    </h2>
+                    <p class="text-xl md:text-2xl font-noto-sans-sc leading-relaxed">
+                        选定一件事，<span class="font-extrabold text-3xl highlight-text">往死里干，干到吐。</span>
+                        <br class="hidden sm:block"> 
+                        白天把动作拆到毫秒，晚上在梦里复盘路径。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-8 card-alt-bg flex flex-col justify-center items-center">
+                <div class="content-z text-center">
+                    <i class="fas fa-clock text-6xl highlight-stat mb-4"></i>
+                    <p class="text-sm uppercase tracking-widest text-gray-600">The Metric</p>
+                    <div class="figure-outline">
+                         <div class="large-stat-text highlight-stat font-mono">100%</div>
+                    </div>
+                    <p class="text-xl font-bold mt-4 font-noto-sans-sc">全生命<br>浸泡</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="detox" class="mb-16">
+            <div class="card p-8 md:p-12 tech-glow-green">
+                <div class="content-z">
+                    <p class="text-lg font-semibold uppercase tracking-widest text-gray-600 mb-4">The Crucial Test</p>
+                    <h2 class="text-5xl md:text-7xl font-noto-sans-sc font-extrabold mb-6 tracking-tight">
+                        <span class="highlight-text">戒断</span>回报<span class="highlight-text">焦虑</span>
+                    </h2>
+                    <p class="text-xl md:text-2xl font-noto-sans-sc leading-relaxed max-w-4xl">
+                        99%的人死在后半句：你看起来在做事，骨子里却在<span class="font-extrabold text-3xl">乞讨</span>。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div class="card p-6 md:p-8">
+                <div class="content-z">
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4 flex items-center">
+                        <i class="fas fa-hand-holding-dollar list-icon"></i> 赌徒心态 <span class="text-base ml-2 text-gray-500 font-normal">(The Beggar)</span>
+                    </h3>
+                    <ul class="space-y-3 text-lg font-light text-gray-700">
+                        <li class="flex items-start"><span class="list-icon mt-1 text-sm"><i class="fas fa-bolt"></i></span> 三秒一刷新，求廉价多巴胺。</li>
+                        <li class="flex items-start"><span class="list-icon mt-1 text-sm"><i class="fas fa-coins"></i></span> 盯着播放量算能涨几毛。</li>
+                        <li class="flex items-start"><span class="list-icon mt-1 text-sm"><i class="fas fa-dice"></i></span> 拿时间和精力，去赌一个即时、确定的结果。</li>
+                        <li class="flex items-start text-red-600 font-medium"><span class="list-icon mt-1 text-sm text-red-600"><i class="fas fa-xmark"></i></span> 亲手掐死了会下金蛋的鸡。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-6 md:p-8">
+                <div class="content-z">
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4 flex items-center">
+                        <i class="fas fa-seedling list-icon text-green-600"></i> 高手结构 <span class="text-base ml-2 text-gray-500 font-normal">(The Master)</span>
+                    </h3>
+                    <ul class="space-y-3 text-lg font-light text-gray-700">
+                        <li class="flex items-start"><span class="list-icon mt-1 text-sm text-green-600"><i class="fas fa-shield-alt"></i></span> 回报是长期实践后顺手掉下的副产品。</li>
+                        <li class="flex items-start"><span class="list-icon mt-1 text-sm text-green-600"><i class="fas fa-gift"></i></span> 是惊喜，而非死盯的目标。</li>
+                        <li class="flex items-start"><span class="list-icon mt-1 text-sm text-green-600"><i class="fas fa-tree"></i></span> 养鸡、护鸡、扩群，等时间把金蛋下成金矿。</li>
+                        <li class="flex items-start text-green-700 font-medium"><span class="list-icon mt-1 text-sm text-green-700"><i class="fas fa-check"></i></span> 命运，从不和赌徒做交易。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="action" class="mb-16">
+            <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-extrabold text-center mb-10 tracking-tight">
+                专注的<span class="highlight-text">结构</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card p-6 text-center tech-glow">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat font-noto-sans-sc">目标收敛</div>
+                        <p class="text-xl mt-2 text-gray-600">Converged Goal</p>
+                        <i class="fas fa-bullseye text-4xl mt-3 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="card card-alt-bg p-6 text-center tech-glow-green">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat font-noto-sans-sc">行为饱和</div>
+                        <p class="text-xl mt-2 text-gray-600">Saturated Action</p>
+                        <i class="fas fa-fire-alt text-4xl mt-3 text-red-400"></i>
+                    </div>
+                </div>
+                <div class="card p-6 text-center tech-glow">
+                    <div class="content-z">
+                        <div class="large-stat-text highlight-stat font-noto-sans-sc">反馈延迟</div>
+                        <p class="text-xl mt-2 text-gray-600">Delayed Feedback</p>
+                        <i class="fas fa-hourglass-half text-4xl mt-3 text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center max-w-3xl mx-auto">
+                <p class="text-2xl md:text-3xl font-noto-sans-sc font-bold leading-relaxed">
+                    <i class="fas fa-circle-question list-icon"></i> 
+                    你敢不敢连续<span class="highlight-text">一个月</span>，只做事，<span class="highlight-text">不问结果</span>？
+                </p>
+            </div>
+        </section>
+
+    </div>
+    
+    <script>
+        // Placeholder for any required JavaScript logic
+        // This is where you would typically initialize observer APIs for animations, etc.
+        console.log("网页--吉卜力动画: 结构化专注模型加载完成.");
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
