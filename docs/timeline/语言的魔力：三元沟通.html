@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语言的魔力：三元沟通</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Make sure it doesn't block interaction */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 勾线图形化 - 简单CSS */
+        .sketch-line {
+            border: 3px solid #3A2E2C; /* 深棕色勾线 */
+            border-radius: 1rem;
+            padding: 1rem;
+            display: inline-block;
+        }
+
+        /* 响应式最大宽度设置，确保1920px及以上也有良好布局 */
+        .container-xl {
+            max-width: 1536px; /* 3XL equivalent in Tailwind */
+        }
+        @media (min-width: 1920px) {
+            .container-xl {
+                max-width: 1700px; /* Custom wider container for ultra-wide screens */
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8 lg:p-16">
+
+    <div class="container-xl mx-auto space-y-24">
+
+        <header class="text-center md:text-left">
+            <h1 class="ultra-large-text font-noto-sans-sc highlight-stat uppercase leading-none">
+                三元沟通
+            </h1>
+            <p class="text-3xl lg:text-5xl font-extrabold mt-4 font-noto-sans-sc">
+                Tomasello's <span class="text-xl lg:text-3xl font-light italic text-gray-600">Three Functions of Language</span>
+            </p>
+            <p class="text-lg mt-4 max-w-3xl mx-auto md:mx-0 text-gray-700">
+                迈克尔·托马塞洛：语言的演化路径，从索取到共享的奇迹。
+            </p>
+        </header>
+
+        <section class="grid md:grid-cols-3 gap-8">
+
+            <div class="card card-alt-bg tech-glow">
+                <div class="content-z">
+                    <div class="text-6xl mb-4">
+                        <i class="fas fa-hand-pointer list-icon"></i>
+                    </div>
+                    <p class="large-stat-text font-noto-sans-sc highlight-stat">
+                        请求
+                    </p>
+                    <p class="text-sm uppercase tracking-widest font-bold text-gray-600 mb-4">
+                        REQUEST
+                    </p>
+                    <ul class="space-y-2 text-lg">
+                        <li class="flex items-start"><i class="fas fa-search list-icon mt-1"></i> 希望对方做某事或提供物品</li>
+                        <li class="flex items-start"><i class="fas fa-users list-icon mt-1"></i> 与其他灵长类动物共有 (Shared)</li>
+                        <li class="text-sm italic mt-2">简单例子: 婴儿指向水杯 (Tool-use)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card tech-glow">
+                <div class="content-z">
+                    <div class="text-6xl mb-4">
+                        <i class="fas fa-exclamation-triangle list-icon"></i>
+                    </div>
+                    <p class="large-stat-text font-noto-sans-sc highlight-stat">
+                        告知
+                    </p>
+                    <p class="text-sm uppercase tracking-widest font-bold text-gray-600 mb-4">
+                        INFORM
+                    </p>
+                    <ul class="space-y-2 text-lg">
+                        <li class="flex items-start"><i class="fas fa-lightbulb list-icon mt-1"></i> 提供未知或需要的信息 (Altruism)</li>
+                        <li class="flex items-start"><i class="fas fa-user list-icon mt-1"></i> 主要为人类所有 (Human Dominant)</li>
+                        <li class="text-sm italic mt-2">简单例子: 告诉同伴“远处有棵果树”</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg tech-glow">
+                <div class="content-z">
+                    <div class="text-6xl mb-4">
+                        <i class="fas fa-heart list-icon"></i>
+                    </div>
+                    <p class="large-stat-text font-noto-sans-sc highlight-stat">
+                        分享
+                    </p>
+                    <p class="text-sm uppercase tracking-widest font-bold text-gray-600 mb-4">
+                        SHARE
+                    </p>
+                    <ul class="space-y-2 text-lg">
+                        <li class="flex items-start"><i class="fas fa-comment list-icon mt-1"></i> 交流情感、态度，建立共同立场 (Joint Attention)</li>
+                        <li class="flex items-start"><i class="fas fa-star list-icon mt-1"></i> 独属于人类的沟通 (Uniquely Human)</li>
+                        <li class="text-sm italic mt-2">简单例子: 兴奋地指彩虹让朋友一起看</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-12 mt-16">
+            
+            <div class="space-y-8">
+                <h2 class="text-4xl font-extrabold font-noto-sans-sc">
+                    进化层次：从<span class="highlight-text">合作</span>到<span class="highlight-text">联结</span>
+                    <span class="block text-lg font-light text-gray-600 uppercase tracking-widest mt-2">The Evolutionary Perspective</span>
+                </h2>
+                
+                <div class="card">
+                    <div class="content-z">
+                        <h3 class="text-2xl font-bold mb-2 font-noto-sans-sc">请求：合作的基础</h3>
+                        <p class="text-gray-700">最基本的功能，目的是改变他人的行为以获得帮助。人类的请求建立在更复杂的<span class="highlight-text">合作与共享意图</span>之上，而非单纯的“工具性”互动。</p>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg">
+                    <div class="content-z">
+                        <h3 class="text-2xl font-bold mb-2 font-noto-sans-sc">告知：从帮助到交流</h3>
+                        <p class="text-gray-700">一次巨大飞跃。动机不再是满足自身需求，而是<span class="highlight-text">无私地帮助他人</span>。体现了理解他人心理状态（他可能不知道什么）并愿意提供帮助的利他精神。</p>
+                    </div>
+                </div>
+
+                <div class="card card-darker-alt-bg">
+                    <div class="content-z">
+                        <h3 class="text-2xl font-bold mb-2 font-noto-sans-sc">分享：构建联结的渴望</h3>
+                        <p class="text-gray-700">语言最独特的功能。目的既非索取也非单纯帮助，而是为了分享内心的感受、态度和体验，从而<span class="highlight-text">建立情感联结</span>和共同的价值观。</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="space-y-8">
+                <h2 class="text-4xl font-extrabold font-noto-sans-sc">
+                    认知基石与<span class="highlight-text">语法推动力</span>
+                    <span class="block text-lg font-light text-gray-600 uppercase tracking-widest mt-2">Cognitive Foundations & Syntax Drive</span>
+                </h2>
+
+                <div class="card p-6 lg:p-12 tech-glow">
+                    <div class="content-z space-y-6">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-4">支撑功能的基础认知能力</h3>
+                        <div class="flex flex-col space-y-4">
+                            <div class="sketch-line flex items-center bg-white/80">
+                                <i class="fas fa-handshake text-3xl highlight-stat mr-4"></i>
+                                <div>
+                                    <p class="font-bold text-xl font-noto-sans-sc">共享意图 (Shared Intentionality)</p>
+                                    <p class="text-sm text-gray-600">理解彼此都参与在合作活动中，拥有共同的关注点和目标。</p>
+                                </div>
+                            </div>
+                            <div class="sketch-line flex items-center bg-white/80">
+                                <i class="fas fa-brain text-3xl highlight-stat mr-4"></i>
+                                <div>
+                                    <p class="font-bold text-xl font-noto-sans-sc">心理理论 (Theory of Mind)</p>
+                                    <p class="text-sm text-gray-600">推断他人拥有与自己不同的知识、信念和欲望。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg">
+                    <div class="content-z">
+                        <h3 class="text-2xl font-bold mb-3 font-noto-sans-sc">语法复杂性的演化</h3>
+                        <div class="space-y-3">
+                            <p class="text-lg font-bold font-noto-sans-sc">请求的语法</p>
+                            <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                                <div class="bg-amber-500 h-3 rounded-full" style="width: 30%"></div>
+                            </div>
+                            <p class="text-sm italic text-gray-700">相对简单，多围绕“人物-动作-对象”。</p>
+
+                            <p class="text-lg font-bold font-noto-sans-sc mt-4">告知的语法</p>
+                            <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                                <div class="bg-amber-500 h-3 rounded-full" style="width: 70%"></div>
+                            </div>
+                            <p class="text-sm italic text-gray-700">复杂得多，需引入新指称、描述事件框架（时间、地点、因果）。</p>
+                            
+                            <p class="text-lg font-bold font-noto-sans-sc mt-4">分享与叙事的语法</p>
+                            <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                                <div class="bg-amber-500 h-3 rounded-full" style="width: 95%"></div>
+                            </div>
+                            <p class="text-sm italic text-gray-700">最为复杂，涉及时间编排、视角追踪和主观态度表达。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <footer class="text-center mt-16 pt-8 border-t border-dashed border-gray-400">
+            <p class="text-sm text-gray-600">
+                数据来源: Michael Tomasello 语言学理论。设计风格致敬吉卜力动画的自然与温暖。
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

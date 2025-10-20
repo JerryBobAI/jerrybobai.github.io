@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冲突驱动：重构决策的锋利度</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qg8H54N5k572u+B+Wf4U1d+q0wN4R+tWwz8vVvA/1P2Z9b+f6Qc2d4wI5+A/Lw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 严格遵循系统提示词中的CSS样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Ensure the glow doesn't interfere with clicks */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 吉卜力柔和勾线图表样式模拟 */
+        .sketch-chart {
+            background-color: transparent;
+            border: 2px solid #5C4033; /* 墨绿/深棕勾线 */
+            border-radius: 1rem;
+            padding: 1rem;
+            position: relative;
+        }
+        .sketch-bar {
+            background-color: #90EE90; /* 嫩绿色 */
+            opacity: 0.8;
+            border-radius: 0.5rem 0.5rem 0 0;
+            transition: height 1s ease-out;
+            margin-right: 1px;
+        }
+        /* 针对大屏幕优化 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen p-4 md:p-12 lg:p-16">
+    <div class="container mx-auto">
+
+        <header class="text-center mb-16 lg:mb-24">
+            <h1 class="font-noto-sans-sc ultra-large-text text-gray-800">
+                <span class="highlight-text block">无人押注</span>
+                <span class="block">Everyone Agrees.</span>
+            </h1>
+            <p class="text-xl md:text-3xl mt-4 font-noto-sans-sc font-bold text-gray-700">这家独角兽如何用“冲突”重建决策锋利度？</p>
+        </header>
+
+        <section class="mb-16 card tech-glow">
+            <div class="content-z p-6 md:p-8">
+                <h2 class="text-3xl md:text-4xl font-noto-sans-sc font-bold mb-4 highlight-text">共识陷阱：完美的会议</h2>
+                <p class="text-lg md:text-xl font-medium">在科技圈，多数人脑海中浮现的顶级项目战略评审会是“PPT精美、数据详实，气氛和谐融洽”。但对CEO陈锋而言，这是“最恐惧的时刻”。</p>
+                <div class="mt-6 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+                    <div class="text-center">
+                        <p class="large-stat-text highlight-stat font-open-sans">1000+</p>
+                        <p class="text-lg font-noto-sans-sc font-medium">公司人数阈值</p>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-xl font-noto-sans-sc font-bold">“人人同意，就是无人押注。”</p>
+                        <p class="text-base text-gray-600 italic">— CEO 陈锋</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <div class="card card-darker-alt-bg p-6 lg:col-span-1">
+                <div class="content-z">
+                    <i class="fas fa-handshake text-4xl mb-4 list-icon"></i>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3">和谐的零承诺</h3>
+                    <p class="text-lg text-gray-700">组织内部的过度安全与和谐，正在以惊人的速度稀释决策的价值密度。新产品立项沦为“四平八稳”的妥协产物。</p>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-6 lg:col-span-2">
+                <div class="content-z">
+                    <i class="fas fa-balance-scale-left text-4xl mb-4 list-icon"></i>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3">双重稀释：本质剖析</h3>
+                    <p class="text-lg font-bold mb-2">共识陷阱的本质是“注意力”与“责任”的双重稀释。</p>
+                    <ul class="space-y-2 text-lg text-gray-700">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-dot-circle"></i></span>
+                            <span>注意力稀释：分散到整体和谐中，导致资源空转。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-dot-circle"></i></span>
+                            <span>责任稀释：失败时归因于“大家一起决定”，责任为零。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 card p-8 md:p-12 lg:p-16 relative overflow-hidden bg-white/80">
+            <div class="content-z text-center">
+                <span class="text-xl font-open-sans font-extrabold block mb-2 text-gray-500">The Turning Point</span>
+                <p class="ultra-large-text font-noto-sans-sc font-black highlight-text">
+                    价值密度
+                </p>
+                <p class="text-2xl md:text-3xl font-noto-sans-sc font-bold mt-4 text-gray-800">
+                    安全感是平庸的温床。<span class="highlight-text">真正的效率，来自责任的尖锐。</span>
+                </p>
+                <p class="text-lg mt-4 text-gray-600 italic">—— 冲突不是内耗，而是高浓度的价值提炼。</p>
+            </div> 
+        </section>
+
+
+        <section class="mb-16">
+            <h2 class="text-4xl font-noto-sans-sc font-extrabold mb-8 text-center text-gray-800">重构价值密度的<span class="highlight-text">「三板斧」</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="card card-alt-bg tech-glow p-8">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat font-open-sans block mb-3">01</span>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold mb-3">打破枷锁：强制反对</h3>
+                        <p class="text-xl font-noto-sans-sc font-bold mb-4">Devil's Advocate</p>
+                        <ul class="space-y-3 text-lg text-gray-700">
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-mask"></i></span>
+                                <span>机制：强制指定高管扮演「魔鬼代言人」。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-lightbulb"></i></span>
+                                <span>目的：重建决策者大脑中的「风险权重」，终结低级共识。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg tech-glow p-8">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat font-open-sans block mb-3">02</span>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold mb-3">重构接口：乐高积木</h3>
+                        <p class="text-xl font-noto-sans-sc font-bold mb-4">Modular Resources</p>
+                        <ul class="space-y-3 text-lg text-gray-700">
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-cube"></i></span>
+                                <span>方法：用「乐高积木」替代「大熔炉」。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-bullseye"></i></span>
+                                <span>原则：资源高度模块化、不可协商，专为特定目标服务（专属弹药）。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg tech-glow p-8">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat font-open-sans block mb-3">03</span>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold mb-3">定义所有权：结果归因</h3>
+                        <p class="text-xl font-noto-sans-sc font-bold mb-4">Decision Maker (D)</p>
+                        <ul class="space-y-3 text-lg text-gray-700">
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-crown"></i></span>
+                                <span>机制：一名且仅有一名负责人成为最终的「D」。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-hand-point-up"></i></span>
+                                <span>结果：责任彻底尖锐化，真正拥有「开枪」的权力与勇气。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 card tech-glow card-darker-alt-bg">
+            <div class="content-z p-8 md:p-12 text-center">
+                <h2 class="text-4xl font-noto-sans-sc font-extrabold mb-8 text-gray-800">效率的终极形态：浓缩咖啡</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div class="p-4 bg-white/60 rounded-xl shadow-inner">
+                        <p class="large-stat-text highlight-stat font-open-sans">80%</p>
+                        <p class="text-xl font-noto-sans-sc font-bold mt-2">平庸项目被砍</p>
+                        <p class="text-sm text-gray-600">在一个季度内</p>
+                    </div>
+
+                    <div class="p-4 bg-white/60 rounded-xl shadow-inner">
+                        <p class="large-stat-text highlight-stat font-open-sans">2</p>
+                        <p class="text-xl font-noto-sans-sc font-bold mt-2">爆款级产品孵化</p>
+                        <p class="text-sm text-gray-600">聚焦后的项目成果</p>
+                    </div>
+
+                    <div class="p-4 bg-white/60 rounded-xl shadow-inner">
+                        <p class="large-stat-text highlight-stat font-open-sans">准</p>
+                        <p class="text-xl font-noto-sans-sc font-bold mt-2">效率的终极形态</p>
+                        <p class="text-sm text-gray-600">而非快 (Not Speed)</p>
+                    </div>
+
+                </div>
+
+                <p class="text-xl md:text-2xl font-noto-sans-sc font-bold mt-10 text-gray-800">
+                    商业真理：想要击中靶心，你必须首先敢于放弃「所有人都同意」的安全感。
+                </p>
+            </div>
+        </section>
+        
+        <footer class="text-center mt-12 text-sm text-gray-500 font-noto-sans-sc">
+            Ghibli-Inspired Hybrid Layout | Data & Mechanism Review by Chen Feng's AI Unicorn.
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
