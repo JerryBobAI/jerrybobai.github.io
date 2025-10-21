@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>确定性成瘾</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ghibli-bg': '#FDF6E3',
+                        'ghibli-text': '#3A2E2C',
+                        'ghibli-highlight': '#FFB300',
+                        'ghibli-card-alt': 'rgba(224, 242, 247, 0.75)',
+                        'ghibli-card-dark': 'rgba(206, 229, 234, 0.8)',
+                    },
+                    fontFamily: {
+                        sans: ['Open Sans', 'Noto Sans SC', 'sans-serif'],
+                        noto: ['Noto Sans SC', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS 样式严格参考系统提示词实现 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+           will-change: transform; /* 性能优化 */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s ease;
+           opacity: 0;
+        }
+        .card:hover .tech-glow::before {
+            opacity: 1;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           font-family: 'Noto Sans SC', sans-serif;
+           text-shadow: 2px 2px 4px rgba(0,0,0,0.05); /* 柔和阴影 */
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1.1;
+           font-family: 'Open Sans', sans-serif;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 针对响应式宽度调整，确保在1920px+下内容居中且不过宽 */
+        .container-xl {
+            max-width: 1600px; /* 限制最大宽度，保证美观 */
+        }
+        .text-dark-prose {
+            color: #3A2E2C; /* 确保 prose 内容颜色正确 */
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="container mx-auto px-4 py-16 lg:py-24 container-xl">
+
+        <header class="text-center mb-20 lg:mb-32">
+            <p class="text-lg uppercase tracking-widest font-semibold text-ghibli-text/70 mb-4">STARTUP MINDSET SERIES</p>
+            <h1 class="ultra-large-text text-ghibli-text mx-auto max-w-5xl">
+                确定性<span class="highlight-text">成瘾</span>
+            </h1>
+            <p class="text-2xl mt-4 font-noto font-light text-ghibli-text/90 max-w-3xl mx-auto">
+                一位创业者与“不确定性”的和解之路
+                <span class="block mt-2 text-base text-ghibli-text/60 font-serif italic">The Entrepreneur's Reconciliation with Uncertainty</span>
+            </p>
+        </header>
+
+        <section class="mb-20 lg:mb-24">
+            <div class="card card-darker-alt-bg p-8 lg:p-16 tech-glow">
+                <div class="content-z text-center">
+                    <i class="fa-solid fa-cloud text-ghibli-highlight text-4xl mb-6"></i>
+                    <h2 class="text-2xl lg:text-3xl font-noto font-light italic leading-relaxed text-ghibli-text/90">
+                        “对确定性的渴求，是心灵面临的最大疾病。”
+                    </h2>
+                    <p class="mt-6 text-lg font-semibold text-ghibli-text/70">— 林屿，连续创业者</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-8 mb-20 lg:mb-24 items-center">
+            
+            <div class="lg:col-span-1 text-center lg:text-right">
+                <span class="large-stat-text highlight-stat block">
+                    <i class="fa-solid fa-ban text-6xl lg:text-8xl mr-2 align-middle"></i>
+                    零<span class="text-ghibli-text">增长</span>
+                </span>
+                <p class="text-xl mt-2 font-noto font-medium text-ghibli-text/90">确定性=精神止痛药，止住了创新</p>
+            </div>
+
+            <div class="lg:col-span-2">
+                <div class="card p-6 lg:p-8">
+                    <h3 class="text-2xl font-noto font-bold mb-4 text-ghibli-text">
+                        冲突：确定性的代价是机会成本
+                    </h3>
+                    <p class="text-lg text-dark-prose">
+                        林屿给出了最稳的路线图、最保守的预算，结果如愿“稳定”，也如愿停滞。那一年公司没翻车，但也没增长。
+                    </p>
+                    <p class="text-lg text-dark-prose mt-3">
+                        错把不确定性当敌人，导致组织奉行“三不原则”：不拍板、不冒头、不出圈。一切只为了“稳”。
+                    </p>
+                    <p class="mt-4 text-base italic text-ghibli-text/60">
+                        “你以为你在躲风险，其实你在让机会过期。”
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 lg:mb-24">
+            <div class="card p-6 lg:p-10 card-alt-bg tech-glow">
+                <div class="content-z">
+                    <h2 class="ultra-large-text highlight-stat text-center mb-8">
+                        速度优先
+                    </h2>
+                    <p class="text-xl font-noto font-medium text-center mb-8 text-ghibli-text">
+                        转折点：正确不是通过预言得来，是通过<span class="highlight-text">快速验证</span>获得。
+                    </p>
+
+                    <div class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-noto font-bold mb-4 text-ghibli-text">
+                                “啊哈时刻”：复盘表的洞察
+                            </h3>
+                            <p class="text-lg text-dark-prose">
+                                复盘发现，功能命中率与“假设准确率”并无显著相关，却与“试验周期短、试错成本低”显著相关。
+                                聚焦于可控的“速度”，放弃对单次“预言”的执念。
+                            </p>
+                            <div class="mt-6 p-4 border-l-4 border-ghibli-highlight bg-ghibli-card-dark/50 rounded-md">
+                                <p class="font-noto font-bold text-ghibli-text">林屿的新信念：</p>
+                                <p class="text-xl font-bold font-open highlight-text">
+                                    Winning Rate <i class="fa-solid fa-arrow-right-long"></i> Short Cycle + Low Cost
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="h-64">
+                                <canvas id="insightChart"></canvas>
+                            </div>
+                            <p class="text-center text-sm mt-2 text-ghibli-text/70">
+                                模拟数据：试验周期越短，命中率越高 (验证驱动)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 lg:mb-24">
+            <h2 class="text-4xl font-noto font-black mb-10 text-center text-ghibli-text">
+                与不确定性共舞的<span class="highlight-text">“三板斧”</span>
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">
+                            <i class="fa-solid fa-dice-d6 text-3xl align-top mr-2"></i>
+                            概率
+                        </span>
+                        <p class="uppercase text-sm tracking-wider font-semibold text-ghibli-text/70 mb-4">Method 1: Probability > Prediction</p>
+                        <h3 class="text-xl font-noto font-bold mb-3 text-ghibli-text">
+                            路线图升级为概率看板
+                        </h3>
+                        <p class="text-dark-prose">
+                            每个策略都标注成功概率、影响权重、试验窗口。团队从“要不要做”转向“以多大权重、小多长窗口去做”，追求总体期望值更高。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-6 card-alt-bg tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">
+                            <i class="fa-solid fa-sitemap text-3xl align-top mr-2"></i>
+                            小押注
+                        </span>
+                        <p class="uppercase text-sm tracking-wider font-semibold text-ghibli-text/70 mb-4">Method 2: Small Bets, High Frequency</p>
+                        <h3 class="text-xl font-noto font-bold mb-3 text-ghibli-text">
+                            大版本拆成小筹码试验
+                        </h3>
+                        <p class="text-dark-prose">
+                            把年度“一个大版本”拆成“每两周一个小押注”。每次试验的“止损线”与“退出条件”预先写清。这让组织变为“渴望验证”。
+                        </p>
+                        <p class="mt-3 text-base italic text-ghibli-text/60">
+                            少押方向，多押窗口；少求对，多求快。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">
+                            <i class="fa-solid fa-arrows-rotate text-3xl align-top mr-2"></i>
+                            节律
+                        </span>
+                        <p class="uppercase text-sm tracking-wider font-semibold text-ghibli-text/70 mb-4">Method 3: Stable Rhythm</p>
+                        <h3 class="text-xl font-noto font-bold mb-3 text-ghibli-text">
+                            建立周测月调季换挡
+                        </h3>
+                        <p class="text-dark-prose">
+                            固定“周测月调季换挡”的运营节律。复盘不再是找罪魁，而是找可复制的胜式（playbook）。节律是组织的免疫系统。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mb-20 lg:mb-24">
+            <h2 class="text-4xl font-noto font-black mb-4 text-ghibli-text">
+                升华：不确定性是<span class="highlight-text">增长的母语</span>
+            </h2>
+            <p class="text-xl font-noto font-medium text-ghibli-text/90 max-w-4xl mx-auto mb-10">
+                心智升级：从追问“能不能保证”到追问“如何提高期望值”。从迷信“单次正确”到经营“长期胜率”。
+            </p>
+
+            <div class="card p-8 lg:p-12 card-darker-alt-bg mx-auto max-w-5xl tech-glow">
+                <div class="content-z">
+                    <i class="fa-solid fa-leaf text-5xl text-ghibli-highlight mb-6"></i>
+                    <h3 class="text-3xl lg:text-4xl font-noto font-bold leading-snug text-ghibli-text">
+                        别为确定性<span class="highlight-text">缴纳增长税</span>；
+                        <span class="block mt-4">
+                            用概率、节律和小押注，赚取长期胜率。
+                        </span>
+                    </h3>
+                    <p class="mt-6 text-xl font-open font-light text-ghibli-text/80 tracking-wide">
+                        The Tax of Certainty vs. The Dividend of Uncertainty
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-10 border-t border-ghibli-text/10">
+            <p class="text-sm text-ghibli-text/50">Presented by <span class="font-noto font-semibold">网页 · 吉卜力动画 企划</span></p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('insightChart').getContext('2d');
+            const insightChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['试验 1', '试验 2', '试验 3', '试验 4', '试验 5', '试验 6'],
+                    datasets: [
+                        {
+                            label: '试验周期 (天)',
+                            data: [30, 15, 7, 25, 10, 5],
+                            borderColor: 'rgba(210, 180, 140, 0.7)', // 浅棕色 (Ghibli Earth Tone)
+                            backgroundColor: 'rgba(210, 180, 140, 0.2)',
+                            yAxisID: 'y1',
+                            tension: 0.4,
+                            pointBackgroundColor: '#D2B48C',
+                            borderWidth: 2,
+                        },
+                        {
+                            label: '功能命中率 (%)',
+                            data: [35, 50, 70, 40, 60, 85],
+                            borderColor: '#FFB300', // 琥珀黄高亮色
+                            backgroundColor: 'rgba(255, 179, 0, 0.3)',
+                            yAxisID: 'y',
+                            tension: 0.4,
+                            pointBackgroundColor: '#FFB300',
+                            fill: true,
+                            borderWidth: 3,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    family: 'Noto Sans SC, Open Sans, sans-serif'
+                                },
+                                color: '#3A2E2C'
+                            }
+                        },
+                        tooltip: {
+                            bodyFont: {
+                                family: 'Noto Sans SC, Open Sans, sans-serif'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '命中率 (%)',
+                                color: '#FFB300'
+                            },
+                            grid: {
+                                color: 'rgba(58, 46, 44, 0.1)'
+                            },
+                            ticks: {
+                                color: '#3A2E2C',
+                                font: { family: 'Open Sans' }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: '试验周期 (天)',
+                                color: '#D2B48C'
+                            },
+                            grid: {
+                                drawOnChartArea: false, // 只显示左侧网格线
+                            },
+                            ticks: {
+                                color: '#3A2E2C',
+                                font: { family: 'Open Sans' }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(58, 46, 44, 0.1)'
+                            },
+                            ticks: {
+                                color: '#3A2E2C',
+                                font: { family: 'Noto Sans SC' }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
