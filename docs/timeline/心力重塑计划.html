@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心力重塑计划</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 手绘纹理背景 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 吉卜力柔和的科技感渐变线条 */
+        .line-graphic {
+            border: 2px solid;
+            border-image: linear-gradient(to right, rgba(255, 179, 0, 0.8), rgba(255, 179, 0, 0.2)) 1;
+        }
+
+        /* 响应式最大宽度容器 */
+        .max-w-screen-2xl {
+            max-width: 1920px;
+        }
+
+        /* 模拟数据可视化勾线图形 */
+        .sketch-chart {
+            border: 3px solid #6B4423; /* 深棕色边框 */
+            border-radius: 0.75rem;
+            padding: 1rem;
+            position: relative;
+            height: 100%;
+            /* 模拟手绘线条 */
+            background-image: linear-gradient(to right, #6B4423 1px, transparent 1px), 
+                              linear-gradient(to bottom, #6B4423 1px, transparent 1px);
+            background-size: 20px 20px;
+            box-shadow: 4px 4px 0px #6B4423; /* 模拟厚重感手绘阴影 */
+        }
+        
+    </style>
+</head>
+<body class="p-8 lg:p-16">
+
+    <div id="app" class="max-w-screen-2xl mx-auto space-y-24">
+
+        <section class="min-h-screen flex items-center justify-center p-4">
+            <div class="text-center">
+                <h1 class="font-noto-sans-sc ultra-large-text highlight-text">
+                    心力重塑计划
+                </h1>
+                <p class="text-3xl lg:text-5xl font-light mt-4 tracking-widest text-[#6B4423]">
+                    <span class="font-bold">GHIBLI MINDSET.</span> 
+                    <span class="font-noto-sans-sc">吉卜力沉静的<span class="font-bold">成长心法</span></span>
+                </p>
+                <div class="w-24 h-1 mt-8 mx-auto line-graphic"></div>
+            </div>
+        </section>
+
+        <section class="py-16">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="text-left">
+                    <p class="text-xl font-medium uppercase tracking-widest text-gray-500">Focus & Subjectivity</p>
+                    <h2 class="font-noto-sans-sc ultra-large-text">
+                        <span class="highlight-text">ZERO.</span>
+                    </h2>
+                    <p class="text-4xl lg:text-6xl font-extrabold mt-4 font-noto-sans-sc text-[#6B4423]">
+                        卸载“注意力切碎机”
+                    </p>
+                </div>
+
+                <div class="space-y-8">
+                    <div class="card card-alt-bg tech-glow content-z">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">陷阱：围观他人生活</h3>
+                        <p class="text-lg">现代社会最致命的陷阱是无休止地消耗普通人的情绪与心力。你脑海中不会存储任何真正有价值的东西，只记得明星、球星的鸡毛蒜皮。</p>
+                        <ul class="mt-4 space-y-2 text-md">
+                            <li class="flex items-start"><i class="fa-solid fa-cloud-sun list-icon pt-1"></i><span class="font-bold">高消耗：</span> 情绪与心力被持续性消耗。</li>
+                            <li class="flex items-start"><i class="fa-solid fa-cloud-sun list-icon pt-1"></i><span class="font-bold">低价值：</span> 无法形成长时段深度思考能力。</li>
+                        </ul>
+                    </div>
+                    <div class="card content-z">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">策略：主体性建立</h3>
+                        <p class="text-lg">对所有明星、球星乃至伟大人物“祛魅”，是建立自身主体性的必经之旅。将注意力收回到自我价值的创造上。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16">
+            <h2 class="text-5xl lg:text-7xl font-extrabold text-center mb-12 font-noto-sans-sc">
+                高价值切换 <span class="highlight-text">FLOW.</span>
+            </h2>
+            <div class="grid lg:grid-cols-3 gap-12">
+                
+                <div class="card card-darker-alt-bg col-span-1 p-8 tech-glow content-z">
+                    <p class="text-xl font-medium uppercase tracking-widest text-gray-700 mb-3">STRATEGY NO.2</p>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-4">挖掘“隐形消耗”</h3>
+                    <p class="text-lg mb-4">面对重要但不紧急的枯燥工作，潜意识的拖延行为源自人类本性，很难完全克服。但可以采用另一种策略：</p>
+                    <div class="large-stat-text highlight-stat mt-6">
+                        <i class="fa-solid fa-shuffle list-icon"></i> Switch
+                    </div>
+                    <p class="text-xl mt-2 font-bold font-noto-sans-sc">
+                        当自己拖延时，去做另一件<span class="highlight-text">有价值</span>的事情。
+                    </p>
+                </div>
+                
+                <div class="col-span-2 space-y-8">
+                    <div class="card content-z">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">前提 1：高价值习惯轮换</h3>
+                        <p class="text-lg">养成<span class="font-bold">三五种不同类型</span>的高价值习惯，然后轮流切换。例如：看书、听书、看专业帖子、写文章等。</p>
+                        <div class="mt-4 sketch-chart">
+                            <div class="h-24 w-full flex justify-around items-end">
+                                <div class="w-1/5 h-full bg-yellow-300 opacity-70 relative">
+                                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 text-sm font-bold">阅读</span>
+                                    <div class="w-full h-full bg-yellow-400 opacity-30"></div>
+                                </div>
+                                <div class="w-1/5 h-3/4 bg-green-300 opacity-70 relative">
+                                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 text-sm font-bold">写作</span>
+                                    <div class="w-full h-full bg-green-400 opacity-30"></div>
+                                </div>
+                                <div class="w-1/5 h-1/2 bg-blue-300 opacity-70 relative">
+                                    <span class="absolute -top-4 left-1/2 -translate-x-1/2 text-sm font-bold">学习</span>
+                                    <div class="w-full h-full bg-blue-400 opacity-30"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-alt-bg content-z">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">前提 2：移除干扰源</h3>
+                        <p class="text-lg">卸载那些随时吸引目光的低价值 APP。这是防止你在抵触当前工作时，轻易打开它们并<span class="font-bold highlight-text">“一刷半个小时而浑然不觉”</span>的关键。</p>
+                        <div class="mt-4 flex items-center justify-start text-xl text-red-500 font-bold">
+                            <i class="fa-solid fa-mobile-screen-button list-icon text-red-600"></i>
+                            <span class="font-noto-sans-sc">生命被隐形消耗。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-16">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="text-left">
+                    <p class="text-xl font-medium uppercase tracking-widest text-gray-500">Knowledge Internalization</p>
+                    <h2 class="font-noto-sans-sc text-7xl lg:text-[7rem] font-extrabold highlight-text leading-none">
+                        OUTPUT.
+                    </h2>
+                    <p class="text-3xl lg:text-5xl font-extrabold mt-4 font-noto-sans-sc text-[#6B4423]">
+                        写文：高效成长的利器
+                    </p>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="card content-z">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">从眼前掠过</h3>
+                        <p class="text-lg">光看不写，万般知识于你而言，只是<span class="font-bold highlight-text">“清风拂山岗、明月照大江”</span>，根本没有嵌入自己的知识结构。</p>
+                    </div>
+                    <div class="card card-darker-alt-bg content-z">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">内化知识的高效途径</h3>
+                        <ul class="mt-4 space-y-3 text-lg">
+                            <li class="flex items-start"><i class="fa-solid fa-pen-nib list-icon pt-1"></i> 习惯输出，整理自己的思绪。</li>
+                            <li class="flex items-start"><i class="fa-solid fa-list-check list-icon pt-1"></i> 每天写逻辑清晰、通俗易懂的文章。</li>
+                            <li class="flex items-start"><i class="fa-solid fa-book-open-reader list-icon pt-1"></i> <span class="font-bold">高强度写文</span>一年，知识内化程度远超博览群书。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16">
+            <div class="text-center mb-12">
+                <p class="text-xl font-medium uppercase tracking-widest text-gray-500">Perspective Shift</p>
+                <h2 class="font-noto-sans-sc ultra-large-text leading-none">
+                    <span class="highlight-text">LOGIC.</span>
+                </h2>
+                <p class="text-4xl lg:text-6xl font-extrabold mt-4 font-noto-sans-sc text-[#6B4423]">
+                    琢磨周边事物背后的逻辑
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                
+                <div class="card content-z p-8">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-4 flex items-center"><i class="fa-solid fa-city list-icon"></i> 周边景象：运作规律的源头</h3>
+                    <p class="text-lg mb-4">公司选址、架构、工位布局，乃至我们居住的高层小区，所有当下景象都是过去在某些意志下被塑造、被生产的结果。</p>
+                    <ul class="mt-4 space-y-2 text-md">
+                        <li class="flex items-start"><i class="fa-solid fa-map-location-dot list-icon pt-1"></i> 追溯这一过程，才是理解世界运作规律的关键。</li>
+                        <li class="flex items-start"><i class="fa-solid fa-sack-dollar list-icon pt-1"></i> 当你理解身边大多数景象，影响力、收入等都是<span class="font-bold highlight-text">应运而生的副产品</span>。</li>
+                    </ul>
+                </div>
+                
+                <div class="card card-alt-bg content-z p-8">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-4 flex items-center"><i class="fa-solid fa-triangle-exclamation list-icon"></i> 宏大叙事：扭曲的垃圾信息</h3>
+                    <p class="text-lg mb-4">普通人能看到的政治相关领域信息，大多是<span class="font-bold">经过无数次扭曲的垃圾信息</span>。</p>
+                    <div class="mt-4 large-stat-text highlight-stat flex justify-center items-center">
+                        <i class="fa-solid fa-skull list-icon"></i> WASTE
+                    </div>
+                    <p class="text-xl mt-2 font-bold font-noto-sans-sc text-center text-red-700">
+                        脑子里塞进一堆人造浆糊，无异于浪费生命。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="min-h-[70vh] flex items-center justify-center py-16">
+            <div class="grid lg:grid-cols-3 gap-12 items-center">
+                
+                <div class="col-span-1 text-center lg:text-left">
+                    <p class="text-xl font-medium uppercase tracking-widest text-gray-500">High-Dimension</p>
+                    <div class="font-noto-sans-sc text-9xl font-extrabold highlight-text leading-none">
+                        <i class="fa-solid fa-eye list-icon text-8xl"></i>
+                    </div>
+                    <p class="text-4xl lg:text-5xl font-extrabold mt-4 font-noto-sans-sc text-[#6B4423]">
+                        上帝视角
+                    </p>
+                </div>
+
+                <div class="col-span-2 space-y-8">
+                    <div class="card content-z p-6">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">降维打击：跳出局限</h3>
+                        <p class="text-lg">“当局者迷”：跳出当前的局面，<span class="font-bold highlight-text">以上帝视角俯瞰这件事情</span>，往往可以带来降维打击。</p>
+                        <ul class="mt-4 space-y-2 text-lg">
+                            <li class="flex items-start"><i class="fa-solid fa-bullseye list-icon pt-1"></i> <span class="font-bold">小兵思维：</span> 节点到我了，我该做什么？</li>
+                            <li class="flex items-start"><i class="fa-solid fa-crown list-icon pt-1"></i> <span class="font-bold">制定者思维：</span> 流程为何如此设计？信息传递逻辑是什么？</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card card-darker-alt-bg content-z p-6">
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-3">破局之道：想象自己是规则制定者</h3>
+                        <p class="text-lg">高层级者拥有更广阔的视野和更核心的信息。你若想破局，就要<span class="font-bold">想象自己是游戏规则的制定者</span>。很多东西会豁然开朗。</p>
+                    </div>
+                </div>
+            </div>
+        </section> 
+
+    </div>
+
+    <script>
+        // 简单的JavaScript增强，例如平滑滚动或未来交互
+        document.addEventListener('DOMContentLoaded', () => {
+            // Placeholder for any future JavaScript logic (e.g., interactive charts, scroll animations)
+            console.log("吉卜力心法网页已加载。");
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

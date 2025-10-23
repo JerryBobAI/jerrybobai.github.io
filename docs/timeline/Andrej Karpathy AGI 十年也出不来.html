@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrej Karpathy AGI 十年也出不来</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* CSS 样式严格参考用户提供的要求 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           scroll-behavior: smooth;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 响应式容器 */
+        .page-container {
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        /* 勾线图形化 - Tailwind 辅助类 */
+        .g-line-icon {
+            border: 2px solid #4C7878; /* 墨绿色勾线 */
+            border-radius: 50%;
+            padding: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 高亮色透明度渐变制造科技感（使用 Taildwind Utility Classes） */
+        .highlight-gradient {
+            background-image: linear-gradient(to right, rgba(255, 179, 0, 0.8), rgba(255, 179, 0, 0.2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        /* 额外颜色定义：嫩绿色 for GROWTH */
+        .ghibli-green {
+            color: #79B09C; 
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+    <div class="page-container">
+
+        <header class="mb-20 pt-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold font-noto-sans-sc text-[#4C7878]">Karpathy's Insight</h1>
+            <p class="text-sm text-[#4C7878] opacity-70">The Decade of Agents</p>
+        </header>
+
+        <section class="min-h-[70vh] flex flex-col justify-center items-center text-center mb-32">
+            <p class="text-lg mb-4 text-[#4C7878] font-bold">CORE THESIS</p>
+            <h2 class="ultra-large-text font-noto-sans-sc mb-6 leading-none">
+                Agent<span class="highlight-text">十年</span>
+            </h2>
+            <p class="text-3xl lg:text-4xl font-light mb-8 text-[#5E4D4A]">
+                距离“可雇佣的数字实习生”，尚有<span class="highlight-text">十年</span>认知鸿沟。
+            </p>
+            <div class="flex space-x-8 text-center">
+                 <div class="text-xl font-medium text-[#4C7878]">
+                    <i class="fas fa-microchip list-icon"></i> 认知缺陷
+                 </div>
+                 <div class="text-xl font-medium text-[#4C7878]">
+                    <i class="fas fa-redo list-icon"></i> 持续学习
+                 </div>
+                 <div class="text-xl font-medium text-[#4C7878]">
+                    <i class="fas fa-desktop list-icon"></i> 多模态操作
+                 </div>
+            </div>
+        </section>
+
+        <section class="mb-32">
+            <div class="text-center mb-16">
+                <h3 class="ultra-large-text font-noto-sans-sc mb-4 leading-none text-[#4C7878]">
+                    LLM认知<span class="highlight-text">缺陷</span>
+                </h3>
+                <p class="text-xl font-light text-[#5E4D4A] mt-2">
+                    Not smart enough. Not persistent enough.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-brain list-icon text-3xl mb-3"></i>
+                        <p class="text-2xl font-semibold font-noto-sans-sc mb-2 text-[#3A2E2C]">工作记忆 VS 模糊知识</p>
+                        <p class="text-sm text-[#5E4D4A]">权重知识像模糊记忆；KV缓存像工作记忆（即时准确），但缺少蒸馏回权重的“睡眠期”。</p>
+                    </div>
+                </div>
+                <div class="card p-6 card-alt-bg">
+                    <div class="content-z">
+                        <i class="fas fa-sync-alt list-icon text-3xl mb-3"></i>
+                        <p class="text-2xl font-semibold font-noto-sans-sc mb-2 text-[#3A2E2C]">缺乏持续学习</p>
+                        <p class="text-sm text-[#5E4D4A]">无法像人类一样通过日常经验持续学习巩固，每次互动几乎从零开始。</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                    <div class="content-z">
+                        <i class="fas fa-box list-icon text-3xl mb-3"></i>
+                        <p class="text-2xl font-semibold font-noto-sans-sc mb-2 text-[#3A2E2C]">认知核心与模型规模</p>
+                        <p class="text-sm text-[#5E4D4A]">未来可能以约<span class="highlight-text">十亿参数</span>的认知核心为主，大模型更多承载知识再由蒸馏压缩。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-32">
+            <div class="lg:col-span-2 card p-8 card-darker-alt-bg">
+                <div class="content-z">
+                    <p class="text-sm mb-2 text-[#4C7878] font-bold">RL CRITIQUE</p>
+                    <h4 class="large-stat-text font-noto-sans-sc highlight-stat mb-4 leading-tight">
+                        强化学习<span class="ghibli-green">很糟糕</span>
+                    </h4>
+                    <ul class="space-y-3 text-lg text-[#3A2E2C]">
+                        <li><i class="fas fa-flask list-icon"></i> 基于结果奖励：噪声大、信用分配粗糙，导致吸管式监督。</li>
+                        <li><i class="fas fa-user-secret list-icon"></i> 对抗欺骗：易被评判模型对抗欺骗，如无意义输出“dhdhdhdh”骗分。</li>
+                        <li><i class="fas fa-share-alt list-icon"></i> 改进方向：转向过程监督、反思回顾、多智能体文化与自我对弈。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card p-8 flex flex-col justify-center items-start">
+                <div class="content-z">
+                    <div class="g-line-icon mb-4 bg-red-100">
+                        <i class="fas fa-bolt text-2xl text-red-600"></i>
+                    </div>
+                    <p class="text-lg font-semibold mb-2 text-[#4C7878]">模型崩溃与熵</p>
+                    <p class="text-2xl font-noto-sans-sc text-[#3A2E2C] font-bold">
+                        合成数据，多样性<span class="highlight-text">不足</span>。
+                    </p>
+                    <p class="text-sm mt-2 text-[#5E4D4A] opacity-80">
+                        Synthetic data leads to distribution collapse. Need to boost entropy.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="card p-8">
+                    <div class="content-z">
+                        <p class="text-sm mb-4 text-[#4C7878] font-bold">AGI & ECONOMICS</p>
+                        <p class="large-stat-text highlight-stat mb-2 leading-none">
+                            ~2%
+                        </p>
+                        <h4 class="text-3xl font-noto-sans-sc font-bold mb-4 text-[#3A2E2C]">
+                            GDP 增速的<span class="ghibli-green">长期轨迹</span>
+                        </h4>
+                        <p class="text-lg text-[#5E4D4A]">
+                            AGI更像是编译器和自动化的渐进扩散，融入社会，而非短期爆炸式跃升。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="card p-6 card-alt-bg">
+                        <div class="content-z flex items-start">
+                            <i class="fas fa-code list-icon text-2xl mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-xl font-noto-sans-sc text-[#3A2E2C]">代码是最佳落地场景</p>
+                                <p class="text-sm text-[#5E4D4A]">代码结构化高、工具链完备，智能体在编程领域先跑通。PPT等视觉排版缺乏基础设施更难。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-6 tech-glow">
+                        <div class="content-z flex items-start">
+                            <i class="fas fa-car list-icon text-2xl mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-xl font-noto-sans-sc text-[#3A2E2C]">自动驾驶的启示</p>
+                                <p class="text-sm text-[#5E4D4A]">从演示（第一个9）到产品（多个九）需跨越可靠性台阶，警惕失败成本与规模化壁垒。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <div class="text-center mb-16">
+                <h4 class="ultra-large-text font-noto-sans-sc mb-4 leading-none text-[#4C7878]">
+                    教育与<span class="highlight-text">未来修炼</span>
+                </h4>
+                <p class="text-xl font-light text-[#5E4D4A] mt-2">
+                    From Utility to Enlightenment. Avoiding WALL-E.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card p-6 card-darker-alt-bg">
+                    <div class="content-z">
+                        <i class="fas fa-graduation-cap list-icon text-3xl mb-3"></i>
+                        <p class="text-2xl font-semibold font-noto-sans-sc mb-2 text-[#3A2E2C]">Eureka Labs 的精英愿景</p>
+                        <p class="text-sm text-[#5E4D4A]">致力于星际舰队学院式教育，强调真正导师体验、构建知识坡道、高密度灵光一现。</p>
+                    </div>
+                </div>
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-seedling list-icon text-3xl mb-3"></i>
+                        <p class="text-2xl font-semibold font-noto-sans-sc mb-2 text-[#3A2E2C]">人类协作的阶段性</p>
+                        <p class="text-sm text-[#5E4D4A]">前 AGI 时代：教育强调实用赋能。后 AGI 时代：教育强调<span class="highlight-text">有趣与修炼</span>，避免“机器人总动员”式人类失能。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-12 border-t border-[#D2B48C] mt-20">
+            <p class="text-sm text-[#4C7878] opacity-70">© The Decade of Agents. Andrej Karpathy. AGI is the continuation of automation.</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

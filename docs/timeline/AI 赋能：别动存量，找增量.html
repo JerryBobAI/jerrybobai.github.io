@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 赋能：别动存量，找增量</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* 核心吉卜力风格 CSS 样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 手绘纹理/水彩渲染效果的微妙背景图案 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+           /* 柔和的边框 */
+           border: 1px solid rgba(210, 180, 140, 0.2);
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 (天空/云朵色) */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 高亮色自身透明度渐变制造科技感 */
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 运用高亮色 #FFB300 的自身透明度渐变 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大字体 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em; /* 苹果风格的紧凑感 */
+           color: #584D4C; /* 深炭黑，避免纯黑 */
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 简洁的勾线图形化 - Tailwind Utilities for simplicity */
+        .outline-graphic {
+            border: 4px solid #3A2E2C; /* 深棕色勾线 */
+            border-radius: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            font-size: 1.5rem;
+            color: #3A2E2C;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12 min-h-screen">
+
+    <div class="max-w-7xl 2xl:max-w-8xl mx-auto space-y-16 lg:space-y-24">
+
+        <header class="text-center pt-8 pb-4">
+            <h1 class="ultra-large-text font-noto-sans-sc">
+                <span class="highlight-text block">别动存量</span>
+                <span class="block text-3xl md:text-5xl lg:text-6xl mt-4 font-light text-[#7C6E6B]">FIND THE INCREMENT.</span>
+            </h1>
+            <h2 class="ultra-large-text font-noto-sans-sc mt-4">
+                <span class="block">找<span class="highlight-text">增量</span></span>
+            </h2>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="card p-6 lg:col-span-1 tech-glow">
+                <div class="content-z">
+                    <p class="text-xl md:text-2xl font-bold mb-3 text-center">AI 赋能的真谛</p>
+                    <div class="text-center my-6">
+                        <span class="large-stat-text highlight-stat block">Not vs.</span>
+                    </div>
+                    <p class="text-3xl font-noto-sans-sc font-extrabold leading-snug">不是证明 AI 比人强。</p>
+                </div>
+            </div>
+            <div class="card card-alt-bg p-6 lg:col-span-2 tech-glow">
+                <div class="content-z">
+                    <p class="text-xl md:text-2xl font-bold mb-3 text-center">我们的使命</p>
+                    <div class="text-center my-6">
+                        <span class="large-stat-text highlight-stat block">Empower</span>
+                    </div>
+                    <p class="text-4xl font-noto-sans-sc font-extrabold leading-tight">是让人觉得：我用了 AI，<span class="highlight-text">我更强</span>。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <div class="card p-8 card-darker-alt-bg">
+                <div class="content-z">
+                    <h3 class="text-3xl font-extrabold mb-6 font-noto-sans-sc">
+                        <i class="fas fa-ban list-icon"></i> 避免冲突：<span class="highlight-text">The Old Way</span>
+                    </h3>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle list-icon mt-1 text-2xl"></i>
+                            <span class="font-noto-sans-sc font-bold text-xl">别动存量</span>：<span class="text-sm md:text-base">Avoid existing territory.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle list-icon mt-1 text-2xl"></i>
+                            <span class="font-noto-sans-sc font-bold text-xl">别替代人</span>：<span class="text-sm md:text-base">Do not replace human roles.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <h3 class="text-3xl font-extrabold mb-6 font-noto-sans-sc">
+                        <i class="fas fa-check-circle list-icon"></i> 聚焦增量：<span class="highlight-text">The New Frontier</span>
+                    </h3>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-alt-circle-right list-icon mt-1 text-2xl"></i>
+                            <span class="font-noto-sans-sc font-bold text-xl">找增量</span>：<span class="text-sm md:text-base">Seek new value streams.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-alt-circle-right list-icon mt-1 text-2xl"></i>
+                            <span class="font-noto-sans-sc font-bold text-xl">武装人</span>：<span class="text-sm md:text-base">Equip and elevate human capability.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center p-8 bg-[#E9F7EF] border border-[#C6E6D6] rounded-3xl relative overflow-hidden">
+            <h4 class="text-7xl md:text-8xl lg:text-9xl font-extrabold leading-none text-[#584D4C] opacity-10 absolute inset-0 flex items-center justify-center font-noto-sans-sc pointer-events-none">
+                无主之地
+            </h4>
+            <div class="content-z py-8">
+                <p class="text-xl md:text-2xl font-semibold mb-4 text-[#4A996E]">THE AI'S ARENA</p>
+                <p class="ultra-large-text font-noto-sans-sc highlight-text">
+                    无主之地
+                </p>
+                <p class="text-2xl md:text-4xl font-light mt-4 text-[#3A2E2C]">那是 AI 的主场，也是 <span class="font-bold">无主之地</span>。</p>
+            </div>
+        </section>
+
+        <section class="space-y-8">
+            <h3 class="text-4xl font-extrabold mb-4 font-noto-sans-sc text-center">
+                AI 增量主场特质
+                <span class="block text-lg font-light mt-2">Where projects thrive.</span>
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-6 text-center tech-glow">
+                    <div class="content-z">
+                        <div class="outline-graphic mx-auto mb-4">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <p class="large-stat-text highlight-stat">Real-Time</p>
+                        <p class="text-xl font-noto-sans-sc font-extrabold mt-2">实时的</p>
+                        <p class="text-sm mt-1 text-[#7C6E6B]">超越人类反应速度的价值捕捉。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center card-alt-bg">
+                    <div class="content-z">
+                        <div class="outline-graphic mx-auto mb-4">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <p class="large-stat-text highlight-stat">Massive</p>
+                        <p class="text-xl font-noto-sans-sc font-extrabold mt-2">大规模的</p>
+                        <p class="text-sm mt-1 text-[#7C6E6B]">处理海量数据的独特能力。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center tech-glow">
+                    <div class="content-z">
+                        <div class="outline-graphic mx-auto mb-4">
+                            <i class="fas fa-bezier-curve"></i>
+                        </div>
+                        <p class="large-stat-text highlight-stat">Cross-Dept</p>
+                        <p class="text-xl font-noto-sans-sc font-extrabold mt-2">跨部门的</p>
+                        <p class="text-sm mt-1 text-[#7C6E6B]">整合全局视角的协同增效。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-10 mt-16 text-center tech-glow">
+            <div class="content-z">
+                <p class="text-xl md:text-3xl font-bold mb-4 font-noto-sans-sc">结论：项目才能活</p>
+                <p class="ultra-large-text font-noto-sans-sc leading-tight">
+                    <span class="block highlight-text">利益增量</span>
+                </p>
+                <p class="text-2xl md:text-3xl font-light mt-4">
+                    没有利益冲突，只有 <span class="font-bold text-[#3A2E2C]">利益增量</span>。
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center mt-12 py-4 text-sm text-[#7C6E6B]">
+        <p>Ghibli-Inspired Hybrid Layout | AI Strategy Vision | © 2025</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注意力变现：商业路径拆解</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ghibli-offwhite': '#FDF6E3',
+                        'ghibli-deepbrown': '#3A2E2C',
+                        'ghibli-highlight': '#FFB300', // 温暖的琥珀黄
+                        'ghibli-sky': '#E0F2F7', // 淡天蓝色
+                        'ghibli-grass': '#A8D8B9', // 嫩绿
+                    },
+                    spacing: {
+                        '128': '32rem', // for ultra-large elements
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           min-height: 100vh; /* 确保背景覆盖整个视窗 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 科技感光晕效果 */
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s;
+           opacity: 0.8;
+        }
+        .card:hover .tech-glow::before {
+             opacity: 1;
+        }
+
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 勾线图形化 - 简单的圆形和线条 */
+        .stroke-circle {
+            border: 3px solid #3A2E2C; /* 深棕色勾线 */
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* 模拟图表组件的容器 */
+        .chart-mock {
+            height: 100%;
+            min-height: 200px;
+            border-radius: 1rem;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body class="p-4 lg:p-8 xl:p-12 font-noto-sans-sc">
+
+    <div class="max-w-7xl mx-auto space-y-12">
+
+        <header class="text-center py-8 lg:py-16">
+            <h1 class="ultra-large-text text-ghibli-deepbrown">
+                注意力<span class="highlight-text block lg:inline">变现</span>
+            </h1>
+            <p class="text-xl lg:text-3xl mt-4 font-light text-ghibli-deepbrown tracking-wider">
+                Focus Alignment. <span class="font-bold">现金跟随</span>的商业新路径。
+            </p>
+        </header>
+
+        <section class="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            <div class="card card-alt-bg p-8 lg:p-12 xl:p-16 flex items-center justify-center h-full min-h-96 relative tech-glow">
+                <div class="content-z text-center">
+                    <p class="large-stat-text highlight-text mb-4 lg:mb-8 tracking-tighter">
+                        <i class="fa-solid fa-bolt mr-2"></i>
+                        Window of Opportunity.
+                    </p>
+                    <h2 class="text-4xl lg:text-6xl font-extrabold leading-tight text-ghibli-deepbrown">
+                        <span class="block">窗口一到，</span>
+                        <span class="block highlight-text">动作要快。</span>
+                    </h2>
+                    <p class="mt-6 text-lg lg:text-xl font-light opacity-80">
+                        把注意力押在可验证的路径上。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-6 lg:p-8 flex flex-col justify-between">
+                <div class="content-z">
+                    <h3 class="text-2xl lg:text-3xl font-bold mb-4 text-ghibli-deepbrown">
+                        核心洞察: 专注的力量
+                    </h3>
+                    <p class="text-lg lg:text-xl leading-relaxed mb-6">
+                        赚钱不难，难在把<span class="highlight-text font-bold">注意力彻底押在赚钱这件事上</span>。商业思维一旦打开，路数相近：先找可模仿的对象，复刻其方法，刻意练习到熟，再微创新越过它，自然就能找到钱路。
+                    </p>
+                    <p class="text-base lg:text-lg leading-relaxed border-l-4 border-ghibli-highlight pl-4 py-2 bg-yellow-50/50 rounded-r-lg">
+                        过去靠人肉对抗惰性；<span class="font-semibold">现在有AI</span>，自建小工具或直接用现成脚本，批量抓取、导出、总结、对标，实现高密度模仿。
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-12">
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-10 text-ghibli-deepbrown">
+                <span class="highlight-text">5-STEP</span> Executable Flow
+            </h2>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+
+                <div class="card card-darker-alt-bg flex flex-col justify-center items-center p-8 lg:p-10 col-span-1 lg:col-span-1 relative tech-glow">
+                    <div class="content-z text-center">
+                        <p class="text-xl font-light text-ghibli-deepbrown mb-2">Total Stages</p>
+                        <p class="large-stat-text highlight-stat font-extrabold leading-none">
+                            <i class="fa-solid fa-chart-line mr-2"></i>
+                            05
+                        </p>
+                        <p class="mt-4 text-2xl font-bold tracking-tight">
+                            系统化增长飞轮
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-6 lg:p-8 col-span-1 lg:col-span-2">
+                    <ul class="space-y-6 content-z">
+                        <li class="flex items-start">
+                            <span class="stroke-circle highlight-text shrink-0 mr-4">1</span>
+                            <div>
+                                <h4 class="text-xl font-bold">明确赛道：Defined Niche</h4>
+                                <p class="text-base font-light opacity-80 mt-1">选一个单点平台或品类，<span class="font-semibold">限定90天</span>只做它。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stroke-circle highlight-text shrink-0 mr-4">2</span>
+                            <div>
+                                <h4 class="text-xl font-bold">高密度模仿：Hyper-Imitation</h4>
+                                <p class="text-base font-light opacity-80 mt-1">锁定30–50个标杆，做结构化拆解与<span class="font-semibold">复刻清单</span>。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stroke-circle highlight-text shrink-0 mr-4">3</span>
+                            <div>
+                                <h4 class="text-xl font-bold">刻意练习：Deliberate Practice</h4>
+                                <p class="text-base font-light opacity-80 mt-1">设定日更与AB测试节奏，<span class="font-semibold">用数据驱动</span>微创新。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stroke-circle highlight-text shrink-0 mr-4">4</span>
+                            <div>
+                                <h4 class="text-xl font-bold">费曼输出：Feynman Output</h4>
+                                <p class="text-base font-light opacity-80 mt-1">记录你的学习路径与方法论，<span class="font-semibold">边做边讲边卖</span>。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="stroke-circle highlight-text shrink-0 mr-4">5</span>
+                            <div>
+                                <h4 class="text-xl font-bold">快速验证：Rapid Validation</h4>
+                                <p class="text-base font-light opacity-80 mt-1">以小额付费资料/会员/咨询试水，<span class="font-semibold">看留存与复购</span>。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12">
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-10 text-ghibli-deepbrown">
+                AI <span class="highlight-text">赋能</span> 工作流
+                <p class="text-lg font-light mt-2 opacity-70">Case Study: Twitter Growth Model</p>
+            </h2>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="card p-6 lg:p-8 flex flex-col justify-center">
+                    <h3 class="text-2xl lg:text-3xl font-bold mb-6 text-ghibli-deepbrown">
+                        自动化拆解与复刻
+                    </h3>
+                    <ol class="space-y-5 content-z">
+                        <li class="flex items-center">
+                            <i class="list-icon fa-solid fa-database text-2xl"></i>
+                            <p class="text-lg"><span class="font-semibold">数据抓取:</span> 批量收集推文、频率、话题、互动。</p>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="list-icon fa-solid fa-brain text-2xl"></i>
+                            <p class="text-lg"><span class="font-semibold">模式识别:</span> 让AI总结共性模板、开头钩子、结构与语气。</p>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="list-icon fa-solid fa-code-fork text-2xl"></i>
+                            <p class="text-lg"><span class="font-semibold">模板化复刻:</span> 生成你的版本，迭代10轮，保留有效模板库。</p>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="list-icon fa-solid fa-store text-2xl"></i>
+                            <p class="text-lg"><span class="font-semibold">公开复盘:</span> 发布“如何拆解与复刻”的过程文档，转化为产品。</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="card card-darker-alt-bg p-6 lg:p-8 relative tech-glow">
+                    <div class="content-z">
+                        <h3 class="text-2xl font-bold mb-4 text-center">
+                            A/B Test 效果对比
+                        </h3>
+                        <div class="chart-mock p-6">
+                            <div class="h-full flex items-end justify-around space-x-4">
+                                <div class="w-1/4 text-center">
+                                    <div class="bg-ghibli-deepbrown/60 rounded-t-lg h-24 lg:h-32 transition-all duration-500 hover:scale-y-105" title="Base Model: 3.5% Conversion"></div>
+                                    <p class="text-sm mt-2 opacity-70">Base</p>
+                                </div>
+                                <div class="w-1/4 text-center">
+                                    <div class="bg-ghibli-grass rounded-t-lg h-32 lg:h-48 transition-all duration-500 hover:scale-y-105" title="AI Assisted: 6.8% Conversion"></div>
+                                    <p class="text-sm mt-2 opacity-70">AI Assist</p>
+                                </div>
+                                <div class="w-1/4 text-center">
+                                    <div class="bg-ghibli-highlight rounded-t-lg h-48 lg:h-64 transition-all duration-500 hover:scale-y-105" title="Iteration v10: 12.1% Conversion"></div>
+                                    <p class="text-sm mt-2 font-semibold">v10</p>
+                                </div>
+                            </div>
+                            <p class="text-center text-sm mt-4 highlight-text font-bold">Conversion Rate <i class="fa-solid fa-arrow-up ml-1"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 opacity-80 text-ghibli-deepbrown">
+            <p class="text-xl lg:text-2xl font-bold mb-2">
+                <i class="fa-solid fa-sun highlight-text mr-2"></i>
+                Attention is the New Currency.
+            </p>
+            <p class="text-sm font-light">
+                Generated with Ghibli Aesthetic & Apple Design Philosophy. | Studio Ghibli Inspired Color Palette.
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
