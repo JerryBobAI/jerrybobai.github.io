@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有趣与有用的平衡</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           scroll-behavior: smooth;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Make sure glow doesn't interfere with clicks */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* Responsive Container */
+        .container-responsive {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        /* Simple Bar Chart Style for visualization */
+        .chart-bar {
+            height: 1.5rem;
+            border-radius: 0.5rem;
+            transition: width 1s ease-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pt-12 pb-20">
+
+    <div class="container-responsive">
+
+        <header class="text-center mb-20 lg:mb-32">
+            <h1 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C]">
+                二元，<span class="highlight-text">拒绝</span>
+            </h1>
+            <p class="text-xl lg:text-3xl mt-4 max-w-4xl mx-auto tracking-wide">
+                <span class="font-bold font-noto-sans-sc">有趣与有用</span>，何必取舍？
+                <br><span class="text-base text-gray-500 mt-1 block">FUN VS FUNCTION. A FALSE DILEMMA.</span>
+            </p>
+            <div class="mt-8 text-lg font-medium text-gray-600">
+                <span class="highlight-stat">范皓宇</span> 的哲学选择
+            </div>
+        </header>
+
+        <section class="grid lg:grid-cols-2 gap-10 mb-20 lg:mb-32 items-start">
+            
+            <div class="card card-darker-alt-bg p-8 lg:p-12 tech-glow order-1 lg:order-2">
+                <div class="content-z">
+                    <p class="text-lg uppercase tracking-widest mb-4 text-[#006064] font-semibold">The Ultimate Choice</p>
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-hand-holding-heart fa-3x highlight-stat"></i>
+                        <span class="large-stat-text highlight-stat font-noto-sans-sc">都选</span>
+                    </div>
+                    <h2 class="text-3xl lg:text-5xl font-extrabold font-noto-sans-sc mt-6 leading-tight">
+                        砍掉单一属性，保留<br>有趣和有用<span class="highlight-text">并存</span>的选项。
+                    </h2>
+                </div>
+            </div>
+
+            <div class="order-2 lg:order-1">
+                <h3 class="text-2xl lg:text-3xl font-bold mb-6 font-noto-sans-sc border-l-4 border-[#FFB300] pl-3">
+                    纯粹的「有用」：不可持续的陷阱
+                    <span class="block text-sm text-gray-500 font-normal mt-1">THE TRAP OF PURE UTILITY</span>
+                </h3>
+                <ul class="space-y-4 text-lg">
+                    <li class="flex items-start">
+                        <i class="fas fa-money-bill-wave list-icon mt-1"></i>
+                        <span class="flex-1">价格战泥潭：只提供有用的价值，必将陷入价格战的恶性竞争。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-chart-line-down list-icon mt-1"></i>
+                        <span class="flex-1">商业不可持续：今日$5，明日$2，最终免费甚至倒贴，难以健康发展。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-handshake-slash list-icon mt-1"></i>
+                        <span class="flex-1">缺乏情感连接：无法创造绵延、可持续的用户关系和信任。</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-20 lg:mb-32">
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-12 font-noto-sans-sc">
+                平衡之道：<span class="highlight-text">角色</span>与<span class="highlight-text">作用</span>
+                <span class="block text-base text-gray-500 font-normal mt-2">DEFINING ROLES: UTILITY VS DELIGHT</span>
+            </h2>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="card p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-door-open fa-3x highlight-stat mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-noto-sans-sc">
+                            有用 (Utility): <span class="highlight-text">敲门砖</span>
+                        </h3>
+                        <p class="text-gray-700">
+                            这是产品的<span class="font-semibold">基础前提</span>。如果一个产品对用户毫无用途，它将不会获得任何关注。有用负责<span class="font-semibold">功能性</span>需求，是理性、可推导、可满足的。
+                        </p>
+                        <ul class="mt-4 space-y-2 text-sm text-gray-600">
+                            <li><i class="fas fa-check-circle list-icon"></i> 获得初始关注</li>
+                            <li><i class="fas fa-check-circle list-icon"></i> 满足功能需求</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-rocket fa-3x highlight-stat mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-3 font-noto-sans-sc">
+                            有趣 (Fun): <span class="highlight-text">时间轴上的惊喜</span>
+                        </h3>
+                        <p class="text-gray-700">
+                            有趣是在<span class="font-semibold">时间轴上展开</span>的体验。它让用户体会到“原来还可以这样”的惊喜，积累情感连接，实现产品的<span class="font-semibold">长期陪伴</span>。
+                        </p>
+                        <ul class="mt-4 space-y-2 text-sm text-gray-600">
+                            <li><i class="fas fa-star list-icon"></i> 形成深层“内化”关系</li>
+                            <li><i class="fas fa-star list-icon"></i> 建立情感连接与信任</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-10 mb-20 lg:mb-32 items-center">
+            
+            <div class="card p-8 lg:col-span-2 tech-glow">
+                <div class="content-z">
+                    <h3 class="text-3xl font-extrabold mb-8 font-noto-sans-sc">
+                        市场供给<span class="highlight-text">严重失衡</span>
+                        <span class="block text-sm text-gray-500 font-normal mt-1">A CRITICAL MARKET IMBALANCE</span>
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <span class="w-24 font-bold text-gray-700">有用供给</span>
+                            <div class="flex-1 ml-4">
+                                <div class="chart-bar bg-green-500/70" style="width: 90%;">
+                                    <span class="block ml-2 text-sm font-semibold text-white/90">极度过剩 (Over-Saturated)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <span class="w-24 font-bold text-gray-700">有趣供给</span>
+                            <div class="flex-1 ml-4">
+                                <div class="chart-bar bg-[#FFB300]/70" style="width: 35%;">
+                                    <span class="block ml-2 text-sm font-semibold text-gray-900/90">无比贫瘠 (Highly Scarce)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 text-xl font-medium pt-4 border-t border-dashed border-gray-300">
+                           结论：绝大多数产品集中于功能性，<span class="font-extrabold highlight-text">忽略了情感连接的复杂创造。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 text-center lg:text-left">
+                <p class="ultra-large-text font-noto-sans-sc highlight-stat opacity-10 lg:opacity-30 leading-none select-none">
+                    90:<span class="text-gray-300">35</span>
+                </p>
+                <p class="text-xl font-bold mt-4 font-noto-sans-sc">
+                    在“有用”基础上，<br><span class="highlight-text">投入更多精力创造有趣。</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="text-center max-w-5xl mx-auto">
+            <h2 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C]">
+                <i class="fas fa-heart highlight-stat text-5xl"></i> 信任与<span class="highlight-text">美好</span>
+            </h2>
+            <p class="text-xl lg:text-2xl mt-6 leading-relaxed">
+                社会底层真正重要的东西始终是<span class="font-extrabold font-noto-sans-sc">幸福和美好</span>。
+                兼顾有趣和有用，不仅是产品策略，更是一种<span class="highlight-stat">能够建立长期信任、创造幸福感的价值选择。</span>
+            </p>
+            <p class="text-sm mt-4 text-gray-500">
+                TRUST & HAPPINESS. THE GOAL OF ALL EAST ASIAN CIVILIZATION.
+            </p>
+        </section>
+
+        <footer class="mt-20 text-center text-xs text-gray-400">
+            © 2025 Studio Ghibli Philosophy Style Demo. All rights reserved.
+        </footer>
+
+    </div>
+
+    <script>
+        // 简易的滚动提示 (如果需要多页，可以加上翻页逻辑)
+        window.onload = function() {
+            console.log("吉卜力风格网页加载完成。");
+        };
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记录、反馈与命运的闭环</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           scroll-behavior: smooth;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Make sure glow doesn't interfere with clicks */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* Responsive Container */
+        .container-responsive {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+        /* Custom Flowchart Style (Conceptual) */
+        .flow-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem 0.5rem;
+            border-radius: 0.75rem;
+            border: 2px solid #D2B48C; /* 浅棕色勾线 */
+            transition: all 0.3s;
+        }
+        .flow-arrow {
+            color: #FFB300;
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen pt-12 pb-20">
+
+    <div class="container-responsive">
+
+        <header class="text-center mb-20 lg:mb-32">
+            <h1 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C]">
+                记录，<span class="highlight-text">重启</span>
+            </h1>
+            <p class="text-xl lg:text-3xl mt-4 max-w-4xl mx-auto tracking-wide">
+                记录是改变命运的起点，但关键在于<span class="font-bold font-noto-sans-sc">转化为反馈与决策。</span>
+                <br><span class="text-base text-gray-500 mt-1 block">THE STARTING POINT IS NOT THE DESTINATION.</span>
+            </p>
+        </header>
+
+        <section class="mb-20 lg:mb-32">
+            <h2 class="text-center text-4xl lg:text-5xl font-extrabold mb-12 font-noto-sans-sc">
+                核心机制：<span class="highlight-text">命运闭环</span>
+                <span class="block text-base text-gray-500 font-normal mt-2">THE MECHANISM OF SELF-ITERATION</span>
+            </h2>
+
+            <div class="grid grid-cols-5 gap-4 items-center max-w-6xl mx-auto">
+                <div class="flow-step bg-white/90">
+                    <span class="font-extrabold text-lg text-[#3A2E2C]">记录</span>
+                </div>
+                <div class="text-center flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step card-alt-bg">
+                    <span class="font-extrabold text-lg text-[#3A2E2C]">复盘</span>
+                </div>
+                <div class="text-center flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="flow-step bg-white/90">
+                    <span class="font-extrabold text-lg text-[#3A2E2C]">决策</span>
+                </div>
+                <div class="col-span-5 text-center text-2xl highlight-stat pt-4">
+                    <i class="fas fa-undo-alt"></i> 试错 → 再记录...
+                </div>
+            </div>
+
+            <div class="mt-12 max-w-3xl mx-auto text-center text-lg leading-relaxed">
+                仅“写下来”而不复盘，会沦为<span class="font-extrabold highlight-text">“精致的拖延”</span>。改变命运，来自这个循环的强度与质量。
+            </div>
+        </section>
+
+        <section class="mb-20 lg:mb-32">
+            <h2 class="text-center text-4xl font-extrabold mb-12 font-noto-sans-sc">
+                机制拆解：<span class="highlight-text">隐性到可度量</span>
+                <span class="block text-base text-gray-500 font-normal mt-2">FROM IMPLICIT THOUGHTS TO MEASURABLE DATA</span>
+            </h2>
+            <div class="grid lg:grid-cols-4 gap-8">
+                
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">1.</span>
+                        <h3 class="text-xl font-bold font-noto-sans-sc mb-3">显性化思维</h3>
+                        <p class="text-gray-700">将模糊念头外化为可检视的对象，降低认知噪音，暴露偏差。</p>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg p-6 tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">2.</span>
+                        <h3 class="text-xl font-bold font-noto-sans-sc mb-3">数据化变量</h3>
+                        <p class="text-gray-700">记录把“隐性思考”变为“可度量的变量”，让你看到趋势而非情绪。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">3.</span>
+                        <h3 class="text-xl font-bold font-noto-sans-sc mb-3">假说与路径</h3>
+                        <p class="text-gray-700">复盘将“事实”转成“因果假说”，为下一步行动提供可证伪的路径。</p>
+                    </div>
+                </div>
+
+                <div class="card card-alt-bg p-6 tech-glow">
+                    <div class="content-z">
+                        <span class="large-stat-text highlight-stat block mb-2">4.</span>
+                        <h3 class="text-xl font-bold font-noto-sans-sc mb-3">个人数据集</h3>
+                        <p class="text-gray-700">长期积累的“个人数据集”成为你独有的优势与洞见来源。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-10 mb-20 lg:mb-32 items-start">
+            
+            <div class="lg:col-span-1 text-center lg:text-left">
+                <p class="ultra-large-text font-noto-sans-sc highlight-stat opacity-10 lg:opacity-30 leading-none select-none">
+                    MVP
+                </p>
+                <h2 class="text-4xl font-extrabold font-noto-sans-sc mt-4">
+                    最小可行<span class="highlight-text">实践</span>
+                </h2>
+                <p class="text-lg text-gray-600 mt-2">MAKE IT ACTIONABLE, KEEP IT MINIMAL.</p>
+            </div>
+
+            <div class="card lg:col-span-2 p-8 tech-glow">
+                <div class="content-z">
+                    <ul class="space-y-6 text-lg">
+                        <li class="flex items-start">
+                            <i class="fas fa-tachometer-alt list-icon mt-1 text-2xl"></i>
+                            <div class="flex-1">
+                                <span class="font-bold text-[#3A2E2C]">关键变量日更：</span> 设定少量（四项以内）关键变量：睡眠时长、专注时段、MIT完成/未完成、一次失败原因。保证可持续。
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-search-plus list-icon mt-1 text-2xl"></i>
+                            <div class="flex-1">
+                                <span class="font-bold text-[#3A2E2C]">因果复盘周更：</span> 用每周一次的“因果复盘”替代流水账。问：哪个假设被证伪？哪一周动带来超额回报？下一周的唯一策略调整是什么？
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock list-icon mt-1 text-2xl"></i>
+                            <div class="flex-1">
+                                <span class="font-bold text-[#3A2E2C]">绑定触发器：</span> 避免意志力消耗。固定两段时间记录（起床后、收工前），每次不超过五分钟。
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-trash-alt list-icon mt-1 text-2xl"></i>
+                            <div class="flex-1">
+                                <span class="font-bold text-[#3A2E2C]">决策可用性：</span> 若一条记录不能改变未来选择，就删去或合并。所有记录都要可用于决策。
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 lg:mb-32">
+            <h2 class="text-center text-4xl font-extrabold mb-12 font-noto-sans-sc">
+                警惕：<span class="highlight-text">记录的陷阱</span>
+                <span class="block text-base text-gray-500 font-normal mt-2">THREE COMMON FALLACIES TO AVOID</span>
+            </h2>
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <div class="card card-darker-alt-bg p-6">
+                    <i class="fas fa-ghost list-icon text-3xl mb-3"></i>
+                    <h3 class="text-xl font-bold font-noto-sans-sc mb-2">幻觉陷阱</h3>
+                    <p class="text-gray-700">“记录即进步”的幻觉。写下来只是起点，不是终点。</p>
+                </div>
+
+                <div class="card card-darker-alt-bg p-6">
+                    <i class="fas fa-map-marker-alt list-icon text-3xl mb-3"></i>
+                    <h3 class="text-xl font-bold font-noto-sans-sc mb-2">杠杆陷阱</h3>
+                    <p class="text-gray-700">只记结果不记过程。导致无法定位真正的“杠杆点”进行调整。</p>
+                </div>
+
+                <div class="card card-darker-alt-bg p-6">
+                    <i class="fas fa-burn list-icon text-3xl mb-3"></i>
+                    <h3 class="text-xl font-bold font-noto-sans-sc mb-2">成本陷阱</h3>
+                    <p class="text-gray-700">记录粒度过细、成本过高。最终导致身心俱疲，全面放弃。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center max-w-5xl mx-auto">
+            <h2 class="ultra-large-text font-noto-sans-sc text-[#3A2E2C]">
+                导航，<span class="highlight-text">非引擎</span>
+            </h2>
+            <p class="text-xl lg:text-2xl mt-6 leading-relaxed">
+                记录是<span class="font-extrabold highlight-text">“导航”</span>，它让你不再迷路。但真正推动你到达新位置的是<span class="font-extrabold font-noto-sans-sc">复盘与决策的执行力</span>。
+                将记录变成带反馈的系统，才配得上“改变命运”这句话。
+            </p>
+            <div class="mt-8">
+                 <i class="fas fa-book-open list-icon text-2xl"></i>
+                 <span class="text-lg font-semibold text-gray-600">建立“失败词典”，优先设计防错机制。</span>
+            </div>
+        </section>
+
+        <footer class="mt-20 text-center text-xs text-gray-400">
+            © 2025 Studio Ghibli Philosophy Style Demo: The System of Self-Iteration. All rights reserved.
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

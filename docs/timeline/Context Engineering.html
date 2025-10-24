@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Context Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* 定制 CSS 样式严格参考用户要求 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 - 像天空 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 自定义 Tailwind 配置，兼容更宽显示器 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px;
+            }
+        }
+        /* 针对高亮色的透明度渐变实现 */
+        .highlight-bg-gradient-tech {
+            background: linear-gradient(135deg, rgba(255, 179, 0, 0.8) 0%, rgba(255, 179, 0, 0.5) 50%, rgba(255, 179, 0, 0.2) 100%);
+            color: #3A2E2C;
+            border: 1px solid rgba(255, 179, 0, 0.4);
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8 min-h-screen">
+
+    <div class="container mx-auto">
+        <header class="text-center mb-16 pt-8">
+            <p class="text-xl md:text-2xl tracking-widest uppercase font-semibold text-gray-600 mb-4">AI Agent Core Strategy</p>
+            <h1 class="ultra-large-text font-noto-sans-sc leading-none mb-4">
+                <span class="highlight-text">Context</span>
+                <span class="text-gray-800">工程</span>
+            </h1>
+            <h2 class="text-4xl md:text-5xl font-extrabold font-noto-sans-sc leading-tight">
+                AI智能体性能的<span class="highlight-text">灵魂</span>
+            </h2>
+            <p class="text-lg md:text-xl mt-4 max-w-3xl mx-auto text-gray-600">
+                有效的上下文管理 = 高效的智能体表现。
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <div class="card p-8 lg:col-span-2 tech-glow">
+                <div class="content-z">
+                    <h3 class="text-3xl font-bold mb-4 font-noto-sans-sc">💎 核心观点：进化之路</h3>
+                    <p class="text-lg md:text-xl leading-relaxed text-gray-700">
+                        大模型性能的提升，<span class="font-bold highlight-text">不再仅依赖参数规模</span>。
+                    </p>
+                    <p class="text-2xl md:text-3xl font-extrabold mt-4 font-noto-sans-sc leading-snug">
+                        取决于<span class="highlight-text">如何组织与利用上下文信息</span>（Context）。
+                    </p>
+                    <div class="mt-6 flex items-center space-x-4">
+                        <i class="fas fa-splotch text-3xl highlight-text"></i>
+                        <p class="text-base text-gray-600 italic">Context Engineering is the evolution of Prompt Engineering.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 flex flex-col justify-center">
+                <h3 class="text-2xl font-bold mb-4 font-noto-sans-sc">⚙️ 何为 Context Engineering</h3>
+                <p class="text-lg leading-relaxed">
+                    通过<span class="font-bold">结构化地设计、组织、筛选和动态更新</span>上下文信息，以最大化模型的理解与推理能力。
+                </p>
+                <div class="mt-4 text-center">
+                    <p class="large-stat-text highlight-stat leading-tight">精准控制</p>
+                    <p class="uppercase text-sm tracking-widest text-gray-600">Model Input</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-center text-4xl font-extrabold mb-8 font-noto-sans-sc">🧠 挑战：有限记忆与<span class="highlight-text">上下文腐烂</span> (Context Rot)</h2>
+            <div class="card p-10 card-darker-alt-bg">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="text-center lg:text-left">
+                        <p class="ultra-large-text highlight-stat leading-tight">70% <i class="fas fa-arrow-down text-red-600"></i></p>
+                        <p class="text-xl md:text-2xl font-bold mt-2 font-noto-sans-sc">
+                            过早信息的<span class="text-red-600">遗忘率</span>
+                        </p>
+                        <p class="text-sm text-gray-600 mt-2">（引用 Chroma 等研究）</p>
+                    </div>
+
+                    <div>
+                        <ul class="space-y-4 text-lg">
+                            <li class="flex items-start">
+                                <i class="fas fa-microchip list-icon mt-1"></i>
+                                <span class="flex-1">模型输入窗口有限，过量上下文会导致<span class="font-bold">性能退化</span>。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-eye-slash list-icon mt-1"></i>
+                                <span class="flex-1">模型会<span class="font-bold highlight-text">淡化或忽略</span>过早输入的关键信息 (Context Rot)。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-filter list-icon mt-1"></i>
+                                <span class="flex-1">核心挑战：如何在有限窗口内放入<span class="font-bold">“最有价值”</span>的信息。</span>
+                            </li>
+                        </ul>
+                        <p class="text-lg font-bold mt-6 text-gray-800">
+                            结论：上下文并非越多越好，而是要<span class="highlight-text">“选得准、放得巧、调得动”</span>。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-center text-4xl font-extrabold mb-10 font-noto-sans-sc">🧩 策略：有效 Context 工程的<span class="highlight-text">三层实践</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="card p-6 highlight-bg-gradient-tech">
+                    <div class="content-z">
+                        <i class="fas fa-feather-alt text-4xl mb-3 text-white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
+                        <h4 class="text-2xl font-bold mb-2 font-noto-sans-sc">1. System Prompt</h4>
+                        <p class="text-sm uppercase tracking-wider text-gray-700 font-semibold mb-3">Agent 的灵魂 | Prompt Layer</p>
+                        <ul class="text-base space-y-2 list-disc list-inside ml-2">
+                            <li>明确<span class="font-bold">身份与语气</span>。</li>
+                            <li>限定<span class="font-bold">任务边界</span>。</li>
+                            <li>给出清晰的<span class="font-bold highlight-text">输出模板</span>。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card p-6 card-alt-bg tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-bolt text-4xl mb-3 highlight-text"></i>
+                        <h4 class="text-2xl font-bold mb-2 font-noto-sans-sc">2. 即时上下文</h4>
+                        <p class="text-sm uppercase tracking-wider text-gray-600 font-semibold mb-3">临时记忆 | Memory Layer</p>
+                        <ul class="text-base space-y-2 list-disc list-inside ml-2">
+                            <li><span class="font-bold">动态检索</span>历史对话。</li>
+                            <li>嵌入数据库<span class="font-bold">查找相关知识</span>。</li>
+                            <li>基于<span class="font-bold highlight-text">意图变化</span>自动更新。</li>
+                        </ul>
+                        <p class="mt-3 text-sm italic text-gray-700">目标：每次决策都在“最新、最相关”的语境下。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 card-darker-alt-bg">
+                    <div class="content-z">
+                        <i class="fas fa-layer-group text-4xl mb-3 text-green-700"></i>
+                        <h4 class="text-2xl font-bold mb-2 font-noto-sans-sc">3. 无限上下文</h4>
+                        <p class="text-sm uppercase tracking-wider text-gray-700 font-semibold mb-3">长期档案 | Architecture Layer</p>
+                        <ul class="text-base space-y-2 list-disc list-inside ml-2">
+                            <li><span class="font-bold">向量数据库</span> + 检索式记忆。</li>
+                            <li>文档<span class="font-bold">摘要与递归压缩</span>。</li>
+                            <li><span class="font-bold highlight-text">分层记忆结构</span>（短期缓存 + 长期档案）。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="text-center text-4xl font-extrabold mb-10 font-noto-sans-sc">🤖 附录：Agent 架构<span class="highlight-text">类型参考</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-6 text-center">
+                    <div class="content-z">
+                        <div class="text-6xl text-blue-500 mb-4">
+                            <i class="far fa-map-marked-alt" style="border: 3px solid #60A5FA; border-radius: 50%; padding: 0.5rem;"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2 font-noto-sans-sc">流程驱动型</h4>
+                        <p class="text-lg highlight-stat">Workflow Agents</p>
+                        <p class="text-base mt-2 text-gray-700">擅长任务分解与执行，线性逻辑处理专家。</p>
+                    </div>
+                </div>
+                
+                <div class="card p-6 text-center card-alt-bg">
+                    <div class="content-z">
+                        <div class="text-6xl text-yellow-500 mb-4">
+                            <i class="far fa-sync-alt" style="border: 3px solid #FBBF24; border-radius: 50%; padding: 0.5rem;"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2 font-noto-sans-sc">自我反思型</h4>
+                        <p class="text-lg highlight-stat">Reflective Agents</p>
+                        <p class="text-base mt-2 text-gray-700">具备自我评估机制，可修正并优化输出。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 text-center card-darker-alt-bg">
+                    <div class="content-z">
+                        <div class="text-6xl text-pink-500 mb-4">
+                            <i class="far fa-comments" style="border: 3px solid #EC4899; border-radius: 50%; padding: 0.5rem;"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold mb-2 font-noto-sans-sc">对话核心型</h4>
+                        <p class="text-lg highlight-stat">Interactive Agents</p>
+                        <p class="text-base mt-2 text-gray-700">强化交互体验，以流畅对话为核心。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-8 pb-12">
+            <h3 class="text-3xl font-bold mb-4 font-noto-sans-sc">🌟 最终启示：<span class="highlight-text">综合思维</span></h3>
+            <p class="text-xl max-w-4xl mx-auto text-gray-800 leading-relaxed">
+                Context 工程要求开发者具备<span class="font-bold">产品、信息架构、认知科学</span>的综合思维。
+            </p>
+            <p class="text-2xl font-extrabold mt-4 font-noto-sans-sc">
+                优秀的 Agent 不靠参数，而靠能否<span class="highlight-text">“记得清、想得准、说得对”</span>。
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
