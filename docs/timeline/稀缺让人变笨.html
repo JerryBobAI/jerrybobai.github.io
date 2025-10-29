@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稀缺让人变笨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJdZzS5WJdK0t9E4z2c0uD3s1h5w4/L2t10QpL1d+V0rQ/x0A1lV8U2/B8sA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 手绘纹理/水彩渲染效果模拟 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 科技感高亮渐变光晕 */
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 使用高亮色自身的透明度渐变 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不影响点击事件 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大文本 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* 统计数字 */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 确保所有中文文本使用 Noto Sans SC 粗体 */
+        .font-bold-cn {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+        }
+        .font-black-cn {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 900;
+        }
+        /* 响应式最大宽度 */
+        .container {
+            max-width: 1920px;
+        }
+
+        /* 勾线图形样式 */
+        .line-graphic {
+            border: 3px solid #3A2E2C;
+            border-radius: 100%; /* 圆形 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFB300;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12 min-h-screen">
+
+    <div class="container mx-auto">
+
+        <header class="text-center mb-16 lg:mb-24 pt-8">
+            <h4 class="font-bold-cn text-xl md:text-3xl text-gray-600 mb-4 tracking-widest">
+                SCARCITY / 稀缺的力量
+            </h4>
+            <h1 class="font-black-cn ultra-large-text highlight-text leading-none mx-auto max-w-6xl">
+                稀缺<br/>让人变笨
+            </h1>
+            <p class="font-open-sans text-lg md:text-2xl mt-4 max-w-3xl mx-auto text-gray-700">
+                It's not a metaphor. It's the literal truth.
+            </p>
+        </header>
+
+        <section class="grid lg:grid-cols-2 gap-8 mb-16 lg:mb-24">
+            <div class="card card-alt-bg tech-glow p-8 lg:p-12 flex flex-col justify-center">
+                <div class="content-z">
+                    <p class="text-lg font-semibold mb-4 text-gray-700">印度农民智力测试实验结果</p>
+                    <div class="flex items-center space-x-4 mb-6">
+                        <i class="fas fa-brain text-5xl highlight-text"></i>
+                        <h2 class="font-black-cn large-stat-text highlight-stat leading-tight">
+                            -13 <span class="text-4xl text-3A2E2C">分</span>
+                        </h2>
+                    </div>
+                    <p class="font-bold-cn text-2xl md:text-3xl mb-4 text-3A2E2C">
+                        贫穷剥夺了明智选择的能力
+                    </p>
+                    <p class="text-gray-700">
+                        缺钱时的智商分数损失，相当于<span class="font-semibold text-red-500">少睡一整夜</span>。有了钱，智商就回来了。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-12">
+                <h3 class="font-bold-cn text-3xl md:text-4xl mb-6">
+                    残酷的真相：贫穷带来的<span class="highlight-text">“带宽负担”</span>
+                </h3>
+                <p class="text-gray-700 leading-relaxed text-lg mb-4">
+                    这不是比喻，而是字面意思。穷人做出的短视和“愚蠢决策”——借高利贷、不投资教育、短视消费——并非他们天生如此。
+                </p>
+                <p class="text-gray-700 leading-relaxed text-lg">
+                    如同<span class="font-semibold">手机内存只剩5%</span>，大脑的认知资源被日常的生存焦虑（饭钱、房租、学费）持续占用，这就是作者所说的“带宽负担”。
+                </p>
+            </div>
+        </section>
+
+        <section class="mb-16 lg:mb-24">
+            <h2 class="font-black-cn ultra-large-text text-center mb-12">
+                <span class="text-3A2E2C">越穷</span> <span class="highlight-text">越错</span>
+            </h2>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="card p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-redo-alt text-4xl highlight-text mb-4"></i>
+                        <h3 class="font-bold-cn text-2xl mb-3">稀缺的死循环</h3>
+                        <ul class="space-y-3 mt-4 text-gray-700">
+                            <li><i class="fas fa-circle list-icon text-xs"></i> <span class="font-bold-cn">越穷</span>，认知带宽越少。</li>
+                            <li><i class="fas fa-circle list-icon text-xs"></i> <span class="font-bold-cn">带宽越少</span>，越做错决策。</li>
+                            <li><i class="fas fa-circle list-icon text-xs"></i> <span class="font-bold-cn">决策越错</span>，陷得越深。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-darker-alt-bg p-8">
+                    <i class="fas fa-eye text-4xl text-3A2E2C mb-4"></i>
+                    <h3 class="font-bold-cn text-2xl mb-3">注意力被“俘获”</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        稀缺会让人对所缺之物<span class="font-semibold highlight-text">过度敏感</span>。饿的人满脑子食物，穷人看硬币会觉得比实际更大。当你全部注意力都在“填补稀缺”时，其他一切都会从视野里消失。
+                    </p>
+                </div>
+                <div class="card p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-binoculars text-4xl highlight-text mb-4"></i>
+                        <h3 class="font-bold-cn text-2xl mb-3">危险的“管窥”视野</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            大脑只能看见最<span class="font-semibold text-red-500">紧急</span>的事。消防员赶去救火，79%的致死车祸中他们没系安全带。不是不在乎，而是“火”占满了他们的管窥视野，<span class="font-bold-cn">“重要但不急”</span>的动作被忽略。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-8 mb-16 lg:mb-24">
+            <div class="card card-darker-alt-bg p-8 lg:p-12 flex flex-col justify-center">
+                <h3 class="font-black-cn text-3xl md:text-4xl mb-6 text-3A2E2C">
+                    永远在“救火”的团队
+                </h3>
+                <ul class="space-y-4 text-gray-700 text-lg">
+                    <li class="flex items-start">
+                        <i class="fas fa-fire list-icon text-xl mt-1"></i>
+                        <span class="ml-3">每天忙着处理<span class="font-bold-cn">紧急需求</span>，没有时间优化流程。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-clock list-icon text-xl mt-1"></i>
+                        <span class="ml-3">越不优化越<span class="font-bold-cn">低效</span>，越低效就越忙碌，陷入杂耍游戏。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-exclamation-triangle list-icon text-xl mt-1"></i>
+                        <span class="ml-3">他们知道需要改进系统，但<span class="font-bold-cn highlight-text">没有带宽</span>去做“重要但不紧急”的事。</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="card p-8 lg:p-12 flex flex-col items-center justify-center">
+                <h3 class="font-bold-cn text-2xl mb-6 text-center">
+                    小贩借贷的代价：年化利率模型
+                </h3>
+                <div class="w-full h-64 line-graphic border-dashed text-center flex-col p-4">
+                    <p class="text-lg font-bold-cn">数据可视化占位图</p>
+                    <canvas id="loanChart" class="w-full h-full"></canvas>
+                </div>
+                <p class="text-sm mt-4 text-gray-600">印度街头小贩借$1000/天，还$1050/天。带宽全被“今天怎么活下去”占满，看不见“一个月后的自由”。</p>
+            </div>
+        </section>
+
+        <section class="mb-20 lg:mb-32">
+            <h2 class="font-black-cn ultra-large-text text-center highlight-text mb-12">
+                <span class="text-3A2E2C">余闲</span> / Redundancy
+            </h2>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="card card-alt-bg p-8 flex flex-col items-center text-center">
+                    <i class="fas fa-seedling text-5xl highlight-text mb-4"></i>
+                    <h3 class="font-bold-cn text-2xl mb-3">刻意留出“余闲”</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        这是反直觉的解法——<span class="font-bold-cn">强行留出冗余资源</span>。稀缺会膨胀，填满所有空间。如果你不强行留，它就会被新任务或新“必需品”瞬间填满。
+                    </p>
+                </div>
+                <div class="card p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-piggy-bank text-5xl highlight-text mb-4"></i>
+                        <h3 class="font-bold-cn text-2xl mb-3">强制储蓄与优化</h3>
+                        <p class="text-gray-700 leading-relaxed">
+                            <span class="font-semibold">农民：</span>收割后被强制储蓄一部分，打破下次收割前的极度稀缺。<br>
+                            <span class="font-semibold">团队：</span>强行空出<span class="font-bold-cn text-red-500">20%时间</span>做系统优化，而非永远救火。
+                        </p>
+                    </div>
+                </div>
+                <div class="card card-darker-alt-bg p-8 flex flex-col items-center text-center">
+                    <i class="fas fa-infinity text-5xl text-3A2E2C mb-4"></i>
+                    <h3 class="font-bold-cn text-2xl mb-3">用现在的痛苦，换未来的自由</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        稀缺不会因为你更努力就消失。它会俘获你的大脑。唯一打破它的时刻是<span class="font-bold-cn highlight-text">现在</span>。<span class="font-semibold">不是等有余力了再留，而是没有余力时，更要留。</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 border-t border-gray-300">
+            <p class="font-bold-cn text-lg text-gray-700">
+                <i class="fas fa-book-open list-icon"></i> <span class="highlight-text">阅读《稀缺》</span>：了解如何管理你生活中的一切稀缺
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        // 初始化 Chart.js 图表 (简洁勾线风格)
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('loanChart').getContext('2d');
+            var loanChart = new Chart(ctx, {
+                type: 'line', // 使用折线图模拟数据趋势
+                data: {
+                    labels: ['Day 1', 'Day 10', 'Day 20', 'Day 30', 'Day 60', 'Day 90'],
+                    datasets: [{
+                        label: '累积利息 (卢比)',
+                        data: [50, 500, 1000, 1500, 3000, 4500],
+                        borderColor: '#FFB300', // 琥珀黄高亮
+                        backgroundColor: 'rgba(255, 179, 0, 0.2)', // 浅色填充
+                        borderWidth: 3,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#3A2E2C', // 深棕色点
+                        tension: 0.4, // 曲线平滑
+                        fill: true
+                    },
+                    {
+                        label: '自由的机会成本',
+                        data: [1000, 1000, 1000, 1000, 1000, 1000],
+                        borderColor: '#A8DADC', // 淡天蓝色
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false // 隐藏图例以保持简洁
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(58, 46, 44, 0.1)', // 柔和的网格线
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#3A2E2C'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(58, 46, 44, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#3A2E2C'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

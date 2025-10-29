@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意秘诀：先爆炸，再整合</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <style>
+        /* 吉卜力风格和 Hybrid Layout 自定义 CSS */
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            min-height: 100vh; /* 确保内容可滚动 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 确保响应式布局在1920px以上仍然美观 */
+        .container {
+            max-width: 1920px;
+        }
+        /* 勾线图形化 SVG 样式 */
+        .svg-outline {
+            stroke: #3A2E2C; /* 深棕色勾线 */
+            stroke-width: 2;
+            fill: none;
+            transition: stroke-dashoffset 2s ease-out; /* 动画效果 */
+        }
+        /* 科技感渐变效果 (高亮色自身透明度渐变) */
+        .gradient-overlay {
+            background: linear-gradient(to right, rgba(255,179,0,0.3), rgba(255,179,0,0.0) 70%);
+            mix-blend-mode: multiply; /* 混合模式增加科技感 */
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8 lg:p-12 min-h-screen">
+
+    <div class="container mx-auto">
+
+        <header class="mb-16 mt-8 lg:mt-16 text-center lg:text-left">
+            <h1 class="ultra-large-text font-noto-sans-sc leading-none mb-4 tracking-tighter">
+                <span class="text-6xl md:text-8xl block text-gray-500 mb-2 font-light">CREATIVE SECRET</span>
+                先<span class="highlight-text">爆炸</span>，再<span class="highlight-text">整合</span>
+            </h1>
+            <p class="text-xl md:text-2xl lg:text-3xl font-noto-sans-sc font-medium text-[#5F4B49]">
+                影视飓风 Tim 的<span class="font-bold">颠覆性</span>创意秘诀。
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            
+            <div class="card card-darker-alt-bg lg:col-span-2 p-8 md:p-12 relative overflow-hidden flex flex-col justify-center tech-glow">
+                <div class="content-z">
+                    <p class="text-lg md:text-xl font-medium text-[#3A2E2C] mb-4">THE MISCONCEPTION</p>
+                    <h2 class="ultra-large-text text-left font-noto-sans-sc leading-tight mb-4 tracking-tighter">
+                        <span class="text-red-600 block mb-2 opacity-80">🚫</span>
+                        大脑不擅长
+                        <span class="highlight-text block">“线性”</span>
+                    </h2>
+                    <blockquote class="text-xl md:text-2xl font-noto-sans-sc border-l-4 border-[#FFB300] pl-4 text-[#5F4B49] italic mt-6">
+                        “在创造的当下，强行追求条理和逻辑，只会导致灵感枯竭。”
+                    </blockquote>
+                </div>
+                <div class="absolute inset-0 gradient-overlay opacity-30"></div>
+            </div>
+
+            <div class="card p-8 md:p-12 flex flex-col justify-center">
+                <div class="content-z">
+                    <p class="text-lg md:text-xl font-medium text-[#5F4B49] mb-4">THE PROCESS</p>
+                    <div class="large-stat-text highlight-stat font-noto-sans-sc leading-none">
+                        <span class="ultra-large-text font-extrabold block">02</span>
+                        <span class="text-4xl md:text-5xl font-bold">步</span>
+                    </div>
+                    <p class="text-xl md:text-2xl font-noto-sans-sc font-semibold mt-4">高效创意工作流</p>
+                    <p class="text-sm text-gray-500 mt-1">First Explode, Then Integrate.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 space-y-12">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                
+                <div class="card card-alt-bg p-8 md:p-12 tech-glow">
+                    <div class="content-z">
+                        <p class="text-lg md:text-xl font-medium text-[#5F4B49] mb-2">STEP ONE</p>
+                        <h3 class="text-5xl md:text-6xl font-noto-sans-sc font-bold mb-6 tracking-tight">
+                            无序的
+                            <span class="highlight-text">“爆炸”</span>
+                        </h3>
+                        <ul class="space-y-4 text-lg font-noto-sans-sc">
+                            <li class="flex items-start">
+                                <i class="fas fa-bomb list-icon mt-1"></i>
+                                <div>
+                                    <span class="font-bold">动作：</span> 像打游戏放大招，暂时忘记分类和逻辑。
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-lightbulb list-icon mt-1"></i>
+                                <div>
+                                    <span class="font-bold">方法：</span> 不加评判地倾泻所有零散、甚至荒谬的想法。
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-hourglass-end list-icon mt-1"></i>
+                                <div>
+                                    <span class="font-bold">目标：</span> 直到感觉<span class="font-bold">“山穷水尽”</span>，彻底榨干大脑。
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="h-64 md:h-96 p-4">
+                    <svg viewBox="0 0 400 300" class="w-full h-full">
+                        <circle cx="200" cy="150" r="10" class="svg-outline" fill="#FFB300" stroke="#FFB300" stroke-width="0"/>
+                        <line x1="200" y1="150" x2="100" y2="50" class="svg-outline" stroke-dasharray="100" stroke-dashoffset="0"/>
+                        <line x1="200" y1="150" x2="300" y2="80" class="svg-outline" stroke-dasharray="100" stroke-dashoffset="0"/>
+                        <line x1="200" y1="150" x2="150" y2="250" class="svg-outline" stroke-dasharray="100" stroke-dashoffset="0"/>
+                        <line x1="200" y1="150" x2="350" y2="200" class="svg-outline" stroke-dasharray="100" stroke-dashoffset="0"/>
+                        <circle cx="100" cy="50" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <circle cx="300" cy="80" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <circle cx="150" cy="250" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <circle cx="350" cy="200" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <text x="50" y="30" class="font-noto-sans-sc text-sm fill-[#3A2E2C]">荒谬想法</text>
+                        <text x="320" y="50" class="font-noto-sans-sc text-sm fill-[#3A2E2C]">零散零件</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                
+                <div class="h-64 md:h-96 p-4 order-2 lg:order-1">
+                    <svg viewBox="0 0 400 300" class="w-full h-full">
+                        <rect x="150" y="10" width="100" height="50" rx="10" class="svg-outline" fill="rgba(255,179,0,0.2)"/>
+                        <text x="200" y="40" text-anchor="middle" class="font-noto-sans-sc text-sm fill-[#3A2E2C]">核心观点</text>
+                        <circle cx="80" cy="150" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <circle cx="320" cy="150" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <circle cx="200" cy="250" r="5" class="svg-outline" fill="#3A2E2C" stroke="#3A2E2C" stroke-width="0"/>
+                        <line x1="80" y1="150" x2="150" y2="40" class="svg-outline"/>
+                        <line x1="320" y1="150" x2="250" y2="40" class="svg-outline"/>
+                        <line x1="200" y1="250" x2="200" y2="60" class="svg-outline"/>
+                        <rect x="50" y="120" width="300" height="150" rx="15" class="svg-outline opacity-50 stroke-dashed" stroke-dasharray="5,5"/>
+                        <text x="200" y="110" text-anchor="middle" class="font-noto-sans-sc text-sm fill-[#3A2E2C]">分类 / 连接 / 筛选</text>
+                    </svg>
+                </div>
+
+                <div class="card p-8 md:p-12 tech-glow order-1 lg:order-2">
+                    <div class="content-z">
+                        <p class="text-lg md:text-xl font-medium text-[#5F4B49] mb-2">STEP TWO</p>
+                        <h3 class="text-5xl md:text-6xl font-noto-sans-sc font-bold mb-6 tracking-tight">
+                            理性的
+                            <span class="highlight-text">“整合”</span>
+                        </h3>
+                        <ul class="space-y-4 text-lg font-noto-sans-sc">
+                            <li class="flex items-start">
+                                <i class="fas fa-user-tie list-icon mt-1"></i>
+                                <div>
+                                    <span class="font-bold">动作：</span> 抽离出来，像一个<span class="font-bold">冷静的局外人</span>。
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-sitemap list-icon mt-1"></i>
+                                <div>
+                                    <span class="font-bold">方法：</span> 对“零件”进行分类、连接和筛选。
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-bullseye list-icon mt-1"></i>
+                                <div>
+                                    <span class="font-bold">目标：</span> 找到真正有价值的<span class="font-bold">核心观点</span> (The Core)。
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 text-center">
+            <h2 class="ultra-large-text font-noto-sans-sc tracking-tighter mb-8">
+                <span class="text-6xl md:text-8xl block text-gray-500 mb-2 font-light">APPLICABLE TO ALL</span>
+                <span class="highlight-text">混乱</span>，
+                才是<br>创意的<span class="text-[#3A2E2C]">起点</span>。
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card p-6 md:p-8">
+                    <i class="fas fa-file-alt text-4xl highlight-stat mb-3"></i>
+                    <p class="font-bold text-xl font-noto-sans-sc">写文案 / 文章</p>
+                </div>
+                <div class="card card-alt-bg p-6 md:p-8">
+                    <i class="fas fa-video text-4xl highlight-stat mb-3"></i>
+                    <p class="font-bold text-xl font-noto-sans-sc">制作 PPT / 课程</p>
+                </div>
+                <div class="card p-6 md:p-8">
+                    <i class="fas fa-rocket text-4xl highlight-stat mb-3"></i>
+                    <p class="font-bold text-xl font-noto-sans-sc">策划活动 / 项目</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="text-center py-8 text-sm text-[#5F4B49] opacity-70">
+            <p>&copy; 2025 Creative Insights | Ghibli-Inspired Hybrid Layout Design.</p>
+            <p>Design Principle: Allow the mess first! <span class="text-[#FFB300]">#Tim's Secret</span></p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

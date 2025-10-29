@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>至高养生之道</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ghibli-beige': '#FDF6E3',
+                        'ghibli-brown': '#3A2E2C',
+                        'ghibli-highlight': '#FFB300', // 温暖琥珀黄
+                        'ghibli-sky': '#E0F2F7', // 淡天蓝
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+           border: 1px solid rgba(210, 180, 140, 0.3); /* 轻微边框模拟水彩勾勒 */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s;
+           opacity: 0.5;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 响应式大屏优化 */
+        @media (min-width: 1920px) {
+            .max-w-7xl {
+                max-width: 1600px; /* 进一步扩大容器 */
+            }
+            .ultra-large-text {
+                font-size: 10rem;
+            }
+            .large-stat-text {
+                font-size: 7rem;
+            }
+        }
+
+        /* 勾线图形样式 */
+        .sketch-icon {
+            border: 3px solid #3A2E2C; /* 深棕色勾线 */
+            border-radius: 50%;
+            padding: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #3A2E2C;
+            transition: all 0.3s;
+        }
+        .sketch-icon:hover {
+            background-color: #FFB300;
+            color: white;
+            border-color: #FFB300;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8 lg:p-12">
+
+    <div class="max-w-7xl mx-auto space-y-24">
+
+        <header class="text-center pt-10 pb-16">
+            <p class="text-lg uppercase font-open-sans text-ghibli-highlight mb-4 tracking-widest">The Ultimate Well-being</p>
+            <h1 class="ultra-large-text font-noto-sans-sc mx-auto">
+                <span class="block highlight-text">至高养生</span>
+                <span class="block text-ghibli-brown">无为之境</span>
+            </h1>
+            <p class="mt-8 text-2xl font-noto-sans-sc max-w-4xl mx-auto text-ghibli-brown/80">
+                人最顶级的养生是什么？答案藏于无心、无虑、无时之境。
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="card card-alt-bg tech-glow relative">
+                <div class="content-z space-y-6 h-full flex flex-col justify-between">
+                    <div>
+                        <div class="sketch-icon mb-6">
+                            <i class="fas fa-hand-sparkles fa-3x"></i>
+                        </div>
+                        <p class="text-lg uppercase font-open-sans text-ghibli-brown/60 mb-2">Principle One</p>
+                        <h2 class="large-stat-text font-noto-sans-sc mb-4 highlight-text">大巧不为</h2>
+                        <p class="text-3xl font-noto-sans-sc font-bold text-ghibli-brown">只做眼前事。</p>
+                    </div>
+                    <p class="mt-4 text-xl text-ghibli-brown/90">
+                        不刻意追求复杂的目标，只专注于眼前的简单行动。所有的“大巧”都源于“不为”的自然流淌。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card relative tech-glow">
+                <div class="content-z space-y-6 h-full flex flex-col justify-between">
+                    <div>
+                        <div class="sketch-icon mb-6">
+                            <i class="fas fa-brain fa-3x"></i>
+                        </div>
+                        <p class="text-lg uppercase font-open-sans text-ghibli-brown/60 mb-2">Principle Two</p>
+                        <h2 class="large-stat-text font-noto-sans-sc mb-4 text-ghibli">大智无虑</h2>
+                        <p class="text-3xl font-noto-sans-sc font-bold text-ghibli-brown">只看眼前人。</p>
+                    </div>
+                    <p class="mt-4 text-xl text-ghibli-brown/90">
+                        真正的智慧是不被杂念和焦虑所困扰。专注于当下的人和事，心无挂碍，自生清明。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg relative tech-glow">
+                <div class="content-z space-y-6 h-full flex flex-col justify-between">
+                    <div>
+                        <div class="sketch-icon mb-6">
+                            <i class="fas fa-infinity fa-3x"></i>
+                        </div>
+                        <p class="text-lg uppercase font-open-sans text-ghibli-brown/60 mb-2">The Zen</p>
+                        <h2 class="large-stat-text font-noto-sans-sc mb-4 highlight-text">忘记时间</h2>
+                        <p class="text-3xl font-noto-sans-sc font-bold text-ghibli-brown">过去、现在、未来本就一回事。</p>
+                    </div>
+                    <p class="mt-4 text-xl text-ghibli-brown/90">
+                        打破时间的束缚，活在永恒的当下。既无太喜，又无太悲，心如止水，宁静致远。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-16 pb-16">
+            <h2 class="text-5xl font-noto-sans-sc font-extrabold text-center mb-12 text-ghibli-brown">
+                <span class="highlight-text">“三只”</span>当下清单
+                <span class="text-xl block font-normal text-ghibli-brown/70 mt-2">The Essential Present Tense Actions</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="card p-8 flex flex-col items-center text-center">
+                    <div class="w-24 h-24 mb-4 flex items-center justify-center border-4 border-ghibli-brown rounded-full">
+                        <i class="fas fa-utensils text-5xl text-ghibli-brown/80"></i>
+                    </div>
+                    <p class="large-stat-text font-noto-sans-sc highlight-text">100%</p>
+                    <p class="text-2xl font-noto-sans-sc font-bold mt-2">只吃眼前饭</p>
+                    <p class="text-lg text-ghibli-brown/70 mt-1">Savor the Now</p>
+                </div>
+                
+                <div class="card card-alt-bg p-8 flex flex-col items-center text-center">
+                    <div class="w-24 h-24 mb-4 flex items-center justify-center border-4 border-ghibli-highlight rounded-full">
+                        <i class="fas fa-tint text-5xl text-ghibli-highlight/80"></i>
+                    </div>
+                    <p class="large-stat-text font-noto-sans-sc text-ghibli-brown">Always</p>
+                    <p class="text-2xl font-noto-sans-sc font-bold mt-2">只喝眼前水</p>
+                    <p class="text-lg text-ghibli-brown/70 mt-1">Drink the Present</p>
+                </div>
+                
+                <div class="card p-8 flex flex-col items-center text-center">
+                    <div class="w-24 h-24 mb-4 flex items-center justify-center border-4 border-ghibli-brown rounded-full">
+                        <i class="fas fa-compass text-5xl text-ghibli-brown/80"></i>
+                    </div>
+                    <p class="large-stat-text font-noto-sans-sc highlight-text">Active</p>
+                    <p class="text-2xl font-noto-sans-sc font-bold mt-2">只做眼前事</p>
+                    <p class="text-lg text-ghibli-brown/70 mt-1">Act with Focus</p>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="card card-darker-alt-bg p-12 lg:p-20 text-center relative tech-glow">
+            <div class="content-z">
+                <p class="text-xl uppercase font-open-sans text-ghibli-brown/70 mb-4 tracking-widest">The Conclusion</p>
+                
+                <div class="flex items-center justify-center mb-6">
+                     <i class="fas fa-cloud fa-6x text-ghibli-highlight opacity-70"></i>
+                </div>
+                
+                <h2 class="ultra-large-text font-noto-sans-sc mx-auto highlight-text leading-tight">
+                    <span class="block">人间极乐</span>
+                </h2>
+                
+                <p class="mt-6 text-3xl font-noto-sans-sc font-medium max-w-5xl mx-auto text-ghibli-brown/90">
+                    福莫长于无祸。既无太喜，又无太悲。<br>
+                    <span class="text-xl font-open-sans block mt-3 text-ghibli-brown/60">Happiness is nothing more than the absence of calamity.</span>
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="max-w-7xl mx-auto mt-24 text-center text-sm text-ghibli-brown/50 pb-8">
+        <p>吉卜力灵感呈现 - 至高养生之道概念页 © 2025</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

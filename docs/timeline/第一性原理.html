@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一性原理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS 样式严格参考 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           scroll-behavior: smooth;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Make sure it doesn't block interaction */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 勾线图形化 - Tailwind Utility Classes */
+        .sketch-line {
+            border: 2px solid #3A2E2C; /* 深棕色勾线 */
+            border-radius: 1rem;
+            padding: 1rem;
+            display: inline-block;
+        }
+
+        /* 高亮色自身透明度渐变制造科技感 */
+        .tech-fade-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255, 179, 0, 0.15) 0%, transparent 50%, rgba(255, 179, 0, 0.05) 100%);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ghibli-deep-brown': '#3A2E2C',
+                        'ghibli-cream': '#FDF6E3',
+                        'ghibli-highlight': '#FFB300',
+                        'ghibli-sky-light': '#E0F2F7',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+    <div class="max-w-7xl mx-auto space-y-16 lg:space-y-24 xl:max-w-[1920px]">
+        
+        <header class="pt-8 pb-12 lg:pt-16 lg:pb-24">
+            <h1 class="ultra-large-text font-noto-sans-sc text-ghibli-deep-brown">
+                <span class="block">第一性原理</span>
+                <span class="block text-ghibli-highlight ml-0 sm:ml-12 lg:ml-24">
+                    First Principles
+                </span>
+            </h1>
+            <p class="mt-4 md:mt-6 text-2xl md:text-3xl font-light max-w-4xl text-ghibli-deep-brown/80">
+                直击本质，重构思维。
+                <span class="block text-lg mt-1 font-open-sans italic">
+                    Uncover the core essence and reconstruct thinking.
+                </span>
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="card card-darker-alt-bg tech-glow relative col-span-1 md:col-span-1 text-center">
+                <div class="tech-fade-overlay"></div>
+                <div class="content-z">
+                    <p class="text-lg uppercase tracking-widest opacity-80 font-open-sans">
+                        TOTAL INSIGHTS
+                    </p>
+                    <div class="large-stat-text highlight-stat font-noto-sans-sc mt-2">
+                        <span class="inline-block relative">
+                            12
+                            <i class="fas fa-magic absolute -top-4 -right-8 text-4xl opacity-50"></i>
+                        </span>
+                    </div>
+                    <p class="text-xl font-noto-sans-sc font-bold mt-1">项核心洞察</p>
+                </div>
+            </div>
+
+            <div class="card col-span-1 md:col-span-2 text-left p-6 flex flex-col justify-center">
+                <h3 class="text-xl font-bold font-noto-sans-sc mb-2">
+                    <i class="fas fa-seedling list-icon"></i>
+                    <span class="highlight-text">关键领域</span> (Focus Areas)
+                </h3>
+                <div class="flex flex-wrap gap-3 mt-2 font-open-sans">
+                    <span class="sketch-line text-sm md:text-base">家庭 & 职场</span>
+                    <span class="sketch-line text-sm md:text-base">健康 & 情绪</span>
+                    <span class="sketch-line text-sm md:text-base">投资 & 创业</span>
+                    <span class="sketch-line text-sm md:text-base">成长 & 学习</span>
+                    <span class="sketch-line text-sm md:text-base">人际 & 爱情</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 pt-8">
+
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#01</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">家庭</span> 的本质
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Family's First Principle
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">经济</span>，
+                        不是 <span class="font-light opacity-80">感情</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#02</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">职场</span> 的核心
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Workplace's Core
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">价值</span>，
+                        不是 <span class="font-light opacity-80">努力</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#03</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">教育</span> 的目标
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Education's Purpose
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">培养能力</span>，
+                        不是 <span class="font-light opacity-80">分数</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#04</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">健康</span> 的保障
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Health's Guarantee
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">自律</span>，
+                        不是 <span class="font-light opacity-80">医疗</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#05</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">创业</span> 的前提
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Entrepreneurship's Prerequisite
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">市场需求</span>，
+                        不是 <span class="font-light opacity-80">个人喜好</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#06</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">投资</span> 的基石
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Investment's Foundation
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">风险控制</span>，
+                        不是 <span class="font-light opacity-80">高回报</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#07</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">成长</span> 的驱动
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Growth's Driver
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">反思</span>，
+                        而不是 <span class="font-light opacity-80">经历</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#08</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">爱情</span> 的真谛
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Love's True Essence
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">筛选</span>，
+                        不是 <span class="font-light opacity-80">死磕</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#09</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">旅行</span> 的意义
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Travel's Significance
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">体验</span>，
+                        而非 <span class="font-light opacity-80">打卡</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#10</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">情绪</span> 的管理
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Emotion Management
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">接纳</span>，
+                        不是 <span class="font-light opacity-80">对抗</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#11</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">人际</span> 的基础
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Relationship's Foundation
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">互利</span>，
+                        不是 <span class="font-light opacity-80">讨好</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col">
+                <div class="content-z">
+                    <span class="text-5xl lg:text-6xl font-black highlight-stat block">#12</span>
+                    <h4 class="text-3xl lg:text-4xl font-black font-noto-sans-sc mt-3 mb-2">
+                        <span class="highlight-text">学习</span> 的方法
+                    </h4>
+                    <p class="text-lg font-open-sans italic mb-4 opacity-70">
+                        Learning's Methodology
+                    </p>
+                    <div class="text-2xl font-noto-sans-sc">
+                        是 <span class="text-4xl font-black text-ghibli-deep-brown">实践</span>，
+                        不是 <span class="font-light opacity-80">记忆</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="text-center py-16 mt-16 border-t border-ghibli-deep-brown/10">
+            <i class="fas fa-feather-alt text-4xl highlight-stat mb-4"></i>
+            <p class="text-2xl font-noto-sans-sc font-bold">
+                <span class="highlight-text">直抵根源，方能致远</span>
+            </p>
+            <p class="text-lg mt-2 font-open-sans italic opacity-70">
+                Reaching the root is the only way to go far.
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

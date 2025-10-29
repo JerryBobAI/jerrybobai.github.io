@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>越吃越聪明的食物</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+           z-index: 10; /* Ensure cards are above background texture */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 制造高亮色自身的透明度渐变 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Make sure it doesn't block clicks */
+           transition: opacity 0.5s ease;
+           opacity: 0;
+        }
+        .card:hover .tech-glow::before {
+            opacity: 1; /* Show glow on hover */
+        }
+
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom Simple Line Drawing Icon Style */
+        .g-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #3A2E2C;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            line-height: 1;
+            padding: 5px;
+            color: #FFB300; /* Highlight color for the icon */
+        }
+        .g-icon-small {
+            width: 28px;
+            height: 28px;
+            font-size: 1rem;
+            border-width: 2px;
+        }
+
+        /* Responsive Grid for Card Layout */
+        .brain-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) {
+            .brain-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .brain-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* Header for large screen adjustment */
+        .hero-header {
+            padding-top: 5rem;
+        }
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1800px;
+            }
+            .hero-header {
+                padding-top: 8rem;
+            }
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16">
+
+    <div class="container mx-auto">
+        <header class="text-center mb-16 hero-header">
+            <p class="text-xl md:text-2xl font-semibold mb-4 text-gray-600">GHIBLI INSPIRED | BRAIN FOOD</p>
+            <h1 class="font-noto-sans-sc ultra-large-text uppercase tracking-tight">
+                越吃越<span class="highlight-text">聪明</span>
+            </h1>
+            <h2 class="text-3xl md:text-5xl font-noto-sans-sc font-light mt-4">
+                The <span class="highlight-text">Cognitive Boost</span> Protocol
+            </h2>
+            <p class="mt-8 text-lg md:text-xl max-w-3xl mx-auto font-noto-sans-sc text-gray-700">
+                吉卜力般温柔的色彩哲学，带来十种天然的脑力增强食物。从健忘迷糊到专注高效，每一次咀嚼，都是对大脑的温柔呵护。
+            </p>
+        </header>
+
+        <div class="mb-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card card-darker-alt-bg tech-glow text-center">
+                <div class="content-z">
+                    <i class="fas fa-brain highlight-text large-stat-text mb-2"></i>
+                    <p class="text-5xl large-stat-text highlight-stat font-noto-sans-sc">10+</p>
+                    <p class="text-lg md:text-xl font-noto-sans-sc font-medium mt-1">
+                        食物解决方案<span class="text-sm block">FOOD SOLUTIONS</span>
+                    </p>
+                </div>
+            </div>
+            <div class="card card-darker-alt-bg tech-glow text-center">
+                <div class="content-z">
+                    <i class="fas fa-seedling highlight-text large-stat-text mb-2"></i>
+                    <p class="text-5xl large-stat-text highlight-stat font-noto-sans-sc">Omega-3</p>
+                    <p class="text-lg md:text-xl font-noto-sans-sc font-medium mt-1">
+                        核心营养<span class="text-sm block">KEY NUTRIENTS</span>
+                    </p>
+                </div>
+            </div>
+            <div class="card card-darker-alt-bg tech-glow text-center">
+                <div class="content-z">
+                    <i class="fas fa-lightbulb highlight-text large-stat-text mb-2"></i>
+                    <p class="text-5xl large-stat-text highlight-stat font-noto-sans-sc">认知增强</p>
+                    <p class="text-lg md:text-xl font-noto-sans-sc font-medium mt-1">
+                        聚焦记忆力<span class="text-sm block">MEMORY FOCUS</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-10 text-center">
+            精选脑力<span class="highlight-text">十强</span>
+        </h2>
+        
+        <div class="brain-grid">
+            
+            <div class="card tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 1 FOCUS</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-seedling"></i></span>
+                        爱走神 → 吃核桃
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        <span class="font-bold highlight-text">维生素E & 不饱和脂肪酸</span>，直达大脑认知与记忆中心。坚果中的蛋白质与矿物质，全方位护脑。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 2 MEMORY</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-capsules"></i></span>
+                        记忆差 → 吃蓝莓
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        富含<span class="font-bold highlight-text">抗氧化剂</span>（维C、类黄酮），抵抗自由基伤害，保护细胞免受氧化应激，改善记忆与认知能力。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 3 REBOOT</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-carrot"></i></span>
+                        脑子卡壳 → 吃胡萝卜
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        <span class="font-bold highlight-text">β-胡萝卜素</span>变维A+B族，护脑细胞，防认知滑坡。大脑卡顿时，即刻重启CPU！
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 4 REPAIR</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-egg"></i></span>
+                        注意力不集中 → 吃鸡蛋
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        <span class="font-bold highlight-text">蛋白质和卵磷脂</span>，大脑发育必备。维护神经系统正常功能，促进脑细胞修复与再生。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 5 VITALITY</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-spa"></i></span>
+                        经常犯困 → 多吃豆类
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        高蛋白！<span class="font-bold highlight-text">卵磷脂+异黄酮双剑合璧</span>，抗炎醒脑。晨起一杯豆浆，为大脑充电！
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 6 OMEGA-3</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-fish"></i></span>
+                        用脑过度记忆差 → 多吃深海鱼
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        三文鱼、鳕鱼等富含<span class="font-bold highlight-text">Omega-3脂肪酸</span>，对脑部发育至关重要，增强记忆与认知力，并预防心血管疾病。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 7 REACTION</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-cookie-bite"></i></span>
+                        没有精神和想法 → 多吃黑巧克力
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        含有<span class="font-bold highlight-text">黄烷醇</span>，能促进脑血液循环，有助于提升反应力，带来精神上的迅速振奋。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 8 MOOD</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-mug-hot"></i></span>
+                        脑子很累转不动 → 喝酸奶
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        肠道菌群失调易伤脑！含<span class="font-bold highlight-text">益生菌</span>的酸奶能抗炎护神经，稳定情绪，防止认知衰退。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-semibold text-gray-500 mb-1">NO. 9 NIGHT OWL</p>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-3 flex items-center">
+                        <span class="g-icon g-icon-small mr-2"><i class="fas fa-leaf"></i></span>
+                        脑子总是犯糊 → 吃西兰花
+                    </h3>
+                    <p class="font-noto-sans-sc text-base text-gray-700">
+                        富含<span class="font-bold highlight-text">维生素K</span>，有助于加速脑细胞代谢，改善认知功能，特别适合经常熬夜的人群。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card card-darker-alt-bg col-span-1 md:col-span-2 lg:col-span-3 tech-glow">
+                <div class="content-z flex flex-col md:flex-row items-center justify-between">
+                    <div class="mb-4 md:mb-0 md:w-3/4">
+                        <p class="text-lg font-semibold text-gray-600 mb-1">NO. 10 ENDURANCE</p>
+                        <h3 class="text-3xl md:text-4xl font-noto-sans-sc font-bold mb-2 flex items-center">
+                            <span class="g-icon mr-3"><i class="fas fa-oatmeal"></i></span>
+                            用脑过度 → 吃燕麦
+                        </h3>
+                        <p class="font-noto-sans-sc text-xl text-gray-700 leading-relaxed">
+                            富含<span class="font-bold highlight-text">复合碳水化合物和纤维素</span>，稳定血糖水平并提供持久能量。同时富含<span class="font-bold highlight-text">B族维生素</span>，对大脑健康大有裨益。
+                        </p>
+                    </div>
+                    <div class="w-full md:w-1/4 text-center">
+                        <div class="mx-auto my-4 w-24 h-24 flex items-center justify-center border-4 border-[#FFB300] rounded-full text-center">
+                             <span class="large-stat-text highlight-stat leading-none">FUEL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="text-center mt-20 pt-8 border-t border-gray-300">
+            <p class="text-gray-500 font-noto-sans-sc text-sm">
+                免责声明：本内容仅供参考，请勿用于替代专业医疗建议。
+            </p>
+            <p class="text-gray-500 text-xs mt-2">
+                © 2025 GHIBLI MIND PROJECT. ALL RIGHTS RESERVED.
+            </p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
