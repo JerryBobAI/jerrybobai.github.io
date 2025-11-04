@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多巴胺的陷阱：从巅峰到低谷的平衡之道</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的手绘/水彩纹理效果 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 (天空蓝) */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 使用高亮色自身透明度渐变制造科技感 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大字体 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* 用于大型统计数字 */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* 嫩绿色 (草地绿) 用于列表图标 */
+           margin-right: 0.75rem; /* 增加图标和文本的间距 */
+        }
+        /* 响应式优化：兼容大屏幕 */
+        @media (min-width: 1920px) {
+            .max-w-7xl {
+                max-width: 1600px; /* 增加最大宽度以适应1920px及以上显示器 */
+            }
+        }
+        .line-graphic {
+            /* 简洁的勾线图形化风格 */
+            stroke: #4A4A4A; /* 深灰/炭黑勾线 */
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8 lg:p-16">
+
+    <div class="max-w-7xl mx-auto space-y-24">
+
+        <header class="text-center pt-8 pb-12">
+            <p class="text-xl font-bold uppercase text-gray-500 tracking-widest mb-4">The Dopamine Trap</p>
+            <h1 class="ultra-large-text font-noto-sans-sc mx-auto">
+                <span class="block highlight-text">多巴胺</span>
+                <span class="block text-5xl sm:text-7xl font-light text-[#3A2E2C]">叠加与平衡</span>
+            </h1>
+            <p class="text-2xl mt-6 max-w-4xl mx-auto font-light italic">
+                总是想着 High 一把，反而会抑郁。短期榨干自己，不如长期保持稳定。
+            </p>
+        </header>
+
+        <section class="grid lg:grid-cols-3 gap-12 items-center">
+            <div class="lg:col-span-2 card p-8 lg:p-12 tech-glow">
+                <div class="content-z">
+                    <p class="text-lg uppercase text-gray-500 mb-3">The Overload</p>
+                    <h2 class="ultra-large-text font-noto-sans-sc leading-tight">
+                        <span class="highlight-text">多巴胺</span>叠加
+                    </h2>
+                    <p class="mt-6 text-xl text-[#3A2E2C] opacity-85">
+                        在同一时间将多个高刺激活动堆叠（如：骑行听歌 + 咖啡 + 编程）。这种手法会在短期内让多巴胺达到<span class="font-bold">巅峰</span>。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card card-darker-alt-bg p-8 flex flex-col justify-center h-full">
+                <p class="text-lg uppercase text-gray-600 mb-2">My Routine Example</p>
+                <ul class="space-y-3 mt-4 text-lg">
+                    <li class="flex items-start"><i class="fas fa-bed list-icon text-xl mt-1 text-[#4CAF50]"></i> <span>睡到自然醒</span></li>
+                    <li class="flex items-start"><i class="fas fa-biking list-icon text-xl mt-1 text-[#4CAF50]"></i> <span>洱海骑车 40-50km 边听歌</span></li>
+                    <li class="flex items-start"><i class="fas fa-mug-hot list-icon text-xl mt-1 text-[#4CAF50]"></i> <span>喝咖啡</span></li>
+                    <li class="flex items-start"><i class="fas fa-code list-icon text-xl mt-1 text-[#4CAF50]"></i> <span>开始写代码</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-12 items-start">
+            
+            <div class="card card-alt-bg p-8 lg:p-12 tech-glow order-2 lg:order-1">
+                <div class="content-z">
+                    <p class="text-lg uppercase text-gray-600 mb-3">The Vicious Cycle</p>
+                    <h3 class="text-5xl font-bold font-noto-sans-sc mb-6">
+                        <i class="fas fa-arrow-trend-down list-icon text-[#FFB300]"></i> 
+                        <span class="highlight-text">低谷</span>比想象中更深
+                    </h3>
+                    
+                    <div class="space-y-4 text-lg">
+                        <p>
+                            巅峰过后，多巴胺状态会<span class="font-bold">低于正常水平</span>，需要更长时间才能恢复。
+                        </p>
+                        <p>
+                            但我们急于回到巅峰，又去做刺激自己的事情（例如药物、性、过度兴奋活动）。
+                        </p>
+                        <ul class="mt-4 space-y-3 font-bold">
+                            <li class="flex items-start">
+                                <i class="fas fa-chevron-down mt-1 list-icon text-2xl"></i> 
+                                <span class="flex-1">每次巅峰：都比上次<span class="font-bold">更低</span>。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-chevron-up mt-1 list-icon text-2xl"></i>
+                                <span class="flex-1">每次低谷：都比上次<span class="font-bold">更长久</span>。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-12 order-1 lg:order-2">
+                <p class="text-xl uppercase text-gray-500 mb-4">The Real Problem</p>
+                <svg viewBox="0 0 100 100" class="w-full h-auto mx-auto mb-6">
+                    <line x1="10" y1="50" x2="90" y2="50" class="line-graphic stroke-gray-400" stroke-width="2" />
+                    <text x="5" y="60" font-size="6" fill="#3A2E2C">正常水平</text>
+
+                    <path d="M 10 50 Q 20 20 30 50 Q 40 70 50 50" class="line-graphic stroke-[#FFB300]" />
+                    
+                    <path d="M 50 50 Q 60 30 70 50 Q 80 80 90 50" class="line-graphic stroke-[#D9534F] stroke-dasharray-4-2" />
+                    
+                    <text x="30" y="15" font-size="8" fill="#FFB300">High</text>
+                    <text x="50" y="95" font-size="8" fill="#D9534F">Low & Long</text>
+                    <text x="50" y="85" text-anchor="middle" font-size="10" fill="#D9534F" class="font-noto-sans-sc font-bold">抑郁陷阱</text>
+                </svg>
+                <h4 class="text-4xl font-bold font-noto-sans-sc">
+                    <span class="highlight-text">“我不能快乐”</span>的错觉
+                </h4>
+                <p class="mt-4 text-lg text-[#3A2E2C] opacity-85">
+                    长期以往，身体会陷入一种“不刺激就不能快乐”的错觉，导致抑郁，甚至会染上不良嗜好。
+                </p>
+            </div>
+        </section>
+
+        <section class="text-center card p-12 lg:p-16 card-darker-alt-bg tech-glow">
+            <div class="content-z max-w-4xl mx-auto">
+                <p class="text-xl uppercase text-gray-600 mb-4">The New Perspective</p>
+                <h2 class="ultra-large-text font-noto-sans-sc leading-tight mb-8">
+                    <span class="highlight-text">保持平衡</span>
+                </h2>
+                <p class="text-2xl font-light text-[#3A2E2C] opacity-85">
+                    你不可能永远维持巅峰状态。生活起起伏伏，这才是<span class="font-bold">常态</span>。短期内榨干自己，不如长期保持稳定的状态。
+                </p>
+                <blockquote class="mt-8 pt-6 border-t border-gray-400/50 italic text-xl font-bold">
+                    <i class="fas fa-balance-scale-left list-icon text-2xl"></i> 
+                    人生永远都会在多巴胺低谷和高潮中切换，保持平衡才是上策。
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="card p-8 lg:p-12">
+            <h3 class="text-4xl font-bold font-noto-sans-sc mb-6 text-center">
+                <i class="fas fa-seedling highlight-text mr-3"></i> 
+                未来的<span class="highlight-text">行动准则</span>
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8 text-lg">
+                <div class="p-4 rounded-xl border border-[#D2B48C] flex items-start">
+                    <i class="fas fa-times-circle fa-2x highlight-text mt-1 mr-4"></i>
+                    <div>
+                        <p class="font-bold text-xl mb-1">避免加强刺激</p>
+                        <p class="text-gray-700">
+                            打散高刺激活动，避免多巴胺叠加。将“High 一下”变成偶尔的奖励，而非日常的例行程序。
+                        </p>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl border border-[#D2B48C] flex items-start">
+                    <i class="fas fa-check-circle fa-2x highlight-text mt-1 mr-4"></i>
+                    <div>
+                        <p class="font-bold text-xl mb-1">承认低谷常态</p>
+                        <p class="text-gray-700">
+                            假如陷入某种低谷，承认这是正常的<span class="font-bold">生理反应</span>，是多巴胺恢复平衡的必经之路。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-12">
+            <h3 class="text-4xl font-bold font-noto-sans-sc mb-6">
+                <i class="fas fa-sun highlight-text mr-3"></i>
+                <span class="highlight-text">温柔地</span>对待自己
+            </h3>
+            <p class="text-2xl font-light max-w-3xl mx-auto">
+                真正的快乐，不是瞬间的爆发，而是持久的宁静。放下对巅峰的执念，拥抱生活的起伏。
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

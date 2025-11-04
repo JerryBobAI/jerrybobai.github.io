@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么你的努力正在被稀释</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdL5i84dUz4g1cT/KjY3Oa8n8sF1M02nC4t5qX5z0y9E+tJqB+pQx5aE2kY4O9W6a2L/gA6S3V5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Noto+Sans+SC:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 用户提供的定制 CSS 样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 响应式和布局优化 */
+        .container {
+            max-width: 1920px; /* 兼容更大屏幕 */
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 1920px) {
+            .xl-max-w-1600 {
+                max-width: 1600px; /* 1920px 屏幕下内容居中显示 */
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16 min-h-screen">
+
+    <div class="container xl-max-w-1600">
+
+        <header class="text-center mb-16 lg:mb-24">
+            <p class="text-lg uppercase tracking-widest font-semibold opacity-70 mb-4">The System is All</p>
+            <h1 class="ultra-large-text highlight-text font-noto-sans-sc mx-auto max-w-5xl">
+                为什么你的努力<span class="text-4xl sm:text-6xl md:text-8xl block font-noto-sans-sc text-[#3A2E2C] mt-4">正在被稀释？</span>
+            </h1>
+            <p class="text-xl md:text-2xl mt-8 max-w-3xl mx-auto opacity-80 font-noto-sans-sc">
+                改变命运的关键，不在于输入量（努力），而在于你这台机器运行的<br/><strong>系统环境</strong>。
+            </p>
+        </header>
+
+        <section class="mb-20 grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            
+            <div class="lg:order-1 order-2">
+                <p class="text-2xl font-bold font-noto-sans-sc mb-4 highlight-text">I. 被低估的系统</p>
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 font-noto-sans-sc">环境的<span class="highlight-text">“平均值吸附力”</span></h2>
+                <p class="text-lg opacity-80 font-noto-sans-sc">
+                    请先停止对自身意志力的拷问。问题不在于你的努力不够，而在于你没有意识到<strong>环境对行为的决定性作用</strong>。
+                </p>
+                
+                <blockquote class="mt-6 p-4 border-l-4 border-[#32A8CE] bg-white bg-opacity-70 rounded-lg shadow-inner font-noto-sans-sc text-base italic">
+                    “个体思维与选择，在长期尺度上会被所处环境的<strong>平均值</strong>强大地吸附和锁定。”
+                </blockquote>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-12 h-64 lg:h-80 flex flex-col justify-center items-center lg:order-2 order-1 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-chart-line text-7xl highlight-text mb-4 opacity-70"></i>
+                    <p class="text-3xl md:text-4xl font-extrabold text-[#3A2E2C] font-noto-sans-sc">
+                        Adaptive Conformity
+                    </p>
+                    <p class="text-xl mt-2 text-[#3A2E2C] opacity-70 font-noto-sans-sc">适应性趋同 - 社会动力学定律</p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="mb-20 grid lg:grid-cols-3 gap-8 lg:gap-12">
+            
+            <div class="lg:col-span-1 card card-darker-alt-bg p-8 flex flex-col justify-center tech-glow">
+                <div class="content-z">
+                    <p class="text-2xl font-bold font-noto-sans-sc mb-2 highlight-text">II. 行为操作系统 (OS)</p>
+                    <h2 class="text-5xl font-extrabold font-noto-sans-sc">你的圈子</h2>
+                    <p class="text-lg mt-4 text-[#3A2E2C] opacity-80 font-noto-sans-sc">
+                        它决定了你的默认设置，将努力<strong>稀释</strong>和<strong>无效化</strong>。
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 card p-8">
+                <div class="content-z">
+                    <i class="fas fa-check-circle text-4xl list-icon mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3 font-noto-sans-sc">接受哪些为“正常”</h3>
+                    <ul class="space-y-2 text-base opacity-90 font-noto-sans-sc">
+                        <li><span class="list-icon">▪</span> 抱怨与消极情绪</li>
+                        <li><span class="list-icon">▪</span> 无目的的拖延</li>
+                        <li><span class="list-icon">▪</span> 低效的社交活动</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 card p-8">
+                <div class="content-z">
+                    <i class="fas fa-times-circle text-4xl text-red-500 opacity-70 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3 font-noto-sans-sc">忽略哪些为“可耻”</h3>
+                    <ul class="space-y-2 text-base opacity-90 font-noto-sans-sc">
+                        <li><span class="list-icon">▪</span> 深度阅读与学习</li>
+                        <li><span class="list-icon">▪</span> 长期投资与规划</li>
+                        <li><span class="list-icon">▪</span> 系统性的自我升级</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </section>
+
+        <section class="mb-20 grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+            
+            <div class="lg:col-span-2">
+                <p class="text-2xl font-bold font-noto-sans-sc mb-4 highlight-text">III. 神经科学验证</p>
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 font-noto-sans-sc">大脑的<span class="highlight-text">“同步机制”</span></h2>
+                <p class="text-lg opacity-80 font-noto-sans-sc">
+                    这一过程并非主观选择，而是有明确的神经科学基础：<strong>镜像神经元系统</strong>（Mirror Neuron System）。
+                </p>
+            </div>
+            
+            <div class="lg:col-span-3 card p-8 lg:p-12 tech-glow">
+                <div class="content-z grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="large-stat-text highlight-stat font-noto-sans-sc">
+                            <i class="fas fa-brain"></i>
+                            <span class="ml-4">内化</span>
+                        </p>
+                        <p class="text-xl mt-2 font-noto-sans-sc text-[#3A2E2C] font-semibold">
+                            与焦虑、散漫为伴
+                        </p>
+                        <p class="text-sm opacity-70 font-noto-sans-sc">
+                            你的大脑会内化这些模式，影响认知效率。
+                        </p>
+                    </div>
+                    <div>
+                        <p class="large-stat-text highlight-stat font-noto-sans-sc">
+                            <i class="fas fa-arrows-alt-h"></i>
+                            <span class="ml-4">对齐</span>
+                        </p>
+                        <p class="text-xl mt-2 font-noto-sans-sc text-[#3A2E2C] font-semibold">
+                            向阅读、运动者对齐
+                        </p>
+                        <p class="text-sm opacity-70 font-noto-sans-sc">
+                            你的认知效率会自动向高平均值环境对齐。
+                        </p>
+                    </div>
+                    <div class="md:col-span-2 mt-4">
+                        <p class="text-2xl font-bold font-noto-sans-sc text-[#3A2E2C]">
+                            <span class="highlight-text large-stat-text mr-3">5</span>
+                            个人的平均值法则
+                        </p>
+                        <p class="text-base opacity-80 font-noto-sans-sc">
+                            你在财富、认知、习惯上，最终都会接近你相处最频繁的五个人。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 lg:mb-24">
+            <p class="text-2xl font-bold font-noto-sans-sc mb-6 highlight-text text-center">IV. 策略：升级你的生态系统</p>
+            <div class="card p-10 lg:p-16 card-darker-alt-bg tech-glow">
+                <div class="content-z">
+                    <h2 class="text-5xl md:text-7xl font-extrabold text-center mb-8 font-noto-sans-sc">
+                        更换<span class="highlight-text">函数</span>
+                        <span class="text-base sm:text-lg block mt-4 font-normal tracking-wider">Upgrade Your Ecosystem</span>
+                    </h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8 mt-10">
+                        <div class="border-b-2 border-dashed border-[#3A2E2C] pb-4">
+                            <p class="text-2xl font-bold font-noto-sans-sc text-[#3A2E2C] mb-2">
+                                <i class="fas fa-arrow-up list-icon"></i>
+                                旧策略：增加输入
+                            </p>
+                            <p class="text-lg opacity-80 font-noto-sans-sc">
+                                <span class="highlight-text font-bold">更努力</span>（努力只是你给予系统的输入）
+                            </p>
+                        </div>
+                        <div class="border-b-2 border-dashed border-[#FFB300] pb-4">
+                            <p class="text-2xl font-bold font-noto-sans-sc text-[#3A2E2C] mb-2">
+                                <i class="fas fa-arrow-right list-icon"></i>
+                                新策略：更换函数
+                            </p>
+                            <p class="text-lg opacity-80 font-noto-sans-sc">
+                                <span class="highlight-text font-bold">更高级的环境</span>（环境才是决定最终结果的输出函数）
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 text-center">
+                        <p class="text-2xl md:text-3xl font-extrabold font-noto-sans-sc text-[#3A2E2C]">
+                            改变命运的本质，是主动将自己置入一个
+                            <span class="block highlight-text mt-2">“高平均值”的环境中。</span>
+                        </p>
+                        <p class="text-xl mt-4 opacity-80 font-noto-sans-sc">
+                            适应性趋同机制将反过来为你服务，自动推动你实现系统性突破。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-8 border-t border-[#3A2E2C] border-opacity-20">
+            <p class="text-sm opacity-60">
+                吉卜力·启示录 | Ghibli-Inspired Insights
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

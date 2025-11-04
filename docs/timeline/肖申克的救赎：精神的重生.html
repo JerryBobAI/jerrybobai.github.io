@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肖申克的救赎：精神的重生</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的手绘/水彩纹理效果 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 (天空蓝) */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 使用高亮色自身透明度渐变制造科技感 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不影响点击事件 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大字体 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* 用于大型统计数字 */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #4CAF50; /* 嫩绿色 (草地绿) 用于列表图标 */
+           margin-right: 0.75rem; /* 增加图标和文本的间距 */
+        }
+        /* 响应式优化：兼容大屏幕 */
+        @media (min-width: 1920px) {
+            .max-w-7xl {
+                max-width: 1600px; /* 增加最大宽度以适应1920px及以上显示器 */
+            }
+        }
+        .line-graphic {
+            /* 简洁的勾线图形化风格 */
+            stroke: #4A4A4A; /* 深灰/炭黑勾线 */
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8 lg:p-16">
+
+    <div class="max-w-7xl mx-auto space-y-24">
+
+        <header class="text-center pt-8 pb-12">
+            <p class="text-xl font-bold uppercase text-gray-500 tracking-widest mb-4">The Shawshank Redemption</p>
+            <h1 class="ultra-large-text font-noto-sans-sc mx-auto">
+                <span class="block highlight-text">精神的重生</span>
+                <span class="block text-5xl sm:text-7xl font-light text-[#3A2E2C]">真正的救赎</span>
+            </h1>
+            <p class="text-2xl mt-6 max-w-3xl mx-auto font-light italic">
+                “希望是美好的，也许是人间至善，而美好的事物永不消逝。”
+            </p>
+        </header>
+
+        <section class="grid lg:grid-cols-3 gap-12 items-center">
+            <div class="lg:col-span-2 card p-8 lg:p-12 tech-glow">
+                <div class="content-z">
+                    <p class="text-lg uppercase text-gray-500 mb-3">The Invisible Prison</p>
+                    <h2 class="ultra-large-text font-noto-sans-sc leading-tight">
+                        <span class="highlight-text">体制化</span>的囚徒
+                    </h2>
+                    <p class="mt-6 text-xl text-[#3A2E2C] opacity-85">
+                        电影最残忍之处，在于揭穿了我们每个人都在服刑的真相。我们的监狱更隐蔽：它叫体制、叫习惯、叫“这就是生活”。
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card card-darker-alt-bg p-8 flex flex-col justify-center h-full">
+                <p class="text-lg uppercase text-gray-600 mb-2">BROOKS' FATE</p>
+                <p class="large-stat-text highlight-stat leading-none">50<span class="text-4xl ml-2 font-light">年</span></p>
+                <p class="text-2xl font-bold font-noto-sans-sc mt-4">习惯成瘾</p>
+                <p class="text-gray-700 mt-2">
+                    <span class="font-bold">老布</span>：从恨到习惯，最后<span class="font-bold">离不开</span>。这便是体制化，一旦离开，自由成了最大的恐慌。
+                </p>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-12 items-start">
+            
+            <div class="card card-alt-bg p-8 lg:p-12 tech-glow order-2 lg:order-1">
+                <div class="content-z">
+                    <p class="text-lg uppercase text-gray-600 mb-3">The Andy Mentality</p>
+                    <h3 class="text-5xl font-bold font-noto-sans-sc mb-6">
+                        <i class="fas fa-hand-fist list-icon text-[#FFB300]"></i> 
+                        <span class="highlight-text">拒绝异化</span>：<br/>在规则内改写规则
+                    </h3>
+                    
+                    <div class="space-y-4 text-lg">
+                        <p>
+                            <span class="font-bold">表面</span>：模范囚犯，帮典狱长洗钱、管理图书馆。
+                        </p>
+                        <p>
+                            <span class="font-bold">实际</span>：每一个动作都在为逃离做准备，从不将监狱视为终点，而是一个<span class="font-bold">暂时的处境</span>。
+                        </p>
+                        <ul class="mt-4 space-y-3 font-bold">
+                            <li class="flex items-start">
+                                <i class="fas fa-hammer mt-1 list-icon text-2xl"></i> 
+                                <span class="flex-1">二十年：<span class="font-bold">持续行动</span>，从小石锤到自由。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-music mt-1 list-icon text-2xl"></i>
+                                <span class="flex-1">《费加罗的婚礼》：提醒所有人，墙外<span class="font-bold">美与尊严尚存</span>。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-12 order-1 lg:order-2">
+                <p class="text-xl uppercase text-gray-500 mb-4">A Question of Belief</p>
+                <svg viewBox="0 0 100 100" class="w-2/3 h-auto mx-auto mb-6">
+                    <path d="M 10 90 Q 50 10 90 90" class="line-graphic stroke-[#FFB300]" />
+                    <circle cx="50" cy="50" r="10" class="line-graphic fill-[#FFB300]" />
+                    <text x="50" y="98" text-anchor="middle" font-size="10" fill="#3A2E2C" class="font-noto-sans-sc font-bold">信念 (Belief)</text>
+                    <text x="10" y="80" font-size="8" fill="#3A2E2C">现状</text>
+                    <text x="90" y="80" font-size="8" text-anchor="end" fill="#3A2E2C">未来</text>
+                </svg>
+                <h4 class="text-4xl font-bold font-noto-sans-sc">
+                    <span class="highlight-text">过程</span> vs. 终点
+                </h4>
+                <p class="mt-4 text-lg text-[#3A2E2C] opacity-85">
+                    大部分人以为现状是<span class="font-bold">permanent</span>（终点）。安迪知道这是<span class="font-bold">process</span>（过程）。这种信念，让他举起那把小石锤，永不停止准备。
+                </p>
+            </div>
+        </section>
+
+        <section class="text-center card p-12 lg:p-16 card-darker-alt-bg tech-glow">
+            <div class="content-z max-w-4xl mx-auto">
+                <p class="text-xl uppercase text-gray-600 mb-4">The Ultimate Escape</p>
+                <h2 class="ultra-large-text font-noto-sans-sc leading-tight mb-8">
+                    <span class="highlight-text">杜佛兰</span>：<br/>重生计划
+                </h2>
+                <p class="text-2xl font-light text-[#3A2E2C] opacity-85">
+                    越狱成功，<span class="font-bold">不是因为隧道</span>，而是因为他先在外面构建了一个<span class="font-bold highlight-text">有身份、有存款、有未来的新生活。</span>
+                </p>
+                <blockquote class="mt-8 pt-6 border-t border-gray-400/50 italic text-xl">
+                    <i class="fas fa-plane-departure list-icon text-2xl"></i> 
+                    <span class="font-bold">这不是逃离</span>（Escaping），<span class="font-bold">而是重生</span>（Rebirthing）。
+                </blockquote>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-12">
+            
+            <div class="card p-8 lg:p-10">
+                <p class="text-lg uppercase text-gray-500 mb-3">Red's Realism</p>
+                <h4 class="text-4xl font-bold font-noto-sans-sc mb-4">
+                    <span class="text-red-600/80">危险</span>的希望
+                </h4>
+                <p class="text-xl font-light italic">
+                    “希望是危险的东西,是精神苦闷的根源。”
+                </p>
+                <p class="mt-4 text-gray-700">
+                    <span class="font-bold">瑞德</span>：现实主义者。为避免失望，选择不抱希望。这看似保护了自己，却提前接受了精神的死亡。
+                </p>
+            </div>
+            
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow">
+                <div class="content-z">
+                    <p class="text-lg uppercase text-gray-600 mb-3">Andy's Idealism</p>
+                    <h4 class="text-4xl font-bold font-noto-sans-sc mb-4">
+                        <span class="highlight-text">人间至善</span>
+                    </h4>
+                    <p class="text-xl font-light italic">
+                        “希望是美好的,也许是人间至善,而美好的事物永不消逝。”
+                    </p>
+                    <p class="mt-4 text-gray-700">
+                        <span class="font-bold">安迪</span>：理想主义者。保持希望，是<span class="font-bold">对抗异化的唯一方式</span>。它不是天真，而是拒绝被系统碾压的尊严。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-8 lg:p-12 tech-glow">
+            <div class="content-z">
+                <h2 class="ultra-large-text font-noto-sans-sc text-center mb-8">
+                    <span class="highlight-text">无形</span>的铁窗
+                </h2>
+                
+                <p class="text-2xl text-center max-w-4xl mx-auto mb-10">
+                    真正的救赎，不是肉体的自由，而是<span class="font-bold">精神的重生</span>。体制没有赢，因为他证明了人还可以有尊严、有希望、不被驯化。
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-4 rounded-xl border border-[#D2B48C]">
+                        <i class="fas fa-briefcase fa-3x highlight-text mb-3"></i>
+                        <p class="font-bold text-xl">“应该找一份稳定的工作”</p>
+                    </div>
+                    <div class="p-4 rounded-xl border border-[#D2B48C]">
+                        <i class="fas fa-house-chimney fa-3x highlight-text mb-3"></i>
+                        <p class="font-bold text-xl">“应该买房买车”</p>
+                    </div>
+                    <div class="p-4 rounded-xl border border-[#D2B48C]">
+                        <i class="fas fa-users fa-3x highlight-text mb-3"></i>
+                        <p class="font-bold text-xl">“应该在三十岁之前结婚”</p>
+                    </div>
+                </div>
+
+                <p class="text-center text-xl mt-10 font-bold max-w-4xl mx-auto">
+                    这些“应该”，就是我们无形的铁窗。真正的自由，在于<span class="font-bold">获得选择的能力</span>。
+                </p>
+            </div>
+        </section>
+
+        <footer class="text-center py-12">
+            <h3 class="text-4xl font-bold font-noto-sans-sc mb-6">
+                <i class="fas fa-map-pin highlight-text mr-3"></i>
+                <span class="highlight-text">你的选择</span>：拿起石锤
+            </h3>
+            <p class="text-2xl font-light max-w-3xl mx-auto">
+                与其等待救赎，不如成为那个拿起石锤的人。每一天都是一次选择——做一个体制化的囚徒，还是一个准备越狱的安迪？
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

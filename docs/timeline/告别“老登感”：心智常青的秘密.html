@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>告别“老登感”：心智常青的秘密</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.5s ease-out;
+        }
+        .card:hover .tech-glow::before {
+            opacity: 1; /* Show on hover */
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* Custom Ghibli-esque Doodles - Example */
+        .doodle-mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg"><path fill="%23C2D7B4" d="M0 20 L20 5 L40 15 L60 0 L80 10 L100 5 L100 20 Z"/></svg>') repeat-x bottom;
+            background-size: auto 100%;
+            opacity: 0.6;
+            z-index: 0;
+        }
+        .doodle-clouds {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 150px;
+            height: 80px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg"><path fill="%23E0F2F7" d="M10 30 Q20 10 40 10 T70 20 T90 30 Q80 45 60 40 T30 45 T10 30 Z"/></svg>') no-repeat center center;
+            background-size: contain;
+            opacity: 0.7;
+            animation: floatCloud 10s infinite ease-in-out alternate;
+            z-index: 0;
+        }
+        @keyframes floatCloud {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(20px); }
+        }
+
+        /* Responsive adjustments for larger screens */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px;
+            }
+            .ultra-large-text {
+                font-size: 10rem;
+            }
+            .large-stat-text {
+                font-size: 7rem;
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-100 selection:text-amber-800">
+
+    <div class="relative min-h-screen flex flex-col justify-center items-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+
+        <div class="doodle-mountains hidden lg:block"></div>
+        <div class="doodle-clouds hidden lg:block" style="top: 10%; left: 5%;"></div>
+        <div class="doodle-clouds hidden lg:block" style="top: 25%; right: 10%; animation-delay: 3s; transform: scale(0.8);"></div>
+
+        <div class="container mx-auto max-w-7xl relative z-10">
+
+            <section class="text-center mb-20">
+                <h1 class="font-noto-sans-sc ultra-large-text highlight-text mb-4">
+                    真正的“老登”
+                </h1>
+                <p class="text-2xl sm:text-3xl font-light font-open-sans text-gray-700">
+                    <span class="font-bold font-noto-sans-sc">不是退休，而是停止学习。</span><br>
+                    <span class="text-xl sm:text-2xl text-gray-600">The Real "Old Fogey": Not Retirement, But Ceasing to Learn.</span>
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <i class="fas fa-seedling text-5xl text-green-700 opacity-70"></i>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 items-center">
+                <div class="card tech-glow content-z p-8 text-center md:text-left">
+                    <h2 class="text-4xl sm:text-5xl font-noto-sans-sc font-bold mb-4">
+                        💡 “老登感”的本质<br>
+                        <span class="font-open-sans text-xl sm:text-2xl font-light">The Essence of "Old Fogey Syndrome"</span>
+                    </h2>
+                    <p class="text-3xl sm:text-4xl font-noto-sans-sc font-bold highlight-text leading-tight mb-6">
+                        心智的退化
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        很多人都错了，老登感跟年龄无关。它只关乎：<span class="font-bold">心智的退化。</span>
+                        <span class="block text-sm mt-2 text-gray-500 font-open-sans">Many are mistaken. "Old fogey syndrome" has nothing to do with age; it's solely about the deterioration of one's mindset.</span>
+                    </p>
+                </div>
+                <div class="flex justify-center items-center relative">
+                    <div class="relative w-full max-w-md h-64 bg-gradient-to-br from-amber-200 to-yellow-300 rounded-full flex items-center justify-center opacity-80 shadow-lg">
+                        <i class="fas fa-brain text-8xl text-amber-900 opacity-30 animate-pulse"></i>
+                        <span class="absolute text-5xl font-bold text-amber-900 font-noto-sans-sc">心智</span>
+                        <span class="absolute text-xl bottom-12 right-12 text-amber-800 font-open-sans">Mindset</span>
+                        <div class="absolute w-24 h-24 bg-red-400 rounded-full -top-8 -left-8 opacity-40"></div>
+                        <div class="absolute w-32 h-32 bg-blue-300 rounded-full -bottom-8 -right-8 opacity-40"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-20">
+                <div class="card card-alt-bg p-8 text-center">
+                    <h2 class="text-4xl sm:text-5xl font-noto-sans-sc font-bold mb-6">
+                        🧗 身体的高峰与心智的山脚<br>
+                        <span class="font-open-sans text-xl sm:text-2xl font-light">Physical Peaks & Mental Foothills</span>
+                    </h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
+                        <div class="content-z">
+                            <h3 class="text-2xl font-noto-sans-sc font-semibold highlight-text mb-3">
+                                过去两年：自由与虚无
+                            </h3>
+                            <ul class="space-y-3 text-gray-700">
+                                <li class="flex items-start">
+                                    <i class="list-icon fas fa-briefcase mt-1"></i>
+                                    远程管理三家公司，极少踏入办公室。
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="list-icon fas fa-mountain mt-1"></i>
+                                    攀登慕士塔格峰，穿越羌塘无人区。
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="list-icon fas fa-road mt-1"></i>
+                                    跑过318、219、217独库公路等极限路线。
+                                </li>
+                            </ul>
+                            <p class="mt-4 text-sm text-gray-600 font-open-sans">
+                                Remote management, extreme adventures, but a growing inner emptiness.
+                            </p>
+                        </div>
+                        <div class="content-z lg:col-span-2 relative mt-8 lg:mt-0">
+                            <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                                身体的极致探索，换来的却是<span class="font-bold highlight-text">内心巨大的虚无感</span>。
+                                我曾以为开心和自由就是我的终极目标。可后来才发现，这种“无目标”的状态，正是精神上的真正停滞。
+                                我深刻体会到，虚无感的本质，就是感觉自己：<span class="font-bold highlight-text">没有在进步！</span>
+                            </p>
+                            <div class="w-full h-48 bg-gray-200 rounded-lg overflow-hidden relative shadow-inner">
+                                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    <path d="M0 80 Q25 60 50 70 T100 50" stroke="#78909C" stroke-width="2" fill="none" class="opacity-60"/>
+                                    <path d="M0 60 Q25 40 50 50 T100 30" stroke="#FFB300" stroke-width="3" fill="none" class="opacity-80"/>
+                                    <text x="5" y="85" fill="#78909C" class="text-xs">身体 Physical</text>
+                                    <text x="5" y="65" fill="#FFB300" class="text-xs">心智 Mindset</text>
+                                </svg>
+                                <span class="absolute bottom-4 right-4 text-sm text-gray-500 font-open-sans">Progress Trend</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 items-stretch">
+                <div class="card card-darker-alt-bg tech-glow content-z p-8 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-4xl sm:text-5xl font-noto-sans-sc font-bold mb-4">
+                            🛡️ 避免“老登感”的唯一途径<br>
+                            <span class="font-open-sans text-xl sm:text-2xl font-light">The Only Way to Avoid "Old Fogey Syndrome"</span>
+                        </h2>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                            直到今年 9 月，当我重新踏入推特大门时，才猛然发现：我离这个世界太远了，落后太多。那一刻，我终于理解了：
+                        </p>
+                        <p class="large-stat-text font-noto-sans-sc highlight-text mb-4">
+                            持续学习
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            <span class="font-bold">持续地学习新东西</span>，是避免成为老登的唯一，也是最难的办法。
+                            <span class="block text-sm mt-2 text-gray-500 font-open-sans">Continual learning is the sole, and most challenging, method to prevent becoming an "old fogey."</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="card content-z p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">
+                            老登感的深层根源<br>
+                            <span class="font-open-sans text-xl font-light">Deep Roots of the Syndrome</span>
+                        </h3>
+                        <ul class="space-y-4 text-gray-700 text-lg">
+                            <li class="flex items-start">
+                                <i class="list-icon fas fa-minus-circle mt-1"></i>
+                                <div class="flex-1">
+                                    <span class="font-bold">失去学习的羞耻感：</span>
+                                    当一个人不再觉得无知难受，就离钝化不远了。
+                                    <span class="block text-sm text-gray-500 font-open-sans">Loss of intellectual humility: When ignorance no longer bothers you, stagnation is near.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="list-icon fas fa-lock mt-1"></i>
+                                <div class="flex-1">
+                                    <span class="font-bold">精神状态的固化：</span>
+                                    以为自己懂了不再学习，以为世界没变，其实早已陌生。
+                                    <span class="block text-sm text-gray-500 font-open-sans">Mental rigidity: Believing you know everything, thinking the world hasn't changed when it's already foreign.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="list-icon fas fa-ban mt-1"></i>
+                                <div class="flex-1">
+                                    <span class="font-bold">对进步的否定：</span>
+                                    否定身边学习的人，嘲笑他们“不切实际”。
+                                    <span class="block text-sm text-gray-500 font-open-sans">Negation of progress: Dismissing and mocking those who strive for growth.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-center mb-20">
+                <div class="card p-8 bg-gradient-to-tr from-orange-50 via-yellow-50 to-amber-100">
+                    <h2 class="text-4xl sm:text-5xl font-noto-sans-sc font-bold mb-6">
+                        ❓ 自省<br>
+                        <span class="font-open-sans text-xl sm:text-2xl font-light">Self-Reflection</span>
+                    </h2>
+                    <p class="text-2xl sm:text-3xl font-noto-sans-sc text-gray-800 leading-relaxed max-w-3xl mx-auto">
+                        我内心的那片“羌塘无人区”，<br class="hidden sm:inline">
+                        是否也曾因为“停止进步”而正在蔓延？
+                    </p>
+                    <p class="mt-6 text-lg text-gray-600 font-open-sans">
+                        Has the "Qiangtang no-man's land" within me also expanded due to a cessation of progress?
+                    </p>
+                    <div class="mt-8 flex justify-center">
+                        <i class="fas fa-search text-6xl text-amber-700 opacity-60"></i>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Example: Add a simple parallax effect to background elements if desired
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            document.querySelectorAll('.doodle-clouds').forEach(cloud => {
+                cloud.style.transform = `translateY(${scrollY * 0.1}px)`;
+            });
+            document.querySelectorAll('.doodle-mountains').forEach(mountain => {
+                mountain.style.backgroundPositionY = `-${scrollY * 0.05}px`;
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
