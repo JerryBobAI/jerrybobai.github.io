@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金钱的终极功能</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40pWkC2Mx92kO8WbXb0y3tK42b82o3J5/4+7E8p1R5k5p6a2X/N8zQ8l6U5T0n7u6h6Z6h6e6w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的手绘纹理/水彩渲染效果 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕/炭黑 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+           /* 添加一个轻微的文字阴影以模拟发光，同时避免与背景冲突 */
+           text-shadow: 0 0 5px rgba(255, 179, 0, 0.3);
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+           border: 1px solid rgba(210, 180, 140, 0.2); /* 浅色边框 */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 (琥珀黄) */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s;
+           opacity: 0.8;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大字体 */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* 用于突出的统计数据 */
+           font-weight: 800;
+           line-height: 1.1;
+        }
+        .list-icon {
+           color: #6C9F92; /* 柔和的墨绿色作为列表点缀色 */
+           margin-right: 0.75rem; /* 调整间距 */
+           min-width: 1.5rem; /* 确保对齐 */
+           text-align: center;
+        }
+        .stat-icon {
+            color: #FFB300; /* 琥珀黄高亮 */
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        /* 针对1920px及以上宽度的响应式优化 */
+        @media (min-width: 1920px) {
+            .container-xl-fixed {
+                max-width: 1600px; /* 进一步增大内容区域最大宽度 */
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-8 lg:p-12">
+
+    <div class="container container-xl-fixed mx-auto max-w-7xl space-y-24">
+
+        <section class="text-center pt-8 md:pt-16">
+            <p class="font-open-sans text-lg md:text-xl text-gray-500 tracking-widest mb-4">
+                THE ULTIMATE FUNCTION OF WEALTH
+            </p>
+            <h1 class="font-noto-sans-sc ultra-large-text text-black/90 mb-6 px-4">
+                <span class="highlight-text">钱的终极功能</span>
+            </h1>
+            <p class="font-noto-sans-sc text-2xl md:text-3xl font-light max-w-4xl mx-auto text-gray-700">
+                从来不是用来买物的，而是用来
+            </p>
+        </section>
+
+        <section class="grid md:grid-cols-3 gap-8">
+            <div class="card card-darker-alt-bg tech-glow text-center">
+                <div class="content-z">
+                    <i class="stat-icon fas fa-leaf mb-3"></i>
+                    <p class="font-open-sans text-sm font-semibold text-gray-700 tracking-wider">LEISURE</p>
+                    <div class="font-noto-sans-sc large-stat-text font-bold text-black/90">
+                        买清闲
+                    </div>
+                </div>
+            </div>
+
+            <div class="card tech-glow text-center">
+                <div class="content-z">
+                    <i class="stat-icon fas fa-mountain mb-3"></i>
+                    <p class="font-open-sans text-sm font-semibold text-gray-700 tracking-wider">SPACE</p>
+                    <div class="font-noto-sans-sc large-stat-text font-bold text-black/90">
+                        买空间
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg tech-glow text-center">
+                <div class="content-z">
+                    <i class="stat-icon fas fa-cloud-sun mb-3"></i>
+                    <p class="font-open-sans text-sm font-semibold text-gray-700 tracking-wider">FREEDOM</p>
+                    <div class="font-noto-sans-sc large-stat-text font-bold text-black/90">
+                        买不被定义的人生
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-8 items-stretch">
+            
+            <div class="card p-8 lg:p-12 card-darker-alt-bg">
+                <div class="content-z space-y-6">
+                    <h2 class="font-noto-sans-sc text-4xl font-extrabold text-black/90 mb-4">
+                        <span class="highlight-text">神形俱疲</span>
+                        <span class="font-open-sans text-xl ml-2 font-normal text-gray-600">The Exhaustion Trap</span>
+                    </h2>
+                    
+                    <p class="font-noto-sans-sc text-lg text-gray-700 leading-relaxed border-l-4 border-amber-500/50 pl-4">
+                        很多人穷极一生，买了房、车、名牌。
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="list-icon far fa-times-circle text-2xl mt-1"></i>
+                            <span class="font-noto-sans-sc text-xl font-medium text-black/80">他们买到了物</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="list-icon far fa-question-circle text-2xl mt-1"></i>
+                            <span class="font-noto-sans-sc text-xl font-medium text-black/80">人生依然<span class="text-red-600/70">神形俱疲</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-12 tech-glow">
+                <div class="content-z space-y-6">
+                    <h2 class="font-noto-sans-sc text-4xl font-extrabold text-black/90 mb-4">
+                        <span class="highlight-text">抽身能力</span>
+                        <span class="font-open-sans text-xl ml-2 font-normal text-gray-600">The Ability to Withdraw</span>
+                    </h2>
+
+                    <p class="font-noto-sans-sc text-lg text-gray-700 leading-relaxed border-l-4 border-green-700/50 pl-4">
+                        他们缺少的，是更高维度的自由。
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="list-icon fas fa-check-circle text-2xl mt-1"></i>
+                            <span class="font-noto-sans-sc text-xl font-medium text-black/80">从物中<span class="highlight-text">抽身</span>的能力</span>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="list-icon fas fa-minus-circle text-2xl mt-1"></i>
+                            <span class="font-noto-sans-sc text-xl font-medium text-black/80">而非纯粹的物质累积</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pt-8 pb-16 text-center">
+            
+            <div class="card p-10 lg:p-16 mx-auto max-w-5xl tech-glow">
+                <div class="content-z">
+                    <p class="font-open-sans text-xl md:text-2xl text-gray-500 tracking-widest mb-4">
+                        THE TRULY RELAXED LIFE
+                    </p>
+                    <div class="font-noto-sans-sc ultra-large-text text-black/90">
+                        <span class="highlight-stat">真正松弛</span>
+                    </div>
+
+                    <div class="mt-6 md:mt-8 flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
+                        <div class="flex items-center">
+                            <i class="list-icon fas fa-balance-scale text-4xl"></i>
+                            <div class="font-noto-sans-sc text-2xl md:text-3xl font-bold text-black/90">
+                                不是“东西最多”的人
+                            </div>
+                        </div>
+                        <div class="font-noto-sans-sc text-3xl font-extrabold text-gray-400">
+                            VS.
+                        </div>
+                        <div class="flex items-center">
+                            <i class="list-icon fas fa-fingerprint text-4xl"></i>
+                            <div class="font-noto-sans-sc text-2xl md:text-3xl font-bold text-black/90">
+                                而是<span class="highlight-text">“选择最多”</span>的人
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </div>
+    
+    <footer class="text-center mt-12 mb-4 text-gray-500 text-sm font-open-sans">
+        Design inspired by Ghibli Aesthetics & Apple Keynote.
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反脆弱：在不确定中获益</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom Tailwind Configuration for responsiveness */
+        @layer utilities {
+            .max-w-7xl-plus {
+                max-width: 90rem; /* Custom max width for large screens (e.g., 1440px) */
+            }
+            .stat-text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* 轻微文字阴影，增强立体感 */
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 lg:p-12">
+
+    <div class="container mx-auto max-w-7xl-plus space-y-24">
+
+        <header class="text-center pt-8 pb-16">
+            <h1 class="font-noto-sans-sc ultra-large-text text-[#3A2E2C]">
+                反脆弱
+            </h1>
+            <p class="text-xl md:text-2xl mt-4 max-w-4xl mx-auto text-[#6F5E59]">
+                <span class="highlight-text font-semibold">ANTIFRAGILE.</span> 
+                我用了三年才真正看懂——现代生活最大的谎言
+            </p>
+        </header>
+
+        <section class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="lg:col-span-1">
+                <p class="text-lg uppercase tracking-widest text-[#6F5E59]">Concept Deconstruction</p>
+                <h2 class="font-noto-sans-sc ultra-large-text text-[#3A2E2C] mt-2 mb-6">
+                    <span class="highlight-text">“稳定”</span>
+                    是自杀
+                </h2>
+                <p class="text-xl md:text-2xl leading-relaxed text-[#5C4D4A]">
+                    我们被教育追求稳定的工作、稳定的收入，但塔勒布说，这只是在积累黑天鹅爆发的能量。
+                </p>
+                <ul class="mt-8 space-y-4 text-lg text-[#5C4D4A]">
+                    <li><i class="fas fa-exclamation-triangle list-icon"></i> 躲避小波动，失去自我修复能力。</li>
+                    <li><i class="fas fa-exclamation-triangle list-icon"></i> 线性思维面对非线性世界必然崩溃。</li>
+                    <li><i class="fas fa-exclamation-triangle list-icon"></i> 缺乏压力测试的系统，一击即溃。</li>
+                </ul>
+            </div>
+            <div class="card card-alt-bg p-8 lg:p-12 lg:col-span-1 h-full flex flex-col justify-center items-center tech-glow">
+                <div class="content-z text-center">
+                    <i class="fas fa-box-open text-9xl text-[#B08E6E] mb-6"></i>
+                    <p class="text-5xl font-extrabold font-noto-sans-sc text-[#8B6E4B] leading-none">易碎品</p>
+                    <p class="text-xl uppercase tracking-widest mt-2 text-[#8B6E4B]">FRAGILE</p>
+                    <p class="text-base mt-4 text-[#5C4D4A]">乞求别人小心，不如让包裹本身能扛摔，甚至摔了更结实。</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-t-2 border-[#D2B48C] opacity-50 my-16">
+
+        <section>
+            <p class="text-lg uppercase tracking-widest text-center text-[#6F5E59]">The Source of Innovation</p>
+            <h2 class="font-noto-sans-sc ultra-large-text text-center text-[#3A2E2C] mt-4 mb-16">
+                创新，来自<span class="highlight-text">试错</span>
+            </h2>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="card p-8 text-center">
+                    <div class="content-z">
+                        <i class="fas fa-steam list-icon text-6xl mb-4"></i>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">蒸汽机</h3>
+                        <p class="text-sm uppercase tracking-wider text-[#6F5E59]">STEAM ENGINE</p>
+                        <p class="mt-3 text-[#5C4D4A]">不是牛顿力学产物，而是工匠在修修补补中搞出来的。</p>
+                    </div>
+                </div>
+                <div class="card p-8 text-center">
+                    <div class="content-z">
+                        <i class="fas fa-plane list-icon text-6xl mb-4"></i>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">莱特兄弟</h3>
+                        <p class="text-sm uppercase tracking-wider text-[#6F5E59]">WRIGHT BROTHERS</p>
+                        <p class="mt-3 text-[#5C4D4A]">不是空气动力学，而是摔了几百次摔出来的。</p>
+                    </div>
+                </div>
+                <div class="card card-darker-alt-bg p-8 text-center lg:col-span-1 h-full">
+                    <div class="content-z">
+                        <i class="fas fa-ban text-[#C0392B] text-6xl mb-4"></i>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">剥夺试错权</h3>
+                        <p class="text-sm uppercase tracking-wider text-[#6F5E59]">PERFECT PLAN</p>
+                        <p class="mt-3 text-[#5C4D4A] font-semibold">“先想清楚再去做”的思维，是最致命的陷阱。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-12 p-8 md:p-12 tech-glow">
+                <div class="content-z">
+                    <h3 class="text-3xl font-bold font-noto-sans-sc mb-4">非线性增长</h3>                     
+                    
+                    <p class="text-base text-[#6F5E59] mt-8">
+                        只要每次失败的成本是可控的，失败得越多，我离成功就越近。这不是不失败，而是让每一次失败都让你变得更强。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-t-2 border-[#D2B48C] opacity-50 my-16">
+
+        <section class="grid lg:grid-cols-2 gap-12 items-center">
+            
+            <div class="card card-darker-alt-bg p-8 lg:p-12 lg:col-span-1 flex flex-col justify-center items-center tech-glow order-2 lg:order-1">
+                <div class="content-z text-center">
+                    <p class="text-xl uppercase tracking-widest text-[#5C4D4A]">Strategy</p>
+                    <h3 class="font-noto-sans-sc ultra-large-text text-[#3A2E2C] my-4 leading-snug">
+                        杠铃<br/>法则
+                    </h3>
+                    
+                    <div class="flex items-center justify-center space-x-4">
+                        <div class="w-20 h-20 md:w-28 md:h-28 bg-[#8C8068] rounded-full flex flex-col items-center justify-center text-white p-2 border-4 border-[#3A2E2C]">
+                            <i class="fas fa-shield-alt text-2xl md:text-3xl"></i>
+                            <p class="text-xs md:text-sm mt-1 font-bold">保守</p>
+                        </div>
+                        <div class="w-16 h-2 md:w-32 md:h-3 bg-[#A0A0A0] rounded-full"></div>
+                        <div class="w-20 h-20 md:w-28 md:h-28 bg-[#FFB300] rounded-full flex flex-col items-center justify-center text-[#3A2E2C] p-2 border-4 border-[#3A2E2C]">
+                            <i class="fas fa-rocket text-2xl md:text-3xl"></i>
+                            <p class="text-xs md:text-sm mt-1 font-bold">激进</p>
+                        </div>
+                    </div>
+
+                    <p class="text-base mt-6 text-[#5C4D4A]">
+                        避开中等风险，将资源分配到
+                        <span class="highlight-text font-bold">极端保守</span>
+                        与
+                        <span class="highlight-text font-bold">极端激进</span>
+                        的两端。
+                    </p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 order-1 lg:order-2">
+                <p class="text-lg uppercase tracking-widest text-[#6F5E59]">Implementation</p>
+                <h2 class="text-4xl md:text-5xl font-extrabold font-noto-sans-sc mt-2 mb-6 leading-tight">
+                    用<span class="highlight-text">确定性</span><br>保护你的下限
+                </h2>
+                
+                <ul class="mt-8 space-y-6 text-xl text-[#5C4D4A]">
+                    <li>
+                        <div class="flex items-start">
+                            <i class="fas fa-lock list-icon text-2xl mt-1"></i>
+                            <p class="ml-3">
+                                <span class="font-bold">极度保守 (Lower Bound)</span>: 90%的钱/时间放在几乎零风险的地方，如稳定的上班收入。它不是目标，而是你的<span class="highlight-text">安全垫</span>。
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-start">
+                            <i class="fas fa-bolt list-icon text-2xl mt-1"></i>
+                            <p class="ml-3">
+                                <span class="font-bold">极度激进 (Upper Bound)</span>: 10%投向高风险高回报的项目，失败了损失可控，成功了<span class="highlight-text">收益指数级</span>。
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="text-center pt-16 pb-24">
+            <h2 class="font-noto-sans-sc ultra-large-text text-[#3A2E2C] mb-4">
+                活得最久
+            </h2>
+            <p class="text-2xl md:text-3xl mt-4 max-w-5xl mx-auto text-[#5C4D4A]">
+                反脆弱的精髓：不是跑得最快，而是<span class="font-bold">活得最久</span>。
+                <br>
+                在用时间换取<span class="highlight-text">可选择性</span>，成为那个能在混乱中获益的人。
+            </p>
+        </section>
+
+    </div>
+     
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

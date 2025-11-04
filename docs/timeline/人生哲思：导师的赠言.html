@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生哲思：导师的赠言</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* 严格按照要求实现的CSS样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease; /* 为了更好的视觉体验 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 定制 Tailwind 配置 */
+        .max-w-7xl-plus {
+            max-width: 1440px; /* 适配 1920px 屏幕的更大容器 */
+        }
+
+        /* 勾线图形（示例：模拟数据可视化） */
+        .line-chart-svg {
+            stroke: #3A2E2C; /* 深棕色勾线 */
+            stroke-width: 3;
+            fill: none;
+            transition: stroke 0.3s ease;
+        }
+        /* 科技感透明渐变圆环 */
+        .tech-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* 运用高亮色自身透明度渐变制造科技感 */
+            background: radial-gradient(circle, rgba(255, 179, 0, 0.3) 0%, rgba(255, 179, 0, 0.1) 40%, transparent 70%);
+            opacity: 0.7;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="max-w-7xl-plus mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+
+        <header class="text-center pt-8 pb-16">
+            <h4 class="text-lg uppercase tracking-widest highlight-text font-open-sans">THE MENTOR'S INSIGHT</h4>
+            <h1 class="ultra-large-text font-noto-sans-sc mt-4 mx-auto max-w-5xl">
+                <span class="highlight-text block">人生本无</span>
+                <span class="block">既定意义</span>
+            </h1>
+            <p class="text-xl mt-6 font-noto-sans-sc max-w-3xl mx-auto text-gray-700">
+                导师的临别赠言：洞察生活本质的终极哲学。
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-2 card p-8 md:p-12 tech-glow">
+                <div class="content-z space-y-6">
+                    <i class="fas fa-quote-left text-5xl highlight-text opacity-75"></i>
+                    <blockquote class="text-3xl lg:text-4xl font-light leading-relaxed font-noto-sans-sc">
+                        “无论是学术成就、社会名誉、显赫头衔，还是权力地位，
+                        <span class="highlight-text font-semibold">这些终究不过是过眼云烟</span>，是实现良好生活的手段，而<span class="font-semibold">绝非人生的终极目标。</span>”
+                    </blockquote>
+                    <p class="text-right text-lg font-open-sans pt-4">- My Mentor</p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-6 flex flex-col justify-between items-center relative overflow-hidden">
+                <div class="tech-ring"></div>
+                <div class="content-z text-center">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-4">虚无之惑</h3>
+                    <p class="text-sm font-open-sans uppercase tracking-widest mb-6 text-gray-600">Initial Feeling</p>
+                    <svg class="line-chart-svg w-full h-32" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M 5 95 C 20 50, 40 20, 50 10 L 95 90" class="line-chart-svg stroke-[#D9534F] opacity-75" />
+                        <circle cx="5" cy="95" r="3" fill="#D9534F" />
+                        <circle cx="95" cy="90" r="3" fill="#D9534F" />
+                    </svg>
+                    <p class="mt-4 text-sm font-noto-sans-sc">当时听来，曾感一丝<span class="font-semibold highlight-text">伤感与虚无</span>。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center pt-16 pb-16">
+            <p class="text-xl uppercase tracking-widest highlight-text font-open-sans">THE ULTIMATE GOAL</p>
+            <div class="flex flex-col items-center justify-center relative">
+                <div class="ultra-large-text highlight-stat relative" style="z-index: 0;">
+                    <span class="font-noto-sans-sc">唯</span>
+                    <span class="text-gray-200 absolute inset-0 -top-4 -right-8" style="font-size: 1.2em; z-index: -1;">1</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-extrabold font-noto-sans-sc -mt-8 relative z-10">
+                    人生的目的：简单而纯粹
+                </h2>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card p-6 card-alt-bg tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-heart text-4xl list-icon mb-4"></i>
+                    <h3 class="text-2xl font-extrabold font-noto-sans-sc mb-2">尽己所能 HEALTH</h3>
+                    <p class="text-lg font-open-sans text-gray-700 mb-4">Stay Healthy</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="fas fa-check-circle list-icon text-base"></i> 健康地活着</li>
+                        <li><i class="fas fa-check-circle list-icon text-base"></i> Maintain Vitality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-smile-beam text-4xl list-icon mb-4"></i>
+                    <h3 class="text-2xl font-extrabold font-noto-sans-sc mb-2">内心圆满 JOY</h3>
+                    <p class="text-lg font-open-sans text-gray-700 mb-4">Full of Happiness</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="fas fa-check-circle list-icon text-base"></i> 充满喜悦和快乐</li>
+                        <li><i class="fas fa-check-circle list-icon text-base"></i> Cultivate Inner Peace</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 card-darker-alt-bg tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-door-open text-4xl list-icon mb-4"></i>
+                    <h3 class="text-2xl font-extrabold font-noto-sans-sc mb-2">平静告别 PEACE</h3>
+                    <p class="text-lg font-open-sans text-gray-700 mb-4">Leave with Serenity</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="fas fa-check-circle list-icon text-base"></i> 平静地离开世界</li>
+                        <li><i class="fas fa-check-circle list-icon text-base"></i> The Final Chapter</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-16 pb-8">
+            <h2 class="text-center ultra-large-text highlight-text opacity-90 font-open-sans tracking-tight">INSIGHT</h2>
+            <div class="card p-8 md:p-12 mt-8 max-w-5xl mx-auto tech-glow">
+                <div class="content-z">
+                    <p class="text-xl md:text-2xl font-light leading-relaxed font-noto-sans-sc">
+                        随着岁月的沉淀，当我再次回味，愈发觉得它充满了<span class="highlight-text font-semibold">洞察力与智慧</span>。
+                    </p>
+                    <p class="mt-6 text-xl md:text-2xl font-light leading-relaxed font-noto-sans-sc">
+                        它提醒我们，勿被表象所迷惑，真正的幸福，
+                        <span class="font-semibold">藏于生活的本质之中</span>。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center py-8 border-t border-gray-300 border-opacity-50">
+            <p class="text-sm font-open-sans text-gray-500">Ghibli Style Hybrid Presentation | Generated by AI</p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

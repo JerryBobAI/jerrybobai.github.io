@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>思考的力量：自学的本质</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* 吉卜力风格配色与纹理 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 微妙的手绘纹理效果 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        /* 苹果风格卡片 */
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden;
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 科技感光晕效果 */
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不会干扰点击 */
+           opacity: 0.5; /* 调低亮度，更柔和 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        /* 超大字体 */
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* 响应式超大字体 */
+           font-weight: 900;
+           line-height: 1;
+           color: #3A2E2C;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem);
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300;
+           margin-right: 0.5rem;
+           font-size: 1.2rem;
+        }
+
+        /* 响应式调整大屏布局 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px; /* 限制在超宽屏上的内容宽度 */
+            }
+        }
+        /* 简洁勾线图形化 */
+        .stroke-graphic {
+            border: 4px solid #3A2E2C;
+            border-radius: 50%;
+            padding: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 lg:p-12">
+
+    <div class="container mx-auto">
+
+        <section class="mb-20 pt-16 lg:pt-24">
+            <h2 class="text-xs uppercase tracking-widest mb-4 text-gray-600 font-semibold">The Core of Learning</h2>
+            <p class="font-noto-sans-sc ultra-large-text mb-6">
+                所有学习的本质<span class="highlight-text">都是</span>
+                <br><span class="highlight-text">自学</span>。
+            </p>
+            <p class="text-xl md:text-2xl max-w-4xl text-gray-700">
+                <strong class="font-bold">一个人什么时候才算开始真正学习？</strong> 不是报了课、做了笔记、交了作业，而是他开始<span class="highlight-text font-bold">主动思考、主动提问、主动构建自己的理解</span>的那一刻。
+            </p>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+            <div class="flex flex-col justify-center order-2 lg:order-1">
+                <h3 class="text-xs uppercase tracking-widest mb-2 text-gray-600 font-semibold">01 / THE ILLUSION</h3>
+                <p class="font-noto-sans-sc ultra-large-text text-gray-500 opacity-50">
+                    <span class="highlight-stat large-stat-text">听懂</span>
+                </p>
+                <p class="font-noto-sans-sc ultra-large-text mb-4">
+                    <span class="highlight-stat">≠</span>
+                    <span class="text-[#5D8B6F]">学会</span>
+                </p>
+                <p class="text-lg font-noto-sans-sc font-medium">
+                    知识从你面前“经过”，但没有进入你的脑子。
+                    <br>那只是“经过”，不是“学会”。
+                </p>
+            </div>
+            <div class="card p-8 lg:p-12 tech-glow order-1 lg:order-2">
+                <div class="content-z">
+                    <p class="text-sm uppercase tracking-widest mb-4 font-semibold highlight-text">The Trap</p>
+                    <h4 class="text-3xl md:text-4xl font-noto-sans-sc font-extrabold mb-6">
+                        没有思考的学习，都是<span class="highlight-text">幻觉</span>。
+                    </h4>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-point-right list-icon mt-1"></i>
+                            <span class="flex-1">误区：依赖老师、课程、书本，总希望有人能“教会”自己。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-point-right list-icon mt-1"></i>
+                            <span class="flex-1">事实：没有人能把知识直接“装进”你的脑子。老师能带入门，不能替你修行。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-hand-point-right list-icon mt-1"></i>
+                            <span class="flex-1">后果：花了时间，却<strong class="font-bold">提取不出</strong>任何有效内容。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 card-alt-bg p-8 lg:p-16">
+            <h3 class="text-xs uppercase tracking-widest mb-2 text-gray-600 font-semibold">02 / THE STARTING POINT</h3>
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between">
+                <div class="max-w-xl mb-8 lg:mb-0">
+                    <p class="font-noto-sans-sc ultra-large-text mb-4 text-[#5D8B6F]">
+                        思考
+                    </p>
+                    <p class="text-lg md:text-xl font-medium">
+                        所有真正的学习，都是<span class="highlight-text font-bold">“从问题开始”</span>的。
+                        <br>
+                        笔记不是记录知识，而是记录<span class="font-bold">自己的思考</span>。
+                    </p>
+                </div>
+
+                <div class="flex items-center space-x-4 md:space-x-8">
+                    <div class="text-center">
+                        <div class="stroke-graphic text-4xl mb-2">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <p class="font-noto-sans-sc font-medium">输入 (Input)</p>
+                    </div>
+                    <i class="fas fa-long-arrow-alt-right text-3xl text-gray-500 hidden md:block"></i>
+
+                    <div class="text-center">
+                        <div class="stroke-graphic text-4xl mb-2 bg-white">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <p class="font-noto-sans-sc font-medium text-lg highlight-text font-bold">建构 (Build)</p>
+                    </div>
+
+                    <i class="fas fa-long-arrow-alt-right text-3xl text-gray-500 hidden md:block"></i>
+
+                    <div class="text-center">
+                        <div class="stroke-graphic text-4xl mb-2">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <p class="font-noto-sans-sc font-medium">输出 (Output)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="text-xs uppercase tracking-widest mb-4 text-gray-600 font-semibold">03 / SYSTEMATIC GROWTH</h3>
+            <p class="font-noto-sans-sc ultra-large-text mb-12 text-center">
+                成长闭环
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card card-darker-alt-bg p-6 lg:p-8">
+                    <div class="content-z">
+                        <i class="fas fa-filter text-4xl highlight-text mb-4"></i>
+                        <h4 class="text-xl font-noto-sans-sc font-bold mb-2">输入判断力</h4>
+                        <p class="text-gray-700">知道什么值得学，能筛选出<span class="font-bold">真正有价值</span>的信息。</p>
+                        <p class="text-sm mt-3 text-gray-500">Input Judgment</p>
+                    </div>
+                </div>
+                <div class="card p-6 lg:p-8">
+                    <div class="content-z">
+                        <i class="fas fa-pen-nib text-4xl highlight-text mb-4"></i>
+                        <h4 class="text-xl font-noto-sans-sc font-bold mb-2">输出能力</h4>
+                        <p class="text-gray-700">能把学到的东西转化为<span class="font-bold">语言、文字、表达或行动</span>。</p>
+                        <p class="text-sm mt-3 text-gray-500">Output Capability</p>
+                    </div>
+                </div>
+                <div class="card card-darker-alt-bg p-6 lg:p-8">
+                    <div class="content-z">
+                        <i class="fas fa-sync-alt text-4xl highlight-text mb-4"></i>
+                        <h4 class="text-xl font-noto-sans-sc font-bold mb-2">反馈系统</h4>
+                        <p class="text-gray-700">能实践、能复盘、能修正，<span class="font-bold">不断更新</span>自己的认知。</p>
+                        <p class="text-sm mt-3 text-gray-500">Feedback System</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-lg mt-8 text-gray-700 max-w-3xl mx-auto">
+                当你具备这三项能力，你就不再依赖外界，学习就成为一种<strong class="font-bold highlight-text">本能</strong>。
+            </p>
+        </section>
+
+        <section class="mb-20">
+            <h3 class="text-xs uppercase tracking-widest mb-4 text-gray-600 font-semibold">04 / THE CONCLUSION</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 flex flex-col justify-center">
+                    <p class="font-noto-sans-sc ultra-large-text mb-4 text-[#C19C74]">
+                        深度
+                    </p>
+                    <p class="text-lg md:text-xl font-noto-sans-sc font-medium max-w-xl">
+                        决定你命运的，不是知识的多少，而是<span class="highlight-text font-bold">思考的深度</span>。
+                        <br>
+                        知识不是财富，<span class="font-bold text-[#5D8B6F]">能思考的脑子才是</span>。
+                    </p>
+                </div>
+                <div class="card p-8 lg:p-10 card-darker-alt-bg">
+                    <div class="content-z">
+                        <h4 class="text-2xl font-noto-sans-sc font-extrabold mb-4 highlight-text">高手路径</h4>
+                        <ul class="space-y-3 text-gray-800 text-base">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle list-icon"></i>
+                                <span>不急着学更多</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle list-icon"></i>
+                                <span>关注<span class="font-bold">吸收的深度</span></span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle list-icon"></i>
+                                <span>不断<span class="font-bold">自我提问、拆解、验证</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-12 border-t border-gray-300">
+            <h4 class="text-2xl font-noto-sans-sc font-extrabold mb-2 text-[#3A2E2C]">
+                自驱进化的<span class="highlight-text">超级个体</span>
+            </h4>
+            <p class="text-gray-600 max-w-3xl mx-auto">
+                真正让你进化的，是你在孤独中不断思考的那些瞬间。<br>
+                当你开始大量思考，你将成为一个能自我驱动、持续成长的超级个体。
+            </p>
+            <p class="text-sm mt-4 text-gray-400">© 2025 Ghibli-Inspired Learning Architecture</p>
+        </footer>
+
+    </div>
+
+        <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

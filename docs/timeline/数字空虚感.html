@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字空虚感</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* 用户提供的CSS样式 
+        Ghibli-inspired base styles and Apple Keynote-like card/text effects
+        */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           padding: 2rem 0; /* Vertical padding for full scroll */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s;
+           opacity: 0;
+        }
+        .card:hover .tech-glow::before {
+            opacity: 1; /* Only show glow on hover for a subtle effect */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom Utility for the 'Wireframe' look on the data/icons */
+        .wireframe-icon {
+            border: 2px solid #FFB300; /* Highlight color border */
+            border-radius: 9999px; /* Circle */
+            padding: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 4rem;
+            height: 4rem;
+        }
+
+        /* Responsive Container */
+        .page-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 4rem; /* Standard large screen padding */
+        }
+        @media (max-width: 1024px) {
+            .page-container {
+                padding: 0 2rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .page-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container space-y-24">
+
+    <header class="pt-16">
+        <h1 class="ultra-large-text font-noto-sans-sc text-center mb-6">
+            <span class="highlight-text">数字</span><br>
+            空虚感
+        </h1>
+        <p class="text-3xl font-light text-center mb-4 leading-relaxed max-w-4xl mx-auto">
+            Why do we download so many online courses but rarely finish them? 
+            <br>
+            并非因为我们懒，而是因为这些数字化产品，缺少一种<span class="highlight-text font-bold">能让我们真正投入的动力。</span>
+        </p>
+        <div class="text-center text-sm uppercase opacity-70 tracking-widest mt-8">
+            Conflict: Infinity Supply vs. Human Nature
+        </div>
+    </header>
+
+    <section class="grid lg:grid-cols-2 gap-8">
+        <div class="card card-darker-alt-bg p-8 tech-glow">
+            <div class="content-z">
+                <p class="text-sm uppercase tracking-widest opacity-80 mb-2">The Digital Paradox</p>
+                <h2 class="ultra-large-text font-noto-sans-sc leading-tight mb-4 text-[#4A6C69]">
+                    轻盈<br>
+                    <span class="text-5xl md:text-7xl font-light">无限供给</span>
+                </h2>
+                <p class="text-xl font-medium">
+                    互联网和AI正在创造一个<span class="highlight-text font-bold">无限供给、轻飘飘的虚拟世界</span>，与人类天性存在冲突。
+                </p>
+            </div>
+        </div>
+        <div class="card p-8 tech-glow">
+            <div class="content-z">
+                <p class="text-sm uppercase tracking-widest opacity-80 mb-2">The Human Desire</p>
+                <h2 class="ultra-large-text font-noto-sans-sc leading-tight mb-4 text-[#C19A6B]">
+                    笨重<br>
+                    <span class="text-5xl md:text-7xl font-light">稀缺渴望</span>
+                </h2>
+                <p class="text-xl font-medium">
+                    我们的大脑更习惯于处理那些<span class="highlight-text font-bold">有形的、稀缺的、需要付出努力</span>才能获得的东西。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="space-y-12">
+        <h2 class="ultra-large-text font-noto-sans-sc text-center mb-16">
+            <span class="highlight-text">三大</span>
+            心理魔力
+        </h2>
+
+        <div class="card p-8 grid lg:grid-cols-3 items-center gap-8 tech-glow">
+            <div class="col-span-1 text-center lg:text-left">
+                <div class="wireframe-icon mx-auto lg:mx-0 mb-4">
+                    <i class="fas fa-lock text-3xl text-amber-600"></i>
+                </div>
+                <p class="large-stat-text highlight-stat font-noto-sans-sc">#1</p>
+                <p class="text-lg uppercase tracking-widest opacity-70">The First Principle</p>
+            </div>
+            <div class="col-span-2">
+                <h3 class="text-6xl md:text-7xl font-extrabold font-noto-sans-sc mb-4 leading-tight">
+                    <span class="highlight-text">稀缺性</span>
+                </h3>
+                <p class="text-2xl font-medium">
+                    Scarcity <span class="font-normal opacity-80">是驱动我们行动最原始的动力之一。</span>
+                </p>
+                <blockquote class="mt-4 pl-4 border-l-4 border-amber-400 text-lg italic text-gray-700">
+                    “只有30个名额的线下席位，比随时可买的线上课程，更让你心动。”
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-8 grid lg:grid-cols-3 items-center gap-8 tech-glow">
+            <div class="col-span-1 text-center lg:text-left">
+                <div class="wireframe-icon mx-auto lg:mx-0 mb-4">
+                    <i class="fas fa-users text-3xl text-teal-600"></i>
+                </div>
+                <p class="large-stat-text highlight-stat font-noto-sans-sc text-teal-600">#2</p>
+                <p class="text-lg uppercase tracking-widest opacity-70">The Second Principle</p>
+            </div>
+            <div class="col-span-2">
+                <h3 class="text-6xl md:text-7xl font-extrabold font-noto-sans-sc mb-4 leading-tight">
+                    <span class="text-teal-600">社交欲</span>
+                </h3>
+                <p class="text-2xl font-medium">
+                    Social Connection <span class="font-normal opacity-80">满足我们对归属感的深层需求。</span>
+                </p>
+                <blockquote class="mt-4 pl-4 border-l-4 border-teal-400 text-lg italic text-gray-700">
+                    “面对面的、有温度的链接，催生‘我们是自己人’的感受。”
+                </blockquote>
+            </div>
+        </div>
+
+        <div class="card p-8 grid lg:grid-cols-3 items-center gap-8 tech-glow">
+            <div class="col-span-1 text-center lg:text-left">
+                <div class="wireframe-icon mx-auto lg:mx-0 mb-4">
+                    <i class="fas fa-box-archive text-3xl text-red-600"></i>
+                </div>
+                <p class="large-stat-text highlight-stat font-noto-sans-sc text-red-600">#3</p>
+                <p class="text-lg uppercase tracking-widest opacity-70">The Third Principle</p>
+            </div>
+            <div class="col-span-2">
+                <h3 class="text-6xl md:text-7xl font-extrabold font-noto-sans-sc mb-4 leading-tight">
+                    <span class="text-red-600">拥有感</span>
+                </h3>
+                <p class="text-2xl font-medium">
+                    Possession <span class="font-normal opacity-80">通过双重投入产生强烈的“我拥有它”感觉。</span>
+                </p>
+                <blockquote class="mt-4 pl-4 border-l-4 border-red-400 text-lg italic text-gray-700">
+                    “一个沉甸甸的实体手册，比硬盘里的一行代码，让你更愿意吸收内容。”
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section class="space-y-12 pb-16">
+        <h2 class="ultra-large-text font-noto-sans-sc text-center mb-16">
+            <span class="highlight-text">四步</span>
+            实践逻辑
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-search-location list-icon text-2xl"></i>
+                        <h4 class="text-xl font-bold font-noto-sans-sc ml-2">第一步：定位空虚</h4>
+                    </div>
+                    <p class="text-sm uppercase opacity-70 mb-3">Find the Void</p>
+                    <p class="font-medium">
+                        寻找人们<span class="highlight-text">获取大量信息但内心仍不满足</span>的场景，比如“看了无数健身视频，却依然无法坚持”。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-6 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-campground list-icon text-2xl text-[#4A6C69]"></i>
+                        <h4 class="text-xl font-bold font-noto-sans-sc ml-2 text-[#4A6C69]">第二步：设计仪式感</h4>
+                    </div>
+                    <p class="text-sm uppercase opacity-70 mb-3">Design the Ritual</p>
+                    <p class="font-medium">
+                        将线下活动设计成<span class="text-[#4A6C69] font-bold">有开始、过程、结束的仪式</span>，如两天的“烧烤营”，共同完成任务。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-handshake list-icon text-2xl"></i>
+                        <h4 class="text-xl font-bold font-noto-sans-sc ml-2">第三步：促成认同</h4>
+                    </div>
+                    <p class="text-sm uppercase opacity-70 mb-3">Cultivate Belonging</p>
+                    <p class="font-medium">
+                        <span class="highlight-text">私下邀请种子用户</span>，赋予他们“创始成员”的身份，激发参与感和忠诚度。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-6 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-ticket-alt list-icon text-2xl text-[#4A6C69]"></i>
+                        <h4 class="text-xl font-bold font-noto-sans-sc ml-2 text-[#4A6C69]">第四步：专属机会</h4>
+                    </div>
+                    <p class="text-sm uppercase opacity-70 mb-3">Offer Exclusivity</p>
+                    <p class="font-medium">
+                        使用“<span class="text-[#4A6C69] font-bold">开放专属席位</span>”的语言，将交易转变为邀请，改变整件事的性质。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="text-center py-16 border-t border-gray-300 border-opacity-50">
+        <h2 class="text-5xl font-extrabold font-noto-sans-sc mb-4 leading-tight">
+            更深刻的<span class="text-pink-600">体验</span>
+        </h2>
+        <p class="text-xl font-light max-w-3xl mx-auto opacity-90">
+            In an era of infinite AI replication, what we truly lack is the <span class="highlight-text font-bold">deeper experience.</span>
+        </p>
+        <p class="text-lg mt-2 opacity-60 italic">
+            这些体验很麻烦，但它能回应我们内心最真实的渴望。
+        </p>
+    </footer>
+
+</div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
