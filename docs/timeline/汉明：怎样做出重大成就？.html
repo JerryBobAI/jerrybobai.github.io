@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉明：怎样做出重大成就？</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* CSS 样式严格参考用户提供的实现方式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不影响点击 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 响应式调整大屏布局 */
+        @media (min-width: 1920px) {
+            .container-xl {
+                max-width: 1920px; /* 1920px及以上居中内容 */
+                width: 85%;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<div class="container-xl mx-auto px-4 py-16 space-y-24">
+
+    <header class="text-center mb-16 pt-12">
+        <p class="text-xl md:text-2xl font-open-sans text-gray-600 mb-4 tracking-wider">RICHARD W. HAMMING</p>
+        <h1 class="font-noto-sans-sc ultra-large-text text-left md:text-center mx-auto max-w-5xl">
+            <span class="highlight-text block">找到一件大事。</span>
+            <span class="block mt-4">方向恒定。</span>
+        </h1>
+        <p class="text-3xl md:text-4xl font-noto-sans-sc font-light mt-8 tracking-wide max-w-4xl mx-auto">
+            图灵奖得主汉明：怎样做出<span class="highlight-text">重大成就</span>？
+        </p>
+        <p class="text-lg font-open-sans italic text-gray-500 mt-4">
+            — From "You and Your Research" (1986)
+        </p>
+    </header>
+
+    <section class="grid lg:grid-cols-3 gap-8">
+        <div class="card card-darker-alt-bg p-8 lg:col-span-2 tech-glow">
+            <div class="content-z">
+                <p class="text-lg font-open-sans mb-2 tracking-widest text-blue-800/80">CORE MINDSET</p>
+                <h2 class="text-5xl md:text-6xl font-noto-sans-sc font-bold mb-6 leading-tight">
+                    <span class="highlight-stat">志向</span> 与 <span class="highlight-stat">勇气</span>
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-2xl font-noto-sans-sc font-semibold mb-3 flex items-start">
+                            <i class="fas fa-mountain list-icon pt-1"></i>
+                            挑战重要问题
+                        </p>
+                        <p class="text-lg ml-8 text-gray-700">
+                            树立做大事的志向，<span class="font-bold">勇于挑战</span>那些影响深远、根本性的问题。
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-noto-sans-sc font-semibold mb-3 flex items-start">
+                            <i class="fas fa-balance-scale list-icon pt-1"></i>
+                            平衡与容忍
+                        </p>
+                        <p class="text-lg ml-8 text-gray-700">
+                            在自信与怀疑间保持平衡，并容忍研究中的<span class="font-bold">不确定性</span>。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card p-8 flex flex-col justify-center items-center">
+            <p class="text-lg font-open-sans mb-4 text-gray-500">A VISION FOR EXCELLENCE</p>
+            <p class="highlight-stat large-stat-text font-open-sans">
+                <span id="stat-goal" class="font-extrabold">10</span>X
+            </p>
+            <p class="text-2xl font-noto-sans-sc font-light text-center mt-2">
+                追求超越<span class="font-semibold">十倍</span>的成果
+            </p>
+        </div>
+    </section>
+
+    <section class="grid lg:grid-cols-3 gap-8">
+        <div class="card p-8 lg:col-span-2">
+            <div class="content-z">
+                <p class="text-lg font-open-sans mb-2 tracking-widest text-gray-500">WORK STRATEGY</p>
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-8">
+                    持续思考，<span class="highlight-text">高效积累</span>
+                </h2>
+                
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <i class="fas fa-bullseye list-icon mt-1 text-2xl"></i>
+                        <p class="text-xl font-noto-sans-sc font-semibold">专注研究重要问题</p>
+                        <p class="text-gray-700 ml-4 hidden md:inline-block">— 保持恒定的方向，随时准备投入。</p>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-door-open list-icon mt-1 text-2xl"></i>
+                        <p class="text-xl font-noto-sans-sc font-semibold">保持开放交流</p>
+                        <p class="text-gray-700 ml-4 hidden md:inline-block">— 敞开办公室门，把握领域前沿动向。</p>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-layer-group list-icon mt-1 text-2xl"></i>
+                        <p class="text-xl font-noto-sans-sc font-semibold">成为他人的基石</p>
+                        <p class="text-gray-700 ml-4 hidden md:inline-block">— 确保你的工作能促进知识的积累与进步。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card card-alt-bg p-8 flex flex-col justify-center items-center">
+            <div class="w-full h-4 flex justify-center items-center p-4">
+            </div>
+            <p class="text-lg font-noto-sans-sc font-light text-center mt-4">
+                解决重要问题，<br/>成果价值将<span class="font-semibold">指数级</span>增长。
+            </p>
+        </div>
+    </section>
+
+    <section class="text-center pt-12 pb-16">
+        <h2 class="text-5xl md:text-7xl font-noto-sans-sc font-black mb-12 max-w-6xl mx-auto leading-tight">
+            汉明的<span class="highlight-text">路灯与钥匙</span> 比喻
+        </h2>
+        
+        <div class="grid lg:grid-cols-5 gap-8 items-stretch">
+            <div class="card card-darker-alt-bg p-8 lg:col-span-2 flex flex-col justify-center tech-glow">
+                <p class="font-open-sans text-9xl md:text-[12rem] font-black highlight-stat leading-none">
+                    1.
+                </p>
+                <p class="text-3xl md:text-4xl font-noto-sans-sc font-extrabold mt-4 mb-2">
+                    便利驱动的陷阱
+                </p>
+                <p class="text-xl font-noto-sans-sc text-gray-700">
+                    在“路灯下”寻找：只在<span class="font-bold">有光、方便</span>的地方做研究，而非问题所在。
+                </p>
+            </div>
+
+            <div class="card p-8 lg:col-span-3 flex flex-col justify-center">
+                <p class="font-open-sans text-9xl md:text-[12rem] font-black highlight-stat leading-none text-right">
+                    2.
+                </p>
+                <h3 class="text-4xl md:text-5xl font-noto-sans-sc font-extrabold mt-4 mb-4 text-left">
+                    离开舒适区：走进<span class="highlight-text">黑暗的公园</span>
+                </h3>
+                
+                <blockquote class="text-2xl italic font-light font-noto-sans-sc border-l-4 border-amber-500 pl-4 py-2 text-left text-gray-800">
+                    “你为什么在这里找？” 醉汉答道：“因为这里有光啊。”
+                </blockquote>
+                
+                <div class="mt-6 text-left space-y-3">
+                    <p class="text-xl font-noto-sans-sc">
+                        <i class="fas fa-lightbulb list-icon text-xl"></i>
+                        <span class="font-bold">核心思想：</span>由<span class="font-extrabold text-red-600/70">问题驱动</span>，而非<span class="font-extrabold text-red-600/70">方法驱动</span>。
+                    </p>
+                    <p class="text-xl font-noto-sans-sc">
+                        <i class="fas fa-key list-icon text-xl"></i>
+                        <span class="font-bold">影响力：</span>真正的钥匙在“公园”里，能开启<span class="font-extrabold">全新大门</span>。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center pt-16 pb-24">
+        <p class="text-2xl font-noto-sans-sc font-light max-w-4xl mx-auto text-gray-600">
+            伟大的研究需要<span class="font-bold highlight-text">战略眼光</span>与非凡的<span class="font-bold highlight-text">勇气</span>，去直面真正棘手的挑战。
+        </p>
+    </footer>
+
+</div>
+
+<script>
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    const statGoal = document.getElementById("stat-goal");
+    
+    // Animate stat on scroll into view
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!entry.target.classList.contains('animated')) {
+             animateValue(entry.target, 0, 10, 1500);
+             entry.target.classList.add('animated');
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // Trigger when 50% of the element is visible
+    
+    observer.observe(statGoal);
+</script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

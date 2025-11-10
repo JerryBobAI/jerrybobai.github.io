@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>思维的合伙人：AI工具浪潮</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* Subtle Hand-drawn Texture/Pattern */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* Custom Glow - Enhanced for Ghibli Yellow */
+        .tech-glow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Ensure it doesn't block clicks */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        /* Ultra Large Text - clamp for responsiveness */
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); 
+           font-weight: 900; 
+           line-height: 1;
+        }
+        /* Large Stat Text */
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); 
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; 
+           margin-right: 0.5rem; 
+        }
+        /* Tailwind configuration for custom colors/spacing if needed */
+        .container-xl {
+            max-width: 1920px;
+        }
+        /* Tailwind custom utility class for text stroke (outline style) */
+        .text-outline {
+            text-shadow: 
+                -1px -1px 0 #3A2E2C,  
+                 1px -1px 0 #3A2E2C,
+                -1px  1px 0 #3A2E2C,
+                 1px  1px 0 #3A2E2C; 
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="container container-xl mx-auto space-y-24 pt-8 pb-16">
+
+        <header class="text-center space-y-4 pt-10 pb-16">
+            <p class="text-lg md:text-xl font-medium tracking-widest text-gray-600 uppercase">Ghibli × Apple Keynote</p>
+            <h1 class="font-noto-sans-sc ultra-large-text text-amber-700 mx-auto max-w-7xl">
+                <span class="highlight-text">思维</span>的合伙人
+            </h1>
+            <p class="text-2xl md:text-3xl font-light max-w-4xl mx-auto mt-6">
+                “我们从不是在制造工具，而是在制造思维的延伸。”
+                <br><span class="text-lg text-gray-500 font-normal italic">— A New Paradigm for AI Collaboration</span>
+            </p>
+            <hr class="w-1/3 mx-auto mt-8 border-t border-amber-300 opacity-50">
+        </header>
+
+        <section class="space-y-16">
+            
+            <div class="grid lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-4 space-y-4">
+                    <p class="text-3xl font-medium tracking-wider text-gray-600">💻 第一幕：AI工具的</p>
+                    <div class="flex items-baseline space-x-2">
+                         <span class="ultra-large-text highlight-stat font-noto-sans-sc leading-none">3</span>
+                         <span class="text-4xl md:text-6xl font-black font-noto-sans-sc">大权力</span>
+                    </div>
+                    <p class="text-xl text-gray-700">
+                        从对人类心智施加的“权力”划分，AI可被清晰归为三大基础类型，它们构成了我们工作的核心。
+                    </p>
+                </div>
+                <div class="lg:col-span-8">
+                    <div class="flex flex-col md:flex-row justify-around items-stretch h-full space-y-6 md:space-y-0 md:space-x-6">
+                        <div class="flex-1 card p-6 text-center shadow-lg border-b-4 border-amber-400">
+                            <i class="fa-solid fa-brain text-5xl highlight-text mb-3"></i>
+                            <h3 class="text-xl font-bold font-noto-sans-sc">信息处理</h3>
+                            <p class="text-sm mt-1 text-gray-600">Knowledge Shapers</p>
+                        </div>
+                        <div class="flex-1 card p-6 text-center shadow-lg border-b-4 border-green-400">
+                            <i class="fa-solid fa-palette text-5xl text-green-600 mb-3"></i>
+                            <h3 class="text-xl font-bold font-noto-sans-sc">创造表达</h3>
+                            <p class="text-sm mt-1 text-gray-600">Generative Artists</p>
+                        </div>
+                        <div class="flex-1 card p-6 text-center shadow-lg border-b-4 border-blue-400">
+                            <i class="fa-solid fa-cogs text-5xl text-blue-600 mb-3"></i>
+                            <h3 class="text-xl font-bold font-noto-sans-sc">行动执行</h3>
+                            <p class="text-sm mt-1 text-gray-600">Automation Agents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10 items-start card card-alt-bg tech-glow p-8">
+                <div class="content-z space-y-4">
+                    <p class="text-5xl font-extrabold font-noto-sans-sc highlight-stat">权力一：</p>
+                    <h2 class="text-6xl font-black font-noto-sans-sc leading-tight">信息的炼金术师</h2>
+                    <p class="text-2xl font-light text-gray-700 italic">The Knowledge Shapers</p>
+                    <blockquote class="border-l-4 border-amber-500 pl-4 text-xl mt-4">
+                        这类AI的本质是<strong class="highlight-text">“理解和重构”</strong>。它们把“阅读”变成了<strong class="highlight-text">“洞察”</strong>。
+                    </blockquote>
+                </div>
+                <div class="content-z space-y-6">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc text-amber-800">核心功能：</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li><i class="fa-solid fa-file-contract list-icon"></i>总结、提炼与跨文献的关联</li>
+                        <li><i class="fa-solid fa-language list-icon"></i>复杂的专业翻译与术语统一</li>
+                        <li><i class="fa-solid fa-search list-icon"></i>发现报告中隐藏的共性与矛盾点</li>
+                    </ul>
+                    <h3 class="text-2xl font-bold font-noto-sans-sc text-amber-800 pt-4">日常结合：</h3>
+                    <p class="text-lg">AI能为你生成一份<strong class="font-bold">“基于多源的策略建议”</strong>，而非简单缩短20份行业报告。</p>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10 items-start card card-darker-alt-bg p-8">
+                 <div class="content-z space-y-6 order-2 lg:order-1">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc text-blue-800">核心功能：</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li><i class="fa-solid fa-pencil list-icon text-blue-600"></i>文本、代码的<strong class="font-bold">高效率初稿生成</strong></li>
+                        <li><i class="fa-solid fa-image list-icon text-blue-600"></i>根据情绪基调的图像合成与编辑</li>
+                        <li><i class="fa-solid fa-music list-icon text-blue-600"></i>音频制作与概念具象化</li>
+                    </ul>
+                    <h3 class="text-2xl font-bold font-noto-sans-sc text-blue-800 pt-4">日常结合：</h3>
+                    <p class="text-lg">将你脑海中抽象的<strong class="font-bold">“感觉”</strong>（如：紧张、创新）直接物化为具有专业质感的演示配图。</p>
+                </div>
+                <div class="content-z space-y-4 order-1 lg:order-2">
+                    <p class="text-5xl font-extrabold font-noto-sans-sc text-blue-600">权力二：</p>
+                    <h2 class="text-6xl font-black font-noto-sans-sc leading-tight">表达的交响乐团</h2>
+                    <p class="text-2xl font-light text-gray-700 italic">The Generative Artists</p>
+                    <blockquote class="border-l-4 border-blue-500 pl-4 text-xl mt-4">
+                        这类AI的本质是<strong class="text-blue-600">“想象和创造”</strong>。它们打破了人类在表达形式上的<strong class="text-blue-600">生产力瓶颈</strong>。
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10 items-start card card-alt-bg tech-glow p-8">
+                <div class="content-z space-y-4">
+                    <p class="text-5xl font-extrabold font-noto-sans-sc highlight-stat">权力三：</p>
+                    <h2 class="text-6xl font-black font-noto-sans-sc leading-tight">行动的执行长</h2>
+                    <p class="text-2xl font-light text-gray-700 italic">The Automation Agents</p>
+                    <blockquote class="border-l-4 border-amber-500 pl-4 text-xl mt-4">
+                        这类AI的本质是<strong class="highlight-text">“链接和执行”</strong>。它们让<strong class="highlight-text">“工作流”有了生命</strong>。
+                    </blockquote>
+                </div>
+                <div class="content-z space-y-6">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc text-amber-800">核心功能：</h3>
+                    <ul class="space-y-3 text-lg">
+                        <li><i class="fa-solid fa-robot list-icon"></i>自动化流程与跨应用连接 (API)</li>
+                        <li><i class="fa-solid fa-chart-line list-icon"></i>实时数据监控与反馈</li>
+                        <li><i class="fa-solid fa-handshake list-icon"></i>接管重复性、高频率任务</li>
+                    </ul>
+                    <h3 class="text-2xl font-bold font-noto-sans-sc text-amber-800 pt-4">日常结合：</h3>
+                    <p class="text-lg">收到“紧急”邮件时，AI能<strong class="font-bold">立即分析情绪、创建高优先级任务</strong>，并自动分配给同事。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-16 pt-16">
+            <header class="text-center space-y-2">
+                <h2 class="font-noto-sans-sc text-7xl font-black leading-tight text-amber-800">
+                    驾驭AI：<span class="highlight-text">从“使用”到“驱动”</span>
+                </h2>
+                <p class="text-2xl font-light text-gray-700">🛠️ 第二幕：思维从独立工具转向<strong class="highlight-text">“集成系统”</strong></p>
+            </header>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                
+                <div class="card p-6 md:p-8 space-y-4 border-t-4 border-green-500">
+                    <i class="fa-solid fa-link text-4xl text-green-600"></i>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc">深度融合：打破壁垒</h3>
+                    <p class="text-base text-gray-700">核心价值在于工具能彼此<strong class="font-bold">通话</strong>。我们应主动寻找拥有强大集成能力的AI，使其成为连接工作环节的“胶水”，无需手动复制粘贴。</p>
+                    <p class="text-sm font-light italic text-gray-500">Integration over Isolation</p>
+                </div>
+
+                <div class="card p-6 md:p-8 space-y-4 border-t-4 border-amber-500 tech-glow">
+                    <i class="fa-solid fa-comments text-4xl highlight-text"></i>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc">提问的艺术：Prompt</h3>
+                    <p class="text-base text-gray-700">AI的力量取决于<strong class="font-bold">问题的质量</strong>。一个好的Prompt应包含：角色定位、明确目标、约束条件（格式/语气）和参考案例。</p>
+                    <p class="text-sm font-light italic text-gray-500">Master the Question</p>
+                </div>
+
+                <div class="card p-6 md:p-8 space-y-4 border-t-4 border-red-500">
+                    <i class="fa-solid fa-graduation-cap text-4xl text-red-600"></i>
+                    <h3 class="text-3xl font-bold font-noto-sans-sc">专业知识与AI的融合</h3>
+                    <p class="text-base text-gray-700">AI是通识大师，但却是专业学徒。喂养它你的<strong class="font-bold">“专长”</strong>（项目文档、客户反馈），使其成为<strong class="font-bold">“你”的数字分身</strong>。</p>
+                    <p class="text-sm font-light italic text-gray-500">Specialization Multiplier</p>
+                </div>
+            </div>
+
+            <div class="card p-8 md:p-12 card-alt-bg mt-16">
+                 <h3 class="text-3xl font-extrabold font-noto-sans-sc text-center mb-6 text-amber-800">🎨 Prompt工程的勾线图形化拆解</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+                    <div class="border-2 border-amber-400 p-4 rounded-xl space-y-2">
+                        <i class="fa-solid fa-user-tie text-4xl highlight-text"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">角色定位</p>
+                        <p class="text-sm text-gray-600">Act as a 10-year veteran...</p>
+                    </div>
+                    <div class="border-2 border-amber-400 p-4 rounded-xl space-y-2">
+                        <i class="fa-solid fa-bullseye text-4xl highlight-text"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">明确目标</p>
+                        <p class="text-sm text-gray-600">Write a project proposal...</p>
+                    </div>
+                    <div class="border-2 border-amber-400 p-4 rounded-xl space-y-2">
+                        <i class="fa-solid fa-ban text-4xl highlight-text"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">约束条件</p>
+                        <p class="text-sm text-gray-600">Tone: authoritative, End with 3 points.</p>
+                    </div>
+                    <div class="border-2 border-amber-400 p-4 rounded-xl space-y-2">
+                        <i class="fa-solid fa-book-open text-4xl highlight-text"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc">参考案例</p>
+                        <p class="text-sm text-gray-600">Based on attached report...</p>
+                    </div>
+                 </div>
+            </div>
+
+        </section>
+
+        <footer class="pt-20 text-center space-y-6">
+            <div class="flex items-center justify-center space-x-4">
+                <span class="text-6xl font-extrabold font-noto-sans-sc highlight-stat leading-none">AI <i class="fa-solid fa-arrow-right-long text-5xl align-top"></i></span>
+                <p class="ultra-large-text font-noto-sans-sc text-amber-700 max-w-4xl leading-tight">
+                    认知杠杆
+                </p>
+            </div>
+            
+            <p class="text-xl md:text-2xl font-light max-w-5xl mx-auto italic text-gray-700">
+                “所有的回报都来自复利。” 与AI的合作，将你的专业知识和执行效率进行<strong class="highlight-text">指数级放大</strong>。
+            </p>
+            
+            <h3 class="text-3xl font-black font-noto-sans-sc pt-10 text-amber-800">核心原则：赋能日常工作</h3>
+            <ul class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 text-left pt-4">
+                <li class="card p-4 flex items-start space-x-3">
+                    <i class="fa-solid fa-magnifying-glass list-icon mt-1"></i>
+                    <p class="text-lg"><strong class="font-bold">追求“认知杠杆”：</strong>优先采用能放大你<strong class="highlight-text">思考深度和决策质量</strong>的AI。</p>
+                </li>
+                <li class="card p-4 flex items-start space-x-3">
+                    <i class="fa-solid fa-user-astronaut list-icon mt-1"></i>
+                    <p class="text-lg"><strong class="font-bold">训练AI成为“你”：</strong>输入你独有的“专长”，使其成为你<strong class="highlight-text">专业经验的放大器</strong>。</p>
+                </li>
+                <li class="card p-4 flex items-start space-x-3">
+                    <i class="fa-solid fa-feather-pointed list-icon mt-1"></i>
+                    <p class="text-lg"><strong class="font-bold">拥抱“提问的艺术”：</strong>投入时间学习<strong class="highlight-text">精确、有约束、有角色代入</strong>的Prompt。</p>
+                </li>
+                <li class="card p-4 flex items-start space-x-3">
+                    <i class="fa-solid fa-route list-icon mt-1"></i>
+                    <p class="text-lg"><strong class="font-bold">打破工作流壁垒：</strong>寻找高度集成和<strong class="highlight-text">自动执行的Agent型AI</strong>。</p>
+                </li>
+            </ul>
+
+            <div class="pt-10">
+                <p class="text-xl font-medium text-amber-700">Webpage Design by Gemini. Inspired by Studio Ghibli & Apple.</p>
+            </div>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

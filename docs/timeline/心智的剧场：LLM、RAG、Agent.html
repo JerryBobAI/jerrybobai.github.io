@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心智的剧场：LLM、RAG、Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <style>
+        /* 核心自定义 CSS 样式 - 严格遵循您的要求 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s;
+           opacity: 0.7; /* 默认可见性 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* 勾线图形化容器样式 */
+        .sketch-box {
+            border: 3px solid #3A2E2C;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            position: relative;
+            background: transparent;
+        }
+
+        /* 响应式调整大容器最大宽度 */
+        .container-xl {
+            max-width: 1920px;
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16">
+
+    <div class="container-xl mx-auto mb-20 md:mb-32">
+        <h1 class="ultra-large-text font-noto-sans-sc text-center mb-4">
+            心智的剧场
+        </h1>
+        <p class="text-3xl md:text-5xl font-light text-center mb-10 md:mb-16">
+            LLM, RAG, Agent: <span class="highlight-text font-semibold">从术语到角色</span>
+        </p>
+        
+        <div class="card p-8 md:p-12 lg:p-16 tech-glow">
+            <div class="content-z">
+                <h2 class="text-4xl md:text-6xl font-noto-sans-sc font-extrabold mb-4">
+                    🌙 此刻的意图之线
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-700">
+                    屏幕上，三个冰冷的术语横在那里。我想要的不是信息，而是赋予它们灵魂，让它们成为可以对话的角色，就像为一出舞台剧，寻找三位气质迥异的主演。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 mb-20 md:mb-32">
+        <div class="lg:col-span-1 flex flex-col justify-start">
+            <p class="large-stat-text font-noto-sans-sc highlight-stat leading-none">
+                <i class="fa-solid fa-water list-icon"></i> 1
+            </p>
+            <p class="text-lg uppercase tracking-widest text-gray-500 mb-6">
+                The River of Language
+            </p>
+            <p class="text-2xl font-noto-sans-sc font-medium">
+                它是一切的起点，庞大、无边，充满了可能性与幻觉。
+            </p>
+        </div>
+
+        <div class="lg:col-span-2 card p-8 tech-glow card-alt-bg">
+            <div class="content-z">
+                <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-4">
+                    🛶 LLM：无边的语言之河
+                </h3>
+                <p class="text-xl mb-6">
+                    我的第一个指令是“写一封致未来的情书”，它立刻交出了几千个版本，华丽、空洞，或带着不必要的哀愁。
+                </p>
+                <div class="sketch-box mt-6">
+                    <p class="text-lg font-mono text-center">
+                        // 角色定位：天赋极高、但需要约束的年轻演员。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 mb-20 md:mb-32">
+        
+        <div class="card p-8 tech-glow">
+            <div class="content-z">
+                <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-4 highlight-text">
+                    🧭 RAG：河上的摆渡人
+                </h3>
+                <p class="text-xl mb-6">
+                    河里泥沙太多，我需要确切的知识。RAG（检索增强生成）不像LLM那样天马行空，它更像一位严肃的摆渡人。
+                </p>
+                <p class="text-2xl font-noto-sans-sc font-semibold mt-4">
+                    “去告诉我，古希腊人如何看待时间。”
+                </p>
+                <p class="text-lg text-gray-600 mt-2">
+                    它不再是靠“猜”，而是静静地靠岸，从确切的文本中捧出一捧清晰的水。
+                </p>
+            </div>
+        </div>
+
+        <div class="flex flex-col justify-center items-center p-8 card-darker-alt-bg">
+            <i class="fa-solid fa-anchor large-stat-text highlight-stat"></i>
+            <p class="text-4xl font-noto-sans-sc font-black mt-4">
+                解决信任危机
+            </p>
+            <p class="text-lg uppercase tracking-wider text-gray-500 mt-1">
+                Grounded Truth
+            </p>
+        </div>
+    </div>
+
+    <div class="container-xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10 mb-20 md:mb-32">
+        <div class="lg:col-span-1 flex flex-col justify-start">
+             <p class="large-stat-text font-noto-sans-sc highlight-stat leading-none">
+                <i class="fa-solid fa-hat-cowboy list-icon"></i> 3
+            </p>
+            <p class="text-lg uppercase tracking-widest text-gray-500 mb-6">
+                The Director's Role
+            </p>
+            <p class="text-2xl font-noto-sans-sc font-medium">
+                真正让这场戏成立的，是流程、是编排、是“做”的能力。
+            </p>
+        </div>
+        
+        <div class="lg:col-span-2 card p-8 tech-glow card-alt-bg">
+            <div class="content-z">
+                <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-4">
+                    🎭 Agent：排练的导演
+                </h3>
+                <p class="text-xl mb-6">
+                    我的意图开始复杂：分析五篇论文，总结叙事结构差异。这是一个多步骤、有逻辑的流程。
+                </p>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center text-center mt-6">
+                    <div class="sketch-box flex-1 mx-2 mb-4 md:mb-0">检索 <i class="fa-solid fa-magnifying-glass list-icon"></i> (RAG)</div>
+                    <i class="fa-solid fa-arrow-right text-2xl mx-2 hidden md:block"></i>
+                    <div class="sketch-box flex-1 mx-2 mb-4 md:mb-0">阅读分析 <i class="fa-solid fa-book-open list-icon"></i> (LLM)</div>
+                    <i class="fa-solid fa-arrow-right text-2xl mx-2 hidden md:block"></i>
+                    <div class="sketch-box flex-1 mx-2">编排剧本 <i class="fa-solid fa-drafting-compass list-icon"></i> (Output)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xl mx-auto mb-20 md:mb-32">
+        <h2 class="ultra-large-text font-noto-sans-sc text-center highlight-stat mb-10">
+            5 个顿悟
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            
+            <div class="lg:col-span-2 card p-6 tech-glow flex flex-col justify-center">
+                <h4 class="text-2xl font-noto-sans-sc font-bold mb-2">潜能而非事实</h4>
+                <p class="text-lg">LLM的价值在于潜能，而非最终的事实。</p>
+            </div>
+            
+            <div class="lg:col-span-1 card p-6 card-alt-bg flex flex-col justify-center">
+                <h4 class="text-2xl font-noto-sans-sc font-bold mb-2">落脚点</h4>
+                <p class="text-lg">RAG解决了信任危机，让语言有了确切的落脚点。</p>
+            </div>
+            
+            <div class="lg:col-span-2 card p-6 tech-glow flex flex-col justify-center">
+                <h4 class="text-2xl font-noto-sans-sc font-bold mb-2">心智带宽</h4>
+                <p class="text-lg">Agent让复杂任务得以分解，它释放了我的心智带宽。</p>
+            </div>
+            
+             <div class="md:col-span-2 lg:col-span-3 card p-6 card-darker-alt-bg flex flex-col justify-center">
+                <h4 class="text-2xl font-noto-sans-sc font-bold mb-2">喂养逻辑</h4>
+                <p class="text-lg">我真正需要喂给它的，不是知识，而是逻辑和流程。</p>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-2 card p-6 tech-glow flex flex-col justify-center">
+                <h4 class="text-2xl font-noto-sans-sc font-bold mb-2 highlight-text">心智的剧场</h4>
+                <p class="text-lg">它们共同创造的，是一个全新的“心智的剧场”。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-xl mx-auto mb-20 md:mb-32">
+        <div class="card p-8 md:p-12 lg:p-16 tech-glow card-alt-bg">
+            <div class="content-z text-center">
+                <h2 class="text-4xl md:text-6xl font-noto-sans-sc font-extrabold mb-4">
+                    🪞 我的尽头是理解
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-700 mx-auto max-w-4xl mb-6">
+                    我的工作，从“制造文字”转移到了 <span class="highlight-text font-bold">“清晰地提出问题”</span>。理解这三者，不是为了技术，而是为了让我们在知识之河中，找到自己的摆渡人，成为自己心智剧场的导演。
+                </p>
+                <p class="text-lg uppercase tracking-widest text-gray-600">
+                    Clarity of Intent.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for simple interactivity (optional)
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("网页加载完成：吉卜力的心智剧场");
+            // Placeholder for chart component initialization if needed,
+            // e.g., using a library like Chart.js which would need CDN import.
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

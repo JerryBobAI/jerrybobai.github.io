@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天道 | 觉醒之路：救世主与众生的文化密码</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           padding-top: 2rem; /* 顶部留白 */
+           padding-bottom: 2rem; /* 底部留白 */
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不影响点击事件 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1.1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom Utility for Max Width 1920px Center Alignment */
+        .container-xl-g {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 勾线图形化 - 简单CSS实现一个圆形流程图节点 */
+        .outline-circle {
+            width: 3rem;
+            height: 3rem;
+            border: 4px solid #3A2E2C;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3A2E2C;
+            margin: 0 auto 0.5rem;
+        }
+
+        /* 数据图表占位符样式 */
+        .chart-placeholder {
+            min-height: 250px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 2px dashed #D2B48C; /* 浅棕色虚线 */
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3A2E2C;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body class="container-xl-g p-4 lg:p-8">
+
+    <section class="mb-16">
+        <h1 class="font-noto-sans-sc ultra-large-text text-center highlight-text leading-none">
+            天道
+        </h1>
+        <h2 class="text-3xl lg:text-5xl font-extrabold text-center mt-4">
+            <span class="font-noto-sans-sc">觉醒之路：</span><span class="highlight-text">文化属性</span><span class="font-noto-sans-sc">的必然</span>
+        </h2>
+        <p class="text-lg lg:text-xl text-center mt-6 max-w-4xl mx-auto opacity-80">
+            <span class="font-noto-sans-sc">世人皆言“天道酬勤”，然《天道》以近乎残忍的清醒，直指人生的底层逻辑：<br/></span>
+            <span class="font-bold highlight-text">贫穷的本质，是等、靠、要的“救世主”文化结构。</span>
+        </p>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="card card-darker-alt-bg tech-glow">
+            <div class="content-z">
+                <p class="text-sm uppercase tracking-widest opacity-70">Weak Culture</p>
+                <h3 class="large-stat-text font-noto-sans-sc highlight-text mt-1">
+                    等 靠 要
+                </h3>
+                <h4 class="text-2xl font-bold mt-4 font-noto-sans-sc">弱势文化：忍受痛苦</h4>
+                <p class="mt-3 text-lg opacity-90">
+                    寄希望于外力、依赖强者、期待救赎、相信运气。核心是“忍受痛苦”，而不是“解决问题”。习惯扮演“受害者”或“跟随者”。
+                </p>
+                <ul class="mt-4 space-y-2 text-md">
+                    <li class="flex items-start"><i class="fas fa-hand-holding-heart list-icon mt-1"></i><span class="font-noto-sans-sc">依赖：期待“天降馅饼”</span></li>
+                    <li class="flex items-start"><i class="fas fa-undo-alt list-icon mt-1"></i><span class="font-noto-sans-sc">循环：固守既定结构</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card card-darker-alt-bg tech-glow">
+            <div class="content-z">
+                <p class="text-sm uppercase tracking-widest opacity-70">Strong Culture</p>
+                <h3 class="large-stat-text font-noto-sans-sc highlight-text mt-1">
+                    不 唯 是
+                </h3>
+                <h4 class="text-2xl font-bold mt-4 font-noto-sans-sc">强势文化：实事求是</h4>
+                <p class="mt-3 text-lg opacity-90">
+                    独立思考、独立判断、不依附、不盲从。核心是“实事求是”。只利用规律，不期待奇迹，是规律的践行者。
+                </p>
+                <ul class="mt-4 space-y-2 text-md">
+                    <li class="flex items-start"><i class="fas fa-brain list-icon mt-1"></i><span class="font-noto-sans-sc">独立：对自身命运绝对负责</span></li>
+                    <li class="flex items-start"><i class="fas fa-cogs list-icon mt-1"></i><span class="font-noto-sans-sc">运作：精密的因果运算者</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-16">
+        <h3 class="text-4xl lg:text-6xl font-extrabold text-center mb-6 font-noto-sans-sc">
+            <span class="highlight-text">格律诗：</span><span class="font-noto-sans-sc">扶贫神话的社会解剖</span>
+        </h3>
+        <p class="text-xl text-center max-w-3xl mx-auto mb-10 opacity-80">
+            <span class="font-noto-sans-sc">丁元英提供的只是机会，而不是救赎。当风险来临时，文化属性决定了选择。</span>
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 card">
+                <div class="content-z">
+                    <p class="text-xl font-bold mb-4">王庙村文化路径图 <span class="text-sm uppercase opacity-60">Visualizing the Dilemma</span></p>
+                    <div class="flex flex-col md:flex-row items-center justify-around space-y-6 md:space-y-0 md:space-x-4 p-4">
+                        <div class="text-center">
+                            <div class="outline-circle bg-gray-100"><i class="fas fa-hand-holding-usd"></i></div>
+                            <p class="mt-2 font-bold font-noto-sans-sc">初始利益</p>
+                            <p class="text-sm opacity-70">天降施舍</p>
+                        </div>
+                        <i class="fas fa-long-arrow-alt-right hidden md:block text-3xl highlight-text opacity-50"></i>
+                        <i class="fas fa-long-arrow-alt-down block md:hidden text-3xl highlight-text opacity-50"></i>
+
+                        <div class="text-center">
+                            <div class="outline-circle bg-gray-100"><i class="fas fa-gavel"></i></div>
+                            <p class="mt-2 font-bold font-noto-sans-sc">诉讼风险</p>
+                            <p class="text-sm opacity-70">危机来临</p>
+                        </div>
+                        <i class="fas fa-long-arrow-alt-right hidden md:block text-3xl highlight-text opacity-50"></i>
+                        <i class="fas fa-long-arrow-alt-down block md:hidden text-3xl highlight-text opacity-50"></i>
+
+                        <div class="text-center">
+                            <div class="outline-circle bg-red-100 text-red-600 border-red-600"><i class="fas fa-sign-out-alt"></i></div>
+                            <p class="mt-2 font-bold font-noto-sans-sc">集体退股</p>
+                            <p class="text-sm opacity-70">放弃主体责任</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg tech-glow">
+                <div class="content-z">
+                    <p class="text-sm uppercase tracking-widest opacity-70">Key Observation</p>
+                    <div class="mt-4">
+                        <p class="text-7xl font-bold highlight-stat leading-none">0</p>
+                        <p class="text-2xl font-bold mt-2 font-noto-sans-sc">真正主体</p>
+                        <p class="mt-2 text-lg opacity-90">
+                            村民永远是经济链条中的“客体”。他们渴望利益，但恐惧责任；想要结果，但拒绝代价。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-16">
+        <h3 class="text-4xl lg:text-6xl font-extrabold text-center mb-10 font-noto-sans-sc">
+            <span class="font-noto-sans-sc">底层规律：</span><span class="highlight-text">认知结构</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card card-alt-bg p-6 text-center">
+                <div class="content-z">
+                    <i class="fas fa-map-marked-alt text-5xl highlight-text opacity-75 mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2 font-noto-sans-sc">命运地图</h4>
+                    <p class="text-lg opacity-90">你的认知结构，决定了你的命运结构。</p>
+                </div>
+            </div>
+            <div class="card card-alt-bg p-6 text-center">
+                <div class="content-z">
+                    <i class="fas fa-handshake-alt-slash text-5xl highlight-text opacity-75 mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2 font-noto-sans-sc">世界逻辑</h4>
+                    <p class="text-lg opacity-90">不要用道德评判世界，要用因果逻辑理解世界。</p>
+                </div>
+            </div>
+            <div class="card card-alt-bg p-6 text-center">
+                <div class="content-z">
+                    <i class="fas fa-link text-5xl highlight-text opacity-75 mb-3"></i>
+                    <h4 class="text-xl font-bold mb-2 font-noto-sans-sc">因果链条</h4>
+                    <p class="text-lg opacity-90">看透事物发展的因果链，并将其外推至无限远。</p>
+                </div>
+            </div>
+        </div>
+
+        <blockquote class="card mt-12 max-w-5xl mx-auto border-l-4 border-highlight-text p-6 text-lg italic opacity-80 font-noto-sans-sc">
+            芮小丹的悲剧，源于她超越时代的觉悟与无法撼动的大众文化惯性之间的巨大鸿沟。她的死，是对这个世界仍被弱势文化主导的最沉痛的控诉。
+        </blockquote>
+    </section>
+
+    <section>
+        <h3 class="font-noto-sans-sc ultra-large-text text-center highlight-text">
+            窄门
+        </h3>
+        <p class="text-3xl lg:text-4xl font-extrabold text-center mt-4 mb-8 font-noto-sans-sc">
+            <span class="font-noto-sans-sc">从</span><span class="highlight-text">“想明白”</span><span class="font-noto-sans-sc">开始的自我革命</span>
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-chess-king text-4xl highlight-text mb-2"></i>
+                    <h4 class="text-xl font-bold mt-2 font-noto-sans-sc">不要找靠山</h4>
+                    <p class="mt-1 text-lg opacity-90">
+                        <span class="font-bold">你的能力</span>才是唯一的靠山。任何依附都是潜在的风险。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-sitemap text-4xl highlight-text mb-2"></i>
+                    <h4 class="text-xl font-bold mt-2 font-noto-sans-sc">利用规律</h4>
+                    <p class="mt-1 text-lg opacity-90">
+                        从<span class="font-bold">因果、逻辑</span>出发，实事求是地看待世界。
+                    </p>
+                </div>
+            </div>
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-lightbulb text-4xl highlight-text mb-2"></i>
+                    <h4 class="text-xl font-bold mt-2 font-noto-sans-sc">文化觉醒</h4>
+                    <p class="mt-1 text-lg opacity-90">
+                        明白赚钱、关系、痛苦的<span class="font-bold">本质。</span>做到“不唯是”。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-xl text-center mt-10 max-w-4xl mx-auto font-bold opacity-90 font-noto-sans-sc">
+            当你能够做到“不唯是”时，你便踏上了<span class="highlight-text">真正的强者之路</span>。<br/>因为那时，你已经活成了你自己的“天道”。
+        </p>
+    </section>
+
+    <footer class="mt-16 text-center text-sm opacity-60">
+        <p class="font-noto-sans-sc">吉卜力风格呈现 | 独立思考的力量</p>
+        <p class="font-noto-sans-sc">© 2025 Culture Revolution</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

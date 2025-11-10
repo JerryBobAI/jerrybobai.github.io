@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能系统架构</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 - 移除了 text-shadow */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom line-art style */
+        .line-art-icon {
+            border: 4px solid #3A2E2C;
+            border-radius: 50%;
+            padding: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 4px 4px 0 #D2B48C; /* 浅棕色阴影 */
+        }
+        /* Gradient for line-art connections (Tech Glow Style) */
+        .line-art-gradient {
+            background-image: linear-gradient(to right, rgba(255,179,0,0.6), rgba(255,179,0,0.1));
+            height: 4px;
+        }
+    </style>
+</head>
+
+<body class="p-8 lg:p-16">
+
+    <section class="min-h-screen flex flex-col justify-center items-start text-left mb-24">
+        <p class="text-xl md:text-2xl mb-4 font-open-sans">THE AI INTELLIGENCE SYSTEM</p>
+        <h1 class="ultra-large-text font-noto-sans-sc highlight-text mb-6 tracking-tight">
+            AI智能系统
+        </h1>
+        <h2 class="text-3xl md:text-5xl font-noto-sans-sc max-w-4xl font-bold leading-snug">
+            它们不是竞争者，<br class="hidden sm:block">
+            而是构建完整<span class="highlight-text">智能架构</span>的<span class="underline decoration-wavy decoration-4 decoration-[#D2B48C]">三个层次</span>。
+        </h2>
+    </section>
+
+    <hr class="border-t-4 border-dotted border-[#D2B48C] my-24">
+
+    <section class="mb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="order-2 lg:order-1">
+                <p class="text-lg md:text-xl mb-4 font-open-sans">LLM / Large Language Model</p>
+                <h3 class="ultra-large-text font-noto-sans-sc highlight-text mb-6">
+                    <i class="fas fa-brain text-5xl mr-4 align-top"></i>大脑
+                </h3>
+                <p class="text-2xl md:text-3xl font-noto-sans-sc font-semibold max-w-xl">
+                    <span class="highlight-text">思考、写作、理解语言。</span>
+                    它是AI的底层智能核心。
+                </p>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="card p-8 lg:p-12 tech-glow">
+                    <div class="content-z">
+                        <div class="flex items-center mb-4">
+                            <span class="line-art-icon text-3xl mr-4"><i class="fas fa-microchip"></i></span>
+                            <span class="large-stat-text highlight-stat font-open-sans">Frozen</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 font-noto-sans-sc">核心限制：知识截止日期</h4>
+                        <p class="text-lg font-noto-sans-sc">模型知识<span class="font-bold underline">冻结</span>在训练结束的那一天。缺乏对“现在”发生事件的实时感知，可能导致<span class="highlight-text font-bold">信息过时或幻觉（瞎编）</span>。</p>
+                        <ul class="mt-4 text-left space-y-2">
+                            <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-check-circle"></i></span>纯语言任务：写作、摘要</li>
+                            <li class="font-noto-sans-sc text-red-700/80"><span class="list-icon text-red-500/80"><i class="fas fa-exclamation-triangle"></i></span>无法回答昨天的新闻</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-4 border-dotted border-[#D2B48C] my-24">
+
+    <section class="mb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="order-2">
+                <div class="card card-alt-bg p-8 lg:p-12">
+                    <div class="content-z">
+                        <div class="flex items-center mb-4">
+                            <span class="line-art-icon text-3xl mr-4 border-none bg-[#D2B48C]"><i class="fas fa-book-open text-white"></i></span>
+                            <span class="large-stat-text highlight-stat font-open-sans">99%<span class="text-lg ml-2">Accuracy Boost</span></span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 font-noto-sans-sc">工作原理：外置实时内存</h4>
+                        <p class="text-lg font-noto-sans-sc">在回答问题前，RAG会先<span class="font-bold">检索外部数据库或文档</span>，并将最新、最相关的资料作为<span class="highlight-text font-bold">上下文</span>提供给LLM进行推理。</p>
+                        <ul class="mt-4 text-left space-y-2">
+                            <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-layer-group"></i></span>接入最新数据、真实事实</li>
+                            <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-bolt"></i></span><span class="font-bold">无需重训模型</span>，成本极低</li>
+                            <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-search-plus"></i></span>答案可追溯来源，保证准确率</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1">
+                <p class="text-lg md:text-xl mb-4 font-open-sans">RAG / Retrieval-Augmented Generation</p>
+                <h3 class="ultra-large-text font-noto-sans-sc highlight-text mb-6 text-right lg:text-left">
+                    记忆<i class="fas fa-database text-5xl ml-4 align-top"></i>
+                </h3>
+                <p class="text-2xl md:text-3xl font-noto-sans-sc font-semibold max-w-xl text-right lg:text-left ml-auto lg:ml-0">
+                    为LLM注入<span class="highlight-text">实时、准确</span>的<span class="underline decoration-wavy decoration-4 decoration-[#D2B48C]">知识力量</span>。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-4 border-dotted border-[#D2B48C] my-24">
+
+    <section class="mb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="order-2 lg:order-1">
+                <p class="text-lg md:text-xl mb-4 font-open-sans">AI AGENTS</p>
+                <h3 class="ultra-large-text font-noto-sans-sc highlight-text mb-6">
+                    <i class="fas fa-running text-5xl mr-4 align-top"></i>行动力
+                </h3>
+                <p class="text-2xl md:text-3xl font-noto-sans-sc font-semibold max-w-xl">
+                    超越问答，它能<span class="highlight-text">自主决策并执行复杂任务</span>。
+                </p>
+            </div>
+            <div class="order-1 lg:order-2">
+                <div class="card card-darker-alt-bg p-8 lg:p-12 tech-glow">
+                    <div class="content-z">
+                        <div class="flex items-center mb-4">
+                            <span class="line-art-icon text-3xl mr-4"><i class="fas fa-route"></i></span>
+                            <span class="large-stat-text highlight-stat font-open-sans">Autonomous</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3 font-noto-sans-sc">核心：外置控制循环</h4>
+                        <div class="flex justify-between items-center text-center text-sm md:text-base font-bold mb-4 font-open-sans">
+                            <div class="p-2 border-b-4 border-r-4 border-[#3A2E2C] rounded-bl-xl">目标</div>
+                            <i class="fas fa-arrow-right text-lg text-highlight-text"></i>
+                            <div class="p-2 border-b-4 border-r-4 border-[#3A2E2C]">规划</div>
+                            <i class="fas fa-arrow-right text-lg text-highlight-text"></i>
+                            <div class="p-2 border-b-4 border-r-4 border-[#3A2E2C]">执行</div>
+                            <i class="fas fa-arrow-right text-lg text-highlight-text"></i>
+                            <div class="p-2 border-b-4 border-r-4 border-[#3A2E2C] rounded-br-xl">反思</div>
+                        </div>
+                        <p class="text-lg font-noto-sans-sc mt-4">它将LLM包装在一个<strong>决策循环</strong>中。能自主研究话题、收集数据、撰写报告，甚至帮你发邮件，实现<span class="highlight-text font-bold">全流程自动化</span>。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-t-4 border-dotted border-[#D2B48C] my-24">
+
+    <section class="mb-24 text-center">
+        <p class="text-xl md:text-2xl mb-4 font-open-sans">SYNERGY / THE TRILOGY</p>
+        <h3 class="ultra-large-text font-noto-sans-sc highlight-text mb-12">
+            三位一体
+        </h3>
+        <p class="text-2xl md:text-3xl font-noto-sans-sc font-semibold mb-12 max-w-5xl mx-auto">
+            真正的<span class="highlight-text">生产级AI系统</span>，必须将这三者完美结合。
+        </p>
+        
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card p-6 md:p-8 flex flex-col items-center">
+                <div class="line-art-icon text-5xl mb-4"><i class="fas fa-brain"></i></div>
+                <h4 class="text-3xl font-bold font-open-sans highlight-stat">LLM</h4>
+                <p class="text-xl font-noto-sans-sc font-bold mt-2">提供 推理与思考</p>
+            </div>
+            
+            <div class="card card-alt-bg p-6 md:p-8 flex flex-col items-center">
+                <div class="line-art-icon text-5xl mb-4 border-none bg-[#D2B48C]"><i class="fas fa-book-open text-white"></i></div>
+                <h4 class="text-3xl font-bold font-open-sans highlight-stat">RAG</h4>
+                <p class="text-xl font-noto-sans-sc font-bold mt-2">确保 知识的准确</p>
+            </div>
+            
+            <div class="card card-darker-alt-bg p-6 md:p-8 flex flex-col items-center">
+                <div class="line-art-icon text-5xl mb-4"><i class="fas fa-route"></i></div>
+                <h4 class="text-3xl font-bold font-open-sans highlight-stat">Agent</h4>
+                <p class="text-xl font-noto-sans-sc font-bold mt-2">实现 行动与决策</p>
+            </div>
+        </div>
+
+        <p class="mt-8 text-lg font-open-sans text-gray-600/70 italic">LLM → RAG → Agent: A Complete Loop</p>
+    </section>
+
+    <hr class="border-t-4 border-dotted border-[#D2B48C] my-24">
+
+    <section class="mb-24">
+        <p class="text-xl md:text-2xl mb-4 font-open-sans text-center">HOW TO SELECT</p>
+        <h3 class="text-5xl md:text-7xl font-noto-sans-sc highlight-text font-bold mb-12 text-center">
+            如何选用？
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <span class="large-stat-text highlight-stat font-open-sans">1. LLM Only</span>
+                    <h4 class="text-xl font-bold font-noto-sans-sc my-3">纯语言任务</h4>
+                    <p class="text-lg font-noto-sans-sc">
+                        当你只需要<strong>纯粹的语言处理</strong>能力时。
+                    </p>
+                    <ul class="mt-4 space-y-2 text-left">
+                        <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-pen"></i></span> 创作故事</li>
+                        <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-file-alt"></i></span> 文本摘要</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card card-alt-bg p-8">
+                <div class="content-z">
+                    <span class="large-stat-text highlight-stat font-open-sans">2. LLM + RAG</span>
+                    <h4 class="text-xl font-bold font-noto-sans-sc my-3">知识密集型问答</h4>
+                    <p class="text-lg font-noto-sans-sc">
+                        当你需要<strong>准确回答特定领域知识</strong>、技术手册或专业文档中的问题时。
+                    </p>
+                    <ul class="mt-4 space-y-2 text-left">
+                        <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-laptop-code"></i></span> 技术文档查询</li>
+                        <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-balance-scale"></i></span> 法律条款解读</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card card-darker-alt-bg p-8 tech-glow">
+                <div class="content-z">
+                    <span class="large-stat-text highlight-stat font-open-sans">3. The Full Stack</span>
+                    <h4 class="text-xl font-bold font-noto-sans-sc my-3">自主行动与决策</h4>
+                    <p class="text-lg font-noto-sans-sc">
+                        当你需要系统<strong>自主执行复杂流程</strong>、管理任务或做出决策时。
+                    </p>
+                    <ul class="mt-4 space-y-2 text-left">
+                        <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-chart-line"></i></span> 市场调研与报告生成</li>
+                        <li class="font-noto-sans-sc"><span class="list-icon"><i class="fas fa-cogs"></i></span> 复杂工作流管理</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <hr class="border-t-4 border-dotted border-[#D2B48C] my-24">
+
+    <section class="min-h-screen flex flex-col justify-center items-center text-center">
+        <p class="text-xl md:text-2xl mb-4 font-open-sans">THE FINAL FORMULA</p>
+        <h3 class="text-5xl md:text-7xl font-noto-sans-sc font-bold mb-12 max-w-5xl mx-auto leading-tight">
+            AI的未来，在于<span class="highlight-text">架构协同</span>，而非单点选择。
+        </h3>
+        
+        <div class="mt-12">
+            <h1 class="ultra-large-text font-noto-sans-sc highlight-text mb-6 tracking-tight">
+                LLM + RAG + Agent
+            </h1>
+            <p class="text-2xl md:text-4xl font-noto-sans-sc font-semibold max-w-4xl mx-auto">
+                思考 + 知识 + 行动 = <span class="highlight-text">完整智能系统</span>
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Optional: Simple scroll progress indicator or intersection observer for "dynamic" content reveal could be added here.
+        // For a base requirement, the visual styling and large text structure suffice as the "hybrid layout."
+
+        // Example: Simple scroll to top on footer click (not needed here but good practice)
+        /*
+        document.querySelector('footer').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        */
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
