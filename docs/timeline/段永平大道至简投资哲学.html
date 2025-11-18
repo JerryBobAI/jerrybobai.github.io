@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>段永平大道至简投资哲学</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMD/cdCqL7NEHefQO/W9I84j2fOQ1h2G3mJ3O/2h7T+E2u4h1I3s2Q2x3g2X2bQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <style>
+        /* 严格按照用户提供的CSS样式实现 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* 手绘纹理或水彩渲染效果的微妙实现 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 (天空的淡蓝) */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* 高亮色自身透明度渐变制造科技感 */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* 确保不干扰内容点击 */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 针对1920px及以上宽度的响应式优化 */
+        @media (min-width: 1920px) {
+            .max-w-7xl-custom {
+                max-width: 1600px; /* 增加最大宽度以适应更大屏幕 */
+            }
+        }
+        /* 简洁的勾线图形化样式 */
+        .sketch-icon {
+            border: 4px solid #3A2E2C;
+            border-radius: 50%;
+            padding: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s ease;
+        }
+        .sketch-icon:hover {
+            border-color: #FFB300;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+    <div class="max-w-7xl mx-auto max-w-7xl-custom space-y-20 lg:space-y-32 py-10 lg:py-20">
+
+        <section class="min-h-screen flex flex-col justify-center items-start lg:items-center text-left lg:text-center">
+            <h1 class="ultra-large-text font-noto-sans-sc leading-none mb-4 lg:mb-8 tracking-tighter">
+                <span class="highlight-text block">大道至简</span>
+                <span class="block text-[#3A2E2C]">投资哲学</span>
+            </h1>
+            <p class="text-2xl md:text-3xl font-light max-w-4xl text-[#5C4B49] lg:pt-4">
+                <span class="font-noto-sans-sc font-bold">买股票就是买公司。</span>
+                <span class="block mt-2 font-noto-sans-sc">— 段永平 (Duan Yongping)</span>
+            </p>
+            <p class="text-lg mt-6 text-gray-600 font-open-sans">
+                A Dialogue on Investment, Business & Life Philosophy
+            </p>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="lg:col-span-1 flex flex-col justify-start">
+                <h2 class="text-5xl lg:text-6xl font-black font-noto-sans-sc mb-4 leading-tight">
+                    <span class="block">三大</span>
+                    <span class="highlight-text block">核心</span>
+                    <span class="block">原则</span>
+                </h2>
+                <p class="text-xl text-[#5C4B49] font-open-sans mt-4">
+                    The Cornerstone of Investment & Business Success.
+                </p>
+            </div>
+            
+            <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <p class="large-stat-text highlight-stat leading-none">01</p>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mt-3 mb-2">诚信与本分</h3>
+                        <p class="text-sm text-gray-600 font-open-sans">
+                            Integrity & Duty
+                        </p>
+                        <p class="mt-4 text-md">
+                            企业文化的基石：从始至终的诚信，坚持本分，不为清单，不为短期利益损害用户。
+                        </p>
+                    </div>
+                </div>
+                <div class="card p-6 card-alt-bg tech-glow">
+                    <div class="content-z">
+                        <p class="large-stat-text highlight-stat leading-none">02</p>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mt-3 mb-2">用户导向</h3>
+                        <p class="text-sm text-gray-600 font-open-sans">
+                            User Focus
+                        </p>
+                        <p class="mt-4 text-md">
+                            “做对的事”先于“把事做对”。一切以用户需求为中心，避免做错事，积累经验。
+                        </p>
+                    </div>
+                </div>
+                <div class="card p-6 tech-glow">
+                    <div class="content-z">
+                        <p class="large-stat-text highlight-stat leading-none">03</p>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mt-3 mb-2">安全边际</h3>
+                        <p class="text-sm text-gray-600 font-open-sans">
+                            Margin of Safety
+                        </p>
+                        <p class="mt-4 text-md">
+                            投资的安全边际不是便宜，而是“看懂公司”。看不懂，再便宜也不碰。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="flex flex-col justify-center">
+                <div class="sketch-icon mb-6 w-24 h-24">
+                    <i class="fas fa-hand-holding-heart text-4xl text-[#3A2E2C]"></i>
+                </div>
+                <h2 class="ultra-large-text font-noto-sans-sc tracking-tighter">
+                    <span class="highlight-text block">胸无大志</span>
+                </h2>
+                <p class="text-4xl font-black font-noto-sans-sc mt-4">
+                    过好小日子
+                </p>
+                <p class="text-lg text-[#5C4B49] mt-4 font-open-sans">
+                    Trust, Boundary, and the Joy of Doing What You Love.
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="card p-8 card-alt-bg">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-3 flex items-center">
+                        <i class="fas fa-child list-icon text-xl"></i> 童年与独立
+                    </h3>
+                    <p class="text-base text-gray-700">
+                        父母给予充分<span class="font-bold">信任与自由</span>，不强求卷式教育，让他从小习惯<span class="highlight-text">独立决策</span>，这是人生哲学的起点。
+                    </p>
+                </div>
+
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-3 flex items-center">
+                        <i class="fas fa-briefcase list-icon text-xl"></i> 创业决策
+                    </h3>
+                    <p class="text-base text-gray-700">
+                        从<span class="font-bold">小霸王</span>到<span class="font-bold">步步高 (OPPO/Vivo)</span>，关键在于<span class="highlight-text">不待在不舒服的环境</span>，决策基于长远诚信，早日授权退出一线。
+                    </p>
+                </div>
+
+                <div class="card p-8 card-darker-alt-bg">
+                    <h3 class="text-2xl font-bold font-noto-sans-sc mb-3 flex items-center">
+                        <i class="fas fa-users-viewfinder list-icon text-xl"></i> 招聘哲学
+                    </h3>
+                    <p class="text-base text-gray-700">
+                        <span class="font-bold">价值观选择为主</span>，而非培养。找认同企业文化的同道中人，文化通过时间自然<span class="highlight-text">淘汰不适者</span>。
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="space-y-10">
+            <header class="text-center max-w-4xl mx-auto">
+                <h2 class="text-6xl font-black font-noto-sans-sc mb-3">
+                    <span class="highlight-text">重仓</span><span class="text-[#3A2E2C]">决策</span>
+                </h2>
+                <p class="text-xl text-[#5C4B49] font-open-sans">
+                    The 10 Holes Philosophy: Deep Understanding of a Limited Few.
+                </p>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fab fa-apple text-5xl highlight-stat mb-3"></i>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">Apple 苹果</h3>
+                        <p class="text-sm text-gray-600 font-open-sans">Core Holding Since 2011</p>
+                        <ul class="list-none mt-4 space-y-2 text-md">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> 硬件+软件生态模式，用户基数强。
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> <span class="font-bold">用户导向文化</span>，不为生意做。
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> AI落地潜力大，<span class="highlight-text">最高仓位曾达90%</span>。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card p-8 card-alt-bg tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-wine-bottle text-5xl highlight-stat mb-3"></i>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">茅台</h3>
+                        <p class="text-sm text-gray-600 font-open-sans">The Unique Culture</p>
+                        <ul class="list-none mt-4 space-y-2 text-md">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> 独特口味，<span class="font-bold">文化维系品质</span>和消费者认同。
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> 国营优势稳定，不需看宏观。
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> <span class="highlight-text">分红高于银行</span>，长期持有价值。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card p-8 tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-microchip text-5xl highlight-stat mb-3"></i>
+                        <h3 class="text-2xl font-bold font-noto-sans-sc mb-2">AI与英伟达</h3>
+                        <p class="text-sm text-gray-600 font-open-sans">Revolution & Ecology</p>
+                        <ul class="list-none mt-4 space-y-2 text-md">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> AI是<span class="font-bold">工业革命级</span>，量变到质变，提高效率。
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> 英伟达看懂<span class="highlight-text">生态系统强大</span>和黄仁勋远见。
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle list-icon pt-1"></i> 炒股更难，但AI对<span class="highlight-text">投资影响小</span>。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-8 lg:p-12 mt-12">
+                <h3 class="text-3xl font-bold font-noto-sans-sc mb-6 text-center">
+                    <i class="fas fa-chart-line list-icon text-xl"></i> 建议：普通人投资路径
+                </h3>
+                <div class="flex flex-col md:flex-row justify-around items-center space-y-6 md:space-y-0 text-center">
+                    <div class="p-4">
+                        <div class="sketch-icon w-28 h-28 mx-auto mb-4">
+                            <i class="fas fa-magnifying-glass-chart text-4xl text-[#3A2E2C]"></i>
+                        </div>
+                        <p class="text-xl font-bold font-noto-sans-sc">不懂不投</p>
+                        <p class="text-sm text-gray-600">Avoid the Unknown</p>
+                    </div>
+                    <div class="hidden md:block text-5xl font-light text-[#3A2E2C]">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="sketch-icon w-28 h-28 mx-auto mb-4">
+                            <i class="fas fa-arrow-down-up-lock text-4xl text-[#3A2E2C]"></i>
+                        </div>
+                        <p class="text-xl font-bold font-noto-sans-sc">指数或伯克希尔</p>
+                        <p class="text-sm text-gray-600">S&P 500 / Berkshire</p>
+                    </div>
+                    <div class="hidden md:block text-5xl font-light text-[#3A2E2C]">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="p-4">
+                        <div class="sketch-icon w-28 h-28 mx-auto mb-4">
+                            <i class="fas fa-clock text-4xl text-[#3A2E2C]"></i>
+                        </div>
+                        <p class="text-xl font-bold font-noto-sans-sc">长期持有</p>
+                        <p class="text-sm text-gray-600">Long-Term Commitment</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row items-center justify-between pt-16 border-t border-gray-300 border-opacity-50">
+                <h2 class="text-5xl lg:text-7xl font-black font-noto-sans-sc leading-tight mb-4 lg:mb-0">
+                    <span class="highlight-text block">机会成本</span>
+                </h2>
+                <div class="max-w-xl text-right">
+                    <p class="text-2xl font-bold font-noto-sans-sc">
+                        投资决策的核心衡量标准。
+                    </p>
+                    <p class="text-lg text-[#5C4B49] mt-2 font-open-sans">
+                        You sell to switch to something better, or you just hold.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center py-10 text-sm text-gray-500 border-t mt-20 border-gray-300 border-opacity-50">
+        <p>页面风格：吉卜力 Hybrid Layout · 信息来源：方三文对话段永平视频总结</p>
+        <p class="mt-1 font-open-sans">Presented in Ghibli Style with Apple-like Simplicity</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

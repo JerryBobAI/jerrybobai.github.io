@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专注 擅长 韧性：成功框架</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 核心吉卜力-苹果风格 CSS */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+           will-change: transform; /* Performance hint */
+        }
+        .card:hover {
+           transform: translateY(-5px) scale(1.01);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 科技感光晕效果 */
+        .tech-glow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s ease;
+        }
+        .card:hover .tech-glow::before {
+             opacity: 0.8;
+        }
+
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em; /* 苹果风格的字距 */
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1.1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 勾线图形化容器 - 示例仅用边框模拟 */
+        .outline-graphic {
+            border: 3px solid #3A2E2C;
+            border-radius: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12 min-h-screen">
+
+    <div class="max-w-7xl mx-auto 2xl:max-w-[1920px] 2xl:px-16">
+        
+        <header class="mb-16 lg:mb-24 text-center">
+            <h1 class="ultra-large-text font-noto-sans-sc mb-4 text-[#3A2E2C] hover:text-[#D2B48C] transition-colors duration-500">
+                重拾<span class="highlight-text block">内在价值</span>
+            </h1>
+            <p class="text-xl md:text-2xl max-w-4xl mx-auto font-light leading-relaxed">
+                在<span class="font-bold">迷茫与噪音</span>中，找到个人与团队的<span class="highlight-text font-semibold">成功指南针</span>。
+                <br><span class="text-sm uppercase tracking-widest text-gray-500 block mt-2">FINDING YOUR NORTH STAR</span>
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 lg:mb-24">
+            
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col justify-between">
+                <div class="content-z">
+                    <h2 class="large-stat-text highlight-stat font-noto-sans-sc">01</h2>
+                    <p class="text-4xl lg:text-5xl font-extrabold mt-2 mb-4 font-noto-sans-sc">专注</p>
+                    <p class="text-lg uppercase tracking-widest text-gray-600 mb-6">FOCUS</p>
+                    <p class="text-base lg:text-lg leading-relaxed">
+                        <span class="font-bold">点亮方向的灯塔。</span>有意识地选择一个方向，并全力投入，从“什么都想试试”转向“深入一件事”。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow flex flex-col justify-between">
+                <div class="content-z">
+                    <h2 class="large-stat-text highlight-stat font-noto-sans-sc">02</h2>
+                    <p class="text-4xl lg:text-5xl font-extrabold mt-2 mb-4 font-noto-sans-sc">擅长</p>
+                    <p class="text-lg uppercase tracking-widest text-gray-600 mb-6">MASTERY</p>
+                    <p class="text-base lg:text-lg leading-relaxed">
+                        <span class="font-bold">筑牢成功的基石。</span>通过有意识练习积累技能，让你从“普通人”变成“专家”，建立内在锚点。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-10 tech-glow flex flex-col justify-between">
+                <div class="content-z">
+                    <h2 class="large-stat-text highlight-stat font-noto-sans-sc">03</h2>
+                    <p class="text-4xl lg:text-5xl font-extrabold mt-2 mb-4 font-noto-sans-sc">韧性</p>
+                    <p class="text-lg uppercase tracking-widest text-gray-600 mb-6">RESILIENCE</p>
+                    <p class="text-base lg:text-lg leading-relaxed">
+                        <span class="font-bold">穿越风暴的护盾。</span>弹性恢复的能力，将失败视为机会，从挫折中学习，继续前进。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 lg:mb-24">
+            
+            <div class="card card-darker-alt-bg p-8 lg:p-12 flex flex-col justify-center items-start">
+                <div class="content-z">
+                    <p class="text-xl uppercase tracking-widest text-gray-700 mb-2">个人价值的放大器</p>
+                    <div class="ultra-large-text highlight-stat leading-none">
+                        <span class="relative inline-block hover:scale-105 transition-transform duration-300">
+                            10,000<span class="text-4xl font-normal ml-4 align-top">hrs</span>
+                        </span>
+                    </div>
+                    <p class="text-xl lg:text-3xl font-bold mt-4 font-noto-sans-sc leading-tight">
+                        <span class="text-[#3A2E2C]">刻意练习</span>时间阈值
+                    </p>
+                    <p class="text-base mt-3 max-w-md">
+                        （Deliberate Practice）<br>专注与擅长的量化体现，实现从<span class="font-semibold">普通人到专家</span>的飞跃。
+                    </p>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:p-12">
+                <div class="content-z">
+                    <h3 class="text-3xl lg:text-4xl font-bold mb-6 font-noto-sans-sc">
+                        <i class="fas fa-sitemap list-icon"></i> <span class="highlight-text">三者协同：</span>正循环的力量
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="outline-graphic flex-shrink-0 mt-1">
+                                <i class="fas fa-lightbulb text-2xl highlight-stat"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-bold font-noto-sans-sc">专注 → 擅长</p>
+                                <p class="text-base text-gray-700">专注引导投入，快速积累经验与技能，形成核心竞争力。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="outline-graphic flex-shrink-0 mt-1">
+                                <i class="fas fa-shield-alt text-2xl highlight-stat"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-bold font-noto-sans-sc">擅长 → 韧性</p>
+                                <p class="text-base text-gray-700">成就感提供内在锚点，让你在挫折中更有自信进行恢复与调整。</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="outline-graphic flex-shrink-0 mt-1">
+                                <i class="fas fa-infinity text-2xl highlight-stat"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-bold font-noto-sans-sc">韧性 → 专注</p>
+                                <p class="text-base text-gray-700">弹性恢复能力，让你能快速修正航线，重新聚焦目标，维持长久动力。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-8 lg:p-12 mb-16 lg:mb-24">
+            <div class="content-z">
+                <h3 class="text-3xl lg:text-4xl font-extrabold mb-6 font-noto-sans-sc text-center highlight-text">
+                    从个人迷茫到<span class="text-[#3A2E2C]">集体飞跃</span>
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    
+                    <div>
+                        <i class="fas fa-bullseye text-4xl highlight-stat mb-3"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc mb-1">团队北极星</p>
+                        <p class="text-sm uppercase tracking-wider text-gray-500">SET CLEAR GOALS</p>
+                        <p class="mt-2 text-base">设定<span class="font-bold">清晰目标</span>，避免资源浪费，凝聚前进动力。</p>
+                    </div>
+
+                    <div>
+                        <i class="fas fa-graduation-cap text-4xl highlight-stat mb-3"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc mb-1">技能工作坊</p>
+                        <p class="text-sm uppercase tracking-wider text-gray-500">CULTIVATE EXPERTISE</p>
+                        <p class="mt-2 text-base">鼓励学习和<span class="font-bold">交叉训练</span>，实现成员互补，形成合力。</p>
+                    </div>
+
+                    <div>
+                        <i class="fas fa-handshake text-4xl highlight-stat mb-3"></i>
+                        <p class="text-xl font-bold font-noto-sans-sc mb-1">支持性环境</p>
+                        <p class="text-sm uppercase tracking-wider text-gray-500">FOSTER SUPPORT</p>
+                        <p class="mt-2 text-base">公开讨论失败，<span class="font-bold">避免指责</span>，让成员感到被赋能。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center pb-8">
+            <p class="text-2xl lg:text-3xl font-bold font-noto-sans-sc mb-4">
+                <span class="highlight-text">立即行动：</span>点亮你的成功旅程！
+            </p>
+            <p class="text-lg text-gray-700">
+                Today, list your <span class="font-semibold">Focus Points</span>, practice a <span class="font-semibold">Skill</span>, and face a small <span class="font-semibold">Setback</span> with a deep breath.
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const cards = document.querySelectorAll('.card');
+
+            // 1. 动态数字计数器 (可选的科技感)
+            const stats = [
+                { selector: '.ultra-large-text span', target: 10000, duration: 2000 }
+            ];
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.textContent = Math.floor(progress * (end - start) + start).toLocaleString() + (obj.textContent.includes('hrs') ? 'hrs' : '');
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            // 仅在统计数字出现在视野内时运行动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        stats.forEach(stat => {
+                            const element = entry.target.querySelector(stat.selector);
+                            if (element && !element.classList.contains('animated')) {
+                                animateValue(element, 0, stat.target, stat.duration);
+                                element.classList.add('animated');
+                            }
+                        });
+                        observer.unobserve(entry.target); // 动画完成后停止观察
+                    }
+                });
+            }, { threshold: 0.5 }); // 目标元素 50% 可见时触发
+
+            document.querySelectorAll('.card-darker-alt-bg').forEach(statCard => {
+                observer.observe(statCard);
+            });
+
+            // 2. 交互式背景颜色变化（模拟氛围切换）
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const highlightColor = card.classList.contains('card-alt-bg') || card.classList.contains('card-darker-alt-bg') 
+                        ? '#E0F2F7' // 淡天蓝
+                        : '#FBF8F3'; // 浅米白
+                    body.style.backgroundColor = highlightColor;
+                });
+                card.addEventListener('mouseleave', () => {
+                    body.style.backgroundColor = '#FDF6E3'; // 恢复默认米白
+                });
+            });
+
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

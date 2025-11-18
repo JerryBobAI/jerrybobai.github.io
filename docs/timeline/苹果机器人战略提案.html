@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苹果机器人战略提案</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 简洁勾线图形化 */
+        .g-icon {
+            border: 3px solid #3A2E2C;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+        }
+        /* 响应式容器宽度 */
+        .container {
+            max-width: 1920px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        /* 针对大屏幕调整排版 */
+        @media (min-width: 1280px) {
+            .xl\:grid-cols-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+            .xl\:col-span-2 {
+                grid-column: span 2 / span 2;
+            }
+            .xl\:col-start-2 {
+                grid-column-start: 2;
+            }
+        }
+    </style>
+</head>
+<body class="p-8">
+
+    <header class="container pt-16 pb-12">
+        <h1 class="font-noto-sans-sc ultra-large-text text-center highlight-text">
+            机器人战略
+        </h1>
+        <p class="text-xl text-center mt-4 tracking-wider">
+            DEFINING THE NEXT DECADE'S GROWTH CURVE
+        </p>
+    </header>
+
+    <section class="container mb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+            <div class="card p-8 tech-glow lg:col-span-2">
+                <div class="content-z">
+                    <h2 class="text-4xl font-noto-sans-sc font-bold mb-4">
+                        后iPhone时代的<span class="highlight-text">增长新引擎</span>
+                    </h2>
+                    <p class="mb-6 text-lg">
+                        随着智能手机市场日趋成熟，核心业务正面临<span class="highlight-text">增长放缓</span>的战略挑战。我们必须为公司寻找下一个能够驱动万亿级增长的新引擎，而<strong>机器人技术</strong>正是这个决定性的答案。
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 text-center">
+                        <div>
+                            <p class="text-xs font-semibold uppercase opacity-70">2007-2016年营收增长率</p>
+                            <p class="large-stat-text highlight-stat font-open-sans">51%</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold uppercase opacity-70">2022-2024年营收增长率</p>
+                            <p class="large-stat-text highlight-stat font-open-sans">2%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-alt-bg p-8">
+                <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">
+                    万亿级机会
+                </h3>
+                <div class="flex items-end mb-4">
+                    <p class="large-stat-text highlight-stat font-open-sans leading-none">
+                        $130B
+                    </p>
+                    <span class="text-xl ml-2 font-noto-sans-sc">美元</span>
+                </div>
+                <p class="text-sm font-open-sans mb-2">Morgan Stanley Analysis, 2040</p>
+                <p class="font-noto-sans-sc text-lg">
+                    仅人形机器人一项，到2040年即可为公司创造<span class="highlight-text">1300亿美元</span>的年收入机会。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-24">
+        <h2 class="font-noto-sans-sc ultra-large-text text-center mb-16">
+            <span class="highlight-text">超越想象</span>的赛道
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="card p-8 card-darker-alt-bg tech-glow">
+                <div class="content-z">
+                    <p class="text-xs font-semibold uppercase opacity-70 font-open-sans">
+                        GLOBAL HUMAN-ROBOT MARKET VALUE
+                    </p>
+                    <p class="text-5xl font-noto-sans-sc font-bold mt-2 mb-4">
+                        <i class="fa-solid fa-earth-americas list-icon"></i>全球人形机器人市场预测
+                    </p>
+                    <ul class="space-y-6 mt-8">
+                        <li class="flex items-center">
+                            <div class="w-1/4">
+                                <span class="large-stat-text font-open-sans highlight-stat">1.2</span>
+                            </div>
+                            <div class="w-3/4">
+                                <p class="text-2xl font-noto-sans-sc font-medium">万亿美元 (2040年)</p>
+                                <p class="text-sm opacity-80">Annual Revenue (Morgan Stanley)</p>
+                            </div>
+                        </li>
+                        <li class="flex items-center">
+                            <div class="w-1/4">
+                                <span class="large-stat-text font-open-sans highlight-stat">4.7</span>
+                            </div>
+                            <div class="w-3/4">
+                                <p class="text-2xl font-noto-sans-sc font-medium">万亿美元 (2050年)</p>
+                                <p class="text-sm opacity-80">Market Size Projections</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card p-8">
+                <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">
+                    <i class="fa-solid fa-scale-balanced list-icon"></i>市场体量对比
+                </h3>
+                <div class="grid grid-cols-1 gap-6">
+                    <div class="p-4 border-l-4 border-l-[#3A2E2C] card-alt-bg">
+                        <p class="text-xs font-semibold uppercase opacity-70">当前全球智能手机市场</p>
+                        <p class="text-4xl font-open-sans font-bold highlight-stat">$550B</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-l-[#FFB300] card-darker-alt-bg">
+                        <p class="text-xs font-semibold uppercase opacity-70">2050年机器人市场潜力</p>
+                        <div class="flex items-center">
+                             <p class="text-5xl font-noto-sans-sc font-bold mr-4">
+                                8倍
+                            </p>
+                             <p class="text-lg font-noto-sans-sc">超越现有市场</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <p class="text-xl font-noto-sans-sc font-semibold mb-2">
+                        关键洞察：从<span class="highlight-text">家用</span>切入，逐步渗透<span class="highlight-text">商业市场</span>。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-24">
+        <h2 class="font-noto-sans-sc ultra-large-text text-center mb-16 highlight-text">
+            核心优势
+        </h2>
+        <p class="text-center text-xl mb-12">
+            UNRIVALED COMPETITIVE ADVANTAGES
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="card p-8 tech-glow">
+                <div class="content-z">
+                    <div class="g-icon mb-4"><i class="fa-solid fa-cogs fa-2x"></i></div>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">垂直整合生态系统</h3>
+                    <p class="text-sm font-open-sans mb-4">Vertically Integrated Ecosystem</p>
+                    <p class="text-lg">端到端的硬件、软件、<span class="highlight-text">Apple Silicon</span>到<span class="highlight-text">Apple Intelligence</span>的无缝体验。</p>
+                </div>
+            </div>
+
+            <div class="card p-8 card-alt-bg">
+                <div class="g-icon mb-4"><i class="fa-solid fa-database fa-2x"></i></div>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">庞大用户与数据采集</h3>
+                <p class="text-sm font-open-sans mb-4">Premium User Base & Visual Data</p>
+                <div class="flex items-end mb-4">
+                    <p class="text-5xl font-open-sans font-bold highlight-stat leading-none">2.3B</p>
+                    <span class="text-xl ml-2 font-noto-sans-sc">活跃设备</span>
+                </div>
+                <p class="text-lg">全球最优质的视觉数据源，训练VLA模型的黄金燃料。</p>
+            </div>
+
+            <div class="card p-8">
+                <div class="g-icon mb-4"><i class="fa-solid fa-lock fa-2x"></i></div>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">品牌与隐私承诺</h3>
+                <p class="text-sm font-open-sans mb-4">Global Brand & Privacy Assurance</p>
+                <p class="text-lg">在敏感的家用机器人领域，<span class="highlight-text">消费者信任</span>是决定性差异化优势。</p>
+            </div>
+
+            <div class="card p-8 card-darker-alt-bg lg:col-span-2">
+                <div class="g-icon mb-4"><i class="fa-solid fa-industry fa-2x"></i></div>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">大规模自主制造经验</h3>
+                <p class="text-sm font-open-sans mb-4">Industrial-Scale Autonomous Manufacturing</p>
+                <p class="text-lg">通过“熄灯工厂”和<span class="highlight-text">Daisy回收机器人</span>积累的经验，为大规模产品部署奠定坚实基础。</p>
+            </div>
+
+            <div class="card p-8">
+                <div class="g-icon mb-4"><i class="fa-solid fa-flask fa-2x"></i></div>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">持续研发与人才储备</h3>
+                <p class="text-sm font-open-sans mb-4">R&D Investment & Talent Reserve</p>
+                <p class="text-lg">机器学习、计算机视觉领域的持续招聘与专利布局。</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-24">
+        <h2 class="font-noto-sans-sc ultra-large-text text-center mb-16">
+            <span class="highlight-text">三阶段</span>路线图
+        </h2>
+        <p class="text-center text-xl mb-12">
+            PHASED STRATEGY FOR MARKET LEADERSHIP
+        </p>
+
+        <div class="grid grid-cols-1 gap-10">
+            <div class="card p-10 card-alt-bg tech-glow">
+                <div class="content-z lg:flex">
+                    <div class="lg:w-1/3">
+                        <p class="large-stat-text font-open-sans highlight-stat mb-2">I</p>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold">第一阶段 (2026-2027)</h3>
+                        <p class="text-xl font-noto-sans-sc font-medium mt-1">智能家居入口与生态系统构建</p>
+                    </div>
+                    <div class="lg:w-2/3 lg:pl-12 mt-6 lg:mt-0">
+                        <ul class="space-y-4 text-lg">
+                            <li><i class="fa-solid fa-house-chimney list-icon"></i><span class="font-bold">2026年：</span> 推出室内安防摄像头、带屏HomePod，铺设智能家居基础设施。</li>
+                            <li><i class="fa-solid fa-robot list-icon"></i><span class="font-bold">2027年：</span> 发布首款核心产品——<span class="highlight-text">自主移动桌面机器人</span>（情感化交互）。</li>
+                            <li><i class="fa-solid fa-cloud list-icon"></i><span class="font-bold">软件核心：</span> 发布由<span class="highlight-text">Apple Intelligence</span>驱动的强大新版Siri，作为统一智能中枢。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-10 card-darker-alt-bg">
+                 <div class="content-z lg:flex">
+                    <div class="lg:w-1/3">
+                        <p class="large-stat-text font-open-sans highlight-stat mb-2">II</p>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold">第二阶段 (2028-2035)</h3>
+                        <p class="text-xl font-noto-sans-sc font-medium mt-1">拓展产品形态与数据飞轮</p>
+                    </div>
+                    <div class="lg:w-2/3 lg:pl-12 mt-6 lg:mt-0">
+                        <ul class="space-y-4 text-lg">
+                            <li><i class="fa-solid fa-mobile-screen list-icon"></i><span class="font-bold">移动探索：</span> 推出<span class="highlight-text">移动家庭助理机器人</span>，服务延伸至全屋。</li>
+                            <li><i class="fa-solid fa-eye list-icon"></i><span class="font-bold">数据飞轮：</span> 推出智能眼镜、带摄像头AirPods，增强第一视角<span class="highlight-text">视觉数据采集</span>。</li>
+                            <li><i class="fa-solid fa-recycle list-icon"></i><span class="font-bold">可持续：</span> 将Daisy回收技术应用到机器人制造，实现<span class="highlight-text">闭环可持续生产</span>。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-10 tech-glow">
+                 <div class="content-z lg:flex">
+                    <div class="lg:w-1/3">
+                        <p class="large-stat-text font-open-sans highlight-stat mb-2">III</p>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold">第三阶段 (2036-2040+)</h3>
+                        <p class="text-xl font-noto-sans-sc font-medium mt-1">进军人形机器人市场</p>
+                    </div>
+                    <div class="lg:w-2/3 lg:pl-12 mt-6 lg:mt-0">
+                        <ul class="space-y-4 text-lg">
+                            <li><i class="fa-solid fa-user-astronaut list-icon"></i><span class="font-bold">产品终极形态：</span> 开发<span class="highlight-text">家用通用人形机器人</span>，完成智能家居的最后一块拼图。</li>
+                            <li><i class="fa-solid fa-briefcase list-icon"></i><span class="font-bold">市场扩展：</span> 进军规模远超家用的<span class="highlight-text">商业人形机器人市场</span>。</li>
+                            <li><i class="fa-solid fa-chart-pie list-icon"></i><span class="font-bold">份额目标 (2040中位数)：</span> 占领<span class="highlight-text">9%</span>全球份额（家庭市场<span class="highlight-text">45%</span>，商业市场<span class="highlight-text">7%</span>）。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-24">
+        <h2 class="font-noto-sans-sc ultra-large-text text-center mb-16 highlight-text">
+            盈利策略
+        </h2>
+        <p class="text-center text-xl mb-12">
+            HARDWARE + SERVICE DUAL-WHEEL MODEL
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card p-8">
+                <i class="fa-solid fa-box-open fa-3x highlight-stat mb-4"></i>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">高利润硬件销售</h3>
+                <p class="text-lg">通过卓越设计、软件集成和品牌溢价，在硬件销售中获取可观的<span class="highlight-text">一次性高利润</span>。</p>
+                <p class="text-xs mt-2 opacity-70 font-open-sans">Early Robot Price: ~$1,000 USD</p>
+            </div>
+            
+            <div class="card p-8 card-alt-bg md:col-span-2">
+                <i class="fa-solid fa-handshake fa-3x highlight-stat mb-4"></i>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-4">高粘性循环服务收入</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="p-4 border-2 border-[#FFB300] card-darker-alt-bg">
+                        <p class="text-lg font-bold">AI增强型Siri订阅</p>
+                        <p class="text-sm font-open-sans">消费者愿付 $9.11/月</p>
+                    </div>
+                    <div class="p-4 border-2 border-[#FFB300] card-darker-alt-bg">
+                        <p class="text-lg font-bold">iCloud存储增长</p>
+                        <p class="text-sm font-open-sans">机器人产生海量数据中枢</p>
+                    </div>
+                    <div class="p-4 border-2 border-[#FFB300] card-darker-alt-bg">
+                        <p class="text-lg font-bold">AppleCare+ 服务计划</p>
+                        <p class="text-sm font-open-sans">针对复杂机械结构的新增高利润类别</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-8 md:col-span-3 tech-glow">
+                <div class="content-z">
+                    <i class="fa-solid fa-code-branch fa-3x highlight-stat mb-4"></i>
+                    <h3 class="text-2xl font-noto-sans-sc font-bold mb-2">平台战略：VLA模型授权与B2B收入</h3>
+                    <p class="text-lg">利用Vision Pro和iPhone采集的第一视角数据，开发业界领先的<span class="highlight-text">视觉-语言-行为 (VLA) 基础模型</span>。</p>
+                    <ul class="mt-4 flex space-x-8">
+                        <li class="font-noto-sans-sc text-xl font-medium"><i class="fa-solid fa-check list-icon"></i>模型授权</li>
+                        <li class="font-noto-sans-sc text-xl font-medium"><i class="fa-solid fa-check list-icon"></i>平台服务 (App Store模式)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-24">
+        <h2 class="font-noto-sans-sc ultra-large-text text-center mb-16 highlight-text">
+            <span class="font-open-sans">$133B</span>
+        </h2>
+        <p class="text-center text-xl mb-12">
+            PROJECTED FINANCIAL IMPACT BY 2040 (MEDIAN CASE)
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="card p-8 lg:col-span-3 card-alt-bg">
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-6 text-center">
+                    <i class="fa-solid fa-chart-line list-icon"></i>2040年人形机器人业务年收入预测
+                </h3>
+                <div class="grid grid-cols-3 gap-8 text-center">
+                    <div class="p-6 border-2 border-[#3A2E2C]">
+                        <p class="text-sm font-semibold uppercase opacity-70">最低情景</p>
+                        <p class="large-stat-text highlight-stat mt-2 mb-2 font-open-sans">$58B</p>
+                        <p class="text-base font-noto-sans-sc">对当前每股贡献: $6</p>
+                    </div>
+                    <div class="p-6 border-2 border-[#FFB300] card-darker-alt-bg">
+                        <p class="text-sm font-semibold uppercase opacity-70">中位数情景</p>
+                        <p class="large-stat-text highlight-stat mt-2 mb-2 font-open-sans">$133B</p>
+                        <p class="text-base font-noto-sans-sc">对当前每股贡献: <span class="highlight-text">$22</span></p>
+                    </div>
+                    <div class="p-6 border-2 border-[#3A2E2C]">
+                        <p class="text-sm font-semibold uppercase opacity-70">最高情景</p>
+                        <p class="large-stat-text highlight-stat mt-2 mb-2 font-open-sans">$293B</p>
+                        <p class="text-base font-noto-sans-sc">对当前每股贡献: $64</p>
+                    </div>
+                </div>
+                <p class="text-center text-lg mt-8 font-noto-sans-sc">
+                    中位数情景的1330亿美元，相当于苹果FY25预计总收入的近<span class="highlight-text">三分之一 (32%)</span>，足以重塑收入结构。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-24">
+        <h2 class="font-noto-sans-sc ultra-large-text text-center mb-16">
+            <span class="highlight-text">行动建议</span>
+        </h2>
+        <div class="card p-10 tech-glow">
+            <div class="content-z">
+                <p class="text-3xl font-noto-sans-sc font-bold mb-4">
+                    <i class="fa-solid fa-hand-point-right list-icon"></i>定义下一个时代
+                </p>
+                <p class="text-xl mb-8">
+                    机器人技术将开启<span class="highlight-text">实体智能时代</span>，苹果必须成为这个时代的领导者。
+                </p>
+                <h3 class="text-2xl font-noto-sans-sc font-bold mb-4 border-b pb-2 border-b-gray-400">
+                    明确行动呼吁
+                </h3>
+                <ol class="list-decimal list-inside space-y-4 text-xl">
+                    <li class="font-noto-sans-sc">
+                        <span class="font-bold">批准三阶段战略：</span>
+                        立即授权成立一个<span class="highlight-text">跨部门专项执行团队</span>，由最高管理层直接领导。
+                    </li>
+                    <li class="font-noto-sans-sc">
+                        <span class="font-bold">抓住历史性机遇：</span>
+                        充分利用我们独特的垂直整合生态系统、品牌信任度和<span class="highlight-text">数据采集能力</span>，确保战略的快速推进。
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container text-center py-12 opacity-60">
+        <p class="text-sm font-open-sans">Apple Robotics Strategy Proposal | Confidential | Generated with Ghibli-Style Hybrid Layout</p>
+    </footer>
+
+    <script>
+        // Example of a simple JS hover effect to make it dynamic (already covered in CSS, but for illustration)
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                // Add any necessary JS logic here if needed (e.g., intersection observer for animations)
+            });
+        });
+    </script>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

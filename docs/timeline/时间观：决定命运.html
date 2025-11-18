@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间观：决定命运</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s;
+        }
+        .card:hover .tech-glow::before {
+             opacity: 1;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+           line-height: 1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 简单勾线图表样式 - 模拟 */
+        .chart-mock {
+            height: 120px;
+            width: 100%;
+            border-bottom: 2px solid #3A2E2C;
+            position: relative;
+        }
+        .chart-mock-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, 
+                transparent 0%, transparent 10%, 
+                #FFB300 10%, #FFB300 15%, 
+                transparent 15%, transparent 20%, 
+                #3A2E2C 20%, #3A2E2C 25%, 
+                transparent 25%, transparent 30%, 
+                #FFB300 30%, #FFB300 35%, 
+                transparent 35%, transparent 40%, 
+                #3A2E2C 40%, #3A2E2C 45%, 
+                transparent 45%, transparent 50%, 
+                #FFB300 50%, #FFB300 55%, 
+                transparent 55%, transparent 60%, 
+                #3A2E2C 60%, #3A2E2C 65%, 
+                transparent 65%, transparent 70%, 
+                #FFB300 70%, #FFB300 75%, 
+                transparent 75%, transparent 80%, 
+                #3A2E2C 80%, #3A2E2C 85%, 
+                transparent 85%, transparent 90%, 
+                #FFB300 90%, #FFB300 95%, 
+                transparent 95%, transparent 100%
+            );
+            /* 更像图表的模拟线 */
+            background-image: 
+                linear-gradient(to top, #3A2E2C 1px, transparent 1px),
+                linear-gradient(to right, #3A2E2C 1px, transparent 1px);
+            background-size: 10% 100%;
+            background-repeat: repeat-x;
+            /* 模拟折线图 */
+            clip-path: polygon(0 90%, 15% 50%, 30% 70%, 50% 30%, 75% 60%, 100% 10%);
+            /* 清除背景避免冲突 */
+            background: none; 
+            border: none;
+        }
+        .chart-line {
+             fill: none;
+             stroke: #FFB300;
+             stroke-width: 4px;
+             stroke-linecap: round;
+             stroke-linejoin: round;
+        }
+        .chart-area {
+             fill: rgba(255, 179, 0, 0.2); /* 高亮色的透明度渐变 */
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 lg:p-12">
+
+    <header class="text-center mb-16 lg:mb-24">
+        <h1 class="font-noto-sans-sc ultra-large-text highlight-text">时间观</h1>
+        <p class="text-xl md:text-3xl font-bold font-noto-sans-sc mt-4 max-w-4xl mx-auto">
+            <span class="text-4xl md:text-6xl mr-2">⏱️</span>
+            决定命运。
+            <span class="block text-gray-600 font-normal text-base md:text-lg mt-1">TIME IS CAPITAL. YOUR DESTINY IS THE VALUATION.</span>
+        </p>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-16 lg:space-y-20">
+
+        <section class="grid lg:grid-cols-2 gap-8 items-center">
+            <div class="card p-8 lg:p-12 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-xl font-bold uppercase tracking-widest mb-2">PROLOGUE</h2>
+                    <p class="text-4xl md:text-5xl font-extrabold font-noto-sans-sc leading-tight">
+                        <span class="highlight-text">被忽视的财富。</span>
+                        <span class="block text-base mt-2">The most expensive asset is never on the balance sheet. It's time.</span>
+                    </p>
+                    <blockquote class="border-l-4 border-[#5E8C61] pl-4 italic text-lg mt-6 text-gray-700">
+                        “真正可怕的，并不是贫穷本身。而是把时间当作无所谓的东西，任其被消耗、被涣散、被沉没。”
+                    </blockquote>
+                </div>
+            </div>
+            <div class="card card-alt-bg p-8 flex flex-col justify-center items-center h-full min-h-[300px]">
+                <i class="fas fa-sack-dollar text-9xl highlight-text opacity-70 mb-4"></i>
+                <p class="text-sm uppercase tracking-wider text-gray-600">UNACCOUNTED CAPITAL</p>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-8 items-stretch">
+            <div class="lg:col-span-2 card p-8 lg:p-12 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-6xl md:text-7xl font-noto-sans-sc font-extrabold mb-4 leading-tight">
+                        <span class="highlight-text">24 小时</span>
+                        <span class="block">唯一的公平筹码。</span>
+                    </h2>
+                    <p class="text-lg mt-4 font-noto-sans-sc">
+                        你没有资源、没有人脉，你能拿来下注的，只有二十年青春。我们常说“命运不公”，却忽视了世界给予的相同每日时长。多数人将这笔资本，花在迷茫和内耗上。
+                    </p>
+                    <div class="mt-6 flex items-center space-x-4">
+                        <i class="fas fa-balance-scale text-3xl highlight-text"></i>
+                        <p class="uppercase text-sm tracking-widest font-bold text-gray-600">THE EQUAL STARTING LINE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-darker-alt-bg p-8 flex flex-col justify-center items-center">
+                <p class="text-sm uppercase tracking-widest text-gray-600 mb-2">DAILY ALLOCATION</p>
+                <div class="large-stat-text highlight-stat">
+                    1440
+                </div>
+                <p class="text-xl font-bold font-noto-sans-sc mt-1">分钟</p>
+            </div>
+        </section>
+
+        <section class="card p-8 lg:p-12 tech-glow">
+            <div class="content-z">
+                <h2 class="ultra-large-text text-center font-noto-sans-sc mb-4 highlight-text">
+                    价值 <span class="text-gray-700">跃迁</span>
+                </h2>
+                <p class="text-center text-xl md:text-2xl font-bold font-noto-sans-sc mb-10">
+                    你的时间，谁在定价？<span class="block text-base font-normal mt-1">THE VALUE TRANSFORMATION OF AN HOUR.</span>
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="p-6 border-4 border-dashed border-[#A7C957] rounded-xl">
+                        <h3 class="text-3xl font-extrabold font-noto-sans-sc mb-4 text-[#5E8C61]">被动定价 (Passive Valuation)</h3>
+                        <p class="text-lg mb-4 italic">
+                            “你的一天，被标成两百块。你的创造力，被折算成工时。”
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li><i class="fas fa-hand-holding-dollar list-icon"></i> <span class="font-bold">工时替换：</span> 只能用更多时间换取更高收入。</li>
+                            <li><i class="fas fa-user-tie list-icon"></i> <span class="font-bold">外部标准：</span> 价值由合同与市场平均值决定。</li>
+                            <li><i class="fas fa-exclamation-triangle list-icon"></i> <span class="font-bold">残酷幻觉：</span> 相信多付体力是唯一出路。</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 border-4 border-dashed border-highlight-text rounded-xl">
+                        <h3 class="text-3xl font-extrabold font-noto-sans-sc mb-4 highlight-text">主动叠加 (Active Multi-Value)</h3>
+                        <p class="text-lg mb-4 italic">
+                            为同一小时叠加多重价值，不再只值两百。
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li><i class="fas fa-rocket list-icon"></i> <span class="font-bold">摸鱼成筹码：</span> 上班时摸鱼变成学习/下一份跳槽资本。</li>
+                            <li><i class="fas fa-lightbulb list-icon"></i> <span class="font-bold">副业成备胎：</span> 下班后副业作为抗风险与新技能试炼场。</li>
+                            <li><i class="fas fa-layer-group list-icon"></i> <span class="font-bold">价值密度：</span> 提高<strong>单位时间的价值</strong>，而非盲目增加时长。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-8">
+            <div class="card card-alt-bg p-8 lg:p-10 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center space-x-4 mb-4">
+                         <i class="fas fa-chess-board text-4xl highlight-text"></i>
+                         <h3 class="text-2xl font-extrabold font-noto-sans-sc">生命的秤：目标与秩序</h3>
+                    </div>
+                    <p class="text-lg mb-4 italic">
+                        穷得稳定的人，并非没有努力。而是把努力，交给了没有方向的时间。
+                    </p>
+                    <ul class="space-y-3 text-gray-700">
+                        <li><i class="fas fa-check-circle list-icon"></i> <span class="font-bold">日常积累：</span> 差距在日常拉开，不在高潮处。</li>
+                        <li><i class="fas fa-sitemap list-icon"></i> <span class="font-bold">微型战役：</span> 把一天排成小战役，迅速完成。</li>
+                        <li><i class="fas fa-brain list-icon"></i> <span class="font-bold">肌肉记忆：</span> 效率与清晰形成日常的习惯。</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card p-8 lg:p-10 tech-glow">
+                <div class="content-z">
+                    <div class="flex items-center space-x-4 mb-4">
+                         <i class="fas fa-gavel text-4xl highlight-text"></i>
+                         <h3 class="text-2xl font-extrabold font-noto-sans-sc">时间主权：你的领地</h3>
+                    </div>
+                    <p class="text-lg mb-4 italic">
+                        当你让别人随意进入你的领地，你就把斧头与木林，一并交了出去。
+                    </p>
+                    <ul class="space-y-3 text-gray-700">
+                        <li><i class="fas fa-ban list-icon"></i> <span class="font-bold">拒绝：</span> 习惯拒绝无效的打扰与无谓的社交。</li>
+                        <li><i class="fas fa-border-all list-icon"></i> <span class="font-bold">边界：</span> 设定边界，守住你的时间和创造力。</li>
+                        <li><i class="fas fa-tree list-icon"></i> <span class="font-bold">木材：</span> 确保你每天都在为自己砍下木材。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="card p-8 lg:p-12 tech-glow">
+            <div class="content-z">
+                <h2 class="text-5xl font-noto-sans-sc font-extrabold mb-2 leading-tight highlight-text">增长不贬值</h2>
+                <p class="text-2xl font-noto-sans-sc mb-8">
+                    INVEST IN <span class="text-gray-700 font-bold">SLOW VARIABLES.</span>
+                </p> 
+                
+                <p class="text-xl mt-6 font-noto-sans-sc text-center text-gray-700">
+                    体力会<span class="font-bold text-red-700">贬值</span>，增长不贬值。投资在能持续产生价值的事上：
+                </p>
+                <div class="mt-4 flex flex-wrap justify-center gap-4 text-lg font-bold font-noto-sans-sc">
+                    <span class="text-highlight-text"><i class="fas fa-graduation-cap list-icon"></i> 学习</span>
+                    <span class="text-gray-700"><i class="fas fa-cogs list-icon"></i> 搭建系统</span>
+                    <span class="text-highlight-text"><i class="fas fa-paint-brush list-icon"></i> 作品</span>
+                    <span class="text-gray-700"><i class="fas fa-user-shield list-icon"></i> 声誉与信用</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-1 card card-darker-alt-bg p-8 flex flex-col justify-center items-center min-h-[300px]">
+                <i class="fas fa-leaf text-8xl text-[#5E8C61] opacity-80 mb-4"></i>
+                <p class="text-sm uppercase tracking-wider text-gray-600">THE POWER OF QUIETNESS</p>
+            </div>
+            <div class="lg:col-span-2 card p-8 lg:p-12 tech-glow">
+                <div class="content-z">
+                    <h2 class="text-5xl font-noto-sans-sc font-extrabold mb-4 leading-tight">
+                        反勤劳陷阱 <span class="highlight-text block text-4xl mt-1">ANTI-BUSYNESS.</span>
+                    </h2>
+                    <p class="text-lg mb-4 italic font-noto-sans-sc">
+                        “身体很忙，思想很懒。”真正的清闲，是为深度思考留空位。
+                    </p>
+                    <ul class="space-y-3 text-gray-700">
+                        <li><i class="fas fa-shoe-prints list-icon"></i> <span class="font-bold">校准方向：</span> 先思考路径，再启动执行。</li>
+                        <li><i class="fas fa-search list-icon"></i> <span class="font-bold">审视与观察：</span> 识别自己的差异化优势。</li>
+                        <li><i class="fas fa-door-open list-icon"></i> <span class="font-bold">转机：</span> 很多转机诞生在片刻的清醒里。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="text-center py-16 lg:py-20">
+             <h2 class="ultra-large-text font-noto-sans-sc text-gray-700 mb-2">
+                 重估 <span class="highlight-text">生命</span>
+             </h2>
+             <p class="text-xl md:text-3xl font-bold font-noto-sans-sc mb-12">
+                 当收回时间主权，命运改变估值。
+             </p>
+
+             <div class="grid md:grid-cols-3 gap-6 text-left max-w-5xl mx-auto">
+                <div class="card p-5 tech-glow">
+                    <i class="fas fa-gem text-4xl highlight-text mb-3"></i>
+                    <h3 class="font-extrabold font-noto-sans-sc text-lg mb-1">核心资产</h3>
+                    <p class="text-sm text-gray-700">把每日 24 小时当作你的核心资产，以增值为目标。Time is Capital.</p>
+                </div>
+                <div class="card card-darker-alt-bg p-5 tech-glow">
+                    <i class="fas fa-chart-line text-4xl highlight-text mb-3"></i>
+                    <h3 class="font-extrabold font-noto-sans-sc text-lg mb-1">复利引擎</h3>
+                    <p class="text-sm text-gray-700">用年为尺度，把时间投入可复利的建设。Compound Effect.</p>
+                </div>
+                <div class="card p-5 tech-glow">
+                    <i class="fas fa-lock text-4xl highlight-text mb-3"></i>
+                    <h3 class="font-extrabold font-noto-sans-sc text-lg mb-1">边界主权</h3>
+                    <p class="text-sm text-gray-700">拒绝无效打扰，守住时间领地，不再交给别人定价。Sovereignty.</p>
+                </div>
+             </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center mt-20 pb-10 text-gray-500 text-sm">
+        <p>Ghibli-Inspired Presentation Design | 时间观 © 2025</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

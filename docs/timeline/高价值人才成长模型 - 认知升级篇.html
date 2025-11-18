@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高价值人才成长模型 - 认知升级篇</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           padding-top: 4rem; /* 顶部间距 */
+           padding-bottom: 4rem; /* 底部间距 */
+           transition: background-color 0.5s ease;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           transition: opacity 0.5s ease;
+           opacity: 0;
+        }
+        .card:hover .tech-glow::before {
+            opacity: 1;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* Custom Line Graphic for emphasis */
+        .line-graphic {
+            border: 4px solid #3A2E2C;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 5rem;
+            height: 5rem;
+            font-size: 2.5rem;
+        }
+        /* Tailwind custom utilities */
+        .max-w-7xl-plus {
+            max-width: 1440px; /* 适应1920px+屏幕 */
+        }
+        /* Subtle Animation for Title */
+        @keyframes fadeInMove {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-intro {
+            animation: fadeInMove 1.2s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="selection:bg-[#D2B48C] selection:text-[#3A2E2C]">
+
+    <div id="app" class="max-w-7xl-plus mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+        <section class="h-[70vh] flex flex-col justify-center items-center text-center pt-10">
+            <p class="text-xl sm:text-2xl font-open-sans tracking-widest text-[#5C5040] mb-4 uppercase animate-intro" style="animation-delay: 0.2s;">
+                HIGHER COGNITION MODEL
+            </p>
+            <h1 class="ultra-large-text font-noto-sans-sc leading-none mb-8 animate-intro" style="animation-delay: 0.4s;">
+                <span class="highlight-text">认知</span> 即 <span class="highlight-text">杠杆</span>
+            </h1>
+            <p class="text-lg sm:text-3xl font-noto-sans-sc max-w-4xl text-[#3A2E2C] opacity-90 animate-intro" style="animation-delay: 0.6s;">
+                理解世界运行的<span class="font-bold">底层规律</span>，找到影响结果的<span class="highlight-text font-bold">关键支点</span>。
+            </p>
+        </section>
+
+        <section class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 card p-8 tech-glow">
+                <div class="content-z">
+                    <p class="text-xl sm:text-2xl font-open-sans tracking-wider text-[#5C5040] mb-3">
+                        INSIGHT & SUMMARY
+                    </p>
+                    <h2 class="text-4xl sm:text-5xl font-noto-sans-sc font-bold mb-6 leading-tight">
+                        <span class="highlight-text">核心启发</span>：认知决定了你的<br>价值边界与风险承受力
+                    </h2>
+                    <div class="flex items-center space-x-6">
+                        <div class="line-graphic border-4 border-[#FFB300] text-[#FFB300]">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <p class="text-lg font-noto-sans-sc opacity-90">
+                            故事最核心的一句话是：<span class="font-bold">认知就是你对世界运行规律的理解程度</span>，你理解得越深，你就越能找到杠杆点。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-alt-bg flex flex-col justify-center items-center text-center p-6 tech-glow">
+                <div class="content-z">
+                    <p class="text-sm font-open-sans tracking-wider text-[#5C5040] mb-2">
+                        COGNITION THRESHOLD
+                    </p>
+                    <div class="ultra-large-text highlight-stat leading-none">
+                        4
+                    </div>
+                    <p class="text-2xl font-noto-sans-sc font-bold mt-2">
+                        大认知模型
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-16">
+
+            <div class="card p-8 tech-glow grid lg:grid-cols-3 gap-8">
+                <div class="content-z lg:col-span-1">
+                    <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-3">
+                        <span class="highlight-stat">1.</span> 结果导向
+                    </h3>
+                    <p class="text-lg font-open-sans text-[#5C5040]">Outcome-Oriented Thinking</p>
+                </div>
+                <div class="content-z lg:col-span-2 space-y-6">
+                    <div>
+                        <p class="text-2xl font-bold font-noto-sans-sc mb-2 flex items-center">
+                            <i class="fas fa-dot-circle list-icon"></i> 认知升级：聚焦核心杠杆点
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="font-bold">过程导向</span>：关注“我该怎么做”，追求完美过程，努力但低效。
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="highlight-text font-bold">结果导向</span>：倒推实现目标所需的核心条件，将精力聚焦于对结果影响最大的关键杠杆点。
+                        </p>
+                    </div>
+                    <blockquote class="border-l-4 border-[#D2B48C] pl-4 italic text-sm text-[#5C5040]">
+                        <p>可学到的：清晰定义目标，避免无效的“努力”。</p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="card card-darker-alt-bg p-8 tech-glow grid lg:grid-cols-3 gap-8">
+                <div class="content-z lg:col-span-1">
+                    <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-3">
+                        <span class="highlight-stat">2.</span> 价值交换
+                    </h3>
+                    <p class="text-lg font-open-sans text-[#5C5040]">Value Exchange Mastery</p>
+                </div>
+                <div class="content-z lg:col-span-2 space-y-6">
+                    <div>
+                        <p class="text-2xl font-bold font-noto-sans-sc mb-2 flex items-center">
+                            <i class="fas fa-handshake list-icon"></i> 突破工时，扩大价值边界
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="font-bold">低价值</span>：仅按岗位描述完成工作，被动等待任务。
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="highlight-text font-bold">高价值</span>：主动创造价值，解决<span class="font-bold">更高层级领导的问题</span>，扩大价值边界。
+                        </p>
+                    </div>
+                    <blockquote class="border-l-4 border-[#FFB300] pl-4 italic text-sm text-[#5C5040]">
+                        <p>可学到的：职场晋升不是看“工时”，而是看“解决了多大的问题”。你的价值边界越广，越不可替代。</p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="card p-8 tech-glow grid lg:grid-cols-3 gap-8">
+                <div class="content-z lg:col-span-1">
+                    <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-3">
+                        <span class="highlight-stat">3.</span> 跨界迁移
+                    </h3>
+                    <p class="text-lg font-open-sans text-[#5C5040]">Applied Methodology</p>
+                </div>
+                <div class="content-z lg:col-span-2 space-y-6">
+                    <div>
+                        <p class="text-2xl font-bold font-noto-sans-sc mb-2 flex items-center">
+                            <i class="fas fa-sitemap list-icon"></i> 内化底层逻辑为直觉
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="font-bold">知识点</span>：学会一套方法论（如万达的营销方法论）。
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="highlight-text font-bold">应用</span>：将底层逻辑跨界应用，将知识内化为直觉（如将 ROI 模型完整应用于微商）。
+                        </p>
+                    </div>
+                    <blockquote class="border-l-4 border-[#D2B48C] pl-4 italic text-sm text-[#5C5040]">
+                        <p>可学到的：真正的学习是“跨界迁移”。商业的底层逻辑在不同行业是相通的。</p>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="card card-alt-bg p-8 tech-glow grid lg:grid-cols-3 gap-8">
+                <div class="content-z lg:col-span-1">
+                    <h3 class="text-5xl font-noto-sans-sc font-extrabold mb-3">
+                        <span class="highlight-stat">4.</span> 持续迭代
+                    </h3>
+                    <p class="text-lg font-open-sans text-[#5C5040]">Continuous Learning</p>
+                </div>
+                <div class="content-z lg:col-span-2 space-y-6">
+                    <div>
+                        <p class="text-2xl font-bold font-noto-sans-sc mb-2 flex items-center">
+                            <i class="fas fa-lock list-icon"></i> 构筑商业壁垒（护城河）
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="font-bold">执行者</span>：盲目跟风，没有长远规划，市场消失时被淘汰。
+                        </p>
+                        <p class="pl-8 text-base text-[#3A2E2C] opacity-90">
+                            <span class="highlight-text font-bold">战略家</span>：意识到<span class="font-bold">护城河</span>的重要性，进行饱和攻击，并通过高层次学习确保认知与时代同步。
+                        </p>
+                    </div>
+                    <blockquote class="border-l-4 border-[#FFB300] pl-4 italic text-sm text-[#5C5040]">
+                        <p>可学到的：在存量竞争时代，只有壁垒才能带来持续的利润。新的尝试必须用可持续性、天花板等数据指标来衡量。</p>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card p-12 text-center tech-glow">
+            <div class="content-z">
+                <p class="text-lg sm:text-2xl font-open-sans tracking-widest text-[#5C5040] mb-4 uppercase">
+                    ACTIONABLE INSIGHT
+                </p>
+                <h2 class="large-stat-text font-noto-sans-sc font-bold mb-6 leading-snug">
+                    <span class="highlight-stat">应用</span> 这四个核心认知模型，<br>开始你的高价值人才成长旅程
+                </h2> 
+             </div>
+        </section>
+
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

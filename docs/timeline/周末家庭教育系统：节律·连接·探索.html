@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周末家庭教育系统：节律·连接·探索</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* 引入 Open Sans（英文）和 Noto Sans SC（中文） */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700;800&display=swap');
+        
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                          linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                          linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                          linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            padding-bottom: 5rem; /* 底部留白 */
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        /* 针对高亮色的光晕效果 */
+        .tech-glow::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            /* 运用高亮色 #FFB300 自身透明度渐变 */
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0.8;
+            transition: opacity 0.5s;
+        }
+        .card:hover .tech-glow::before {
+            opacity: 1;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        /* 响应式网格调整 */
+        @media (min-width: 1920px) {
+            .container {
+                max-width: 1600px; /* 适应更大屏幕 */
+            }
+        }
+        /* 勾线图形化元素的模拟样式 */
+        .sketch-line {
+            border: 2px solid #3A2E2C; /* 深棕色勾线 */
+            border-radius: 10px;
+            padding: 0.5rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="font-noto-sans-sc min-h-screen">
+
+    <div class="container mx-auto px-4 md:px-8 lg:px-16 pt-12">
+
+        <header class="text-center mb-16">
+            <h1 class="ultra-large-text highlight-text">节律·连接·探索</h1>
+            <p class="text-xl md:text-2xl lg:text-3xl font-bold mt-4 tracking-wider text-4xl font-extrabold text-[#5B453A]">
+                周末家庭教育系统
+            </p>
+            <p class="text-gray-600 italic mt-2 text-sm md:text-base">THE TRI-UNITY SYSTEM: RHYTHM, CONNECTION, EXPLORATION</p>
+        </header>
+
+        <section class="mb-20">
+            <h2 class="text-4xl font-bold mb-8 highlight-text tracking-wide text-center md:text-left">
+                <i class="fa-solid fa-layer-group list-icon text-3xl"></i>
+                <span class="font-noto-sans-sc">不变骨架：第一性原理</span>
+                <span class="text-lg text-gray-600 ml-3 italic font-open-sans">THE CORE FRAMEWORK</span>
+            </h2>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+
+                <div class="card p-6 md:p-10 tech-glow">
+                    <div class="content-z">
+                        <p class="ultra-large-text text-[#5B453A] mb-4">01</p>
+                        <h3 class="text-3xl font-extrabold highlight-text mb-3">稳定节律</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-4">Stable Rhythm</p>
+                        <p class="text-md leading-relaxed">
+                            <i class="fa-solid fa-clock list-icon"></i>
+                            儿童发展依赖<span class="font-bold">可预期的作息</span>与重复锚点。规律降低摩擦，提升自控力。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-6 md:p-10 card-alt-bg tech-glow">
+                    <div class="content-z">
+                        <p class="ultra-large-text text-[#5B453A] mb-4">02</p>
+                        <h3 class="text-3xl font-extrabold highlight-text mb-3">安全依恋</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-4">Secure Attachment</p>
+                        <p class="text-md leading-relaxed">
+                            <i class="fa-solid fa-heart list-icon"></i>
+                            <span class="font-bold">高质量连接</span>是学习动机与情绪调节的底座，先关系后学习。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-6 md:p-10 tech-glow">
+                    <div class="content-z">
+                        <p class="ultra-large-text text-[#5B453A] mb-4">03</p>
+                        <h3 class="text-3xl font-extrabold highlight-text mb-3">主动探索</h3>
+                        <p class="text-lg font-open-sans text-gray-600 mb-4">Active Exploration</p>
+                        <p class="text-md leading-relaxed">
+                            <i class="fa-solid fa-compass list-icon"></i>
+                            以<span class="font-bold">好奇心驱动</span>的问题情境与可见的进步反馈，使能力增长呈复利。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <blockquote class="mt-8 text-center text-2xl italic font-serif text-gray-700 p-4 border-l-4 border-highlight-text bg-white/50 rounded-lg">
+                <i class="fa-solid fa-quote-left text-highlight-text mr-2"></i>
+                <span class="font-bold font-noto-sans-sc">规律托底，关系点燃，探索增量。</span>
+            </blockquote>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-4xl font-bold mb-8 highlight-text tracking-wide text-center md:text-left">
+                <i class="fa-solid fa-diagram-project list-icon text-3xl"></i>
+                <span class="font-noto-sans-sc">动态网络：增强与调节回路</span>
+                <span class="text-lg text-gray-600 ml-3 italic font-open-sans">FEEDBACK LOOPS & DYNAMICS</span>
+            </h2>
+
+            <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                <div class="lg:col-span-1 xl:col-span-2 space-y-6">
+                    <h3 class="text-2xl font-extrabold text-[#5B453A]">
+                        <i class="fa-solid fa-circle-up list-icon"></i>
+                        增强回路 (Reinforcing Loops)
+                    </h3>
+                    
+                    <div class="card card-darker-alt-bg p-6">
+                        <p class="text-lg font-bold text-highlight-text mb-1">(R1) 节律增强回路</p>
+                        <p class="text-sm italic font-open-sans mb-3">Rhythm Reinforcement</p>
+                        <p>
+                            [稳定作息] &rarr; [可预期感↑] &rarr; [情绪稳定↑] &rarr; <span class="font-bold">巩固节律</span> (R)
+                        </p>
+                    </div>
+                    
+                    <div class="card card-alt-bg p-6">
+                        <p class="text-lg font-bold text-highlight-text mb-1">(R2) 依恋-动机回路</p>
+                        <p class="text-sm italic font-open-sans mb-3">Attachment-Motivation Loop</p>
+                        <p>
+                            [高质量亲子连接] &rarr; [安全感↑] &rarr; [动机↑] &rarr; <span class="font-bold">促进更好连接</span> (R)
+                        </p>
+                    </div>
+
+                    <div class="card card-darker-alt-bg p-6">
+                        <p class="text-lg font-bold text-highlight-text mb-1">(R3) 探索复利回路</p>
+                        <p class="text-sm italic font-open-sans mb-3">Exploration Compound Interest</p>
+                        <p>
+                            [探索任务设计] &rarr; [小胜利体验] &rarr; [自我效能↑] &rarr; <span class="font-bold">挑战更大成功</span> (R)
+                        </p>
+                    </div>
+
+                    <div class="card p-6 bg-green-50/75 border-l-4 border-green-600">
+                        <p class="text-lg font-bold text-green-700 mb-1">(R4) 社区增益回路</p>
+                        <p class="text-sm italic font-open-sans mb-3">Community Gain Loop</p>
+                        <p>
+                            [外部活动资源↑] &rarr; [社交与见识↑] &rarr; [兴趣扩展↑] &rarr; <span class="font-bold">再获取资源</span> (R)
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="lg:col-span-1 xl:col-span-1 space-y-6">
+                    <h3 class="text-2xl font-extrabold text-[#5B453A]">
+                        <i class="fa-solid fa-circle-down list-icon"></i>
+                        调节回路 (Balancing Loops)
+                    </h3>
+                    
+                    <div class="card p-6 bg-red-50/75 border-l-4 border-red-600">
+                        <div class="flex items-center space-x-4">
+                            <div class="large-stat-text text-red-600 font-bold">B1</div>
+                            <div>
+                                <p class="text-lg font-bold text-red-700">(B1) 负荷调节回路</p>
+                                <p class="text-sm italic font-open-sans mb-2">Load Balancing</p>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm">
+                            [过度安排/屏幕失衡] &rarr; [疲劳/冲突↑] &rarr; <span class="font-bold">倒逼减负与限屏</span> (B)
+                        </p>
+                        <div class="mt-4 h-1 bg-red-300 rounded-full">
+                            <div class="h-full w-4/5 bg-red-600 rounded-full sketch-line" style="border: none;"></div>
+                        </div><br/>
+                        <p class="text-xs text-right mt-1 text-red-600">负荷水平：80% 需警惕</p>
+                    </div>
+
+                    <div class="card p-6 bg-blue-50/75 border-l-4 border-blue-600">
+                        <div class="flex items-center space-x-4">
+                            <div class="large-stat-text text-blue-600 font-bold">B2</div>
+                            <div>
+                                <p class="text-lg font-bold text-blue-700">(B2) 一致性调节回路</p>
+                                <p class="text-sm italic font-open-sans mb-2">Consistency Control</p>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm">
+                            [家庭一致性↓] &rarr; [规则争议↑] &rarr; <span class="font-bold">系统自我削弱</span> (B)
+                        </p>
+                        <div class="mt-4 h-1 bg-blue-300 rounded-full">
+                            <div class="h-full w-2/3 bg-blue-600 rounded-full sketch-line" style="border: none;"></div>
+                        </div><br/>
+                        <p class="text-xs text-right mt-1 text-blue-600">一致性：66% 仍需努力</p>
+                    </div>
+
+                    <div class="card card-darker-alt-bg p-6 tech-glow">
+                        <div class="content-z">
+                            <h4 class="text-xl font-extrabold highlight-text mb-2">升维总结</h4>
+                            <p class="text-sm leading-relaxed">
+                                增强回路R1/R2/R3共同“涌现并维持”骨架。调节回路B1/B2确保系统不过载与不失序。骨架为网络设边界。
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-4xl font-bold mb-10 highlight-text tracking-wide text-center">
+                <i class="fa-solid fa-hand-fist list-icon text-3xl"></i>
+                <span class="font-noto-sans-sc">关键杠杆点：立即行动</span>
+                <span class="text-lg text-gray-600 ml-3 italic font-open-sans">HIGH-LEVERAGE ACTIONS</span>
+            </h2>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                
+                <div class="card p-8 lg:p-12 card-alt-bg tech-glow">
+                    <div class="content-z">
+                        <p class="ultra-large-text text-[#5B453A] text-opacity-20 absolute top-[-10px] right-[-10px] lg:top-[-30px] lg:right-[-30px] pointer-events-none">VIEW</p>
+                        <h3 class="text-3xl md:text-4xl font-extrabold highlight-text mb-4">新视角</h3>
+                        <p class="text-xl leading-relaxed font-noto-sans-sc">
+                            <span class="font-extrabold">不是“补课堆量”</span>，而是“用节律承载连接，以连接点燃探索”。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card p-8 lg:p-12 tech-glow">
+                    <div class="content-z">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-[#5B453A] mb-4">5个行动</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-calendar-check list-icon mt-1 text-xl flex-shrink-0"></i>
+                                <div>
+                                    <p class="text-lg font-bold">可预期的周末剧本</p>
+                                    <p class="text-sm text-gray-600">固定“起床—户外—专注—共读—自由玩—收尾复盘”时段锚点。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-hand-holding-heart list-icon mt-1 text-xl flex-shrink-0"></i>
+                                <div>
+                                    <p class="text-lg font-bold">高质量的连接时刻</p>
+                                    <p class="text-sm text-gray-600">每天至少<span class="font-bold highlight-stat">20分钟</span>“陪伴金块”，先关系再任务。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-lightbulb list-icon mt-1 text-xl flex-shrink-0"></i>
+                                <div>
+                                    <p class="text-lg font-bold">可见的探索任务</p>
+                                    <p class="text-sm text-gray-600">以兴趣为核心的项目化微任务，确保当日小胜利可被看见与表扬。</p>
+                                </div>
+                            </li>
+                             <li class="flex items-start">
+                                <i class="fa-solid fa-ban list-icon mt-1 text-xl flex-shrink-0"></i>
+                                <div>
+                                    <p class="text-lg font-bold">负荷与屏幕的红线</p>
+                                    <p class="text-sm text-gray-600">总活动不超阈值，设定明确限屏窗口，防止B1触发。</p>
+                                </div>
+                            </li>
+                             <li class="flex items-start">
+                                <i class="fa-solid fa-arrows-rotate list-icon mt-1 text-xl flex-shrink-0"></i>
+                                <div>
+                                    <p class="text-lg font-bold">一次全家复盘</p>
+                                    <p class="text-sm text-gray-600">晚间三问“最开心/最困难/明天想尝试”，体验沉淀增量。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center mt-20 text-sm text-gray-500 italic">
+        <p class="font-open-sans">© 2025 Ghibli-inspired Family Education System Design</p>
+    </footer>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
