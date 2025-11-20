@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品经理的新范式：从文档到可执行规范</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+            background-color: #FDF6E3; /* 吉卜力米白底色 */
+            background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                              linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+            background-size: 20px 20px;
+            color: #3A2E2C; /* 主文字颜色 深棕 */
+            overflow-x: hidden;
+        }
+        .font-noto-sans-sc {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+            color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem; /* 苹果风格圆角 */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+            padding: 1.5rem; /* 24px */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative;
+            overflow: hidden; /* For glow effects */
+            border: 1px solid rgba(0, 0, 0, 0.05); /* 增加一点边界感 */
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+            background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果保留 */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 250%;
+            height: 250%;
+            background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0.7;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        .ultra-large-text {
+            font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+            font-weight: 900; /* Noto Sans SC Black */
+            line-height: 1;
+            /* 增加一点手绘线条感 */
+            text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5); 
+        }
+        .large-stat-text {
+            font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats like subscriber count */
+            font-weight: 700;
+        }
+        .list-icon {
+            color: #FFB300; /* Highlight color for list icons */
+            margin-right: 0.5rem; /* Space between icon and text */
+        }
+        .section-separator {
+            border-bottom: 2px dashed rgba(58, 46, 44, 0.1); /* 柔和的分隔线 */
+        }
+        /* 响应式调整大尺寸容器宽度 */
+        .container-xl {
+            max-width: 1440px; 
+        }
+        @media (min-width: 1920px) {
+            .container-xl {
+                max-width: 1680px; /* 进一步增加宽度以适应1920px+显示器 */
+            }
+        }
+
+        /* 勾线图形（示例：一个简单的圆圈进度条） */
+        .outline-shape {
+            width: 100px;
+            height: 100px;
+            border: 8px solid #FFB300;
+            border-radius: 50%;
+            border-top-color: transparent;
+            position: relative;
+            transform: rotate(45deg);
+        }
+        .outline-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3A2E2C;
+        }
+    </style>
+</head>
+<body class="font-noto-sans-sc">
+
+    <div class="container container-xl mx-auto px-4 py-16 space-y-24">
+        
+        <header class="text-center pb-8 section-separator">
+            <h4 class="text-xl font-light text-gray-500 mb-4">PRODUCT MANAGEMENT TREND 2024+</h4>
+            <h1 class="ultra-large-text font-noto-sans-sc text-center leading-none">
+                <span class="highlight-text">看得见</span>
+                <span class="text-gray-700">的产品</span>
+            </h1>
+            <p class="text-4xl mt-8 font-light max-w-4xl mx-auto">
+                产品经理的角色正从“写文档、画PPT”转向“<span class="highlight-text font-medium">拿得出手的可交互 Demo</span>”。AI正在加速决策方式的迁移。
+            </p>
+        </header>
+
+        <section class="space-y-16">
+            <h2 class="text-5xl font-bold mb-12 text-center">
+                <span class="highlight-text">三大</span> 核心主线
+                <span class="text-sm block font-light text-gray-500 mt-1">THE THREE PILLARS OF PRODUCT REVOLUTION</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <div class="card card-alt-bg tech-glow flex flex-col justify-start">
+                    <div class="content-z">
+                        <i class="fas fa-drafting-compass large-stat-text highlight-text mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-3">焦点一</h3>
+                        <p class="text-4xl font-extrabold highlight-text mb-6">Demo 真实</p>
+                        <p class="text-lg">决策方式的迁移：传统PRD优化“计划”，Demo优化“体验与可行性”。AI使<span class="font-bold">“看得见”的证据</span>成为新的沟通货币。</p>
+                        <ul class="list-none mt-4 text-base space-y-2">
+                            <li class="flex items-start"><i class="fas fa-check-circle list-icon mt-1"></i>Demo化门槛降低，但对“产品思维的细化”要求更高。</li>
+                            <li class="flex items-start"><i class="fas fa-times-circle text-gray-500 mt-1"></i>风险：Demo拉近落地距离，但不能替代需求验证、用户访谈。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-code large-stat-text highlight-text mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-3">焦点二</h3>
+                        <p class="text-4xl font-extrabold highlight-text mb-6">工程师化</p>
+                        <p class="text-lg">角色重构而非换岗：掌握<span class="font-bold">“接口级”的表达与约束</span>，用清晰的输入输出描述功能边界。</p>
+                        <ul class="list-none mt-4 text-base space-y-2">
+                            <li class="flex items-start"><i class="fas fa-sitemap list-icon mt-1"></i>团队分工：工程师负责架构，产品经理负责业务语义与技术边界的对齐。</li>
+                            <li class="flex items-start"><i class="fas fa-arrow-up list-icon mt-1"></i>转型：能把问题抽象成用例，敢用AI跑通假设的人，将实现升维。</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card card-darker-alt-bg tech-glow">
+                    <div class="content-z">
+                        <i class="fas fa-file-invoice large-stat-text highlight-text mb-4"></i>
+                        <h3 class="text-3xl font-bold mb-3">焦点三</h3>
+                        <p class="text-4xl font-extrabold highlight-text mb-6">Spec Coding</p>
+                        <p class="text-lg">从PRD到可执行规范：把需求抽象为<span class="font-bold">机器可读、可生成原型与测试</span>的约束与用例。</p>
+                        <ul class="list-none mt-4 text-base space-y-2">
+                            <li class="flex items-start"><i class="fas fa-robot list-icon mt-1"></i>工具链：AI自动补全边界条件、生成验收用例、联动原型与测试套件。</li>
+                            <li class="flex items-start"><i class="fas fa-scale-balanced list-icon mt-1"></i>组织影响：可执行规范减少沟通损耗，小团队执行力逼近大团队。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center section-separator pt-16">
+            
+            <div class="lg:col-span-2 space-y-6">
+                <h2 class="text-5xl font-bold">
+                    <span class="highlight-text">不可逆</span>的逻辑
+                    <span class="text-sm block font-light text-gray-500 mt-1">WHY THE SHIFT IS INEVITABLE</span>
+                </h2>
+                <p class="text-2xl font-light">
+                    组织自然会选择成本更低的路径。<span class="font-semibold highlight-text">效率、清晰度、证据密度</span>是Demo与Spec带来的核心优势。
+                </p>
+
+                <div class="card p-6 mt-6">
+                    <p class="text-xl font-semibold mb-3">需要“踩刹车”的场景（Guardrails）:</p>
+                    <ul class="list-none text-lg space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-exclamation-triangle list-icon mt-1 text-red-500"></i> 
+                            高风险领域：金融合规、医疗安全，仍需<span class="font-bold">人类审查</span>和严格测试。
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-exclamation-triangle list-icon mt-1 text-red-500"></i>
+                            “Demo驱动的幻觉”：可点击<span class="font-bold">不等于可交付</span>，容量规划、监控策略仍是工程真功。
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 card card-alt-bg h-96 flex flex-col justify-center items-center">
+                <div class="content-z w-full h-full p-4">
+                    <h4 class="text-2xl font-bold mb-4 text-center">沟通成本减少 (Simulated Data)</h4>
+                    <div class="flex items-end justify-around h-2/3">
+                        <div class="text-center">
+                            <div class="bg-gray-400/50 w-8 md:w-16 h-40 rounded-t-lg transition-all duration-700 ease-out" style="height: 160px;"></div>
+                            <span class="text-lg mt-2 block font-medium">传统 PRD</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-amber-500/70 w-8 md:w-16 h-20 rounded-t-lg transition-all duration-700 ease-out" style="height: 80px;"></div>
+                            <span class="text-lg mt-2 block font-medium highlight-text">Demo + Spec</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-gray-500">
+                        *数据来源：社区讨论共识 - 模拟图表
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-12 pt-16 section-separator">
+            <h2 class="text-5xl font-bold text-center">
+                <span class="text-gray-700">一线经验：</span>
+                <span class="highlight-text">如何“工程师化”</span>
+                <span class="text-sm block font-light text-gray-500 mt-1">PRODUCT PRACTICE ACTION PLAN</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <div class="card flex flex-col items-center text-center p-6">
+                    <div class="outline-shape mb-4">
+                        <div class="outline-text">01</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">最小原子：“用例”</h3>
+                    <p class="text-base">为每个目标写清输入、前置条件、状态变化；让AI生成<span class="font-bold highlight-text">原型与测试</span>，再回填假设。</p>
+                </div>
+
+                <div class="card card-darker-alt-bg flex flex-col items-center text-center p-6">
+                    <div class="outline-shape mb-4" style="border-top-color: #FFB300; border-right-color: #FFB300; border-bottom-color: transparent; border-left-color: transparent; transform: rotate(0deg);">
+                        <div class="outline-text" style="transform: translate(-50%, -50%);">02</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">规范结构化</h3>
+                    <p class="text-base">约定接口契约、事件字典、错误语义、验收标准，使其尽可能<span class="font-bold highlight-text">机器可读</span>。</p>
+                </div>
+
+                <div class="card flex flex-col items-center text-center p-6">
+                    <div class="outline-shape mb-4" style="border-top-color: #FFB300; border-right-color: transparent; border-bottom-color: transparent; border-left-color: #FFB300; transform: rotate(-45deg);">
+                        <div class="outline-text" style="transform: translate(-50%, -50%) rotate(45deg);">03</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">打通工具栈</h3>
+                    <p class="text-base">原型工具负责<span class="font-bold">可见性</span>；代码/测试工具负责<span class="font-bold">可执行性</span>；数据工具负责<span class="font-bold">验证性</span>。</p>
+                </div>
+
+                <div class="card card-alt-bg flex flex-col items-center text-center p-6">
+                    <div class="outline-shape mb-4" style="border-top-color: transparent; border-right-color: #FFB300; border-bottom-color: #FFB300; border-left-color: transparent; transform: rotate(180deg);">
+                        <div class="outline-text" style="transform: translate(-50%, -50%) rotate(180deg);">04</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">人审—机产</h3>
+                    <p class="text-base">AI产出初稿，<span class="font-bold highlight-text">人审改进边界</span>；上线后以真实数据与反馈回写规范。</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="pt-16 text-center">
+            <h2 class="text-6xl font-black mb-4">
+                <span class="text-gray-700">新一轮的</span>
+                <span class="highlight-text">主动权</span>
+            </h2>
+            <p class="text-3xl font-light max-w-5xl mx-auto mb-8">
+                本质不是替代，而是将“产品的语言”从描述转为<span class="font-bold highlight-text">执行</span>。能把业务语义压缩为接口与用例的人，将掌握生产力分配的主动。
+            </p>
+            <p class="text-xl text-gray-500">
+                <i class="fas fa-mountain mr-2"></i> 竞争回到“谁能更快、更严密地验证真正的价值”。
+            </p>
+        </footer>
+
+    </div>
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
