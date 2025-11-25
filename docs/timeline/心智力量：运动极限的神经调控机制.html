@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心智力量：运动极限的神经调控机制</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* Base Styles - Ghibli Palette & Texture */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* Subtle Hand-drawn Texture */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕/墨绿 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        
+        /* Card Styles - Apple-like Floating Design */
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; 
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        
+        /* Tech Glow Effect */
+        .tech-glow::before { 
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           /* High-light color with transparency gradient */
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        
+        /* Typography Styles */
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); 
+           font-weight: 900; 
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); 
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300; 
+           margin-right: 0.5rem; 
+        }
+
+        /* Custom Visual Element: Simple Hooked Graphics (勾线图形化) */
+        .hooked-graphic {
+            border: 3px solid #3A2E2C; /* 深棕色勾线 */
+            padding: 1rem;
+            border-radius: 1rem;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+            color: #3A2E2C;
+            text-align: center;
+        }
+        .hooked-graphic::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: #FDF6E3;
+            border: 3px solid #3A2E2C;
+            border-radius: 50%;
+        }
+        .hooked-graphic-icon {
+            font-size: 1.5rem;
+            color: #5599ff; /* 淡蓝科技感 */
+        }
+
+    </style>
+</head>
+
+<body class="min-h-screen p-8 md:p-12 lg:p-20 transition-all">
+
+    <main class="max-w-[1920px] mx-auto">
+        
+        <header class="mb-20 text-center md:text-left">
+            <h1 class="ultra-large-text font-noto-sans-sc text-[#4B7348]">
+                心智力量：<span class="highlight-text block md:inline">突破肉体瓶颈</span>
+            </h1>
+            <p class="text-2xl md:text-3xl font-light tracking-wider text-[#6A5F58] mt-4">
+                MIND OVER MATTER &middot; The Neural Overdrive Mechanism
+            </p>
+        </header>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+            
+            <div class="card card-darker-alt-bg lg:col-span-2 tech-glow p-8 md:p-12">
+                <div class="content-z">
+                    <p class="text-3xl font-medium mb-4 text-[#3A2E2C] font-noto-sans-sc">
+                        当你“跑不动了”，你的肌肉还剩...
+                    </p>
+                    <div class="flex items-end space-x-6">
+                        <div class="ultra-large-text highlight-stat leading-none">
+                            20-40%
+                        </div>
+                        <p class="text-5xl font-bold font-noto-sans-sc text-[#6A5F58] mb-4">
+                             <span class="text-[#3A2E2C]">剩余能量</span>
+                        </p>
+                    </div>
+                    <p class="text-xl mt-4 italic text-[#6A5F58]">
+                        "Who locks this capacity? Your brain does."
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="content-z p-6">
+                    <h3 class="text-3xl font-bold mb-4 font-noto-sans-sc text-[#4B7348]">
+                        <i class="fas fa-lock list-icon"></i> 谁锁住了能力？
+                    </h3>
+                    <p class="text-lg font-noto-sans-sc mb-4">
+                      <strong>大脑 (The Brain)</strong> 是那个保守的“财务总监”。
+                    </p>
+                    <ul class="space-y-3 text-lg text-[#3A2E2C]">
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-hand-holding-heart"></i></span>
+                            <span class="flex-1 font-bold">核心任务：</span><span class="text-[#6A5F58]">生存 (Survival)，而非破纪录。</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="list-icon mt-1"><i class="fas fa-battery-empty"></i></span>
+                            <span class="flex-1 font-bold">手段：</span><span class="text-[#6A5F58]">提前制造虚假疲劳感 (Pain & Fatigue)。</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20">
+            <h2 class="text-4xl font-bold mb-10 text-center font-noto-sans-sc text-[#3A2E2C]">
+                Mindfulness 解锁机制：<span class="highlight-text">三大底层原理</span>
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="card card-alt-bg tech-glow">
+                    <div class="content-z p-4">
+                        <p class="text-lg uppercase text-[#6A5F58] tracking-widest mb-2">原理一 / Principle I</p>
+                        <h3 class="text-3xl font-bold mb-4 font-noto-sans-sc text-[#4B7348]">
+                            中央调控理论
+                        </h3>
+                        <p class="text-2xl font-light italic mb-4 text-[#3A2E2C]">
+                            The Central Governor Theory
+                        </p>
+                        
+                        <div class="hooked-graphic my-4">
+                            <i class="fas fa-calculator hooked-graphic-icon"></i><br>
+                            大脑 = 保守的财务总监 (BMS)
+                        </div>
+
+                        <ul class="space-y-3 text-lg font-noto-sans-sc">
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-exclamation-triangle"></i></span>
+                                <span class="flex-1">普通人：<span class="font-bold">杏仁核报警</span> → 启动熔断机制。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-check-shield"></i></span>
+                                <span class="flex-1">Mindfulness：<span class="font-bold">“觉察但不评判”</span> → 骗过“财务总监”。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="content-z p-4">
+                        <p class="text-lg uppercase text-[#6A5F58] tracking-widest mb-2">原理二 / Principle II</p>
+                        <h3 class="text-3xl font-bold mb-4 font-noto-sans-sc text-[#4B7348]">
+                            痛觉去耦
+                        </h3>
+                        <p class="text-2xl font-light italic mb-4 text-[#3A2E2C]">
+                            Decoupling Sensation from Emotion
+                        </p>
+                        
+                        <div class="hooked-graphic my-4">
+                            <i class="fas fa-sliders-h hooked-graphic-icon"></i><br>
+                            痛苦 = 物理信号 (Sensation) + 情绪反应 (Suffering)
+                        </div>
+
+                        <ul class="space-y-3 text-lg font-noto-sans-sc">
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-bolt"></i></span>
+                                <span class="flex-1">物理信号：客观事实（乳酸、放电）。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-microphone-slash"></i></span>
+                                <span class="flex-1">Mindfulness：<span class="font-bold">切断“情绪消耗”</span> → 保持动作不变形。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card-darker-alt-bg">
+                    <div class="content-z p-4">
+                        <p class="text-lg uppercase text-[#6A5F58] tracking-widest mb-2">原理三 / Principle III</p>
+                        <h3 class="text-3xl font-bold mb-4 font-noto-sans-sc text-[#4B7348]">
+                            优化神经效率
+                        </h3>
+                        <p class="text-2xl font-light italic mb-4 text-[#3A2E2C]">
+                            Neural Efficiency / Kill Background Processes
+                        </p>
+                        
+                        <div class="hooked-graphic my-4">
+                            <i class="fas fa-microchip hooked-graphic-icon"></i><br>
+                            杂念 = 耗能的后台进程 (CPU Memory Drain)
+                        </div>
+
+                        <ul class="space-y-3 text-lg font-noto-sans-sc">
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-head-side-mask"></i></span>
+                                <span class="flex-1">杂念：焦虑、怀疑、自我否定。</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon mt-1"><i class="fas fa-hand-sparkles"></i></span>
+                                <span class="flex-1">Mindfulness：<span class="font-bold">专注当下</span> → 进入“心流” (Flow)。</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-4xl font-bold mb-8 text-center font-noto-sans-sc text-[#3A2E2C]">
+                【实际应用】: 如何用心智<span class="highlight-text">养膝盖</span>？
+            </h2>
+            <div class="card p-8 md:p-12 tech-glow">
+                <div class="content-z grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    
+                    <div>
+                        <p class="text-xl font-medium mb-4 text-[#6A5F58] font-noto-sans-sc">
+                            <i class="fas fa-crosshairs list-icon"></i> 康复动作的心智介入 (Mindfulness Override)
+                        </p>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline mb-2">
+                                <span class="large-stat-text highlight-stat mr-4 leading-none">01</span>
+                                <h3 class="text-3xl font-bold font-noto-sans-sc">识别信号 <span class="text-xl text-[#6A5F58] font-light italic">/ Monitor</span></h3>
+                            </div>
+                            <p class="ml-16 text-lg text-[#3A2E2C]">
+                                当大腿开始<span class="font-bold">发抖、酸痛</span>时，本能会报警：“我不行了！”
+                            </p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline mb-2">
+                                <span class="large-stat-text highlight-stat mr-4 leading-none">02</span>
+                                <h3 class="text-3xl font-bold font-noto-sans-sc">分辨定义 <span class="text-xl text-[#6A5F58] font-light italic">/ Define</span></h3>
+                            </div>
+                            <p class="ml-16 text-lg text-[#3A2E2C]">
+                                <span class="font-bold">问：</span> 是锐利的刺痛 (Stop) 还是<span class="highlight-text">浑厚的酸痛</span> (Good)？
+                            </p>
+                            <p class="ml-16 text-lg text-[#3A2E2C] mt-1">
+                                <span class="font-bold">定义：</span> “这是我的股四头肌正在<span class="highlight-text">变强壮</span>，是胜利的信号。”
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col justify-center h-full">
+                         <div class="text-center bg-gray-50 p-6 rounded-xl shadow-inner border border-[#D2B48C]">
+                            <p class="text-2xl font-medium mb-2 text-[#6A5F58] font-noto-sans-sc">
+                                结果：突破瓶颈
+                            </p>
+                            <p class="large-stat-text highlight-stat font-noto-sans-sc leading-none">
+                                +15s
+                            </p>
+                            <p class="text-xl font-bold text-[#3A2E2C] font-noto-sans-sc mt-2">
+                                靠墙静蹲坚持时间
+                            </p>
+                         </div>
+
+                         <blockquote class="mt-8 border-l-4 border-[#4B7348] pl-4 text-xl italic text-[#3A2E2C]">
+                            <p class="font-noto-sans-sc">肉体是<span class="font-bold">硬件</span>，心智是<span class="font-bold highlight-text">驱动程序</span>。</p>
+                            <p class="text-lg mt-2 text-[#6A5F58]">Rewrite the underlying driver code.</p>
+                         </blockquote>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-16 text-center text-xl text-[#6A5F58] font-light">
+            <p>
+                <i class="fas fa-feather-pointed list-icon"></i> 你具备这样的认知天赋，完全可以成为自己身体的<span class="font-bold highlight-text">“黑客”</span>。
+            </p>
+        </footer>
+
+    </main>
+    
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
