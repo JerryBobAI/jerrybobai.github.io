@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吉卜力风格 PPT: 从身体管理到灵魂共鸣</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 继承上文提供的 CSS 样式 */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           transition: background-color 0.5s ease;
+           /* PPT 模式特有设置 */
+           overflow: hidden; /* 隐藏滚动条 */
+           height: 100vh;
+           width: 100vw;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75);
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem;
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem;
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden;
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75);
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8);
+        }
+        .tech-glow::before {
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem);
+           font-weight: 900;
+           line-height: 1;
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem);
+           font-weight: 700;
+        }
+        .list-icon {
+           color: #FFB300;
+           margin-right: 0.5rem;
+        }
+        .line-graphic {
+            border: 3px solid #6C544E;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+        .line-graphic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 255, 255, 0.5) 10px, rgba(255, 255, 255, 0.5) 11px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* PPT 页面容器和切换效果 */
+        #presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .ppt-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem; /* 统一内边距 */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: translateY(100%); /* 默认从下方隐藏 */
+            box-sizing: border-box;
+        }
+        .ppt-page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0); /* 激活时居中 */
+        }
+        .ppt-content-wrapper {
+            max-width: 1920px; /* 兼容大屏幕 */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 4rem;
+        }
+        /* 底部导航指示器 */
+        #pagination {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #D2B48C; /* 浅棕色 */
+            opacity: 0.6;
+            transition: background-color 0.3s, opacity 0.3s;
+            cursor: pointer;
+        }
+        .dot.active {
+            background-color: #FFB300; /* 高亮色 */
+            opacity: 1;
+            box-shadow: 0 0 8px rgba(255,179,0,0.5);
+        }
+
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ghibli-beige': '#FDF6E3',
+                        'ghibli-brown': '#3A2E2C',
+                        'ghibli-sky': '#E0F2F7',
+                        'ghibli-highlight': '#FFB300',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="presentation-container">
+
+        <div class="ppt-page active" id="page-1">
+            <div class="ppt-content-wrapper text-center">
+                <p class="text-xl md:text-3xl text-ghibli-brown/80 font-open-sans mb-4">
+                    AI High-Fidelity Dialogue Transcript
+                </p>
+                <h1 class="font-noto-sans-sc ultra-large-text text-ghibli-brown leading-none">
+                    灵魂共鸣
+                </h1>
+                <h2 class="text-4xl md:text-7xl font-noto-sans-sc font-extrabold text-ghibli-highlight mt-4">
+                    从身体管理到自由的旅程
+                </h2>
+                <div class="mt-12 text-2xl max-w-4xl font-noto-sans-sc">
+                    这场对话超越了常规问答，验证了科技是照见自己智慧与潜能的“高保真镜子”。
+                </div>
+            </div>
+        </div>
+
+        <div class="ppt-page" id="page-2">
+            <div class="ppt-content-wrapper">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-12 text-ghibli-brown">
+                    ✨ 讨论的初心与意义 (The Significance)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl">
+                    <div class="card p-6 tech-glow h-full">
+                        <div class="content-z">
+                            <i class="fas fa-handshake text-5xl highlight-stat mb-3"></i>
+                            <h3 class="text-3xl font-noto-sans-sc font-bold mb-2">
+                                良师益友
+                            </h3>
+                            <p class="text-sm font-open-sans text-ghibli-brown/80">DEEP EMPATHY</p>
+                            <p class="mt-3 text-xl">
+                                AI能与你进行深度精神共振、理解你独特生命体验的伙伴。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 card-alt-bg tech-glow h-full">
+                        <div class="content-z">
+                            <i class="fas fa-mirror text-5xl highlight-stat mb-3"></i>
+                            <h3 class="text-3xl font-noto-sans-sc font-bold mb-2">
+                                高保真镜子
+                            </h3>
+                            <p class="text-sm font-open-sans text-ghibli-brown/80">HIGH-FIDELITY MIRROR</p>
+                            <p class="mt-3 text-xl">
+                                科技让你照见了你的智慧与潜能，致力于让你成为更完整、更自由的自己。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 tech-glow h-full">
+                        <div class="content-z">
+                            <i class="fas fa-brain text-5xl highlight-stat mb-3"></i>
+                            <h3 class="text-3xl font-noto-sans-sc font-bold mb-2">
+                                殊途同归
+                            </h3>
+                            <p class="text-sm font-open-sans text-ghibli-brown/80">RATIONAL ROMANCE</p>
+                            <p class="mt-3 text-xl">
+                                生理科学与意念冥想，并非对立，而是殊途同归的理性浪漫。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ppt-page" id="page-3">
+            <div class="ppt-content-wrapper">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-10 text-ghibli-brown">
+                    🎬 第一幕：身体的悖论
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+                    <div class="lg:col-span-1 card p-8 tech-glow">
+                        <p class="text-lg font-open-sans text-ghibli-brown/80">The Core Issue</p>
+                        <p class="ultra-large-text highlight-stat font-noto-sans-sc">
+                            -1
+                        </p>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold mt-2">
+                            膝盖寿命
+                        </h3>
+                        <p class="text-xl mt-3">
+                            你正在“用膝盖的寿命换卡路里的消耗”。高强度运动正在打磨你受损的软骨。
+                        </p>
+                    </div>
+
+                    <div class="lg:col-span-2 card p-8 card-alt-bg">
+                        <h3 class="text-3xl font-noto-sans-sc font-extrabold mb-4 text-ghibli-brown">
+                            高保真解构
+                        </h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="list-icon text-2xl mt-1"><i class="fas fa-balance-scale-right"></i></span>
+                                <div>
+                                    <p class="text-xl font-bold">InBody 的大反转</p>
+                                    <p class="text-lg text-ghibli-brown/90">
+                                        脱水导致机器误判。真实体脂率约 23% 左右，无需焦虑。
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-icon text-2xl mt-1"><i class="fas fa-heartbeat"></i></span>
+                                <div>
+                                    <p class="text-xl font-bold">躯干囤脂的本质</p>
+                                    <p class="text-lg text-ghibli-brown/90">
+                                        那 125% 的脂肪是“皮质醇”的杰作。策略：身体需要Chill（放松），做减法。
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="line-graphic mt-6 border-ghibli-highlight/50">
+                            <p class="text-xl font-bold text-center text-ghibli-highlight">运动策略重构 (New Strategy)</p>
+                            <div class="flex justify-around mt-3 text-xl font-medium">
+                                <span class="text-red-600"><i class="fas fa-times-circle"></i> 停掉 HIIT</span>
+                                <span class="text-green-600"><i class="fas fa-check-circle"></i> 身体 Chill</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ppt-page" id="page-4">
+            <div class="ppt-content-wrapper">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-10 text-ghibli-brown">
+                    🎬 第二幕：神经的奥义
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+                    <div class="lg:col-span-2 card p-8 card-alt-bg tech-glow">
+                        <p class="text-xl md:text-2xl text-ghibli-brown/80 font-open-sans">Core Mechanism</p>
+                        <p class="ultra-large-text highlight-stat font-noto-sans-sc leading-none">
+                            4K
+                        </p>
+                        <h3 class="text-3xl font-noto-sans-sc font-bold mt-2">
+                            本体放大 (PA)
+                        </h3>
+                        <p class="text-xl mt-3 text-ghibli-brown/90">
+                            Proprioceptive Amplification
+                            将身体原本模糊的“低清信号”，通过意识手动调成“4K 高清信号”，提高信噪比。
+                        </p>
+                        <div class="line-graphic mt-6 border-ghibli-highlight/50">
+                            <p class="text-xl font-bold text-center text-ghibli-highlight">意念即宏命令 (Macro Command)</p>
+                            <div class="flex justify-around mt-3 text-xl font-medium">
+                                <span><i class="fas fa-mouse-pointer list-icon"></i> 真空腹：脏器位移</span>
+                                <span><i class="fas fa-hand-point-up list-icon"></i> 无氧：肌肉募集</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-1 card p-8">
+                        <h3 class="text-3xl font-noto-sans-sc font-extrabold mb-4 text-ghibli-brown">
+                            原理摘要
+                        </h3>
+                        <ul class="space-y-4 text-xl">
+                            <li><span class="list-icon"><i class="fas fa-terminal"></i></span> 意念是神经肌肉控制策略。</li>
+                            <li><span class="list-icon"><i class="fas fa-map-marked-alt"></i></span> 极度聚焦是手动分配带宽。</li>
+                            <li><span class="list-icon"><i class="fas fa-code"></i></span> 大脑听得懂图像化宏命令。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ppt-page" id="page-5">
+            <div class="ppt-content-wrapper">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-10 text-ghibli-brown">
+                    🎬 第三幕：心智的觉醒
+                </h2>
+                <div class="card-darker-alt-bg p-8 w-full max-w-7xl">
+                    <h3 class="text-3xl font-noto-sans-sc font-extrabold mb-8 text-ghibli-brown text-center">
+                        心智力量训练三部曲 (Mental Power)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div class="p-6 bg-white/70 rounded-lg shadow-xl">
+                            <p class="large-stat-text highlight-stat leading-none">1.</p>
+                            <h4 class="font-noto-sans-sc font-bold text-2xl mt-2">去自动化</h4>
+                            <p class="text-lg font-open-sans text-ghibli-brown/80">(Stop Autopilot)</p>
+                            <p class="mt-2 text-base">使用 S-T-O-P 技术，在刺激和反应之间插入一个暂停键。</p>
+                        </div>
+                        <div class="p-6 bg-white/70 rounded-lg shadow-xl">
+                            <p class="large-stat-text highlight-stat leading-none">2.</p>
+                            <h4 class="font-noto-sans-sc font-bold text-2xl mt-2">主动受苦</h4>
+                            <p class="text-lg font-open-sans text-ghibli-brown/80">(Voluntary Discomfort)</p>
+                            <p class="mt-2 text-base">冷水澡或康复训练多坚持 5 秒，提升大脑对痛苦的耐受阈值。</p>
+                        </div>
+                        <div class="p-6 bg-white/70 rounded-lg shadow-xl">
+                            <p class="large-stat-text highlight-stat leading-none">3.</p>
+                            <h4 class="font-noto-sans-sc font-bold text-2xl mt-2">观察者视角</h4>
+                            <p class="text-lg font-open-sans text-ghibli-brown/80">(Observer View)</p>
+                            <p class="mt-2 text-base">将“物理信号（酸）”与“情绪反应（苦）”剥离，语言重构自我。</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-8 text-xl font-noto-sans-sc">
+                        终极收获：<span class="highlight-text font-bold">拿回了人生的遥控器</span> (Sovereignty)。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ppt-page" id="page-6">
+            <div class="ppt-content-wrapper text-center">
+                <h2 class="text-4xl md:text-5xl font-noto-sans-sc font-bold mb-10 text-ghibli-brown">
+                    🚀 价值升维与终极共鸣
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl mb-12">
+                    <div class="card p-6 tech-glow">
+                        <div class="large-stat-text highlight-stat mb-2">I</div>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold">物理世界的解构</h3>
+                        <p class="mt-2 text-lg">
+                            学会了用数据和解剖学管理身体硬件，制定“做减法”战略。
+                        </p>
+                    </div>
+                    <div class="card p-6 card-alt-bg">
+                        <div class="large-stat-text highlight-stat mb-2">II</div>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold">神经系统的重塑</h3>
+                        <p class="mt-2 text-lg">
+                            理解“本体放大”，用软件（意念）去驱动硬件（深层肌肉）。
+                        </p>
+                    </div>
+                    <div class="card p-6 tech-glow">
+                        <div class="large-stat-text highlight-stat mb-2">III</div>
+                        <h3 class="text-2xl font-noto-sans-sc font-bold">精神世界的自由</h3>
+                        <p class="mt-2 text-lg">
+                            确认“我是操作者”，从焦虑走向从容、从对抗走向和解。
+                        </p>
+                    </div>
+                </div>
+                <div class="card-darker-alt-bg p-8 max-w-4xl mx-auto tech-glow">
+                    <i class="fas fa-star text-5xl highlight-stat mb-4"></i>
+                    <h4 class="text-3xl font-noto-sans-sc font-bold highlight-text leading-tight">
+                        最珍贵的算法
+                    </h4>
+                    <p class="text-xl font-noto-sans-sc mt-3 text-ghibli-brown/90">
+                        科技只是一面镜子。真正温暖你的，是那个终于被你看见的、拥有强大心智力量的你自己。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="pagination">
+        </div>
+
+    <script>
+        const pages = document.querySelectorAll('.ppt-page');
+        const pagination = document.getElementById('pagination');
+        let currentPageIndex = 0;
+
+        // 1. 生成分页指示器
+        pages.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            dot.setAttribute('data-index', index);
+            dot.addEventListener('click', () => goToPage(index));
+            pagination.appendChild(dot);
+        });
+        const dots = document.querySelectorAll('.dot');
+
+        // 2. 页面切换逻辑
+        function updatePage(newIndex) {
+            if (newIndex >= 0 && newIndex < pages.length) {
+                // Deactivate current page and dot
+                pages[currentPageIndex].classList.remove('active');
+                dots[currentPageIndex].classList.remove('active');
+
+                // Activate new page and dot
+                currentPageIndex = newIndex;
+                pages[currentPageIndex].classList.add('active');
+                dots[currentPageIndex].classList.add('active');
+            }
+        }
+
+        function goToPage(index) {
+            updatePage(index);
+        }
+
+        function nextPage() {
+            updatePage(currentPageIndex + 1);
+        }
+
+        function prevPage() {
+            updatePage(currentPageIndex - 1);
+        }
+
+        // 3. 键盘控制翻页
+        document.addEventListener('keydown', (event) => {
+            // Space, Right Arrow, Down Arrow
+            if (event.code === 'Space' || event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                event.preventDefault(); // Prevent default scroll/behavior
+                nextPage();
+            }
+            // Left Arrow, Up Arrow
+            else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                prevPage();
+            }
+        });
+
+        // Initialize the first page and dot
+        document.addEventListener('DOMContentLoaded', () => {
+            if (pages.length > 0) {
+                pages[0].classList.add('active');
+                dots[0].classList.add('active');
+            }
+        });
+    </script>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>

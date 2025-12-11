@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来教育新蓝图：AI时代的稀缺人才培养</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700;900&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 核心吉卜力与苹果风格CSS */
+        body {
+           font-family: 'Open Sans', 'Noto Sans SC', sans-serif;
+           background-color: #FDF6E3; /* 吉卜力米白底色 */
+           /* Subtle Hand-drawn Texture */
+           background-image: linear-gradient(45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(-45deg, rgba(210, 180, 140, 0.03) 25%, transparent 25%),
+                         linear-gradient(45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%),
+                         linear-gradient(-45deg, transparent 75%, rgba(210, 180, 140, 0.03) 75%);
+           background-size: 20px 20px;
+           color: #3A2E2C; /* 主文字颜色 深棕 */
+           line-height: 1.6;
+        }
+        .font-noto-sans-sc {
+           font-family: 'Noto Sans SC', sans-serif;
+        }
+        .highlight-text, .highlight-stat {
+           color: #FFB300; /* 温暖的琥珀黄高亮 */
+        }
+        .card {
+           background-color: rgba(255, 255, 255, 0.75); /* 半透明白色卡片 */
+           backdrop-filter: blur(12px);
+           border-radius: 1.5rem; /* 苹果风格圆角 */
+           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0,0,0,0.03);
+           padding: 1.5rem; /* 24px */
+           transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+           position: relative;
+           overflow: hidden; /* For glow effects */
+        }
+        .card:hover {
+           transform: translateY(-5px);
+           box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08), 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .card-alt-bg {
+           background-color: rgba(224, 242, 247, 0.75); /* 淡天蓝色半透明 */
+        }
+        .card-darker-alt-bg {
+            background-color: rgba(206, 229, 234, 0.8); /* 稍深一点的淡天蓝色 */
+        }
+        .tech-glow::before { /* 卡片背景光晕效果 */
+           content: '';
+           position: absolute;
+           top: 50%;
+           left: 50%;
+           width: 250%;
+           height: 250%;
+           background-image: radial-gradient(circle, rgba(255,179,0,0.15) 0%, rgba(255,179,0,0.05) 40%, transparent 70%);
+           transform: translate(-50%, -50%);
+           z-index: 0;
+           pointer-events: none; /* Ensure the glow doesn't interfere with clicks */
+        }
+        .content-z {
+           position: relative;
+           z-index: 1;
+        }
+        .ultra-large-text {
+           font-size: clamp(3rem, 10vw, 8rem); /* Responsive ultra large text */
+           font-weight: 900; /* Noto Sans SC Black */
+           line-height: 1;
+           letter-spacing: -0.05em; /* Tighten up for impact */
+        }
+        .large-stat-text {
+           font-size: clamp(2.5rem, 6vw, 5rem); /* For large stats */
+           font-weight: 700;
+           line-height: 1.1;
+        }
+        .list-icon {
+           color: #FFB300; /* Highlight color for list icons */
+           margin-right: 0.5rem; /* Space between icon and text */
+        }
+
+        /* Data Viz Hook for Chart.js */
+        .chart-container {
+            position: relative;
+            height: 200px;
+            width: 100%;
+        }
+
+        /* Responsive Container */
+        .container-xl {
+            max-width: 1440px; /* Adjusted for wider screens */
+        }
+    </style>
+</head>
+<body class="p-8 md:p-12 lg:p-16">
+
+    <header class="mb-20 text-center">
+        <p class="text-xl md:text-2xl mb-4 font-open-sans text-[#7A6A5A]">A New Era of Learning</p>
+        <h1 class="ultra-large-text font-noto-sans-sc mx-auto max-w-7xl">
+            <span class="highlight-text">未来教育</span><br/><br class="block md:hidden">成为<span class="highlight-text">稀缺的人</span>
+        </h1>
+        <p class="text-2xl md:text-3xl mt-6 font-noto-sans-sc font-light text-[#5B4F48]">
+            不再是“答案”，而是：<strong class="font-bold">问题感 + 模型思维 + AI协作 + 长期价值</strong>。
+        </p>
+    </header>
+
+    <section class="mb-20">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 container-xl mx-auto">
+            <div class="card card-darker-alt-bg p-8 lg:col-span-1 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-robot text-5xl mb-4 highlight-text"></i>
+                    <h2 class="text-4xl font-noto-sans-sc font-bold mb-4 text-[#2E4A52]">交给 AI 做：</h2>
+                    <p class="text-xl font-open-sans text-[#4A6B72] mb-6">Execution Layer</p>
+                    <p class="text-lg mb-6">释放人类大脑的“硬盘”空间，让AI接管<strong class="highlight-text font-bold">机械性、低重复性</strong>的工作。</p>
+                    <ul class="space-y-3 text-lg font-noto-sans-sc">
+                        <li><i class="list-icon fas fa-check-circle"></i> <strong class="font-bold">死记硬背型知识</strong>：年代表、定义表、公式推导过程、冷门事实、机械型题海训练。</li>
+                        <li><i class="list-icon fas fa-check-circle"></i> <strong class="font-bold">低层重复技能</strong>：一模一样的计算题刷一百道、格式化公文写作、套路化的阅读理解模板答案。</li>
+                        <li><i class="list-icon fas fa-check-circle"></i> <strong class="font-bold">机械信息加工</strong>：整理资料、初步翻译、生成大纲、做 PPT 雏形、做简单代码 Demo 等。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-8 lg:col-span-2 flex flex-col justify-center">
+                <div class="content-z">
+                    <p class="text-2xl font-open-sans text-[#7A6A5A] mb-4">The Human Role Shift</p>
+                    <div class="flex items-start">
+                        <i class="fas fa-user-tie text-7xl highlight-text mr-6 hidden sm:block"></i>
+                        <div>
+                            <h2 class="ultra-large-text font-noto-sans-sc highlight-text">
+                                人类，退到<span class="text-[#3A2E2C]">“导演位”</span>
+                            </h2>
+                            <p class="text-2xl mt-4 font-noto-sans-sc font-bold text-[#5B4F48]">
+                                AI负责<strong class="highlight-text">执行</strong>，我们负责<strong class="highlight-text">决策、创造、提问</strong>。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-xl mx-auto mb-20">
+        <h2 class="text-center text-4xl md:text-5xl font-noto-sans-sc font-bold mb-12">
+            <span class="highlight-text">五大</span>底层板块：AI时代“教什么”
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-globe-americas text-4xl mb-3 highlight-text"></i>
+                    <p class="text-lg font-open-sans text-[#7A6A5A]">1. How to See the World</p>
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">学「如何看世界」</h3>
+                    <p class="text-lg font-bold mb-3">模型化的通识，而不是碎片知识。</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="list-icon fas fa-code-branch"></i> <strong class="font-bold">系统思维</strong>：因果链、反馈环、延迟效应、意外后果 —— 理解气候、经济、网络舆论。</li>
+                        <li><i class="list-icon fas fa-dice"></i> <strong class="font-bold">概率和不确定性</strong>：风险、期望值、贝叶斯直觉，知道“世界没有标准答案”。</li>
+                        <li><i class="list-icon fas fa-seedling"></i> <strong class="font-bold">演化视角</strong>：从生物演化到技术演化、商业演化，理解“为什么会变成今天这样”。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 card-alt-bg tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-brain text-4xl mb-3 highlight-text"></i>
+                    <p class="text-lg font-open-sans text-[#7A6A5A]">2. Thinking Methodology</p>
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">学「如何思考」</h3>
+                    <p class="text-lg font-bold mb-3">从“解题技巧”升级为“思维工法”。</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="list-icon fas fa-layer-group"></i> <strong class="font-bold">问题拆解能力</strong>：把一个模糊问题拆成可操作的小问题（例如：“我想做一个游戏”）。</li>
+                        <li><i class="list-icon fas fa-route"></i> <strong class="font-bold">多方案思考</strong>：同一个问题，至少想到 3 种完全不同的解法，再对比选最优。</li>
+                        <li><i class="list-icon fas fa-balance-scale"></i> <strong class="font-bold">判断与取舍</strong>：识别信息里的偏见、噪音，知道“什么可以信”和“信到什么程度”。</li>
+                    </ul>
+                    <p class="text-sm mt-3 text-[#5B4F48]">本质上是：从“我会做题”到“我会做选择”。</p>
+                </div>
+            </div>
+
+            <div class="card p-6 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-handshake text-4xl mb-3 highlight-text"></i>
+                    <p class="text-lg font-open-sans text-[#7A6A5A]">3. Human-AI Collaboration</p>
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">学「如何和AI协作」</h3>
+                    <p class="text-lg font-bold mb-3">AI素养：现代版“读写算”基础学科。</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="list-icon fas fa-comments"></i> <strong class="font-bold">会问</strong>：把目标、限制条件、风格要求说清楚，而不是一句“帮我写作业”。</li>
+                        <li><i class="list-icon fas fa-edit"></i> <strong class="font-bold">会改</strong>：把 AI 的输出当“草稿”和“材料库”，学会自己删减、重组、提炼。</li>
+                        <li><i class="list-icon fas fa-sitemap"></i> <strong class="font-bold">会搭流程</strong>：用 AI 做资料搜集 → 结构设计 → 初稿 → 视觉生成，完成一个真正的作品。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card p-6 card-alt-bg tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-project-diagram text-4xl mb-3 highlight-text"></i>
+                    <p class="text-lg font-open-sans text-[#7A6A5A]">4. Project-Based Learning</p>
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">学「做事」</h3>
+                    <p class="text-lg font-bold mb-3">真实项目，组合技能，创造价值。</p>
+                    <ul class="space-y-2 text-base font-noto-sans-sc">
+                        <li><i class="list-icon fas fa-cogs"></i> <strong class="font-bold">项目制学习（PBL）</strong>：用知识 + AI 图像工具，制作“未来城市生存指南”或“想象中的物种图鉴”。</li>
+                        <li><i class="list-icon fas fa-users"></i> <strong class="font-bold">团队协作与角色分工</strong>：学习时间管理、冲突解决、妥协、说服别人、抗压和情商。</li>
+                        <li><i class="list-icon fas fa-laptop-code"></i> <strong class="font-bold">实践作品</strong>：一个小游戏、一本小绘本、一段解说视频、一个对别人有用的东西。</li>
+                    </ul>
+                    <p class="text-sm mt-3 text-[#5B4F48]">真正有竞争力的，是能将兴趣与AI组合起来的孩子。</p>
+                </div>
+            </div>
+
+            <div class="card p-6 lg:col-span-2 tech-glow">
+                <div class="content-z">
+                    <i class="fas fa-heart text-4xl mb-3 highlight-text"></i>
+                    <p class="text-lg font-open-sans text-[#7A6A5A]">5. Becoming Human</p>
+                    <h3 class="text-3xl font-noto-sans-sc font-bold mb-4">学「成为人」</h3>
+                    <p class="text-lg font-bold mb-3">AI越聪明，人类越需要那些<strong class="font-bold">“AI没法替你活的部分”</strong>。</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="p-3 bg-white/70 rounded-lg shadow-sm">
+                            <i class="list-icon fas fa-gavel"></i> <strong class="font-bold">价值判断与责任感</strong>：能区分“能不能做”和“该不该做”。
+                        </div>
+                        <div class="p-3 bg-white/70 rounded-lg shadow-sm">
+                            <i class="list-icon fas fa-shield-alt"></i> <strong class="font-bold">情绪管理与韧性</strong>：接受自己会输、会错，学会在焦虑里行动，而不是躺平。
+                        </div>
+                        <div class="p-3 bg-white/70 rounded-lg shadow-sm">
+                            <i class="list-icon fas fa-palette"></i> <strong class="font-bold">审美与品味</strong>：在AI生成的无限结果中，判断“哪个是真的好？适合这个场景？”。
+                        </div>
+                    </div>
+                    <p class="text-sm mt-3 text-[#5B4F48]">这些曾被视为“软性”的特质，在AI时代是核心竞争力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-xl mx-auto mb-20">
+        <div class="card card-darker-alt-bg p-10 tech-glow">
+            <div class="content-z">
+                <h2 class="large-stat-text font-noto-sans-sc highlight-text mb-4">
+                    <span class="text-[#2E4A52]">传统学科：</span>不是砍掉，是「重写大纲」
+                </h2>
+                <p class="text-xl font-noto-sans-sc font-light text-[#4A6B72] mb-8">
+                    都还要学，但要围绕“模型 + 方法 + 表达”重构教学目标。
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="p-5 bg-white/80 rounded-xl">
+                        <h3 class="text-2xl font-noto-sans-sc font-bold highlight-text mb-2"><i class="fas fa-chart-line mr-2"></i> 6. 数学 / MATH</h3>
+                        <p class="text-lg text-[#3A2E2C]">从“算题”变成“理解世界<strong class="font-bold">底层结构</strong>”。</p>
+                        <ul class="list-disc pl-5 mt-2 text-base">
+                            <li>聚焦：函数和变化趋势、概率与统计（判断风险）、基本逻辑结构（充分条件/必要条件）。</li>
+                            <li>理念：<strong class="font-bold">大量计算交给 AI</strong>，人学判断风险和看懂数据。</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-white/80 rounded-xl">
+                        <h3 class="text-2xl font-noto-sans-sc font-bold highlight-text mb-2"><i class="fas fa-pen-nib mr-2"></i> 7. 语文 / LANGUAGE</h3>
+                        <p class="text-lg text-[#3A2E2C]">从“应试作文”变成“<strong class="font-bold">表达与叙事能力</strong>”。</p>
+                        <ul class="list-disc pl-5 mt-2 text-base">
+                            <li>聚焦：讲一个人听得进去的故事；把复杂的观点讲清楚；与不同的人沟通。</li>
+                            <li>理念：课文的选择从“背诵型”转为“思考型”，关注<strong class="font-bold">立场与看不到的部分</strong>。</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-white/80 rounded-xl">
+                        <h3 class="text-2xl font-noto-sans-sc font-bold highlight-text mb-2"><i class="fas fa-flask mr-2"></i> 8. 理化生 / SCIENCE</h3>
+                        <p class="text-lg text-[#3A2E2C]">从“背知识点”变成“<strong class="font-bold">理解方法 + 探究习惯</strong>”。</p>
+                        <ul class="list-disc pl-5 mt-2 text-base">
+                            <li>聚焦：怎样提出假设？怎样设计验证？怎样解释“和预期不一样的结果”？</li>
+                            <li>理念：科学不是结论，是一种<strong class="font-bold">不断修正自己认知的方式</strong>。</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-white/80 rounded-xl">
+                        <h3 class="text-2xl font-noto-sans-sc font-bold highlight-text mb-2"><i class="fas fa-landmark mr-2"></i> 9. 历史 / HISTORY</h3>
+                        <p class="text-lg text-[#3A2E2C]">从“记年代”变成“理解人类如何<strong class="font-bold">做选择</strong>”。</p>
+                        <ul class="list-disc pl-5 mt-2 text-base">
+                            <li>聚焦：挑选重大节点，帮孩子看见不同决策 → 不同后果。</li>
+                            <li>理念：让孩子学会：“如果我是当事人，在当时信息条件下，<strong class="font-bold">我会怎么选</strong>？”。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container-xl mx-auto mb-20">
+        <h2 class="text-center text-4xl md:text-5xl font-noto-sans-sc font-bold mb-12">
+            AI时代<span class="highlight-text">课程表</span>：稀缺人才培养配比
+        </h2>
+
+        <div class="card p-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1 flex items-center justify-center">
+                <div class="w-64 h-64 relative">
+                    <div class="absolute inset-0 rounded-full border-[30px] border-gray-200"></div>
+                    <div class="absolute inset-0 rounded-full border-[30px] border-[#FFB300] transform rotate-[-90deg]" style="clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 0%, 50% 0%, 50% 100%, 0% 100%, 0% 50%, 50% 50%, 50% 0%);"></div>
+                    <div class="absolute inset-0 rounded-full border-[30px] border-[#4FC3F7] transform rotate-[90deg]" style="clip-path: polygon(50% 0%, 50% 50%, 0% 50%, 0% 0%);"></div>
+                    <div class="absolute inset-0 rounded-full border-[30px] border-[#66BB6A] transform rotate-[180deg]" style="clip-path: polygon(50% 0%, 50% 50%, 100% 50%, 100% 0%);"></div>
+
+                    <div class="absolute inset-0 flex flex-col items-center justify-center font-noto-sans-sc text-2xl font-bold">
+                        <span class="highlight-text">100%</span>
+                        <span class="text-sm font-light text-[#7A6A5A]">Focus Redefined</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                <h3 class="text-4xl font-noto-sans-sc font-bold mb-6">
+                    <i class="fas fa-map-marked-alt mr-2 highlight-text"></i>
+                    核心方向感
+                </h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-white/70 rounded-xl flex items-center shadow-md">
+                        <span class="large-stat-text highlight-text mr-4">50%</span>
+                        <div>
+                            <p class="text-xl font-bold font-noto-sans-sc">传统学科的<strong class="text-green-600">重构版</strong></p>
+                            <p class="text-sm text-[#7A6A5A]">围绕“模型 + 方法 + 表达”，而不是考点清单。</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white/70 rounded-xl flex items-center shadow-md">
+                        <span class="large-stat-text highlight-text mr-4">25%</span>
+                        <div>
+                            <p class="text-xl font-bold font-noto-sans-sc">AI与<strong class="text-blue-600">数字素养</strong></p>
+                            <p class="text-sm text-[#7A6A5A]">AI工具使用、数据素养、信息安全、基础编程 / 自动化思维。</p>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white/70 rounded-xl flex items-center shadow-md">
+                        <span class="large-stat-text highlight-text mr-4">25%</span>
+                        <div>
+                            <p class="text-xl font-bold font-noto-sans-sc">项目制与<strong class="text-yellow-600">人生技能</strong></p>
+                            <p class="text-sm text-[#7A6A5A]">项目制学习、合作与领导力、情绪与压力管理、职业视野与自我认知。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container-xl mx-auto mb-16">
+        <h2 class="text-center text-4xl md:text-5xl font-noto-sans-sc font-bold mb-12">
+            <span class="highlight-text">小步快跑</span>：立即行动建议
+        </h2>
+
+        <div class="card p-8 card-darker-alt-bg tech-glow">
+            <div class="content-z">
+                <p class="text-2xl font-noto-sans-sc font-bold mb-6 text-[#2E4A52]">
+                    如果你是家长 / 教师 / 决策者：从日常开始改变。
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg font-noto-sans-sc">
+                    <div class="flex items-start">
+                        <i class="fas fa-feather-alt text-3xl highlight-text mr-4 mt-1"></i>
+                        <div>
+                            <strong class="font-bold">1. 减少纯“抄资料式作业”</strong>
+                            <p class="text-base text-[#4A6B72]">允许孩子用 AI 查资料，但要求他们<strong class="font-bold">自己写“总结 + 判断 + 反思”</strong>。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-question-circle text-3xl highlight-text mr-4 mt-1"></i>
+                        <div>
+                            <strong class="font-bold">2. 所有作业默认有一个“为什么”问题</strong>
+                            <p class="text-base text-[#4A6B72]">不是只交答案，而是：你为什么这样做？还有别的做法吗？如果条件变了，你的答案会怎么变？</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-lightbulb text-3xl highlight-text mr-4 mt-1"></i>
+                        <div>
+                            <strong class="font-bold">3. 每学期至少做 1–2 个真正“对别人有用”的项目</strong>
+                            <p class="text-base text-[#4A6B72]">小册子、小网站、小展览、小科普视频都可以。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fas fa-comments text-3xl highlight-text mr-4 mt-1"></i>
+                        <div>
+                            <strong class="font-bold">4. 日常对话里，多问孩子“你怎么看”“你会怎么选”</strong>
+                            <p class="text-base text-[#4A6B72]">少问一点“你背到哪一课了”，将重点从<strong class="font-bold">知识搬运</strong>转向<strong class="font-bold">观点形成</strong>。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="text-center mt-10 p-4 border-t border-[#D2B48C] text-sm text-[#7A6A5A]">
+        <p class="font-open-sans">Future of Education Initiative | Powered by AI, Guided by Human Wisdom.</p>
+    </div>
+
+    <!-- 加载组件脚本 -->
+    <script src="../../js/main.js"></script>
+</body>
+</html>
