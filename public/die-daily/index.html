@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>DieDaily</title>
+    <!-- 主屏 Web App（模式同 ghibli-ride）：HTTPS 安全源下 localStorage 才被当
+         持久数据；manifest + 两条 capable meta 让主屏图标以 standalone 横屏运行。 -->
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DIE DAILY">
+    <!-- iOS 12+ 按 180×180 取主屏图标；?v= 用于换图后绕开 iOS 对该 URL 的长期缓存 -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png?v=20261116">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+    <!-- 截图 / 自动化 / 商店封面通道直接跳过启动页：这些参数由巡检 runner 使用，
+         splash 必须在第一帧之前就 display:none，别截进图里。 -->
+    <script>
+      (function () {
+        var s = location.search + ' ' + location.hash;
+        if (/(screenshot|self-test|selftest|nosplash|hud=0|hint=0)/.test(s)) {
+          document.documentElement.classList.add('splash-skip');
+        }
+      })();
+    </script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #ffffff;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      /* Block iOS long-press callout/loupe/text-selection (touch-callout does not inherit, needs *) */
+      * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      canvas {
+        display: block;
+        /* 游戏驾驶面禁手势滚动/缩放。原 html,body 全局 none 会禁掉设置面板/弹层/
+           图鉴的触摸滚动（手势许可取祖先链交集）——iPhone 实测面板下拉回弹点不到
+           底行，2026-11-13 收缩到 canvas，滚动容器自行声明 touch-action:pan-y */
+        touch-action: none;
+      }
+      /* 矮屏（手机横屏 ~330-390px 高）设置面板改双列：9 行折半 ~190px 高，
+         整面板免滚动全部可点——iOS WebKit 的 fixed 层触摸滚动不可靠（2026-11-13
+         iPhone 实测 pan-y/manipulation 均死、Chrome 正常），免滚比修滚更稳 */
+      @media (max-height: 420px) {
+        .dd-panel {
+          flex-flow: row wrap !important;
+          width: min(412px, calc(100vw - 20px)) !important;
+          min-width: 0 !important;
+          padding: 10px !important;
+          gap: 6px 10px !important;
+        }
+        .dd-panel > div {
+          width: calc(50% - 5px) !important;
+        }
+      }
+      /* ---- 启动页：全屏白底墨车插画（纯 CSS/SVG，无图片请求），游戏本体同语言：
+         #fff 底 + #111 墨 + ui-monospace 大字距全大写。辐条慢转 + 车身悬挂浮动，
+         就绪后进度线换成 TAP TO RIDE 呼吸入口，点击淡出交还游戏。
+         ?screenshot / ?self-test / ?nosplash 走 head 里的 splash-skip。 ---- */
+      #splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: #fff;
+        color: #111;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: opacity 0.65s ease;
+        touch-action: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      #splash.out {
+        opacity: 0;
+        pointer-events: none;
+      }
+      html.splash-skip #splash {
+        display: none;
+      }
+      .sp-bike {
+        width: min(52vw, 420px);
+        height: auto;
+        display: block;
+      }
+      .sp-rot {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: sp-spin 1.5s linear infinite;
+      }
+      @keyframes sp-spin {
+        to { transform: rotate(360deg); }
+      }
+      .sp-bob {
+        animation: sp-bob 2.6s ease-in-out infinite;
+      }
+      @keyframes sp-bob {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-9px); }
+      }
+      .sp-dust {
+        animation: sp-dust 1.8s ease-in-out infinite;
+      }
+      .sp-dust-2 { animation-delay: 0.45s; }
+      .sp-dust-3 { animation-delay: 0.9s; }
+      @keyframes sp-dust {
+        0%, 100% { opacity: 0.15; }
+        50% { opacity: 0.85; }
+      }
+      .sp-title {
+        margin: 0;
+        font: 800 clamp(26px, 6vw, 42px)/1 ui-monospace, Menlo, Consolas, monospace;
+        letter-spacing: 0.38em;
+        text-indent: 0.38em;
+        color: #111;
+      }
+      .sp-bar {
+        position: relative;
+        width: min(230px, 52vw);
+        height: 2px;
+        background: rgba(17, 17, 17, 0.14);
+        overflow: hidden;
+      }
+      .sp-bar i {
+        position: absolute;
+        top: 0;
+        left: -40%;
+        width: 40%;
+        height: 100%;
+        background: #111;
+        animation: sp-scan 1.15s ease-in-out infinite;
+      }
+      @keyframes sp-scan {
+        to { left: 100%; }
+      }
+      .sp-tap {
+        font: 700 13px/1 ui-monospace, Menlo, Consolas, monospace;
+        letter-spacing: 0.42em;
+        text-indent: 0.42em;
+        color: #111;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s;
+      }
+      #splash.ready .sp-bar {
+        display: none;
+      }
+      #splash.ready .sp-tap {
+        visibility: visible;
+        opacity: 1;
+        animation: sp-breath 1.7s ease-in-out infinite;
+      }
+      @keyframes sp-breath {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-hjeGUX7E.js"></script>
+  </head>
+  <body>
+    <!-- 启动页：纯 CSS/SVG 墨车插画（几何与 icon.svg 同源），无图片请求。
+         ready（main.ts dispatch diedaily:ready）后 TAP TO RIDE 呼吸，点击淡出；
+         巡检通道走 head 里 splash-skip。9s 兜底 arm 防极端情况入口卡死。 -->
+    <div id="splash">
+      <svg class="sp-bike" viewBox="140 225 720 665" aria-hidden="true">
+        <g class="sp-bob" fill="none">
+          <g stroke="#111" stroke-linecap="round">
+            <line class="sp-dust" x1="255" y1="812" x2="175" y2="818" stroke-width="14"/>
+            <line class="sp-dust sp-dust-2" x1="215" y1="845" x2="130" y2="848" stroke-width="11"/>
+            <line class="sp-dust sp-dust-3" x1="160" y1="838" x2="95" y2="832" stroke-width="10"/>
+          </g>
+          <!-- 后轮：隐形对称十字线定旋转 bbox（transform-origin=轮心） -->
+          <circle cx="330" cy="700" r="150" fill="#111"/>
+          <circle cx="330" cy="700" r="120" fill="#fff"/>
+          <g class="sp-rot" stroke="#111" stroke-width="18" stroke-linecap="round">
+            <line x1="220" y1="700" x2="440" y2="700" stroke="none"/>
+            <line x1="330" y1="590" x2="330" y2="810" stroke="none"/>
+            <line x1="330" y1="700" x2="430.5" y2="736.6"/>
+            <line x1="330" y1="700" x2="248.1" y2="768.8"/>
+            <line x1="330" y1="700" x2="311.4" y2="594.6"/>
+          </g>
+          <circle cx="330" cy="700" r="27" fill="#111"/>
+          <!-- 前轮 -->
+          <circle cx="670" cy="700" r="150" fill="#111"/>
+          <circle cx="670" cy="700" r="120" fill="#fff"/>
+          <g class="sp-rot" stroke="#111" stroke-width="18" stroke-linecap="round">
+            <line x1="560" y1="700" x2="780" y2="700" stroke="none"/>
+            <line x1="670" y1="590" x2="670" y2="810" stroke="none"/>
+            <line x1="670" y1="700" x2="762.7" y2="646.5"/>
+            <line x1="670" y1="700" x2="670" y2="807"/>
+            <line x1="670" y1="700" x2="577.3" y2="646.5"/>
+          </g>
+          <circle cx="670" cy="700" r="27" fill="#111"/>
+          <!-- 前叉 / 后叉 -->
+          <g stroke="#111" stroke-width="25" stroke-linecap="round">
+            <line x1="388" y1="640" x2="330" y2="700"/>
+            <line x1="618" y1="614" x2="670" y2="700"/>
+          </g>
+          <!-- 车把：白 halo 垫底（白壳上墨柱可读） -->
+          <line x1="609" y1="613" x2="626" y2="543" stroke="#fff" stroke-width="24" stroke-linecap="round"/>
+          <line x1="609" y1="613" x2="626" y2="543" stroke="#111" stroke-width="20" stroke-linecap="round"/>
+          <!-- 车壳：墨剪影 + 白描边（icon 同一多边形） -->
+          <polygon points="325,661 319,627 366,614 423,570 495,576 546,570 593,604 634,614 642,658 588,676 387,676" fill="#111" stroke="#fff" stroke-width="8" stroke-linejoin="round"/>
+          <!-- 骑手 Jerry：白 halo 层 → 墨线层，后仰 -20° 姿态 -->
+          <g stroke="#fff" stroke-linecap="round">
+            <line x1="449" y1="401" x2="436" y2="553" stroke-width="22"/>
+            <line x1="436" y1="553" x2="547" y2="578" stroke-width="22"/>
+            <line x1="547" y1="578" x2="556" y2="688" stroke-width="22"/>
+            <line x1="449" y1="401" x2="626" y2="543" stroke-width="22"/>
+          </g>
+          <circle cx="429" cy="325" r="94" fill="#fff"/>
+          <g stroke="#111" stroke-linecap="round">
+            <line x1="449" y1="401" x2="436" y2="553" stroke-width="16"/>
+            <line x1="436" y1="553" x2="547" y2="578" stroke-width="14"/>
+            <line x1="547" y1="578" x2="556" y2="688" stroke-width="14"/>
+            <line x1="449" y1="401" x2="626" y2="543" stroke-width="14"/>
+          </g>
+          <circle cx="429" cy="325" r="82" fill="#111"/>
+          <line x1="637" y1="553" x2="626" y2="543" stroke="#111" stroke-width="32" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <h1 class="sp-title">DIE DAILY</h1>
+      <div class="sp-bar" aria-hidden="true"><i></i></div>
+      <div class="sp-tap">TAP TO RIDE</div>
+    </div>
+    <script>
+      (function () {
+        var el = document.getElementById('splash');
+        if (!el || document.documentElement.classList.contains('splash-skip')) return;
+        var ready = false;
+        var gone = false;
+        var arm = function () {
+          if (ready) return;
+          ready = true;
+          el.classList.add('ready');
+        };
+        window.addEventListener('diedaily:ready', arm);
+        setTimeout(arm, 9000);
+        el.addEventListener('pointerdown', function () {
+          if (!ready || gone) return;
+          gone = true;
+          el.classList.add('out');
+          setTimeout(function () { el.remove(); }, 700);
+        });
+      })();
+    </script>
+  </body>
+</html>

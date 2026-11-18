@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- DieDaily 主屏图标：黑底白墨反色版游戏画风（游戏内墨色 #111111 统一反转）。
+       造型忠实还原 draw.ts drawBike：11 点车壳多边形 + 双叉 + 把立 + 3 辐条轮 +
+       halo 火柴人骑手 + 圆头。后轮滑 wheelie -26°、骑手重心后仰 -20°，
+       前轮腾空于断崖平台尽头，车尾尘土未散。 -->
+  <rect width="1024" height="1024" fill="#111111"/>
+  <g transform="translate(46,-91) scale(1.1)">
+    <!-- 平台：白描边空心矩形（游戏平台语言），右端断崖——前轮悬在其上方 -->
+    <rect x="60" y="850" width="480" height="20" fill="none" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/>
+    <!-- 车尾尘土（世界系粒子，不随车转） -->
+    <g stroke="#ffffff" stroke-linecap="round" fill="none">
+      <line x1="255" y1="812" x2="175" y2="818" stroke-width="14" opacity="1"/>
+      <line x1="215" y1="845" x2="130" y2="848" stroke-width="11" opacity="0.8"/>
+      <line x1="160" y1="838" x2="95" y2="832" stroke-width="10" opacity="0.55"/>
+    </g>
+    <!-- 车 + 骑手：整组绕后轮轴 wheelie -26° -->
+    <g transform="rotate(-26 330 700)">
+      <!-- 后轮（白胎环 + 墨内圈 + 白辐条×3 + 白毂） -->
+      <circle cx="330" cy="700" r="150" fill="#ffffff"/>
+      <circle cx="330" cy="700" r="120" fill="#111111"/>
+      <g stroke="#ffffff" stroke-width="18" stroke-linecap="round">
+        <line x1="330" y1="700" x2="430.5" y2="736.6"/>
+        <line x1="330" y1="700" x2="248.1" y2="768.8"/>
+        <line x1="330" y1="700" x2="311.4" y2="594.6"/>
+      </g>
+      <circle cx="330" cy="700" r="27" fill="#ffffff"/>
+      <!-- 前轮（腾空，辐条角错开） -->
+      <circle cx="670" cy="700" r="150" fill="#ffffff"/>
+      <circle cx="670" cy="700" r="120" fill="#111111"/>
+      <g stroke="#ffffff" stroke-width="18" stroke-linecap="round">
+        <line x1="670" y1="700" x2="762.7" y2="646.5"/>
+        <line x1="670" y1="700" x2="670" y2="807"/>
+        <line x1="670" y1="700" x2="577.3" y2="646.5"/>
+      </g>
+      <circle cx="670" cy="700" r="27" fill="#ffffff"/>
+      <!-- 前叉 / 后叉 -->
+      <g stroke="#ffffff" stroke-width="25" stroke-linecap="round">
+        <line x1="388" y1="640" x2="330" y2="700"/>
+        <line x1="618" y1="614" x2="670" y2="700"/>
+      </g>
+      <!-- 车把：把立柱 + 握把（墨 halo 垫底，白柱在白壳上可读） -->
+      <line x1="609" y1="613" x2="626" y2="543" stroke="#111111" stroke-width="30" stroke-linecap="round"/>
+      <line x1="609" y1="613" x2="626" y2="543" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
+      <!-- 车壳（draw.ts silhouette ×0.85 ×357px/m），墨描边与白胎环分界 -->
+      <polygon points="325,661 319,627 366,614 423,570 495,576 546,570 593,604 634,614 642,658 588,676 387,676" fill="#ffffff" stroke="#111111" stroke-width="8" stroke-linejoin="round"/>
+      <!-- 骑手：墨 halo 层（反转自游戏白 halo 分离手法）→ 白线层；
+           躯干/头/腿绕座位 pivot 后仰 -20°，臂钉在把端 -->
+      <g stroke="#111111" stroke-linecap="round">
+        <line x1="449" y1="401" x2="436" y2="553" stroke-width="28"/>
+        <line x1="436" y1="553" x2="547" y2="578" stroke-width="26"/>
+        <line x1="547" y1="578" x2="556" y2="688" stroke-width="26"/>
+        <line x1="449" y1="401" x2="626" y2="543" stroke-width="26"/>
+      </g>
+      <circle cx="429" cy="325" r="94" fill="#111111"/>
+      <g stroke="#ffffff" stroke-linecap="round">
+        <line x1="449" y1="401" x2="436" y2="553" stroke-width="16"/>
+        <line x1="436" y1="553" x2="547" y2="578" stroke-width="14"/>
+        <line x1="547" y1="578" x2="556" y2="688" stroke-width="14"/>
+        <line x1="449" y1="401" x2="626" y2="543" stroke-width="14"/>
+      </g>
+      <!-- 圆头 Jerry（RIDER_HEAD_R 0.23×357） -->
+      <circle cx="429" cy="325" r="82" fill="#ffffff"/>
+      <!-- 握把套最后叠画：盖住臂端 halo，手「握住」握把 -->
+      <line x1="637" y1="553" x2="626" y2="543" stroke="#ffffff" stroke-width="32" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

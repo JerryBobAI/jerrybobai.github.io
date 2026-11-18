@@ -31,7 +31,8 @@ const projects = defineCollection({
   schema: z.object({
     ...shared,
     kind: z.enum(['实战项目', '在线产品']).default('实战项目'),
-    link: z.string().url().optional(),
+    // 站内相对路径（如 /die-daily/）或完整外链均可
+    link: z.string().optional(),
     status: z.enum(['进行中', '已上线', '维护中', '已归档']).default('进行中'),
     cover: z.string().optional(),
   }),
