@@ -536,7 +536,7 @@ function renderArticleHeader(currentPath, isRoot) {
             <div class="flex items-center ultra-light-date">
                 <a href="/docs/timeline/" class="home-link" title="返回"
                    onclick="if (document.referrer && document.referrer.includes(location.host)) { history.back(); return false; }">
-                    <i class="fa-solid fa-arrow-left" aria-hidden="true" title="返回"></i>
+                    <svg class="mr-2 inline-block h-3.5 w-3.5 align-[-0.125em]" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 8H1M6 3 1 8l5 5"/></svg>
                 </a>
                 <span class="text-sm font-medium">${dateStr}</span>
             </div>
@@ -707,8 +707,9 @@ function renderArticleMeta(currentPath, metadataCache) {
         <div class="w-full article-meta-blur glass-effect">
             <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
                 <div class="flex items-center ultra-light-date">
-                    <a href="${homeLink}" class="home-link">
-                        <i class="fa-solid fa-home mr-2" aria-hidden="true"></i>
+                    <a href="/docs/timeline/" class="home-link" title="返回"
+                   onclick="if (document.referrer \&\& document.referrer.includes(location.host)) { history.back(); return false; }">
+                        <svg class="mr-2 inline-block h-3.5 w-3.5 align-[-0.125em]" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 8H1M6 3 1 8l5 5"/></svg>
                     </a>
                     <span class="text-sm font-medium">${dateStr}</span>
                 </div>
