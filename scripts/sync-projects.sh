@@ -12,9 +12,10 @@ set -euo pipefail
 
 SITE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
-# 名称|构建目录|构建命令|产物源目录（尾斜杠）|站内目标路径
+# 名称|构建目录|构建命令（空=纯静态无需构建）|产物源目录（尾斜杠）|站内目标路径|rsync 排除（分号分隔，可空）
 PROJECTS=(
-  "die-daily|$HOME/Workspace/Creation/die-daily/app|npm run build|$HOME/Workspace/Creation/die-daily/app/dist/|public/die-daily/"
+  "die-daily|$HOME/Workspace/Creation/die-daily/app|npm run build|$HOME/Workspace/Creation/die-daily/app/dist/|public/die-daily/|"
+  "courses|$HOME/Workspace/Creation/courses||$HOME/Workspace/Creation/courses/|public/courses/|lectures;audio;readings;repos;site"
 )
 
 # ---- 解析参数，筛出要同步的项目 ----
@@ -39,11 +40,18 @@ cd "$SITE_DIR"
 # ---- 逐个项目：构建 + rsync ----
 synced=()
 for p in "${targets[@]}"; do
-  IFS='|' read -r name build_dir build_cmd src dest <<<"$p"
-  echo "==> [$name] 构建（${build_cmd}）"
-  (cd "$build_dir" && $build_cmd)
+  IFS='|' read -r name build_dir build_cmd src dest excludes <<<"$p"
+  if [ -n "$build_cmd" ]; then
+    echo "==> [$name] 构建（${build_cmd}）"
+    (cd "$build_dir" && $build_cmd)
+  fi
   echo "==> [$name] rsync 产物 → $dest/"
-  rsync -a --delete --exclude='.DS_Store' "$src" "$SITE_DIR/$dest/"
+  rsync_args=(-a --delete --exclude='.DS_Store' --exclude='.git')
+  if [ -n "$excludes" ]; then
+    IFS=';' read -ra excl_list <<<"$excludes"
+    for e in "${excl_list[@]}"; do rsync_args+=(--exclude="$e"); done
+  fi
+  rsync "${rsync_args[@]}" "$src" "$SITE_DIR/$dest/"
   synced+=("$name")
 done
 
@@ -57,7 +65,7 @@ if [ -z "$(git status --porcelain -- public)" ]; then
   echo "产物无变化，跳过提交"
 else
   git add public
-  git commit -m "chore: 同步项目构建产物 (${synced[*]}) $(date +%Y-%m-%d %H:%M)
+  git commit -m "chore: 同步项目构建产物 (${synced[*]}) $(date +%Y-%m-%d)
 
 Co-Authored-By: Claude Code <noreply@anthropic.com>"
 fi
