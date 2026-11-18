@@ -17,15 +17,15 @@
 
 - LLM = 把 transformer 的 decoder 部分单独放大：参数量数十亿到万亿级，pre-training 喂进数万亿甚至数十万亿 token；前四讲是理论，本讲回答「实践上怎么跑起来」。
 - decoder 拆开只有两层：**masked multi-head attention + feedforward network**，本质都是矩阵乘法——矩阵每个输出元素都是一个独立 dot product，天然可并行，这正是 **GPU**(大量 core + 专用硬件)的主场。
-- 两个易混指标(lecture 2 用过前者,本讲两个都用):**FLOPs**(floating point operations,计算量/compute budget)vs **FLOP/s**(floating point operations per second,衡量硬件计算速度)。
+- 两个易混指标(lecture 2 用过前者，本讲两个都用):**FLOPs**(floating point operations,计算量/compute budget)vs **FLOP/s**(floating point operations per second,衡量硬件计算速度)。
 - [0:06] 以 NVIDIA **H200** 的 datasheet 为标尺：计算速度以 teraflops 计、显存 **141 GB**、数据搬运速度 TB/s 量级。
 - Napkin math:100B 参数 × 每参数 2 bytes(fp16 = 16 bit)= **200 GB > 141 GB**——光放参数就爆，还没算 activations、gradients、optimizer states，而训练时这些全都要驻留显存。
-- 由此确立全讲路线图，围绕两个问题：①**怎么让模型 fit 进硬件?** ②**怎么让它 fast?**——先单卡讲 Flash Attention(exact 方法,不做任何近似)，再多卡讲训练并行，最后讲推理优化。
+- 由此确立全讲路线图，围绕两个问题：①**怎么让模型 fit 进硬件?** ②**怎么让它 fast?**——先单卡讲 Flash Attention(exact 方法，不做任何近似)，再多卡讲训练并行，最后讲推理优化。
 
 ### [0:11] GPU 记忆层级：HBM 大而慢、SRAM 小而快，attention 的 n×n 账单
 
-- masked self-attention 要算(甚至要存)**QK^T 这个 n×n 矩阵**(n = 序列长度,可到几万):n=1000 就有 100 万个条目，存储本身就是灾难。
-- GPU 里两块记忆分工：**HBM**(high bandwidth memory,off-chip)就是 datasheet 上那 141 GB，大但相对慢(读写 ~1 TB/s 量级)；**SRAM**(on-chip,与 compute unit 同片)快一个数量级(~几十 TB/s)但只有几百 MB，装不下大中间结果。(学生确认:141 GB 指 HBM;计算在片上 compute unit 发生,数据要进出片外的 HBM。)
+- masked self-attention 要算(甚至要存)**QK^T 这个 n×n 矩阵**(n = 序列长度，可到几万):n=1000 就有 100 万个条目，存储本身就是灾难。
+- GPU 里两块记忆分工：**HBM**(high bandwidth memory,off-chip)就是 datasheet 上那 141 GB，大但相对慢(读写 ~1 TB/s 量级)；**SRAM**(on-chip,与 compute unit 同片)快一个数量级(~几十 TB/s)但只有几百 MB，装不下大中间结果。(学生确认:141 GB 指 HBM;计算在片上 compute unit 发生，数据要进出片外的 HBM。)
 - 所以单卡优化的目标 = **最小化对大而慢的 HBM 的读写次数**。
 - [0:15] softmax 是主要障碍：分母 = 整行 exp 之和，**不可能只看单个分量就算出 softmax**；naive 流程被迫物化整个矩阵——Q·K^T 写入 HBM → 读回做 softmax 再写回 → 再读回乘 V，大矩阵多次进出 HBM。
 - Flash Attention 的核心提问：能否**迭代式、融合式(fused)**地算 softmax·V，从头到尾不物化 n×n 矩阵?
@@ -50,7 +50,7 @@
 
 ### [0:51] 训练侧：一张 GPU 的显存账单，data parallelism 与 ZeRO
 
-- 即使有 Flash Attention，模型太大单卡照样爆：显存要装 ①**parameters**(数十亿~万亿);②**activations**(forward 算 loss 时产生,随模型大小、**序列长度与 batch size** 增长——每个 token 都要与所有 token 交互,每 token 一份激活);③**gradients**(backward 求出);④**optimizer states**(如今模型多用 Adam 及其变体训练,要额外追踪好几个量)。
+- 即使有 Flash Attention，模型太大单卡照样爆：显存要装 ①**parameters**(数十亿~万亿);②**activations**(forward 算 loss 时产生，随模型大小、**序列长度与 batch size** 增长——每个 token 都要与所有 token 交互，每 token 一份激活);③**gradients**(backward 求出);④**optimizer states**(如今模型多用 Adam 及其变体训练，要额外追踪好几个量)。
 - **Data parallelism**：把数据切到多卡各自 forward/backward；naive 做法 = 每卡完整复制参数+梯度+优化器状态，冗余巨大。
 - **ZeRO(zero redundancy optimizer)**：把 optimizer states / gradients / parameters **分片(shard)**摊到各卡，不存重复；代价 = 计算时缺的参数要**跨卡通信**取回，不是 free lunch。
 - [0:56] 学生易混点：ZeRO **不是 model parallelism**——给定子批数据的全部模型计算仍在这张卡上完成(缺什么向别的卡要什么)；model parallelism 是把模型计算本身切到不同卡上。分片参数时，梯度与优化器状态跟着参数走，各卡只留与自己那部分参数相关的量。
@@ -60,32 +60,32 @@
 
 - **Tensor parallelism**：把单个矩阵乘法切到多卡——multi-head attention 各 head 本来独立，一卡一 head，各自算投影再合并；FFN 同理，矩阵 A 按行切、B 按列切。与 data parallelism **不互斥，可叠加**(显存不够就一起上)。
 - [1:04:00] **Pipeline parallelism**：按层/组件切，device0→device1→…接力；forward 传递信息、各 stage 留存 activation 供 backward 用；代价是 **bubble**(GPU 空转等接力)，业界有一堆缓解策略(本讲不展开)。
-- [1:06:00] **Context parallelism**：按**序列长度**切——queries 分组驻留各卡、keys/values 在邻居间轮转(两卡两 token 例:各算各的 q/k/v,算完交换 KV 再来一轮,token 多了就分组循环);**Expert parallelism**:MoE 的专家放不同卡，token 按 router 送到专家所在卡计算再回来。
+- [1:06:00] **Context parallelism**：按**序列长度**切——queries 分组驻留各卡、keys/values 在邻居间轮转(两卡两 token 例:各算各的 q/k/v,算完交换 KV 再来一轮，token 多了就分组循环);**Expert parallelism**:MoE 的专家放不同卡，token 按 router 送到专家所在卡计算再回来。
 - 「五个 D」全家福：**Data / Tensor / Pipeline / Context / Expert** parallelism，可任意混用；但并行不白给——GPU 按小时计费(利用率低 = 烧钱)+ 通信开销(如 ZeRO-3 要传参数)。
 - 训练侧答卷：fit = 把 parameters/activations/gradients/states 摊到多卡；fast = data parallelism 并行 batch + model parallelism 并行模型计算。
 
 ### [1:11:00] 推理延迟解剖：prefill 快、decode 慢、TTFT/TPOT/TTLT
 
 - 开场对比(Shervine 交给全班答):10-token 输入要 10k-token 输出 vs 10k-token 输入只要 10-token 输出，**后者快**——prefill 是 **teacher forcing** 式并行吃进全部 prompt token,decode 是 **autoregressive** 一个 token 一个 token 蹦。
-- 一次请求的延迟组成：**Tq**(排队时间,provider 有多个用户,受其 batching 策略影响)+ **T_prefill**(并行,相对快)+ autoregression 时间(大头)。
+- 一次请求的延迟组成：**Tq**(排队时间，provider 有多个用户，受其 batching 策略影响)+ **T_prefill**(并行，相对快)+ autoregression 时间(大头)。
 - 三个监控指标：**TTFT**(time to first token)、**TPOT**(time per output token)、**TTLT**(time to last token);infra 重点盯前两个(反映排队/并行/解码策略好坏)。
 - [1:13:00] TTLT 反而少盯：它被模型行为天然污染——长 reasoning 链、用户爱要 teddy bear 长故事都会拉高 TTLT，不代表系统差。
-- [1:15:00] 价格直觉：大 lab 定价**输出 ≈ 5 × 输入**(纯经验值,无理论必然)——decode 的自回归本质决定了它贵；系统 owner 的目标 = 在 τ₁/τ₂ 这类延迟与成本约束内做到 fast & cheap。
+- [1:15:00] 价格直觉：大 lab 定价**输出 ≈ 5 × 输入**(纯经验值，无理论必然)——decode 的自回归本质决定了它贵；系统 owner 的目标 = 在 τ₁/τ₂ 这类延迟与成本约束内做到 fast & cheap。
 
 ### [1:16:00] Arithmetic intensity 与 roofline:memory-bound vs compute-bound
 
-- 三个硬件量：**computational throughput**(datasheet 上的 teraflops,**强依赖数据类型**)、**memory bandwidth**(HBM→SRAM→compute unit 的搬运速度,TB/s 量级)、**arithmetic intensity** = 计算数 / 内存搬运数(把前两者连起来的比值)。
+- 三个硬件量：**computational throughput**(datasheet 上的 teraflops,**强依赖数据类型**)、**memory bandwidth**(HBM→SRAM→compute unit 的搬运速度，TB/s 量级)、**arithmetic intensity** = 计算数 / 内存搬运数(把前两者连起来的比值)。
 - HBM 做不快是硬件设计折中：更快意味着更大面积与成本，所以 HBM 大慢、SRAM 小快各有定位；理想世界当然想要最大的 SRAM + 无限算力，可惜造不出来。
-- [1:21:00] **Roofline model**：横轴 arithmetic intensity、纵轴 computational throughput，可达性能有一条形似屋顶的上限线；拐点叫 **ridge point**——既不 memory-bound 也不 compute-bound 的临界点(注意图是对数坐标,不该从非零画起)。
-- 推理定位：**decode = memory-bound**(每出一个 token 都要把整包权重从 HBM 搬一遍,计算极少);**prefill = compute-bound**(做了 flash attention 类优化后计算密集,瓶颈在算力)。
-- [1:24:00] **KV caching**:decode 时复用历史 keys/values,provider 对 cached 输入只收约 **1/10** 价格；注意区分两种「缓存」——decode 时的 KV cache(计价含在输出价里)vs **跨 turn 的 prompt cache**(新 query 锚定之前已算好的状态,不算新输入);causal mask 不用专门操心，乘个三角矩阵就搞定。
+- [1:21:00] **Roofline model**：横轴 arithmetic intensity、纵轴 computational throughput，可达性能有一条形似屋顶的上限线；拐点叫 **ridge point**——既不 memory-bound 也不 compute-bound 的临界点(注意图是对数坐标，不该从非零画起)。
+- 推理定位：**decode = memory-bound**(每出一个 token 都要把整包权重从 HBM 搬一遍，计算极少);**prefill = compute-bound**(做了 flash attention 类优化后计算密集，瓶颈在算力)。
+- [1:24:00] **KV caching**:decode 时复用历史 keys/values,provider 对 cached 输入只收约 **1/10** 价格；注意区分两种「缓存」——decode 时的 KV cache(计价含在输出价里)vs **跨 turn 的 prompt cache**(新 query 锚定之前已算好的状态，不算新输入);causal mask 不用专门操心，乘个三角矩阵就搞定。
 
 ### [1:26:00] 给 KV cache 挤水：paged attention、GQA、MLA
 
 - 显存分配的坑：provider 按请求声明的 **max output** 预留 KV cache 空间，而实际 completion 往往短得多 → 大量「**预留了却用不上、别人也用不了**」的显存碎片；查询多了碎片越积越多。
 - [1:29:00] **Paged attention**：不再连续摆放 KV，改用逻辑视图——切成大小 **B** 的 block + 元数据查找表记录「谁的 KV 在哪个 block」；B 太小 → 元数据爆炸，B 太大 → 碎片回归；实践取 **B=16**，碎片被限制在 block 级。
-- **GQA**(grouped-query attention):h 个 query 头只配 **g 个 KV 头**,queries 分组共享；两个极端——g=h 退回 **MHA**,g=1 是 **MQA**(每 token 只剩一对 K/V,表达力不够,太激进)；量级感受：g=2、h=24 → 显存省 **1 - 2/24 ≈ 91%**;g 靠 grid search / ablation 调，太靠近 h 提升只有边际。
-- [1:31:00] **MLA**(multi-latent attention)：不只求少、还求小——把每 token 的 2h(或 2g)个 KV 向量压成**一个小的 latent 向量**；LoRA 式**低秩分解**：先投影出共享低秩表示，再训练一个 decoder 从 latent 还原 K/V(还原结果不存储,只存共享 latent)；魔法在**第一个投影矩阵跨所有 head、且 K/V 共用**，于是每 token 只存一个向量。
+- **GQA**(grouped-query attention):h 个 query 头只配 **g 个 KV 头**,queries 分组共享；两个极端——g=h 退回 **MHA**,g=1 是 **MQA**(每 token 只剩一对 K/V,表达力不够，太激进)；量级感受：g=2、h=24 → 显存省 **1 - 2/24 ≈ 91%**;g 靠 grid search / ablation 调，太靠近 h 提升只有边际。
+- [1:31:00] **MLA**(multi-latent attention)：不只求少、还求小——把每 token 的 2h(或 2g)个 KV 向量压成**一个小的 latent 向量**；LoRA 式**低秩分解**：先投影出共享低秩表示，再训练一个 decoder 从 latent 还原 K/V(还原结果不存储，只存共享 latent)；魔法在**第一个投影矩阵跨所有 head、且 K/V 共用**，于是每 token 只存一个向量。
 
 ### [1:33:00] Speculative decoding：验证便宜、生成贵，输出分布可证一致
 
@@ -113,7 +113,7 @@
 | GQA / MQA / MLA | h 个 query 头共享 g 个 KV 头(g=h→MHA,g=1→MQA);MLA 低秩分解把每 token KV 压成一个共享 latent |
 | Speculative decoding | draft 生成 k 个 token、target 并行验证，min(1,T/D) 接受 + residual 重采样，输出分布严格等于 target |
 
-## 自测题(先自己答,再看答案)
+## 自测题(先自己答，再看答案)
 1. 为什么显存 141GB 的 H200 连一个 100B 参数的模型都放不下?训练时除了参数还要在显存里放什么?
    > fp16 每参数 2 字节，仅参数就要 200GB > 141GB；训练还需 activations(随序列长度与 batch 增长)、gradients、optimizer states(Adam 变体额外追踪多个量)。
 2. Flash Attention 要解决什么瓶颈?softmax 为什么是主要障碍?

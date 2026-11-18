@@ -1,6 +1,6 @@
 # CS329A Lecture 1 学习笔记：Course Overview
 
-> 讲者：Aakanksha Chowdhery(Stanford 兼职教授、Reflection AI 研究员)| Azalia Mirhoseini(Stanford CS 助理教授,前 Google Brain / Google DeepMind,参与 Gemini)|配合视频 `lectures/…[6YnLB0XbTnI].mp4`，时间戳可直接跳转
+> 讲者：Aakanksha Chowdhery(Stanford 兼职教授、Reflection AI 研究员)| Azalia Mirhoseini(Stanford CS 助理教授，前 Google Brain / Google DeepMind,参与 Gemini)|配合视频 `lectures/…[6YnLB0XbTnI].mp4`，时间戳可直接跳转
 > 配套原始文字稿：[L01-transcript.md](L01-transcript.md)
 
 ---
@@ -16,16 +16,16 @@
 ### [0:00–0:05] 讲者阵容与 scaling laws 三要素
 
 - 第二次开课，两位讲者自述背景；课程网站 cs329a.stanford.edu。
-- 本讲结构：LLM 与 scaling 趋势回顾 → 课程内容预览 → 课程后勤(直接影响成绩,重点听)。
+- 本讲结构：LLM 与 scaling 趋势回顾 → 课程内容预览 → 课程后勤(直接影响成绩，重点听)。
 - **Scaling laws**：三张曲线图——加大**算力**、加大**数据集**、加大**参数量**，测试 loss 都随之下降；这是 GPT-3 以来预训练的根基。
 - 模型规模的指数增长：BERT 3.4 亿 → GPT-2 15 亿 → GPT-3 1750 亿 → PaLM 5400 亿 → GPT-4 估计**万亿级**参数。
 - 2018–2024 规模一路推高；「去年开始」预训练这条曲线出现**饱和**迹象——为后面转向推理时扩展埋下伏笔。
 
 ### [0:05–0:10] 变大带来什么：few-shot、CoT 与 ChatGPT 时刻
 
-- 模型变大的三类收益：benchmark 持续提升；**few-shot learning**(不用微调,给几个示例即可套模板,原型开发变极易);**涌现行为**(推理等能力只在足够大的模型上出现)。
+- 模型变大的三类收益：benchmark 持续提升；**few-shot learning**(不用微调，给几个示例即可套模板，原型开发变极易);**涌现行为**(推理等能力只在足够大的模型上出现)。
 - zero-shot = 只有任务描述；few-shot = 任务描述 + 几个示例(课上用英译法任务、cheese 一词演示)。
-- **Chain of Thought**：在示例中连推理过程一起给出(Roger 有 5 个网球,再买 2 罐每罐 3 个,5+6=11)，让模型学会「过程」再解新题；它是今天所有 reasoning/thinking 模型的地基。
+- **Chain of Thought**：在示例中连推理过程一起给出(Roger 有 5 个网球，再买 2 罐每罐 3 个，5+6=11)，让模型学会「过程」再解新题；它是今天所有 reasoning/thinking 模型的地基。
 - CoT 有规模门槛：LaMDA 8B、GPT-3 约 7B 用 CoT 无收益，更大的模型才能利用；modular arithmetic、word unscramble 也是到某个规模**突然出现**。
 - 前沿实验室因此仍愿意继续推 scaling——更大的模型可能带来不可预知的新涌现行为。
 - ChatGPT 2022 年 11 月上线，**5 天达到 100 万用户**，远快于此前知名软件；两个关键增量：**instruction tuning + RLHF**。
@@ -76,11 +76,11 @@
 ### [0:45–0:50] Workflow 模式大全与 coding agent 循环
 
 - 工作流常见构件：LLM 调用、**verifier**(专讲一课)、**critic/judge**(LLM-as-judge,作业覆盖)、**tool call**(搜网页、查天气)。
-- 六种编排模式：**prompt chaining**(子任务串链)、**routing**(按复杂度分流到繁/简流程)、**parallelization**(Deep Research 多关键词并行后聚合)、**orchestrator**(中央 LLM 做规划,Claude Code 即此)、**evaluator/judge**、**verifier**(跑 unit test 验证输出)。
+- 六种编排模式：**prompt chaining**(子任务串链)、**routing**(按复杂度分流到繁/简流程)、**parallelization**(Deep Research 多关键词并行后聚合)、**orchestrator**(中央 LLM 做规划，Claude Code 即此)、**evaluator/judge**、**verifier**(跑 unit test 验证输出)。
 - 在可验证域(**math、code、规则明确**的领域)，verifier 的反馈能让模型自我纠错——全课反复出现的主线。
 - 这些 workflow 对模型的新要求：**更好的规划、多步推理、自我改进**(错了能自己纠正)——单靠推理模型还不够，是后续讲次的地图。
 - Coding agent 循环：英语指令 → 导航 repo、搜索/查看/编辑文件 → 终端执行命令 → 依据输出决定下一步；这套循环去年还不可靠，现在开始可靠。
-- 为什么是现在：模型更强 + **RL with verifiable rewards** + train-time scaling 起效；模型变好后 **self-improvement loop** 接棒(自动生成任务,任务越来越可靠);Code Monkeys 论文用「给生成代码再生成 unit tests」做验证。
+- 为什么是现在：模型更强 + **RL with verifiable rewards** + train-time scaling 起效；模型变好后 **self-improvement loop** 接棒(自动生成任务，任务越来越可靠);Code Monkeys 论文用「给生成代码再生成 unit tests」做验证。
 
 ### [0:50–1:00:00] Generator-verifier gap、落地场景与「CoT 是否涌现」之争
 
@@ -88,7 +88,7 @@
 - 学生好问题：预训练里明明已有这些能力，RL 为什么还能带来这么大的跳变?——回答：活跃研究领域、**尚无共识**；预训练多样数据与 RL 都有贡献，整个闭环「初步看到生命迹象就被商业化」，远未被理解。
 - Coding agent 补充：**澄清用户意图**是第一步(用户经常说不清需求)，收尾要靠测试验证——甚至测试也可能是模型自己生成的；o3 这类模型见过大量端到端 trace，所以能规划、多步推理、给出结论。
 - 最先落地的场景是**重复性任务**：代码迁移、版本升级、代码库重构、数据工程(抽取/清洗)、数仓迁移、单元级任务。
-- 客户支持四件套：实时转写、knowledge assist(查知识库并给出相关文章,优于纯索引检索)、smart replies、call summary。
+- 客户支持四件套：实时转写、knowledge assist(查知识库并给出相关文章，优于纯索引检索)、smart replies、call summary。
 - 研究报告场景：给复杂题目(例:2022 冬奥开幕式)→ 自动确定要查的参考文献 → 列大纲 → 逐篇总结 → 合成完整长文；作业里会亲手做一个。
 - 更前沿的 **AI scientist**(AI scientist 论文)：idea 生成/brainstorm、实验迭代、论文写作全程辅助；虽然会幻觉，但读遍网页的模型能给出「跳出框」的想法，brainstorm 价值已被认可。
 - 收尾问答：CoT 当年是**被发现的**而非设计出来的(GSM8K 论文首个 signs of life,PaLM 能解释笑话令人惊艳)；今天的 reasoning 模型则是**专门训练**出来的——自我纠错/回溯算不算涌现，「很难说」。
@@ -96,8 +96,8 @@
 ### [1:00:00–1:09:42] 课程后勤：作业、项目标准与评分
 
 - 主题清单 + **frontier lab 客座讲座**(post-training 演进、多模态 agent、机器人等)；信息走 Canvas，讲义尽量课前上传，due date 已挂网站。
-- 本季 **3 个 homework**(比上一季多一个,TA 新设计)。
-- **Course project**：自选题——搭 agentic 系统或深挖一个问题并设计实验；**提供 API credits**；组队 **2–4 人**(1 人也行,组队共享更多 credits)；往年优秀项目会上网站展示。
+- 本季 **3 个 homework**(比上一季多一个，TA 新设计)。
+- **Course project**：自选题——搭 agentic 系统或深挖一个问题并设计实验；**提供 API credits**；组队 **2–4 人**(1 人也行，组队共享更多 credits)；往年优秀项目会上网站展示。
 - 合格项目示例：新的评测数据集/benchmark、评估现有 agentic 系统的可靠性、在现有 benchmark 上 hill-climb、质疑/改进/评测课上论文的某个决策。
 - 反面示例：**survey 论文、纯 demo app**；必须 researchy——有假设、有问题、有想看到的改进或想分析的性质，「不止是 live coding」。
 - 里程碑：尽早开跑——**project proposal 约 10 月初**；proposal 两周后的 **midterm 展示要有真实进展**(提按时就想好要跑哪些实验)；final report 权重最大；期末 **poster 展示 12 月 12 日 16:00–18:00**，业界人士到场；上一季有学生把项目做成了论文发表。

@@ -45,9 +45,9 @@
 
 ### 五、Kernel 融合实战：gelu 的 CUDA C++ 实现
 - kernel fusion 的工厂比喻：每个算子单独执行都要从 DRAM「仓库」往返搬运一次；融合成一个 kernel 就只搬一次，省掉全部中间运输成本([0:40])
-- naive PyTorch gelu(手写 tanh 近似公式)拆成一堆小 CUDA kernel：实测约 8.1ms;PyTorch 内置融合版约 1.1ms，差约 8 倍(讲者口播单位 seconds 系口误,量级为毫秒)([0:45])
+- naive PyTorch gelu(手写 tanh 近似公式)拆成一堆小 CUDA kernel：实测约 8.1ms;PyTorch 内置融合版约 1.1ms，差约 8 倍(讲者口播单位 seconds 系口误，量级为毫秒)([0:45])
 - CUDA 代码两层结构：kernel 函数(`__global__`,在 GPU 上执行计算)+ wrapper(CPU 上编排 launch)；调试必开 CUDA_LAUNCH_BLOCKING=1 才能拿到报错(代价是变慢)([0:50])
-- wrapper 标配：assert x 在 CUDA 设备上 + assert contiguous(索引运算假设连续内存;transpose/view 是唯一常见反例,可在 wrapper 一侧转成连续再进 kernel)；用 torch::empty_like 分配输出(不必 zeros,反正要整块写入);cdiv = ceil(n/block_size) 上取整算 block 数，保证尾部元素被覆盖([0:50])
+- wrapper 标配：assert x 在 CUDA 设备上 + assert contiguous(索引运算假设连续内存;transpose/view 是唯一常见反例，可在 wrapper 一侧转成连续再进 kernel)；用 torch::empty_like 分配输出(不必 zeros,反正要整块写入);cdiv = ceil(n/block_size) 上取整算 block 数，保证尾部元素被覆盖([0:50])
 - kernel 侧：全局下标 i = blockIdx.x * blockDim.x + threadIdx.x；因 cdiv 上取整会多出线程，必须 `if (i < n)` 越界保护——CUDA 没有自动越界检查；launch 形如 `kernel<<<blocks, block_size>>>(指针, n)`，传指针不传值([0:50])
 - 结果：CUDA 版约 1.8ms，单个 kernel 吃满 100% GPU 时间——融合问题本身已解决；element-wise 算子容易手写，带 reduction 的算子和 FlashAttention 会更复杂一些([0:50])
 

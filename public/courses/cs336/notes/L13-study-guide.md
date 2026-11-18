@@ -33,8 +33,8 @@
 
 - Common Crawl：2007 年成立的非营利项目，每月爬一次网，17 年约 100 次 crawl；单次可新增 27 亿页面；爬取成本相对训练微不足道(租 AWS 机器两周内搞定)——「语言模型训在互联网上」严格说是训在 Common Crawl 这个学术近似上([0:10])
 - 爬取机制：数亿种子 URL 起步，维护爬取前沿(crawl frontier)，多机近似 BFS；须尊重 robots.txt、不压垮服务器、决定重爬间隔；URL 动态且多 URL 指向同内容，天然大量重复；robots.txt 只是指导无强制，多数前沿模型开发商自建爬虫(CC 覆盖其实稀疏)([0:15])
-- 两种产物格式：WARC(raw HTTP 响应,多为 HTML)与 WET(转好的文本,转换有损)；DataComp-LM 消融显示直接用 WET 文件比用 Trafilatura 做 HTML 转文本低 4 个点——底层细节有真实影响([0:15])
-- CC 的边界：刻意不求全面(政策温和礼貌,并非所有 Wikipedia 文章都在)、基本不过滤敏感内容、大部分内容受版权保护([0:15])
+- 两种产物格式：WARC(raw HTTP 响应，多为 HTML)与 WET(转好的文本，转换有损)；DataComp-LM 消融显示直接用 WET 文件比用 Trafilatura 做 HTML 转文本低 4 个点——底层细节有真实影响([0:15])
+- CC 的边界：刻意不求全面(政策温和礼貌，并非所有 Wikipedia 文章都在)、基本不过滤敏感内容、大部分内容受版权保护([0:15])
 - 两条过滤路线：CCNet(Meta)是模型式——去重、语言识别后，用 Wikipedia 训 5-gram 模型打分留下「像 Wikipedia」的文档，但 Wikipedia 作为高质量代理本身覆盖不全；C4(T5 论文)是规则式——保留标点结尾行、删少于 3 句页面/坏词/花括号、只留英语([0:20])
 - 两路线互补：规则式能保留「不像 Wikipedia 但良好成形」的句子却会放进 spam；模型式上限取决于正例覆盖面；C4 附带实验把 OpenWebText 链接过全部 CC 只得 17GB(WebText 自爬 40GB)，证明 CC 覆盖相当不完整([0:20])
 
@@ -49,7 +49,7 @@
 
 ### 五、手工规则时代：MassiveText、Llama 系与 RefinedWeb/FineWeb([0:40])
 
-- GitHub：代码数据主来源(也被认为有助推理能力)；28M 公共仓库，但仓库≠代码(含 issues、提交历史、大量重复)；三层结构：活服务(网站)→ 快照(GitHub Archive,BigQuery 可查)→ 加工(The Stack:clone 仓库、只留宽松许可证、去重,得 3.1TB)——「训在 GitHub 上」必须追问预处理细节([0:40])
+- GitHub：代码数据主来源(也被认为有助推理能力)；28M 公共仓库，但仓库≠代码(含 issues、提交历史、大量重复)；三层结构：活服务(网站)→ 快照(GitHub Archive,BigQuery 可查)→ 加工(The Stack:clone 仓库、只留宽松许可证、去重，得 3.1TB)——「训在 GitHub 上」必须追问预处理细节([0:40])
 - Gopher/MassiveText(DeepMind 2021)：MassiveWeb 用手工规则过滤(如 80% 的词须含至少一个字母字符)+ Google SafeSearch 毒性过滤；当时反对模型过滤的理由：弱模型当过滤器偏见严重、且可能误杀边缘群体的数据；10TB 文本(约 4-5T tokens)但 Gopher 只训 300B([0:40])
 - Llama(2022):CCNet 处理 CC + 质量分类器——与 GPT-3 的关键差异：GPT-3 问「像不像 Wikipedia 页面」，Llama 问「像不像 Wikipedia 引用出去的页面」，利用了 Wikipedia 的外链结构(与 WebText 同一思路)；再加 C4、GitHub(宽松许可证)、Wikipedia、Gutenberg、Books3(惹上官司)、arXiv、Stack Exchange，得 1.2T tokens([0:45])
 - RedPajama：社区复现 Llama 数据集(处理代码+数据公开)；Cerebras 进一步去重得 627B token 子集；RedPajama-V2 是另一回事——CC 快照产出 30T tokens 附带全套质量信号，供过滤研究用([0:45])
@@ -58,12 +58,12 @@
 
 ### 六、模型过滤时代：DCLM 与 Nemotron-CC([0:50])
 
-- Dolma(AI2,OLMo 初代):CC + The Stack + C4 + Reddit(提交与评论分开存,无线程结构)+ Semantic Scholar(4 千万论文)+ Gutenberg + Wikipedia；语言识别留英文、规则质量过滤(初代刻意不用模型)、毒性用分类器、去重，得 3T tokens([0:50])
-- DataComp-LM(DCLM)：多机构合作，把「造数据集」做成竞赛：全 CC dump 加工成 DCLM-pool(240T tokens)，再用激进过滤器缩到 DCLM-baseline——只保留约 1.4%;fastText 分类器正例 = OpenHermes(GPT-4 生成的指令数据)+ ELI5(subreddit)，负例 = 从 RefinedWeb 采样(不是低质,只是没那么策展)([0:50])
+- Dolma(AI2,OLMo 初代):CC + The Stack + C4 + Reddit(提交与评论分开存，无线程结构)+ Semantic Scholar(4 千万论文)+ Gutenberg + Wikipedia；语言识别留英文、规则质量过滤(初代刻意不用模型)、毒性用分类器、去重，得 3T tokens([0:50])
+- DataComp-LM(DCLM)：多机构合作，把「造数据集」做成竞赛：全 CC dump 加工成 DCLM-pool(240T tokens)，再用激进过滤器缩到 DCLM-baseline——只保留约 1.4%;fastText 分类器正例 = OpenHermes(GPT-4 生成的指令数据)+ ELI5(subreddit)，负例 = 从 RefinedWeb 采样(不是低质，只是没那么策展)([0:50])
 - 「用指令数据当正例去筛预训练数据」是新颖思路；benchmark 上 DCLM 超 RefinedWeb 3%；OLMo 2 随即改用 DCLM-baseline；风向转变：「不用模型以免偏见」的时代基本结束——模型进环(model in the loop)在提升 benchmark 上效果压倒性([0:55])
 - Nemotron-CC(NVIDIA)：动机是 DCLM 过滤太激进，3.8T 撑不起 400B 模型的长训——想要更多 token；HTML 转文本消融不只看质量还看留存 token 数，选 jusText 而非 Trafilatura([0:55])
 - Nemotron-CC 的过滤组合：大模型按「教育价值」打分蒸馏进快模型 + DCLM 分类器，按分数分桶、每桶采样(不取 top,保住不同「专家」对质量的覆盖)([1:00:00])
-- 合成两路：低质数据用 LM 重写成高质量(会出错,但未必比训低质差)；高质量数据(如 Wikipedia)用 LM 生成任务式输入输出对(问答/摘要/关键信息提取)，为指令跟随抢跑；共得 6.3T tokens，近 DCLM-baseline 两倍，benchmark 排序 Nemotron-CC > DCLM > FineWeb，另有 1T 高质量子集更优；参考：Llama 3 训 15T、Qwen3 训 36T([1:00:00])
+- 合成两路：低质数据用 LM 重写成高质量(会出错，但未必比训低质差)；高质量数据(如 Wikipedia)用 LM 生成任务式输入输出对(问答/摘要/关键信息提取)，为指令跟随抢跑；共得 6.3T tokens，近 DCLM-baseline 两倍，benchmark 排序 Nemotron-CC > DCLM > FineWeb，另有 1T 高质量子集更优；参考：Llama 3 训 15T、Qwen3 训 36T([1:00:00])
 
 ### 七、版权与法律：license 与 fair use([1:05:00])
 
@@ -71,7 +71,7 @@
 - 边界：纯收集不具可版权性(电话簿)，除非选择/编排有创造性；只保护表达不保护思想——可版权代码，不可版权算法；无需注册即有版权(不同于专利)，但起诉前须注册(仅 65 美元)；保护期 75 年后进入公有域([1:05:00])
 - 关键事实重置：网上大部分内容其实都有版权，真正的问题是「能否使用」——两条路：拿许可(license)或主张合理使用(fair use)([1:05:00])
 - license：签合同(Google-Reddit、OpenAI-Shutterstock/StackExchange 等)，实质是「别告我」；Creative Commons 许可让作品可自由分发但仍受版权(Wikipedia、大量 YouTube 视频)；没钱的学术路线靠对方通融([1:05:00])
-- fair use 四要素：使用的目的与性质(教育性/转换性加分)、作品性质(事实性作品更易过关)、使用量(片段有利,但训练要全文)、市场影响(替代创作者最不利)；Google Books 展示快照最终被判 fair use([1:05:00])
+- fair use 四要素：使用的目的与性质(教育性/转换性加分)、作品性质(事实性作品更易过关)、使用量(片段有利，但训练要全文)、市场影响(替代创作者最不利)；Google Books 展示快照最终被判 fair use([1:05:00])
 - 训练与版权的微妙处：「复制」本身即侵权起点；可主张训练是转换性的、关注思想而非表达，但模型会记忆且能提取训练数据，市场影响也客观存在；角色与情节也可受版权(不止逐字复现)；即便有 license 或 fair use，爬取行为仍可能违反平台服务条款(YouTube 例子)([1:10:00])
 
 ### 八、中期与后训练数据：长上下文与指令跟随([1:10:00])
@@ -79,7 +79,7 @@
 - mid/post 界限本就不清，合并讲：重点从「普遍高质量」转向「注入特定能力」([1:10:00])
 - 长上下文扩展(long context extension)放在中期训练：注意力对序列长度二次方扩展，模型还没好就训长上下文是浪费算力，所以后置；数据源是书和数学(天然长依赖)，部分可合成([1:10:00])
 - 指令化浪潮：2022 年是「把所有 NLP 任务塞进指令格式」的一年——Supernatural Instructions(社区攒 1,600 个任务)、Flan；好处是迁移学习(回到 T5 思想)，问题是 prompt 模板化严重；2022 之后「任务」概念消失，期望模型直接回答任何一次性请求([1:10:00])
-- 开放社区转向合成数据：Alpaca(self-instruct)、Vicuna(ShareGPT 对话,已弃用)、模型自聊(种子问题)、evol-instruct(把问题复杂化)、从 Common Crawl 找 quiz 站抽 QA 对、OpenHermes(数据集聚合)([1:10:00])
+- 开放社区转向合成数据：Alpaca(self-instruct)、Vicuna(ShareGPT 对话，已弃用)、模型自聊(种子问题)、evol-instruct(把问题复杂化)、从 Common Crawl 找 quiz 站抽 QA 对、OpenHermes(数据集聚合)([1:10:00])
 - Llama 2 chat：雇标注员写高质量指令数据，论文称优于数百万开源样本，但本可少标注多 RLHF 省钱；Llama-Nemotron 后训练数据：WildChat + 多模型合成 + R1 推理轨迹，已开源([1:15:00])
 - 合成数据三档及其代价：GPT-4 便宜但用它训竞品违反 OpenAI 条款；开放权重模型许可证宽松可放心蒸馏；雇标注员贵且慢，还有标注员偷偷用 GPT-4 的风险。总结：数据不会从天上掉下来——活服务 → 快照 → 加工，一路都是质量过滤与去重的启发式；架构趋同(transformer/MOE)之下，数据才是区分模型的关键；领域很乱、很启发式，恰恰意味着改进机会很多([1:15:00])
 

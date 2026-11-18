@@ -16,7 +16,7 @@
 ### [0:00–0:05] 动机：AIME 上小模型反超大模型
 
 - 课程脉络承接：前几讲是 test-time scaling、feedback/tools/code、robust verification；本讲**闭环**——用验证过的输出反过来改进模型。
-- 三篇论文路线图：**STaR**(Stanford 作者,自举推理)、**DeepSeekMath**(数学推理 RL)、**DAPO**(长推理链 RL 稳定化)。
+- 三篇论文路线图：**STaR**(Stanford 作者，自举推理)、**DeepSeekMath**(数学推理 RL)、**DAPO**(长推理链 RL 稳定化)。
 - 为什么换基准：GSM8K/MATH 已饱和且**被大多数模型污染**，改用 AIME 2024/2025(homework 1 同款)。
 - AIME 对比：GPT-3.5(据信 175B)约 **5%**;DeepSeekMath 7B(7B!)**51.7%**、加 tricks 约 60%;DAPO + Qwen 32B **50%**。
 - 三条核心洞察：①允许模型**从自己的输出中学习**(聪明过滤)可进一步提升；②训练时投入的 compute 可**部分替代参数量**；③RL 的**实现细节**极重要，小 fix 决定成败。
@@ -44,9 +44,9 @@
 
 ### [0:20–0:30] STaR 的假设、实验与局限
 
-- 三个假设：①**最终答案正确 = 推理质量的代理**(数学里一般成立)；②模型拿到答案 hint 后能生成有效 rationale；③**初始模型足够强**(问题不能完全超出能力范围,否则迭代无从启动)。
+- 三个假设：①**最终答案正确 = 推理质量的代理**(数学里一般成立)；②模型拿到答案 hint 后能生成有效 rationale；③**初始模型足够强**(问题不能完全超出能力范围，否则迭代无从启动)。
 - 实验设置：**GPTJ 6B**(GPT-3 风格开源模型)；小 warm-up + 恒定学习率；外循环多次迭代，内循环步数逐步增加(慢启动)。
-- 数据集：GSM8K(约 9K 样本)、CommonsenseQA(日常多选题,如「结账前把葡萄放哪→grocery cart B」)、多位数加法(合成)。种子 rationale 数据集很小，真正的训练数据靠模型自己生成。
+- 数据集：GSM8K(约 9K 样本)、CommonsenseQA(日常多选题，如「结账前把葡萄放哪→grocery cart B」)、多位数加法(合成)。种子 rationale 数据集很小，真正的训练数据靠模型自己生成。
 - 结果：相比 supervised fine-tuning,STaR 达到 51.7% 且只用 **70–87% 的数据**(答错的被丢弃);rationalization 提升数据效率——用 86% 数据即可达到 72.5%。
 - 人类评估：CommonsenseQA 上 STaR 生成的 rationale 被评为合理。
 - 反直觉发现：**GSM8K 上 rationalization 没有帮助**——问题太简单，CoT 与 rationalization 的计算步数差不多，直接 fine-tune 就能拿到类似收益。
@@ -72,7 +72,7 @@
 ### [0:45–0:50] GRPO 统一视角与奖励分布难题
 
 - 统一框架：各 RL 变体改的其实是两件事——**数据源**与**梯度系数**的计算方式。
-- 频谱：**STaR**(一次性生成,对/错 0-1 奖励)→ **online rejection sampling**(在线生成,只留 reward=1)→ **GRPO**(在线生成 + 组基线 advantage)。
+- 频谱：**STaR**(一次性生成，对/错 0-1 奖励)→ **online rejection sampling**(在线生成，只留 reward=1)→ **GRPO**(在线生成 + 组基线 advantage)。
 - 关键条件：**奖励必须有分布**——一组样本全对或全错时，标准化后 advantage 全为 0，没有 hill-climbing 信号。
 - 推论：题目不能全太难(全 0 学不到)也不能太简单(全 1 学不到)；需要**有梯度的奖励分布**。
 - 学生讨论的补充手段：加 **KL divergence** 项防止偏离模型已会的能力；或只更新部分参数(低秩/子集)。

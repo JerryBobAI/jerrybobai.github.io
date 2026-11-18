@@ -24,7 +24,7 @@
 ### [0:05–0:10] ReAct 抽象：纯 prompting 实现思考-行动-观察循环
 
 - ReAct 核心抽象：用 prompting 让模型先生成**verbal reasoning trace**，追加进 prompt，再问「基于此该做什么动作」——思考与行动交替。
-- 三个任务都需要 grounding:**HotpotQA**(multi-hop 问答)、**FEVER**(事实核查)、**WebShop**(按指令网购,一系列工具调用完成购买)。
+- 三个任务都需要 grounding:**HotpotQA**(multi-hop 问答)、**FEVER**(事实核查)、**WebShop**(按指令网购，一系列工具调用完成购买)。
 - 两个收益：①grounding 关键的任务性能提升；②trace **可解释**，人类能逐步核对从而信任模型。
 - 让动作合法的技巧：把动作生成**framing 成分类任务**——给出合法动作子集 + 世界状态，再选下一步；讲者与 Google 机器人团队的合作论文同样靠受限动作列表保证 grounded。
 - 实现很朴素：旧模型 PaLM(frozen LLM)+ few-shot 示例(动作/思考/观察)，每步决定「接着推理还是行动」。
@@ -43,7 +43,7 @@
 ### [0:15–0:20] ReAct 结果：知识密集任务与消融
 
 - HotpotQA/FEVER 的动作空间极简：**Search[wiki 页]、Lookup[字符串]、Finish**——模拟人类交互 Wikipedia。
-- 基线：Standard prompting(无思考无动作)、**CoT**、**CoT-SC**(SC=self-consistency=majority voting,同义词)、**Act**(只行动不思考,失败可 fallback 到 CoT-SC;SC 多数答案占比不足半数时可 back off 到 ReAct)。
+- 基线：Standard prompting(无思考无动作)、**CoT**、**CoT-SC**(SC=self-consistency=majority voting,同义词)、**Act**(只行动不思考，失败可 fallback 到 CoT-SC;SC 多数答案占比不足半数时可 back off 到 ReAct)。
 - 结果：ReAct 稳定好于 Act-only；**不一定总赢 CoT**——FEVER 上更好，HotpotQA 上不总是；CoT-SC 与 ReAct 互相 fallback 的组合超过所有标准技术。
 - 结论：价值在于**正确组合内部知识与外部知识**，以推理为中介决定检索什么。
 - 失败分析：CoT 的主要失败模式是**幻觉**；ReAct 靠检索外部知识 grounding，错误更少、更可信。
@@ -118,7 +118,7 @@
 | ReAct | 思考-行动-观察**交错**循环；用真实观察给推理 grounding,trace 可解释 | ReAct(Yao et al. 2022),[0:00]–[0:25] |
 | CoT-SC(SC) | self-consistency = majority voting，多数票定答案 | [0:15] |
 | WebShop | 按用户指令在模拟环境完成网购的决策 benchmark | [0:20] |
-| RLEF | 用执行反馈(测试通过/失败,二值奖励)对 code LLM 做端到端 RL 微调(PPO) | RLEF 论文，[0:25] 起 |
+| RLEF | 用执行反馈(测试通过/失败，二值奖励)对 code LLM 做端到端 RL 微调(PPO) | RLEF 论文，[0:25] 起 |
 | 双层测试(two-tier test) | public 测试供推理期即时反馈，private 测试隐藏只定奖励，防背答案 | [0:30] |
 | turn-level critic | value 按整轮算(prompt 末 token,单一 advantage 覆盖全轮),policy 仍逐 token；近似 GSPO | [0:30] |
 | solve@k | 生成 k 个解看通过比率，衡量随采样预算的解题率 | [0:35] |
@@ -128,7 +128,7 @@
 
 ## 自测题(先遮住右侧再答)
 1. 本讲三篇论文各自的反馈信号来自哪里?
-   > ReAct=环境交互(搜索与观察结果)；RLEF=执行反馈(跑测试的通过/失败,二值奖励)；Constitutional AI=模型按人类写的 16 条宪法自我批评与修订(AI 反馈)。
+   > ReAct=环境交互(搜索与观察结果)；RLEF=执行反馈(跑测试的通过/失败，二值奖励)；Constitutional AI=模型按人类写的 16 条宪法自我批评与修订(AI 反馈)。
 2. ReAct 与 CoT 的关键区别是什么?为什么 ReAct 幻觉更少?
    > CoT 的推理链只基于模型内部状态、无外部反馈；ReAct 在思考间交错插入真实动作与观察(thought1-act1-…)，CoT 的主要失败模式是幻觉，ReAct 靠检索外部知识 grounding，错误更少、更可信。
 3. ReAct 在 HotpotQA/FEVER 上是否全面胜过 CoT?最佳用法是什么?

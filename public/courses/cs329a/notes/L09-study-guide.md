@@ -26,7 +26,7 @@
 - 缺口一 **推理链多样性**：test/train-time scaling 仍限于 math/coding 等窄域；推理链要足够多样才能持续驱动 self-improvement loop，如何泛化到其他域是重要研究方向。
 - 缺口二 **验证**：self-improvement loop 的关键环节是验证；需要 robust 的 verification / **meta-verification** 技术，审查进入推理链的内容本身是否可靠。
 - 缺口三 **数据瓶颈**：训练用 prompt 目前**静态选取、靠人挑**；要打破 human data 依赖，让 loop 自己挑对数据。
-- 论文一动机：pre-training 是互联网规模数据的压缩，instruction tuning 又依赖人类偏好标注；替代路径是 **LLM 合成数据 + 迭代微调**：**rejection sampling**——生成候选解、过滤错误的、只对好的做 SFT(STaR 及其变体,可再加推理链)。
+- 论文一动机：pre-training 是互联网规模数据的压缩，instruction tuning 又依赖人类偏好标注；替代路径是 **LLM 合成数据 + 迭代微调**：**rejection sampling**——生成候选解、过滤错误的、只对好的做 SFT(STaR 及其变体，可再加推理链)。
 - 单模型痛点：同一个 LLM 生成的解高度相似，**即使高温采样也不够多样**，几十轮迭代后性能提升停滞；对比之下 pre-training 数据因人类长期积累而天然多样——解法直觉是多 agent、各有所长。
 
 ### [0:10–0:15] 多智能体微调：debate 机制与实验结果
@@ -35,7 +35,7 @@
 - 多轮 debate 流程：各 generation agent 给初始答案 → **汇总所有 agent 的回答**(模型总结或直接拼接)→ critic 对更新后的答案集做 critique → 汇总回填输入 → 所有模型再生成、再 majority voting、再总结，循环往复。
 - 多 agent 结构 = **免费的 majority voting**；只要各 agent 训练得略有差异，多样性也免费。朴素替代(**poor man's version**)：直接用不同模型、不同 prompt 生成。
 - Critic 微调数据：混合「一开始就对」与「经辩论才纠正」的轨迹，让 critic 学会**对比正确与错误答案**。
-- 结果(x 轴 = 微调迭代数;y 轴 = negative log likelihood 作性能代理,或 embedding dissimilarity 作多样性)：两个开源模型多轮微调性能持续上升(**Llama 3** 对该技术响应更明显)，且回复多样性全程保持(数学数据集)。
+- 结果(x 轴 = 微调迭代数;y 轴 = negative log likelihood 作性能代理，或 embedding dissimilarity 作多样性)：两个开源模型多轮微调性能持续上升(**Llama 3** 对该技术响应更明显)，且回复多样性全程保持(数学数据集)。
 - 三个开源模型、数学域：多 agent 微调持续提升，**单 agent 微调的 accuracy 崩掉或不继续提升**；相邻域 **GSM8K** 上微调后的 agent 同样更高——**泛化到训练域之外**。
 - 技术细节：因为走的是微调路线，实验只能选开源模型。
 - 启示：要 self-improvement，喂给模型的推理链必须多样；多模型 / 多 agent 生成是制造多样性的一条路。
@@ -52,7 +52,7 @@
 
 ### [0:20–0:25] DSM-V2 结果；论文三动机：打破数据瓶颈
 
-- 结果：基于 **DeepSeek V3 base**、GRPO 式 RL 循环；在 **IMO 与 CNML** 上验证(Gemini 版此前客座讲师讲过,这是开源版);8 轮迭代 **pass@1** proof score 持续攀升；**best@32**(32 个证明里挑最好)在 **IMO 2024 shortlist** 上接近 **42%** proof score。
+- 结果：基于 **DeepSeek V3 base**、GRPO 式 RL 循环；在 **IMO 与 CNML** 上验证(Gemini 版此前客座讲师讲过，这是开源版);8 轮迭代 **pass@1** proof score 持续攀升；**best@32**(32 个证明里挑最好)在 **IMO 2024 shortlist** 上接近 **42%** proof score。
 - 启示：最好的证明拿到更高验证分；generator 学会区分高质量与有缺陷证明；**验证可以是瓶颈，meta-verification 是破局方式**——但该方法仍限于验证较容易的域。
 - 推广配方：①让 LLM verifier **无参考解找问题**;②加 meta-verification 降低 verifier 幻觉问题的概率；③给 generator 施加激励，用 deliberate reasoning 最大化回答质量。
 - 论文三动机：SFT 靠人类整理的推理轨迹，RLVR 要专家出题——数学要数学专家、IMO 题要 IMO 专家、代码要强工程师；模型逼近并超过人类智能时，**找专家越来越难**，成为限制。
@@ -70,11 +70,11 @@
 
 ### [0:30–0:35] 收获与共性：合成数据飞轮(SWiRL 呼应)
 
-- 结果：prompt 侧零人工数据，拿到 coding benchmark **SOTA**，胜过用**数万专家样本**训练的模型；只在自产代码任务上爬山，却在**数学 benchmark 上也强**(意外,但可用领域已有结果解释)；**大模型收益更大**。
+- 结果：prompt 侧零人工数据，拿到 coding benchmark **SOTA**，胜过用**数万专家样本**训练的模型；只在自产代码任务上爬山，却在**数学 benchmark 上也强**(意外，但可用领域已有结果解释)；**大模型收益更大**。
 - 涌现行为：复杂度指标随时间上升；循环设对时，程序与答案的**多样性也在改善**；proposer 出题难度持续上升。
 - 气质：**game theory**——proposer 与 solver 略微对抗，但整体互相成就；解的是「该拿什么任务训练模型」的瓶颈。
 - 定位：人类能生成的 coding 数据终究有限，后期必然靠合成数据；这篇工作相当于**合成数据的 task 级变体**——在训练 loop 内、任务粒度上即时生成。
-- Azalia 用 **SWiRL**(step-by-step RL with synthetic data)呼应同一趋势：模型自产合成数据不仅提升生成它的那个任务，还**迁移**到别的能力(多跳 QA + 检索 → 更会调 Python、解数学,反之亦然)；同样观察到**大模型更擅长吸收 data flywheel 并泛化**(至少在 RL 优化侧)。
+- Azalia 用 **SWiRL**(step-by-step RL with synthetic data)呼应同一趋势：模型自产合成数据不仅提升生成它的那个任务，还**迁移**到别的能力(多跳 QA + 检索 → 更会调 Python、解数学，反之亦然)；同样观察到**大模型更擅长吸收 data flywheel 并泛化**(至少在 RL 优化侧)。
 - Aakanksha 三条收束：①真泛化需要推理链多样性(如何制造仍是开放问题)；②验证要去人类瓶颈——reward model 难建，越不被人类专家卡住越好；③训练数据选择要去人类瓶颈。
 - Azalia 补充的研究方向：在可验证域极限 self-improve、喂回多样可验证任务，能否让能力**外溢**到没有自动验证的域、省掉其标注数据?(计算极重的实验)
 
@@ -88,7 +88,7 @@
 
 ### [0:40–0:50] Intelligence per Watt：推理需求洪流与本地模型崛起(Azalia)
 
-- 转场：self-improvement 意味着大量 inference,**智能有成本**;Azalia 讲效率(与 Professor Ray、John Hennessy 等合作的近期工作,看模型侧与硬件加速器侧趋势,推演未来 AI inference 的负载形态与所需加速器)。
+- 转场：self-improvement 意味着大量 inference,**智能有成本**;Azalia 讲效率(与 Professor Ray、John Hennessy 等合作的近期工作，看模型侧与硬件加速器侧趋势，推演未来 AI inference 的负载形态与所需加速器)。
 - 现在是 **mainframe era**：ChatGPT/Gemini 级模型全在云端跑；闭源模型拿不到权重，大的开源模型本地也跑不动。
 - 算力需求爆炸：Google Cloud 计算 serving 约 **1200x**(过去 12-20 个月)、NVIDIA **10x** 年同比；要服务当前需求约需 **250 GW** 数据中心；Google 处理 token 从去年 2 月 **160 trillion** 到今年 10 月 **1.3 quadrillion**——史上最快的算力需求增长。
 - 负载侧：大规模 ChatGPT 用户数据集显示约 **77%** 请求是实用指导/信息获取/写作类，**不需要最强 frontier model**，小的本地模型就能答对；query 会越来越复杂，但大多数仍停留在简单侧。
@@ -98,13 +98,13 @@
 
 ### [0:50–1:05:00] 开放研究方向、Q&A 与课程收尾
 
-- 核心发现：本地模型 2023 年以来可解 query 比例 **3.1x**(仅两年)，当前覆盖约 **88.7%**；IPW 两年提升 **5.3x**——**3.1x 来自模型进步、1.7x 来自硬件进步**；但 Apple M4 Max 的 IPW 仍比 **B200 低 1.5x**(企业芯片专为 LM 工作负载优化,本地芯片设计时没预设 LLM 本地跑)→ 更多流量将转向 edge(笔记本/手机)。
+- 核心发现：本地模型 2023 年以来可解 query 比例 **3.1x**(仅两年)，当前覆盖约 **88.7%**；IPW 两年提升 **5.3x**——**3.1x 来自模型进步、1.7x 来自硬件进步**；但 Apple M4 Max 的 IPW 仍比 **B200 低 1.5x**(企业芯片专为 LM 工作负载优化，本地芯片设计时没预设 LLM 本地跑)→ 更多流量将转向 edge(笔记本/手机)。
 - 开放方向①：test-time scaling 与 **synthetic data flywheel** 的**基础原理**——为什么反复问同一问题，正确答案会涌现?把成功轨迹 distill 回模型的最佳实践是什么?由此自然衔接 continual learning。
 - 开放方向② **continual learning**：人类越学越强是连续过程，模型却是离线的「攒经验 → 微调」两段式；要把正负经验更自然地回灌模型，替代当前异步的数据生成 + 微调范式。
 - 开放方向③：**高吞吐低延迟 test-time scaling 的系统 infra**——重复采样、回改生成、工具调用与单轮聊天完全不同，系统与推理优化机会大；她实验室的 **Hydrogen、Tokamak** 类工作会越来越重要。
 - 开放方向④⑤⑥：**hybrid serving**(按需在本地与云端模型/加速器之间平滑路由流量)、面向本地加速器的**节能推理**新架构与 kernel、把**能源**当作最宝贵资源(IPW 类能耗指标主流化)。
 - 讲者坦承：本课程对 **pre-training** 着墨很少(Aakanksha 本人是 pre-training 专家)，重心放在 post-training 与 test-time scaling;fine-tuning、在线学习与 test-time scaling 交界处的 synthetic data flywheel + continual learning 是尚未解决的新地带。
-- Q&A(continual learning 落点 + 记忆库 vs 权重)：第一步是让模型在多步推理中**从成败中学习、把技能留在权重里**(「学会学习」是当前不具备的能力,如看视频学会做事而非靠大量任务示范)；理想解是 infinite context——但现实中 1M+ 上下文时 ICL 推理能力已明显衰减；**cartridge**(课程讲过)不改权重、把知识装进 KV cache，是免微调做长期记忆的另一条路。知识库类信息改外挂数据库即可，但**跨域推理的技能迁移**(如周一讲的机器人 cross-embodiment 泛化)外挂记忆做不到，**必须更新权重**。
+- Q&A(continual learning 落点 + 记忆库 vs 权重)：第一步是让模型在多步推理中**从成败中学习、把技能留在权重里**(「学会学习」是当前不具备的能力，如看视频学会做事而非靠大量任务示范)；理想解是 infinite context——但现实中 1M+ 上下文时 ICL 推理能力已明显衰减；**cartridge**(课程讲过)不改权重、把知识装进 KV cache，是免微调做长期记忆的另一条路。知识库类信息改外挂数据库即可，但**跨域推理的技能迁移**(如周一讲的机器人 cross-embodiment 泛化)外挂记忆做不到，**必须更新权重**。
 - Q&A(自建环境)：Absolute Zero 式环境的意义在**作为真实世界任务的 proxy**；游戏是有限空间容易用代码仿真；用 agent 建还是用软件建都好办，关键是能否合理代表模型与真实世界交互取反馈的方式。
 - 收尾：领域演化极快——「现在教的内容，下次开课就成了历史」，但**基础技术长期有效**，新东西仍建立在基础技术之上；两位讲者感谢学生，课程本身也是边教边学，希望大家把方法带进自己的研究与工作。
 
@@ -143,7 +143,7 @@
 5. Absolute Zero 只用自产代码任务训练，结果如何?
    > prompt 侧零人工数据拿到 coding benchmark SOTA、胜过数万专家样本训练的模型；数学 benchmark 也意外变强；大模型收益更大。
 6. 什么是非可验证域?举两个例子和一种应对方案。
-   > 验证太慢(芯片仿真数天、湿实验化学)或太主观(创意写作,稍有偏差即 reward hacking)；应对：离线收集数据训练 reward model 预测仿真/实验结果，充当 RL loop 中的代理验证，但泛化受数据量限制。
+   > 验证太慢(芯片仿真数天、湿实验化学)或太主观(创意写作，稍有偏差即 reward hacking)；应对：离线收集数据训练 reward model 预测仿真/实验结果，充当 RL loop 中的代理验证，但泛化受数据量限制。
 7. Intelligence per watt 的定义，以及本讲给出的两组关键数字?
    > 平均任务准确率 ÷ 平均功耗(本地模型 = ≤20B active params)；本地模型两年 query 覆盖 3.1x、当前 88.7%;IPW 两年 5.3x = 模型 3.1x + 硬件 1.7x;Apple M4 Max 仍比 B200 低 1.5x。
 8. 讲者如何回答「continual learning 靠外挂记忆库还是更新权重」?

@@ -16,10 +16,10 @@
 ### 一、课程定位与技术史脉络
 
 - 讲者是一对双胞胎兄弟：Centrale Paris 本科毕业后，Afshine 去 MIT、Shervine 进 Stanford ICME 读研，先后同在 Uber、Google，现都在 Netflix；2021 年起以各种形式教这门课，成为正式 Stanford 课程后本期是第三届([0:01])。
-- 三类目标受众：想走 research scientist 路线(开阔技术视野)、想做个人项目(coding agent 无处不在,得知道它擅长与不擅长什么)、以及任何岗位都在涨的 AI literacy 需求；先修只要求 linear algebra(矩阵与乘法)加 ML 基础概念(loss function、neural network、embedding)。
+- 三类目标受众：想走 research scientist 路线(开阔技术视野)、想做个人项目(coding agent 无处不在，得知道它擅长与不擅长什么)、以及任何岗位都在涨的 AI literacy 需求；先修只要求 linear algebra(矩阵与乘法)加 ML 基础概念(loss function、neural network、embedding)。
 - 考核：无 homework，只有两次考试——midterm 考前 4 讲(约一个月后)、final 考后 5 讲，各占 50%;2025 年真题已挂在网站当 practice problems。配套教材 *Super Study Guide: Transformers and Large Language Models* 与两周前刚更新的 cheat sheet(约 15 种语言)；无正式 office hours，课后留答疑 + Ed 平台提问([0:05])。
 - 课程有录像但内容逐年重写：这一版新增 post-training(如 policy distillation)、AI agents、以及 diffusion 等新一代建模范式；备考务必以今年讲义为准。
-- 技术史三幕：2010s 一个 use case 一个专属模型(sentiment、翻译、NER 各训各的,RNN 当道)；2017 年 *Attention is All You Need* 提出 transformer——scalable 指加数据、加算力、加参数能换来远超以往的收益，此后大家沿模型规模与训练 token 数两个方向把它堆大；2022 年 11 月 ChatGPT 发布是产品拐点；2026 年的日常已是 coding agent，课程后半段会讲从对话助手到 agentic behavior 的演化([0:13])。
+- 技术史三幕：2010s 一个 use case 一个专属模型(sentiment、翻译、NER 各训各的，RNN 当道)；2017 年 *Attention is All You Need* 提出 transformer——scalable 指加数据、加算力、加参数能换来远超以往的收益，此后大家沿模型规模与训练 token 数两个方向把它堆大；2022 年 11 月 ChatGPT 发布是产品拐点；2026 年的日常已是 coding agent，课程后半段会讲从对话助手到 agentic behavior 的演化([0:13])。
 
 ### 二、Tokenization：把文本变成模型能懂的数字
 
@@ -41,13 +41,13 @@
 
 - 最朴素的 token 表示是 one-hot encoding，但任意两个 one-hot 点积都是 0——完全正交，不含任何「谁跟谁相似」的信息；我们想要的是 Teddy bear 与 soft 相近、与 book 无关这种结构([0:35])。
 - **Word2vec**(约 2013)用 proxy task 学表示：proxy task 不是最终目标，而是为学出好表示设的中间任务。两个版本——**CBOW** 用上下文词预测中间词；**skip-gram** 用一个词预测周围词([0:37])。
-- 网络：one-hot(V 维)→ 矩阵乘到 hidden/latent 表示(D 维,D 是自选超参,通常远小于 V)→ 再乘回 V 维，softmax 归一化成概率，与 one-hot 标签算 cross-entropy loss，反向传播更新权重。
+- 网络：one-hot(V 维)→ 矩阵乘到 hidden/latent 表示(D 维，D 是自选超参，通常远小于 V)→ 再乘回 V 维，softmax 归一化成概率，与 one-hot 标签算 cross-entropy loss，反向传播更新权重。
 - 例：用 "a" 预测 "cute"——概率向量里 "cute" 那一维要被推向 1；换 "cute" 预测 "Teddy bear" 再来一遍，如此扫完整个语料。
 - 训练完发现中间的 latent 表示「自己长出了语义」：相似 token 表示相近，还能做类比——Teddy bear之于soft，Paris之于France ≈ Berlin之于Germany([0:40])。
 
 ### 五、Word2vec 四大局限与 RNN/LSTM 的得与失
 
-- 课堂现场答出的四个局限：①训练没见过的词无法表示；②表示维度随词表 V 涨(V 由 tokenizer 决定,非 Word2vec 特有)；③**多义词**共享同一表示——真心夸与讽刺的 cute、river bank 与银行的 bank 不加区分；④**词序无感**——The child is hugging the Teddy bear 与 The Teddy bear is hugging the child 词集合相同，embedding 完全一样([0:44])。
+- 课堂现场答出的四个局限：①训练没见过的词无法表示；②表示维度随词表 V 涨(V 由 tokenizer 决定，非 Word2vec 特有)；③**多义词**共享同一表示——真心夸与讽刺的 cute、river bank 与银行的 bank 不加区分；④**词序无感**——The child is hugging the Teddy bear 与 The Teddy bear is hugging the child 词集合相同，embedding 完全一样([0:44])。
 - **RNN** 的补法：额外维护一个 hidden state，编码「到目前为止看到的序列」的含义，每步自我更新并作为下一步预测的输入——词序信息由此进入模型；2010s 它无处不在：分类任务读到最后用状态预测 sentiment，逐词标注(名词/动词)用每个位置的表示，生成任务逐步输出([0:45])。
 - RNN 死穴：**long-range dependency**——全部历史压进一个不断被改写的向量，远处的信息(如 it 指代很前面提到的 Teddy bear)捞不回来；变体 **LSTM** 加一条 cell state 专司长程携带，但没根治。
 - 更深层的病灶是 **vanishing gradient**：反向传播穿长序列时梯度消失；且 RNN 必须 token 一个个串行处理，训练极慢——效果当年不错但称不上惊艳，这些共同催生了替代方案([0:50])。
@@ -71,11 +71,11 @@
 - 名字由来：当时主流模型都是递归式(RNN)的；这篇说「不要 hidden state、不要递归，token 之间靠 self-attention 直连——attention 就够了」。论文场景是机器翻译：**encoder** 为源语言文本算有意义表示，**decoder** 拿这些表示加自己的内部 embedding 自回归生成译文([1:10:00])。
 - **position embedding**：token embedding 本身与位置无关，必须另加位置信息才知道 token 在序列何处。两条路——学习式 embedding，或固定的多频率正弦/余弦函数。学习版硬伤：训练只见过 500 个位置、推理来 1000 个 token 就没辙；固定版可外推([1:13:00])。
 - 多频率直觉来自手表：时针/分针/秒针各按不同频率旋转，合起来唯一确定时刻；正弦/余弦位置编码同样有「相近位置表示相似、远位置不相似」的好性质。
-- **encoder** 内部两大件：self-attention 层(QKV 投影 + 公式,让每个 token 变成全序列的函数)+ feedforward neural network(投影到更高维 + 非线性激活学复杂特征);encoder 顶端输出每个 token 的 context-aware 表示([1:17:00])。
+- **encoder** 内部两大件：self-attention 层(QKV 投影 + 公式，让每个 token 变成全序列的函数)+ feedforward neural network(投影到更高维 + 非线性激活学复杂特征);encoder 顶端输出每个 token 的 context-aware 表示([1:17:00])。
 
 ### 九、Decoder 自回归循环与五个训练技巧
 
-- **decoder** 单步流程：喂 BOS(加位置编码)→ **masked self-attention**(只看自己与已生成的 token,不能偷看未来)→ **cross-attention**(query 来自 decoder 端,key/value 来自 encoder 输出——把「已生成内容」表示成「源文本」的函数,图上即两支箭头从 encoder 进来)→ feedforward → 线性层 + softmax 投到词表([1:18:00])。
+- **decoder** 单步流程：喂 BOS(加位置编码)→ **masked self-attention**(只看自己与已生成的 token,不能偷看未来)→ **cross-attention**(query 来自 decoder 端，key/value 来自 encoder 输出——把「已生成内容」表示成「源文本」的函数，图上即两支箭头从 encoder 进来)→ feedforward → 线性层 + softmax 投到词表([1:18:00])。
 - 挑出下一个 token 后拼回输入重走一遍，如此自回归直到输出 EOS——翻译被化归为不断「猜下一个 token」。
 - **residual connection**：层输出写成 F(x)+x——是「修改 x」而非「彻底重写 x」；深层架构里让特征直通，助反向传播、学得更好([1:20:00])。
 - **layer normalization** 归一化激活助收敛；masked 的实现是三角矩阵把「未来位置」置 -inf，softmax 后权重为 0——训练与推理都断掉向后的连接。
@@ -84,12 +84,12 @@
 
 ### 十、端到端维度走查与真正的 secret sauce
 
-- Shervine 用老朋友例句把全部积木拼起来：分词(刻意选一种任意切分,证明切法自由)→ 加 BOS/EOS → 查可学习的 embedding lookup table → 加正弦/余弦位置 embedding(同长度、逐元素相加)，得到 encoder 输入([1:26:00])。
+- Shervine 用老朋友例句把全部积木拼起来：分词(刻意选一种任意切分，证明切法自由)→ 加 BOS/EOS → 查可学习的 embedding lookup table → 加正弦/余弦位置 embedding(同长度、逐元素相加)，得到 encoder 输入([1:26:00])。
 - 维度账：输入 n×D_model；W_Q/W_K/W_V 分别为 D_model×D_q、D_model×D_k、D_model×D_v，构造上要求 D_q=D_k；QKᵀ 得 n×n 相似度矩阵，乘 V 后维度与 V 相同；除以 √d_k 是因为点积方差随维度增长，除以标准差才能保持数值规整([1:31:00])。
 - **multi-head** 并行 h 份，各自输出拼接后过 W_O 投回 D_model；transformer 的漂亮性质是「多数操作保持 D_model 不变」，层与层之间才好堆叠。
 - **FFN** 是单隐层网络：D_model → D_ff(通常远大于 D_model,留给复杂表示)→ 回到 D_model;encoder 块整体重复 N 次，原论文 N=6。
 - decoder 端数值走查：BOS → 预测出 "un" → 拼回输入 → 预测出 Teddy bear 的法语对应词 → ……直到 EOS 停机；每个 decoder block 的 K/V 都是 encoder 最后一层的输出。
-- 学生问「若只留一样，是什么让它 work?」——secret sauce 有二：**attention 层**(点题)与 **feedforward network**(绝大多数参数与容量都在这,learning 真正发生的地方)；其余组件全是「帮助学得更好的 tricks」，再叠加数据质量这一层。预告：后续讲次会看到很多组件被砍掉、只留反复堆叠的子集([1:41:00])。
+- 学生问「若只留一样，是什么让它 work?」——secret sauce 有二：**attention 层**(点题)与 **feedforward network**(绝大多数参数与容量都在这，learning 真正发生的地方)；其余组件全是「帮助学得更好的 tricks」，再叠加数据质量这一层。预告：后续讲次会看到很多组件被砍掉、只留反复堆叠的子集([1:41:00])。
 
 ---
 
@@ -125,5 +125,5 @@
 7. 写出 self-attention 核心公式；除以 √d_k 与 mask 里置 -inf 各是为什么?
    > softmax(QKᵀ/√d_k)·V；点积方差随维度 d_k 增长，除以 √d_k 保持数值规整；decoder 用三角矩阵把未来位置置 -inf、softmax 后权重为 0，禁止偷看未生成的 token。
 8. transformer 的 secret sauce 是哪两个组件?cross-attention 的 Q 与 K/V 分别来自哪边?
-   > attention 层(点题)+ feedforward network(绝大多数参数与容量所在,learning 真正发生);cross-attention 的 Q 来自 decoder 已生成 token,K/V 来自 encoder 最后一层输出，把生成内容锚回源文本。
+   > attention 层(点题)+ feedforward network(绝大多数参数与容量所在，learning 真正发生);cross-attention 的 Q 来自 decoder 已生成 token,K/V 来自 encoder 最后一层输出，把生成内容锚回源文本。
 ---

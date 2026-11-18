@@ -38,7 +38,7 @@
 - Cuddly 反例([0:21]):query「where is Cuddly?」(Cuddly 是只泰迪熊)，纯**语义相似度**捞回 "Huggy likes to work downstairs" 和 "where is Paris located?"——cuddle≈huggy、都是疑问句，语义近但答非所问。
 - **BM25**：按 query 与文档的**精确关键词**重合度打分，本例能捞回含 "Cuddly" 的两条；但自然语言可以换说法，纯关键词匹配又会漏掉改述(paraphrase)。
 - 实践结论：**hybrid rank**——把语义相似度给出的 rank 与关键词检索给出的 rank 融合成最终排序，绝大多数情况好于任何单打一。
-- 其余补丁([0:25])：query 与文档「性格不同」(问句 vs 陈述句)→ **HyDE**(hypothetical document embedding,从 query 先生成一篇假文档,再拿它与 chunk 算相似度)；一个 query 装多个问题 → 先改写成多个子问题分别检索；chunk 即使带 overlap 仍可能不自足 → 用 LLM **上下文化**每个 chunk——把整篇文档放 prompt 顶部再问 chunk，固定前缀正好吃 prompt caching(OpenAI cached input 约为原价 1/10)。
+- 其余补丁([0:25])：query 与文档「性格不同」(问句 vs 陈述句)→ **HyDE**(hypothetical document embedding,从 query 先生成一篇假文档，再拿它与 chunk 算相似度)；一个 query 装多个问题 → 先改写成多个子问题分别检索；chunk 即使带 overlap 仍可能不自足 → 用 LLM **上下文化**每个 chunk——把整篇文档放 prompt 顶部再问 chunk，固定前缀正好吃 prompt caching(OpenAI cached input 约为原价 1/10)。
 
 ### [0:28] 重排序 cross-encoder 与检索评估
 
@@ -58,12 +58,12 @@
 - **工具调用三段循环**：① LLM 不直接回答，而是**预测**该调哪个工具、什么参数(先 `my_position()` 拿坐标，再 `find_teddy_bear(location)`)；② 真正执行这个动作(与 LLM 无关的后端)；③ 把后端返回结果**回喂** LLM，由它转成自然语言答复用户。延迟通常不是大头：GPS 近乎即时，联网查询一般也小于生成答案本身的耗时。
 - 实现([0:50])：主流 provider 用 **Python 函数**表达工具。LLM 能看到的只有 **API 描述 + docstring + 输入/输出类型**；函数体代码逻辑是执行细节，**不给 LLM 看**，里面想写什么都行。
 - 输入输出都要**可解释(interpretable)**：参数命名清晰并标类型(如 `location`)；输出用 **structured output**(enum、含 name/distance/mood 字段的类)——因为结果要回喂 LLM 转述给用户。
-- 工具生态([0:54])：**web search**(UI 上「正在搜索…」就是后端预测了 search tool call,界面动画顺便吸收延迟)、天气/股票等快捷查询、代码库检索、**计算**(next-token prediction 做乘法不可靠,交给确定性 calculator 工具,如算 2×3)、**code execution**(要画图就生成代码并执行,你看到的 plot 就是它)、**行动类**(读意图、代写邮件、代发邮件)。
+- 工具生态([0:54])：**web search**(UI 上「正在搜索…」就是后端预测了 search tool call,界面动画顺便吸收延迟)、天气/股票等快捷查询、代码库检索、**计算**(next-token prediction 做乘法不可靠，交给确定性 calculator 工具，如算 2×3)、**code execution**(要画图就生成代码并执行，你看到的 plot 就是它)、**行动类**(读意图、代写邮件、代发邮件)。
 
 ### [0:56] 工具用法怎么学会、描述怎么写、冲突长什么样
 
 - 「工具集合是训练时定死的吗?」——一两年前是：把「预测 tool call + 参数」和「把后端结果转述成人话」拆成两阶段做 **SFT**；**现在不是了**：通用训练已让工具使用成为**原生能力**，具体行为靠 prompting(docstring)引导；而且随着工具设计变好(输入输出可解释)，对精心写 docstring 的需求还在下降。
-- 工具描述怎么写得好?[1:01:00] 学生答案「用另一个模型照着 API 写描述」可行；更 grounded 的做法：拿一批目标 query + 期望输出(**label 最难搞**——专家写太贵,LLM 合成又常不对齐)，用当前版本的 prompt 生成实际输出，再让另一个 LLM 对比两列、**迭代 prompt 直到对齐**。
+- 工具描述怎么写得好?[1:01:00] 学生答案「用另一个模型照着 API 写描述」可行；更 grounded 的做法：拿一批目标 query + 期望输出(**label 最难搞**——专家写太贵，LLM 合成又常不对齐)，用当前版本的 prompt 生成实际输出，再让另一个 LLM 对比两列、**迭代 prompt 直到对齐**。
 - MCP 解决的是「工具怎么定义」的标准化，**正交于**「描述里写什么 prompt」——桶有了，内容还得自己填。
 - 工具一多就**冲突**：「show me my teddy bear's morning routine」可能同时命中 `get_drive`(网盘里翻出文档)和 `get_doc`。输出相同 → **benign conflict** 无害；[1:03:00] 但「Can you find me my teddy bear?」会分叉出「在电脑里找泰迪熊图片」vs「告诉你泰迪熊 physically 在哪」两种解释 → 有害冲突。
 - 学生 pushback「这难道不是用户 query 没说清?」——讲者：控制工具空间的和被服务的是两拨人，不能怪用户；答案跑偏往往就是**工具开太多**的症状。强制确定性(temperature=0)也救不了：质量会下降，而且可能让这个模糊 query 永远答错。
@@ -92,7 +92,7 @@
 ### [1:23:00] Harness、ReAct、compaction 与 memory
 
 - **harness**(2026 年热词)：模型之外包着的一切——tools、动作怎么排序、compaction 策略、memory、prompting。类比：**模型是引擎，harness 是整车其余部分；弱模型配强 harness 不行，反过来也不行**，想哪里都能开就得两个都强。
-- **ReAct**(2023 年形式化,reason + act)：**observe(观察当前状态)→ plan(规划动作)→ act(执行工具)→ observe(观察结果)……** 循环任意多次，直到观察到的状态令人满意才向用户输出。恒温器泰迪熊例子([1:26:00])：观察到泰迪熊冷 → 查当前温度 → 低于舒适区间 → 执行升温 → 复查达标 → 完成。
+- **ReAct**(2023 年形式化，reason + act)：**observe(观察当前状态)→ plan(规划动作)→ act(执行工具)→ observe(观察结果)……** 循环任意多次，直到观察到的状态令人满意才向用户输出。恒温器泰迪熊例子([1:26:00])：观察到泰迪熊冷 → 查当前温度 → 低于舒适区间 → 执行升温 → 复查达标 → 完成。
 - 学生问：observe/plan/act 是 SFT 学的吗?——是，训练后已成 LLM 原生能力；每次执行工具后必须有 recap 阶段，这是**必要推理(needed reasoning)**，不同于 reasoning models 那种额外推理层，非推理模型也要走这三步。
 - **A2A**(去年发布)：agent 之间的标准化协议，声明各 agent 的技能与可被其他 agent 调用的函数。
 - **compaction**(context 满了必须处理)三策略，可组合([1:29:00])：**删除**——工具输出往往只下一轮有用，事后删掉省 token；**sliding window**——按与当前的时间距离定相关性；**结构化摘要**(最流行)——把迄今进展填进预定义桶再摘要、带着小摘要继续聊，Pi coding agent 的桶是 **current progress / remaining work** 等。
@@ -133,7 +133,7 @@
 1. 本讲说 LLM 有哪两大局限?为什么不能把「训练截止后的所有事」直接塞进 prompt?
    > 局限：知识锁死在训练数据(knowledge cutoff,如 GPT-6 Astra 2026-04-30)+ 只能回答不能行动；塞 prompt 会撞三堵墙：context window 有限(约 1M token)、needle-in-a-haystack 显示输入越长检索越差(顶部的事实反而捞不出)、按 input token 计费太贵(检索 token 与 reasoning token 都是隐藏成本)。
 2. RAG 检索的两阶段怎么分工?bi-encoder 与 cross-encoder 差在哪?
-   > candidate retrieval 用 bi-encoder(query/chunk 分别编码、chunk 向量可预计算 + approximate nearest neighbor)全库扫出约 100 个候选、最大化 recall;re-ranking 用 cross-encoder(query+chunk 拼一条序列过单个 encoder,token 经 self-attention 直接交互,CLS 投影 0–1 相关分)细排取 top-k;vector DB 只能服务第一阶段，第二阶段无法预计算。
+   > candidate retrieval 用 bi-encoder(query/chunk 分别编码、chunk 向量可预计算 + approximate nearest neighbor)全库扫出约 100 个候选、最大化 recall;re-ranking 用 cross-encoder(query+chunk 拼一条序列过单个 encoder,token 经 self-attention 直接交互，CLS 投影 0–1 相关分)细排取 top-k;vector DB 只能服务第一阶段，第二阶段无法预计算。
 3. 「where is Cuddly?」例子里纯语义检索和纯 BM25 各错在哪?正确做法是什么?代码检索为什么改用 grep?
    > 纯语义捞回 Huggy/Paris 这类语义近但答非所问的 chunk；纯 BM25 抓不住换说法的改述(paraphrase)；实践用 hybrid rank 融合两种排序；代码关心精确匹配函数/符号，grep(Global Regular Expression Print)又快又准，coding agent 因此基本无视传统 RAG。
 4. NDCG@k 为什么叫「normalized」?再说出另外几个检索评估指标。
@@ -145,6 +145,6 @@
 7. MCP 的 server/client 各是什么?标准化了哪三个桶?prompt 里固定部分为什么要放顶部?
    > server 装工具实现与业务逻辑，client 被用户交互并代为调用 server；三桶 = tools(参数/输出模板)、prompts(工作流捷径句柄)、resources(应用层喂给工具的数据)；固定部分(tool definitions、user context)置顶才能让共享前缀命中 prompt caching(约 10 倍折扣、TTL 5min/1h)，user context 是 provider 推断注入的时间/IP 位置等、用户不可见。
 8. harness 是什么?ReAct 循环怎么转?compaction 有哪三种策略、长期记忆怎么实现?
-   > harness = 模型之外的一切(工具、动作排序、compaction、memory、prompting)，模型如引擎、harness 如整车，两者必须都强；ReAct = observe→plan→act→observe 循环直到观察到满意状态再输出(SFT 学成原生能力,工具后 recap 属必要推理)；compaction = 删下轮后无用的工具输出 / 按时间的 sliding window / 预定义桶+摘要(Pi:current progress、remaining work)；长期记忆靠对过往对话做 RAG 或 memory tool 存到常驻 context 的位置(短期记忆就是 context window 本身)。
+   > harness = 模型之外的一切(工具、动作排序、compaction、memory、prompting)，模型如引擎、harness 如整车，两者必须都强；ReAct = observe→plan→act→observe 循环直到观察到满意状态再输出(SFT 学成原生能力，工具后 recap 属必要推理)；compaction = 删下轮后无用的工具输出 / 按时间的 sliding window / 预定义桶+摘要(Pi:current progress、remaining work)；长期记忆靠对过往对话做 RAG 或 memory tool 存到常驻 context 的位置(短期记忆就是 context window 本身)。
 
 ---

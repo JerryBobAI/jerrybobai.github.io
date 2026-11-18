@@ -16,17 +16,17 @@
 ### [0:00] Recap：transformer 的两半，以及拆开玩的两种玩法
 
 - 上讲回顾链：模型不懂文本只懂数字 → **tokenization**(如今主流是 subword,词表大小与序列长度的折中)→ **embeddings**(Word2Vec 无上下文)→ **RNN**(循环结构会遗忘过去)→ 2017 **Attention is All You Need** 弃用循环、改用直连，用 query/key/value 让每个 token 决定该 attend 谁。
-- 原版 transformer 两半：**encoder**(左,为输入文本算 meaningful embeddings,机器翻译里即源语言)与 **decoder**(右,autoregressive 一次生成一个 token,同时 attend 已生成的 token 和 encoder 的输出)。
+- 原版 transformer 两半：**encoder**(左，为输入文本算 meaningful embeddings,机器翻译里即源语言)与 **decoder**(右，autoregressive 一次生成一个 token,同时 attend 已生成的 token 和 encoder 的输出)。
 - 本讲主线问题：机器翻译上这么强，别的领域能不能吃到红利?——做法就是把架构拆开试：**只留 encoder 会怎样?只留 decoder 会怎样?**
 
 ### [0:05] BERT:encoder-only 的「先理解、再微调」路线
 
-- **BERT**(2018)= Bidirectional Encoder Representations from Transformers：只留 encoder，靠 multi-head self-attention 让**所有输入 token 互相 attend**(双向,名字由此来)。
+- **BERT**(2018)= Bidirectional Encoder Representations from Transformers：只留 encoder，靠 multi-head self-attention 让**所有输入 token 互相 attend**(双向，名字由此来)。
 - **CLS token**：序列最前面的特殊分类 token；因为自注意力全连通，它的 embedding 与所有 token 都交互过，可当**整句表示**用——投影到类别就做情感分类；取某个具体 token 的 embedding 也能做词性标注这类 token 级任务。
-- 训练分两步：**pre-training**(proxy task,教模型「文本是怎么写的」,贵、只做一次)→ **fine-tuning**(拿小标注集把表示投影到具体任务,如 positive/negative)。
-- Proxy task 之一 **MLM(Masked Language Modeling)**：随机选 token 把输入「弄坏」(实际 mask 策略更复杂,为的是不引入 bias)，让模型用上下文还原被 mask 的原词——学的是**token 怎么放**。
+- 训练分两步：**pre-training**(proxy task,教模型「文本是怎么写的」,贵、只做一次)→ **fine-tuning**(拿小标注集把表示投影到具体任务，如 positive/negative)。
+- Proxy task 之一 **MLM(Masked Language Modeling)**：随机选 token 把输入「弄坏」(实际 mask 策略更复杂，为的是不引入 bias)，让模型用上下文还原被 mask 的原词——学的是**token 怎么放**。
 - [0:10] Proxy task 之二 **NSP(Next Sentence Prediction)**：输入两句话，判断它们是否真的前后相连(正样本取真实连续句对、负样本乱配)——学的是**句子怎么排**，把理解从句子级提升到文档级。
-- Pros：性能好；自注意力双向；fine-tuning 所需标注数据很少。Cons：fine-tuning 本身是必须做的工程量；而且 encoder-only 模型**怎么生成文本并不直观**(lecture 8 会讲其实可以,先按下不表)。
+- Pros：性能好；自注意力双向；fine-tuning 所需标注数据很少。Cons：fine-tuning 本身是必须做的工程量；而且 encoder-only 模型**怎么生成文本并不直观**(lecture 8 会讲其实可以，先按下不表)。
 
 ### [0:15] GPT:decoder-only 的 text-to-text 路线，笑到最后
 
@@ -41,7 +41,7 @@
 - 为什么叫 LLM：**LM** = language model，给 token 序列分配概率、预测 next token 的模型；**L** = large，参数十亿到千亿甚至万亿级、训练数据数百亿到数十万亿 token、外加海量 GPU。
 - decoder-only 的 backbone 长这样：原 decoder 里与 encoder 交互的 **cross-attention 也一并删掉**，只剩 **causal multi-head attention**(token 通信的地方)+ **feedforward network**(计算所在)。
 - **Kaplan et al. 2020**：性能(test loss)随训练 token 数、模型大小、算力呈**幂律**可预测地变好；且**模型越大越 token-efficient**——达到同样性能所需的训练 token 更少(图上越亮的模型曲线越早下降)。于是 2020-2022 年大家一路堆参数堆数据。
-- 易混单位：**FLOPs**(floating point operations,小写 s 是复数,衡量**计算量**,训练 LLM 约 10^25)vs **FLOPS / FLOP/s**(大写 S 或 /s,衡量**硬件计算速度**)——一字之差两个物理量。
+- 易混单位：**FLOPs**(floating point operations,小写 s 是复数，衡量**计算量**,训练 LLM 约 10^25)vs **FLOPS / FLOP/s**(大写 S 或 /s,衡量**硬件计算速度**)——一字之差两个物理量。
 - [0:25] **Chinchilla(Hoffmann et al. 2022)**：算力有限时，模型大小与训练 token 数之间存在 **sweet spot**；并发现当时模型普遍 **undertrained**(相对训练量来说模型太大)；实证：同一算力预算下，**70B 参数 × 1.4T token 的小模型打败了训得更少的大模型**；经验配比约 **1 个参数配 20 个 token**，此后人人回头检查自己 compute-optimal 没有。
 - 两个边界补充：①数据质量——pre-training 阶段**规模比质量重要**，质量的重要性要到后训练(lecture 3)才凸显；②compute-optimal 只管训练，**生产环境高并发推理还有「模型别太大」的独立激励**。
 - (课堂确认:损失就是 next token prediction 的 **cross-entropy**。)
@@ -59,20 +59,20 @@
 
 ### [0:45] 位置编码：自注意力天生「失忆」位置
 
-- self-attention 全员直连，token 顺序信息被抹掉——必须显式注入位置。原论文试了两条路，性能大致相当(但确定性公式更优,也是本讲重点)。
+- self-attention 全员直连，token 顺序信息被抹掉——必须显式注入位置。原论文试了两条路，性能大致相当(但确定性公式更优，也是本讲重点)。
 - **方案一：learned position embeddings**——每个位置索引学一个 embedding，加到 token embedding 上。缺陷：推理时遇到**比训练更长的序列**，没见过的位置根本没有 embedding，无法外推。
 - **方案二：deterministic 公式(sinusoidal)**——不用学、任意长度都能算，这才是值得展开的设计。
 - [0:50] **时钟类比**：时针粗略定位、分针更细、秒针最细，三根不同频率的针合起来唯一定指一个时刻。sinusoidal PE 同理：位置 m 的第 2i 维取 sin(ωᵢ·m)、第 2i+1 维取 cos(ωᵢ·m)；**i 小 → 高频(随位置变化快)，i 大 → 低频(变化慢)**——高频维度区分邻近位置，低频维度编码全局位置。
 - **点积的漂亮性质**：cos(a−b)=cos a·cos b+sin a·sin b，逐维套用，两个位置 embedding 的点积 = Σᵢ cos(ωᵢ(m−n))——**只依赖相对距离 m−n**；cos(0) 最大，所以**相同位置相似度最大、近处高、远处低**(右边相似度矩阵沿对角线最亮)。
 - [0:55] **加性 PE 的致命缺陷**：位置 embedding 加进 token embedding 后被**所有层**处理；但位置信息只有 attention 层需要(判断谁和谁相关)，FFN 根本不该关心 token 在位置 5 还是 12——同一句话放在文中位置 1 或 24 都完全合理。所以人们要找**只作用于 attention 层**的「外科手术式」方案。
-- (学生疑虑「远 token 交互变弱,不是 RNN 的老毛病吗?」——直接连接仍在、只是相对重要性衰减:长文档里同句内容大概率比十页开外的内容更相关,但仍保留交互的机会。)
+- (学生疑虑「远 token 交互变弱，不是 RNN 的老毛病吗?」——直接连接仍在、只是相对重要性衰减:长文档里同句内容大概率比十页开外的内容更相关，但仍保留交互的机会。)
 
 ### [1:00:00] RoPE：把位置编码做进 attention 的旋转
 
 - 两款过渡产品：**T5 bias**——在 softmax 内部学一个随距离变化的 bias 项(attention 公式 softmax(QKᵀ/√d)·V 里加东西)，缺陷与 learned PE 同源：要学、训练数据自带距离偏置、不能外推到任意距离；**ALiBi**(Attention with Linear Biases)——bias 随距离线性衰减，不用学，但也不是今天的主流。
 - 今天的主流是 **RoPE(Rotary Position Embedding)**：不加 bias，**直接按各自位置旋转 query 和 key**。
 - [1:05:00] 2D 推导：向量 [r·cosθ, r·sinθ]ᵀ 左乘角度 φ 的旋转矩阵，得 [r·cos(θ+φ), r·sin(θ+φ)]ᵀ——**乘旋转矩阵 = 旋转向量**。让 q 按其位置 m 旋转、k 按其位置 n 旋转，两者内积时两个旋转**合成为角度 n−m 的旋转**——注意力分数只依赖**相对距离**。
-- 好处：什么都不学、可外推到任意位置；qk 点积随距离**大致衰减**(非严格单调,但趋势正是「远的 token 相关性弱」)。
+- 好处：什么都不学、可外推到任意位置；qk 点积随距离**大致衰减**(非严格单调，但趋势正是「远的 token 相关性弱」)。
 - d 维推广：把维度切**成对的 2D block**，每 block 各自做旋转，角度是维度索引的函数——又是「低维高频、高维低频」。
 - 总结对照：原始 transformer 用**加性**位置编码(进所有层)，如今主流 **RoPE**(只动 attention 里的 q/k)。
 
@@ -90,17 +90,17 @@
 - 生成流程：decoder 堆 n 层 → 线性投影到词表 → 得到下一个 token 的**概率分布** → 怎么选?
 - **greedy**：每步取 argmax。弱点：逐步局部最优 ≠ 整条序列**联合概率**最优。
 - **beam search**：不算完整联合概率(太贵)，始终跟踪 **k 条**最优路径，每步保留 k 个最好的候选继续。弱点：计算更多；且与 greedy 共享一个更根本的问题(课堂提问引出)：**deterministic**——同样输入永远同样输出。
-- 确定性为什么对用户是坏事：每次问候都得到一字不差的回答，chatbot 显得 **robotic**、像重度工程产物(讲者补充:这是思想实验——实际部署里 context 会随时间等信息变化,不完全严格成立,但 robotic 感确实存在)。
+- 确定性为什么对用户是坏事：每次问候都得到一字不差的回答，chatbot 显得 **robotic**、像重度工程产物(讲者补充:这是思想实验——实际部署里 context 会随时间等信息变化，不完全严格成立，但 robotic 感确实存在)。
 - [1:25:00] 非确定性路线：回到概率分布**直接采样**。**top-k**：只在概率前 k 个 token 里采；**top-p**(nucleus)：在累积概率达到 p 的最小候选集里采。
-- 什么时候**需要**确定性：要可复现的任务——摘要(每次同样输出)、**LLM as a judge**(评分要一致,后续 evaluation 课细讲)；其余场景非确定性路径更有吸引力。
+- 什么时候**需要**确定性：要可复现的任务——摘要(每次同样输出)、**LLM as a judge**(评分要一致，后续 evaluation 课细讲)；其余场景非确定性路径更有吸引力。
 - **temperature T**：线性层输出经 softmax 成分布，T 是 softmax 里的调节旋钮(连续、非开关)。**T→0：分布 sharpen**，最大 logit 的项概率趋近 1、其余趋近 0;**T→∞：分布趋 uniform**(exp 里指数被压平);T=1 是标准 softmax。
-- T=0 就完全确定了吗?理论上是(权重固定、运算固定)，**实践否**：推理引擎会把你的请求与别人的 **batch** 在一起，**浮点加法不满足结合律**——先加大数再减掉 vs 分开算，结果可以不同；**batch invariance** 并不总被实现保证(推荐 Thinking Machines 的博客,讲了原理和怎么写满足不变性的 kernel)。
+- T=0 就完全确定了吗?理论上是(权重固定、运算固定)，**实践否**：推理引擎会把你的请求与别人的 **batch** 在一起，**浮点加法不满足结合律**——先加大数再减掉 vs 分开算，结果可以不同；**batch invariance** 并不总被实现保证(推荐 Thinking Machines 的博客，讲了原理和怎么写满足不变性的 kernel)。
 - [1:30:00] **guided decoding**：工业场景要结构化输出(如 JSON)，格式错了下游解析就炸；只 prompt「用 JSON 格式」如今的模型大多能成但**不是 100%**；guided decoding 按**目标语法约束每一步可预测的 token 集合**(JSON 就必须先出特定符号……)，拿到 100% 合法输出。
 
 ### [1:35:00] context window 的边界与不改权重的涨分：ICL、CoT、self-consistency
 
 - prompting 词汇：**prompt** 是用户输入，模型 autoregressive 逐 token 续写；**context window** = 每步 next token prediction 的输入——**不只是用户输入**，已生成的 token 也要放回输入端，所以窗口大小与输出长度联动，别看到大数字就以为能随便塞。
-- 数量级：input 上下文 ~**1M token**(行业标准)、output ~**100k**(讲两天前刚被新模型改写,输出可能也进百万级)；换算直觉：1 token ≈ 3/4 个词、一页 ≈ 500 token,**100k ≈ 一本书，1M ≈ 大部头**。
+- 数量级：input 上下文 ~**1M token**(行业标准)、output ~**100k**(讲两天前刚被新模型改写，输出可能也进百万级)；换算直觉：1 token ≈ 3/4 个词、一页 ≈ 500 token,**100k ≈ 一本书，1M ≈ 大部头**。
 - 为什么不该无限上下文：**context rot**——**needle in a haystack** 测试(把关键信息埋进超长上下文再要求检索)显示**上下文越长、检索越难**；部分是模型自身问题，部分是概念性的：信息混在海量噪声里，精确检索本身就不现实。所以「多塞 input = 推高风险上升」，**context compaction、适时开新对话**仍是好实践。
 - [1:40:00] **in-context learning**：不改权重，在 prompt 里给**示例 + 答案**教模型——zero-shot vs few-shot；模型学到的是格式甚至隐式推理路径。代价：示例占 input token，推高成本与延迟；且如今 **reasoning models 越来越强，few-shot 用得越来越少**(容易过拟合到给定的具体示例)；**prompt tuning** 的思路就是把示例提炼成手工指令。
 - **Chain of Thought**：ICL 的进阶——few-shot 示例里把**推理路径**也写出来，作者发现模型学到了推理方式、整体性能提升；注意 CoT 不只是 ICL 技术之一，reasoning models 的 thinking token 是同一思想的内化(后续 reasoning 课细讲)。

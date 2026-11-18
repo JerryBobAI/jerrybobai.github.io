@@ -34,10 +34,10 @@
 
 ### 四、张量并行 TP：列切与行切的数学
 
-- ZeRO-3 的使用纪律与 DP 的天花板：能 ZeRO-1 放下就别上 ZeRO-3(ZeRO-3 只会多通信、更慢,分片没有其他收益)；规模大到一定程度，FSDP 的每模块 all-gather 即使有重叠也藏不住(慢网络下尤甚)，解法是混合分片 HSDP——小圈子内 FSDP、大圈子外 vanilla DP；但 ZeRO-3 仍在数据并行范畴，global batch 用满(如 1000 卡时已到顶)就得换并行轴 ([0:21])
+- ZeRO-3 的使用纪律与 DP 的天花板：能 ZeRO-1 放下就别上 ZeRO-3(ZeRO-3 只会多通信、更慢，分片没有其他收益)；规模大到一定程度，FSDP 的每模块 all-gather 即使有重叠也藏不住(慢网络下尤甚)，解法是混合分片 HSDP——小圈子内 FSDP、大圈子外 vanilla DP；但 ZeRO-3 仍在数据并行范畴，global batch 用满(如 1000 卡时已到顶)就得换并行轴 ([0:21])
 - 张量并行(TP, tensor parallelism)动机：保持同一份数据/batch 不变，把模型切开、多卡合起来做与单卡完全相同的计算，模型/梯度/优化器状态显存按卡数均分；经典面试题：TP 下激活是全量还是减半? ([0:23])
 - 以矩阵乘法建立直觉：X·W 若把 W 按列切，算完 all-gather 输出即可；两个连续 matmul 时，第一个权重按列切、第二个按行切，算完做一次 AllReduce——于是两个 matmul 的分布式执行 = forward 一次 AllReduce + backward 一次 AllReduce(backward 乘转置、假设上游梯度相同)；套在 Transformer 的 MLP 上就是 column linear + row linear + 中间 AllReduce，而这一切成立的大前提是"各卡看到相同输入、相同上游梯度"——这是 TP 正确性的命门 ([0:25])
-- attention 怎么切：按 head 数切(head 之间相互独立,激活与 TP=1 完全相同)，不能按 hidden 维切——softmax 里 Q·K 会被归约到残缺维度、破坏计算；通用校验问题只有一句："TP 后各卡算出的激活，与不用 TP 时一样吗?" ([0:29])
+- attention 怎么切：按 head 数切(head 之间相互独立，激活与 TP=1 完全相同)，不能按 hidden 维切——softmax 里 Q·K 会被归约到残缺维度、破坏计算；通用校验问题只有一句："TP 后各卡算出的激活，与不用 TP 时一样吗?" ([0:29])
 - TP 优缺点：同时省显存与样本(同一 batch 不复制)、无需梯度 AllReduce(各卡做的是同一份工作的不同部分)；但通信极重——每个 attention/MLP 块的 forward 和 backward 都有 AllReduce；TP 区域外的参数(layer norm 等)理论上无需同步，实际会因数值精度漂移，实践中仍然 all-reduce 它们的梯度(这是 TP 训练翻车的常见来源)；换新架构(如 MLA)时 TP 实现是头痛事 ([0:30])
 
 ### 五、序列并行 SP 与并行组合的正交性
@@ -54,12 +54,12 @@
 - 最简单的 all-forward-all-backward 调度：排满 8 个 micro-batch，全体先做完 forward 再做 backward，靠多个 batch 把空转压小，但 bubble 仍是 PP 的头号问题 ([0:41])
 - 两种进阶：1F1B(one-forward-one-backward,backward 优先、forward/backward 交错)主要省显存、bubble 仍在；DeepSeek 的 DualPipe 把层 round-robin 铺开(第一层同时放在首末两张卡)，两端同时起 forward 与 backward、对向流动并重叠——方向正确但实现极复杂，要盯紧每个 batch 的激活与梯度发谁 ([0:43])
 - PP 的优点：通信便宜——没有 AllReduce，只在相邻 stage 间传激活和梯度；分片高效、模型无关(只要模型有层就行) ([0:44])
-- PP 的缺点：要为多个 micro-batch 同时保存激活(8 个 backward / 20 个 micro-batch 的例子,激活 ×20)——PP 与 FSDP 这类依赖激活的方案通常配 activation checkpointing 或 CPU offload；藏 bubble 要上 DualPipe 级别的高级 scheduler、实现难度大；且 global batch 必须随 PP size 放大才有足够 micro-batch 可排 ([0:45])
+- PP 的缺点：要为多个 micro-batch 同时保存激活(8 个 backward / 20 个 micro-batch 的例子，激活 ×20)——PP 与 FSDP 这类依赖激活的方案通常配 activation checkpointing 或 CPU offload；藏 bubble 要上 DualPipe 级别的高级 scheduler、实现难度大；且 global batch 必须随 PP size 放大才有足够 micro-batch 可排 ([0:45])
 
 ### 七、上下文并行 CP 与专家并行 EP：两条专用路线
 
 - 上下文并行(CP, context parallelism,字幕误作 CPP)：序列一长激活就爆炸，TP/PP 都救不了；DP 切 batch 的思路照搬到序列维——每卡分一段序列；但 attention 要看全序列，于是有了 ring attention：借鉴 flash attention 的 online softmax 思想，各卡先算局部 softmax、环形交换 K 和 V、迭代更新 softmax 累计量 ([0:46])
-- CP 优缺点：五种并行里唯一能高效切分长序列的；但每个 attention 块内都要传 K/V(通信重,可用 send-receive 或 all-gather)，且各卡数据不同所以仍需梯度 AllReduce；短序列没收益——只在长上下文训练时启用 ([0:48])
+- CP 优缺点：五种并行里唯一能高效切分长序列的；但每个 attention 块内都要传 K/V(通信重，可用 send-receive 或 all-gather)，且各卡数据不同所以仍需梯度 AllReduce；短序列没收益——只在长上下文训练时启用 ([0:48])
 - 专家并行(EP, expert parallelism)为 MoE 而生：router 把 token 路由给各专家，专家切到不同卡上即可；路由依赖 all-to-all——最通用的集合通信，n 张卡各自把消息发给其余所有卡，近似 n² 通信，也是最复杂的一种；top-K 路由下先 dispatch(all-to-all 把 token 送到专家所在卡)、专家算完再 combine 拼回原序列；EP 只碰 MoE 不碰 attention，为避免 attention 部分重复劳动数据也要在 EP 维共享——所以这个意义上 EP 与 DP 并不正交(它顺手也切了数据)，且因各卡数据不同需要梯度 AllReduce ([0:49])
 - EP 最大的工程坑：CPU-GPU sync——dispatch 前必须等 GPU 上的 router 算完 expert scores，才能确定 buffer 大小与每专家 token 数(dispatch preprocess)；解法是 DeepSeek 的 DeepEP、NVIDIA 的 hybrid EP，但都要新硬件(IBGDA[字幕误作 IBGDI]+RDMA,预分配专用 SM 与显存)；没有 InfiniBand(如只有 H100[字幕疑为 H hundreds])就卡死在这个 sync 上——这就是多数实验室 MoE 训练慢的硬件根因，DeepEP 也只在 IBGDA 上能跑 ([0:52])
 - EP 实操结论：它是高效分布式 MoE 的唯一方式，代价是每个 MoE 块一次 all-to-all + 梯度 AllReduce + CPU-GPU sync；实践解法是 EP+PP 组合——用 1F1B 的思路让一个 batch 的 dispatch/combine 与另一个 batch 的 forward/backward 重叠，两个 batch(蓝/绿)交错填满通信间隙，Megatron 里两个 flag 即可开启 ([0:55])

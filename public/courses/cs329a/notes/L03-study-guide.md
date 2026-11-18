@@ -27,8 +27,8 @@
 - 测试时：生成大量候选解 → 用 verifier 打 log-prob 分 → 取**最高分**的解作为最终答案。
 - **双损失**：二分类损失 + 普通语言建模的下一 token 预测损失；论文称两者结合有帮助。
 - 架构：verifier 本身也是语言模型，加一个小**标量头**，对解法**每个 token** 输出二分类预测；问题(question)部分的 token 被**屏蔽**，不参与优化。
-- 训练配方：生成器先微调 **2 epochs** → 每题采 100 解打标 → verifier 训 **1 epoch**。(讲者注:如今模型指令跟随已很强,新 verifier 或可跳过预先 SFT 直接训。)
-- 标签粒度变体：**句子级**(每句末判断该步是否正确)或 **token 级**(噪声很大,期望每个 token 都沿向正确解法)。
+- 训练配方：生成器先微调 **2 epochs** → 每题采 100 解打标 → verifier 训 **1 epoch**。(讲者注:如今模型指令跟随已很强，新 verifier 或可跳过预先 SFT 直接训。)
+- 标签粒度变体：**句子级**(每句末判断该步是否正确)或 **token 级**(噪声很大，期望每个 token 都沿向正确解法)。
 - token 级打分的测试时用法：**取最后一个 token 的分数**代表整个解法——最终只需一个 yes/no。
 
 ### [0:10–0:20] Paper 1 结果与讨论：SFT 对比、规模权衡、400 样本饱和
@@ -44,7 +44,7 @@
 ### [0:20–0:25] Paper 2:Let's Verify Step by Step——ORM vs PRM
 
 - 时隔不到两年，OpenAI 面对同一问题：幻觉；一步走错就会**带偏整条解法**。
-- 两类奖励模型：**ORM**(outcome-based reward model,给整个解法一个奖励,即上一篇文章的做法)vs **PRM**(process-based reward model,每一步各得一个奖励)。
+- 两类奖励模型：**ORM**(outcome-based reward model,给整个解法一个奖励，即上一篇文章的做法)vs **PRM**(process-based reward model,每一步各得一个奖励)。
 - 训练数据差异：ORM 用最终答案 vs ground truth 打标即可；**PRM 需要人工标注员逐步走查**模型生成、给每步打分。
 - PRM 的解法总分 = 各步奖励的**乘积**；测试时可对每步跑 PRM、乘出质量分，据此决定**采纳还是重试**——这就是 **process supervision**。
 - PRM 是更精细的 **credit assignment**：把功劳/过错分到具体步骤，而非只看输出。
@@ -66,7 +66,7 @@
 - **泛化**：换到新域/新数据集时，ORM 泛化不如 majority voting，而 **PRM 全面最好**、可容忍更大的分布偏移。
 - Q&A 风险一：PRM 可能给「看起来好但并不贡献答案」的步**错误记功**；近年做法常将 **PRM 与 ORM 结合**；PRM 的判定阈值是新增的**超参数**，需要调优。
 - Q&A 风险二(reward hacking)：若用 PRM 做 RL 微调生成器，模型可能**跳步直接写答案**骗分；本讲的生成器**不被改动**，始终可要求它写步骤，人工标注也会惩罚跳步(「直接 x=14 没有意义」)。
-- 成本记账：ORM 每题需 K 条标注，PRM 每题需 K×步数(步数难精确控制,论文尝试了对齐比较)。
+- 成本记账：ORM 每题需 K 条标注，PRM 每题需 K×步数(步数难精确控制，论文尝试了对齐比较)。
 - 术语澄清：majority voting = 不用任何 reward model，取**最终答案重复最多**的那个解。
 
 ### [0:35–0:45] Paper 3:Math-Shepherd——无人工标注的步骤自动标注
@@ -75,7 +75,7 @@
 - 两条线：①**自动标注**步骤质量；②把 reward model 经 **RL** 接入生成器优化循环(本讲简提)。
 - 步骤质量定义：该步**到达正确最终答案的潜力**——从这一步出发采 n 条补全，看最终对错。
 - **Strict estimation**:n 条补全**任一**到达正确答案 → 该步记 1;**Soft estimation**：取到达正确答案的**比例**(例:n=3 时 step 1 的 strict=1、soft=2/3)。
-- 已知缺陷(课堂讨论)：罕见解法路径在 n=3 下看不见(n=100 才能暴露,却被记 0)；难题可能采不出任何信号；**中间错但终点对的轨迹仍被标对**(期望更多采样能暴露错误,但无保证)。
+- 已知缺陷(课堂讨论)：罕见解法路径在 n=3 下看不见(n=100 才能暴露，却被记 0)；难题可能采不出任何信号；**中间错但终点对的轨迹仍被标对**(期望更多采样能暴露错误，但无保证)。
 - 用法：采样-重采候选解 → PRM 打分 → 选最高分；再把 PRM 当 **RL 的奖励模型**微调生成器，鼓励它产出 PRM 打高分的步骤。
 - n 的消融：n 增大时 soft 略优，但 **n=4** 收集标签已拿到最好结果，最终选 **strict**(更好测)。
 - 结果(全程零人工标注):**SC(self-consistency,即 majority voting)< ORM < Math-Shepherd PRM**；在更难的 **MATH** 上还超过了用 PRM800K 训的方法，delta 更大。
@@ -96,14 +96,14 @@
 - 集成来源：不同实验室、不同数据集训练的 verifier 与 LM judge，各自对 query 输出分数。
 - 朴素集成(直接平均)有效但**不单调**；给每个 checker 学一个权重(naive baseline / logistic regression)更好——用少量带标签数据拟合权重，再用于新测试数据。
 - Weaver 管线：①各 verifier 打分并**归一化**到同一尺度；②**过滤**低于质量门槛的 verifier(讲者强调这一步很关键)；③用**弱监督**以极少标注估计各 verifier 准确率并加权合并出总分。
-- 弱监督脉络：受 **Snorkel**(Alex Ratner 等,Stanford)启发——多路弱信号合成一个强信号。
+- 弱监督脉络：受 **Snorkel**(Alex Ratner 等，Stanford)启发——多路弱信号合成一个强信号。
 - 问题设定：n 个 query × 每题 k 个解 × m 个 verifier = **n·k·m** 个标签；目标是估计 P(query i 的解 j 正确 | 所有标签)。
 - 核心假设：**每个 verifier 捕捉正确性的一个独立侧面**——全体一致的评分不含新信息，信号来自 verifier 之间的**分歧**；由「条件独立假设 + 概率基本公式」两组方程写出优化，解出各 checker 权重；在 **GPQA Diamond、MMLU-Pro、MATH** 等本来就难的基准上收益最大(基线弱)。
 
 ### [1:00:00–1:12:00] Weaver 结果：验证算力标度、weak-to-strong、蒸馏与 recap
 
 - 验证算力的扩展维度：采更多解(10→100→1000)、用更大的生成/验证模型、**扩大 verifier 池**——推理 flops 可以分配到不同环节。
-- 对比链条：Pass@k oracle(虚线上界)> 有监督学权重(大量标签)> 无监督(仅 1% 标签)> 朴素集成；全部显著好于 **majority voting** 与 **MAV**(multi-agent verification:prompt 多个 LLM 按多方面 rubric 给解打分,实测比 majority voting 还差)。
+- 对比链条：Pass@k oracle(虚线上界)> 有监督学权重(大量标签)> 无监督(仅 1% 标签)> 朴素集成；全部显著好于 **majority voting** 与 **MAV**(multi-agent verification:prompt 多个 LLM 按多方面 rubric 给解打分，实测比 majority voting 还差)。
 - 难题上从 **约 40% 提到 70% 以上**，对应 **o3-mini** 一级；这里报告的是**整系统的最终答案准确率**，不是 coverage。
 - **Weak-to-strong**：Llama 3.1 8B-Instruct 生成器 + 全部 **≤8B** 的验证器组，平均 **约 70%**，几乎追平 70B 类模型仅靠 majority voting 的水平；把同法用于 **70B 类**达平均 **86.2%**，与专有的 **o3-mini** 相当——验证侧的推理扩展能把小模型系统抬进大模型区间。
 - 工程问题：集成要对每个解跑整个 verifier 池(×100 采样时更贵)→ 把训好的 Weaver **蒸馏**成约 **400M** 的小模型(原池为 70B 级)，保住集成 **97%** 的精度、测试时**省 99%** 计算；蒸馏版与原版 checkpoint 均开源。
@@ -152,7 +152,7 @@
 7. Math-Shepherd 的 strict 与 soft estimation 分别是什么?最后为何选 strict?
    > strict = 该步之后 n 条补全任一到达正确答案记 1；soft = 到达比例(n=3 时 step 1 的 strict=1、soft=2/3)；n=4 时两者结果已差不多，选 strict 因为更好测。
 8. Weaver 的三步管线与核心假设?weak-to-strong 的关键数字?
-   > 归一化分数 → 过滤低质 verifier → 弱监督学权重聚合(核心假设:每个 verifier 捕捉正确性的独立侧面,信号来自分歧)；8B 生成器 + ≤8B 验证器组约 70%，70B 类 86.2% ≈ o3-mini，蒸馏到 400M 保 97% 精度省 99% 计算。
+   > 归一化分数 → 过滤低质 verifier → 弱监督学权重聚合(核心假设:每个 verifier 捕捉正确性的独立侧面，信号来自分歧)；8B 生成器 + ≤8B 验证器组约 70%，70B 类 86.2% ≈ o3-mini，蒸馏到 400M 保 97% 精度省 99% 计算。
 
 ---
 

@@ -20,7 +20,7 @@
 
 - 数据 = 全网文本(多语言)+ 代码(Python 等)+ 数学科学语料；训练方式是 **next-token prediction**：喂 BOS，预测第一个 token，再把它喂进去预测下一个，循环。
 - 不必顺序进行——**高度可并行**：把整段输入一次性喂入，同时预测所有位置的下一 token，本质是一次大矩阵乘法；这叫 **teacher forcing**：无论模型实际预测了什么，下一步的输入永远是文本里的真实 token。
-- 学生提问的痛点(训练/推理不匹配,即 exposure bias)被点名，将在后续课程给出解法；只喂 BOS 时模型学到的只是「什么样的 token 适合开头」。
+- 学生提问的痛点(训练/推理不匹配，即 exposure bias)被点名，将在后续课程给出解法；只喂 BOS 时模型学到的只是「什么样的 token 适合开头」。
 - 并行化的钥匙是 **masked self-attention**：每个位置只能 attend 到自己和之前的 token，与推理时的因果设定一致。
 
 ### [0:10–0:15] 损失函数：从最大似然推导 cross-entropy，以及 BPB
@@ -68,7 +68,7 @@
 
 - 新问题：SFT 只教了「该做什么」，没教「**不该做什么**」；「建议你别陪泰迪熊了」这种回答合规但不合心意。
 - 数据形态：每个 prompt 配一条 **chosen**(正面)与一条 **rejected**(负面)。选 pairwise 是因为**人类做相对判断远比绝对判断容易**。
-- 三种收集方式：**pointwise**(绝对打分,难)、**pairwise**(二选一,主流)、**listwise**(整列排序)。
+- 三种收集方式：**pointwise**(绝对打分，难)、**pairwise**(二选一，主流)、**listwise**(整列排序)。
 - 额外红利：模型 misbehave 的案例反过头帮我们**审计 SFT 数据**——是不是混进了不想要的数据；且偏好调优对 prompt 分布**没有 SFT 那么敏感**。
 
 - **RLHF(Reinforcement Learning from Human Feedback)** 两段：先用人类偏好数据训 **reward model** 学会分辨好坏；再用它当裁判做 RL 对齐 LLM。本讲只讲直觉，数学留到 L4。
@@ -105,13 +105,13 @@
 
 - 核心权衡：①**sequence-level reward**(RLHF/GRPO)是 on-policy 但**稀疏**——整条输出只有对/错一个信号；②**token-level 信号**(如 SFT 类方法)是**稠密**但 **off-policy**——训在模型自己不会生成的序列上，分布有偏。
 - **on-policy distillation** 两全其美：学生模型自己生成序列，**teacher 对每个 token 给出它的预测分布**，逐 token 惩罚师生偏差——既 on-policy(用的是学生的生成)又稠密(token 级)。
-- 变体：**on-policy self-distillation**(没有现成 teacher 时,用同一个模型但把答案告诉它,让它「带着答案」示范)；还有**专项 teacher** 组合——数学一个、工程一个，对学生做稠密监督。
+- 变体：**on-policy self-distillation**(没有现成 teacher 时，用同一个模型但把答案告诉它，让它「带着答案」示范)；还有**专项 teacher** 组合——数学一个、工程一个，对学生做稠密监督。
 - 已成为多数 frontier 开源模型的标配组件。
 
 ### [1:25:00–1:40:00] 实战全景：GLM-5 技术报告逐阶段拆解
 
 - **Artificial Analysis Intelligence Index**：把各家 benchmark 聚合成单一智能分，便于排名；开源模型通常略落后闭源前沿，但**公开配方与权重**，是最好的学习材料；GLM-5 是本节的技术报告范本。
-- 预训练数据：**Common Crawl** 起步(全网都有,但 AI 生成污染严重)，启发式过滤后**通常只剩约 1%**；Wikipedia 等权威源补主线知识，长尾事实需专门策展；代码(GitHub 系)从预训练就进——**agent 本质是换着花样的代码问题**；论文/数学/科学语料补 reasoning 底子。
+- 预训练数据：**Common Crawl** 起步(全网都有，但 AI 生成污染严重)，启发式过滤后**通常只剩约 1%**；Wikipedia 等权威源补主线知识，长尾事实需专门策展；代码(GitHub 系)从预训练就进——**agent 本质是换着花样的代码问题**；论文/数学/科学语料补 reasoning 底子。
 - GLM-5 数量级：预训练在 **~4K 上下文**；分两段——先纯 web 学语言结构，再混入代码 + reasoning(web 退居次要)。
 
 - 预训练喂 batch 的方式很粗暴：**切 chunk、把文档拼起来填满上下文**，batch 未必以 BOS 开头——目的只是学语言，不是产出成句。
@@ -120,9 +120,9 @@
 
 - GLM-5 的 midtraining 目标很纯粹：**拉长上下文**；数据换成长文本形态——代码用 **PR + issue + diff**(天然长)，整本书也放得下了；并借合成数据缓解 **context rot**(把事实埋在长文中间、后文回指它)。
 - 打包策略从「切 chunk 硬拼」升级为 **best-fit packing**：文档尽量完整装箱，塞不下就 padding；目标长度仍分阶段递进。
-- SFT：质量再上台阶、token 量级再骤降；注入大量 reasoning + 代码数据；**tool call 前插 reasoning** 的样本、**think tokens**(隐藏草稿区,计费但不可见)都在这一步铺垫；loss 只算答案，不算用户输入。
+- SFT：质量再上台阶、token 量级再骤降；注入大量 reasoning + 代码数据；**tool call 前插 reasoning** 的样本、**think tokens**(隐藏草稿区，计费但不可见)都在这一步铺垫；loss 只算答案，不算用户输入。
 
-- GLM-5 把 RL 拆三块：**reasoning RL**(数学竞赛类,答案可验证)、**agentic RL**(模型进 harness,跑测试验证——如修 bug 让 fail 变 pass)、**general RL**(更开放:instruction following、专家标注的「什么叫有帮助」、任务特定质量)。
+- GLM-5 把 RL 拆三块：**reasoning RL**(数学竞赛类，答案可验证)、**agentic RL**(模型进 harness,跑测试验证——如修 bug 让 fail 变 pass)、**general RL**(更开放:instruction following、专家标注的「什么叫有帮助」、任务特定质量)。
 - 机制与前面一致：生成答案 → 按结果上/下调 token 概率；细节在 L4。
 - **on-policy cross-stage distillation**：防「多阶段训练把学过的能力练丢」——用 **SFT 后 checkpoint** 与**第一段 RL 后 checkpoint** 当 teacher，对学生做 token 级蒸馏。
 - 两个延伸观察：①开源技术报告的「secret sauce」未必全写出来，业内也确有互蒸馏的指控——保持批判眼光；②**Pi coding agent** 的启示：模型 reasoning 越强，harness 越薄，harness engineering 的需求会持续下降；reasoning 训练已经外溢到数学前沿(OpenAI 最近公布了若干 open problems 的解)。

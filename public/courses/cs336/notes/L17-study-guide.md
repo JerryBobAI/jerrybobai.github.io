@@ -49,27 +49,27 @@
 - GRPO 是 PPO 的简化(而非"从简单到复杂"演进的例外)；它能在 2024 年成立，靠的是语言模型设定的自然结构——同一 prompt 并行采一组 response，天然 group 给出 baseline = 组内平均奖励([0:30])
 - 目的仍是降方差，group 是天然比较集，这就是"relative(相对于组)"的含义；经典 RL(机器人走路)没有 group 结构，GRPO 说不通，只能回 value function 聚合全部状态动作([0:30])
 - toy 任务：排序 n 个数，prompt 是乱序 n 数、response 是排好的 n 数；奖励若设"全对 = 1 否则 0"会撞上稀疏奖励问题，起步阶段学不动([0:30])
-- 部分分奖励 v1：逐位置数 response 与 ground truth 的匹配数(正确 4 分,碰对 1 个位置 1 分)——但"差得远"与"接近"可能同分([0:35])
+- 部分分奖励 v1：逐位置数 response 与 ground truth 的匹配数(正确 4 分，碰对 1 个位置 1 分)——但"差得远"与"接近"可能同分([0:35])
 - 更细的 v2：inclusion reward(prompt 中每个 token 出现于 response 得 1 分)+ 每个相邻有序对得 1 分，求和——注意这个奖励有漏洞(loophole)，Percy 留给观众找([0:35])
-- toy 模型刻意简化：prompt/response 定长且等长、独立位置参数捕捉位置信息、每个位置独立解码(非自回归;真实场景一般不用,仅部分 speculative decoding 类似)，绕开自回归生成后代码全是矩阵运算([0:35])
+- toy 模型刻意简化：prompt/response 定长且等长、独立位置参数捕捉位置信息、每个位置独立解码(非自回归;真实场景一般不用，仅部分 speculative decoding 类似)，绕开自回归生成后代码全是矩阵运算([0:35])
 
 ### 六、deltas、ratio 与 GRPO loss 实现([0:40])
 
 - forward pass 与采样：embed prompt → per-position 矩阵编码、sum 掉 position 维 → 每 prompt 一个向量 → per-position 解码 → vocab logits → torch.multinomial 采样出 responses(batch×trial×position)；真实管线这一步就是 LLM 推理调用([0:40])
-- compute_deltas 菜单：δ = R(朴素)/ centered(减组均值)/ 标准化(再除以标准差+ε,防除零,对奖励整体缩放不变)([0:40])
-- centered 的效果：奖励 1 与一堆 0 时均值 ≈0.1，减完负样本以负值参与更新——自动回应"为何不用 −1 奖励"的提问；全组同奖励则全 0 → 不更新(组内无相对信号,弃权等别的样本)；私货玩法(论文没做)：组内非最大奖励全置 0(all-or-nothing)，防部分分诱导策略扑向 low-hanging fruit 的局部最优([0:45])
+- compute_deltas 菜单：δ = R(朴素)/ centered(减组均值)/ 标准化(再除以标准差+ε,防除零，对奖励整体缩放不变)([0:40])
+- centered 的效果：奖励 1 与一堆 0 时均值 ≈0.1，减完负样本以负值参与更新——自动回应"为何不用 −1 奖励"的提问；全组同奖励则全 0 → 不更新(组内无相对信号，弃权等别的样本)；私货玩法(论文没做)：组内非最大奖励全置 0(all-or-nothing)，防部分分诱导策略扑向 low-hanging fruit 的局部最优([0:45])
 - log probs 与 naive loss:responses 过模型取 log softmax，升维后用 responses 索引出选中 token 的 log prob;loss = mean(δ × log probs),outcome reward 的 δ 无位置维、广播到每个 token(有过程奖励才按位置给)([0:45])
 - 冻结与 clip:ratio = π/π_old 中 π_old 必须 no_grad 当常数(同参数连通则比值恒 1、梯度为 0);GRPO loss = −min(ratio·δ, clip(ratio, 1−ε, 1+ε)·δ),ratio 出界时更新幅度被 1±ε 封顶；outcome reward 不 discounting——credit assignment 未知(早期决策可能更关键)，干脆把 credit 均摊到所有 token([0:50])
 - KL 惩罚的低方差估计：naive 的 E_P[log(P/Q)] 无偏但方差高；改用 Q/P − log(Q/P) − 1——因 E[Q/P]=1 两式期望相同而后者方差更低；实现对 vocab 维求和、对 batch/trial/position 取均值([0:55])
 
 ### 七、完整算法、三模型架构与实验观察([1:00:00])
 
-- 全算法与三模型：外层 epoch 循环 →(用 KL 时)freeze 模型作 reference → 采样 responses → 算 rewards 与 deltas →(KL 需 reference log probs,clip 需 current log probs)→ 内层对同一批 responses 做多个梯度步(推理贵,一批 rollout 榨干)；三模型 = π_ref(KL 正则,要存整份副本、内存翻倍)、π_old(算 ratio,只需存那批 responses 的 log probs 更省)、π_theta(在线更新)；真实 GRPO 代码三循环，此处简化为两循环([1:00:00])
+- 全算法与三模型：外层 epoch 循环 →(用 KL 时)freeze 模型作 reference → 采样 responses → 算 rewards 与 deltas →(KL 需 reference log probs,clip 需 current log probs)→ 内层对同一批 responses 做多个梯度步(推理贵，一批 rollout 榨干)；三模型 = π_ref(KL 正则，要存整份副本、内存翻倍)、π_old(算 ratio,只需存那批 responses 的 log probs 更省)、π_theta(在线更新)；真实 GRPO 代码三循环，此处简化为两循环([1:00:00])
 - 学生问答：KL 为什么对 reference 而不是对 old?——RL 的"目标函数"本是为算梯度而设的谎言，更新几步目标就变了，变得越快越不是真的在优化它；两个正则机制分工：clip 作用于 π_old，KL 作用于 π_ref；另答：第一轮内层 π_old = π 不浪费——ratio=1 不会被 clip，更新照做，old 只是个常数缩放([1:05:00])
-- 实验观察(naive δ 100 epochs×10 步:reward 2→3 出头,但"数字大概来自 prompt、未真正排序";centered δ:推向高分远离低分,全同分是 no-op——此前对全等差的糟糕样本也更新其实没道理;末期部分样本拿到 4 分甚至正确 permutation,部分卡住——δ 全 0 这批无信号,重新生成才有新样本;部分分奖励是双刃剑,标准化这次作用不大)([1:05:00])
+- 实验观察(naive δ 100 epochs×10 步:reward 2→3 出头，但"数字大概来自 prompt、未真正排序";centered δ:推向高分远离低分，全同分是 no-op——此前对全等差的糟糕样本也更新其实没道理;末期部分样本拿到 4 分甚至正确 permutation,部分卡住——δ 全 0 这批无信号，重新生成才有新样本;部分分奖励是双刃剑，标准化这次作用不大)([1:05:00])
 - loss 曲线不可信：reward 在涨而 loss 看着糟糕——"最小化 loss"是谎言，response 集合随训练自变(self-circular)，没有同一参照点，监控 loss 意义不大，只能盯 reward([1:10:00])
 - 收尾判断：RL 是让模型超越人类能力的关键——标注数据只能模仿，labeled data 有上限，"能测量就能优化(if you can measure it, you can optimize it)"；更大的问题是如何设计不可 hack 的 reward 与可泛化的 environment(活跃研究方向)([1:10:00])
-- RL 系统工程比预训练复杂得多：推理本身就是一摊事，还要管理多个模型(训练 policy、PPO 的 critic、inference worker 要 ship 模型过去、agent 环境要起服务,再加 π_old/π_ref)，全部并行分布式协同——课程没时间展开，有兴趣可找 Percy 要 pointers([1:15:00])
+- RL 系统工程比预训练复杂得多：推理本身就是一摊事，还要管理多个模型(训练 policy、PPO 的 critic、inference worker 要 ship 模型过去、agent 环境要起服务，再加 π_old/π_ref)，全部并行分布式协同——课程没时间展开，有兴趣可找 Percy 要 pointers([1:15:00])
 
 ## 核心概念速查
 

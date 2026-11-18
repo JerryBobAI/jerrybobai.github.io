@@ -58,7 +58,7 @@
 - 提出的方向：序贯修订(先给一版再改)、知识图谱 + RAG 的混合检索提效、先探索领域再并行采样(self-study)。
 - 「证伪比证真容易」：可保留进化式过滤，用模拟器、工具或另一个模型剔除明显错误的答案；也有学生提醒物理/机器人等领域的验证器本身带噪。
 - 讲者回应：self-study search、tool use 都是后续课程内容；**缩小 generation-verification gap 可作本课程研究项目**。
-- 多 verifier 集成：实验室在做弱监督 verifier ensembling(约 10–20 个,不是上千个)，方向可取但算力代价高。
+- 多 verifier 集成：实验室在做弱监督 verifier ensembling(约 10–20 个，不是上千个)，方向可取但算力代价高。
 - 验证器质量检查：数学题答案人工抽查约九成准确；**单元测试没有真正覆盖代码**是典型失败模式。
 
 ### [0:25–0:35] Snell et al.：并行 vs 序贯、ORM vs PRM、PRM 引导的 beam search
@@ -88,7 +88,7 @@
 
 - **Archon: An Architecture Research Framework for Inference-Time Scaling**(Saad-Falcon et al. 2024,课程 TA 是作者之一)：把「混合匹配推理技术与模型」形式化为**推理架构设计问题**，目标是 accuracy–cost 前沿。
 - 输入：目标 benchmarks、**inference call budget**、可用 LLM 集合、推理技术集合；优化器 **ITAS(inference-time architecture search)** 搜出具体架构；全部技术靠 **prompting 实现**，不专门训练。
-- 推理算子：**generation**(采样 N 个候选)、**fusion**(把 K 个候选连同原题交给 LLM 综合成一个答案,属序贯更新)、**critic**(指出回答强弱项)、**ranker**(按质量排序)、**verifier**(给出选择并附打分理由)。
+- 推理算子：**generation**(采样 N 个候选)、**fusion**(把 K 个候选连同原题交给 LLM 综合成一个答案，属序贯更新)、**critic**(指出回答强弱项)、**ranker**(按质量排序)、**verifier**(给出选择并附打分理由)。
 - **unit test generation**：让模型为编码/数学/推理题生成单元测试；例(括号平衡题)：「奇数个括号 → 输出 no」「闭括号必须匹配最近一个未匹配的开括号」，还能让模型把测试写成代码。
 - **unit test evaluation**：更激进——不真运行测试，直接让模型**判断某个回答是否通过这些测试**。
 - 关键实验(重复样本 1–10)：随机选 < 模型 ranker < oracle selection，而 **fusion 的 win rate 甚至超过 oracle selection**；先按 ranker 取 top-5 再 fusion 又更好。
@@ -141,7 +141,7 @@
 3. generation-verification gap 是什么?majority voting 为什么在难题上失效?
    > 模型能生成正确答案但验证方法接不住的差距；majority voting 在 10–50 样本就 plateau，而最难问题在 1000–10000 样本中只被解出 1–3 次，正确答案太稀有投不出来(MATH 比 GSM8K 更严重)。
 4. 哪些领域天然自带 verifier?AI as a compiler 为什么可验证?
-   > 数学(形式化证明软件逐步验证)、代码(单元测试,常比解题程序好写)、语言间翻译/移植(等价性判定)；AI as a compiler 用「任意输入下 CUDA 输出与 PyTorch 输出一致」验证，KernelBench 上 coverage 随样本数持续上升。
+   > 数学(形式化证明软件逐步验证)、代码(单元测试，常比解题程序好写)、语言间翻译/移植(等价性判定)；AI as a compiler 用「任意输入下 CUDA 输出与 PyTorch 输出一致」验证，KernelBench 上 coverage 随样本数持续上升。
 5. ORM 与 PRM 的区别?PRM 怎么进入搜索?
    > ORM 只对最终结果打分；PRM 对解法每一步打分(非 per token,按有语义的步骤、可人工标注训练)；PRM 引导 beam search，每层采样(如 4 个)后留 top(如 2 个)分支剪枝扩展。
 6. Snell et al. 的核心结论：什么题该烧推理算力，什么题该靠预训练?
@@ -149,4 +149,4 @@
 7. Archon 的 fusion 操作是什么?为什么让讲者惊讶?
    > 把 K 个候选连同原题交给 LLM 合成一个答案；其 win rate 竟超过 oracle selection(完美验证器挑最好)，先 ranker 取 top-5 再 fusion 还会更好。
 8. Archon 用什么优化器、给了哪些搜索约束?最终成绩如何?
-   > Bayesian optimization(目标 = accuracy vs inference call 数,比 greedy/随机省配置;约束:每层一种技术、首层必 generator、critic 在 ranker/fuser 前、unit test generator 后必接 evaluator)；纯开源模型 pass@1 平均超 GPT-4o / Claude 3.5 Sonnet 14.1%。
+   > Bayesian optimization(目标 = accuracy vs inference call 数，比 greedy/随机省配置;约束:每层一种技术、首层必 generator、critic 在 ranker/fuser 前、unit test generator 后必接 evaluator)；纯开源模型 pass@1 平均超 GPT-4o / Claude 3.5 Sonnet 14.1%。

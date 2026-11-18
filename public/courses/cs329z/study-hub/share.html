@@ -385,7 +385,7 @@ const doneKey = 'cs329z-done';
 let done = new Set(JSON.parse(localStorage.getItem(doneKey) || '[]'));
 const quizKey = 'cs329z-quiz';
 let quizAns = JSON.parse(localStorage.getItem(quizKey) || '{}');
-/* ---- 站内原答与 AI 批改(自 sutskevers-list 移植):原答自动保存,批改调 OpenAI 兼容端点 ---- */
+/* ---- 站内原答与 AI 批改(自 sutskevers-list 移植):原答自动保存，批改调 OpenAI 兼容端点 ---- */
 const myAnsKey = doneKey.replace(/-done$/, '-myans');
 let myAns = JSON.parse(localStorage.getItem(myAnsKey) || '{}');
 function saveMyAns(slug, idx, text){
@@ -432,7 +432,7 @@ function exportMyAns(slug, btn){
   } else { downloadMd(text, slug); flash('已下载 md ✓'); }
 }
 
-/* ---- 站内 AI 批改:调 OpenAI 兼容端点,批改结果存 localStorage 并汇入内化记录 ---- */
+/* ---- 站内 AI 批改:调 OpenAI 兼容端点，批改结果存 localStorage 并汇入内化记录 ---- */
 const aiKey = doneKey.replace(/-done$/, '-ai');
 const gradeKey = doneKey.replace(/-done$/, '-grade');
 let aiCfg = Object.assign(
@@ -450,10 +450,10 @@ function verdictOf(text){
 const VERDICT_TXT = {ok: '✅ 通过', part: '⚠️ 部分正确', miss: '❌ 未命中'};
 async function callLLM(question, ref, mine){
   if (!aiCfg.key) throw new Error('NOKEY');
-  const sys = '你是精读视频课程的助教,学生做完自测题后你负责批改。'
-    + '输出两行,格式严格如下:\n'
+  const sys = '你是精读视频课程的助教，学生做完自测题后你负责批改。'
+    + '输出两行，格式严格如下:\n'
     + '判定:✅ 通过 或 ⚠️ 部分正确 或 ❌ 未命中\n'
-    + '批语:2-4 句,先指出原答命中了哪些要点,再对照参考答案指出遗漏或纠错;简体中文,直接说,不客套。'
+    + '批语:2-4 句，先指出原答命中了哪些要点，再对照参考答案指出遗漏或纠错;简体中文，直接说，不客套。'
     + '原答若与参考答案语义等价即使措辞不同也算命中;确有明显错误才判 ❌。';
   const r = await fetch(aiCfg.endpoint, {
     method: 'POST',
@@ -482,7 +482,7 @@ function renderGrade(slug, idx){
   const v = verdictOf(g.text);
   out.className = 'grade-out show' + (v ? ' v-' + v : '');
   const head = v ? `<span class="gd-verdict">${VERDICT_TXT[v]}</span>` : '';
-  // 徽章已表达判定,正文里剥掉「判定:…」行避免重复
+  // 徽章已表达判定，正文里剥掉「判定:…」行避免重复
   const body = g.text.replace(/^\s*判定[::].*(\n|$)/, '').trim();
   out.innerHTML = head + escapeHtml(body).replace(/\n/g, '<br>');
 }
@@ -767,7 +767,7 @@ function render(){
 function show(slug, seekTo){
 function renderToc(slug){
   document.querySelectorAll('.nav-toc').forEach(n => { n.hidden = n.id !== 'nav-toc-' + slug; });
-  if (slug === 'papers') return;   // 论文清单 python 预填,展开即可
+  if (slug === 'papers') return;   // 论文清单 python 预填，展开即可
   const box = document.getElementById('nav-toc-' + slug);
   if (!box) return;
   const view = document.getElementById('view-' + slug);
@@ -776,7 +776,7 @@ function renderToc(slug){
     `<a class="nav-sub" href="#${slug}" data-hi="${i}"><span class="tno">${String(i + 1).padStart(2, '0')}</span>${h.textContent}</a>`).join('');
   box.hidden = !hs.length;
 }
-/* 侧栏宽度拖拽:pointer capture 拖分隔条,写 CSS 变量并持久化 localStorage */
+/* 侧栏宽度拖拽:pointer capture 拖分隔条，写 CSS 变量并持久化 localStorage */
 (function(){
   const sb = document.querySelector('.sidebar');
   if (!sb) return;
@@ -893,14 +893,14 @@ function quizFold(){
     const slug = view.id.slice(5);
     const idx = [...view.querySelectorAll('details.quiz')].indexOf(d);
     d.dataset.qid = String(idx);
-    // 原答输入框常驻在本 li 内、对照折叠之前:先落笔,再点开对照
+    // 原答输入框常驻在本 li 内、对照折叠之前:先落笔，再点开对照
     const li = d.parentElement;
     if (li && !li.querySelector('textarea.myans')){
       li.dataset.idx = String(idx);
       const key = String(idx);
       const ta = document.createElement('textarea');
       ta.className = 'myans';
-      ta.placeholder = '先写下你的回答,再对照参考答案——原答自动保存,可 AI 批改。';
+      ta.placeholder = '先写下你的回答，再对照参考答案——原答自动保存，可 AI 批改。';
       ta.value = (myAns[slug] || {})[key] || '';
       if (ta.value.trim()) d.classList.add('answered');
       ta.addEventListener('input', () => {

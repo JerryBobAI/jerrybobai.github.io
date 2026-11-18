@@ -56,7 +56,7 @@
 - 谜底一(可整除性)：matmul 性能按尺寸能否被 32/16/8/2/1 整除分层着色，素数维度(K=1)最惨——tile 无法与 burst 读取对齐，别用素数维度([1:00:00])
 - 谜底二(波量化(wave quantization))：tile 取 256×128 时尺寸从 1792 变 1794，tile 数从 7×14=98 涨到 120；A100 只有 108 个 SM——98 全并行满载，120 却要分两波，第一波满载跑完、剩 12 个 tile 以极低利用率补跑，利用率断崖；tile 数要么远大于 SM 数，别刚好略超([1:00:00])
 - 工具箱总结：一切为了减少内存访问——coalescing 榨干免费读取、fusion 免去不必要读写、tiling 把读取搬进共享内存；再不然拿富余换稀缺：算力换内存是重计算，精度换内存是量化(quantization)([1:00:00])
-- FlashAttention 论文自述：只用两个「老」技巧——tiling 与 recomputation——把精确 attention 的 HBM 访问从二次方压成亚二次方(计算仍是二次方,但让算力而非带宽付账)；难点在 softmax 的整行求和是全局操作，在线 softmax(online softmax)流式维护当前最大值、校正项与 running normalizer，逐 tile 算部分 softmax，全程无需物化(materialize)n² 矩阵([1:05:00])
+- FlashAttention 论文自述：只用两个「老」技巧——tiling 与 recomputation——把精确 attention 的 HBM 访问从二次方压成亚二次方(计算仍是二次方，但让算力而非带宽付账)；难点在 softmax 的整行求和是全局操作，在线 softmax(online softmax)流式维护当前最大值、校正项与 running normalizer，逐 tile 算部分 softmax，全程无需物化(materialize)n² 矩阵([1:05:00])
 - FlashAttention-2 全流程与收束：forward 是 tiled 的 QKᵀ 矩阵乘 → online softmax 增量更新 → 扫完所有 tile 时归一化分母已在手、就地完成归一化 → 最后与 V 的 tile 相乘；backward 逐 tile 重算激活，铁律是绝不存储任何 n² 规模的量——硬件是语言模型背后的推力，别只问怎么减 FLOPs，要问怎么让数据移动更高效([1:10:00])
 
 ## 核心概念速查
@@ -84,7 +84,7 @@
 
 ## 自测题
 1. CPU 和 GPU 在设计目标上的根本差异是什么?
-   > CPU 为单任务延迟优化(大控制单元、分支预测、少量快线程)；GPU 为聚合吞吐优化(海量轻量线程加极少控制,整体完成更快)。
+   > CPU 为单任务延迟优化(大控制单元、分支预测、少量快线程)；GPU 为聚合吞吐优化(海量轻量线程加极少控制，整体完成更快)。
 2. warp 是什么?由多少线程组成?
    > warp 是 GPU 的基本执行单位，由同一 block 内连续编号的 32 个线程组成，全 warp 执行同一条指令作用于不同数据(SIMT)。
 3. 为什么设计新的神经网络架构时应让大部分计算是矩阵乘?

@@ -30,7 +30,7 @@
 ### 三、路由：设计空间收敛到 token choice top-K
 - 三类路由：token choice(每 token 按 affinity 选 top-K 专家)/ expert choice(每专家选 top-K token,设备负载天然均衡)/ global assignment(解组合优化)；所有主流发布收敛到 token choice top-K([0:15])
 - OlMoE 消融：token choice 验证损失衰减更快更稳；打分作用在 hidden state(含位置信息)上；路由器极轻量——向量内积+sigmoid/softmax，似一次 attention，做复杂收益有限(路由 FLOPs 自己买单、学习信号本就间接)([0:15])
-- K 是超参数：K=2 是经典选择(第二臂提供探索信号,K=1 纯利用)；K>1 时 FLOPs 约翻倍，"xx 激活参数"的说法由此而来；输出按门控加权求和([0:20])
+- K 是超参数：K=2 是经典选择(第二臂提供探索信号，K=1 纯利用)；K>1 时 FLOPs 约翻倍，"xx 激活参数"的说法由此而来；输出按门控加权求和([0:20])
 - 前向机制：残差流 u 与专家习得向量 e_i 内积→softmax 得亲和度 s_i，t→top-K、其余置零得门控 g→专家输出加权求和→加回残差流；e_i 是路由器自己的参数，与 FFN 权重无关([0:20])
 - 反直觉：纯 hash 路由(零语义)也有增益——同类 token 确定性命中同一专家，Zipf 分布下高频词主导某专家，仍能特化；但与输入无关的纯随机路由会很糟([0:20])
 - softmax 只是"归一到 1"操作；top-K 后权重不再和为 1 无所谓(下层 LayerNorm 会放大回来)，是否重归一化是风格选择；但绝不能去掉 top-K——否则训练要付全部 N 个专家的 FLOPs，训练与推理同时稀疏是 MoE 命门([0:25])
@@ -39,7 +39,7 @@
 - 基础款 MoE：复制 dense FFN 若干份、top-2 激活→激活参数是 dense 的 2 倍；人们很快想要"更多专家但不付参数代价"([0:30])
 - 细粒度专家(fine-grained experts)：把 FFN 中间层切小——上讲金律 hidden×4 改成 ×2、×1 甚至更小，专家变小变多；DeepSeek MoE 首创(灵感部分来自 DeepSpeed-MoE)，现已是无脑该做([0:30])
 - 共享专家(shared experts)：恒定激活的少量专家负责共性处理，免得所有参数都摊进路由；这套组合被几乎所有开源 MoE 继承([0:30])
-- DeepSeek 消融：GShard 基线→加共享专家→加细粒度，逐级提升；"x out of y"=y 个路由专家中激活 x 个；专家变多常伴随激活数变多(FLOPs 仍近似免费,因为每个专家更小)([0:35])
+- DeepSeek 消融：GShard 基线→加共享专家→加细粒度，逐级提升；"x out of y"=y 个路由专家中激活 x 个；专家变多常伴随激活数变多(FLOPs 仍近似免费，因为每个专家更小)([0:35])
 - OlMoE 第三方复现：细粒度 8→32→64 收益明确；共享专家增益却不明显，OlMoE 最终没用——共享专家的价值存在争议([0:35])
 - 配置谱系：早期 Google 论文(GShard/Switch/ST-MoE)专家数巨大→8-16 专家期(Mixtral/DBRX/Grok,top-2)→DeepSeek MoE 64 细粒度+6 激活+2 共享、每个 1/4 尺寸；Qwen1.5/DeepSeek-V3/MiniMax/Llama 4 全走同一路线([0:35])
 
@@ -68,7 +68,7 @@
 
 ### 八、MoE 之外：MLA 与 MTP，本讲收束
 - MLA(multi-head latent attention)：不减头数，把 h_t 投影到低维潜向量 c 并只缓存 c，用时上投影还原 k/v→KV cache 大幅压缩；新增的 W_UK 矩阵乘凭结合律并入 Q 投影，不多付 FLOPs([1:15:00])
-- 细节：训练时 query 也压缩(省显存,与 KV cache 无关)；RoPE 与该压缩不兼容——旋转矩阵卡在 Q 投影与上投影之间、矩阵乘无法重排，解法是在未压缩维度上做 RoPE([1:15:00])
+- 细节：训练时 query 也压缩(省显存，与 KV cache 无关)；RoPE 与该压缩不兼容——旋转矩阵卡在 Q 投影与上投影之间、矩阵乘无法重排，解法是在未压缩维度上做 RoPE([1:15:00])
 - MTP(multi-token prediction)：主模型照常预测下一 token，另把隐状态喂给轻量单层 transformer 预测再下一个；实际只做了 1 个额外 token，论文复杂图示有点虚([1:20:00])
 - 收束：MoE 已是构建高性能大系统的核心玩法；离散路由是最大挑战，但启发式居然稳定工作；FLOPs 受限场景下 MoE 就是该用([1:20:00])
 

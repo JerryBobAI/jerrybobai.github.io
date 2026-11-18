@@ -1,6 +1,6 @@
 # L25 · Kolmogorov Complexity — 「学习即压缩」的公理化地基
 
-《An Introduction to Kolmogorov Complexity and Its Applications》(教材, 3rd ed. 2008, Springer) · Ming Li, Paul Vitányi · 章节「Complexity, Randomness, and Incompleteness」· [教材页](https://link.springer.com/book/10.1007/978-0-387-49820-1)
+《An Introduction to Kolmogorov Complexity and Its Applications》(教材， 3rd ed. 2008, Springer) · Ming Li, Paul Vitányi · 章节「Complexity, Randomness, and Incompleteness」· [教材页](https://link.springer.com/book/10.1007/978-0-387-49820-1)
 
 注意：这是这份 List 里唯一的教材条目。前三讲的压缩理论（L21/L22 的 MDL、L23 的 sophistication）反复引用的「最短描述」，全部压在这一章定义的量上——读它是给整批理论补地基。
 

@@ -15,7 +15,7 @@
 
 ### [0:00] 课程定位与读论文避雷：约定不一才是最大混乱源
 
-- 本讲位置：pretraining(数万亿 token、cross-entropy、next-token prediction,含 mid-training / long-context 等中间阶段)→ **SFT**(cross-entropy 只罚输出侧偏差,让模型从「懂文本」变「有用」)→ **preference tuning + reasoning**——后两步的损失函数长什么样，就是今天的全部内容。
+- 本讲位置：pretraining(数万亿 token、cross-entropy、next-token prediction,含 mid-training / long-context 等中间阶段)→ **SFT**(cross-entropy 只罚输出侧偏差，让模型从「懂文本」变「有用」)→ **preference tuning + reasoning**——后两步的损失函数长什么样，就是今天的全部内容。
 - 讲者两个 disclaimer：① 全讲数学密集(读论文亦然)，解药三步——**先抓直觉**、补不熟的符号、**从第一性原理解释公式**，别被大公式吓住；② 更坑的是**各论文约定不一致**。
 - [0:05] 三个具体的约定坑：① reward 记 r，但有的论文拿 r 表示概率 ratio——本讲 ratio 一律记 **ρ**；② policy 有 current / old / reference 多种，记号常被混用；③ 前几讲都在 **minimize loss L**，RL 里常 **maximize** 一个也叫 L 的量——动手前先分清要 min 还是 max。
 
@@ -32,7 +32,7 @@
 - 复习：导数给出**最陡上升的方向与幅度**；n 维推广即 gradient(对输入各维求偏导)。
 - 目标 max_θ E_{τ~π_θ}[R(τ)] 求梯度：R 不依赖 θ(冻结)、π_θ 依赖 → 把 ∇ 移进积分；用恒等式 **∇f = (∇log f)·f**(即 ∇log f = ∇f/f)得 **∇J = E_{τ~π_θ}[R(τ)∇log π_θ(τ)]**——全场反复出现的公式，必须知道它从哪来。
 - [0:20] 直觉：reward 为正 → 梯度推高该 action 的采样概率；为负 → 压低；记号 **τ ~ π_θ** 读作 sampled from;LLM 场景的 expectation 实际是两层：先对 prompts、再对给定 prompt 的 responses。
-- 更新用 **gradient ascent**:θ ← θ + α∇(要的是高 reward 概率变大,不是 descent)。
+- 更新用 **gradient ascent**:θ ← θ + α∇(要的是高 reward 概率变大，不是 descent)。
 - 关键代价：**on-policy**——每次更新都要当前模型重新生成 response；rollout 逐 token 串行(问一次 → 拿一个 token → 再问)，无法并行，非常贵。
 
 ### [0:25] Importance sampling 与 vanilla 方法的三大挑战
@@ -72,7 +72,7 @@
 - [1:10:00] 流程 walkthrough:prompt → policy 生成 g 条 → reward 打分(**RM 或确定性 verifier**)→ advantage = (r − mean)/std → 带上 clipping(防偏离 π_old)与 KL(防偏离 π_ref)更新；全程只需 **policy + reward model + reference model**，且 RLVR 场景下 RM 可省。
 - PPO 对照：一条 response → RM 打分(KL penalty 的一种变体是并进 reward)→ value model 给 token 级期望 → vanilla advantage = value function 差分，实际用 **GAE** → 更新。
 - 模型盘点：reference model 固定；reward model 可选、**事先训好**、本阶段不训；policy 在训；value model 仅 PPO 有、与 policy 联合训(必须同步)——**这正是 PPO 的 hassle：要为 value model 的训练留带宽**。
-- [1:15:00] 两公式异同：相同处都有 ρ ratio、clipping、KL；差异 ① KL 放哪——GRPO 放 **loss**、PPO 常并入 **advantage**(每家论文实现都不同,别惊讶)；差异 ② advantage 算法——GRPO 在 **completion 级**对组内比较(公式带 (i,t) 下标但实际只是 i 的函数；token 级理论可行但需要 token 级贡献标注，一般不做),PPO 在 **token 级**靠 value function。
+- [1:15:00] 两公式异同：相同处都有 ρ ratio、clipping、KL；差异 ① KL 放哪——GRPO 放 **loss**、PPO 常并入 **advantage**(每家论文实现都不同，别惊讶)；差异 ② advantage 算法——GRPO 在 **completion 级**对组内比较(公式带 (i,t) 下标但实际只是 i 的函数；token 级理论可行但需要 token 级贡献标注，一般不做),PPO 在 **token 级**靠 value function。
 - GRPO 原作者跑数学/reasoning：性能上涨、推理链变长；但发现 **response 长度持续增长，即使 performance 已 plateau**——埋下节的雷。
 
 ### [1:20:00] GRPO 的坑与未偿之债：长度膨胀、std、ε 与 token 级 credit 缺失
@@ -93,7 +93,7 @@
 - KL **不对称**：KL(P‖Q) 按 P 加权——「在一个由 P 治理的世界里，用 Q 近似有多糟」；常规 distillation 是 KL(T‖S)，on-policy 要以 student 自身采样为准 → 取 **reverse KL，即 KL(S‖T)**。
 - reverse KL 性质：T≠0、S≈0 的项**宽容(forgiving)**；T 小而 S 非零 → 比值爆炸、巨罚；叠加 student 自由度通常比 teacher 少 → **mode seeking**：student 集中学会 teacher 分布的峰。注意：原论文其实两种 KL 混用，reverse 并非显然更优。
 - [1:35:00] Teddy 演练：student 逐 token 生成，teacher 在**同一 context** 下逐 token 打分——"Teddy" 合理；"climbs" 在 teacher 分布里低概率，被 reverse KL 罚；有趣的是 "works" **没被罚**:climbs 进了 context 后，teacher 把 Teddy 理解成「会爬的、也许是人」，walking 就不离谱——逐 token 条件化带来的灵活性。
-- 特性：监督信号 **dense(token 级而非 outcome 级)**;**on-policy**(对着自己的补全变强,与 SFT 不同)；实践效果好，同算力**更划算**；对参数受限场景友好——Thinking Machines 博客的 toy ablation：不同 LoRA rank 下，先 SFT 再 on-policy distillation 能大幅缩短 SFT 留下的 performance gap。无 reward model → **无从 hack**；真要 hack，把 loss 压到 0 = 完全对齐 teacher 分布，恰好是好事。
+- 特性：监督信号 **dense(token 级而非 outcome 级)**;**on-policy**(对着自己的补全变强，与 SFT 不同)；实践效果好，同算力**更划算**；对参数受限场景友好——Thinking Machines 博客的 toy ablation：不同 LoRA rank 下，先 SFT 再 on-policy distillation 能大幅缩短 SFT 留下的 performance gap。无 reward model → **无从 hack**；真要 hack，把 loss 压到 0 = 完全对齐 teacher 分布，恰好是好事。
 - 局限 ①:**需要 teacher**——frontier model 没人能教你。
 - [1:40:00] 变体 **self-distillation**：利用 teacher forcing，把 prompt + 完整答案(以及通往答案的一切)塞进**同一个模型**的输入，拿它的 next-token 分布当 teacher——「自问自答拿分布」；GLM 5 论文就用 self-distill 保住旧知识不遗忘。定位：最适合系列里的**快模型**(pro/flash 中的 flash 线)，pro 级前沿模型更适合 GRPO 这类基于硬标签、吃算力的方法。
 - 局限 ②：信号是 **teacher 分布而非真标签**，可能不完美、领域覆盖不全 → **multi-teacher on-policy distillation**：用 verifiable rewards 在各领域训 expert，distill 时对相应领域 expert；单一 teacher 做后训练 RL 容易**遗忘**、一组参数被多个目标拉扯，multi-teacher 实证更高效。
@@ -124,13 +124,13 @@
 3. 为什么要 importance sampling ratio ρ = π_θ/π_old?「评估 policy 便宜、生成 rollout 贵」差在哪?
    > 生成要逐 token 串行、每次更新都重来太贵；固定 π_old 生成一次 batch，之后多次更新用 ρ 重加权仍数学等价；评估时整条 response 已知，并行喂入 decoder-only 模型(masked self-attention 一次算出全部概率)所以便宜；注意有的论文把 ratio 记作 R，与 reward 撞名。
 4. Vanilla policy gradient 的三大挑战是什么?各配课堂上的例子。
-   > ① 无 baseline 梯度方差大(好答案 101 vs 坏答案 100 双向猛更新,应对比期望 100.5 看 ±0.5);② completion 级 reward 无 token 级 credit assignment(Teddy 答对 kitchen 但 climbs/walks 错误步骤也被一起奖励);③ 无约束偏离已很好的初始 policy + reward 不完美导致 reward hacking(只优化掌声就全程讲段子)，过度优化还遗忘旧能力。
+   > ① 无 baseline 梯度方差大(好答案 101 vs 坏答案 100 双向猛更新，应对比期望 100.5 看 ±0.5);② completion 级 reward 无 token 级 credit assignment(Teddy 答对 kitchen 但 climbs/walks 错误步骤也被一起奖励);③ 无约束偏离已很好的初始 policy + reward 不完美导致 reward hacking(只优化掌声就全程讲段子)，过度优化还遗忘旧能力。
 5. PPO 的 value function 是什么?「in the box」例子里 token "box" 的简单 advantage 怎么算?reward model 与 value model 训练时机有何不同?
    > value function = 给定 prompt+部分补全、继续按当前 policy 采样时的期望 final reward(token 级 baseline);box 的 advantage = 带它 0.95 − 不带它 0.7 = 0.25;reward model 事先训好、本阶段冻结，value model 与 policy 联合训练(同一 loss 含 value loss + policy loss,须同步因为 value 依赖当前 policy)。
 6. PPO 用哪两道缰绳防偏离、各自相对哪个 policy?π_θ/π_old/π_ref 如何辨析?为什么说 DPO 的 β 与 KL penalty 的 β 是同一个?
    > clipping 把 J(ρ,A) 在 ρ 远离 1 处截出 0 梯度区，相对 π_old;KL penalty 在 loss 里惩罚偏离固定的 π_ref(SFT base);π_θ=当前在训、π_old=生成当前 batch 的、π_ref=全程不动；β 大→sigmoid 饱和快→微小偏离就够→不敢偏离 π_ref；读 PPO 论文注意 L 是 objective 要 maximize、R 是 ratio 不是 reward。
 7. GRPO 怎么在不用 value function 的情况下算 advantage?与 PPO 的公式差异有哪些?为什么会出现「性能 plateau 但 response 越来越长」?
-   > 同一 prompt 采 g 条 response,advantage=(r−组均值)/组标准差(completion 级)，组平均替代 baseline，只需 policy+RM(RLVR 可省)+reference；差异：KL 放 loss(GRPO)vs 并入 advantage(PPO)、组内比较 vs value function 的 token 级；长度膨胀源于 1/|O| 归一化——负 advantage 在长 response 里只是轻微下压，模型偏爱更长的坏答案；DAPO 改按 outputs 总和归一化，Dr. GRPO 直接去掉该项(另:除 std 有 bias、ε 对称压探索,均可修)。
+   > 同一 prompt 采 g 条 response,advantage=(r−组均值)/组标准差(completion 级)，组平均替代 baseline，只需 policy+RM(RLVR 可省)+reference；差异：KL 放 loss(GRPO)vs 并入 advantage(PPO)、组内比较 vs value function 的 token 级；长度膨胀源于 1/|O| 归一化——负 advantage 在长 response 里只是轻微下压，模型偏爱更长的坏答案；DAPO 改按 outputs 总和归一化，Dr. GRPO 直接去掉该项(另:除 std 有 bias、ε 对称压探索，均可修)。
 8. On-policy distillation 为什么用 reverse KL?它有什么性质?两大局限与对应变体是什么?
-   > on-policy 以 student 自身采样为准，故取 KL(S‖T) 而非 KL(T‖S)；性质：T≈0 而 S 非零巨罚、T≠0 而 S≈0 宽容 → mode seeking,student 学 teacher 分布的峰(原论文两种 KL 混用)；局限①需 teacher(frontier 无人可教)→ self-distillation:teacher forcing 把 prompt+答案喂给同一个模型拿分布(GLM 5 用它防遗忘,适合 flash 线)；局限②信号是 teacher 分布非真标签、覆盖不全 → multi-teacher：各领域训 expert、对领域 expert 蒸馏。
+   > on-policy 以 student 自身采样为准，故取 KL(S‖T) 而非 KL(T‖S)；性质：T≈0 而 S 非零巨罚、T≠0 而 S≈0 宽容 → mode seeking,student 学 teacher 分布的峰(原论文两种 KL 混用)；局限①需 teacher(frontier 无人可教)→ self-distillation:teacher forcing 把 prompt+答案喂给同一个模型拿分布(GLM 5 用它防遗忘，适合 flash 线)；局限②信号是 teacher 分布非真标签、覆盖不全 → multi-teacher：各领域训 expert、对领域 expert 蒸馏。
 ---

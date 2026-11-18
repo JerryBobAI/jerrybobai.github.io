@@ -66,8 +66,8 @@ m_{i,t} = σ(f_{i,t} + b̃_f) ∘ m_{i,t-1}  +  σ(i_{i,t}) ∘ g_ψ(m̃_{i,t})
 
 - **定制毒物 Nth Farthest**：流式输入 8 个随机向量，最后问「离参考向量 m 第 n 远的是哪个」。难点：必须对**所有两两距离**做隐式排序，而且 m 可能最后才出现——先记好全部，等线索到了再连线。结果：LSTM 和 DNC 的最佳批次准确率都**上不了 30%**，RMC 稳定 **91%**。注意力分析拍到解题姿势：参考向量出现前，输入写进一两个 slot；一出现，**所有 slot 齐刷刷转头盯住那几个 slot**——「等参照物到了再建索引」
 - **RL 迷宫(viewport 部分可观测)**:Mini Pacman 只给周围 5×5 视野，幽灵动向和吃过的豆全靠记。RMC 677 分 vs LSTM 550；全观测下 1159 vs 598，近翻倍。更难的 BoxWorld(钥匙-锁-宝石链):RMC 解出 **98%** 关卡，ConvLSTM 只有 **73%**
-- **程序执行**(`Learning to Execute`——Zaremba 与 Sutskever 2014 的老题,Ilya 本人合著)：读伪代码，输出执行结果。RMC 全面不输 LSTM/DNC/EntNet，而且去掉 teacher forcing 训练反而更强
-- **语言建模**：WikiText-103、Project Gutenberg、GigaWord 三个数据集同时做到当时最好，困惑度(`perplexity`:平均每步在多少个等效候选词里犹豫,越低越好)比已发表最好结果**降 1.4-5.4(相对提升 5-12%)**。彩蛋：这里只用了 **1 个 slot + 4 个头**——分区可发生在 head 里，不必在 slot 里
+- **程序执行**(`Learning to Execute`——Zaremba 与 Sutskever 2014 的老题，Ilya 本人合著)：读伪代码，输出执行结果。RMC 全面不输 LSTM/DNC/EntNet，而且去掉 teacher forcing 训练反而更强
+- **语言建模**：WikiText-103、Project Gutenberg、GigaWord 三个数据集同时做到当时最好，困惑度(`perplexity`:平均每步在多少个等效候选词里犹豫，越低越好)比已发表最好结果**降 1.4-5.4(相对提升 5-12%)**。彩蛋：这里只用了 **1 个 slot + 4 个头**——分区可发生在 head 里，不必在 slot 里
 - 诚实条款：作者明说这些只是「功能证据」——题解得更好，但不能断言内部真在做关系推理
 
 ## 5. 为什么在这份 List 里
