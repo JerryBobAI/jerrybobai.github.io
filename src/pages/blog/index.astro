@@ -7,7 +7,28 @@ import { notDraft, byDateDesc, formatDate } from '../../lib/content';
 const posts = (await getCollection('blog', notDraft)).sort(byDateDesc);
 ---
 <BaseLayout width="wide" title={`文章 · ${SITE.name}`} description="观点文章：原创为主，转载注明来源。">
-  <h1 class="text-3xl font-bold">文章</h1>
+  <a
+    href="/"
+    class="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-900"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M19 12H5"></path>
+      <path d="M12 19l-7-7 7-7"></path>
+    </svg>
+    返回首页
+  </a>
+  <h1 class="mt-4 text-3xl font-bold">文章</h1>
   {posts.length === 0 && <p class="mt-6 text-slate-500">写作中，敬请期待。</p>}
   <div id="tag-filter-notice" class="mt-4 hidden items-center gap-2 text-sm text-slate-500">
     <span>筛选：<strong id="tag-filter-name" class="font-medium text-slate-900"></strong></span>
