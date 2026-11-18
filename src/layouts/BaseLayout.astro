@@ -8,9 +8,12 @@ interface Props {
   title: string;
   description: string;
   jsonLd?: Record<string, unknown>[];
+  /** wide：栏目页/首页 max-w-6xl；narrow（默认）：长文正文 max-w-3xl */
+  width?: 'narrow' | 'wide';
 }
 
-const { title, description, jsonLd = [] } = Astro.props;
+const { title, description, jsonLd = [], width = 'narrow' } = Astro.props;
+const containerMax = width === 'wide' ? 'max-w-6xl' : 'max-w-3xl';
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -23,7 +26,7 @@ const { title, description, jsonLd = [] } = Astro.props;
   </head>
   <body class="min-h-screen bg-white text-slate-900 antialiased">
     <SiteNav />
-    <main class="mx-auto max-w-3xl px-4 py-10">
+    <main class={`mx-auto ${containerMax} px-4 py-10`}>
       <slot />
     </main>
     <SiteFooter />

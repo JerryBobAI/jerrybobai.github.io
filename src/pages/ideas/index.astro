@@ -7,7 +7,7 @@ import { notDraft, byDateDesc, formatDate } from '../../lib/content';
 const entries = (await getCollection('ideas', notDraft)).sort(byDateDesc);
 const STATUS_ORDER = ['种子', '验证中', '已验证', '搁置'] as const;
 ---
-<BaseLayout title={`点子 · ${SITE.name}`} description="创业点子库：从种子到验证的全程记录。">
+<BaseLayout width="wide" title={`点子 · ${SITE.name}`} description="创业点子库：从种子到验证的全程记录。">
   <h1 class="text-3xl font-bold">创业点子</h1>
   {entries.length === 0 && <p class="mt-6 text-slate-500">点子库整理中，好东西攒够一轮就发。</p>}
   {STATUS_ORDER.map((status) => {

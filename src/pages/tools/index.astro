@@ -5,7 +5,7 @@ import { tools } from '../../data/tools';
 
 const sorted = [...tools].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 ---
-<BaseLayout title={`工具 · ${SITE.name}`} description="自制小工具，独立成页，按需加载。">
+<BaseLayout width="wide" title={`工具 · ${SITE.name}`} description="自制小工具，独立成页，按需加载。">
   <h1 class="text-3xl font-bold">工具</h1>
   {sorted.length === 0 && <p class="mt-6 text-slate-500">工具制作中。每个工具独立成页，进入才加载交互代码。</p>}
   <ul class="mt-6 space-y-4">

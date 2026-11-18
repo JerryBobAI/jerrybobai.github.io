@@ -7,7 +7,7 @@ import { notDraft, byDateDesc, formatDate } from '../../lib/content';
 const entries = (await getCollection('projects', notDraft)).sort(byDateDesc);
 const KINDS = ['实战项目', '在线产品'] as const;
 ---
-<BaseLayout title={`项目 · ${SITE.name}`} description="实战项目与在线产品，产品外链直达，欢迎反链回来。">
+<BaseLayout width="wide" title={`项目 · ${SITE.name}`} description="实战项目与在线产品，产品外链直达，欢迎反链回来。">
   <h1 class="text-3xl font-bold">项目</h1>
   {entries.length === 0 && <p class="mt-6 text-slate-500">项目整理中，敬请期待。</p>}
   {KINDS.map((kind) => {

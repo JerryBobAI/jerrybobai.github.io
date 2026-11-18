@@ -27,7 +27,7 @@ for (const e of entries) {
 }
 const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP_TAGS);
 ---
-<BaseLayout title={`文章归档 · ${SITE.name}`} description={`重建前收集的文章，共 ${entries.length} 篇，可按标签筛选。`}>
+<BaseLayout width="wide" title={`文章归档 · ${SITE.name}`} description={`重建前收集的文章，共 ${entries.length} 篇，可按标签筛选。`}>
   <h1 class="text-3xl font-bold">文章归档</h1>
   <p class="mt-2 text-sm text-slate-500">重建前的 {entries.length} 篇文章，全部保留在原路径，可按标签筛选。</p>
 

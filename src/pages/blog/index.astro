@@ -6,7 +6,7 @@ import { notDraft, byDateDesc, formatDate } from '../../lib/content';
 
 const posts = (await getCollection('blog', notDraft)).sort(byDateDesc);
 ---
-<BaseLayout title={`文章 · ${SITE.name}`} description="观点文章：原创为主，转载注明来源。">
+<BaseLayout width="wide" title={`文章 · ${SITE.name}`} description="观点文章：原创为主，转载注明来源。">
   <h1 class="text-3xl font-bold">文章</h1>
   {posts.length === 0 && <p class="mt-6 text-slate-500">写作中，敬请期待。</p>}
   <ul class="mt-8 space-y-6">
