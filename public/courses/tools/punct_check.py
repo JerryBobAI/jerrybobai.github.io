@@ -60,18 +60,12 @@ def paren_sub(seg, stats):
 
 
 def fix_script(part, stats, fix_parens):
-    """script 段：只处理 JS 字符串字面量（奇数索引为完整字面量含引号），语法位不动"""
+    """script 段：JS 字符串字面量内只做标点替换（左邻 CJK 才触发，语法位天然安全）。
+    括号对替换在此禁用——正则字面量配对会被英文撇号（Sutskever's）带偏，
+    一旦奇偶错位就会把语法位括号（如 alert(）当内容改掉，破坏 JS 语法。"""
     subs = JS_STR.split(part)
     for j in range(1, len(subs), 2):
-        seg = subs[j]
-        seg = map_sub(seg, stats)
-        if fix_parens:
-            for _ in range(5):  # 嵌套括号迭代收敛
-                new = paren_sub(seg, stats)
-                if new == seg:
-                    break
-                seg = new
-        subs[j] = seg
+        subs[j] = map_sub(subs[j], stats)
     return ''.join(subs)
 
 
