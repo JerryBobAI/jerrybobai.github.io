@@ -69,3 +69,7 @@ temp/
 .coverage/
 coverage/
 .nyc_output/
+
+node_modules/
+dist/
+.astro/
