@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { readdirSync, existsSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 
 const EXPECTED_COUNT = 368;
 const dir = 'public/docs/timeline';
@@ -16,9 +17,16 @@ const spotChecks = ['体验 · 创造 · 连接：生命的三位一体.html', '
 for (const name of spotChecks) {
   if (!existsSync(`${dir}/${name}`)) errors.push(`抽查缺失：${name}`);
 }
+// 外链回归守卫：归档页禁止引用远程 CSS/JS（曾因国内访问 CDN 阻塞导致打开极慢）
+const EXTERNAL_REF = /<(?:script[^>]*src|link[^>]*href)="https?:\/\/[^"]+"/;
+for (const f of files) {
+  const html = readFileSync(`${dir}/${f}`, 'utf-8');
+  const m = html.match(EXTERNAL_REF);
+  if (m) errors.push(`${f} 引用了远程资源：${m[0].slice(0, 80)}`);
+}
 if (errors.length > 0) {
   console.error(`归档完整性检查失败，共 ${errors.length} 处：`);
   for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
 }
-console.log(`归档完整性检查通过：${files.length} 篇 + 依赖齐全`);
+console.log(`归档完整性检查通过：${files.length} 篇 + 依赖齐全 + 外链资源为零`);
