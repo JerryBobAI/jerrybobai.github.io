@@ -5,20 +5,76 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { SITE } from '../../../config/site';
 
 const dir = path.resolve('public/docs/timeline');
-const files = fs
-  .readdirSync(dir)
-  .filter((f) => f.endsWith('.html'))
-  .map((f) => f.replace(/\.html$/, ''))
-  .sort();
+const metaPath = path.resolve('public/cache/metadata.json');
+const meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8')) as Record<
+  string,
+  { title: string; date?: string; tags?: string[] }
+>;
+
+const entries = Object.entries(meta)
+  .map(([p, info]) => {
+    const file = path.basename(p);
+    if (!fs.existsSync(path.join(dir, file))) return null;
+    return { file, title: info.title, date: info.date ?? '', tags: info.tags ?? [] };
+  })
+  .filter((e): e is NonNullable<typeof e> => e !== null)
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const TOP_TAGS = 24;
+const tagCount = new Map<string, number>();
+for (const e of entries) {
+  for (const t of e.tags) tagCount.set(t, (tagCount.get(t) ?? 0) + 1);
+}
+const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP_TAGS);
 ---
-<BaseLayout title={`文章归档 · ${SITE.name}`} description={`重建前收集的文章，共 ${files.length} 篇。`}>
+<BaseLayout title={`文章归档 · ${SITE.name}`} description={`重建前收集的文章，共 ${entries.length} 篇，可按标签筛选。`}>
   <h1 class="text-3xl font-bold">文章归档</h1>
-  <p class="mt-2 text-sm text-slate-500">重建前的 {files.length} 篇文章，全部保留在原路径。</p>
-  <ul class="mt-6 space-y-2 text-sm">
-    {files.map((name) => (
-      <li>
-        <a class="hover:underline" href={`/docs/timeline/${encodeURIComponent(name)}.html`}>{name}</a>
+  <p class="mt-2 text-sm text-slate-500">重建前的 {entries.length} 篇文章，全部保留在原路径，可按标签筛选。</p>
+
+  <div id="tag-bar" class="mt-6 flex flex-wrap gap-2">
+    <button data-tag="" class="tag-btn tag-btn-active">全部</button>
+    {topTags.map(([t, n]) => (
+      <button data-tag={t} class="tag-btn">{t} <span class="text-slate-400">{n}</span></button>
+    ))}
+  </div>
+
+  <p id="match-info" class="mt-4 text-sm text-slate-400"></p>
+
+  <ul id="archive-list" class="mt-4 space-y-3">
+    {entries.map((e) => (
+      <li class="archive-item border-b pb-3" data-tags={e.tags.join(' ')}>
+        <a class="font-medium hover:underline" href={`/docs/timeline/${encodeURIComponent(e.file)}`}>{e.title}</a>
+        <span class="ml-2 text-xs text-slate-400">{e.date}</span>
+        <p class="mt-1 text-xs text-slate-400">{e.tags.join(' · ')}</p>
       </li>
     ))}
   </ul>
+  <p id="no-match" class="mt-8 text-slate-500" hidden>没有匹配的文章</p>
 </BaseLayout>
+
+<style>
+  .tag-btn { border: 1px solid var(--tw-color-slate-200, #e2e8f0); border-radius: 9999px; padding: 0.25rem 0.75rem; font-size: 0.8rem; color: #475569; }
+  .tag-btn-active { background: #0f172a; color: #fff; border-color: #0f172a; }
+</style>
+
+<script is:inline>
+  const bar = document.getElementById('tag-bar');
+  const items = document.querySelectorAll('.archive-item');
+  const info = document.getElementById('match-info');
+  const noMatch = document.getElementById('no-match');
+  bar.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.tag-btn');
+    if (!btn) return;
+    bar.querySelectorAll('.tag-btn').forEach((b) => b.classList.remove('tag-btn-active'));
+    btn.classList.add('tag-btn-active');
+    const tag = btn.dataset.tag || '';
+    let shown = 0;
+    items.forEach((li) => {
+      const hit = tag === '' || (li.dataset.tags || '').split(' ').includes(tag);
+      li.hidden = !hit;
+      if (hit) shown += 1;
+    });
+    info.textContent = tag === '' ? '' : `「${tag}」筛选出 ${shown} 篇`;
+    noMatch.hidden = shown !== 0;
+  });
+</script>
