@@ -9,7 +9,7 @@
   <!-- TailwindCSS 3.0+ CDN -->
   <link rel="stylesheet" href="/vendor/tailwind-compiled.css">
   <!-- Font Awesome 6 CDN -->
-  <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css" media="print" onload="this.media=\'all\'">
   <!-- Noto Sans SC & Open Sans -->
   <style>
 	body {
@@ -250,7 +250,7 @@
     </section>
   </main>
   <!-- Chart.js CDN -->
-  <script src="/vendor/chartjs/chart-4.4.3.umd.min.js"></script>
+  <script defer src="/vendor/chartjs/chart-4.4.3.umd.min.js"></script>
   <script>
     // 学习动力来源比例图
     const ctx = document.getElementById('motivationChart').getContext('2d');

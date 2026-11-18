@@ -8,7 +8,7 @@
   <!-- TailwindCSS 3.0+ CDN -->
   <link rel="stylesheet" href="/vendor/tailwind-compiled.css">
   <!-- Font Awesome 6 CDN -->
-  <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css" media="print" onload="this.media=\'all\'">
   <!-- Google Fonts: Noto Sans SC & Open Sans -->
   <!-- Custom 吉卜力风格样式 -->
   <style>
@@ -290,7 +290,7 @@
     </footer>
   </main>
   <!-- Chart.js CDN for 数据可视化 -->
-  <script src="/vendor/chartjs/chart-4.4.3.umd.min.js"></script>
+  <script defer src="/vendor/chartjs/chart-4.4.3.umd.min.js"></script>
   <script>
     // 轮回之环 Doughnut Chart
     const ctx = document.getElementById('cycleChart').getContext('2d');

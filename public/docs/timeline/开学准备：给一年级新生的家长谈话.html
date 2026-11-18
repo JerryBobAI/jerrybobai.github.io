@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>开学准备：给一年级新生的家长谈话</title>
     <link rel="stylesheet" href="/vendor/tailwind-compiled.css">
-    <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css" media="print" onload="this.media=\'all\'">
     <style>
         /* 自定义字体和全局样式 */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background-color: #f0f2f5;
@@ -247,7 +246,7 @@
 
     </main>
 
-    <script src="/vendor/chartjs/chart-3.7.1.min.js"></script>
+    <script defer src="/vendor/chartjs/chart-3.7.1.min.js"></script>
     <script>
         // Reveal on scroll
         const revealElements = document.querySelectorAll('.reveal');

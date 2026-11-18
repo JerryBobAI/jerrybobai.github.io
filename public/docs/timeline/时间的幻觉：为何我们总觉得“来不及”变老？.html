@@ -7,7 +7,7 @@
   <!-- TailwindCSS 3.0+ CDN -->
   <link rel="stylesheet" href="/vendor/tailwind-compiled.css">
   <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/vendor/fontawesome/6.5.2/css/all.min.css" media="print" onload="this.media=\'all\'">
   <!-- Google Fonts: Noto Sans SC & Open Sans -->
   <style>
 	body {
@@ -255,7 +255,7 @@
     </section>
   </main>
   <!-- Chart.js CDN -->
-  <script src="/vendor/chartjs/chart-4.4.3.umd.min.js"></script>
+  <script defer src="/vendor/chartjs/chart-4.4.3.umd.min.js"></script>
   <script>
     // 记忆密度随年龄变化的简洁勾线图
     const ctx = document.getElementById('memoryChart').getContext('2d');

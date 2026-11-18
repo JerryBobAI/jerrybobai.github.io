@@ -19,10 +19,15 @@ for (const name of spotChecks) {
 }
 // 外链回归守卫：归档页禁止引用远程 CSS/JS（曾因国内访问 CDN 阻塞导致打开极慢）
 const EXTERNAL_REF = /<(?:script[^>]*src|link[^>]*href)="https?:\/\/[^"]+"/;
+// @import url(...) 不走 link/script 标签，曾被守卫漏掉（Google Fonts 被墙拖住整页渲染）
+const CSS_IMPORT = /@import\s+url\(['"]?https?:\/\//;
+const BLOCKED_HOST = /fonts\.(googleapis|gstatic)\.com/;
 for (const f of files) {
   const html = readFileSync(`${dir}/${f}`, 'utf-8');
-  const m = html.match(EXTERNAL_REF);
+  const m = html.match(EXTERNAL_REF) || html.match(CSS_IMPORT);
   if (m) errors.push(`${f} 引用了远程资源：${m[0].slice(0, 80)}`);
+  const h = html.match(BLOCKED_HOST);
+  if (h) errors.push(`${f} 引用了被墙字体域名：${h[0]}`);
 }
 if (errors.length > 0) {
   console.error(`归档完整性检查失败，共 ${errors.length} 处：`);
