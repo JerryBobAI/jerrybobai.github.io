@@ -36,7 +36,7 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP
   <div id="tag-bar" class="mt-6 flex flex-wrap gap-2">
     <button data-tag="" class="tag-btn tag-btn-active">全部</button>
     {topTags.map(([t, n]) => (
-      <button data-tag={t} class="tag-btn">{t} <span class="text-slate-400">{n}</span></button>
+      <button data-tag={t} class="tag-btn">{t} <span class="text-slate-500">{n}</span></button>
     ))}
   </div>
 
@@ -48,14 +48,14 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP
     class="mt-4 w-full max-w-md rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-slate-400"
   />
 
-  <p id="match-info" class="mt-4 text-sm text-slate-400"></p>
+  <p id="match-info" class="mt-4 text-sm text-slate-500"></p>
 
   <ul id="archive-list" class="mt-4 space-y-3">
     {entries.map((e) => (
       <li class="archive-item border-b pb-3" data-tags={e.tags.join(' ')}>
         <a class="font-medium hover:underline" href={`/docs/timeline/${encodeURIComponent(e.file)}`}>{e.title}</a>
-        <span class="ml-2 text-xs text-slate-400">{e.date}</span>
-        <p class="mt-1 text-xs text-slate-400">{e.tags.join(' · ')}</p>
+        <span class="ml-2 text-xs text-slate-500">{e.date}</span>
+        <p class="mt-1 text-xs text-slate-500">{e.tags.join(' · ')}</p>
       </li>
     ))}
   </ul>
