@@ -23,7 +23,7 @@ const posts = (await getCollection('blog', notDraft)).sort(byDateDesc);
           {formatDate(post.data.pubDate)}
           <span class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs">{post.data.origin}</span>
           {post.data.tags.map((t) => (
-            <a href={`/blog/?tag=${encodeURIComponent(t)}`} class="ml-1 text-xs text-slate-400 hover:text-slate-900">#{t}</a>
+            <a href={`/tags/${encodeURIComponent(t)}/`} class="ml-1 text-xs text-slate-400 hover:text-slate-900">#{t}</a>
           ))}
         </p>
         <p class="mt-2 text-slate-600">{post.data.summary}</p>

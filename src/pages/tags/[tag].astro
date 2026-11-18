@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
+import { SITE } from '../../config/site';
+import { notDraft, byDateDesc, formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', notDraft);
+  const map = new Map<string, typeof posts>();
+  for (const post of posts) {
+    for (const t of post.data.tags) {
+      if (!map.has(t)) map.set(t, []);
+      map.get(t)!.push(post);
+    }
+  }
+  return [...map.entries()].map(([tag, tagPosts]) => ({
+    params: { tag },
+    props: { tag, posts: tagPosts.sort(byDateDesc) },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout width="wide" title={`#${tag} · ${SITE.name}`} description={`标签 #${tag} 下的全部文章，共 ${posts.length} 篇。`}>
+  <BackLink href="/tags/" label="返回标签" />
+  <h1 class="mt-4 text-3xl font-bold">#{tag}</h1>
+  <p class="mt-2 text-sm text-slate-500">共 {posts.length} 篇文章。</p>
+  <ul class="mt-8 space-y-6">
+    {posts.map((post) => (
+      <li class="border-b pb-6">
+        <a href={`/blog/${post.id}/`} class="text-xl font-medium hover:underline">{post.data.title}</a>
+        <p class="mt-2 text-sm text-slate-500">
+          {formatDate(post.data.pubDate)}
+          <span class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs">{post.data.origin}</span>
+          {post.data.tags.filter((t) => t !== tag).map((t) => (
+            <a href={`/tags/${encodeURIComponent(t)}/`} class="ml-1 text-xs text-slate-400 hover:text-slate-900">#{t}</a>
+            ))}
+        </p>
+        <p class="mt-2 text-slate-600">{post.data.summary}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
