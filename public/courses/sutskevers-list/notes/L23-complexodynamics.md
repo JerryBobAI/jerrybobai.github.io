@@ -1,6 +1,6 @@
 # L23 · The First Law of Complexodynamics — 复杂度是座山，熵不是
 
-《The First Law of Complexodynamics》(2011, 博文 · Shtetl-Optimized 博客) · Scott Aaronson · [原文](https://scottaaronson.blog/?p=762)
+《The First Law of Complexodynamics》（2011, 博文 · Shtetl-Optimized 博客） · Scott Aaronson · [原文](https://scottaaronson.blog/?p=762)
 
 注意：这是这份 List 里极少数不是论文的条目——一篇 2011 年 9 月 23 日的博文（30papers.com 可查）。缘起是 FQXi 学术会议「Setting Time Aright」（一半议程在卑尔根开往哥本哈根的邮轮上）里物理学家 Sean Carroll 的开场报告；三年后，Aaronson 和 Carroll（外加 MIT 本科生 Lauren Ouellette）把博文里的猜想做成论文，就是下一讲 L24。读这一篇，等于看一个理论直觉的「出生证明」。
 

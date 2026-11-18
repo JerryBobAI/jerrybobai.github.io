@@ -1,6 +1,6 @@
 # L07 · Understanding LSTM Networks — 给记忆修一条带闸门的传送带
 
-《Understanding LSTM Networks》(2015, 博客) · Christopher Olah · [colah.github.io/posts/2015-08-Understanding-LSTMs](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+《Understanding LSTM Networks》（2015, 博客） · Christopher Olah · [colah.github.io/posts/2015-08-Understanding-LSTMs](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 
 ## 1. 一句话
 

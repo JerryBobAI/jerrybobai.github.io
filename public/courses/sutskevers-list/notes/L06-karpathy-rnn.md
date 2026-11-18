@@ -1,6 +1,6 @@
 # L06 · The Unreasonable Effectiveness of RNNs — 没人教括号，它自己学会了配对
 
-《The Unreasonable Effectiveness of Recurrent Neural Networks》(2015, 博客) · Andrej Karpathy · [karpathy.github.io/rnn.html](http://karpathy.github.io/rnn.html)
+《The Unreasonable Effectiveness of Recurrent Neural Networks》（2015, 博客） · Andrej Karpathy · [karpathy.github.io/rnn.html](http://karpathy.github.io/rnn.html)
 
 ## 1. 一句话
 

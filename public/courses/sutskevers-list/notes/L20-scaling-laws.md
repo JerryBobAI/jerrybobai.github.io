@@ -1,6 +1,6 @@
 # L20 · Scaling Laws — 把「大力出奇迹」变成一张预算表
 
-《Scaling Laws for Neural Language Models》(2020, arXiv 技术报告) · Jared Kaplan 等（OpenAI + Johns Hopkins）· [arXiv:2001.08361](https://arxiv.org/abs/2001.08361)
+《Scaling Laws for Neural Language Models》（2020, arXiv 技术报告） · Jared Kaplan 等（OpenAI + Johns Hopkins）· [arXiv:2001.08361](https://arxiv.org/abs/2001.08361)
 
 ## 1. 一句话
 
