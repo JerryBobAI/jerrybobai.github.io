@@ -168,6 +168,20 @@
         0%, 100% { opacity: 1; }
         50% { opacity: 0.3; }
       }
+      .sp-back {
+        position: fixed;
+        top: 18px;
+        left: 22px;
+        font: 600 12px/1 ui-monospace, Menlo, Consolas, monospace;
+        letter-spacing: 0.14em;
+        color: #111;
+        opacity: 0.55;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+      .sp-back:hover {
+        opacity: 1;
+      }
     </style>
     <script type="module" crossorigin src="./assets/index-hjeGUX7E.js"></script>
   </head>
@@ -236,6 +250,7 @@
       <h1 class="sp-title">DIE DAILY</h1>
       <div class="sp-bar" aria-hidden="true"><i></i></div>
       <div class="sp-tap">TAP TO RIDE</div>
+      <a class="sp-back" href="/projects/">← PROJECTS</a>
     </div>
     <script>
       (function () {
