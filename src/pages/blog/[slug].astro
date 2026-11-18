@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+import { notDraft, formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', notDraft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+if (post.data.origin !== '原创' && !post.data.source) {
+  throw new Error(`[${post.id}] origin 为非原创时必须填写 source 字段`);
+}
+const { Content } = await render(post);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.data.title,
+    datePublished: post.data.pubDate.toISOString(),
+    author: { '@type': 'Person', name: SITE.author, url: SITE.url },
+    description: post.data.summary,
+    mainEntityOfPage: new URL(Astro.url.pathname, SITE.url).href,
+  },
+];
+---
+<BaseLayout title={`${post.data.title} · ${SITE.name}`} description={post.data.summary} jsonLd={jsonLd}>
+  <article>
+    <h1 class="text-3xl font-bold">{post.data.title}</h1>
+    <p class="mt-2 text-sm text-slate-500">
+      {formatDate(post.data.pubDate)} · {post.data.origin}
+      {post.data.source && <a href={post.data.source} class="ml-2 underline">原文</a>}
+    </p>
+    <div class="prose prose-slate mt-8 max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

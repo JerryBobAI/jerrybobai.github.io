@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { tools } from '../../data/tools';
+import { SITE } from '../../config/site';
+
+export function getStaticPaths() {
+  return tools.map((tool) => ({ params: { slug: tool.slug }, props: { tool } }));
+}
+
+const { tool } = Astro.props;
+---
+<BaseLayout title={`${tool.title} · ${SITE.name}`} description={tool.description}>
+  <h1 class="text-3xl font-bold">{tool.title}</h1>
+  <p class="mt-2 text-slate-600">{tool.description}</p>
+  <div class="mt-8 min-h-[200px] rounded border border-dashed border-slate-300 p-6 text-sm text-slate-400">
+    <!-- 工具交互区：实现具体工具时在此挂载 island（client:visible） -->
+
+  </div>
+</BaseLayout>

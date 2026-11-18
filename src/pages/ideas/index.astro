@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+import { notDraft, byDateDesc, formatDate } from '../../lib/content';
+
+const entries = (await getCollection('ideas', notDraft)).sort(byDateDesc);
+const STATUS_ORDER = ['种子', '验证中', '已验证', '搁置'] as const;
+---
+<BaseLayout title={`点子 · ${SITE.name}`} description="创业点子库：从种子到验证的全程记录。">
+  <h1 class="text-3xl font-bold">创业点子</h1>
+  {entries.length === 0 && <p class="mt-6 text-slate-500">点子库整理中，好东西攒够一轮就发。</p>}
+  {STATUS_ORDER.map((status) => {
+    const group = entries.filter((e) => e.data.status === status);
+    if (group.length === 0) return null;
+    return (
+      <section class="mt-8">
+        <h2 class="text-xl font-bold">{status}</h2>
+        <ul class="mt-3 space-y-3">
+          {group.map((e) => (
+            <li>
+              <span class="font-medium">{e.data.title}</span>
+              <span class="ml-2 text-sm text-slate-400">{formatDate(e.data.pubDate)}</span>
+              <p class="mt-1 text-sm text-slate-500">{e.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+</BaseLayout>

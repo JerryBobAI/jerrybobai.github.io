@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+import { tools } from '../../data/tools';
+
+const sorted = [...tools].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+---
+<BaseLayout title={`工具 · ${SITE.name}`} description="自制小工具，独立成页，按需加载。">
+  <h1 class="text-3xl font-bold">工具</h1>
+  {sorted.length === 0 && <p class="mt-6 text-slate-500">工具制作中。每个工具独立成页，进入才加载交互代码。</p>}
+  <ul class="mt-6 space-y-4">
+    {sorted.map((t) => (
+      <li>
+        <a href={`/tools/${t.slug}/`} class="text-lg font-medium hover:underline">{t.title}</a>
+        <span class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs">{t.status}</span>
+        <p class="mt-1 text-sm text-slate-500">{t.description}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

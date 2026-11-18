@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+import { notDraft, byDateDesc, formatDate } from '../../lib/content';
+
+const entries = (await getCollection('projects', notDraft)).sort(byDateDesc);
+const KINDS = ['实战项目', '在线产品'] as const;
+---
+<BaseLayout title={`项目 · ${SITE.name}`} description="实战项目与在线产品，产品外链直达，欢迎反链回来。">
+  <h1 class="text-3xl font-bold">项目</h1>
+  {entries.length === 0 && <p class="mt-6 text-slate-500">项目整理中，敬请期待。</p>}
+  {KINDS.map((kind) => {
+    const group = entries.filter((e) => e.data.kind === kind);
+    if (group.length === 0) return null;
+    return (
+      <section class="mt-8">
+        <h2 class="text-xl font-bold">{kind}</h2>
+        <ul class="mt-3 space-y-3">
+          {group.map((e) => (
+            <li>
+              {e.data.link
+                ? <a href={e.data.link} class="font-medium underline">{e.data.title} ↗</a>
+                : <span class="font-medium">{e.data.title}</span>}
+              <span class="ml-2 text-sm text-slate-400">{formatDate(e.data.pubDate)}</span>
+              <p class="mt-1 text-sm text-slate-500">{e.data.summary}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  })}
+</BaseLayout>
