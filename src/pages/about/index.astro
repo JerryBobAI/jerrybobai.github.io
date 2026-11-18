@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 import { SITE } from '../../config/site';
 
 const jsonLd = [
@@ -14,7 +15,8 @@ const jsonLd = [
 ];
 ---
 <BaseLayout title={`关于 · ${SITE.name}`} description={SITE.description} jsonLd={jsonLd}>
-  <h1 class="text-3xl font-bold">关于</h1>
+  <BackLink href="/" label="返回首页" />
+  <h1 class="mt-4 text-3xl font-bold">关于</h1>
   <div class="mt-6 space-y-4 leading-relaxed text-slate-700">
     <p>我是 {SITE.author}。这里是我的个人品牌主页：观点文章、创业点子、实战项目、在线产品与工具。</p>
     <p>站点正在重建，内容陆续上线。</p>

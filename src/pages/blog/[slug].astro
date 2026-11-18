@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 import { SITE } from '../../config/site';
 import { notDraft, formatDate } from '../../lib/content';
 
@@ -31,27 +32,7 @@ const jsonLd = [
 ---
 <BaseLayout title={`${post.data.title} · ${SITE.name}`} description={post.data.summary} jsonLd={jsonLd}>
   <article>
-    <a
-      href="/blog/"
-      class="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-900"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M19 12H5"></path>
-        <path d="M12 19l-7-7 7-7"></path>
-      </svg>
-      返回文章列表
-    </a>
+    <BackLink href="/blog/" label="返回文章列表" />
     <h1 class="mt-4 text-3xl font-bold">{post.data.title}</h1>
     <p class="mt-2 text-sm text-slate-500">
       {formatDate(post.data.pubDate)} · {post.data.origin}
