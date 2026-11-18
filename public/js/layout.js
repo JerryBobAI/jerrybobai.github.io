@@ -536,7 +536,7 @@ function renderArticleHeader(currentPath, isRoot) {
             <div class="flex items-center ultra-light-date">
                 <a href="/docs/timeline/" class="home-link" title="返回"
                    onclick="if (document.referrer && document.referrer.includes(location.host)) { history.back(); return false; }">
-                    <i class="fa-solid fa-arrow-left mr-2" aria-hidden="true"></i><span class="text-sm font-medium mr-3">返回</span>
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true" title="返回"></i>
                 </a>
                 <span class="text-sm font-medium">${dateStr}</span>
             </div>
