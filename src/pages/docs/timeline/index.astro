@@ -1,0 +1,24 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { SITE } from '../../../config/site';
+
+const dir = path.resolve('public/docs/timeline');
+const files = fs
+  .readdirSync(dir)
+  .filter((f) => f.endsWith('.html'))
+  .map((f) => f.replace(/\.html$/, ''))
+  .sort();
+---
+<BaseLayout title={`文章归档 · ${SITE.name}`} description={`重建前收集的文章，共 ${files.length} 篇。`}>
+  <h1 class="text-3xl font-bold">文章归档</h1>
+  <p class="mt-2 text-sm text-slate-500">重建前的 {files.length} 篇文章，全部保留在原路径。</p>
+  <ul class="mt-6 space-y-2 text-sm">
+    {files.map((name) => (
+      <li>
+        <a class="hover:underline" href={`/docs/timeline/${encodeURIComponent(name)}.html`}>{name}</a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>

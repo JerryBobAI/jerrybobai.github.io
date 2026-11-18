@@ -6,3 +6,11 @@ export const SITE = {
   author: 'JerryBobAI',
   github: 'https://github.com/JerryBobAI',
 } as const;
+
+export const NAV_ITEMS = [
+  { href: '/blog/', label: '文章' },
+  { href: '/ideas/', label: '点子' },
+  { href: '/projects/', label: '项目' },
+  { href: '/tools/', label: '工具' },
+  { href: '/about/', label: '关于' },
+] as const;
