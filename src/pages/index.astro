@@ -21,7 +21,7 @@ const jsonLd = [
 ];
 ---
 <BaseLayout title={SITE.name} description={SITE.description} jsonLd={jsonLd} width="wide">
-  <section class="grid items-center gap-6 py-8 lg:grid-cols-2 lg:gap-10 lg:py-14">
+  <section class="grid items-center gap-6 py-6 lg:grid-cols-2 lg:gap-10 lg:py-8">
     <div>
       <h1 class="text-4xl font-bold tracking-tight lg:text-5xl">{SITE.name}</h1>
       <p class="mt-4 text-lg leading-relaxed text-slate-600">{SITE.tagline}</p>
@@ -30,8 +30,14 @@ const jsonLd = [
         <a href="/docs/timeline/" class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-medium transition-colors hover:border-slate-900">文章归档</a>
       </div>
     </div>
-    <div id="hero-figure" aria-hidden="true" class="mx-auto w-full max-w-[240px] sm:max-w-xs lg:max-w-none"></div>
+    <div id="hero-figure" aria-hidden="true" class="mx-auto w-full max-w-[240px] sm:max-w-xs lg:max-w-lg"></div>
   </section>
+  <style>
+    /* hairline 默认 aspect-ratio 5/4，宽屏下会把 hero 撑高一截导致上下大片留白；压扁到 2/1 与左侧文字块等高 */
+    #hero-figure {
+      aspect-ratio: 2 / 1;
+    }
+  </style>
 
   <section aria-label="栏目精选" class="mt-6 grid gap-6 lg:grid-cols-3">
     <div class="rounded-xl border border-slate-200 p-6">

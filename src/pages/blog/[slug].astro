@@ -39,3 +39,32 @@ const jsonLd = [
     </div>
   </article>
 </BaseLayout>
+<style is:global>
+  /* 「凝练自」溯源区块（hr 之后的 h2+ul）：降为小字灰色，不与正文争视觉 */
+  .prose hr ~ h2 {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: rgb(100 116 139);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose hr ~ ul {
+    font-size: 0.8125rem;
+    line-height: 1.9;
+    color: rgb(100 116 139);
+    margin-top: 0;
+  }
+  .prose hr ~ ul li::marker {
+    color: rgb(203 213 225);
+  }
+  .prose hr ~ ul a {
+    color: rgb(100 116 139);
+    font-weight: 400;
+    text-decoration: underline;
+    text-decoration-color: rgb(203 213 225);
+    text-underline-offset: 2px;
+  }
+  .prose hr ~ ul a:hover {
+    color: rgb(71 85 105);
+  }
+</style>
