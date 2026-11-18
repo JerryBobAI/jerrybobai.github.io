@@ -22,9 +22,7 @@ jobs:
       - uses: withastro/action@v3
         with:
           node-version: 22
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
+      # 注意：withastro/action@v3 内置 Upload Pages Artifact，无需再显式上传
 
   deploy:
     needs: build
