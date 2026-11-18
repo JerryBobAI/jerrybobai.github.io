@@ -22,12 +22,17 @@ const EXTERNAL_REF = /<(?:script[^>]*src|link[^>]*href)="https?:\/\/[^"]+"/;
 // @import url(...) 不走 link/script 标签，曾被守卫漏掉（Google Fonts 被墙拖住整页渲染）
 const CSS_IMPORT = /@import\s+url\(['"]?https?:\/\//;
 const BLOCKED_HOST = /fonts\.(googleapis|gstatic)\.com/;
+// 关键 CSS/JS 必须内联进 HTML（国内访问 GH Pages 高时延，串行外链请求 = 白屏放大器）
+const MUST_INLINE = /<(?:link[^>]*tailwind-compiled\.css|script src="\/js\/article-bundle\.js)/;
 for (const f of files) {
   const html = readFileSync(`${dir}/${f}`, 'utf-8');
   const m = html.match(EXTERNAL_REF) || html.match(CSS_IMPORT);
   if (m) errors.push(`${f} 引用了远程资源：${m[0].slice(0, 80)}`);
   const h = html.match(BLOCKED_HOST);
   if (h) errors.push(`${f} 引用了被墙字体域名：${h[0]}`);
+  const i = html.match(MUST_INLINE);
+  if (i) errors.push(`${f} 未内联关键资源（应内嵌而非外链）：${i[0].slice(0, 60)}`);
+  if (html.includes('\\&') || html.includes("media=\\'")) errors.push(`${f} 事件属性含坏转义（\\& / \\'）`);
 }
 if (errors.length > 0) {
   console.error(`归档完整性检查失败，共 ${errors.length} 处：`);

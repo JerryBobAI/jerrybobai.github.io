@@ -38,6 +38,14 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP
     ))}
   </div>
 
+  <input
+    id="search-box"
+    type="search"
+    placeholder="搜索标题或标签…"
+    autocomplete="off"
+    class="mt-4 w-full max-w-md rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-slate-400"
+  />
+
   <p id="match-info" class="mt-4 text-sm text-slate-400"></p>
 
   <ul id="archive-list" class="mt-4 space-y-3">
@@ -59,39 +67,63 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP
 
 <script is:inline>
   const bar = document.getElementById('tag-bar');
+  const searchBox = document.getElementById('search-box');
   const items = document.querySelectorAll('.archive-item');
   const info = document.getElementById('match-info');
   const noMatch = document.getElementById('no-match');
 
-  function applyFilter(tag) {
+  function applyFilter(tag, q) {
+    q = (q || '').trim().toLowerCase();
     let shown = 0;
     items.forEach((li) => {
-      const hit = tag === '' || (li.dataset.tags || '').split(' ').includes(tag);
+      const tagHit = tag === '' || (li.dataset.tags || '').split(' ').includes(tag);
+      const textHit = q === '' || (li.textContent || '').toLowerCase().includes(q);
+      const hit = tagHit && textHit;
       li.hidden = !hit;
       if (hit) shown += 1;
     });
-    info.textContent = tag === '' ? '' : `「${tag}」筛选出 ${shown} 篇`;
+    if (q && tag) info.textContent = `「${tag}」+「${q}」筛选出 ${shown} 篇`;
+    else if (tag) info.textContent = `「${tag}」筛选出 ${shown} 篇`;
+    else if (q) info.textContent = `「${q}」搜索到 ${shown} 篇`;
+    else info.textContent = '';
     noMatch.hidden = shown !== 0;
     bar.querySelectorAll('.tag-btn').forEach((b) => {
       b.classList.toggle('tag-btn-active', (b.dataset.tag || '') === tag);
     });
   }
 
-  function syncHash(tag) {
-    history.replaceState(null, '', tag ? `${location.pathname}#tag=${encodeURIComponent(tag)}` : location.pathname);
+  function syncHash(tag, q) {
+    const parts = [];
+    if (tag) parts.push(`tag=${encodeURIComponent(tag)}`);
+    q = (q || '').trim();
+    if (q) parts.push(`q=${encodeURIComponent(q)}`);
+    history.replaceState(null, '', parts.length ? `${location.pathname}#${parts.join('&')}` : location.pathname);
   }
 
   bar.addEventListener('click', (ev) => {
     const btn = ev.target.closest('.tag-btn');
     if (!btn) return;
-    const tag = btn.dataset.tag || '';
-    applyFilter(tag);
-    syncHash(tag);
+    applyFilter(btn.dataset.tag || '', searchBox.value);
+    syncHash(btn.dataset.tag || '', searchBox.value);
   });
 
-  // 从 URL hash 恢复筛选状态（返回、刷新、带状态的分享链接）
-  if (location.hash.startsWith('#tag=')) {
-    const tag = decodeURIComponent(location.hash.slice(5));
-    if (tag) applyFilter(tag);
+  let searchTimer;
+  searchBox.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      const active = bar.querySelector('.tag-btn-active');
+      applyFilter(active ? active.dataset.tag || '' : '', searchBox.value);
+      syncHash(active ? active.dataset.tag || '' : '', searchBox.value);
+    }, 120);
+  });
+
+  // 从 URL hash 恢复筛选/搜索状态（返回、刷新、带状态的分享链接）
+  const hashParams = new URLSearchParams(location.hash.startsWith('#') ? location.hash.slice(1) : '');
+  const hashTag = hashParams.get('tag') || '';
+  const hashQ = hashParams.get('q') || '';
+  if (hashTag) applyFilter(hashTag, hashQ);
+  if (hashQ) {
+    searchBox.value = hashQ;
+    applyFilter(hashTag, hashQ);
   }
 </script>

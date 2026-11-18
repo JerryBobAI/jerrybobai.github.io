@@ -177,5 +177,2616 @@
     </script>
 
     <!-- 加载组件脚本 -->
-    <script src="/js/article-bundle.js"></script>
+    <script>
+/* article-bundle: 由 8 个旧运行时模块按依赖顺序合并，消除串行动态加载 */
+/* ===== logger.js ===== */
+/**
+ * 统一日志系统 - 提供结构化、可配置的日志记录
+ * 
+ * 功能特点：
+ * 1. 统一的日志格式和图标
+ * 2. 可配置的日志级别
+ * 3. 模块化的日志分类
+ * 4. 性能友好的条件日志
+ * 5. 扩展性强的架构
+ */
+
+(function() {
+    'use strict';
+
+    // 日志级别定义
+    const LOG_LEVELS = {
+        ERROR: 0,   // 错误：系统错误、功能失败
+        WARN: 1,    // 警告：潜在问题、降级处理
+        INFO: 2,    // 信息：重要状态变化、用户操作
+        DEBUG: 3    // 调试：详细执行流程、开发调试
+    };
+
+    // 当前日志级别（生产环境建议设为 INFO）
+    let currentLogLevel = LOG_LEVELS.INFO;
+
+    // 模块分类和对应图标
+    const MODULE_ICONS = {
+        // 系统核心
+        SYSTEM: '🚀',      // 系统启动、初始化
+        CORE: '⚙️',        // 核心功能、元数据
+        
+        // 布局组件
+        LAYOUT: '🏗️',      // 布局系统
+        HEADER: '📋',      // 头部组件
+        FOOTER: '📄',      // 底部组件
+        MENU: '📱',        // 菜单系统
+        
+        // UI组件
+        WIDGET: '🧩',      // UI小部件
+        CARD: '🃏',        // 卡片组件
+        TAG: '🏷️',        // 标签系统
+        
+        // 数据处理
+        DATA: '📊',        // 数据处理
+        FILE: '📁',        // 文件操作
+        PATH: '🔄',        // 路径处理
+        
+        // 用户交互
+        USER: '👤',        // 用户操作
+        CLICK: '🖱️',       // 点击事件
+        NAVIGATION: '🧭',  // 导航操作
+        
+        // 样式和主题
+        STYLE: '🎨',       // 样式处理
+        THEME: '🌓',       // 主题切换
+        
+        // 网络和加载
+        LOAD: '📦',        // 资源加载
+        NETWORK: '🌐',     // 网络请求
+        
+        // 状态和流程
+        STATE: '📍',       // 状态变化
+        FLOW: '➡️',        // 流程控制
+        
+        // 性能和优化
+        PERF: '⚡',        // 性能相关
+        CACHE: '💾',       // 缓存操作
+        
+        // 错误和调试
+        ERROR: '❌',       // 错误信息
+        WARN: '⚠️',        // 警告信息
+        SUCCESS: '✅',     // 成功信息
+        DEBUG: '🔍'        // 调试信息
+    };
+
+    // 日志级别对应的控制台方法和图标
+    const LEVEL_CONFIG = {
+        [LOG_LEVELS.ERROR]: { method: 'error', icon: '❌' },
+        [LOG_LEVELS.WARN]:  { method: 'warn',  icon: '⚠️' },
+        [LOG_LEVELS.INFO]:  { method: 'log',   icon: 'ℹ️' },
+        [LOG_LEVELS.DEBUG]: { method: 'log',   icon: '🔍' }
+    };
+
+    /**
+     * 核心日志函数
+     * @param {number} level - 日志级别
+     * @param {string} module - 模块名称
+     * @param {string} message - 日志消息
+     * @param {*} data - 可选的附加数据
+     */
+    function log(level, module, message, data = null) {
+        // 检查日志级别
+        if (level > currentLogLevel) {
+            return;
+        }
+
+        const config = LEVEL_CONFIG[level];
+        const moduleIcon = MODULE_ICONS[module] || '📝';
+        const timestamp = new Date().toLocaleTimeString();
+        
+        // 构建日志消息
+        const logMessage = `${moduleIcon} ${message}`;
+        
+        // 输出日志
+        if (data !== null) {
+            console[config.method](logMessage, data);
+        } else {
+            console[config.method](logMessage);
+        }
+    }
+
+    /**
+     * 便捷的日志方法
+     */
+    const Logger = {
+        // 设置日志级别
+        setLevel: function(level) {
+            currentLogLevel = level;
+            this.info('SYSTEM', `日志级别设置为: ${Object.keys(LOG_LEVELS)[level]}`);
+        },
+
+        // 错误日志
+        error: function(module, message, data) {
+            log(LOG_LEVELS.ERROR, module, message, data);
+        },
+
+        // 警告日志
+        warn: function(module, message, data) {
+            log(LOG_LEVELS.WARN, module, message, data);
+        },
+
+        // 信息日志
+        info: function(module, message, data) {
+            log(LOG_LEVELS.INFO, module, message, data);
+        },
+
+        // 调试日志
+        debug: function(module, message, data) {
+            log(LOG_LEVELS.DEBUG, module, message, data);
+        },
+
+        // 成功日志（特殊的信息日志）
+        success: function(module, message, data) {
+            const moduleIcon = MODULE_ICONS[module] || '📝';
+            const logMessage = `✅ ${message}`;
+            if (data !== null && data !== undefined) {
+                console.log(logMessage, data);
+            } else {
+                console.log(logMessage);
+            }
+        },
+
+        // 分组日志开始
+        group: function(module, title) {
+            if (currentLogLevel >= LOG_LEVELS.DEBUG) {
+                const moduleIcon = MODULE_ICONS[module] || '📝';
+                console.group(`${moduleIcon} ${title}`);
+            }
+        },
+
+        // 分组日志结束
+        groupEnd: function() {
+            if (currentLogLevel >= LOG_LEVELS.DEBUG) {
+                console.groupEnd();
+            }
+        },
+
+        // 性能计时开始
+        time: function(label) {
+            if (currentLogLevel >= LOG_LEVELS.DEBUG) {
+                console.time(`⚡ ${label}`);
+            }
+        },
+
+        // 性能计时结束
+        timeEnd: function(label) {
+            if (currentLogLevel >= LOG_LEVELS.DEBUG) {
+                console.timeEnd(`⚡ ${label}`);
+            }
+        }
+    };
+
+    // 预定义的常用日志方法（保持向后兼容）
+    const CommonLogs = {
+        // 系统相关
+        systemStart: (message) => Logger.info('SYSTEM', `开始${message}`),
+        systemComplete: (message) => Logger.success('SYSTEM', `${message}完成`),
+        systemError: (message, error) => Logger.error('SYSTEM', `${message}失败`, error),
+
+        // 组件相关
+        componentInit: (name) => Logger.info('LAYOUT', `初始化${name}组件`),
+        componentReady: (name) => Logger.success('LAYOUT', `${name}组件就绪`),
+        componentError: (name, error) => Logger.error('LAYOUT', `${name}组件错误`, error),
+
+        // 用户交互
+        userAction: (action) => Logger.info('USER', action),
+        clickEvent: (target) => Logger.debug('CLICK', `点击: ${target}`),
+        navigationChange: (from, to) => Logger.info('NAVIGATION', `导航: ${from} → ${to}`),
+
+        // 数据处理
+        dataLoad: (type) => Logger.info('DATA', `加载${type}数据`),
+        dataProcess: (type, count) => Logger.info('DATA', `处理${type}数据: ${count}项`),
+        dataError: (type, error) => Logger.error('DATA', `${type}数据错误`, error),
+
+        // 文件操作
+        fileLoad: (filename) => Logger.debug('FILE', `加载文件: ${filename}`),
+        fileProcess: (filename) => Logger.info('FILE', `处理文件: ${filename}`),
+        fileError: (filename, error) => Logger.error('FILE', `文件错误: ${filename}`, error),
+
+        // 样式和主题
+        styleApply: (style) => Logger.debug('STYLE', `应用样式: ${style}`),
+        themeChange: (theme) => Logger.info('THEME', `切换主题: ${theme}`),
+
+        // 性能相关
+        perfStart: (operation) => Logger.time(operation),
+        perfEnd: (operation) => Logger.timeEnd(operation)
+    };
+
+    // 导出到全局
+    if (typeof window !== 'undefined') {
+        window.Logger = Logger;
+        window.CommonLogs = CommonLogs;
+        window.LOG_LEVELS = LOG_LEVELS;
+        window.MODULE_ICONS = MODULE_ICONS;
+    }
+
+    // 初始化日志系统
+    Logger.info('SYSTEM', 'Logger系统初始化完成');
+
+})();
+
+/* ===== utils.js ===== */
+// 共享工具函数
+
+// 标签颜色配置 - 适配深色背景的柔和配色
+const TAG_COLORS = [
+    'bg-blue-500/20 text-blue-200 border-blue-400/30',
+    'bg-indigo-500/20 text-indigo-200 border-indigo-400/30',
+    'bg-purple-500/20 text-purple-200 border-purple-400/30',
+    'bg-pink-500/20 text-pink-200 border-pink-400/30',
+    'bg-red-500/20 text-red-200 border-red-400/30',
+    'bg-orange-500/20 text-orange-200 border-orange-400/30',
+    'bg-amber-500/20 text-amber-200 border-amber-400/30',
+    'bg-yellow-500/20 text-yellow-200 border-yellow-400/30',
+    'bg-lime-500/20 text-lime-200 border-lime-400/30',
+    'bg-green-500/20 text-green-200 border-green-400/30',
+    'bg-emerald-500/20 text-emerald-200 border-emerald-400/30',
+    'bg-teal-500/20 text-teal-200 border-teal-400/30',
+    'bg-cyan-500/20 text-cyan-200 border-cyan-400/30',
+    'bg-sky-500/20 text-sky-200 border-sky-400/30',
+    'bg-violet-500/20 text-violet-200 border-violet-400/30',
+    'bg-fuchsia-500/20 text-fuchsia-200 border-fuchsia-400/30',
+    'bg-rose-500/20 text-rose-200 border-rose-400/30',
+    'bg-slate-500/20 text-slate-200 border-slate-400/30'
+];
+
+// 浅色背景的标签颜色配置（用于首页等浅色背景）
+const TAG_COLORS_LIGHT = [
+    'bg-blue-50 text-blue-600 border-blue-200',
+    'bg-indigo-50 text-indigo-600 border-indigo-200',
+    'bg-purple-50 text-purple-600 border-purple-200',
+    'bg-pink-50 text-pink-600 border-pink-200',
+    'bg-red-50 text-red-600 border-red-200',
+    'bg-orange-50 text-orange-600 border-orange-200',
+    'bg-amber-50 text-amber-600 border-amber-200',
+    'bg-yellow-50 text-yellow-600 border-yellow-200',
+    'bg-lime-50 text-lime-600 border-lime-200',
+    'bg-green-50 text-green-600 border-green-200',
+    'bg-emerald-50 text-emerald-600 border-emerald-200',
+    'bg-teal-50 text-teal-600 border-teal-200',
+    'bg-cyan-50 text-cyan-600 border-cyan-200',
+    'bg-sky-50 text-sky-600 border-sky-200',
+    'bg-violet-50 text-violet-600 border-violet-200',
+    'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200',
+    'bg-rose-50 text-rose-600 border-rose-200',
+    'bg-slate-50 text-slate-600 border-slate-200'
+];
+
+// 单个标签颜色分配函数（保持向后兼容）
+function getTagColorClass(tag, isDarkBackground = true) {
+    let sum = 0;
+    for (let i = 0; i < tag.length; i++) {
+        sum += tag.charCodeAt(i);
+    }
+    const colors = isDarkBackground ? TAG_COLORS : TAG_COLORS_LIGHT;
+    return colors[sum % colors.length];
+}
+
+// 为标签数组分配不重复的颜色
+function getTagColorsForTags(tags, isDarkBackground = true) {
+    if (!Array.isArray(tags) || tags.length === 0) {
+        return [];
+    }
+
+    const colors = isDarkBackground ? TAG_COLORS : TAG_COLORS_LIGHT;
+
+    // 如果标签数量超过可用颜色数量，使用原来的方法
+    if (tags.length > colors.length) {
+        return tags.map(tag => getTagColorClass(tag, isDarkBackground));
+    }
+
+    // 为每个标签生成一个基于内容的索引
+    const tagIndices = tags.map(tag => {
+        let sum = 0;
+        for (let i = 0; i < tag.length; i++) {
+            sum += tag.charCodeAt(i);
+        }
+        return { tag, index: sum };
+    });
+
+    // 排序确保相同标签总是得到相同的颜色
+    tagIndices.sort((a, b) => a.index - b.index);
+
+    // 分配不重复的颜色
+    const usedColorIndices = new Set();
+    const result = [];
+
+    for (let i = 0; i < tagIndices.length; i++) {
+        const { tag, index } = tagIndices[i];
+        let colorIndex = index % colors.length;
+
+        // 如果颜色已被使用，找下一个可用的颜色
+        while (usedColorIndices.has(colorIndex)) {
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+
+        usedColorIndices.add(colorIndex);
+        result.push({
+            tag: tag,
+            colorClass: colors[colorIndex]
+        });
+    }
+
+    // 按原始顺序返回
+    return tags.map(tag => {
+        const found = result.find(item => item.tag === tag);
+        return found ? found.colorClass : getTagColorClass(tag, isDarkBackground);
+    });
+}
+
+// 检测背景色是否为深色
+function isDarkBackground() {
+    try {
+        // 获取body的背景色
+        const bodyStyle = window.getComputedStyle(document.body);
+        const backgroundColor = bodyStyle.backgroundColor;
+
+        // 只在DEBUG级别记录详细信息
+        Logger.debug('STYLE', `检测到的body背景色: ${backgroundColor}`);
+
+        // 如果没有背景色，检查html元素
+        if (!backgroundColor || backgroundColor === 'rgba(0, 0, 0, 0)' || backgroundColor === 'transparent') {
+            const htmlStyle = window.getComputedStyle(document.documentElement);
+            const htmlBackgroundColor = htmlStyle.backgroundColor;
+            Logger.debug('STYLE', `检测到的html背景色: ${htmlBackgroundColor}`);
+            if (htmlBackgroundColor && htmlBackgroundColor !== 'rgba(0, 0, 0, 0)' && htmlBackgroundColor !== 'transparent') {
+                const result = isColorDark(htmlBackgroundColor);
+                Logger.debug('STYLE', `背景色检测结果 (html): ${result ? '深色' : '浅色'}`);
+                return result;
+            }
+        }
+
+        // 解析RGB值并计算亮度
+        const result = isColorDark(backgroundColor);
+        Logger.debug('STYLE', `背景色检测结果 (body): ${result ? '深色' : '浅色'}`);
+        return result;
+    } catch (e) {
+        Logger.warn('STYLE', '无法检测背景色，使用默认深色方案', e);
+        return true; // 默认假设是深色背景
+    }
+}
+
+// 判断颜色是否为深色
+function isColorDark(color) {
+    if (!color || color === 'transparent' || color === 'rgba(0, 0, 0, 0)') {
+        return true; // 默认假设是深色
+    }
+
+    // 解析RGB值
+    const rgb = color.match(/\d+/g);
+    if (!rgb || rgb.length < 3) {
+        return true; // 解析失败，默认深色
+    }
+
+    const r = parseInt(rgb[0]);
+    const g = parseInt(rgb[1]);
+    const b = parseInt(rgb[2]);
+
+    // 使用相对亮度公式计算
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    // 亮度小于0.5认为是深色背景
+    return luminance < 0.5;
+}
+
+// 构建标签HTML的通用函数
+function buildTagsHtml(tags, options = {}) {
+    const {
+        padding = 'px-3 py-1',           // 默认padding
+        extraClasses = '',               // 额外的CSS类
+        withAnimation = false,           // 是否包含动画
+        isDarkBackground = null          // 是否为深色背景，null表示自动检测
+    } = options;
+
+    if (!Array.isArray(tags) || tags.length === 0) {
+        return '';
+    }
+
+    // 如果没有指定背景类型，自动检测
+    let useDarkColors;
+    if (isDarkBackground !== null) {
+        useDarkColors = isDarkBackground;
+        Logger.debug('TAG', `使用指定的背景类型: ${useDarkColors ? '深色' : '浅色'}`);
+    } else {
+        // 调用全局的背景检测函数
+        useDarkColors = window.isDarkBackground ? window.isDarkBackground() : true;
+        Logger.debug('TAG', `自动检测背景类型: ${useDarkColors ? '深色' : '浅色'}`);
+    }
+
+    const tagColors = getTagColorsForTags(tags, useDarkColors);
+    return tags.map((tag, index) => {
+        const colorClass = tagColors[index];
+        const animationClass = withAnimation ? 'tag-animate' : '';
+        const animationStyle = withAnimation ? `style="animation-delay: ${index * 0.1}s"` : '';
+
+        return `<span class="inline-block ${colorClass} hover:opacity-80 transition-all duration-200 hover:scale-105 rounded-full ${padding} text-xs font-medium border ${animationClass} ${extraClasses}" ${animationStyle}>${tag}</span>`;
+    }).join('');
+}
+
+// 导出函数供其他模块使用
+if (typeof window !== 'undefined') {
+    window.getTagColorClass = getTagColorClass;
+    window.getTagColorsForTags = getTagColorsForTags;
+    window.buildTagsHtml = buildTagsHtml;
+    window.isDarkBackground = isDarkBackground;
+    window.isColorDark = isColorDark;
+    window.TAG_COLORS = TAG_COLORS;
+    window.TAG_COLORS_LIGHT = TAG_COLORS_LIGHT;
+}
+
+/* ===== core.js ===== */
+// 核心系统 - 元数据管理、路径处理、系统初始化
+
+// =============== 路径处理工具 ===============
+
+// 路径归一化工具，确保本地和线上环境一致
+function normalizePath(path) {
+    let normalizedPath = path;
+
+    // 先尝试解码URL编码的字符
+    try {
+        normalizedPath = decodeURIComponent(normalizedPath);
+    } catch (e) {
+        Logger.warn('PATH', `路径解码失败，使用原始路径: ${path}`);
+    }
+
+    const REPO_NAME = 'jerrybobai.github.io';
+    const repoIndex = normalizedPath.indexOf(REPO_NAME + '/');
+    if (repoIndex !== -1) {
+        normalizedPath = normalizedPath.substring(repoIndex + REPO_NAME.length + 1);
+    } else {
+        const docsIndex = normalizedPath.indexOf('docs/timeline/');
+        if (docsIndex !== -1) {
+            normalizedPath = normalizedPath.substring(docsIndex);
+        }
+    }
+
+    // 移除开头的斜杠
+    if (normalizedPath.startsWith('/')) {
+        normalizedPath = normalizedPath.substring(1);
+    }
+
+    Logger.debug('PATH', `路径归一化: ${path} -> ${normalizedPath}`);
+    return normalizedPath;
+}
+
+// 判断当前路径是否为首页
+function isRootPath(path) {
+    const REPO_NAME = 'jerrybobai.github.io';
+    return (
+        path === '' ||
+        path === 'index.html' ||
+        path === REPO_NAME ||
+        path === REPO_NAME + '/' ||
+        path === REPO_NAME + '/index.html' ||
+        (path.endsWith('index.html') && !path.includes('docs/'))
+    );
+}
+
+// =============== 元数据管理 ===============
+
+// 简化的元数据路径计算
+function getMetadataPath() {
+    const currentPath = window.location.pathname;
+    Logger.debug('PATH', `当前页面路径: ${currentPath}`);
+
+    // 简化逻辑：如果在 docs/timeline 目录下，使用 ../../cache/metadata.json
+    if (currentPath.includes('docs/timeline/')) {
+        Logger.debug('PATH', '检测到 timeline 目录，使用相对路径');
+        return '../../cache/metadata.json';
+    }
+    // 如果在 docs/tags 目录下，使用 ../../cache/metadata.json
+    else if (currentPath.includes('docs/tags/')) {
+        Logger.debug('PATH', '检测到 tags 目录，使用相对路径');
+        return '../../cache/metadata.json';
+    }
+    // 如果在 docs 目录下，使用 ../cache/metadata.json
+    else if (currentPath.includes('docs/')) {
+        Logger.debug('PATH', '检测到 docs 目录，使用相对路径');
+        return '../cache/metadata.json';
+    }
+    // 根目录使用直接路径
+    else {
+        Logger.debug('PATH', '根目录，使用直接路径');
+        return 'cache/metadata.json';
+    }
+}
+
+let metadataCache = null; // 全局缓存，避免重复加载
+
+async function loadMetadata() {
+    Logger.debug('DATA', `开始加载元数据, 当前缓存状态: ${metadataCache ? '已缓存' : '未缓存'}`);
+    if (metadataCache) {
+        Logger.debug('DATA', '使用缓存的元数据');
+        return metadataCache;
+    }
+
+    const METADATA_PATH = getMetadataPath();
+    Logger.debug('DATA', `尝试从路径加载元数据: ${METADATA_PATH}`);
+
+    try {
+        const response = await fetch(METADATA_PATH);
+        Logger.debug('DATA', `元数据请求响应状态: ${response.status}`);
+        if (response.ok) {
+            metadataCache = await response.json();
+            Logger.info('DATA', `元数据加载成功: ${Object.keys(metadataCache).length} 条记录`);
+        } else {
+            Logger.error('DATA', `无法加载元数据文件, 状态码: ${response.status}`);
+        }
+    } catch (error) {
+        Logger.error('DATA', `加载元数据时出错: ${error.message}`);
+    }
+    return metadataCache;
+}
+
+// 获取当前页面的元数据 - 增强调试版本，专门处理空格编码问题
+function getPageMetadata(path) {
+    Logger.debug('DATA', '查找页面元数据');
+    Logger.debug('DATA', `原始路径: ${path}`);
+    Logger.debug('DATA', `元数据缓存状态: ${metadataCache ? '已加载' : '未加载'}`);
+
+    if (!metadataCache) {
+        Logger.warn('DATA', '元数据缓存为空');
+        return null;
+    }
+
+    // 获取文件名（处理URL编码）
+    const filename = path.split('/').pop();
+    let decodedFilename = filename;
+    try {
+        decodedFilename = decodeURIComponent(filename);
+    } catch (e) {
+        Logger.warn('DATA', '文件名解码失败，使用原始文件名');
+    }
+
+    // 创建多种路径变体来处理各种编码情况
+    const pathVariants = new Set(); // 使用Set避免重复
+
+    // 基础路径变体
+    pathVariants.add(path);
+    pathVariants.add(normalizePath(path));
+    pathVariants.add(path.replace(/^\/+/, ''));
+
+    // 文件名变体
+    pathVariants.add('docs/timeline/' + filename);
+    pathVariants.add('docs/timeline/' + decodedFilename);
+
+    // 处理URL解码
+    try {
+        const decodedPath = decodeURIComponent(path);
+        pathVariants.add(decodedPath);
+        pathVariants.add(decodedPath.replace(/^\/+/, ''));
+        pathVariants.add(normalizePath(decodedPath));
+    } catch (e) {
+        Logger.warn('DATA', '路径解码失败');
+    }
+
+    // 特别处理空格编码问题
+    // 将 %20 替换为空格
+    const spaceDecodedPath = path.replace(/%20/g, ' ');
+    pathVariants.add(spaceDecodedPath);
+    pathVariants.add(spaceDecodedPath.replace(/^\/+/, ''));
+    pathVariants.add(normalizePath(spaceDecodedPath));
+    pathVariants.add('docs/timeline/' + spaceDecodedPath.split('/').pop());
+
+    // 将空格替换为 %20
+    const spaceEncodedPath = path.replace(/ /g, '%20');
+    pathVariants.add(spaceEncodedPath);
+    pathVariants.add(spaceEncodedPath.replace(/^\/+/, ''));
+    pathVariants.add('docs/timeline/' + spaceEncodedPath.split('/').pop());
+
+    const pathVariantsArray = Array.from(pathVariants);
+    Logger.debug('DATA', `尝试的路径变体: ${pathVariantsArray.join(', ')}`);
+    Logger.debug('DATA', `原始文件名: ${filename}`);
+    Logger.debug('DATA', `解码文件名: ${decodedFilename}`);
+
+    // 精确匹配
+    for (const variant of pathVariantsArray) {
+        if (metadataCache[variant]) {
+            Logger.debug('DATA', `找到精确匹配的元数据: ${variant}`);
+            return metadataCache[variant];
+        }
+    }
+
+    // 如果精确匹配失败，尝试模糊匹配
+    Logger.debug('DATA', '精确匹配失败，尝试模糊匹配');
+    Logger.debug('DATA', `元数据中可用的键（前10个）: ${Object.keys(metadataCache).slice(0, 10).join(', ')}`);
+
+    // 获取不带路径的纯文件名进行模糊匹配
+    const pureFilename = filename.replace(/^.*\//, '');
+    const decodedPureFilename = decodedFilename.replace(/^.*\//, '');
+
+    Logger.debug('DATA', `纯文件名: ${pureFilename}`);
+    Logger.debug('DATA', `解码纯文件名: ${decodedPureFilename}`);
+
+    const matchingKeys = Object.keys(metadataCache).filter(key => {
+        const keyFilename = key.split('/').pop();
+        return keyFilename === pureFilename ||
+               keyFilename === decodedPureFilename ||
+               key.includes(pureFilename) ||
+               key.includes(decodedPureFilename);
+    });
+
+    Logger.debug('DATA', `模糊匹配找到的键: ${matchingKeys.join(', ')}`);
+
+    // 使用第一个匹配的键
+    if (matchingKeys.length > 0) {
+        Logger.debug('DATA', `使用模糊匹配找到的第一个键: ${matchingKeys[0]}`);
+        return metadataCache[matchingKeys[0]];
+    }
+
+    Logger.debug('DATA', '未找到匹配的元数据');
+    return null;
+}
+
+// =============== 系统初始化 ===============
+
+// 注入全局样式
+function injectGlobalStyles() {
+    const globalStyleElement = document.createElement('style');
+    globalStyleElement.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* 头部、元信息、内容区块等动画样式略... 可根据需求补充 */
+    `;
+    document.head.appendChild(globalStyleElement);
+}
+
+// 设置滚动动画
+function setupScrollAnimations() {
+    const sections = document.querySelectorAll('.content-section, section, .card, .grid > div, .style-card, .layout-card');
+    const textElements = document.querySelectorAll('h1:not(.fade-in), h2:not(.fade-in), h3:not(.fade-in), p:not(.fade-in), img:not(.fade-in), .chinese-title:not(.fade-in), .chinese-heading:not(.fade-in), .chinese-main-text:not(.fade-in)');
+    sections.forEach(section => {
+        if (!section.classList.contains('scroll-fade') && !section.classList.contains('fade-in')) {
+            section.classList.remove('content-section');
+            section.classList.add('scroll-fade');
+        }
+    });
+    textElements.forEach(element => {
+        if (!element.classList.contains('scroll-fade') && !element.classList.contains('fade-in')) {
+            element.classList.add('scroll-fade');
+        }
+    });
+    function checkVisibility() {
+        const scrollElements = document.querySelectorAll('.scroll-fade');
+        scrollElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementBottom = element.getBoundingClientRect().bottom;
+            const isVisible = (elementTop < window.innerHeight - 50) && (elementBottom > 0);
+            if (isVisible) {
+                element.classList.add('visible');
+            }
+        });
+    }
+    setTimeout(checkVisibility, 100);
+    window.addEventListener('scroll', checkVisibility);
+}
+
+// 主系统初始化函数
+async function initializeCore() {
+    // 只在主页面执行组件渲染逻辑
+    const isInIframe = window.self !== window.top;
+    Logger.debug('CORE', `是否在iframe中: ${isInIframe}`);
+    if (isInIframe) {
+        // 在iframe中时，返回null表示跳过初始化
+        return null;
+    }
+
+    Logger.info('CORE', '开始初始化核心系统');
+
+    // 注入全局样式
+    injectGlobalStyles();
+
+    // 获取当前路径和首页状态
+    const currentPath = normalizePath(window.location.pathname);
+    const isRoot = isRootPath(currentPath);
+    Logger.debug('CORE', `当前归一化路径: ${currentPath}`);
+    Logger.debug('CORE', `是否为首页: ${isRoot}`);
+
+    // 加载元数据
+    await loadMetadata();
+
+    // 启动滚动动画
+    setupScrollAnimations();
+
+    Logger.success('CORE', '核心系统初始化完成');
+
+    // 返回系统状态供其他模块使用
+    return {
+        currentPath,
+        isRoot,
+        metadataCache
+    };
+}
+
+// 导出函数供其他模块使用
+if (typeof window !== 'undefined') {
+    window.normalizePath = normalizePath;
+    window.isRootPath = isRootPath;
+    window.loadMetadata = loadMetadata;
+    window.getPageMetadata = getPageMetadata;
+    window.injectGlobalStyles = injectGlobalStyles;
+    window.setupScrollAnimations = setupScrollAnimations;
+    window.initializeCore = initializeCore;
+
+    // 提供获取元数据缓存的方法
+    window.getMetadataCache = () => metadataCache;
+}
+
+/* ===== shared/articles.js ===== */
+/**
+ * 文章相关的共享逻辑
+ * 提供文章加载、显示、过滤等通用功能
+ */
+
+class ArticleManager {
+    constructor() {
+        this.allArticles = [];
+        this.filteredArticles = [];
+        this.pinnedArticles = [];
+        this.regularArticles = [];
+    }
+
+    /**
+     * 加载文章数据
+     * @param {string} metadataPath - metadata.json的路径
+     * @param {string} basePath - 文章的基础路径
+     */
+    async loadArticlesData(metadataPath = 'cache/metadata.json', basePath = '') {
+        try {
+            const response = await fetch(metadataPath);
+            const metadata = await response.json();
+
+            // 将数据转换为数组格式
+            const articles = Object.entries(metadata).map(([path, info]) => {
+                return {
+                    title: info.title,
+                    link: `${basePath}${path}`,
+                    src: `${basePath}${path}`,
+                    date: info.date,
+                    tags: info.tags || ['博客'],
+                    pinned: info.pinned || false
+                };
+            });
+
+            this.allArticles = articles;
+            
+            // 分离置顶和普通文章
+            this.pinnedArticles = articles.filter(article => article.pinned);
+            this.regularArticles = articles.filter(article => !article.pinned);
+
+            // 按日期倒序排列
+            this.pinnedArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.regularArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // 初始化过滤后的文章为所有普通文章
+            this.filteredArticles = [...this.regularArticles];
+
+            Logger.info('ARTICLES', `文章数据加载完成: ${this.allArticles.length} 篇文章`);
+            return this.allArticles;
+
+        } catch (error) {
+            Logger.error('ARTICLES', '加载文章数据失败:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * 显示文章列表
+     * @param {Array} articles - 要显示的文章数组
+     * @param {string} containerId - 容器元素ID
+     * @param {boolean} isPinned - 是否为置顶文章
+     */
+    displayArticles(articles, containerId = 'iframe-previews', isPinned = false) {
+        const container = document.getElementById(containerId);
+        if (!container) {
+            Logger.error('ARTICLES', `容器元素 ${containerId} 不存在`);
+            return;
+        }
+
+        // 设置数据属性
+        container.setAttribute('data-previews', JSON.stringify(articles));
+        if (isPinned) {
+            container.setAttribute('data-pinned', 'true');
+        }
+
+        // 初始化iframe预览组件
+        this.initializePreviewsWithRetry(containerId);
+    }
+
+    /**
+     * 带重试机制的预览组件初始化
+     * @param {string} containerId - 容器ID
+     * @param {number} retryCount - 重试次数
+     */
+    initializePreviewsWithRetry(containerId, retryCount = 0) {
+        if (typeof initializeIframePreviews === 'function') {
+            initializeIframePreviews();
+
+            // 触发动画（如果是首页）
+            setTimeout(() => {
+                this.triggerPreviewAnimations();
+            }, 50);
+        } else if (retryCount < 10) {
+            setTimeout(() => {
+                this.initializePreviewsWithRetry(containerId, retryCount + 1);
+            }, 100);
+        } else {
+            Logger.error('ARTICLES', 'initializeIframePreviews 函数加载失败');
+        }
+    }
+
+    /**
+     * 触发预览卡片动画
+     */
+    triggerPreviewAnimations() {
+        const previewItems = document.querySelectorAll('.preview-item');
+        previewItems.forEach((item, index) => {
+            // 移除之前的动画类，重置状态
+            item.classList.remove('animate-in');
+
+            setTimeout(() => {
+                item.classList.add('animate-in');
+            }, index * 50); // 每个卡片延迟50ms出现
+        });
+    }
+
+    /**
+     * 按标签过滤文章
+     * @param {Set} selectedTags - 选中的标签集合
+     */
+    filterByTags(selectedTags) {
+        if (selectedTags.size === 0) {
+            this.filteredArticles = [...this.regularArticles];
+        } else {
+            this.filteredArticles = this.regularArticles.filter(article => {
+                return article.tags.some(tag => selectedTags.has(tag));
+            });
+        }
+        return this.filteredArticles;
+    }
+
+    /**
+     * 获取所有标签及其统计信息
+     */
+    getAllTags() {
+        const allTags = {};
+        const tagLayers = {};
+
+        this.regularArticles.forEach(article => {
+            article.tags.forEach((tag, idx) => {
+                allTags[tag] = (allTags[tag] || 0) + 1;
+                if (!(tag in tagLayers) || idx < tagLayers[tag]) {
+                    tagLayers[tag] = idx; // 记录最上层出现的位置
+                }
+            });
+        });
+
+        return { allTags, tagLayers };
+    }
+
+    /**
+     * 显示错误信息
+     * @param {string} message - 错误信息
+     * @param {string} containerId - 容器ID
+     */
+    showError(message, containerId = 'iframe-previews') {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `
+                <div class="text-center text-red-500 py-12">
+                    <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                    <p class="text-lg">${message}</p>
+                </div>
+            `;
+        }
+    }
+
+    /**
+     * 显示加载状态
+     * @param {string} containerId - 容器ID
+     */
+    showLoading(containerId = 'iframe-previews') {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `
+                <div class="text-center text-gray-500 py-12">
+                    <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                    <p>正在加载文章...</p>
+                </div>
+            `;
+        }
+    }
+}
+
+// 创建全局实例
+window.articleManager = new ArticleManager();
+
+/* ===== shared/pagination.js ===== */
+/**
+ * 分页相关的共享逻辑
+ * 提供分页控制、页面跳转等通用功能
+ */
+
+class PaginationManager {
+    constructor(articlesPerPage = 20) {
+        this.currentPage = 1;
+        this.articlesPerPage = articlesPerPage;
+        this.totalArticles = 0;
+        this.articles = [];
+        this.onPageChange = null; // 页面变化回调函数
+    }
+
+    /**
+     * 初始化分页
+     * @param {Array} articles - 文章数组
+     * @param {Function} onPageChange - 页面变化回调函数
+     */
+    initialize(articles, onPageChange) {
+        this.articles = articles;
+        this.totalArticles = articles.length;
+        this.currentPage = 1;
+        this.onPageChange = onPageChange;
+        
+        this.bindEvents();
+        this.updateControls();
+        
+        // 显示或隐藏分页控制
+        this.togglePaginationControls();
+    }
+
+    /**
+     * 获取当前页的文章
+     */
+    getCurrentPageArticles() {
+        const startIndex = (this.currentPage - 1) * this.articlesPerPage;
+        const endIndex = startIndex + this.articlesPerPage;
+        return this.articles.slice(startIndex, endIndex);
+    }
+
+    /**
+     * 跳转到指定页面
+     * @param {number} page - 页码
+     */
+    goToPage(page) {
+        const totalPages = this.getTotalPages();
+        if (page < 1 || page > totalPages) return;
+        
+        this.currentPage = page;
+        this.updateControls();
+        
+        if (this.onPageChange) {
+            this.onPageChange(this.getCurrentPageArticles(), this.currentPage);
+        }
+    }
+
+    /**
+     * 获取总页数
+     */
+    getTotalPages() {
+        return Math.ceil(this.totalArticles / this.articlesPerPage);
+    }
+
+    /**
+     * 更新分页控制UI
+     */
+    updateControls() {
+        const totalPages = this.getTotalPages();
+        
+        // 更新页面信息
+        const pageInfo = document.getElementById('page-info');
+        if (pageInfo) {
+            pageInfo.textContent = `第 ${this.currentPage} 页，共 ${totalPages} 页`;
+        }
+
+        // 获取所有按钮
+        const firstBtn = document.getElementById('first-page');
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+        const lastBtn = document.getElementById('last-page');
+
+        // 更新按钮状态
+        const isFirstPage = this.currentPage === 1;
+        const isLastPage = this.currentPage === totalPages;
+
+        if (firstBtn) {
+            firstBtn.disabled = isFirstPage;
+            firstBtn.className = isFirstPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+        }
+        
+        if (prevBtn) {
+            prevBtn.disabled = isFirstPage;
+            prevBtn.className = isFirstPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+        }
+        
+        if (nextBtn) {
+            nextBtn.disabled = isLastPage;
+            nextBtn.className = isLastPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+        }
+        
+        if (lastBtn) {
+            lastBtn.disabled = isLastPage;
+            lastBtn.className = isLastPage ? 'pagination-btn pagination-btn-disabled' : 'pagination-btn';
+        }
+    }
+
+    /**
+     * 绑定分页按钮事件
+     */
+    bindEvents() {
+        // 避免重复绑定
+        if (this.eventsBound) return;
+        this.eventsBound = true;
+
+        const firstBtn = document.getElementById('first-page');
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+        const lastBtn = document.getElementById('last-page');
+
+        if (firstBtn) {
+            firstBtn.addEventListener('click', () => {
+                this.goToPage(1);
+                this.scrollToArticlesSection();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                this.goToPage(this.currentPage - 1);
+                this.scrollToArticlesSection();
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                this.goToPage(this.currentPage + 1);
+                this.scrollToArticlesSection();
+            });
+        }
+
+        if (lastBtn) {
+            lastBtn.addEventListener('click', () => {
+                this.goToPage(this.getTotalPages());
+                this.scrollToArticlesSection();
+            });
+        }
+    }
+
+    /**
+     * 显示或隐藏分页控制
+     */
+    togglePaginationControls() {
+        const paginationControls = document.getElementById('pagination-controls');
+        if (paginationControls) {
+            if (this.totalArticles > this.articlesPerPage) {
+                paginationControls.style.display = 'block';
+            } else {
+                paginationControls.style.display = 'none';
+            }
+        }
+    }
+
+    /**
+     * 滚动到文章区域
+     */
+    scrollToArticlesSection() {
+        const articlesSection = document.getElementById('iframe-previews');
+        if (articlesSection) {
+            const offsetTop = articlesSection.offsetTop - 100;
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    /**
+     * 重置分页（当文章列表变化时）
+     * @param {Array} newArticles - 新的文章数组
+     */
+    reset(newArticles) {
+        this.articles = newArticles;
+        this.totalArticles = newArticles.length;
+        this.currentPage = 1;
+        this.updateControls();
+        this.togglePaginationControls();
+    }
+}
+
+// 创建全局实例
+window.paginationManager = new PaginationManager();
+
+/* ===== shared/category-page.js ===== */
+/**
+ * 分类页面基类
+ * 提供通用的标签过滤、分页等功能
+ * 可被个人、工作、学习、社交、家庭等页面继承
+ */
+
+class CategoryPageBase {
+    constructor(config = {}) {
+        this.selectedTags = new Set();
+        this.allTags = {};
+        this.tagLayers = {};
+        this.ALL_TAG = '全部';
+        this.articlesPerPage = config.articlesPerPage || 20;
+
+        // 分类配置
+        this.categoryTag = config.categoryTag; // 第一级标签，如 '个人', '工作', '学习' 等
+        this.categoryName = config.categoryName; // 显示名称，如 '个人', '工作', '学习' 等
+        this.loggerPrefix = config.loggerPrefix || 'CATEGORY'; // 日志前缀
+
+        // 页面标题配置
+        this.defaultTitle = config.defaultTitle || `${this.categoryName}相关文章`;
+        this.filteredTitle = config.filteredTitle || `筛选后的${this.categoryName}文章`;
+    }
+
+    /**
+     * 初始化分类页面
+     */
+    async initialize() {
+        try {
+            // 加载文章数据（分类页面不显示置顶文章）
+            await articleManager.loadArticlesData('../../cache/metadata.json', '../../');
+
+            // 预过滤出分类相关文章
+            this.preFilterCategoryArticles();
+
+            // 获取分类相关标签统计信息
+            const { allTags, tagLayers } = this.getCategoryTags();
+            this.allTags = allTags;
+            this.tagLayers = tagLayers;
+
+            // 生成标签云
+            this.generateTagCloud();
+
+            // 初始化分页管理器
+            paginationManager.articlesPerPage = this.articlesPerPage;
+            paginationManager.initialize(
+                articleManager.filteredArticles,
+                (articles) => this.onPageChange(articles)
+            );
+
+            // 显示第一页文章
+            this.displayCurrentPage();
+
+            // 绑定事件
+            this.bindEvents();
+
+            Logger.info(this.loggerPrefix, `${this.categoryName}页面初始化完成`);
+
+        } catch (error) {
+            Logger.error(this.loggerPrefix, `${this.categoryName}页面初始化失败:`, error);
+            articleManager.showError('加载失败，请刷新页面重试');
+        }
+    }
+
+    /**
+     * 预过滤出分类相关文章
+     * 基于标签层级：第一级标签匹配指定分类的文章
+     */
+    preFilterCategoryArticles() {
+        const categoryArticles = articleManager.regularArticles.filter(article => {
+            // 检查第一级标签（索引0）是否为指定分类
+            return article.tags.length > 0 && article.tags[0] === this.categoryTag;
+        });
+
+        // 更新过滤后的文章列表
+        articleManager.filteredArticles = categoryArticles;
+
+        Logger.info(this.loggerPrefix, `过滤出 ${categoryArticles.length} 篇${this.categoryName}相关文章`);
+    }
+
+    /**
+     * 获取分类相关标签及其统计信息
+     */
+    getCategoryTags() {
+        const allTags = {};
+        const tagLayers = {};
+
+        // 统计分类相关文章的所有标签
+        articleManager.filteredArticles.forEach(article => {
+            article.tags.forEach((tag, idx) => {
+                allTags[tag] = (allTags[tag] || 0) + 1;
+                if (!(tag in tagLayers) || idx < tagLayers[tag]) {
+                    tagLayers[tag] = idx; // 记录最上层出现的位置
+                }
+            });
+        });
+
+        return { allTags, tagLayers };
+    }
+
+    /**
+     * 生成标签云
+     */
+    generateTagCloud() {
+        const tagCloudContainer = document.getElementById('tag-cloud');
+        if (!tagCloudContainer) return;
+
+        // 构建带层级信息的数组
+        const tagsArray = Object.entries(this.allTags).map(([tag, count]) => ({
+            tag,
+            count,
+            layer: this.tagLayers[tag] ?? 999
+        }));
+
+        // 在最前面插入虚拟"全部"标签
+        tagsArray.unshift({
+            tag: this.ALL_TAG,
+            count: articleManager.filteredArticles.length,
+            layer: -1
+        });
+
+        // 按层级（小值优先）-> 频次排序
+        tagsArray.sort((a, b) => {
+            if (a.layer !== b.layer) return a.layer - b.layer;
+            return b.count - a.count;
+        });
+
+        const tagElements = tagsArray.map(({ tag, count }) => {
+            const activeClass = (this.selectedTags.size === 0 && tag === this.ALL_TAG) ||
+                this.selectedTags.has(tag) ? 'active' : '';
+            return `<span class="tag-item tag-size-3 ${activeClass}"
+                         data-tag="${tag}"
+                         data-count="${count}">
+                        ${tag} (${count})
+                    </span>`;
+        }).join('');
+
+        tagCloudContainer.innerHTML = tagElements;
+
+        // 检查是否需要显示折叠/展开按钮
+        this.checkTagCloudHeight();
+    }
+
+    /**
+     * 检查标签云高度，决定是否显示折叠/展开按钮
+     */
+    checkTagCloudHeight() {
+        const tagCloudContainer = document.getElementById('tag-cloud');
+        const toggleBtn = document.getElementById('toggle-tag-cloud-btn');
+
+        if (!tagCloudContainer || !toggleBtn) return;
+
+        // 临时移除折叠状态，获取真实高度
+        const wasCollapsed = tagCloudContainer.classList.contains('collapsed');
+        tagCloudContainer.classList.remove('collapsed');
+
+        // 获取标签云的实际高度
+        const actualHeight = tagCloudContainer.scrollHeight;
+        const collapsedHeight = 116; // 7.25rem ≈ 116px (对应CSS中的max-height)
+
+        // 如果实际高度小于等于折叠高度，隐藏按钮并移除折叠状态
+        if (actualHeight <= collapsedHeight) {
+            toggleBtn.style.display = 'none';
+            // 不需要折叠状态
+        } else {
+            toggleBtn.style.display = 'inline-block';
+            // 恢复折叠状态
+            if (wasCollapsed) {
+                tagCloudContainer.classList.add('collapsed');
+            }
+        }
+    }
+
+    /**
+     * 应用标签过滤
+     */
+    applyFilters() {
+        // 先获取分类相关文章（基于第一级标签）
+        const categoryArticles = articleManager.regularArticles.filter(article => {
+            return article.tags.length > 0 && article.tags[0] === this.categoryTag;
+        });
+
+        // 在分类相关文章中进一步按选中标签过滤
+        if (this.selectedTags.size === 0) {
+            articleManager.filteredArticles = categoryArticles;
+        } else {
+            articleManager.filteredArticles = categoryArticles.filter(article => {
+                return article.tags.some(tag => this.selectedTags.has(tag));
+            });
+        }
+
+        // 更新标题
+        const articlesTitle = document.getElementById('articles-title');
+        if (articlesTitle) {
+            articlesTitle.textContent = this.selectedTags.size > 0 ? this.filteredTitle : this.defaultTitle;
+        }
+
+        // 重置分页并显示
+        paginationManager.reset(articleManager.filteredArticles);
+        this.displayCurrentPage();
+    }
+
+    /**
+     * 显示当前页文章
+     */
+    displayCurrentPage() {
+        const articles = paginationManager.getCurrentPageArticles();
+        articleManager.displayArticles(articles);
+        this.updateArticlesCount();
+    }
+
+    /**
+     * 更新文章数量显示
+     */
+    updateArticlesCount() {
+        const countElement = document.getElementById('articles-count');
+        if (!countElement) return;
+
+        const totalCount = articleManager.filteredArticles.length;
+        const currentPageArticles = paginationManager.getCurrentPageArticles().length;
+
+        if (totalCount === 0) {
+            countElement.textContent = '';
+            return;
+        }
+
+        if (totalCount > this.articlesPerPage) {
+            const startIndex = (paginationManager.currentPage - 1) * this.articlesPerPage + 1;
+            const endIndex = Math.min(startIndex + currentPageArticles - 1, totalCount);
+            countElement.textContent = `(第 ${startIndex}-${endIndex} 篇，共 ${totalCount} 篇)`;
+        } else {
+            countElement.textContent = `(${totalCount} 篇)`;
+        }
+    }
+
+    /**
+     * 页面变化回调
+     * @param {Array} articles - 当前页文章
+     */
+    onPageChange(articles) {
+        articleManager.displayArticles(articles);
+        this.updateArticlesCount();
+    }
+
+    /**
+     * 处理标签点击
+     * @param {string} tag - 点击的标签
+     */
+    handleTagClick(tag) {
+        if (tag === this.ALL_TAG) {
+            this.selectedTags.clear();
+        } else {
+            if (this.selectedTags.has(tag)) {
+                this.selectedTags.delete(tag);
+            } else {
+                this.selectedTags.add(tag);
+            }
+        }
+
+        // 重新渲染标签云和应用过滤
+        this.generateTagCloud();
+        this.applyFilters();
+    }
+
+    /**
+     * 绑定事件
+     */
+    bindEvents() {
+        // 标签点击事件
+        const tagCloud = document.getElementById('tag-cloud');
+        if (tagCloud) {
+            tagCloud.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tag-item')) {
+                    const tag = e.target.dataset.tag;
+                    this.handleTagClick(tag);
+                }
+            });
+        }
+    }
+}
+
+/**
+ * 通用分类页面初始化函数
+ * @param {Object} config - 分类配置
+ */
+function initializeCategoryPage(config) {
+    // 等待依赖加载完成后再初始化
+    const waitForDependencies = (retryCount = 0) => {
+        if (typeof articleManager !== 'undefined' &&
+            typeof paginationManager !== 'undefined' &&
+            typeof Logger !== 'undefined') {
+            // 依赖已加载，开始初始化
+            Logger.info(config.loggerPrefix, `开始初始化${config.categoryName}页面`);
+            const categoryPage = new CategoryPageBase(config);
+            categoryPage.initialize();
+        } else if (retryCount < 20) {
+            // 继续等待
+            setTimeout(() => {
+                waitForDependencies(retryCount + 1);
+            }, 100);
+        } else {
+            console.error(`依赖加载超时，${config.categoryName}页面初始化失败`);
+        }
+    };
+    waitForDependencies();
+}
+
+// 导出到全局
+window.CategoryPageBase = CategoryPageBase;
+window.initializeCategoryPage = initializeCategoryPage;
+/* ===== layout.js ===== */
+// 布局组件 - header、footer、article-meta等页面布局相关组件
+
+// =============== 移动端菜单管理器 ===============
+let mobileMenuManager = null;
+
+function createMobileMenuManager() {
+    // 如果已存在管理器，先销毁
+    if (mobileMenuManager) {
+        mobileMenuManager.destroy();
+        mobileMenuManager = null;
+    }
+
+    mobileMenuManager = {
+        isToggling: false,
+        isInitialized: false,
+        outsideClickHandler: null,
+        buttonClickHandler: null,
+
+        init: function() {
+            if (this.isInitialized) return;
+
+            const button = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+
+            if (!button || !menu) return;
+
+            Logger.info('MENU', '初始化移动端菜单管理器');
+
+            // 重置状态
+            menu.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
+            this.isToggling = false;
+
+            // 创建绑定的事件处理函数
+            this.buttonClickHandler = (event) => {
+                Logger.debug('MENU', '菜单按钮被点击');
+                event.preventDefault();
+                event.stopPropagation();
+                event.stopImmediatePropagation();
+
+                if (this.isToggling) {
+                    Logger.debug('MENU', '菜单正在切换中，忽略点击');
+                    return;
+                }
+
+                this.toggle();
+            };
+
+            this.outsideClickHandler = (event) => {
+                const button = document.getElementById('mobile-menu-button');
+                const menu = document.getElementById('mobile-menu');
+
+                if (!button || !menu) return;
+
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                if (isExpanded && !menu.contains(event.target) && !button.contains(event.target)) {
+                    // 点击外部区域，关闭菜单
+                    this.close();
+                }
+            };
+
+            // 绑定事件
+            button.addEventListener('click', this.buttonClickHandler, { capture: true });
+
+            // 菜单容器点击事件 - 阻止冒泡
+            const container = menu.querySelector('.mobile-menu-container');
+            if (container) {
+                container.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                });
+            }
+
+            // 菜单项点击事件
+            const links = menu.querySelectorAll('.mobile-nav-link');
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    // 菜单项被点击，关闭菜单
+                    this.close();
+                });
+            });
+
+            // 延迟绑定外部点击事件，避免立即触发
+            setTimeout(() => {
+                document.addEventListener('click', this.outsideClickHandler);
+            }, 100);
+
+            this.isInitialized = true;
+            Logger.success('MENU', '移动端菜单管理器初始化完成');
+        },
+
+        toggle: function() {
+            const button = document.getElementById('mobile-menu-button');
+            if (!button) return;
+
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            Logger.debug('MENU', `切换菜单状态: ${isExpanded ? '关闭' : '打开'}`);
+
+            if (isExpanded) {
+                this.close();
+            } else {
+                this.open();
+            }
+        },
+
+        open: function() {
+            if (this.isToggling) return;
+            this.isToggling = true;
+
+            // 打开菜单
+            const button = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const container = menu.querySelector('.mobile-menu-container');
+
+            menu.classList.remove('hidden');
+            button.setAttribute('aria-expanded', 'true');
+
+            if (container) {
+                container.style.animation = 'mobileMenuSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                setTimeout(() => {
+                    this.isToggling = false;
+                    // 菜单打开完成
+                }, 350);
+            } else {
+                this.isToggling = false;
+            }
+        },
+
+        close: function() {
+            if (this.isToggling) return;
+            this.isToggling = true;
+
+            // 关闭菜单
+            const button = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const container = menu.querySelector('.mobile-menu-container');
+
+            button.setAttribute('aria-expanded', 'false');
+
+            if (container) {
+                container.style.animation = 'mobileMenuSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    container.style.animation = '';
+                    this.isToggling = false;
+                    // 菜单关闭完成
+                }, 250);
+            } else {
+                menu.classList.add('hidden');
+                this.isToggling = false;
+            }
+        },
+
+        destroy: function() {
+            Logger.debug('MENU', '销毁移动端菜单管理器');
+
+            if (this.outsideClickHandler) {
+                document.removeEventListener('click', this.outsideClickHandler);
+                this.outsideClickHandler = null;
+            }
+
+            if (this.buttonClickHandler) {
+                const button = document.getElementById('mobile-menu-button');
+                if (button) {
+                    button.removeEventListener('click', this.buttonClickHandler, { capture: true });
+                }
+                this.buttonClickHandler = null;
+            }
+
+            this.isInitialized = false;
+            this.isToggling = false;
+        }
+    };
+
+    return mobileMenuManager;
+}
+
+// =============== Header组件 ===============
+
+// 渲染Header组件 - 根据页面类型显示不同内容
+function renderHeader(currentPath, isRoot) {
+    const isIndexPage = currentPath.endsWith('index.html') || currentPath === '' || currentPath === '/';
+    const isArticlePage = currentPath.includes('docs/') && !isIndexPage;
+
+    if (isIndexPage) {
+        // 所有index页面显示导航栏
+        renderHomepageHeader(currentPath, isRoot);
+    } else if (isArticlePage) {
+        // 文章页面显示元信息
+        renderArticleHeader(currentPath, isRoot);
+    } else {
+        Logger.warn('HEADER', '未知页面类型，跳过header渲染');
+        return;
+    }
+}
+
+// 渲染导航栏 - 用于所有index页面（首页、分类页等）
+function renderHomepageHeader(currentPath, isRoot) {
+    const headerElement = document.querySelector('[data-component="header"]');
+    if (!headerElement) return;
+    headerElement.classList.add('header-component', 'glass-effect');
+
+    // 路径处理逻辑改进，避免重复路径
+    let prefix = '';
+    if (!isRoot) {
+        // 计算当前页面到网站根目录的路径
+        const pathSegments = currentPath.split('/');
+        // 如果是docs下的子目录，需要回退两级
+        if (pathSegments.length >= 2 && pathSegments[0] === 'docs') {
+            prefix = '../../';
+        } else if (pathSegments.length >= 1) {
+            // 其他情况回退一级
+            prefix = '../';
+        }
+    }
+
+    // 设置导航激活状态 - 改进逻辑，确保所有页面都能正确高亮
+    let homeClass = '';
+    let tagsClass = '';
+    let personalClass = '';
+    let familyClass = '';
+    let workClass = '';
+    let socialClass = '';
+    let learnClass = '';
+
+    // 判断当前页面类型并设置对应的激活状态
+    if (currentPath.includes('docs/tags/')) {
+        tagsClass = 'active';
+    } else if (currentPath.includes('docs/personal/')) {
+        personalClass = 'active';
+    } else if (currentPath.includes('docs/family/')) {
+        familyClass = 'active';
+    } else if (currentPath.includes('docs/work/')) {
+        workClass = 'active';
+    } else if (currentPath.includes('docs/social/')) {
+        socialClass = 'active';
+    } else if (currentPath.includes('docs/learn/')) {
+        learnClass = 'active';
+    } else {
+        // 默认情况下（首页或其他页面）激活首页
+        homeClass = 'active';
+    }
+
+    // 调试输出
+    Logger.debug('HEADER', `当前路径: ${currentPath}, 前缀: ${prefix}`);
+    Logger.debug('HEADER', '导航激活状态', {
+        home: homeClass,
+        tags: tagsClass,
+        personal: personalClass,
+        family: familyClass,
+        work: workClass,
+        social: socialClass,
+        learn: learnClass
+    });
+
+    // 生成绝对路径的链接
+    const homeLink = `${prefix}index.html`;
+    const tagsLink = `${prefix}docs/tags/index.html`;
+    const personalLink = `${prefix}docs/personal/index.html`;
+    const familyLink = `${prefix}docs/family/index.html`;
+    const workLink = `${prefix}docs/work/index.html`;
+    const socialLink = `${prefix}docs/social/index.html`;
+    const learnLink = `${prefix}docs/learn/index.html`;
+
+    headerElement.innerHTML = `
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="${homeLink}" class="flex items-center hover:opacity-90 transition-opacity">
+                        <img src="${prefix}images/logo.png" 
+                             srcset="${prefix}images/logo/logo-40.png 1x, ${prefix}images/logo/logo-80.png 2x"
+                             alt="JerryBob Logo" 
+                             loading="eager"
+                             decoding="async"
+                             onerror="this.onerror=null; this.src='${prefix}images/logo/logo-original.png'; this.srcset='';"
+                             class="h-10 w-10 rounded-full mr-3 flex-shrink-0">
+                        <span class="text-xl sm:text-2xl font-bold text-primary">JerryBob</span>
+                    </a>
+                </div>
+
+                <!-- 桌面端导航 -->
+                <nav class="hidden md:flex flex-nowrap items-center gap-6 whitespace-nowrap overflow-x-auto hide-scrollbar">
+                    <a href="${homeLink}" class="nav-link ${homeClass}">首页</a>
+                    <a href="${tagsLink}" class="nav-link ${tagsClass}">标签</a>
+                    <a href="${personalLink}" class="nav-link ${personalClass}">个人</a>
+                    <a href="${learnLink}" class="nav-link ${learnClass}">学习</a>
+                    <a href="${workLink}" class="nav-link ${workClass}">工作</a>
+                    <a href="${socialLink}" class="nav-link ${socialClass}">社交</a>
+                    <a href="${familyLink}" class="nav-link ${familyClass}">家庭</a>
+                </nav>
+
+                <!-- 移动端菜单按钮 -->
+                <button class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                        id="mobile-menu-button" aria-expanded="false">
+                    <span class="sr-only">打开主菜单</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+
+        </div>
+    `;
+
+    // 创建独立的移动端菜单（在header外部）
+    createIndependentMobileMenu(homeLink, tagsLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, tagsClass, personalClass, familyClass, workClass, socialClass, learnClass);
+
+    // 添加移动端菜单交互
+    setTimeout(() => {
+        const manager = createMobileMenuManager();
+        manager.init();
+    }, 100);
+
+    Logger.success('HEADER', '导航栏渲染完成 (index页面)');
+}
+
+// 创建独立的移动端菜单
+function createIndependentMobileMenu(homeLink, tagsLink, personalLink, familyLink, workLink, socialLink, learnLink, homeClass, tagsClass, personalClass, familyClass, workClass, socialClass, learnClass) {
+    // 检查是否已存在移动端菜单
+    let existingMenu = document.getElementById('mobile-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+
+    // 创建独立的移动端菜单
+    const mobileMenu = document.createElement('div');
+    mobileMenu.id = 'mobile-menu';
+    mobileMenu.className = 'md:hidden hidden fixed top-16 left-0 right-0 z-50';
+
+    mobileMenu.innerHTML = `
+        <div class="mobile-menu-container glass-effect mx-4 mt-2 mb-4 rounded-2xl shadow-lg overflow-hidden">
+            <div class="px-4 py-3 space-y-1">
+                <a href="${homeLink}" class="mobile-nav-link ${homeClass}">首页</a>
+                <a href="${tagsLink}" class="mobile-nav-link ${tagsClass}">标签</a>
+                <a href="${personalLink}" class="mobile-nav-link ${personalClass}">个人</a>
+                <a href="${learnLink}" class="mobile-nav-link ${learnClass}">学习</a>
+                <a href="${workLink}" class="mobile-nav-link ${workClass}">工作</a>
+                <a href="${socialLink}" class="mobile-nav-link ${socialClass}">社交</a>
+                <a href="${familyLink}" class="mobile-nav-link ${familyClass}">家庭</a>
+            </div>
+        </div>
+    `;
+
+    // 插入到body中
+    document.body.appendChild(mobileMenu);
+}
+
+// 渲染文章页面Header - 显示元信息
+function renderArticleHeader(currentPath, isRoot) {
+    // 检查是否已存在header组件
+    let headerElement = document.querySelector('[data-component="header"]');
+
+    // 如果不存在，创建新的header组件
+    if (!headerElement) {
+        Logger.info('HEADER', '创建新的header组件');
+
+        // 确保body已设置为文章页面类型，并强制设置padding
+        const bodyElement = document.body;
+        if (bodyElement) {
+            if (!bodyElement.hasAttribute('data-page-type')) {
+                bodyElement.setAttribute('data-page-type', 'article');
+                Logger.debug('LAYOUT', '设置页面类型为文章页面');
+            }
+            // 强制设置padding，覆盖文章页面内部的样式
+            bodyElement.style.paddingTop = '64px';
+            bodyElement.style.transition = 'none'; // 禁用过渡效果
+            Logger.debug('LAYOUT', '强制设置body padding-top，确保header不会遮挡内容');
+        }
+
+        headerElement = document.createElement('div');
+        headerElement.setAttribute('data-component', 'header');
+        headerElement.className = 'header-component glass-effect';
+        headerElement.style.opacity = '0'; // 初始设置为透明，等待透明度渐入动画
+
+        // 插入到body的开头
+        if (bodyElement) {
+            bodyElement.insertBefore(headerElement, bodyElement.firstChild);
+            Logger.success('HEADER', 'Header组件已插入到body开头');
+        } else {
+            Logger.warn('HEADER', '无法找到body元素');
+            return;
+        }
+    } else {
+        headerElement.classList.add('header-component', 'glass-effect');
+    }
+
+    // 路径处理逻辑
+    let prefix = '';
+    if (!isRoot) {
+        const pathSegments = currentPath.split('/');
+        if (pathSegments.length >= 2 && pathSegments[0] === 'docs') {
+            prefix = '../../';
+        } else if (pathSegments.length >= 1) {
+            prefix = '../';
+        }
+    }
+
+    // 获取元数据
+    const metadata = getPageMetadata(currentPath);
+
+    // 设置默认值
+    const today = new Date();
+    const dateStr = metadata?.date || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    let tags = metadata && metadata.tags ? metadata.tags : ['博客'];
+
+    Logger.debug('DATA', `使用的日期: ${dateStr}, 标签: ${tags.join(', ')}`);
+
+    // 使用共享的标签构建函数 - 自动检测背景色
+    let tagsHtml = '';
+    if (typeof buildTagsHtml === 'function') {
+        tagsHtml = buildTagsHtml(tags, {
+            padding: 'px-3 py-1',
+            withAnimation: true
+            // 不指定 isDarkBackground，让函数自动检测
+        });
+    } else {
+        // 回退到原始方法 - 也使用自动检测
+        const isPageDark = typeof window.isDarkBackground === 'function' ? window.isDarkBackground() : true;
+        const tagColors = getTagColorsForTags ? getTagColorsForTags(tags, isPageDark) : tags.map(tag => getTagColorClass(tag, isPageDark));
+        tagsHtml = tags.map((tag, index) => {
+            const colorClass = tagColors[index] || getTagColorClass(tag, isPageDark);
+            return `<span class="inline-block ${colorClass} hover:opacity-80 transition-all duration-200 hover:scale-105 rounded-full px-3 py-1 text-xs font-medium border tag-animate" style="animation-delay: ${index * 0.1}s">${tag}</span>`;
+        }).join('');
+    }
+
+    // 根据背景色动态调整毛玻璃效果 - 同步检测
+    let isDark = true; // 默认深色
+    if (typeof window.isDarkBackground === 'function') {
+        try {
+            isDark = window.isDarkBackground();
+            Logger.debug('STYLE', `同步检测背景色: ${isDark ? '深色背景' : '浅色背景'}`);
+
+            if (!isDark) {
+                // 浅色背景：添加light-bg类
+                headerElement.classList.add('light-bg');
+                Logger.debug('STYLE', '应用浅色背景毛玻璃效果');
+            } else {
+                // 深色背景：移除light-bg类（使用默认深色效果）
+                headerElement.classList.remove('light-bg');
+                Logger.debug('STYLE', '应用深色背景毛玻璃效果');
+            }
+        } catch (error) {
+            Logger.error('STYLE', `背景色检测出错: ${error.message}`);
+        }
+    }
+
+    // 添加header样式
+    const headerStyles = `
+        <style>
+            .header-component {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100vw !important;
+                margin: 0 !important;
+                z-index: 1001 !important;
+                opacity: 0;
+                animation: fadeInOnly 0.3s ease-out forwards 0.1s; /* 快速透明度渐入，不干扰文章动画 */
+                will-change: opacity; /* 只优化opacity */
+            }
+
+            @keyframes fadeInOnly {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* 增强的毛玻璃效果 - 默认深色背景优化 */
+            .header-component.glass-effect {
+                background: rgba(40, 40, 40, 0.7) !important; /* 通用深灰色，适配各种深色背景 */
+                backdrop-filter: blur(30px) saturate(180%) !important;
+                -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+                border: none !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important; /* 更轻的阴影 */
+            }
+
+            /* 浅色背景的毛玻璃效果 - 更透明，适配白色和浅色背景 */
+            .header-component.light-bg.glass-effect {
+                background: rgba(255, 255, 255, 0.75) !important; /* 白色透明背景，更通用 */
+                backdrop-filter: blur(20px) saturate(120%) !important;
+                -webkit-backdrop-filter: blur(20px) saturate(120%) !important;
+                border: none !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important; /* 极淡的阴影，几乎不可见 */
+            }
+
+            /* 浅色背景下的日期文字 - 更深的颜色确保可读性 */
+            .header-component.light-bg .ultra-light-date {
+                color: rgba(55, 65, 81, 0.85) !important; /* 更深的灰色 */
+            }
+            .header-component.light-bg .ultra-light-date a {
+                color: rgba(55, 65, 81, 0.85) !important;
+            }
+            .header-component.light-bg .ultra-light-date a:hover {
+                color: rgba(55, 65, 81, 1) !important;
+            }
+
+            /* 深色背景下的日期文字 - 更白更清晰 */
+            .ultra-light-date {
+                color: rgba(255, 255, 255, 0.9) !important;
+            }
+            .ultra-light-date a {
+                color: rgba(255, 255, 255, 0.9) !important;
+            }
+            .ultra-light-date a:hover {
+                color: rgba(255, 255, 255, 1) !important;
+            }
+
+            .tag-animate {
+                opacity: 0;
+                transform: translateY(10px);
+                animation: tagFadeIn 0.4s ease-out forwards;
+            }
+
+            @keyframes tagFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    `;
+
+    // 使用导航栏的布局结构，但填入元信息内容
+    headerElement.innerHTML = `
+        ${headerStyles}
+        <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center ultra-light-date">
+                <a href="/docs/timeline/" class="home-link" title="返回"
+                   onclick="if (document.referrer && document.referrer.includes(location.host)) { history.back(); return false; }">
+                    <svg width="14" height="14" class="mr-2 inline-block h-3.5 w-3.5 align-[-0.125em]" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 8H1M6 3 1 8l5 5"/></svg>
+                </a>
+                <span class="text-sm font-medium">${dateStr}</span>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
+                ${tagsHtml}
+            </div>
+        </div>
+    `;
+
+    Logger.success('HEADER', 'Header组件（包含元信息）渲染完成');
+}
+
+// =============== Footer组件 ===============
+
+// 渲染Footer组件
+function renderFooter(isRoot) {
+    const footerElement = document.querySelector('[data-component="footer"]');
+    if (!footerElement) return;
+    if (isRoot) {
+        footerElement.innerHTML = `
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 flex justify-between items-center">
+                <p class="footer-text">&copy; 2025 <span class="text-primary font-semibold">JerryBob</span>. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="https://web.okjike.com/u/8d6e830c-4da1-4753-ab41-020b91002aec" target="_blank" class="social-button bg-yellow-400">
+                        <span class="social-button-text">J</span>
+                    </a>
+                    <a href="https://x.com/JerryBobAI" target="_blank" class="social-button bg-black">
+                        <span class="social-button-text">X</span>
+                    </a>
+                </div>
+            </div>
+        `;
+        footerElement.style.display = 'block';
+        footerElement.style.opacity = '1';
+        Logger.debug('FOOTER', '首页显示footer');
+    } else {
+        footerElement.style.display = 'none';
+        Logger.debug('FOOTER', '非首页不显示footer');
+    }
+}
+
+// =============== Article Meta组件 ===============
+
+// 渲染文章元信息组件 - 功能已移到header中
+function renderArticleMeta(currentPath, metadataCache) {
+    // 功能已移到 renderHeader 中，不再单独渲染
+    Logger.debug('LAYOUT', '元信息功能已移到header组件中');
+    return;
+
+    // 检查是否已存在元信息组件
+    let articleMetaElement = document.querySelector('[data-component="article-meta"]');
+
+    // 如果不存在，创建新的元信息组件
+    if (!articleMetaElement) {
+        Logger.debug('LAYOUT', '创建新的元信息组件');
+        articleMetaElement = document.createElement('div');
+        articleMetaElement.setAttribute('data-component', 'article-meta');
+        articleMetaElement.className = 'article-meta-component';
+
+        // 插入到body开头
+        const bodyElement = document.body;
+
+        if (bodyElement) {
+            bodyElement.insertBefore(articleMetaElement, bodyElement.firstChild);
+            Logger.debug('LAYOUT', '元信息组件已插入到body开头');
+        } else {
+            Logger.warn('LAYOUT', '无法找到 body 元素');
+            return;
+        }
+    }
+
+    // 获取元数据
+    const metadata = getPageMetadata(currentPath);
+
+    // 设置默认值
+    const today = new Date();
+    const dateStr = metadata?.date || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+    let tags = metadata && metadata.tags ? metadata.tags : ['博客'];
+
+    Logger.debug('DATA', `使用的日期: ${dateStr}, 标签: ${tags.join(', ')}`);
+
+    // 使用共享的标签构建函数
+    let tagsHtml = '';
+    if (typeof buildTagsHtml === 'function') {
+        tagsHtml = buildTagsHtml(tags, {
+            padding: 'px-3 py-1',
+            withAnimation: true
+        });
+    } else {
+        Logger.warn('TAG', 'buildTagsHtml 函数未定义，回退到原始方法');
+        // 回退到原始方法
+        const tagColors = getTagColorsForTags ? getTagColorsForTags(tags) : tags.map(tag => getTagColorClass(tag));
+        tagsHtml = tags.map((tag, index) => {
+            const colorClass = tagColors[index] || getTagColorClass(tag);
+            return `<span class="inline-block ${colorClass} hover:opacity-80 transition-all duration-200 hover:scale-105 rounded-full px-3 py-1 text-xs font-medium border tag-animate" style="animation-delay: ${index * 0.1}s">${tag}</span>`;
+        }).join('');
+    }
+
+    const homeLink = "../../index.html";
+    if (currentPath.split('/').length <= 2) {
+        homeLink = "../index.html";
+    }
+
+    // 简化样式
+    const styles = `
+        <style>
+            /* 移除重复的CSS，使用CSS文件中的统一样式 */
+            .ultra-light-date {
+                color: rgba(107, 114, 128, 0.7);
+            }
+            .ultra-light-date a {
+                color: rgba(107, 114, 128, 0.7);
+            }
+            .ultra-light-date a:hover {
+                color: rgba(107, 114, 128, 0.9);
+            }
+            /* 简化的 meta 信息样式 */
+            .article-meta-component {
+                position: sticky !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100vw !important;
+                margin: 0 !important;
+                z-index: 1000 !important;
+                opacity: 0;
+                transform: translateY(-20px);
+                animation: slideInFromTop 0.6s ease-out forwards;
+            }
+
+            @keyframes slideInFromTop {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .article-meta-blur {
+                transition: all 0.3s ease;
+            }
+
+            .tag-animate {
+                opacity: 0;
+                transform: translateY(10px);
+                animation: tagFadeIn 0.4s ease-out forwards;
+            }
+
+            @keyframes tagFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    `;
+
+    // 渲染 HTML 内容 - 保持原有的简洁设计
+    articleMetaElement.innerHTML = `
+        ${styles}
+        <div class="w-full article-meta-blur glass-effect">
+            <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+                <div class="flex items-center ultra-light-date">
+                    <a href="/docs/timeline/" class="home-link" title="返回"
+                   onclick="if (document.referrer && document.referrer.includes(location.host)) { history.back(); return false; }">
+                        <svg width="14" height="14" class="mr-2 inline-block h-3.5 w-3.5 align-[-0.125em]" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 8H1M6 3 1 8l5 5"/></svg>
+                    </a>
+                    <span class="text-sm font-medium">${dateStr}</span>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-2 md:mt-0">
+                    ${tagsHtml}
+                </div>
+            </div>
+        </div>
+    `;
+
+    Logger.success('LAYOUT', '元信息组件渲染完成');
+}
+
+// =============== 布局系统初始化 ===============
+
+// 初始化所有布局组件
+async function initializeLayout() {
+    Logger.info('LAYOUT', '开始初始化布局组件');
+
+    // 等待核心系统初始化完成
+    const coreState = await initializeCore();
+    if (!coreState) {
+        // 如果是在iframe中，coreState为null，这是正常的
+        if (window.self !== window.top) {
+            Logger.debug('LAYOUT', '在iframe中，跳过布局初始化');
+            return;
+        } else {
+            Logger.error('LAYOUT', '核心系统初始化失败');
+            return;
+        }
+    }
+
+    const { currentPath, isRoot } = coreState;
+    const metadataCache = getMetadataCache();
+
+    // 渲染各布局组件
+    renderHeader(currentPath, isRoot);
+    renderFooter(isRoot);
+
+    Logger.success('LAYOUT', '布局组件初始化完成');
+}
+
+// 导出函数供其他模块使用
+if (typeof window !== 'undefined') {
+    window.renderHeader = renderHeader;
+    window.renderHomepageHeader = renderHomepageHeader;
+    window.renderArticleHeader = renderArticleHeader;
+    window.createIndependentMobileMenu = createIndependentMobileMenu;
+    window.renderFooter = renderFooter;
+    window.renderArticleMeta = renderArticleMeta;
+    window.initializeLayout = initializeLayout;
+}
+
+// 多种方式确保布局组件能够正确加载
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeLayout);
+} else if (document.readyState === 'interactive') {
+    // DOM 已加载但资源可能还在加载
+    setTimeout(initializeLayout, 100);
+} else {
+    // 页面完全加载
+    initializeLayout();
+}
+
+// 备用方案：如果上面的都没执行，在 window.onload 时执行
+window.addEventListener('load', function() {
+    // 检查是否在iframe中
+    if (window.self !== window.top) {
+        return; // 在iframe中不执行备用方案
+    }
+
+    // 检查是否已经初始化过
+    if (window.top.systemInitialized) {
+        return; // 已经初始化过，不需要备用方案
+    }
+
+    if (!document.querySelector('[data-component="article-meta"]')) {
+        Logger.info('LAYOUT', '备用方案：在 window.onload 时初始化布局');
+        initializeLayout();
+    }
+});
+
+/* ===== widgets.js ===== */
+// UI小部件 - iframe预览卡片、文章卡片等可复用组件
+
+// =============== iframe预览组件 ===============
+
+// 定义一个全局函数，用于初始化iframe预览组件
+function initializeIframePreviews() {
+    // 初始化置顶文章预览
+    initializePreviews('[data-component="pinned-previews"]', true);
+
+    // 初始化普通文章预览
+    initializePreviews('[data-component="iframe-previews"]', false);
+}
+
+// 通用预览初始化函数
+function initializePreviews(selector, isPinned) {
+    // 查找预览容器
+    const previewsContainer = document.querySelector(selector);
+    if (!previewsContainer) return;
+
+    // 获取预览数据属性
+    const previewsDataStr = previewsContainer.getAttribute('data-previews');
+    if (!previewsDataStr) return;
+
+    try {
+        // 解析预览数据
+        const previews = JSON.parse(previewsDataStr);
+        if (!Array.isArray(previews) || previews.length === 0) return;
+
+        // 所有页面都使用与header一致的双重padding策略：container + px-4 sm:px-6 lg:px-8
+        let containerClass = 'container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 mt-12';
+        let itemClass = 'preview-item hover:scale-105 transition-transform duration-300 ease-in-out';
+        let iframeClass = 'preview-iframe w-full';
+        let iframeHeight = '400px';
+
+        // 置顶文章的特殊处理 - 移除宽度限制，保持与普通文章一致的宽度
+        if (isPinned) {
+            itemClass = 'preview-item pinned-preview-item hover:scale-105 transition-transform duration-300 ease-in-out';
+            iframeClass = 'preview-iframe w-full pinned-iframe';
+            iframeHeight = '450px';
+        }
+
+        // 创建容器元素
+        const containerWrapper = document.createElement('div');
+        containerWrapper.className = 'mb-12';
+
+        // 创建响应式容器
+        const responsiveContainer = document.createElement('div');
+        responsiveContainer.className = containerClass;
+
+        // 生成预览HTML
+        previews.forEach(preview => {
+            const { title, link, src } = preview;
+
+            const previewItem = document.createElement('div');
+            previewItem.className = itemClass;
+
+            // 添加置顶标记（如果是置顶文章）
+            let pinnedBadge = '';
+            if (isPinned) {
+                pinnedBadge = `
+                    <div class="pinned-badge" style="
+                        position: absolute !important;
+                        top: 16px !important;
+                        right: 16px !important;
+                        background: rgba(234, 230, 225, 0.95) !important;
+                        color: #3D3D3D !important;
+                        padding: 0.375rem 0.75rem !important;
+                        border-radius: 1rem !important;
+                        font-size: 0.75rem !important;
+                        font-weight: 500 !important;
+                        z-index: 10 !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        gap: 0.25rem !important;
+                        box-shadow: 0 2px 8px rgba(61, 61, 61, 0.1) !important;
+                        backdrop-filter: blur(8px) !important;
+                        border: 1px solid rgba(104, 144, 148, 0.15) !important;
+                        transition: all 0.3s ease !important;
+                        font-family: 'Noto Sans SC', sans-serif !important;
+                    ">
+                        <i class="fas fa-star" style="
+                            font-size: 0.625rem !important;
+                            color: #689094 !important;
+                        "></i>
+                        <span>置顶</span>
+                    </div>
+                `;
+            }
+
+            // 构建日期和标签信息
+            const metaInfo = buildPreviewMetaInfo(preview);
+
+            previewItem.innerHTML = `
+                <div class="preview-card">
+                    <a href="${link}" target="_blank" title="${title || '查看完整内容'}" class="block w-full relative">
+                        ${pinnedBadge}
+                        <iframe
+                            src="${src}"
+                            class="${iframeClass}"
+                            style="height: ${iframeHeight};"
+                            frameborder="0"
+                            scrolling="no"
+                            title="${title || '内容预览'}">
+                        </iframe>
+                        ${metaInfo}
+                    </a>
+                </div>
+            `;
+
+            responsiveContainer.appendChild(previewItem);
+        });
+
+        // 将响应式容器添加到外层容器
+        containerWrapper.appendChild(responsiveContainer);
+
+        // 清空并设置容器的内容
+        previewsContainer.innerHTML = '';
+        previewsContainer.appendChild(containerWrapper);
+
+        // 延迟检测背景色并应用深色模式样式
+        setTimeout(() => {
+            applyDarkModeToPreviewCards();
+        }, 100);
+
+        Logger.info('WIDGET', `${isPinned ? '置顶' : '普通'}文章预览组件初始化完成，共加载 ${previews.length} 篇文章`);
+
+    } catch (error) {
+        Logger.error('WIDGET', '解析预览数据时出错', error);
+    }
+}
+
+// 构建预览meta信息
+function buildPreviewMetaInfo(preview) {
+    const date = preview.date || '';
+    const tags = preview.tags || ['博客'];
+
+    // 格式化日期
+    let formattedDate = '';
+    if (date) {
+        try {
+            const dateObj = new Date(date);
+            formattedDate = dateObj.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        } catch (e) {
+            formattedDate = date;
+        }
+    }
+
+    // 使用共享的标签构建函数 - 自动检测背景色
+    const tagsHtml = buildTagsHtml(tags, {
+        padding: 'px-2 py-1',
+        withAnimation: false  // iframe预览不需要动画
+        // 不指定 isDarkBackground，让函数自动检测
+    });
+
+    return `
+        <div class="preview-meta">
+            <div class="flex items-center justify-between text-sm px-3 py-2">
+                <div class="flex items-center gap-2">
+                    <i class="far fa-calendar-alt" style="color: #9CA3AF;"></i>
+                    <span class="font-context font-normal" style="color: #9CA3AF;">${formattedDate}</span>
+                </div>
+                <div class="flex flex-wrap gap-1 items-center">
+                    ${tagsHtml}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// =============== 深色模式适配 ===============
+
+// 为预览卡片应用深色模式样式
+function applyDarkModeToPreviewCards() {
+    // 获取所有预览卡片
+    const previewCards = document.querySelectorAll('.preview-card');
+    if (previewCards.length === 0) {
+        Logger.debug('WIDGET', '未找到预览卡片，跳过深色模式适配');
+        return;
+    }
+
+    previewCards.forEach((card, index) => {
+        try {
+            // 获取iframe元素
+            const iframe = card.querySelector('iframe');
+            if (!iframe) return;
+
+            // 等待iframe加载完成后检测背景色
+            const checkIframeBackground = () => {
+                try {
+                    // 尝试访问iframe内容（可能受跨域限制）
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframeDoc && iframeDoc.body) {
+                        const iframeStyle = iframe.contentWindow.getComputedStyle(iframeDoc.body);
+                        const bgColor = iframeStyle.backgroundColor;
+
+                        Logger.debug('WIDGET', `检测iframe ${index + 1} 背景色: ${bgColor}`);
+
+                        // 简单的深色检测：检查背景色的亮度
+                        const isIframeDark = isBackgroundDark(bgColor);
+
+                        if (isIframeDark) {
+                            card.classList.add('dark-bg');
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用深色模式样式`);
+                        } else {
+                            card.classList.remove('dark-bg');
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用浅色模式样式`);
+                        }
+                    }
+                } catch (e) {
+                    // 跨域限制，使用全局背景检测作为备选
+                    Logger.debug('WIDGET', `iframe ${index + 1} 跨域限制，使用全局背景检测`);
+
+                    // 使用全局背景检测
+                    if (typeof window.isDarkBackground === 'function') {
+                        const isDark = window.isDarkBackground();
+                        if (isDark) {
+                            card.classList.add('dark-bg');
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用深色模式样式（全局检测）`);
+                        } else {
+                            card.classList.remove('dark-bg');
+                            Logger.debug('WIDGET', `为预览卡片 ${index + 1} 应用浅色模式样式（全局检测）`);
+                        }
+                    }
+                }
+            };
+
+            // 等待iframe加载完成
+            iframe.addEventListener('load', checkIframeBackground);
+            // 备用方案：延迟检测
+            setTimeout(checkIframeBackground, 500);
+
+        } catch (e) {
+            Logger.warn('WIDGET', `预览卡片 ${index + 1} 背景检测失败`, e);
+        }
+    });
+
+    Logger.debug('WIDGET', '预览卡片深色模式适配完成');
+}
+
+// 简单的背景色深浅检测函数
+function isBackgroundDark(bgColor) {
+    if (!bgColor || bgColor === 'transparent' || bgColor === 'rgba(0, 0, 0, 0)') {
+        return false;
+    }
+
+    // 解析RGB值
+    const rgb = bgColor.match(/\d+/g);
+    if (!rgb || rgb.length < 3) return false;
+
+    // 计算亮度 (使用相对亮度公式)
+    const r = parseInt(rgb[0]);
+    const g = parseInt(rgb[1]);
+    const b = parseInt(rgb[2]);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // 亮度小于128认为是深色
+    return brightness < 128;
+}
+
+// =============== 文章卡片组件 ===============
+
+// 初始化文章卡片组件
+function initializeArticleCards() {
+    // 查找文章卡片容器
+    const articleCardsContainer = document.querySelector('[data-component="article-cards"]');
+    if (!articleCardsContainer) return;
+
+    // 获取文章数据属性
+    const articlesDataStr = articleCardsContainer.getAttribute('data-articles');
+    if (!articlesDataStr) return;
+
+    try {
+        // 解析文章数据
+        const articles = JSON.parse(articlesDataStr);
+        if (!Array.isArray(articles) || articles.length === 0) return;
+
+        // 生成文章卡片HTML
+        const cardsHTML = articles.map(article => {
+            const {
+                title,
+                subtitle,
+                description,
+                link,
+                gradient = 'from-blue-600 to-indigo-700',
+                textColor = 'text-blue-600'
+            } = article;
+
+            return `
+                <a href="${link}" class="article-card">
+                    <div class="article-card-inner bg-white">
+                        <div class="p-6 bg-gradient-to-r ${gradient} text-white">
+                            <h3 class="text-xl font-bold mb-2">${title}</h3>
+                            <p class="opacity-90">${subtitle}</p>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-700">${description}</p>
+                            <div class="mt-4 flex justify-end">
+                                <span class="inline-flex items-center ${textColor}">
+                                    阅读全文 <i class="fas fa-arrow-right ml-2"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }).join('');
+
+        // 设置容器的HTML
+        articleCardsContainer.innerHTML = cardsHTML;
+
+        // 添加网格布局类
+        articleCardsContainer.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-8', 'mb-16');
+
+        Logger.info('WIDGET', `文章卡片组件初始化完成，共加载 ${articles.length} 篇文章`);
+
+    } catch (error) {
+        Logger.error('WIDGET', 'Error parsing article data', error);
+    }
+}
+
+// =============== 小部件系统初始化 ===============
+
+// 初始化所有小部件
+function initializeWidgets() {
+    Logger.info('WIDGET', '开始初始化UI小部件');
+
+    // 初始化iframe预览组件
+    initializeIframePreviews();
+
+    // 初始化文章卡片组件
+    initializeArticleCards();
+
+    Logger.success('WIDGET', 'UI小部件初始化完成');
+}
+
+// 导出函数供其他模块使用
+if (typeof window !== 'undefined') {
+    window.initializeIframePreviews = initializeIframePreviews;
+    window.initializeArticleCards = initializeArticleCards;
+    window.initializeWidgets = initializeWidgets;
+    window.buildPreviewMetaInfo = buildPreviewMetaInfo;
+    window.applyDarkModeToPreviewCards = applyDarkModeToPreviewCards;
+    window.isBackgroundDark = isBackgroundDark;
+}
+
+// 页面加载完成后自动初始化小部件
+document.addEventListener('DOMContentLoaded', function() {
+    // 如果页面上已经有预设的data-previews或data-articles属性，则直接初始化
+    const previewsContainer = document.querySelector('[data-component="iframe-previews"]');
+    const pinnedContainer = document.querySelector('[data-component="pinned-previews"]');
+    const articleCardsContainer = document.querySelector('[data-component="article-cards"]');
+
+    if ((previewsContainer && previewsContainer.getAttribute('data-previews')) ||
+        (pinnedContainer && pinnedContainer.getAttribute('data-previews')) ||
+        (articleCardsContainer && articleCardsContainer.getAttribute('data-articles'))) {
+        initializeWidgets();
+    }
+    // 否则，等待其他脚本加载数据后再初始化
+});
+
+</script>
 </body></html>
