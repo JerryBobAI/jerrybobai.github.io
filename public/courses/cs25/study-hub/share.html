@@ -59,6 +59,7 @@ a{color:var(--accent)}
 .nav-toc{padding:2px 0 8px 10px;margin:2px 0 6px 16px;border-left:2px solid var(--line)}
 .nav-sub{display:block;padding:4px 8px;border-radius:7px;font-size:12px;color:var(--ink2);text-decoration:none;line-height:1.45}
 .nav-sub:hover{background:var(--bg2);color:var(--accent)}
+.nav-sub.cur{background:var(--bg2);color:var(--accent);font-weight:600}
 .nav-sub .tno{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:10px;margin-right:5px;color:var(--accent)}
 @media(max-width:880px){.nav-toc{display:none}}
 .sidebar{position:sticky;top:63px;height:calc(100vh - 63px);overflow-y:auto;
@@ -764,6 +765,19 @@ function render(){
   refreshReviewBadge();
 }
 function show(slug, seekTo){
+function updateTocCur(){
+  const box = document.querySelector('.nav-toc:not([hidden])');
+  if (!box) return;
+  const slug = box.id.replace('nav-toc-', '');
+  const view = document.getElementById('view-' + slug);
+  if (!view || view.hidden) return;
+  const line = (document.querySelector('.topbar')?.offsetHeight || 76) + 40;
+  const hs = [...(view ? [...view.querySelectorAll('.markdown h2[id],.markdown h3[id]')] : [])].filter(h=>{const t=h.textContent.trim();return !!t&&!/^\[\d+:\d+(?::\d+)?\]$/.test(t)});
+  let cur = 0;
+  hs.forEach((h, i) => { if (h.getBoundingClientRect().top <= line) cur = i; });
+  box.querySelectorAll('.nav-sub').forEach(a => a.classList.toggle('cur', Number(a.dataset.hi) === cur));
+}
+window.addEventListener('scroll', updateTocCur, {passive: true});
 function renderToc(slug){
   document.querySelectorAll('.nav-toc').forEach(n => { n.hidden = n.id !== 'nav-toc-' + slug; });
   if (slug === 'papers') return;   // 论文清单 python 预填,展开即可
@@ -824,7 +838,7 @@ function renderToc(slug){
   });
   if (seekTo != null && v) seekVideo(v, seekTo);
   if (slug === 'review') startReview();   // entering the view starts a session
-  renderToc(slug);
+  renderToc(slug); updateTocCur();
   window.scrollTo({top:0});
 }
 function seekVideo(v, t){
