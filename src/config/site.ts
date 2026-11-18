@@ -9,6 +9,7 @@ export const SITE = {
 
 export const NAV_ITEMS = [
   { href: '/blog/', label: '文章' },
+  { href: '/tags/', label: '标签' },
   { href: '/ideas/', label: '点子' },
   { href: '/projects/', label: '项目' },
   { href: '/tools/', label: '工具' },
