@@ -3,6 +3,7 @@ title: 站点重建说明
 pubDate: 2026-11-18
 tags: [站点公告]
 summary: 本站已重建为 Astro 静态架构：加载更快、内容管线更干净，并补齐面向 AI 搜索的 GEO 基建。368 篇旧文章全部保留在原路径。
+cover: /covers/blog-site-rebuild.jpg
 ---
 本站完成了一次彻底重建：
 

@@ -58,7 +58,7 @@ const jsonLd = [
     <nav
       id="toc"
       aria-label="文章目录"
-      class="fixed top-28 hidden w-44 xl:block"
+      class="fixed top-28 hidden w-44 opacity-0 transition-opacity duration-200 xl:block"
       style="left: calc(50% + 26rem);"
     >
       <p class="text-xs font-medium uppercase tracking-wider text-slate-400">目录</p>
@@ -117,6 +117,15 @@ const jsonLd = [
   // （不用 IntersectionObserver：scroll-margin 让锚点跳转停在带区之外，高亮无法跟随）
   const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
   if (links.length > 0) {
+    // 文章标题区可见时隐藏悬浮目录（含过滚橡皮筋把标题拉回视口的瞬间），滚出后淡入
+    const toc = document.getElementById('toc');
+    const h1 = document.querySelector('article h1');
+    if (toc && h1) {
+      new IntersectionObserver(([e]) => {
+        toc.classList.toggle('opacity-0', e.isIntersecting);
+        toc.classList.toggle('pointer-events-none', e.isIntersecting);
+      }).observe(h1);
+    }
     const targets = links
       .map((a) => document.getElementById(a.dataset.tocLink ?? ''))
       .filter((el): el is HTMLElement => el !== null);
