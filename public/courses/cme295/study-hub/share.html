@@ -54,7 +54,7 @@ a{color:var(--accent)}
   padding:3px 11px;color:var(--ink2);display:inline-flex;align-items:center;gap:5px}
 .badge svg{flex-shrink:0}
 .layout{display:grid;grid-template-columns:var(--side-w,264px) 1fr;max-width:calc(1280px + var(--side-w,264px) - 264px);margin:0 auto}
-.side-handle{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:5}
+.side-handle{position:fixed;top:0;width:7px;height:100vh;cursor:col-resize;z-index:5}
 .side-handle:hover,.side-handle.dragging{background:linear-gradient(90deg,transparent,var(--accent))}
 .nav-toc{padding:2px 0 8px 10px;margin:2px 0 6px 16px;border-left:2px solid var(--line)}
 .nav-sub{display:block;padding:4px 8px;border-radius:7px;font-size:12px;color:var(--ink2);text-decoration:none;line-height:1.45}
@@ -801,6 +801,9 @@ function renderToc(slug){
   const KEY = doneKey.replace(/-done$/, '-sidew');
   const saved = parseInt(localStorage.getItem(KEY) || '', 10);
   if (saved >= 180 && saved <= 560) document.documentElement.style.setProperty('--side-w', saved + 'px');
+  const syncHandle = () => { h.style.left = (sb.getBoundingClientRect().right - 3) + 'px'; };
+  syncHandle();
+  window.addEventListener('resize', syncHandle);
   let sx = 0, sw = 0;
   h.addEventListener('pointerdown', e => {
     sx = e.clientX;
@@ -814,6 +817,7 @@ function renderToc(slug){
     if (!h.classList.contains('dragging')) return;
     const w = Math.min(560, Math.max(180, Math.round(sw + e.clientX - sx)));
     document.documentElement.style.setProperty('--side-w', w + 'px');
+    syncHandle();
   });
   const finish = e => {
     if (!h.classList.contains('dragging')) return;
