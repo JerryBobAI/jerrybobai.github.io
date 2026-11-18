@@ -794,7 +794,7 @@ function bind(){
     e.preventDefault();
     const slug = a.closest('.nav-toc').id.replace('nav-toc-', '');
     const view = document.getElementById('view-' + slug);
-    const el = a.dataset.hi != null ? (view && view.querySelectorAll('.markdown h2[id],.markdown h3[id]').filter(h=>{const t=h.textContent.trim();return !!t&&!/^\[\d+:\d+(?::\d+)?\]$/.test(t)})[Number(a.dataset.hi)])
+    const el = a.dataset.hi != null ? (view && [...view.querySelectorAll('.markdown h2[id],.markdown h3[id]')].filter(h=>{const t=h.textContent.trim();return !!t&&!/^\[\d+:\d+(?::\d+)?\]$/.test(t)})[Number(a.dataset.hi)])
                                      : document.getElementById(a.dataset.target);
     if (el) window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth'});
   });
