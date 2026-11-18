@@ -35,6 +35,10 @@ const projects = defineCollection({
     link: z.string().optional(),
     status: z.enum(['进行中', '已上线', '维护中', '已归档']).default('进行中'),
     cover: z.string().optional(),
+    // 卡片统计行（如「30 关」「每关 3 目标」）
+    stats: z.array(z.string()).default([]),
+    // 卡片 CTA 文案（默认「查看详情」）
+    cta: z.string().optional(),
   }),
 });
 

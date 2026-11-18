@@ -7,4 +7,6 @@ kind: 实战项目
 status: 进行中
 cover: /covers/die-daily.png
 link: /die-daily/
+stats: [30 关, 每关 3 目标, 进度本地留存, 每日模式 WIP]
+cta: 进入游戏
 ---
