@@ -1,0 +1,12 @@
+lectures/
+readings/
+repos/
+site/
+.claude/
+preview-*.png
+.DS_Store
+audio/*.wav
+audio/*.m4a
+audio/parts/
+audio/raw/
+audio/scripts/

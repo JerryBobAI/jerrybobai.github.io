@@ -1,0 +1,6423 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:05.560 --> 00:00:11.960
+Hello, everyone, and welcome
+to lecture 2 of CME 295.
+
+00:00:11.960 --> 00:00:14.200
+So today is an exciting
+day because we'll
+
+00:00:14.200 --> 00:00:17.120
+be talking about
+large language models,
+
+00:00:17.120 --> 00:00:20.480
+and in particular, how they
+relate to the transformer
+
+00:00:20.480 --> 00:00:24.640
+architecture that
+we saw last lecture.
+
+00:00:24.640 --> 00:00:29.100
+But before we start, we will
+recap what we saw last time.
+
+00:00:29.100 --> 00:00:31.040
+And we will do that
+at every lecture
+
+00:00:31.040 --> 00:00:34.800
+to see how this connect
+to what we'll see today.
+
+00:00:34.800 --> 00:00:39.160
+So if you remember, last
+time we were wondering
+
+00:00:39.160 --> 00:00:42.280
+how models could process text.
+
+00:00:42.280 --> 00:00:44.600
+So models, they
+don't understand text
+
+00:00:44.600 --> 00:00:47.160
+as it is, they
+understand numbers.
+
+00:00:47.160 --> 00:00:49.680
+So if you remember, one
+thing that we looked at
+
+00:00:49.680 --> 00:00:55.800
+was, first of all, how to divide
+our text into indivisible units.
+
+00:00:55.800 --> 00:00:58.800
+And this process is
+called tokenization.
+
+00:00:58.800 --> 00:01:02.780
+And we saw a few kinds of
+tokenization algorithms.
+
+00:01:02.780 --> 00:01:06.300
+And we said that the most
+common tokenization algorithm
+
+00:01:06.300 --> 00:01:10.500
+these days is the subword
+tokenization because it
+
+00:01:10.500 --> 00:01:14.780
+has a nice trade-off
+between the vocabulary
+
+00:01:14.780 --> 00:01:18.100
+that it was building
+and the sequence length
+
+00:01:18.100 --> 00:01:21.540
+that input text would have.
+
+00:01:21.540 --> 00:01:23.980
+But this was not
+it, because once you
+
+00:01:23.980 --> 00:01:27.180
+divide a text into
+tokens, the next step
+
+00:01:27.180 --> 00:01:29.500
+is to compute embeddings.
+
+00:01:29.500 --> 00:01:33.300
+So if you remember, we
+saw Word2Vec as a way
+
+00:01:33.300 --> 00:01:37.700
+to compute embeddings, but they
+were not aware of the context.
+
+00:01:37.700 --> 00:01:41.900
+So then we talked about another
+class of models that were very
+
+00:01:41.900 --> 00:01:45.580
+popular in the 2010s
+which is called RNNs,
+
+00:01:45.580 --> 00:01:48.380
+Recurrent Neural Networks.
+
+00:01:48.380 --> 00:01:51.580
+And then what we said
+was, OK, the problem
+
+00:01:51.580 --> 00:01:55.140
+is that you tend
+to forget things
+
+00:01:55.140 --> 00:01:57.680
+that happened in the past.
+
+00:01:57.680 --> 00:02:03.480
+And so in 2017, there was this
+landmark paper called "Attention
+
+00:02:03.480 --> 00:02:07.360
+is All You Need" that
+actually dropped the principle
+
+00:02:07.360 --> 00:02:13.920
+of recurrence and had direct
+connections in order to compute
+
+00:02:13.920 --> 00:02:17.160
+meaningful
+representation of tokens.
+
+00:02:17.160 --> 00:02:21.140
+So we spent a little bit
+of time on some notations.
+
+00:02:21.140 --> 00:02:26.100
+So if you remember, we
+had query, key, and value,
+
+00:02:26.100 --> 00:02:28.820
+which were useful
+for us to know OK,
+
+00:02:28.820 --> 00:02:35.080
+given a token, what other tokens
+should that token attend to?
+
+00:02:35.080 --> 00:02:39.480
+And we saw that the architecture
+that the authors introduced
+
+00:02:39.480 --> 00:02:44.640
+was called the transformer, and
+that the attention operation
+
+00:02:44.640 --> 00:02:47.000
+that is here is
+actually something
+
+00:02:47.000 --> 00:02:50.240
+that is happening in
+the multi-head attention
+
+00:02:50.240 --> 00:02:56.580
+layers, which are present in
+the encoder and the decoder.
+
+00:02:56.580 --> 00:03:01.380
+And what we said was that this
+architecture was first developed
+
+00:03:01.380 --> 00:03:04.000
+in the context of
+machine translation,
+
+00:03:04.000 --> 00:03:11.460
+in that in that context, that
+model performed really well.
+
+00:03:11.460 --> 00:03:14.780
+So a natural question
+is, well, given
+
+00:03:14.780 --> 00:03:16.980
+that this architecture
+performs really, really
+
+00:03:16.980 --> 00:03:21.580
+well for machine translation,
+can we actually propagate
+
+00:03:21.580 --> 00:03:25.460
+the gains to other domains?
+
+00:03:25.460 --> 00:03:29.720
+And so this is what we're
+going to see in the first part.
+
+00:03:29.720 --> 00:03:32.980
+So we're going to talk
+about different variants
+
+00:03:32.980 --> 00:03:36.300
+of the original transformer
+architecture, such
+
+00:03:36.300 --> 00:03:41.980
+that it was possible to
+apply it to other domains.
+
+00:03:41.980 --> 00:03:44.860
+So if you recall,
+the transformer
+
+00:03:44.860 --> 00:03:47.700
+is composed of two main parts.
+
+00:03:47.700 --> 00:03:50.580
+The first part is
+the encoder, which is
+
+00:03:50.580 --> 00:03:53.100
+on the left side of the figure.
+
+00:03:53.100 --> 00:03:59.760
+And the goal of the encoder is
+to compute meaningful embeddings
+
+00:03:59.760 --> 00:04:02.160
+of your input text.
+
+00:04:02.160 --> 00:04:04.620
+So here it was in the context
+of machine translation.
+
+00:04:04.620 --> 00:04:07.920
+So input text, you can think
+of it as the source text
+
+00:04:07.920 --> 00:04:10.200
+that you want to translate.
+
+00:04:10.200 --> 00:04:12.880
+And then you had a second
+part on the right side, which
+
+00:04:12.880 --> 00:04:20.959
+is the decoder whose goal is to
+actually generate the output one
+
+00:04:20.959 --> 00:04:25.120
+token at a time in an
+autoregressive manner.
+
+00:04:25.120 --> 00:04:28.840
+And the way it does
+that is by attending
+
+00:04:28.840 --> 00:04:33.080
+to all the tokens that
+it has predicted so far,
+
+00:04:33.080 --> 00:04:37.640
+plus the meaningful
+embeddings from the input that
+
+00:04:37.640 --> 00:04:41.160
+were computed by the encoder.
+
+00:04:41.160 --> 00:04:43.600
+So that was the
+original transformer.
+
+00:04:43.600 --> 00:04:46.980
+So a very natural
+question is, well,
+
+00:04:46.980 --> 00:04:50.740
+how about we try to play
+with the architecture?
+
+00:04:50.740 --> 00:04:53.130
+We try to see,
+well, what happens
+
+00:04:53.130 --> 00:04:56.170
+if we only take the encoder?
+
+00:04:56.170 --> 00:04:58.810
+Let's suppose we only
+take the encoder.
+
+00:04:58.810 --> 00:05:01.690
+Can we do something with it?
+
+00:05:01.690 --> 00:05:05.690
+Well, this is something that
+people have tried shortly
+
+00:05:05.690 --> 00:05:10.970
+after the transformer came out
+in 2018 with a very important
+
+00:05:10.970 --> 00:05:16.210
+paper called BERT, which stands
+for Bidirectional Encoder
+
+00:05:16.210 --> 00:05:19.330
+Representation
+from Transformers.
+
+00:05:19.330 --> 00:05:28.290
+So the idea is to take only the
+encoder parts of the transformer
+
+00:05:28.290 --> 00:05:34.370
+and to leverage the multi-head
+attention layer which
+
+00:05:34.370 --> 00:05:39.810
+performs the self-attention
+operation over all of its inputs
+
+00:05:39.810 --> 00:05:47.810
+in order to have all the input
+tokens attend to one another.
+
+00:05:47.810 --> 00:05:50.190
+And so here what
+they say is, well,
+
+00:05:50.190 --> 00:05:54.730
+if you do that and if you
+introduce a special token--
+
+00:05:54.730 --> 00:05:58.070
+and here the special token is
+on the left side of the sequence
+
+00:05:58.070 --> 00:06:00.430
+called CLS token.
+
+00:06:00.430 --> 00:06:02.750
+So it's a classification token.
+
+00:06:02.750 --> 00:06:09.030
+Then what you could do is
+rely on the meaningful encoded
+
+00:06:09.030 --> 00:06:13.470
+embedding corresponding
+to the CLS token
+
+00:06:13.470 --> 00:06:18.390
+in order to know what the
+input sequence is about.
+
+00:06:18.390 --> 00:06:22.190
+Because here the encoder
+is doing self-attention
+
+00:06:22.190 --> 00:06:24.150
+across all the tokens.
+
+00:06:24.150 --> 00:06:27.230
+So the meaningful
+embedding that is
+
+00:06:27.230 --> 00:06:31.670
+corresponding to the
+CLS token has interacted
+
+00:06:31.670 --> 00:06:35.190
+with all other tokens.
+
+00:06:35.190 --> 00:06:42.990
+So the idea of BERT is to say if
+you have some input text, then
+
+00:06:42.990 --> 00:06:47.470
+what I can do is to compute
+a meaningful representation
+
+00:06:47.470 --> 00:06:51.850
+of the input and then
+use that representation
+
+00:06:51.850 --> 00:06:54.290
+for some downstream task.
+
+00:06:54.290 --> 00:06:57.850
+So at the time we had something
+like sentiment extraction
+
+00:06:57.850 --> 00:06:59.630
+as a very common task.
+
+00:06:59.630 --> 00:07:01.790
+So is this tweet
+positive or not?
+
+00:07:01.790 --> 00:07:03.850
+So typically what
+you could do is
+
+00:07:03.850 --> 00:07:07.010
+take that embedding and then
+project that onto that class.
+
+00:07:07.010 --> 00:07:08.370
+That's one example.
+
+00:07:08.370 --> 00:07:12.590
+But then you could also take
+the embedding of a given token,
+
+00:07:12.590 --> 00:07:15.370
+and then try to determine
+if that token is
+
+00:07:15.370 --> 00:07:19.070
+corresponding to let's say,
+a noun or a verb and so on.
+
+00:07:22.250 --> 00:07:24.570
+So that's the idea.
+
+00:07:24.570 --> 00:07:27.690
+Does that make sense?
+
+00:07:27.690 --> 00:07:29.130
+OK, great.
+
+00:07:29.130 --> 00:07:32.010
+So now the next question
+is, how do you actually
+
+00:07:32.010 --> 00:07:34.130
+train such a model?
+
+00:07:34.130 --> 00:07:37.490
+Well, this is done in two steps.
+
+00:07:37.490 --> 00:07:41.050
+The first step is
+called pre-training.
+
+00:07:41.050 --> 00:07:48.090
+And the goal is for the model to
+understand how text is written.
+
+00:07:48.090 --> 00:07:52.310
+And so the way you do that
+is with some proxy tasks.
+
+00:07:52.310 --> 00:07:56.710
+So if you remember, a proxy task
+is a task that is not really
+
+00:07:56.710 --> 00:07:59.470
+your end goal, but
+that is a way for you
+
+00:07:59.470 --> 00:08:01.690
+to achieve something else.
+
+00:08:01.690 --> 00:08:03.670
+And for us, this
+something else here
+
+00:08:03.670 --> 00:08:08.110
+is the model understanding text.
+
+00:08:08.110 --> 00:08:12.670
+So the first proxy task that
+this model is trained with
+
+00:08:12.670 --> 00:08:18.430
+is called Masked
+Language Modeling, MLM.
+
+00:08:18.430 --> 00:08:24.710
+And the idea is for
+the model to understand
+
+00:08:24.710 --> 00:08:27.070
+how tokens are placed.
+
+00:08:27.070 --> 00:08:31.790
+And so the way it does that
+is it takes the input text
+
+00:08:31.790 --> 00:08:34.750
+and then it corrupts
+it randomly.
+
+00:08:34.750 --> 00:08:39.429
+So the way it does that is it
+selects some tokens at random
+
+00:08:39.429 --> 00:08:41.372
+and it masks them.
+
+00:08:41.372 --> 00:08:42.830
+So actually, it's
+a little bit more
+
+00:08:42.830 --> 00:08:45.170
+complicated to not
+introduce biases.
+
+00:08:45.170 --> 00:08:51.170
+But the idea is to corrupt
+the input sequence.
+
+00:08:51.170 --> 00:08:57.250
+And the idea is to compute
+meaningful embeddings
+
+00:08:57.250 --> 00:09:02.130
+corresponding to these
+corrupted tokens in order
+
+00:09:02.130 --> 00:09:08.610
+to try to predict the actual
+token-- the original token
+
+00:09:08.610 --> 00:09:13.090
+that was before that
+corrupted token.
+
+00:09:13.090 --> 00:09:14.930
+So here, as an
+example, if we take
+
+00:09:14.930 --> 00:09:17.730
+a cute Teddy Bear is reading and
+let's suppose we corrupt cute
+
+00:09:17.730 --> 00:09:21.290
+and we corrupt
+reading, then here
+
+00:09:21.290 --> 00:09:24.930
+our goal could be to compute
+a meaningful representation
+
+00:09:24.930 --> 00:09:28.450
+of these corrupted
+tokens and try
+
+00:09:28.450 --> 00:09:32.930
+to predict the original token.
+
+00:09:32.930 --> 00:09:35.170
+And what the model
+will try to do
+
+00:09:35.170 --> 00:09:39.690
+is to rely on all the
+attention mechanism
+
+00:09:39.690 --> 00:09:44.170
+that it is performing
+in order to deduce
+
+00:09:44.170 --> 00:09:50.470
+what the original token
+was from the context.
+
+00:09:50.470 --> 00:09:53.230
+So in other words,
+the model is trying
+
+00:09:53.230 --> 00:09:55.750
+to understand how
+language is written
+
+00:09:55.750 --> 00:09:57.590
+and trying to
+understand, what are
+
+00:09:57.590 --> 00:10:02.550
+the words that are likely to be
+in places where it is missing?
+
+00:10:02.550 --> 00:10:04.370
+So that's the first proxy task.
+
+00:10:04.370 --> 00:10:08.310
+And then there's a second proxy
+task that the authors of BERT
+
+00:10:08.310 --> 00:10:12.950
+have also tried, which is
+called NSP, which stands
+
+00:10:12.950 --> 00:10:16.790
+for Next Sentence Prediction.
+
+00:10:16.790 --> 00:10:19.230
+And the idea behind
+that proxy task
+
+00:10:19.230 --> 00:10:28.070
+is for the model to understand
+how sentences are sequenced.
+
+00:10:28.070 --> 00:10:33.350
+So here the idea is to have two
+different sentences as input,
+
+00:10:33.350 --> 00:10:37.150
+and to ask the model if
+these two sentences actually
+
+00:10:37.150 --> 00:10:40.030
+follow each other or not.
+
+00:10:40.030 --> 00:10:43.330
+So in practice, what you would
+do is you would look at a text
+
+00:10:43.330 --> 00:10:47.310
+and take two sentences that
+follow each other, put it there,
+
+00:10:47.310 --> 00:10:49.890
+try to predict that it
+is indeed following.
+
+00:10:49.890 --> 00:10:52.630
+And then two sentences that
+are not following each other
+
+00:10:52.630 --> 00:10:55.770
+and you need to predict
+that it's not following.
+
+00:10:55.770 --> 00:10:59.370
+And the idea behind
+that proxy task
+
+00:10:59.370 --> 00:11:04.870
+is for the model to learn text,
+not at the sentence level,
+
+00:11:04.870 --> 00:11:08.010
+but at the document level.
+
+00:11:08.010 --> 00:11:11.290
+So that's the first step
+called pre-training.
+
+00:11:11.290 --> 00:11:15.610
+And at that stage, you're
+assuming that your model now
+
+00:11:15.610 --> 00:11:19.090
+understands text much better.
+
+00:11:19.090 --> 00:11:22.640
+And that's why you can
+go to the second task.
+
+00:11:22.640 --> 00:11:25.290
+So by the way, the first task
+is typically very expensive,
+
+00:11:25.290 --> 00:11:29.930
+something you do just once,
+train on a bunch of data.
+
+00:11:29.930 --> 00:11:33.370
+And then the second
+task is for you
+
+00:11:33.370 --> 00:11:36.570
+to adapt your model to
+the specific use case
+
+00:11:36.570 --> 00:11:38.810
+that you're interested in.
+
+00:11:38.810 --> 00:11:42.590
+So if we take the example of
+sentiment extraction, which
+
+00:11:42.590 --> 00:11:46.690
+is trying to predict
+if a sentence is,
+
+00:11:46.690 --> 00:11:50.390
+let's say, positive or
+negative, what you would do
+
+00:11:50.390 --> 00:11:58.230
+is have some projection layer
+that takes in the CLS token that
+
+00:11:58.230 --> 00:12:03.390
+is carrying all the
+information from the sentence
+
+00:12:03.390 --> 00:12:05.750
+and project it onto the class--
+
+00:12:05.750 --> 00:12:10.510
+the classes of interests which
+are positive or negative.
+
+00:12:10.510 --> 00:12:16.090
+And for that, you need to
+have a small set of labels.
+
+00:12:16.090 --> 00:12:19.630
+So you need the observations
+with actual labels.
+
+00:12:19.630 --> 00:12:22.470
+And then what you would
+do is to tune the weights,
+
+00:12:22.470 --> 00:12:26.510
+so that you can actually project
+that meaningful representation
+
+00:12:26.510 --> 00:12:28.370
+onto the space of interest.
+
+00:12:31.030 --> 00:12:33.970
+So what are the pros and
+cons of this approach?
+
+00:12:33.970 --> 00:12:38.790
+So the pro is, well, it led
+to pretty good performance.
+
+00:12:38.790 --> 00:12:43.350
+The other thing is it is relying
+on the self-attention mechanism.
+
+00:12:43.350 --> 00:12:47.530
+So you have connections from
+both sides, which is actually
+
+00:12:47.530 --> 00:12:49.750
+the reason why BERT
+is called that way,
+
+00:12:49.750 --> 00:12:53.010
+because it's Bidirectional
+Encoder Representation
+
+00:12:53.010 --> 00:12:55.850
+from Transformers.
+
+00:12:55.850 --> 00:12:58.830
+Another pro is, well, you
+need to do fine tuning,
+
+00:12:58.830 --> 00:13:04.090
+but you don't need that much
+data typically or of 100.
+
+00:13:04.090 --> 00:13:08.210
+But the con is, well, you
+need a small amount of data
+
+00:13:08.210 --> 00:13:10.950
+to do the fine-tuning, but you
+need to do the fine-tuning.
+
+00:13:10.950 --> 00:13:13.610
+So in itself, that's an effort.
+
+00:13:13.610 --> 00:13:15.690
+So that's a con.
+
+00:13:15.690 --> 00:13:20.610
+And then the other con is
+when you look at this model,
+
+00:13:20.610 --> 00:13:26.450
+you may be wondering, well,
+how can I generate text?
+
+00:13:26.450 --> 00:13:29.690
+And it's something
+that is not obvious.
+
+00:13:29.690 --> 00:13:33.410
+But actually, we
+will see in lecture 8
+
+00:13:33.410 --> 00:13:36.810
+that it is actually
+possible to generate text
+
+00:13:36.810 --> 00:13:39.390
+with an encoder only model.
+
+00:13:39.390 --> 00:13:43.430
+But for now, let's suppose
+there's no obvious way.
+
+00:13:43.430 --> 00:13:45.130
+But more on that in lecture 8.
+
+00:13:47.990 --> 00:13:50.350
+Cool.
+
+00:13:50.350 --> 00:13:53.150
+So that's for
+encoder only model.
+
+00:13:53.150 --> 00:13:56.630
+Well, going back to the
+transformer architecture,
+
+00:13:56.630 --> 00:14:00.150
+we tried removing the decoder,
+only going with the encoder.
+
+00:14:00.150 --> 00:14:01.750
+That's what we obtained.
+
+00:14:01.750 --> 00:14:04.470
+Now how about we
+remove the encoder
+
+00:14:04.470 --> 00:14:07.470
+and we try with
+just the decoder?
+
+00:14:07.470 --> 00:14:09.470
+Well, let's just try that.
+
+00:14:09.470 --> 00:14:13.190
+Well, actually, people
+have tried that roughly
+
+00:14:13.190 --> 00:14:16.230
+at the same time as
+BERT was published.
+
+00:14:16.230 --> 00:14:19.910
+There was another branch
+of transformer variants
+
+00:14:19.910 --> 00:14:24.750
+which were actually focusing
+on decoder only transformers.
+
+00:14:24.750 --> 00:14:27.230
+And this is the
+example of GPT, which
+
+00:14:27.230 --> 00:14:29.950
+I'm sure you have
+heard plenty of times,
+
+00:14:29.950 --> 00:14:34.430
+which stands for Generative
+Pre-trained Transformer.
+
+00:14:34.430 --> 00:14:41.160
+And the idea is to only keep the
+decoder parts of the transformer
+
+00:14:41.160 --> 00:14:50.520
+and formulates any task you
+have as a text-to-text problem.
+
+00:14:50.520 --> 00:14:52.080
+So what does that mean?
+
+00:14:52.080 --> 00:14:55.080
+That means you have
+some text as input
+
+00:14:55.080 --> 00:14:58.560
+and your only job is to
+predict the next token.
+
+00:14:58.560 --> 00:15:06.320
+So here beginning of sequence
+A, A, teddy, teddy bear,
+
+00:15:06.320 --> 00:15:10.000
+is, reading, and so on.
+
+00:15:10.000 --> 00:15:12.800
+So by the way, this
+kind of decoding
+
+00:15:12.800 --> 00:15:15.600
+is called autoregressive
+decoding because you
+
+00:15:15.600 --> 00:15:18.880
+predict tokens one at a time.
+
+00:15:18.880 --> 00:15:20.740
+And this is the idea behind GPT.
+
+00:15:20.740 --> 00:15:24.440
+So you don't need to do--
+you don't necessarily
+
+00:15:24.440 --> 00:15:28.400
+need to do any fine-tuning
+because your model is already
+
+00:15:28.400 --> 00:15:33.960
+equipped to be adapted
+to any use case.
+
+00:15:33.960 --> 00:15:35.300
+So I'll give you an example.
+
+00:15:35.300 --> 00:15:36.800
+The sentiment extraction.
+
+00:15:36.800 --> 00:15:40.300
+So let's assume you have a
+tweet you want to categorize
+
+00:15:40.300 --> 00:15:43.380
+as positive or negative.
+
+00:15:43.380 --> 00:15:46.900
+Well, you would just
+put into your model,
+
+00:15:46.900 --> 00:15:49.890
+is this sentence
+positive or negative?
+
+00:15:49.890 --> 00:15:51.140
+And then you put the sentence.
+
+00:15:51.140 --> 00:15:56.660
+And then the model would just
+respond positive or negative.
+
+00:15:56.660 --> 00:15:58.420
+You don't need to
+do fine-tuning,
+
+00:15:58.420 --> 00:16:01.980
+unless you want to make
+your model even better.
+
+00:16:01.980 --> 00:16:06.620
+So fine-tuning is not
+a required step, which
+
+00:16:06.620 --> 00:16:08.080
+is already pretty appealing.
+
+00:16:11.340 --> 00:16:16.180
+But you may be wondering,
+well, last time we
+
+00:16:16.180 --> 00:16:19.200
+saw the encoder-decoder
+architecture,
+
+00:16:19.200 --> 00:16:22.580
+the original transformer,
+which was also generating text.
+
+00:16:22.580 --> 00:16:25.700
+Well, what is the difference
+between this new decoder
+
+00:16:25.700 --> 00:16:29.940
+only model with the
+encoder-decoder model?
+
+00:16:29.940 --> 00:16:36.120
+Well, so both are similar in
+that they can generate text
+
+00:16:36.120 --> 00:16:38.240
+autoregressively.
+
+00:16:38.240 --> 00:16:42.600
+But in the case of the
+encoder-decoder architecture,
+
+00:16:42.600 --> 00:16:47.720
+the input has a
+special treatment.
+
+00:16:47.720 --> 00:16:52.000
+It is input into the encoder,
+and within that encoder,
+
+00:16:52.000 --> 00:16:57.040
+all the tokens are able to
+interact with one another.
+
+00:16:57.040 --> 00:17:00.080
+So it's like pure
+self-attention.
+
+00:17:00.080 --> 00:17:03.680
+Whereas in the decoder
+only architecture,
+
+00:17:03.680 --> 00:17:06.480
+what you have as
+input, the tokens
+
+00:17:06.480 --> 00:17:11.319
+can only interact between
+themselves and tokens
+
+00:17:11.319 --> 00:17:12.760
+before them.
+
+00:17:12.760 --> 00:17:16.839
+They cannot interact
+with tokens after them.
+
+00:17:16.839 --> 00:17:20.619
+So you have causal
+attention for decoder only,
+
+00:17:20.619 --> 00:17:24.880
+but you have bidirectional
+attention for encoder-decoder
+
+00:17:24.880 --> 00:17:27.520
+for the input.
+
+00:17:27.520 --> 00:17:29.240
+That's the first difference.
+
+00:17:29.240 --> 00:17:35.460
+The second difference is that,
+well, you have an extra encoder
+
+00:17:35.460 --> 00:17:40.840
+and you need to have some
+special care for the input.
+
+00:17:40.840 --> 00:17:43.100
+You're treating it differently,
+so it may make sense
+
+00:17:43.100 --> 00:17:45.180
+for things like
+machine translation
+
+00:17:45.180 --> 00:17:49.620
+because, well, you have
+source texts as inputs
+
+00:17:49.620 --> 00:17:53.340
+and you want to have
+target text as outputs.
+
+00:17:53.340 --> 00:17:57.380
+But things like text
+generation, it's not super clear
+
+00:17:57.380 --> 00:17:58.640
+what should be as input.
+
+00:18:01.260 --> 00:18:05.780
+So in other words, decoder only
+is a little bit more general
+
+00:18:05.780 --> 00:18:10.980
+because it treats
+everything the same.
+
+00:18:10.980 --> 00:18:14.860
+So people have tried
+both approaches
+
+00:18:14.860 --> 00:18:18.460
+when it came to the
+text-to-text paradigm,
+
+00:18:18.460 --> 00:18:21.940
+and overwhelmingly
+they all pretty much
+
+00:18:21.940 --> 00:18:24.340
+went with the decoder only.
+
+00:18:24.340 --> 00:18:26.940
+So what I want
+you to remember is
+
+00:18:26.940 --> 00:18:30.300
+that people have tried
+all different variants.
+
+00:18:30.300 --> 00:18:34.440
+And in particular when it
+comes to generating texts,
+
+00:18:34.440 --> 00:18:36.340
+there was both these paradigms.
+
+00:18:36.340 --> 00:18:41.160
+But the decoder only
+one is the one that
+
+00:18:41.160 --> 00:18:44.380
+actually lived through today.
+
+00:18:44.380 --> 00:18:46.800
+And one of the reasons
+is, well, it's simpler
+
+00:18:46.800 --> 00:18:49.320
+and there is no special
+treatment of the inputs.
+
+00:18:49.320 --> 00:18:52.800
+And yeah, you don't
+need to have an encoder
+
+00:18:52.800 --> 00:18:55.880
+to treat the input separately.
+
+00:18:55.880 --> 00:18:58.220
+So overall, there
+are two paradigms.
+
+00:18:58.220 --> 00:19:00.440
+Either you compute
+meaningful embeddings
+
+00:19:00.440 --> 00:19:03.120
+and you try to fine-tuning
+for your use case,
+
+00:19:03.120 --> 00:19:06.520
+or you frame it as a
+text to text problem.
+
+00:19:06.520 --> 00:19:10.240
+And you can frame all problems
+as text-to-text problems.
+
+00:19:10.240 --> 00:19:11.823
+Another question
+is, is it efficient?
+
+00:19:11.823 --> 00:19:12.740
+It's another question.
+
+00:19:12.740 --> 00:19:14.800
+But you can do that.
+
+00:19:14.800 --> 00:19:18.300
+And that's what people
+have been doing so far.
+
+00:19:22.840 --> 00:19:23.800
+Cool.
+
+00:19:23.800 --> 00:19:28.280
+Well, as I mentioned,
+people went
+
+00:19:28.280 --> 00:19:30.980
+with the decoder only
+architecture, and what they did
+
+00:19:30.980 --> 00:19:33.260
+was just to scale
+that up, because they
+
+00:19:33.260 --> 00:19:36.380
+have seen that it was
+performing better and better.
+
+00:19:36.380 --> 00:19:40.540
+And in particular,
+in the early 2020s,
+
+00:19:40.540 --> 00:19:44.860
+there were a couple of papers
+that actually quantified how
+
+00:19:44.860 --> 00:19:49.180
+much better your model was
+getting as you were training it
+
+00:19:49.180 --> 00:19:55.660
+on more data, with more
+parameters, with more compute.
+
+00:19:55.660 --> 00:19:57.940
+And we'll see that now.
+
+00:19:57.940 --> 00:20:02.420
+So this paper from
+2020 is actually
+
+00:20:02.420 --> 00:20:09.300
+saying that you can actually
+have almost like a law that
+
+00:20:09.300 --> 00:20:12.460
+tells you how much
+better your model will
+
+00:20:12.460 --> 00:20:16.580
+get as a function of
+the number of tokens
+
+00:20:16.580 --> 00:20:18.100
+that you're training on.
+
+00:20:18.100 --> 00:20:21.460
+So it's the middle
+chart, and as a function
+
+00:20:21.460 --> 00:20:28.120
+of how big your model is,
+which is the rightmost chart.
+
+00:20:28.120 --> 00:20:32.800
+And so that's the reason
+why in 2020, 2021, 2022,
+
+00:20:32.800 --> 00:20:36.000
+people have been
+increasing model size
+
+00:20:36.000 --> 00:20:40.800
+and training it on more
+tokens like increasingly.
+
+00:20:40.800 --> 00:20:45.280
+And not only that,
+the authors also
+
+00:20:45.280 --> 00:20:50.560
+saw that the bigger your
+model, the more token efficient
+
+00:20:50.560 --> 00:20:52.640
+they were as well.
+
+00:20:52.640 --> 00:20:54.120
+So what does that mean?
+
+00:20:54.120 --> 00:20:58.040
+That means that if you
+have a bigger model,
+
+00:20:58.040 --> 00:21:01.600
+you need a fewer
+amount of tokens
+
+00:21:01.600 --> 00:21:06.880
+to train on in order to
+reach a certain performance.
+
+00:21:06.880 --> 00:21:09.020
+So on the slide, so what
+are all these colors?
+
+00:21:09.020 --> 00:21:11.500
+So on the y-axis,
+it's the Tesla's.
+
+00:21:11.500 --> 00:21:13.440
+So it's the performance
+of your model.
+
+00:21:13.440 --> 00:21:15.240
+The lower the better.
+
+00:21:15.240 --> 00:21:17.680
+And then the x-axis
+is the number
+
+00:21:17.680 --> 00:21:22.560
+of tokens that were processed
+as part of the training.
+
+00:21:22.560 --> 00:21:24.640
+And so the beautiful
+colors, they're
+
+00:21:24.640 --> 00:21:30.100
+saying that the
+brighter you are,
+
+00:21:30.100 --> 00:21:35.140
+the bigger your model is, the
+more it tends to have a better
+
+00:21:35.140 --> 00:21:38.740
+performance earlier.
+
+00:21:38.740 --> 00:21:41.940
+So that's why we're saying
+that bigger models are also
+
+00:21:41.940 --> 00:21:43.000
+more token efficient.
+
+00:21:43.000 --> 00:21:48.380
+They need fewer training
+tokens to perform better.
+
+00:21:48.380 --> 00:21:53.320
+But as you can imagine,
+well, hardware is limited.
+
+00:21:53.320 --> 00:21:55.700
+You don't have infinite compute.
+
+00:21:55.700 --> 00:21:58.520
+So very naturally,
+you're wondering, well,
+
+00:21:58.520 --> 00:22:01.740
+if I have a certain
+compute budget,
+
+00:22:01.740 --> 00:22:05.340
+how much should I
+scale my model in size?
+
+00:22:05.340 --> 00:22:08.900
+And how much should I attribute
+that to the number of tokens
+
+00:22:08.900 --> 00:22:11.300
+I should train it on?
+
+00:22:11.300 --> 00:22:14.980
+So before we talk about this, I
+want to introduce some notations
+
+00:22:14.980 --> 00:22:16.680
+that I think maybe
+you have seen,
+
+00:22:16.680 --> 00:22:19.780
+but I want to make sure
+we're all on the same page.
+
+00:22:19.780 --> 00:22:24.600
+So the first one is FLOPs,
+which stands for Floating Point
+
+00:22:24.600 --> 00:22:25.540
+Operations.
+
+00:22:25.540 --> 00:22:28.800
+And please note the little
+S, lowercase S. So this
+
+00:22:28.800 --> 00:22:33.200
+is a unit that is meant
+to measure compute.
+
+00:22:33.200 --> 00:22:38.320
+So the higher the FLOPs, the
+more compute you actually have.
+
+00:22:38.320 --> 00:22:41.160
+So order of magnitude, so
+training FLOPs for LLMs
+
+00:22:41.160 --> 00:22:44.720
+is like 10 to the power of 25.
+
+00:22:44.720 --> 00:22:47.160
+But you may see another
+FLOPS out there.
+
+00:22:47.160 --> 00:22:51.880
+So FLOPS with a
+capital S or even /S.
+
+00:22:51.880 --> 00:22:55.760
+And that one is actually
+the compute speed.
+
+00:22:55.760 --> 00:23:00.000
+And it's actually a measure of
+how performant your hardware is.
+
+00:23:00.000 --> 00:23:03.960
+It is different compared
+to the previous FLOPs,
+
+00:23:03.960 --> 00:23:05.540
+but it's easy to get mixed up.
+
+00:23:05.540 --> 00:23:08.680
+So just wanted to call that out.
+
+00:23:08.680 --> 00:23:12.780
+So with that said, back
+to what we were saying.
+
+00:23:12.780 --> 00:23:16.580
+So we live in a world where we
+don't have unlimited compute,
+
+00:23:16.580 --> 00:23:18.200
+or at least not yet.
+
+00:23:18.200 --> 00:23:22.280
+So given the amount of compute
+that you have available,
+
+00:23:22.280 --> 00:23:25.560
+a natural question
+that you have is,
+
+00:23:25.560 --> 00:23:28.880
+how much should I
+increase my model size?
+
+00:23:28.880 --> 00:23:33.540
+Versus how much should I
+increase the training size
+
+00:23:33.540 --> 00:23:36.540
+on which I'm training my model?
+
+00:23:36.540 --> 00:23:38.620
+And so there is this
+paper that came out
+
+00:23:38.620 --> 00:23:44.460
+in 2022 which exactly
+asked this question.
+
+00:23:44.460 --> 00:23:47.460
+And what it found was
+actually pretty interesting.
+
+00:23:47.460 --> 00:23:53.740
+It found that there was actually
+a sweet spot between model size
+
+00:23:53.740 --> 00:23:57.420
+and training data size.
+
+00:23:57.420 --> 00:24:01.900
+And it also found that most
+models at the time in 2022
+
+00:24:01.900 --> 00:24:05.180
+were actually
+undertrained, meaning
+
+00:24:05.180 --> 00:24:10.460
+that they were too big
+for the amount of tokens
+
+00:24:10.460 --> 00:24:11.820
+that they were trained on.
+
+00:24:11.820 --> 00:24:14.300
+They were undertrained.
+
+00:24:14.300 --> 00:24:18.940
+And so it actually also showed
+that by training two models.
+
+00:24:18.940 --> 00:24:22.670
+So one, which was, I believe,
+70 billion parameters
+
+00:24:22.670 --> 00:24:26.170
+and another one 200 and
+something billion parameters,
+
+00:24:26.170 --> 00:24:28.950
+so higher than the previous one.
+
+00:24:28.950 --> 00:24:32.990
+And it had the same
+compute budget for the two.
+
+00:24:32.990 --> 00:24:36.090
+So the first one, given
+it's smaller in model size,
+
+00:24:36.090 --> 00:24:39.590
+it trained it on more tokens.
+
+00:24:39.590 --> 00:24:43.335
+I believe it trained it
+on $1.4 trillion tokens.
+
+00:24:43.335 --> 00:24:45.210
+And the second one,
+which was bigger in size,
+
+00:24:45.210 --> 00:24:47.350
+it trained it on fewer
+tokens because it
+
+00:24:47.350 --> 00:24:49.990
+was the same compute budget.
+
+00:24:49.990 --> 00:24:54.310
+And it showed that the
+smaller model in terms of size
+
+00:24:54.310 --> 00:24:57.230
+was actually more performant.
+
+00:24:57.230 --> 00:25:01.870
+So they had some relationship
+between number of parameters
+
+00:25:01.870 --> 00:25:04.890
+and number of tokens that
+you are training it on,
+
+00:25:04.890 --> 00:25:10.790
+which was something like
+one parameter for 20 tokens.
+
+00:25:10.790 --> 00:25:12.670
+And so this was quite important.
+
+00:25:12.670 --> 00:25:15.590
+A lot of people tried
+to go back and see OK,
+
+00:25:15.590 --> 00:25:18.870
+is my model compute optimal?
+
+00:25:18.870 --> 00:25:23.810
+So yeah, so this is also
+pretty important paper.
+
+00:25:23.810 --> 00:25:25.830
+Another question you
+can ask yourself--
+
+00:25:25.830 --> 00:25:28.770
+I mean, just trying to
+think beyond this paper
+
+00:25:28.770 --> 00:25:30.890
+is what your use case is.
+
+00:25:30.890 --> 00:25:35.550
+Because here we're talking
+about training compute optimal.
+
+00:25:35.550 --> 00:25:41.090
+But you also need to serve
+your model production.
+
+00:25:41.090 --> 00:25:45.310
+So if you serve it with
+many, many requests,
+
+00:25:45.310 --> 00:25:50.690
+you also have an incentive
+to not have it be too big.
+
+00:25:50.690 --> 00:25:52.190
+But that's another question.
+
+00:25:52.190 --> 00:25:54.730
+But I just want to put it out.
+
+00:25:54.730 --> 00:25:56.650
+Yeah.
+
+00:25:56.650 --> 00:25:58.910
+So the question is, is it
+the cross-entropy loss?
+
+00:25:58.910 --> 00:26:00.810
+And the answer is
+yes, because your task
+
+00:26:00.810 --> 00:26:02.750
+is next token prediction.
+
+00:26:02.750 --> 00:26:06.490
+And what you're
+trying to do is have
+
+00:26:06.490 --> 00:26:09.890
+your prediction be as
+close as the label, which
+
+00:26:09.890 --> 00:26:10.877
+is the next token.
+
+00:26:10.877 --> 00:26:13.210
+And yes, cross-entropy is
+typically the one that you use
+
+00:26:13.210 --> 00:26:16.610
+and it's the one that is here.
+
+00:26:16.610 --> 00:26:19.430
+Yeah.
+
+00:26:19.430 --> 00:26:22.470
+So the question is, does the
+quality of the data matter?
+
+00:26:22.470 --> 00:26:24.070
+I would say there
+are many papers that
+
+00:26:24.070 --> 00:26:29.570
+came out from this, many
+with different conclusions.
+
+00:26:29.570 --> 00:26:31.870
+I would say for
+pre-training, what matters is
+
+00:26:31.870 --> 00:26:34.390
+the size more than the quality.
+
+00:26:34.390 --> 00:26:39.190
+We will see in lecture 3 that
+next steps of the training
+
+00:26:39.190 --> 00:26:43.150
+process matters, there's more
+importance towards quality
+
+00:26:43.150 --> 00:26:46.590
+and we will see that.
+
+00:26:46.590 --> 00:26:49.430
+OK, cool.
+
+00:26:49.430 --> 00:26:51.170
+OK, moving on to LLM.
+
+00:26:51.170 --> 00:26:54.750
+So why do we call LLM, LLM?
+
+00:26:54.750 --> 00:26:59.750
+Well LLM stands for
+Large Language Model.
+
+00:26:59.750 --> 00:27:01.550
+So language model
+is, because it's
+
+00:27:01.550 --> 00:27:06.350
+a model that associates some
+probabilities to sequences
+
+00:27:06.350 --> 00:27:07.590
+of tokens.
+
+00:27:07.590 --> 00:27:10.350
+So in this case, it's
+a model that tries
+
+00:27:10.350 --> 00:27:12.270
+to predict the next token.
+
+00:27:12.270 --> 00:27:16.070
+So we're trying to put some
+probability towards what
+
+00:27:16.070 --> 00:27:19.290
+the next prediction is.
+
+00:27:19.290 --> 00:27:20.430
+And why is it large?
+
+00:27:20.430 --> 00:27:23.930
+Well, it is large because the
+model size is large, typically
+
+00:27:23.930 --> 00:27:27.730
+in the billions, even tens of
+billions or hundreds of billions
+
+00:27:27.730 --> 00:27:30.650
+and even trillions.
+
+00:27:30.650 --> 00:27:33.110
+Training data, also hundreds
+of billions of tokens.
+
+00:27:33.110 --> 00:27:37.650
+At least nowadays, it's also on
+the tens of trillions of tokens.
+
+00:27:37.650 --> 00:27:38.790
+And also compute.
+
+00:27:38.790 --> 00:27:41.690
+You need a lot of GPUs.
+
+00:27:41.690 --> 00:27:46.730
+And as I mentioned,
+nowadays people
+
+00:27:46.730 --> 00:27:49.950
+rely on the decoder
+only transformer,
+
+00:27:49.950 --> 00:27:55.610
+which is the original
+transformer without the encoder.
+
+00:27:55.610 --> 00:28:01.250
+Well, you may ask me, well,
+if you look into the decoder,
+
+00:28:01.250 --> 00:28:04.130
+you actually have
+a component, which
+
+00:28:04.130 --> 00:28:07.810
+is the cross-attention
+that takes
+
+00:28:07.810 --> 00:28:13.210
+in the meaningful embeddings
+from the encoder with the ones
+
+00:28:13.210 --> 00:28:14.230
+coming from the decoder.
+
+00:28:14.230 --> 00:28:16.730
+And you're like, OK, what is
+happening with that components?
+
+00:28:16.730 --> 00:28:18.670
+Well, you also remove it.
+
+00:28:18.670 --> 00:28:20.610
+So the decoder is not
+exactly the decoder.
+
+00:28:20.610 --> 00:28:24.590
+You also remove the
+part that is interacting
+
+00:28:24.590 --> 00:28:29.230
+and you obtain this
+very simple backbone,
+
+00:28:29.230 --> 00:28:34.830
+which is a causal multi-head
+attention layer, which is only
+
+00:28:34.830 --> 00:28:37.790
+attending to each token
+and the tokens that
+
+00:28:37.790 --> 00:28:42.750
+came before it and a feed
+forward neural network, which
+
+00:28:42.750 --> 00:28:44.290
+is where the compute happens.
+
+00:28:47.110 --> 00:28:49.070
+Cool.
+
+00:28:49.070 --> 00:28:50.070
+OK.
+
+00:28:50.070 --> 00:28:55.030
+So what we saw here is the
+bigger your model size,
+
+00:28:55.030 --> 00:28:57.230
+the better your performance.
+
+00:28:57.230 --> 00:29:00.390
+And we saw that there was also
+a trade-off between the number
+
+00:29:00.390 --> 00:29:02.070
+of tokens you were
+training it on
+
+00:29:02.070 --> 00:29:05.150
+and the model size
+that you were having.
+
+00:29:05.150 --> 00:29:11.270
+A natural question could
+be, when you have an input
+
+00:29:11.270 --> 00:29:16.370
+x into your model, if
+your model is huge,
+
+00:29:16.370 --> 00:29:19.490
+then that means that there are
+a lot of computations happening
+
+00:29:19.490 --> 00:29:21.490
+in that model.
+
+00:29:21.490 --> 00:29:24.690
+A natural question
+can be do you really
+
+00:29:24.690 --> 00:29:31.930
+need all the parameters in your
+model for that given input x?
+
+00:29:31.930 --> 00:29:34.050
+Do you really need that?
+
+00:29:34.050 --> 00:29:37.890
+And I want to motivate
+this observation
+
+00:29:37.890 --> 00:29:40.810
+with another observation.
+
+00:29:40.810 --> 00:29:44.330
+So let's assume I'm here
+in a room full of people.
+
+00:29:44.330 --> 00:29:47.450
+And let's say I have
+a math question.
+
+00:29:47.450 --> 00:29:50.850
+Let's suppose you all are coming
+from different backgrounds.
+
+00:29:50.850 --> 00:29:52.510
+So let's assume
+you're a math expert.
+
+00:29:52.510 --> 00:29:55.450
+Let's assume you're a physics
+expert, biology expert.
+
+00:29:55.450 --> 00:29:59.690
+And I'm coming with
+my math question.
+
+00:29:59.690 --> 00:30:00.830
+Should I ask everyone?
+
+00:30:00.830 --> 00:30:03.050
+Should I only ask you?
+
+00:30:03.050 --> 00:30:05.410
+And this is exactly
+the kind of question
+
+00:30:05.410 --> 00:30:08.650
+that people have
+asked themselves.
+
+00:30:08.650 --> 00:30:14.190
+How about we actually
+only activate
+
+00:30:14.190 --> 00:30:18.230
+a subset of the model for
+given inputs as opposed
+
+00:30:18.230 --> 00:30:22.230
+to all parameters?
+
+00:30:22.230 --> 00:30:24.990
+And so if you were
+to do that, then you
+
+00:30:24.990 --> 00:30:28.790
+could scale your
+model in size, but not
+
+00:30:28.790 --> 00:30:34.350
+incur the cost of having to go
+through all these operations
+
+00:30:34.350 --> 00:30:37.790
+for every forward pass?
+
+00:30:37.790 --> 00:30:39.830
+So how about you did that?
+
+00:30:39.830 --> 00:30:43.310
+Well, it turns out there's
+a type of model out there
+
+00:30:43.310 --> 00:30:46.230
+that was actually
+predating LLMs, which
+
+00:30:46.230 --> 00:30:49.830
+is called a mixture of experts.
+
+00:30:49.830 --> 00:30:52.450
+So who has heard of
+mixture of experts?
+
+00:30:52.450 --> 00:30:52.950
+Yes.
+
+00:30:52.950 --> 00:30:54.150
+OK, great.
+
+00:30:54.150 --> 00:30:56.450
+So what is the idea
+behind mixture of experts?
+
+00:30:56.450 --> 00:30:58.470
+So you have experts.
+
+00:30:58.470 --> 00:31:00.330
+So think of it as
+your math expert,
+
+00:31:00.330 --> 00:31:02.430
+physics experts, et cetera.
+
+00:31:02.430 --> 00:31:08.430
+And then you have a gate,
+also called a router,
+
+00:31:08.430 --> 00:31:14.050
+that tries to figure out, given
+your input, which expert should
+
+00:31:14.050 --> 00:31:18.770
+you use and to what extent?
+
+00:31:18.770 --> 00:31:21.530
+So for instance, you
+have some input x
+
+00:31:21.530 --> 00:31:24.150
+and you're passing it through
+your gate or your router.
+
+00:31:24.150 --> 00:31:26.730
+And the router
+says OK, expert 2,
+
+00:31:26.730 --> 00:31:28.750
+so this is a math
+question I should ask you.
+
+00:31:31.330 --> 00:31:38.210
+So there are several kinds of
+Mixture of Experts or MoEs.
+
+00:31:38.210 --> 00:31:41.690
+One first kind is
+called a dense MoE.
+
+00:31:41.690 --> 00:31:43.730
+A dense MoE, what does it do?
+
+00:31:43.730 --> 00:31:46.850
+It still activates
+all the experts,
+
+00:31:46.850 --> 00:31:49.690
+but it gives more
+weight towards experts
+
+00:31:49.690 --> 00:31:51.930
+that are maybe more relevant.
+
+00:31:51.930 --> 00:31:53.490
+So, for instance,
+the math question
+
+00:31:53.490 --> 00:31:56.690
+could be high weight for
+the math expert, maybe lower
+
+00:31:56.690 --> 00:31:59.890
+weight for the physics expert,
+but maybe a very small weight
+
+00:31:59.890 --> 00:32:03.730
+for the biology experts.
+
+00:32:03.730 --> 00:32:07.090
+So the bad thing
+with the dense MoE
+
+00:32:07.090 --> 00:32:09.210
+is you still activate
+all the parameters.
+
+00:32:09.210 --> 00:32:10.510
+It's not what you want to do.
+
+00:32:10.510 --> 00:32:15.030
+So that's why, in
+the context of LLMs,
+
+00:32:15.030 --> 00:32:17.830
+the kind that is
+actually very interesting
+
+00:32:17.830 --> 00:32:19.590
+is actually not
+the dense MoE, it's
+
+00:32:19.590 --> 00:32:25.670
+the sparse MoE, which is the
+kind of ammo that actually
+
+00:32:25.670 --> 00:32:30.870
+selects experts that
+should be activated
+
+00:32:30.870 --> 00:32:35.670
+and that ignores all
+the other experts.
+
+00:32:35.670 --> 00:32:37.130
+This is the sparse MoE.
+
+00:32:37.130 --> 00:32:41.590
+So typically you have top k
+experts that were selected.
+
+00:32:41.590 --> 00:32:45.870
+So k can be equal to 1, can
+be equal to 2 to some number
+
+00:32:45.870 --> 00:32:48.270
+that you fix.
+
+00:32:48.270 --> 00:32:54.510
+And the output that you get, so
+y hat is the sum of the expert
+
+00:32:54.510 --> 00:32:58.110
+output weighted by how
+important they are,
+
+00:32:58.110 --> 00:33:01.510
+which is given by the gates.
+
+00:33:01.510 --> 00:33:06.290
+And it's only a sum over some
+experts that were activated--
+
+00:33:06.290 --> 00:33:08.540
+so k experts, not all experts.
+
+00:33:11.140 --> 00:33:11.640
+Cool.
+
+00:33:11.640 --> 00:33:12.380
+Well, OK.
+
+00:33:12.380 --> 00:33:13.440
+All that is great.
+
+00:33:13.440 --> 00:33:15.500
+But now let's go
+back to reality.
+
+00:33:15.500 --> 00:33:16.880
+Let's go back to our LLM.
+
+00:33:16.880 --> 00:33:20.300
+If you remember, it's a
+decoder only architecture.
+
+00:33:20.300 --> 00:33:23.580
+So we have this as a backbone.
+
+00:33:23.580 --> 00:33:26.000
+So I have a question for you.
+
+00:33:26.000 --> 00:33:31.880
+Where would you put this
+mixture of experts scheme
+
+00:33:31.880 --> 00:33:33.620
+in the architecture?
+
+00:33:33.620 --> 00:33:37.160
+Which layer would you put it?
+
+00:33:37.160 --> 00:33:39.860
+Does anyone have
+any suggestions?
+
+00:33:44.920 --> 00:33:47.880
+Yes.
+
+00:33:47.880 --> 00:33:48.380
+Yep.
+
+00:33:48.380 --> 00:33:51.680
+So the answer here is
+you can take a token
+
+00:33:51.680 --> 00:33:54.260
+and project it in order to
+select which expert it is.
+
+00:33:54.260 --> 00:33:54.760
+Yes.
+
+00:33:54.760 --> 00:33:57.760
+So that is actually
+the role of the router.
+
+00:33:57.760 --> 00:33:59.840
+So here the thing that
+I'm really interested in
+
+00:33:59.840 --> 00:34:03.600
+is where would you put the
+whole mixture of experts
+
+00:34:03.600 --> 00:34:04.580
+in all of this?
+
+00:34:04.580 --> 00:34:05.540
+So I'll help you.
+
+00:34:05.540 --> 00:34:06.040
+Oh, yeah.
+
+00:34:06.040 --> 00:34:06.540
+Sorry.
+
+00:34:06.540 --> 00:34:08.699
+Yeah.
+
+00:34:08.699 --> 00:34:09.880
+It's a great answer.
+
+00:34:09.880 --> 00:34:12.760
+So I'll just exactly
+mention what you said.
+
+00:34:12.760 --> 00:34:15.639
+So the answer would be
+feedforward neural network,
+
+00:34:15.639 --> 00:34:19.699
+because this is where all the
+compute typically resides.
+
+00:34:19.699 --> 00:34:22.020
+And yes, I completely
+agree with you.
+
+00:34:22.020 --> 00:34:26.179
+The multi-head attention
+layer is actually the place
+
+00:34:26.179 --> 00:34:27.880
+where tokens communicate.
+
+00:34:27.880 --> 00:34:31.980
+It's not where typically you
+compute meaningful embeddings
+
+00:34:31.980 --> 00:34:33.940
+by projecting it.
+
+00:34:33.940 --> 00:34:37.480
+So you would typically go with
+the feedforward neural network.
+
+00:34:37.480 --> 00:34:38.580
+So a great answer.
+
+00:34:38.580 --> 00:34:41.679
+And so here what you would
+do is back to your point,
+
+00:34:41.679 --> 00:34:44.820
+have a router where
+for a given input,
+
+00:34:44.820 --> 00:34:48.880
+decides which
+expert to activate.
+
+00:34:48.880 --> 00:34:54.739
+And here the expert would be
+a feedforward neural network.
+
+00:34:54.739 --> 00:34:58.120
+So yeah, great answer.
+
+00:34:58.120 --> 00:34:58.620
+Sorry.
+
+00:34:58.620 --> 00:34:59.120
+Yeah.
+
+00:35:01.860 --> 00:35:05.640
+So the question is, well,
+or the remark I would say
+
+00:35:05.640 --> 00:35:09.360
+is that in the attention layer,
+you have different heads.
+
+00:35:09.360 --> 00:35:13.280
+Why wouldn't you treat
+heads as experts?
+
+00:35:13.280 --> 00:35:14.740
+So it's a great point.
+
+00:35:14.740 --> 00:35:19.580
+I think, at the end of the
+day, you can also try that.
+
+00:35:19.580 --> 00:35:21.640
+But speaking of that,
+we will actually
+
+00:35:21.640 --> 00:35:26.160
+talk about a small variation
+that people usually
+
+00:35:26.160 --> 00:35:29.800
+do on multi-head attention
+because, not all heads are
+
+00:35:29.800 --> 00:35:30.920
+as useful.
+
+00:35:30.920 --> 00:35:32.800
+So I'm going to just
+address your question
+
+00:35:32.800 --> 00:35:35.600
+in about 30 minutes.
+
+00:35:35.600 --> 00:35:37.300
+Yeah, but great point.
+
+00:35:37.300 --> 00:35:37.800
+Yep.
+
+00:35:40.640 --> 00:35:44.360
+So the question is, how
+does the router know
+
+00:35:44.360 --> 00:35:45.940
+when to activate each expert?
+
+00:35:45.940 --> 00:35:50.160
+So by with the magic of back
+propagation, magic of learning.
+
+00:35:50.160 --> 00:35:53.400
+So you have a training
+process and then
+
+00:35:53.400 --> 00:35:58.280
+you want to learn how each
+component should behave.
+
+00:35:58.280 --> 00:36:01.920
+And you just backpropagate
+and it just learns that way.
+
+00:36:01.920 --> 00:36:07.160
+And it's actually a great
+point because one observation
+
+00:36:07.160 --> 00:36:10.500
+you may tell me is,
+what would prevent
+
+00:36:10.500 --> 00:36:16.540
+your model from overrelying
+on a specific set of experts
+
+00:36:16.540 --> 00:36:20.540
+and not explore other experts?
+
+00:36:20.540 --> 00:36:23.460
+And so this is
+actually a problem
+
+00:36:23.460 --> 00:36:27.460
+when training
+MoE-based LLMs, which
+
+00:36:27.460 --> 00:36:31.260
+is the tendency for
+your model to rely only
+
+00:36:31.260 --> 00:36:36.180
+on a small set of experts
+instead of all the experts.
+
+00:36:36.180 --> 00:36:38.860
+And it's called
+routing collapse.
+
+00:36:38.860 --> 00:36:40.980
+So there are many reasons
+why it's not good.
+
+00:36:40.980 --> 00:36:45.140
+But one of the reasons is
+your effective model size
+
+00:36:45.140 --> 00:36:51.100
+is actually smaller than
+the total number of experts
+
+00:36:51.100 --> 00:36:52.740
+and weights that you have.
+
+00:36:52.740 --> 00:36:57.900
+And this typically
+occurs, because when
+
+00:36:57.900 --> 00:37:02.520
+you train your model, if
+some experts get chosen
+
+00:37:02.520 --> 00:37:05.640
+in the very beginning,
+then when it
+
+00:37:05.640 --> 00:37:11.240
+comes to updating the
+weights, those experts that
+
+00:37:11.240 --> 00:37:13.680
+were activated in
+the beginning, they
+
+00:37:13.680 --> 00:37:18.000
+tend to be updated at first.
+
+00:37:18.000 --> 00:37:20.520
+So they tend to get
+better and better,
+
+00:37:20.520 --> 00:37:24.560
+whereas all the other experts
+are still sitting there.
+
+00:37:24.560 --> 00:37:28.640
+So it's the problem of
+the rich getting richer.
+
+00:37:28.640 --> 00:37:33.280
+And so it's for that reason
+that people have also come up
+
+00:37:33.280 --> 00:37:37.800
+with a part of the
+last cult, so it's
+
+00:37:37.800 --> 00:37:42.080
+a load balancing
+auxiliary loss, which
+
+00:37:42.080 --> 00:37:49.320
+is aimed at forcing your model
+to also incentivize exploring
+
+00:37:49.320 --> 00:37:56.320
+other experts by encouraging
+the fraction of the tokens that
+
+00:37:56.320 --> 00:38:00.620
+are being rerouted to be
+uniform or more or less uniform
+
+00:38:00.620 --> 00:38:02.660
+across experts.
+
+00:38:02.660 --> 00:38:04.640
+And so maybe it's something
+that I didn't say,
+
+00:38:04.640 --> 00:38:06.820
+but I will say it now.
+
+00:38:06.820 --> 00:38:10.340
+The routing is done
+at the token level.
+
+00:38:10.340 --> 00:38:12.820
+So if you have an
+input sentence,
+
+00:38:12.820 --> 00:38:18.700
+each token will ask itself,
+which expert should I go to?
+
+00:38:18.700 --> 00:38:21.220
+So this is done at
+the token level.
+
+00:38:21.220 --> 00:38:26.440
+And so here this loss is
+incentivizing your model-- yeah.
+
+00:38:29.060 --> 00:38:31.400
+So the question is, well,
+if you select one or two,
+
+00:38:31.400 --> 00:38:32.400
+it's not differentiable.
+
+00:38:32.400 --> 00:38:33.280
+It's a great point.
+
+00:38:33.280 --> 00:38:37.220
+So you have an operator
+that's called stop grad that
+
+00:38:37.220 --> 00:38:42.620
+is treating some aspects as
+being actually derivative of 0
+
+00:38:42.620 --> 00:38:45.220
+and treating these as constants.
+
+00:38:45.220 --> 00:38:48.340
+So long story short
+is in the loss,
+
+00:38:48.340 --> 00:38:52.100
+you're treating the fraction
+of tokens routed to expert i
+
+00:38:52.100 --> 00:38:54.260
+as a constant.
+
+00:38:54.260 --> 00:38:58.580
+And you're only backpropagating
+through the routing probability.
+
+00:38:58.580 --> 00:39:02.480
+So you're still able to
+actually change those routers.
+
+00:39:02.480 --> 00:39:04.540
+But yeah, that's a good point.
+
+00:39:08.200 --> 00:39:09.200
+So let me see.
+
+00:39:09.200 --> 00:39:12.200
+So I think we're
+talking about the fact
+
+00:39:12.200 --> 00:39:17.400
+that these auxiliary loss
+is incentivizing your model
+
+00:39:17.400 --> 00:39:21.400
+to also choose other
+experts and not
+
+00:39:21.400 --> 00:39:24.120
+to have this routing
+collapse problem that we
+
+00:39:24.120 --> 00:39:27.237
+mentioned at the beginning.
+
+00:39:27.237 --> 00:39:28.820
+There are some other
+problems as well.
+
+00:39:28.820 --> 00:39:31.880
+I just want to just tell
+you that training an MoE
+
+00:39:31.880 --> 00:39:38.400
+based LLM is challenging, and
+this is part of its challenge.
+
+00:39:38.400 --> 00:39:44.000
+But the good thing is, if you
+do it properly, you will have--
+
+00:39:44.000 --> 00:39:46.960
+so here on the
+slide, what you see
+
+00:39:46.960 --> 00:39:52.640
+is an input text where
+the color of each section
+
+00:39:52.640 --> 00:39:58.020
+denotes a specific experts
+that a given token was sent to.
+
+00:39:58.020 --> 00:40:00.780
+And this is, for instance,
+at a given layer.
+
+00:40:00.780 --> 00:40:03.880
+And this is coming from
+a paper from Mixtral.
+
+00:40:03.880 --> 00:40:07.260
+So here is the model
+called Mixtral of experts.
+
+00:40:07.260 --> 00:40:10.760
+And you see that the
+colors are pretty diverse.
+
+00:40:10.760 --> 00:40:14.940
+So it means that you're actually
+leveraging your experts pretty
+
+00:40:14.940 --> 00:40:17.220
+well.
+
+00:40:17.220 --> 00:40:22.280
+And so I want to just say a few
+things about MoE-based LLMs.
+
+00:40:22.280 --> 00:40:23.760
+So now we're in 2026.
+
+00:40:23.760 --> 00:40:25.900
+This is something that
+I think the paper was
+
+00:40:25.900 --> 00:40:31.140
+from 2024, which is quite
+some time ago in the AI field.
+
+00:40:31.140 --> 00:40:35.580
+So nowadays, what people
+do is they use experts,
+
+00:40:35.580 --> 00:40:40.340
+but they also have
+shared experts
+
+00:40:40.340 --> 00:40:46.420
+that gets activated no matter
+which experts the router
+
+00:40:46.420 --> 00:40:48.380
+or the gate selects.
+
+00:40:48.380 --> 00:40:51.460
+And the idea behind
+this is for every token,
+
+00:40:51.460 --> 00:40:56.280
+there is always some computation
+that is always necessary.
+
+00:40:56.280 --> 00:41:00.520
+And you want to avoid your
+experts from always learning
+
+00:41:00.520 --> 00:41:04.120
+the same thing as a foundation
+and then specializing
+
+00:41:04.120 --> 00:41:06.400
+into something.
+
+00:41:06.400 --> 00:41:08.380
+So that is something
+that people do nowadays.
+
+00:41:08.380 --> 00:41:12.220
+The second thing that people
+do is the number of experts,
+
+00:41:12.220 --> 00:41:15.920
+they don't choose
+it to be 8 or 16.
+
+00:41:15.920 --> 00:41:21.240
+They actually choose it to be
+higher, 60 or in the hundreds.
+
+00:41:21.240 --> 00:41:27.120
+And the reason why they do
+that is that intuitively, you
+
+00:41:27.120 --> 00:41:29.120
+just give the chance
+to your experts
+
+00:41:29.120 --> 00:41:32.440
+to be very specialized,
+very fine-grained.
+
+00:41:32.440 --> 00:41:35.640
+But also on the charts, you
+see that the performance,
+
+00:41:35.640 --> 00:41:40.880
+when you have more fine-grained
+experts is just higher.
+
+00:41:40.880 --> 00:41:43.960
+So it's also just empirical.
+
+00:41:43.960 --> 00:41:47.360
+And so speaking of
+order of magnitudes.
+
+00:41:47.360 --> 00:41:51.920
+So when it comes to the
+frontier open source LLMs
+
+00:41:51.920 --> 00:41:54.040
+that were published recently.
+
+00:41:54.040 --> 00:41:58.340
+So here the screenshot is
+actually from a few days ago.
+
+00:41:58.340 --> 00:42:01.140
+If we take the top
+models, what we see
+
+00:42:01.140 --> 00:42:03.800
+is that-- so there
+are MoE-based LLMs.
+
+00:42:03.800 --> 00:42:05.940
+And the number of
+experts that they have
+
+00:42:05.940 --> 00:42:08.760
+is on the order of hundreds.
+
+00:42:08.760 --> 00:42:12.020
+So here are 384, 256.
+
+00:42:12.020 --> 00:42:14.700
+And the number of
+experts that are
+
+00:42:14.700 --> 00:42:20.460
+activated at each forward
+pass is typically eight or so.
+
+00:42:20.460 --> 00:42:22.940
+And you also have
+a shared expert,
+
+00:42:22.940 --> 00:42:26.580
+which is not widely used.
+
+00:42:26.580 --> 00:42:30.260
+Like in this example, the
+first model is not using it.
+
+00:42:30.260 --> 00:42:32.180
+And in terms of
+the model size, it
+
+00:42:32.180 --> 00:42:35.500
+is in the hundreds of
+billions of parameters
+
+00:42:35.500 --> 00:42:39.080
+or even trillion parameter
+for the first one.
+
+00:42:39.080 --> 00:42:41.860
+So it's pretty big models.
+
+00:42:41.860 --> 00:42:43.998
+Yes.
+
+00:42:43.998 --> 00:42:45.040
+So it's a great question.
+
+00:42:45.040 --> 00:42:48.340
+The question is, does
+the scaling law still
+
+00:42:48.340 --> 00:42:51.550
+hold true for a MoE-based LLMs?
+
+00:42:51.550 --> 00:42:57.490
+So the answer is that paper was
+actually based on a dense LLM.
+
+00:42:57.490 --> 00:42:59.830
+It was not like
+an MoE-based LLM.
+
+00:42:59.830 --> 00:43:03.390
+So one thing that
+I've seen papers do
+
+00:43:03.390 --> 00:43:06.110
+is have these scaling
+law experiments
+
+00:43:06.110 --> 00:43:11.710
+for their own setup on small
+number of tokens, small model
+
+00:43:11.710 --> 00:43:15.790
+size to just see what the law
+is for the specific setup.
+
+00:43:15.790 --> 00:43:19.870
+So to your question, I
+think for MoE-based LLMs,
+
+00:43:19.870 --> 00:43:25.510
+if authors feel that
+their choice, their design
+
+00:43:25.510 --> 00:43:29.510
+is very different from what was
+tested before, they would just
+
+00:43:29.510 --> 00:43:32.070
+do this very small
+experiment and see what
+
+00:43:32.070 --> 00:43:35.330
+is the kind of law
+that comes from there,
+
+00:43:35.330 --> 00:43:39.910
+and then choose the
+parameters from there.
+
+00:43:39.910 --> 00:43:42.030
+Yep.
+
+00:43:42.030 --> 00:43:42.570
+Yep.
+
+00:43:42.570 --> 00:43:46.510
+So the question is, why
+is n the number of experts
+
+00:43:46.510 --> 00:43:47.810
+doing in the numerator?
+
+00:43:47.810 --> 00:43:51.130
+So here, actually,
+what you're doing is
+
+00:43:51.130 --> 00:43:53.810
+you are summing
+across the experts.
+
+00:43:53.810 --> 00:43:56.450
+And so if you actually
+write that mathematically,
+
+00:43:56.450 --> 00:44:01.530
+you actually want to add n to--
+
+00:44:01.530 --> 00:44:05.690
+because fi and Pi is like over
+n, so it's over n squared,
+
+00:44:05.690 --> 00:44:07.010
+times n is like over n.
+
+00:44:07.010 --> 00:44:09.770
+So it's times n.
+
+00:44:09.770 --> 00:44:13.650
+But n is the number of experts.
+
+00:44:13.650 --> 00:44:17.330
+OK, great.
+
+00:44:17.330 --> 00:44:18.510
+We're doing amazing.
+
+00:44:18.510 --> 00:44:21.030
+Any questions, other questions?
+
+00:44:24.050 --> 00:44:26.570
+So far, what did we see?
+
+00:44:26.570 --> 00:44:30.610
+We saw that people have
+tried different variants
+
+00:44:30.610 --> 00:44:31.710
+of the transformer.
+
+00:44:31.710 --> 00:44:34.410
+They saw OK, how about
+we take the encoder?
+
+00:44:34.410 --> 00:44:35.750
+Well, OK, you can do this.
+
+00:44:35.750 --> 00:44:37.470
+How about you take the decoder?
+
+00:44:37.470 --> 00:44:40.530
+You treat that as a
+text-to-text problem.
+
+00:44:40.530 --> 00:44:41.770
+They scale that up.
+
+00:44:41.770 --> 00:44:44.410
+And people have seen
+that the performance just
+
+00:44:44.410 --> 00:44:46.810
+gets better and better
+as people increase it
+
+00:44:46.810 --> 00:44:50.910
+in size and in number of
+tokens that it is trained on.
+
+00:44:50.910 --> 00:44:53.550
+We've seen that when
+the model is too big,
+
+00:44:53.550 --> 00:44:57.150
+you need to do something
+in order for you to not
+
+00:44:57.150 --> 00:45:00.110
+have crazy inference costs.
+
+00:45:00.110 --> 00:45:04.750
+And so that's why people have
+developed a MoE-based LLMs that
+
+00:45:04.750 --> 00:45:07.470
+allow you to scale the
+number of parameters
+
+00:45:07.470 --> 00:45:11.430
+without having to incur
+the cost of also activating
+
+00:45:11.430 --> 00:45:15.030
+all the parameters
+in each forward pass.
+
+00:45:15.030 --> 00:45:18.710
+So here in this part,
+what we will focus on
+
+00:45:18.710 --> 00:45:22.030
+is a number of
+changes that people
+
+00:45:22.030 --> 00:45:28.270
+have made in the layers
+that were originally
+
+00:45:28.270 --> 00:45:33.990
+described in the original
+transformer architecture.
+
+00:45:33.990 --> 00:45:36.830
+So you will see in a
+second what I mean.
+
+00:45:36.830 --> 00:45:41.070
+So if you remember, the
+transformer architecture
+
+00:45:41.070 --> 00:45:44.950
+relies on the
+self-attention mechanism,
+
+00:45:44.950 --> 00:45:50.490
+which is the idea of letting
+all your tokens communicate
+
+00:45:50.490 --> 00:45:53.010
+with everyone.
+
+00:45:53.010 --> 00:45:56.170
+So the problem
+when you do that is
+
+00:45:56.170 --> 00:45:58.930
+that you lose the
+information of where
+
+00:45:58.930 --> 00:46:03.130
+tokens are positioned because
+you have these direct links.
+
+00:46:03.130 --> 00:46:06.010
+So if you don't have any
+information about positions
+
+00:46:06.010 --> 00:46:10.330
+about each of these tokens
+that are included anywhere,
+
+00:46:10.330 --> 00:46:16.810
+well, you lose the information
+of where tokens are located.
+
+00:46:16.810 --> 00:46:23.010
+So the original transformer
+paper tried two approaches.
+
+00:46:23.010 --> 00:46:27.650
+The first was learning
+position embeddings
+
+00:46:27.650 --> 00:46:31.810
+and adding those embeddings
+to the token embeddings.
+
+00:46:31.810 --> 00:46:36.450
+So what people would do is
+you have an input sequence,
+
+00:46:36.450 --> 00:46:38.290
+you have your tokens.
+
+00:46:38.290 --> 00:46:42.450
+Each token is associated
+with a position index.
+
+00:46:42.450 --> 00:46:45.910
+Let's assume 1, 2, 3, and so on.
+
+00:46:45.910 --> 00:46:51.510
+And here the idea is to learn
+an embedding that is associated
+
+00:46:51.510 --> 00:46:53.670
+with each position index.
+
+00:46:53.670 --> 00:46:55.610
+So position 1 will
+have an embedding,
+
+00:46:55.610 --> 00:46:59.790
+position 2 will have an
+embedding, and so on.
+
+00:46:59.790 --> 00:47:02.950
+And these embeddings
+would be learned.
+
+00:47:02.950 --> 00:47:06.870
+And what would happen is,
+in order for your model
+
+00:47:06.870 --> 00:47:11.110
+to actually know about
+where each of these tokens
+
+00:47:11.110 --> 00:47:15.470
+are located, so if you see on
+the right, what people would do
+
+00:47:15.470 --> 00:47:19.150
+is take the token
+embedding and then
+
+00:47:19.150 --> 00:47:23.590
+add that position-specific
+embedding to the token
+
+00:47:23.590 --> 00:47:29.790
+just to reflect that token is
+at a very specific position.
+
+00:47:29.790 --> 00:47:32.230
+But the problem
+with this approach
+
+00:47:32.230 --> 00:47:37.470
+is, as we mentioned last time,
+that if you train your model
+
+00:47:37.470 --> 00:47:43.730
+on a given length of
+input data, if you ever
+
+00:47:43.730 --> 00:47:48.470
+come across some sequence
+at inference time, that is,
+
+00:47:48.470 --> 00:47:52.170
+let's say longer, the
+problem is actually
+
+00:47:52.170 --> 00:47:55.810
+have never encountered
+positions beyond the ones
+
+00:47:55.810 --> 00:47:59.170
+that you encountered
+at training time.
+
+00:47:59.170 --> 00:48:02.770
+So you actually do not know what
+embeddings for such position
+
+00:48:02.770 --> 00:48:03.530
+are.
+
+00:48:03.530 --> 00:48:06.010
+You don't know.
+
+00:48:06.010 --> 00:48:09.810
+And so that's the reason
+why the original authors
+
+00:48:09.810 --> 00:48:13.950
+of the transformer paper, they
+not only tried the learned way,
+
+00:48:13.950 --> 00:48:18.610
+but they also tried a
+deterministic formula-based way
+
+00:48:18.610 --> 00:48:21.170
+that we're going
+to see in a second.
+
+00:48:21.170 --> 00:48:23.530
+And the reason why they
+tried this approach
+
+00:48:23.530 --> 00:48:31.650
+is because it can generalize
+to any sequence length
+
+00:48:31.650 --> 00:48:37.490
+without having you to actually
+train on longer sequences.
+
+00:48:37.490 --> 00:48:39.730
+And they actually said
+that both approaches
+
+00:48:39.730 --> 00:48:42.950
+were roughly leading to
+the same performance.
+
+00:48:42.950 --> 00:48:48.750
+So the fixed one is better
+and we're going to see it now.
+
+00:48:48.750 --> 00:48:53.550
+So there was this analogy that I
+mentioned last time that I will
+
+00:48:53.550 --> 00:48:56.770
+start from in this session.
+
+00:48:56.770 --> 00:49:03.150
+So the idea behind the
+deterministic formulation
+
+00:49:03.150 --> 00:49:11.550
+is to express each position
+on a high dimensional vector.
+
+00:49:11.550 --> 00:49:17.270
+And what you want is that
+vector to exactly inform you
+
+00:49:17.270 --> 00:49:20.750
+in which position you're in.
+
+00:49:20.750 --> 00:49:24.450
+And so you want that.
+
+00:49:24.450 --> 00:49:30.910
+You also want two
+positions to be embedded,
+
+00:49:30.910 --> 00:49:35.430
+such that the similarity
+operation between these two
+
+00:49:35.430 --> 00:49:41.130
+embeddings are high if
+the positions are close
+
+00:49:41.130 --> 00:49:44.810
+and it's low when these
+positions are far.
+
+00:49:44.810 --> 00:49:47.570
+And so I'm going
+to just motivate
+
+00:49:47.570 --> 00:49:50.530
+how the authors have
+actually designed
+
+00:49:50.530 --> 00:49:52.530
+the formula and the
+design that they're
+
+00:49:52.530 --> 00:49:58.090
+using for the position embedding
+that they're proposing here.
+
+00:49:58.090 --> 00:50:01.450
+So going through the
+analogy that we discussed,
+
+00:50:01.450 --> 00:50:05.250
+let's assume you're
+looking at your watch.
+
+00:50:05.250 --> 00:50:06.910
+You have several hands.
+
+00:50:06.910 --> 00:50:08.468
+You have the hour hand.
+
+00:50:08.468 --> 00:50:09.510
+You have the minute hand.
+
+00:50:09.510 --> 00:50:12.450
+You have the second hand.
+
+00:50:12.450 --> 00:50:14.823
+If you put all these
+hands together,
+
+00:50:14.823 --> 00:50:19.486
+you know exactly
+what time it is.
+
+00:50:19.486 --> 00:50:26.170
+And each of these hands, they're
+moving at different frequencies.
+
+00:50:26.170 --> 00:50:28.790
+So the hour tells you roughly
+when you are in the day,
+
+00:50:28.790 --> 00:50:30.750
+the minute is a little
+bit more precise.
+
+00:50:30.750 --> 00:50:33.890
+And then the second is
+like, even more precise.
+
+00:50:33.890 --> 00:50:37.250
+And so what we're
+going to do is do
+
+00:50:37.250 --> 00:50:41.990
+something very similar for the
+position embeddings, where we'll
+
+00:50:41.990 --> 00:50:49.110
+have a function of higher
+and lower frequency,
+
+00:50:49.110 --> 00:50:54.250
+such that when you put all of
+that together into one vector,
+
+00:50:54.250 --> 00:50:59.310
+if you know exactly
+which position you're at.
+
+00:50:59.310 --> 00:51:02.610
+So it's going to get a little
+bit more into the math.
+
+00:51:02.610 --> 00:51:05.190
+So disclaimer, I
+hope you remember
+
+00:51:05.190 --> 00:51:06.650
+your trigonometry formula.
+
+00:51:06.650 --> 00:51:08.330
+But if not, don't worry.
+
+00:51:08.330 --> 00:51:10.430
+We'll also look at it together.
+
+00:51:10.430 --> 00:51:16.950
+So let's assume that
+you are at position m.
+
+00:51:16.950 --> 00:51:22.170
+And so here you're looking
+at two consecutive indices--
+
+00:51:22.170 --> 00:51:25.750
+so 2i and 2i plus 1.
+
+00:51:25.750 --> 00:51:31.970
+So what the authors propose
+is to have one be a cosine,
+
+00:51:31.970 --> 00:51:35.190
+the other one be a
+sine or vice versa,
+
+00:51:35.190 --> 00:51:40.160
+and have the frequency
+of these functions
+
+00:51:40.160 --> 00:51:43.520
+be a function of the index.
+
+00:51:43.520 --> 00:51:49.000
+So here, if i is low, then
+you have a higher frequency
+
+00:51:49.000 --> 00:51:50.760
+function.
+
+00:51:50.760 --> 00:51:55.720
+If i is high, you have a
+lower frequency function,
+
+00:51:55.720 --> 00:52:00.560
+meaning your sine
+will vary more slowly.
+
+00:52:00.560 --> 00:52:02.000
+So here, if you
+see on the graph,
+
+00:52:02.000 --> 00:52:06.780
+I'm not sure if you
+exactly read the axis.
+
+00:52:06.780 --> 00:52:10.340
+So on the right
+side of the slide,
+
+00:52:10.340 --> 00:52:15.080
+you have on the
+y-axis the position,
+
+00:52:15.080 --> 00:52:18.960
+and on the x-axis,
+the dimension.
+
+00:52:18.960 --> 00:52:24.680
+So here what you see is
+if you take the first row
+
+00:52:24.680 --> 00:52:29.360
+and you're moving down,
+you're going from position 1
+
+00:52:29.360 --> 00:52:34.000
+to later positions
+of your sequence.
+
+00:52:34.000 --> 00:52:37.160
+And you see that the first
+dimensions, the first indices,
+
+00:52:37.160 --> 00:52:41.740
+the one on the left, they
+tend to vary very quickly,
+
+00:52:41.740 --> 00:52:44.200
+and the one on the
+right, the later indices,
+
+00:52:44.200 --> 00:52:47.900
+they tend to vary
+much, much more slowly.
+
+00:52:47.900 --> 00:52:50.940
+So in other words,
+your lower indices,
+
+00:52:50.940 --> 00:52:53.800
+they're much higher frequency.
+
+00:52:53.800 --> 00:52:58.260
+And the later indices, they
+are of much lower frequency.
+
+00:52:58.260 --> 00:53:02.020
+So just to tell you that this
+seemingly scary formula is just
+
+00:53:02.020 --> 00:53:03.180
+telling you this.
+
+00:53:03.180 --> 00:53:07.780
+So it's varying cosine, sine
+with different frequencies.
+
+00:53:07.780 --> 00:53:11.180
+It's a higher frequency for a
+lower index, lower frequency
+
+00:53:11.180 --> 00:53:14.180
+for a higher index.
+
+00:53:14.180 --> 00:53:19.060
+So let's assume you note
+omega i, the huge formula,
+
+00:53:19.060 --> 00:53:21.420
+so that we don't need
+to worry about it.
+
+00:53:21.420 --> 00:53:27.180
+Well, what happens if you have
+a position m and a position n?
+
+00:53:27.180 --> 00:53:29.300
+How do you compute
+the similarity?
+
+00:53:29.300 --> 00:53:32.202
+Well, you take the dot product.
+
+00:53:32.202 --> 00:53:33.660
+So if you remember
+the way you take
+
+00:53:33.660 --> 00:53:39.960
+the dot product of two vectors
+is you multiply each dimension
+
+00:53:39.960 --> 00:53:43.040
+and then you add everything up.
+
+00:53:43.040 --> 00:53:47.660
+So just a refresher
+on trigonometry.
+
+00:53:47.660 --> 00:53:51.840
+So cosine of a minus b
+is cosine of a cosine
+
+00:53:51.840 --> 00:53:59.040
+of b plus sine of a sine of b
+just the trigonometry formula.
+
+00:53:59.040 --> 00:54:06.680
+So here if you take the cosine
+of omega i of m minus n,
+
+00:54:06.680 --> 00:54:13.700
+it's actually the dot product
+between these two indices.
+
+00:54:19.560 --> 00:54:22.140
+So the question, is i a
+function of the dimension?
+
+00:54:22.140 --> 00:54:22.640
+Yes.
+
+00:54:22.640 --> 00:54:24.760
+So i is a function of the index.
+
+00:54:24.760 --> 00:54:29.840
+So if you have a lower
+i, then your omega i
+
+00:54:29.840 --> 00:54:33.460
+will be such that it will
+be of higher frequency.
+
+00:54:33.460 --> 00:54:36.180
+So yes, it's a
+function of the index.
+
+00:54:36.180 --> 00:54:37.500
+That's a great question.
+
+00:54:37.500 --> 00:54:43.140
+So here going back to our
+favorite trigonometric formula,
+
+00:54:43.140 --> 00:54:49.500
+so here I just want to point out
+that cosine of omega i m minus n
+
+00:54:49.500 --> 00:54:55.500
+is equal to the dot
+product of these two.
+
+00:54:55.500 --> 00:54:59.300
+And if you actually want to take
+the dot product of the whole two
+
+00:54:59.300 --> 00:55:04.300
+vectors, you
+actually obtain a sum
+
+00:55:04.300 --> 00:55:12.500
+of the cosine of the omega i
+of all the indices multiplied
+
+00:55:12.500 --> 00:55:16.540
+by m minus n.
+
+00:55:16.540 --> 00:55:19.020
+Is everyone following so far?
+
+00:55:19.020 --> 00:55:20.660
+Yeah.
+
+00:55:20.660 --> 00:55:22.380
+So why am I saying this?
+
+00:55:22.380 --> 00:55:26.660
+I'm saying this because the
+dot product of the two position
+
+00:55:26.660 --> 00:55:32.520
+embeddings at position m and
+n is a function of m minus n.
+
+00:55:32.520 --> 00:55:38.280
+And you may remember
+that cosine of 0
+
+00:55:38.280 --> 00:55:41.480
+is the maximum value
+that cosine can take.
+
+00:55:41.480 --> 00:55:45.760
+So in other words,
+when m is equal to n,
+
+00:55:45.760 --> 00:55:47.100
+the sum is maximized.
+
+00:55:47.100 --> 00:55:50.680
+So the similarity is maximum.
+
+00:55:50.680 --> 00:55:56.240
+So all of that to say that if
+you take this expression that
+
+00:55:56.240 --> 00:56:00.040
+is graphically something that
+you see on the left in terms
+
+00:56:00.040 --> 00:56:04.000
+of the value of the embeddings,
+what you will obtain
+
+00:56:04.000 --> 00:56:07.500
+is that positions that
+are close together,
+
+00:56:07.500 --> 00:56:10.800
+they're actually of high
+similarity and positions that
+
+00:56:10.800 --> 00:56:14.800
+are farther together, they
+are of lower similarity.
+
+00:56:14.800 --> 00:56:16.800
+And that's what you
+see on the right.
+
+00:56:16.800 --> 00:56:21.080
+So on the right, you have
+the positions on the x-axis
+
+00:56:21.080 --> 00:56:24.640
+and on the y-axis of m and n.
+
+00:56:24.640 --> 00:56:28.840
+And you see that when
+the positions are equal,
+
+00:56:28.840 --> 00:56:32.980
+the similarity is maximum.
+
+00:56:32.980 --> 00:56:36.380
+So all of that to say that if
+you were to look at the formulas
+
+00:56:36.380 --> 00:56:39.660
+without any context, I think
+you'd be probably scared.
+
+00:56:39.660 --> 00:56:44.460
+But I hope that with
+this perspective,
+
+00:56:44.460 --> 00:56:48.720
+it's a little bit less scary.
+
+00:56:48.720 --> 00:56:55.560
+So now what I want to tell you
+is that if everything was great,
+
+00:56:55.560 --> 00:56:59.300
+we would be using this
+exact method today.
+
+00:56:59.300 --> 00:57:01.740
+But the truth is we are not.
+
+00:57:01.740 --> 00:57:04.000
+This is actually not something
+that people use today.
+
+00:57:04.000 --> 00:57:06.500
+People use something
+differently.
+
+00:57:06.500 --> 00:57:13.180
+And the reason why that is the
+case is if you think about it,
+
+00:57:13.180 --> 00:57:19.460
+you care about where
+tokens are positioned
+
+00:57:19.460 --> 00:57:21.160
+in a very specific layer.
+
+00:57:21.160 --> 00:57:25.180
+You only care about it
+in the attention layer,
+
+00:57:25.180 --> 00:57:28.160
+because the attention layer is
+the layer where you actually
+
+00:57:28.160 --> 00:57:29.460
+are communicating.
+
+00:57:29.460 --> 00:57:33.560
+You're trying to determine
+which tokens are relevant when
+
+00:57:33.560 --> 00:57:37.840
+you do your expression.
+
+00:57:37.840 --> 00:57:43.200
+And so this is the reason
+why people have actually
+
+00:57:43.200 --> 00:57:49.440
+tried to find a method that is
+not affecting all the layers,
+
+00:57:49.440 --> 00:57:55.840
+but that is being surgically
+applied to the attention layer.
+
+00:57:55.840 --> 00:57:58.720
+Yeah.
+
+00:57:58.720 --> 00:58:03.280
+So the question is if you
+do that, then you may make
+
+00:58:03.280 --> 00:58:05.640
+further token interact less.
+
+00:58:05.640 --> 00:58:07.340
+And that was maybe
+the problem of RNN.
+
+00:58:07.340 --> 00:58:08.720
+So why are we doing this?
+
+00:58:08.720 --> 00:58:13.760
+So here the idea is to inject
+some position information
+
+00:58:13.760 --> 00:58:18.540
+and intuitively tokens
+that are farther apart,
+
+00:58:18.540 --> 00:58:21.440
+they're just less relevant.
+
+00:58:21.440 --> 00:58:24.240
+But they're not relevant.
+
+00:58:24.240 --> 00:58:30.460
+And so here the idea is
+that on a relative sense,
+
+00:58:30.460 --> 00:58:34.380
+closer token are just more
+likely to be more relevant.
+
+00:58:34.380 --> 00:58:37.120
+But you're still keeping
+the direct connections,
+
+00:58:37.120 --> 00:58:39.740
+and you're still giving
+a chance to your model
+
+00:58:39.740 --> 00:58:42.220
+to actually interact
+with those tokens.
+
+00:58:42.220 --> 00:58:45.060
+So I do get your concern.
+
+00:58:45.060 --> 00:58:47.580
+That being said,
+this is something
+
+00:58:47.580 --> 00:58:53.700
+that proved to work well,
+and it just reflects the idea
+
+00:58:53.700 --> 00:58:57.140
+that if let's say you have
+a 10 document page, then
+
+00:58:57.140 --> 00:58:59.300
+probably what you have
+in the same sentence
+
+00:58:59.300 --> 00:59:01.340
+is probably more relevant
+than something that
+
+00:59:01.340 --> 00:59:04.940
+is very far apart, but
+you're still giving a chance
+
+00:59:04.940 --> 00:59:06.440
+to these tokens to interact.
+
+00:59:09.580 --> 00:59:12.140
+OK, great.
+
+00:59:12.140 --> 00:59:13.560
+So going back to here.
+
+00:59:13.560 --> 00:59:17.140
+So one major drawback
+of the previous approach
+
+00:59:17.140 --> 00:59:20.420
+is that this position
+embedding was actually
+
+00:59:20.420 --> 00:59:25.080
+being added to the token
+embedding, which was then being
+
+00:59:25.080 --> 00:59:27.160
+processed by all the layers.
+
+00:59:27.160 --> 00:59:30.580
+But intuitively, this is
+actually not what you want,
+
+00:59:30.580 --> 00:59:34.680
+because what you want is
+to let your attention layer
+
+00:59:34.680 --> 00:59:39.080
+know when two tokens
+are far apart.
+
+00:59:39.080 --> 00:59:43.760
+But you don't want to let your
+feedforward neural network know
+
+00:59:43.760 --> 00:59:47.600
+that your token is at
+position 5 or at position 12
+
+00:59:47.600 --> 00:59:51.360
+because the feedforward
+neural network doesn't care.
+
+00:59:51.360 --> 00:59:55.160
+Can very well have a
+sentence where a token is
+
+00:59:55.160 --> 00:59:59.160
+at position 24 versus 1.
+
+00:59:59.160 --> 01:00:01.920
+That can be very making
+sense just because you
+
+01:00:01.920 --> 01:00:05.240
+have multiple sentences.
+
+01:00:05.240 --> 01:00:08.200
+So this is the reason
+why people have
+
+01:00:08.200 --> 01:00:14.320
+tried to mitigate this
+drawback by surgically looking
+
+01:00:14.320 --> 01:00:19.360
+into the attention layers
+and doing something there.
+
+01:00:19.360 --> 01:00:22.980
+And in particular, I'll
+go through a few methods
+
+01:00:22.980 --> 01:00:24.900
+that people have tried.
+
+01:00:24.900 --> 01:00:30.860
+So one of them is a method
+which was meant to learn a bias
+
+01:00:30.860 --> 01:00:34.040
+term within the Softmax.
+
+01:00:34.040 --> 01:00:36.060
+So if you remember in
+the attention layer,
+
+01:00:36.060 --> 01:00:39.700
+you have this formula which
+I recommend you remember,
+
+01:00:39.700 --> 01:00:45.100
+which is Softmax of qk transpose
+over some scaling constant times
+
+01:00:45.100 --> 01:00:46.660
+v.
+
+01:00:46.660 --> 01:00:49.220
+So within the Softmax,
+you're actually
+
+01:00:49.220 --> 01:00:54.460
+trying to ask yourself
+how relevant the query is
+
+01:00:54.460 --> 01:00:56.500
+to all the other keys.
+
+01:00:56.500 --> 01:00:58.980
+So this is where that matters.
+
+01:00:58.980 --> 01:01:03.820
+And so here the idea
+is to learn a bias that
+
+01:01:03.820 --> 01:01:11.700
+is dependent on how far your
+token m and your token n
+
+01:01:11.700 --> 01:01:16.860
+are by learning a bias.
+
+01:01:16.860 --> 01:01:19.780
+The problem with this is,
+so similar to the very first
+
+01:01:19.780 --> 01:01:22.310
+method, you need
+to learn the bias.
+
+01:01:22.310 --> 01:01:25.110
+And so first of all,
+maybe your training data
+
+01:01:25.110 --> 01:01:27.490
+has some bias in itself.
+
+01:01:27.490 --> 01:01:29.730
+So it will maybe not optimal.
+
+01:01:29.730 --> 01:01:31.750
+But then the second
+thing is it's not
+
+01:01:31.750 --> 01:01:37.590
+generalizable to all
+possible distances.
+
+01:01:37.590 --> 01:01:40.090
+So that's why people have
+tried other methods as well.
+
+01:01:40.090 --> 01:01:44.630
+Another one is called ALiBi--
+so Attention with Linear Biases.
+
+01:01:44.630 --> 01:01:47.110
+And so here the idea
+is to actually make
+
+01:01:47.110 --> 01:01:52.030
+that bias vary as
+a function of m--
+
+01:01:52.030 --> 01:01:53.530
+sorry, n minus m.
+
+01:01:53.530 --> 01:01:58.310
+So the distance between m and n.
+
+01:01:58.310 --> 01:02:04.130
+But the method that is commonly
+used nowadays is not ALiBi,
+
+01:02:04.130 --> 01:02:06.790
+is not the T5 bias, it's RoPE.
+
+01:02:06.790 --> 01:02:10.110
+So who has heard of RoPE?
+
+01:02:10.110 --> 01:02:10.990
+Yeah?
+
+01:02:10.990 --> 01:02:11.490
+OK, great.
+
+01:02:11.490 --> 01:02:15.190
+So we're going to see why
+RoPE is the way it is.
+
+01:02:15.190 --> 01:02:21.130
+So RoPE stands for Rotary
+Position Embedding.
+
+01:02:21.130 --> 01:02:27.490
+And the idea behind RoPE
+is in the attention layer,
+
+01:02:27.490 --> 01:02:29.955
+you're not going to add a bias.
+
+01:02:29.955 --> 01:02:31.330
+What you're going
+to do is you're
+
+01:02:31.330 --> 01:02:35.770
+going to change the query
+and the key directly.
+
+01:02:35.770 --> 01:02:38.610
+And so how are we going
+to change them directly?
+
+01:02:38.610 --> 01:02:40.690
+What you're going
+to do is you're
+
+01:02:40.690 --> 01:02:44.110
+going to rotate your query.
+
+01:02:44.110 --> 01:02:49.570
+You're going to rotate
+your key, each of them
+
+01:02:49.570 --> 01:02:54.130
+as a function of the
+position that they're in.
+
+01:02:54.130 --> 01:02:57.730
+And why is it something
+that is very appealing?
+
+01:02:57.730 --> 01:03:02.450
+Well, because the nice thing is
+when you rotate the query, when
+
+01:03:02.450 --> 01:03:07.410
+you rotate the key, what you're
+actually doing, when you do
+
+01:03:07.410 --> 01:03:16.290
+the self-attention formula is
+you're actually bubbling up
+
+01:03:16.290 --> 01:03:21.870
+an expression that is a function
+of the difference between n
+
+01:03:21.870 --> 01:03:22.450
+and m.
+
+01:03:25.070 --> 01:03:27.510
+So we're going to see a
+little bit how that works.
+
+01:03:27.510 --> 01:03:29.910
+So here, so I'm not
+sure if any of you
+
+01:03:29.910 --> 01:03:35.010
+is an expert at geometry
+and rotation matrices.
+
+01:03:35.010 --> 01:03:41.230
+But the way you rotate a
+vector is you take that vector
+
+01:03:41.230 --> 01:03:45.310
+and you actually have
+a rotation matrix
+
+01:03:45.310 --> 01:03:48.110
+that you apply to that vector.
+
+01:03:48.110 --> 01:03:51.270
+So I'm going to maybe
+just write that down.
+
+01:03:51.270 --> 01:03:53.570
+If I do have this.
+
+01:03:53.570 --> 01:04:00.590
+So let's suppose you have
+some vector, let's call it x.
+
+01:04:00.590 --> 01:04:08.130
+So you have, let's say
+you have two dimensions--
+
+01:04:08.130 --> 01:04:10.830
+let's assume you have x and y.
+
+01:04:10.830 --> 01:04:17.770
+And let's assume that
+your vector is like this.
+
+01:04:17.770 --> 01:04:22.210
+And this is let's
+say a radius of r.
+
+01:04:22.210 --> 01:04:26.330
+So here the x-axis is x--
+
+01:04:26.330 --> 01:04:32.470
+sorry, it's R and here
+you have your theta angle,
+
+01:04:32.470 --> 01:04:34.770
+cosine of theta.
+
+01:04:34.770 --> 01:04:42.450
+And then here you have your y
+value, which is R sine theta.
+
+01:04:42.450 --> 01:04:44.910
+So let's assume you have this.
+
+01:04:48.330 --> 01:04:51.370
+So what I'm only
+doing is expressing
+
+01:04:51.370 --> 01:04:56.090
+x as a function of some angle
+theta that it already has.
+
+01:04:56.090 --> 01:04:58.890
+And what I want to
+show you is if you
+
+01:04:58.890 --> 01:05:05.010
+were to multiply the rotation
+matrix with this vector x.
+
+01:05:05.010 --> 01:05:09.330
+So let's assume you have a
+rotation matrix of let's say
+
+01:05:09.330 --> 01:05:14.330
+angle phi, let's assume, which
+is-- so I'm going to just copy
+
+01:05:14.330 --> 01:05:15.690
+what is on the slides.
+
+01:05:15.690 --> 01:05:27.270
+So it's cosine of phi is minus
+sine of phi, sine of phi,
+
+01:05:27.270 --> 01:05:30.950
+and then cosine of phi.
+
+01:05:30.950 --> 01:05:37.470
+So let's assume you actually
+multiply your rotation matrix
+
+01:05:37.470 --> 01:05:40.910
+with the vector x.
+
+01:05:40.910 --> 01:05:45.910
+So for those of you who
+love matrix multiplications
+
+01:05:45.910 --> 01:05:51.750
+and trigonometry formulas, this
+is the best case because I'm
+
+01:05:51.750 --> 01:05:55.270
+going to exactly see.
+
+01:05:55.270 --> 01:05:57.890
+So here you would do the
+matrix multiplication.
+
+01:05:57.890 --> 01:06:01.630
+So R times cosine of
+theta cosine of phi
+
+01:06:01.630 --> 01:06:05.110
+minus R cosine of theta--
+
+01:06:05.110 --> 01:06:10.150
+sorry, minus R sine
+of phi sine of theta.
+
+01:06:10.150 --> 01:06:10.770
+What is this?
+
+01:06:10.770 --> 01:06:15.850
+It's R cosine of theta plus phi.
+
+01:06:15.850 --> 01:06:19.390
+And you guessed it, the other
+one is the same, but with sine.
+
+01:06:30.770 --> 01:06:33.030
+So why am I writing all of this?
+
+01:06:33.030 --> 01:06:36.410
+What I want to show
+you is if you multiply
+
+01:06:36.410 --> 01:06:39.170
+your vector with
+the rotation matrix,
+
+01:06:39.170 --> 01:06:41.850
+you're rotating your vector.
+
+01:06:41.850 --> 01:06:44.410
+And this is the reason why
+we have this formula written
+
+01:06:44.410 --> 01:06:46.130
+on the slide.
+
+01:06:46.130 --> 01:06:52.770
+And the nice thing is, if
+you rotate your query vector
+
+01:06:52.770 --> 01:06:56.510
+by some angle as
+a function of m,
+
+01:06:56.510 --> 01:07:00.650
+and if you rotate
+your key vector
+
+01:07:00.650 --> 01:07:03.770
+as a function of
+its position n, then
+
+01:07:03.770 --> 01:07:08.290
+you obtain a rotation
+matrix that is actually
+
+01:07:08.290 --> 01:07:11.530
+a function of n minus m.
+
+01:07:11.530 --> 01:07:13.670
+So I will spare you the details.
+
+01:07:13.670 --> 01:07:16.450
+But if you just do
+the multiplication,
+
+01:07:16.450 --> 01:07:18.950
+you will see that it works.
+
+01:07:18.950 --> 01:07:22.910
+And so the reason
+why it is pretty nice
+
+01:07:22.910 --> 01:07:27.330
+is because this is
+extensible to any positions.
+
+01:07:27.330 --> 01:07:30.030
+You're not learning anything.
+
+01:07:30.030 --> 01:07:33.550
+And by the way, one other thing
+I will say is I just showed you
+
+01:07:33.550 --> 01:07:34.610
+the 2D case.
+
+01:07:34.610 --> 01:07:41.730
+But in order to generalize that
+let's say d-dimensional case,
+
+01:07:41.730 --> 01:07:48.550
+you would actually
+do that by 2D blocks.
+
+01:07:48.550 --> 01:07:54.510
+And you would do the
+rotation with angles that
+
+01:07:54.510 --> 01:07:56.250
+are a function of the index.
+
+01:07:56.250 --> 01:07:58.590
+So to your earlier
+question, so here you
+
+01:07:58.590 --> 01:08:03.370
+would have also angles
+that would be a function,
+
+01:08:03.370 --> 01:08:04.950
+let's say if it's
+a lower index, it's
+
+01:08:04.950 --> 01:08:08.650
+a different angle compared
+to if it's a later index.
+
+01:08:11.570 --> 01:08:12.530
+Cool.
+
+01:08:12.530 --> 01:08:14.850
+And the nice thing
+with this method
+
+01:08:14.850 --> 01:08:20.729
+is if you take a look at the
+order of magnitude of the dot
+
+01:08:20.729 --> 01:08:23.569
+product between the
+query and the key
+
+01:08:23.569 --> 01:08:27.930
+as a function of how far
+their positions are, then
+
+01:08:27.930 --> 01:08:33.050
+you will see that roughly
+it tends to decay as m and n
+
+01:08:33.050 --> 01:08:35.490
+are farther apart.
+
+01:08:35.490 --> 01:08:40.609
+So it's not strictly
+monotonic because, well, it's
+
+01:08:40.609 --> 01:08:41.870
+more complicated than that.
+
+01:08:41.870 --> 01:08:45.930
+But at a very high
+level, it just decays
+
+01:08:45.930 --> 01:08:50.569
+and it just reflects
+what we want in tokens
+
+01:08:50.569 --> 01:08:53.930
+that are very far apart.
+
+01:08:53.930 --> 01:08:56.210
+So that was RoPE.
+
+01:08:56.210 --> 01:09:00.290
+So in other words, the
+original transformer paper
+
+01:09:00.290 --> 01:09:04.729
+used position embeddings
+that were additive,
+
+01:09:04.729 --> 01:09:09.790
+which is in contrast with
+nowadays where people use RoPE
+
+01:09:09.790 --> 01:09:13.990
+as a way to encode position.
+
+01:09:13.990 --> 01:09:16.189
+So this is how people use it.
+
+01:09:16.189 --> 01:09:21.830
+And they don't use
+the additive position
+
+01:09:21.830 --> 01:09:24.029
+that we discussed before.
+
+01:09:24.029 --> 01:09:27.933
+So now we're going to talk
+about another component that
+
+01:09:27.933 --> 01:09:29.350
+is a little bit
+different compared
+
+01:09:29.350 --> 01:09:34.350
+to the original transformer, and
+this one is the attention layer.
+
+01:09:34.350 --> 01:09:38.550
+So I mentioned that
+in the encoder part,
+
+01:09:38.550 --> 01:09:40.870
+everyone can attend to everyone.
+
+01:09:40.870 --> 01:09:44.310
+In the decoder
+part, a given token
+
+01:09:44.310 --> 01:09:49.189
+can attend to itself
+and to tokens before it.
+
+01:09:49.189 --> 01:09:52.670
+So one natural question
+that people have asked
+
+01:09:52.670 --> 01:09:56.670
+is, well, do you
+really need to attend
+
+01:09:56.670 --> 01:10:01.150
+to everyone at every layer?
+
+01:10:01.150 --> 01:10:04.030
+Because it's a lot
+of computations.
+
+01:10:04.030 --> 01:10:09.730
+And the answer is, well, maybe
+you don't need to do that.
+
+01:10:09.730 --> 01:10:14.410
+And in particular, there
+is a specific variation
+
+01:10:14.410 --> 01:10:18.690
+that is called the sliding
+window attention that
+
+01:10:18.690 --> 01:10:23.490
+is actually meant for
+you to attend to only up
+
+01:10:23.490 --> 01:10:27.730
+to a certain position that
+is farther away from you.
+
+01:10:27.730 --> 01:10:31.970
+Not everyone, but only
+up to a certain level.
+
+01:10:31.970 --> 01:10:34.410
+And so here it's
+something that people also
+
+01:10:34.410 --> 01:10:38.410
+call local attention.
+
+01:10:38.410 --> 01:10:43.170
+And what I want to tell you
+is you may-- so probably, you
+
+01:10:43.170 --> 01:10:44.990
+will probably come
+back to me with saying,
+
+01:10:44.990 --> 01:10:47.302
+OK, the RNN actually
+had this issue.
+
+01:10:47.302 --> 01:10:48.510
+Well, why are you doing this?
+
+01:10:48.510 --> 01:10:53.010
+So I want to point
+out something that I
+
+01:10:53.010 --> 01:10:59.050
+hope will be making sense.
+
+01:10:59.050 --> 01:11:03.350
+So your model is
+not just one block.
+
+01:11:03.350 --> 01:11:05.150
+It's not just one
+block of the decoder.
+
+01:11:05.150 --> 01:11:07.620
+It's actually several blocks.
+
+01:11:07.620 --> 01:11:12.020
+So the attention operation
+is not just happening once.
+
+01:11:12.020 --> 01:11:15.020
+It is happening several times.
+
+01:11:15.020 --> 01:11:20.400
+So if you have, let's
+say, a sequence of tokens.
+
+01:11:25.580 --> 01:11:32.540
+So I'm going to just replicate
+exactly these tokens over here
+
+01:11:32.540 --> 01:11:33.960
+and let's say over here.
+
+01:11:37.580 --> 01:11:47.180
+So let's assume that
+this token can only
+
+01:11:47.180 --> 01:11:54.140
+interact with itself and
+with one token from before.
+
+01:11:54.140 --> 01:11:58.580
+Here you only see yourself
+and the token before.
+
+01:11:58.580 --> 01:12:02.980
+But if you consider that
+in a similar fashion
+
+01:12:02.980 --> 01:12:09.200
+this token can attend to
+itself and the token before,
+
+01:12:09.200 --> 01:12:15.200
+well, effectively, this token
+is able to see representations
+
+01:12:15.200 --> 01:12:19.340
+from tokens that are
+beyond the limit.
+
+01:12:22.560 --> 01:12:23.980
+Does what I'm
+saying making sense?
+
+01:12:23.980 --> 01:12:24.440
+Yeah.
+
+01:12:24.440 --> 01:12:24.940
+OK.
+
+01:12:24.940 --> 01:12:31.800
+So in other words, even though
+you are limiting yourself
+
+01:12:31.800 --> 01:12:35.160
+in the tokens that you're
+able to interact with,
+
+01:12:35.160 --> 01:12:39.600
+if you have several
+stacked blocks,
+
+01:12:39.600 --> 01:12:41.440
+then what you're
+actually able to do
+
+01:12:41.440 --> 01:12:46.040
+is to interact with
+further tokens.
+
+01:12:46.040 --> 01:12:49.900
+And for those of us who are also
+familiar with the vision world,
+
+01:12:49.900 --> 01:12:53.200
+so in case you're familiar with
+convolutional neural networks,
+
+01:12:53.200 --> 01:12:58.560
+it's a little bit the same
+idea as receptive fields.
+
+01:12:58.560 --> 01:13:02.660
+So here when you
+perform the convolution,
+
+01:13:02.660 --> 01:13:08.180
+a given element is actually a
+function of actually many pixels
+
+01:13:08.180 --> 01:13:10.500
+if you go back into the chain.
+
+01:13:10.500 --> 01:13:13.220
+So it's the same idea.
+
+01:13:13.220 --> 01:13:18.700
+OK, I want to tell you something
+else about the attention layer.
+
+01:13:18.700 --> 01:13:23.260
+So I think we briefly discussed
+it earlier in the lecture.
+
+01:13:23.260 --> 01:13:25.760
+But OK, I'm going to reuse this.
+
+01:13:29.660 --> 01:13:36.260
+So let's assume that we're
+back with our decoder
+
+01:13:36.260 --> 01:13:41.580
+only model which is typically
+what LLMs are composed of.
+
+01:13:41.580 --> 01:13:47.420
+And let's assume that
+what you want to do
+
+01:13:47.420 --> 01:13:50.620
+is to predict the next token.
+
+01:13:50.620 --> 01:13:53.140
+Well, this is your
+last predicted token.
+
+01:13:53.140 --> 01:13:55.260
+In order to predict
+the next token,
+
+01:13:55.260 --> 01:13:57.980
+you have a bunch of layers, but
+in particular in the attention
+
+01:13:57.980 --> 01:14:01.740
+layer, what you're doing is
+you're attending to yourself.
+
+01:14:01.740 --> 01:14:04.640
+You're attending to the
+token before, the token
+
+01:14:04.640 --> 01:14:07.880
+before that, the
+token before that.
+
+01:14:07.880 --> 01:14:11.120
+Let's assume you
+predict a new token
+
+01:14:11.120 --> 01:14:13.700
+and that the new token, in
+order to predict the next token,
+
+01:14:13.700 --> 01:14:15.200
+you're attending
+to yourself, you're
+
+01:14:15.200 --> 01:14:18.340
+attending to the one before
+you, and so on and so forth.
+
+01:14:21.280 --> 01:14:27.760
+So every time you want to
+predict the next token, what
+
+01:14:27.760 --> 01:14:32.000
+you're doing is this
+causal attention,
+
+01:14:32.000 --> 01:14:37.880
+where you're comparing
+the query from your token
+
+01:14:37.880 --> 01:14:43.520
+with all the keys
+from the other tokens.
+
+01:14:43.520 --> 01:14:45.980
+And every time you want
+to predict a new token,
+
+01:14:45.980 --> 01:14:52.400
+you again compare it to the
+keys of the previous tokens.
+
+01:14:52.400 --> 01:14:59.300
+So you could either compute all
+the previous keys every time
+
+01:14:59.300 --> 01:15:06.700
+you do that operation, or
+you could store the keys
+
+01:15:06.700 --> 01:15:09.220
+as you perform your decoding.
+
+01:15:09.220 --> 01:15:11.240
+So, for instance, when
+I decode when I'm here,
+
+01:15:11.240 --> 01:15:12.520
+I attend only to myself.
+
+01:15:12.520 --> 01:15:13.740
+I computed the key.
+
+01:15:13.740 --> 01:15:16.260
+You can save the key.
+
+01:15:16.260 --> 01:15:17.520
+You predict this one.
+
+01:15:17.520 --> 01:15:20.035
+So here I attend to
+here and to the one
+
+01:15:20.035 --> 01:15:21.160
+before-- so I need the key.
+
+01:15:21.160 --> 01:15:23.100
+I can reuse the key.
+
+01:15:23.100 --> 01:15:26.500
+And I compute the
+key here that I save.
+
+01:15:26.500 --> 01:15:29.000
+And I'm continuing this
+process so on and so forth.
+
+01:15:29.000 --> 01:15:37.180
+So the problem with this is
+keys detect memory space.
+
+01:15:37.180 --> 01:15:40.500
+And as your decoding
+gets longer and longer,
+
+01:15:40.500 --> 01:15:43.380
+you need to store these keys.
+
+01:15:43.380 --> 01:15:45.820
+And so if you remember,
+the attention layer
+
+01:15:45.820 --> 01:15:48.700
+is actually a multi-head
+attention layer.
+
+01:15:48.700 --> 01:15:50.300
+So it doesn't only
+have one key, it
+
+01:15:50.300 --> 01:15:53.340
+has actually several
+keys for the same layer
+
+01:15:53.340 --> 01:15:55.420
+for the same token.
+
+01:15:55.420 --> 01:16:00.880
+So that is the reason why
+people have tried saving up
+
+01:16:00.880 --> 01:16:03.040
+the number of keys and
+the number of values
+
+01:16:03.040 --> 01:16:05.800
+that each token
+needs to produce.
+
+01:16:05.800 --> 01:16:07.940
+And that's why you
+have this method.
+
+01:16:07.940 --> 01:16:13.000
+So, for instance, the idea
+of sharing keys and values
+
+01:16:13.000 --> 01:16:15.120
+across heads.
+
+01:16:15.120 --> 01:16:18.520
+So the reason why people are
+interested in such methods
+
+01:16:18.520 --> 01:16:23.040
+is because given that you
+always need the keys in order
+
+01:16:23.040 --> 01:16:30.280
+to predict the next token, you
+want to save memory in there.
+
+01:16:30.280 --> 01:16:32.880
+And so that is the reason why
+you have a number of methods
+
+01:16:32.880 --> 01:16:35.920
+like group query
+attention, which
+
+01:16:35.920 --> 01:16:39.080
+shares the key and
+the value projection
+
+01:16:39.080 --> 01:16:44.253
+matrices across the heads,
+or the group query attention
+
+01:16:44.253 --> 01:16:45.920
+which is a little bit
+more common, where
+
+01:16:45.920 --> 01:16:51.720
+you have a certain number of
+groups where you share the key
+
+01:16:51.720 --> 01:16:54.400
+and value matrices.
+
+01:16:54.400 --> 01:16:58.060
+And this contrasts with the
+original multi-head attention
+
+01:16:58.060 --> 01:17:03.820
+layer, which had one heads,
+where you had all the projection
+
+01:17:03.820 --> 01:17:07.620
+matrices that you had to learn.
+
+01:17:07.620 --> 01:17:11.660
+So all of that to say
+that given that you
+
+01:17:11.660 --> 01:17:17.780
+are in this situation where
+you're always saving your keys
+
+01:17:17.780 --> 01:17:21.420
+and your values for tokens
+that you have decoded
+
+01:17:21.420 --> 01:17:24.260
+in the past, what
+you want is to not
+
+01:17:24.260 --> 01:17:26.720
+have to save too much of them.
+
+01:17:26.720 --> 01:17:29.340
+You don't want to
+saturate your memory.
+
+01:17:29.340 --> 01:17:33.660
+So people are trying to
+find ways to optimize that.
+
+01:17:33.660 --> 01:17:37.100
+And one such way
+is to just reduce
+
+01:17:37.100 --> 01:17:39.620
+the number of different
+projection matrices
+
+01:17:39.620 --> 01:17:43.340
+that you need to learn for
+the keys and the values.
+
+01:17:43.340 --> 01:17:45.442
+And that is the
+reason why, I mean,
+
+01:17:45.442 --> 01:17:47.400
+no one cares about the
+query because the query,
+
+01:17:47.400 --> 01:17:50.200
+you use it once and then
+you don't need that.
+
+01:17:52.980 --> 01:17:54.200
+So does that make sense?
+
+01:17:56.880 --> 01:17:59.860
+So nowadays people
+use GQA quite a lot.
+
+01:17:59.860 --> 01:18:03.140
+So among everything we've seen,
+you will see a RoPE quite a lot.
+
+01:18:03.140 --> 01:18:06.700
+You will see local attention
+with sliding window quite a lot.
+
+01:18:06.700 --> 01:18:10.420
+You will see GQA quite a lot.
+
+01:18:10.420 --> 01:18:13.020
+And there is one last thing that
+I want to talk to you about,
+
+01:18:13.020 --> 01:18:17.400
+which is the normalization.
+
+01:18:17.400 --> 01:18:21.445
+So in the original
+transformer architecture.
+
+01:18:21.445 --> 01:18:23.320
+So if you remember, so
+it's a little bit more
+
+01:18:23.320 --> 01:18:25.540
+of a detail when you
+first read the paper.
+
+01:18:25.540 --> 01:18:31.880
+But the way people do
+normalization is they first
+
+01:18:31.880 --> 01:18:40.040
+perform the sublayer operation
+and then they add to the inputs
+
+01:18:40.040 --> 01:18:41.460
+and then they normalize.
+
+01:18:41.460 --> 01:18:45.960
+So they do normalization
+of x plus sublayer of x.
+
+01:18:45.960 --> 01:18:48.340
+So it's also called post-norm.
+
+01:18:48.340 --> 01:18:52.600
+So you're normalizing
+after the operation.
+
+01:18:52.600 --> 01:18:55.820
+And the reason
+why people thought
+
+01:18:55.820 --> 01:18:58.900
+it was maybe not the
+best way is because here
+
+01:18:58.900 --> 01:19:00.980
+the idea behind
+residual connection
+
+01:19:00.980 --> 01:19:05.940
+is that you want to let
+the input through just
+
+01:19:05.940 --> 01:19:07.900
+for the gradient to flow better.
+
+01:19:07.900 --> 01:19:11.680
+And so here the x is actually
+within the layer normalization.
+
+01:19:11.680 --> 01:19:13.860
+So it's not great.
+
+01:19:13.860 --> 01:19:17.140
+And so this is the reason why
+people nowadays, what they do
+
+01:19:17.140 --> 01:19:19.520
+is they don't normalize
+after the operation.
+
+01:19:19.520 --> 01:19:21.860
+They actually normalize before.
+
+01:19:21.860 --> 01:19:24.060
+So they first
+normalize the inputs
+
+01:19:24.060 --> 01:19:26.200
+and then they put
+it into the layer.
+
+01:19:26.200 --> 01:19:28.700
+And then they add it to x.
+
+01:19:28.700 --> 01:19:31.140
+It's also called pre-norm.
+
+01:19:31.140 --> 01:19:33.500
+And it's just a way for
+the residual connection
+
+01:19:33.500 --> 01:19:39.140
+to do its job of letting
+the gradient flow.
+
+01:19:39.140 --> 01:19:42.540
+So you will see pre-norm as
+also a very common method.
+
+01:19:42.540 --> 01:19:47.420
+And one last thing, I
+promise, which is the layer
+
+01:19:47.420 --> 01:19:49.740
+normalization itself.
+
+01:19:49.740 --> 01:19:52.910
+So in the original
+transformer, here we're
+
+01:19:52.910 --> 01:19:57.990
+normalizing across all the
+activation by first recentering
+
+01:19:57.990 --> 01:20:02.550
+x and then having a
+term, gamma, and then
+
+01:20:02.550 --> 01:20:06.150
+some bias beta, which helps
+with training stability
+
+01:20:06.150 --> 01:20:08.150
+and convergence.
+
+01:20:08.150 --> 01:20:11.970
+But people have tried with
+other normalization methods.
+
+01:20:11.970 --> 01:20:16.190
+And in particular, they
+have found that RMS norm--
+
+01:20:16.190 --> 01:20:19.270
+RMS stands for Root
+Mean Squared norm,
+
+01:20:19.270 --> 01:20:22.630
+actually does the
+job just as well.
+
+01:20:22.630 --> 01:20:25.410
+And here, you don't
+need to recenter x,
+
+01:20:25.410 --> 01:20:29.150
+you just need to rescale
+it and to have just one
+
+01:20:29.150 --> 01:20:32.430
+factor that you need to learn.
+
+01:20:32.430 --> 01:20:36.230
+And that is the reason
+why people tend to use it.
+
+01:20:36.230 --> 01:20:38.790
+And I think this was
+all the tricks I had.
+
+01:20:38.790 --> 01:20:41.990
+So just as a summary.
+
+01:20:41.990 --> 01:20:44.390
+Before on normalization
+front, people
+
+01:20:44.390 --> 01:20:47.990
+used to do post-norm
+and layer norm,
+
+01:20:47.990 --> 01:20:52.930
+and nowadays people do
+pre-norm and RMS norm.
+
+01:20:52.930 --> 01:21:02.930
+So long story short, nowadays
+RoPE, local attention, gka GQA,
+
+01:21:02.930 --> 01:21:07.770
+pre-norm, and RMS norm.
+
+01:21:07.770 --> 01:21:11.930
+And with that, I'll
+give it to Shervin.
+
+01:21:11.930 --> 01:21:13.330
+Thank you Afshin.
+
+01:21:13.330 --> 01:21:16.370
+So now we're going to
+spend some time together
+
+01:21:16.370 --> 01:21:19.850
+to talk about next
+token prediction.
+
+01:21:19.850 --> 01:21:23.010
+And as Afshin has
+mentioned, LLMs
+
+01:21:23.010 --> 01:21:25.930
+they use this
+autoregressive process
+
+01:21:25.930 --> 01:21:28.370
+where you start with a
+given set of tokens that
+
+01:21:28.370 --> 01:21:31.850
+have been processed, and
+then you generate the others
+
+01:21:31.850 --> 01:21:33.810
+one at a time.
+
+01:21:33.810 --> 01:21:37.170
+So let's say you
+start with just BOS.
+
+01:21:37.170 --> 01:21:42.090
+So you generate A and then
+teddy, bear, is, and then
+
+01:21:42.090 --> 01:21:44.330
+you complete the sequence.
+
+01:21:44.330 --> 01:21:48.810
+So now the question is, how do
+you generate the next token?
+
+01:21:48.810 --> 01:21:53.430
+So you know that all
+of these are processed
+
+01:21:53.430 --> 01:21:55.490
+through these decoder layers.
+
+01:21:55.490 --> 01:21:57.950
+So you have the
+self-attention mechanism
+
+01:21:57.950 --> 01:22:00.230
+and the feedforward
+neural network
+
+01:22:00.230 --> 01:22:04.750
+that is repeated n times because
+you have n layers of decoder
+
+01:22:04.750 --> 01:22:06.510
+that are stacked.
+
+01:22:06.510 --> 01:22:10.710
+But then at the end, it is
+projected on a linear layer
+
+01:22:10.710 --> 01:22:16.070
+to predict the next token on
+the space of your vocabulary.
+
+01:22:16.070 --> 01:22:20.310
+And there might be
+several ways to choose it.
+
+01:22:20.310 --> 01:22:25.150
+So what could be a natural way?
+
+01:22:25.150 --> 01:22:28.730
+So first, since you have a
+probability distribution,
+
+01:22:28.730 --> 01:22:32.950
+one piece of intuition could
+be the probability distribution
+
+01:22:32.950 --> 01:22:34.570
+has done a lot of work for me.
+
+01:22:34.570 --> 01:22:37.690
+It says, what is the
+most probable token?
+
+01:22:37.690 --> 01:22:39.110
+So let's just take it.
+
+01:22:39.110 --> 01:22:42.230
+So that could be one.
+
+01:22:42.230 --> 01:22:48.210
+But the thing is, as you compute
+tokens one after the other,
+
+01:22:48.210 --> 01:22:53.470
+you will try to optimize
+the next token immediately.
+
+01:22:53.470 --> 01:22:56.290
+But as you have generated
+the whole sequence,
+
+01:22:56.290 --> 01:22:59.690
+you see that the global
+sequence might not be
+
+01:22:59.690 --> 01:23:02.730
+with optimal joint probability.
+
+01:23:02.730 --> 01:23:07.610
+So this is one weakness
+of this approach.
+
+01:23:07.610 --> 01:23:11.130
+And you might be tempted
+to go the joint probability
+
+01:23:11.130 --> 01:23:12.630
+route a bit more.
+
+01:23:12.630 --> 01:23:17.450
+So this is why you have
+techniques like beam search
+
+01:23:17.450 --> 01:23:20.050
+that doesn't do full joint
+probability because that
+
+01:23:20.050 --> 01:23:23.370
+would be too
+computationally expensive.
+
+01:23:23.370 --> 01:23:27.050
+But it does track
+k path at a time.
+
+01:23:27.050 --> 01:23:29.970
+So let's say you want to
+compute the next token,
+
+01:23:29.970 --> 01:23:32.870
+instead of only
+selecting the next one,
+
+01:23:32.870 --> 01:23:36.890
+you will consider k
+path all the time.
+
+01:23:36.890 --> 01:23:39.270
+So here you have
+beginning of sequence.
+
+01:23:39.270 --> 01:23:44.390
+You have an there that are
+good like the two best ones.
+
+01:23:44.390 --> 01:23:47.530
+And then you generate the
+next probability distribution,
+
+01:23:47.530 --> 01:23:55.430
+and then you keep on keeping
+the k best and so on.
+
+01:23:55.430 --> 01:23:58.750
+So who can tell me,
+what kind of weakness
+
+01:23:58.750 --> 01:24:01.150
+you see out of
+these two techniques
+
+01:24:01.150 --> 01:24:02.970
+that I haven't
+called out just yet?
+
+01:24:07.610 --> 01:24:08.110
+Yes.
+
+01:24:08.110 --> 01:24:11.170
+So there is a more computation.
+
+01:24:11.170 --> 01:24:13.370
+Yes, for the second one,
+but not for the first one.
+
+01:24:13.370 --> 01:24:18.110
+I'm looking for something that
+is common to both techniques.
+
+01:24:18.110 --> 01:24:25.310
+So what can you say
+about the reproducibility
+
+01:24:25.310 --> 01:24:29.430
+of choosing always the
+highest probability token?
+
+01:24:29.430 --> 01:24:32.150
+It will always be the same.
+
+01:24:32.150 --> 01:24:35.990
+What can you say
+about beam search?
+
+01:24:35.990 --> 01:24:38.870
+Let's say you redo the
+computations at the same time.
+
+01:24:38.870 --> 01:24:41.890
+Do you get the same path
+each time or will it change?
+
+01:24:45.090 --> 01:24:46.350
+Yeah, great.
+
+01:24:46.350 --> 01:24:46.850
+So yeah.
+
+01:24:46.850 --> 01:24:49.190
+Same path and it's
+deterministic.
+
+01:24:49.190 --> 01:24:49.690
+Great.
+
+01:24:52.850 --> 01:24:56.650
+And this is where I want to
+bring your intuition on why that
+
+01:24:56.650 --> 01:24:59.170
+may not be great,
+because as someone
+
+01:24:59.170 --> 01:25:03.250
+who optimizes things for
+a living, you might say,
+
+01:25:03.250 --> 01:25:05.270
+OK, I don't mind.
+
+01:25:05.270 --> 01:25:07.130
+Determinism might be good.
+
+01:25:07.130 --> 01:25:09.410
+But I just want to
+show you as a user
+
+01:25:09.410 --> 01:25:11.530
+why you would care about it.
+
+01:25:11.530 --> 01:25:16.450
+So let's suppose you are a
+chatbot user of all our favorite
+
+01:25:16.450 --> 01:25:20.210
+LLMs, and you ask
+a given question,
+
+01:25:20.210 --> 01:25:24.830
+like let's say a greeting
+message, "Good, and you?"
+
+01:25:24.830 --> 01:25:29.190
+And let's say your friends
+ask the same message
+
+01:25:29.190 --> 01:25:32.090
+and you have the same
+answer, and so on, you
+
+01:25:32.090 --> 01:25:36.170
+might feel that the
+chatbot is robotic.
+
+01:25:36.170 --> 01:25:38.830
+And robotic chatbots,
+I don't know about you,
+
+01:25:38.830 --> 01:25:43.270
+but it's not so appealing
+because it feels like it's still
+
+01:25:43.270 --> 01:25:46.910
+heavily engineered,
+whereas you as a human,
+
+01:25:46.910 --> 01:25:49.830
+you might be tempted to
+respond a bit differently
+
+01:25:49.830 --> 01:25:51.830
+to similar prompts.
+
+01:25:51.830 --> 01:25:55.850
+So what I said here is
+mostly a thought experiment,
+
+01:25:55.850 --> 01:25:59.110
+because in practice,
+the context of the LLM
+
+01:25:59.110 --> 01:26:00.650
+might change quite a bit.
+
+01:26:00.650 --> 01:26:03.950
+Let's say today we are the
+2nd of October at Stanford.
+
+01:26:03.950 --> 01:26:06.870
+If I ask this question
+one hour from now,
+
+01:26:06.870 --> 01:26:08.930
+the context will change a bit.
+
+01:26:08.930 --> 01:26:12.370
+It might put my new time and
+other pieces of information.
+
+01:26:12.370 --> 01:26:15.270
+So this might not
+strictly apply.
+
+01:26:15.270 --> 01:26:18.870
+But still you see
+this robotic behavior.
+
+01:26:18.870 --> 01:26:22.630
+Whereas non-deterministic
+behavior
+
+01:26:22.630 --> 01:26:26.310
+could give similarly
+well-sounding
+
+01:26:26.310 --> 01:26:30.910
+answers as potential
+choices, which is great.
+
+01:26:30.910 --> 01:26:36.110
+So I hope I convinced you that
+determinism is not the best.
+
+01:26:36.110 --> 01:26:38.170
+So it can be good
+for some use cases.
+
+01:26:38.170 --> 01:26:42.450
+I'll talk about it in a bit.
+
+01:26:42.450 --> 01:26:47.570
+And one natural next step
+to combat determinism
+
+01:26:47.570 --> 01:26:51.130
+is to go back to this
+probability distribution
+
+01:26:51.130 --> 01:26:54.650
+and simply sample from it,
+because you have a probability
+
+01:26:54.650 --> 01:26:56.930
+distribution, you have weights.
+
+01:26:56.930 --> 01:26:59.890
+All our computational
+methods enable
+
+01:26:59.890 --> 01:27:01.270
+us to sample the next word.
+
+01:27:01.270 --> 01:27:03.130
+So let's just do that.
+
+01:27:03.130 --> 01:27:08.290
+And you can do so
+with two methods,
+
+01:27:08.290 --> 01:27:11.690
+because you might not want to
+deal with the whole distribution
+
+01:27:11.690 --> 01:27:12.770
+all the time.
+
+01:27:12.770 --> 01:27:17.810
+So you might want to
+select amongst top-k most
+
+01:27:17.810 --> 01:27:20.210
+probable next tokens.
+
+01:27:20.210 --> 01:27:24.850
+And the second technique
+that is used quite often
+
+01:27:24.850 --> 01:27:27.930
+is top-p where
+you want to select
+
+01:27:27.930 --> 01:27:30.970
+tokens that have a
+given probability
+
+01:27:30.970 --> 01:27:32.950
+distribution in cumulate.
+
+01:27:36.650 --> 01:27:40.550
+So I promised you
+that I would tell you
+
+01:27:40.550 --> 01:27:42.490
+when determinism is needed.
+
+01:27:42.490 --> 01:27:46.590
+So, for example, if you perform
+natural language tasks that
+
+01:27:46.590 --> 01:27:50.068
+are tricky and need
+reproducibility,
+
+01:27:50.068 --> 01:27:52.610
+for example, let's say you want
+to summarize a piece of text.
+
+01:27:52.610 --> 01:27:55.630
+You want the same output all
+the time, that can be good.
+
+01:27:55.630 --> 01:27:57.470
+In one of the later
+lectures, we're
+
+01:27:57.470 --> 01:28:01.350
+going to talk about evaluations
+and particularly LLM
+
+01:28:01.350 --> 01:28:04.990
+as a judge, where you want
+consistency between the ratings
+
+01:28:04.990 --> 01:28:05.890
+that you give.
+
+01:28:05.890 --> 01:28:08.390
+So these two are good examples.
+
+01:28:12.150 --> 01:28:16.110
+In the rest of the time,
+this non-deterministic path
+
+01:28:16.110 --> 01:28:17.530
+might be the most attractive.
+
+01:28:20.070 --> 01:28:24.030
+So now I'm going to
+go into the specifics
+
+01:28:24.030 --> 01:28:25.650
+that I mentioned
+on a high-level,
+
+01:28:25.650 --> 01:28:27.570
+but making sure
+that it makes sense.
+
+01:28:27.570 --> 01:28:31.550
+So in the last layers, you
+have this linear projection
+
+01:28:31.550 --> 01:28:35.870
+between d model, the
+embedding space of your token
+
+01:28:35.870 --> 01:28:37.330
+at a given time.
+
+01:28:37.330 --> 01:28:41.690
+And then you project it on
+the space of vocabulary.
+
+01:28:41.690 --> 01:28:47.970
+And then based on this, you
+apply this Softmax operator
+
+01:28:47.970 --> 01:28:52.450
+to convert these numbers into
+a probability distribution.
+
+01:28:52.450 --> 01:28:54.610
+And why am I telling you that?
+
+01:28:54.610 --> 01:28:59.050
+It's because I want to introduce
+a parameter that you might have
+
+01:28:59.050 --> 01:29:02.250
+heard as users quite
+bit-- the temperature
+
+01:29:02.250 --> 01:29:07.090
+T, which helps modulate
+the probability
+
+01:29:07.090 --> 01:29:09.090
+distribution that you get.
+
+01:29:09.090 --> 01:29:16.410
+So here, as you see, so the
+regular Softmax operator
+
+01:29:16.410 --> 01:29:17.830
+has T equals 1.
+
+01:29:17.830 --> 01:29:20.530
+So the formula that you see
+on the right is T equals 1.
+
+01:29:20.530 --> 01:29:23.130
+You introduce T like so.
+
+01:29:23.130 --> 01:29:29.290
+I want to ask your intuition
+of how you feel the probability
+
+01:29:29.290 --> 01:29:31.750
+distribution to be then.
+
+01:29:31.750 --> 01:29:35.330
+So let's say you
+take T bigger than 1.
+
+01:29:35.330 --> 01:29:38.020
+If you have a given
+probability distribution,
+
+01:29:38.020 --> 01:29:42.120
+how do you feel the probability
+distribution will change?
+
+01:29:46.540 --> 01:29:48.560
+So yeah, the one
+comment is flatter.
+
+01:29:48.560 --> 01:29:49.580
+Yeah, great.
+
+01:29:49.580 --> 01:29:51.740
+And let me ask you the opposite.
+
+01:29:51.740 --> 01:29:53.500
+Let's say you have very small t.
+
+01:29:53.500 --> 01:29:55.460
+What is your intuition?
+
+01:29:55.460 --> 01:29:57.240
+Yeah and the comment is sharper.
+
+01:29:57.240 --> 01:29:58.300
+Yeah, great.
+
+01:29:58.300 --> 01:30:01.100
+So is it clear to everyone?
+
+01:30:01.100 --> 01:30:06.740
+Because if you have small
+T, then the Xi that is high
+
+01:30:06.740 --> 01:30:10.400
+will be more emphasized.
+
+01:30:10.400 --> 01:30:14.980
+And the for the other i's,
+the some at the bottom
+
+01:30:14.980 --> 01:30:15.960
+will take it over.
+
+01:30:15.960 --> 01:30:18.980
+So you will have just one term--
+
+01:30:18.980 --> 01:30:21.140
+so you will have
+just one index that
+
+01:30:21.140 --> 01:30:23.560
+will have a probability
+close to one
+
+01:30:23.560 --> 01:30:25.340
+and the other ones
+will be close to 0.
+
+01:30:25.340 --> 01:30:29.820
+And when T is large, then
+all of these x exponential
+
+01:30:29.820 --> 01:30:33.520
+of something over T will tend
+to 0 within the exponential.
+
+01:30:33.520 --> 01:30:37.600
+So everything will be
+more or less uniform.
+
+01:30:37.600 --> 01:30:40.320
+And this is exactly
+what these graphs show.
+
+01:30:40.320 --> 01:30:44.520
+And one thing, so
+this is a determinism
+
+01:30:44.520 --> 01:30:49.380
+is continuous more so than
+truly like binary choice.
+
+01:30:49.380 --> 01:30:54.300
+So you're not committed to
+either turn it on or off.
+
+01:30:54.300 --> 01:30:58.680
+You can adjust the
+temperature as a setting.
+
+01:30:58.680 --> 01:31:02.800
+And I want to say-- so I
+talked about determinism.
+
+01:31:02.800 --> 01:31:04.460
+Does it really happen?
+
+01:31:04.460 --> 01:31:06.480
+So you could think that
+it does, because when
+
+01:31:06.480 --> 01:31:09.020
+you look at your
+decoder architecture,
+
+01:31:09.020 --> 01:31:11.200
+you have embeddings
+that are learned.
+
+01:31:11.200 --> 01:31:14.240
+OK, these are deterministically
+set at inference time.
+
+01:31:14.240 --> 01:31:17.540
+It goes through the masked
+self-attention mechanism.
+
+01:31:17.540 --> 01:31:20.540
+You have fixed weights,
+fixed operations.
+
+01:31:20.540 --> 01:31:22.940
+You could think that's fixed,
+feedforward neural network.
+
+01:31:22.940 --> 01:31:25.060
+You have given weights
+that are fixed.
+
+01:31:25.060 --> 01:31:25.780
+You multiply.
+
+01:31:25.780 --> 01:31:29.120
+This should be fixed and so on.
+
+01:31:29.120 --> 01:31:31.080
+So with a temperature
+of 0, you would
+
+01:31:31.080 --> 01:31:34.820
+think that this is
+completely deterministic.
+
+01:31:34.820 --> 01:31:39.620
+But it turns out that not
+because in practice LLM
+
+01:31:39.620 --> 01:31:44.660
+inference engines, they will
+batch your request among others.
+
+01:31:44.660 --> 01:31:48.340
+And the reason why
+nondeterminism comes into play
+
+01:31:48.340 --> 01:31:50.660
+is a purely computational one.
+
+01:31:50.660 --> 01:31:53.380
+In theory, it should
+still be deterministic.
+
+01:31:53.380 --> 01:31:57.060
+But there is this concept
+of batch invariance
+
+01:31:57.060 --> 01:32:00.500
+that is not respected
+in some cases.
+
+01:32:00.500 --> 01:32:03.300
+And I strongly
+recommend this blog
+
+01:32:03.300 --> 01:32:07.640
+from [INAUDIBLE] as a
+great piece of reading.
+
+01:32:07.640 --> 01:32:10.140
+So he goes through
+the exact reason.
+
+01:32:10.140 --> 01:32:13.020
+And if you want me to
+break it down to you,
+
+01:32:13.020 --> 01:32:19.420
+it all goes to the floating
+points non-associativity
+
+01:32:19.420 --> 01:32:22.220
+with respect to the
+addition operation,
+
+01:32:22.220 --> 01:32:29.460
+where the order of addition
+does matter on the result
+
+01:32:29.460 --> 01:32:32.040
+that you get.
+
+01:32:32.040 --> 01:32:37.500
+So let's say you add a big
+number to a small number
+
+01:32:37.500 --> 01:32:42.040
+and then you retract that
+big number, you might get 0.
+
+01:32:42.040 --> 01:32:44.040
+Whereas if you do that
+operation separately,
+
+01:32:44.040 --> 01:32:46.120
+you will get that
+small number back.
+
+01:32:46.120 --> 01:32:49.040
+So it all has to do with the
+representation of floating point
+
+01:32:49.040 --> 01:32:51.440
+numbers that are approximated.
+
+01:32:51.440 --> 01:32:57.820
+So this relationship does apply
+in the world of floating points.
+
+01:33:01.740 --> 01:33:02.240
+Yeah.
+
+01:33:05.880 --> 01:33:08.480
+So the comment here
+the tensor should
+
+01:33:08.480 --> 01:33:10.860
+be computed independently.
+
+01:33:10.860 --> 01:33:14.040
+So it turns out that depending
+on the implementation,
+
+01:33:14.040 --> 01:33:19.760
+the order of operation within
+these tensors will change.
+
+01:33:19.760 --> 01:33:23.600
+Yes, that is the reason.
+
+01:33:23.600 --> 01:33:28.360
+So yeah, the blog has more
+information on exactly why
+
+01:33:28.360 --> 01:33:30.380
+and then how to
+build kernels that
+
+01:33:30.380 --> 01:33:34.220
+do apply this as great reading.
+
+01:33:34.220 --> 01:33:35.320
+Any other questions?
+
+01:33:39.300 --> 01:33:41.340
+OK, great.
+
+01:33:41.340 --> 01:33:46.900
+And so now we talked about
+decoding in the usual case.
+
+01:33:46.900 --> 01:33:50.540
+Sometimes, and more particularly
+in an industry setting,
+
+01:33:50.540 --> 01:33:54.340
+you might want to use these
+LLMs to perform tasks you would
+
+01:33:54.340 --> 01:33:57.980
+have used complex systems for.
+
+01:33:57.980 --> 01:34:02.240
+So you might want to generate
+let's say structured output,
+
+01:34:02.240 --> 01:34:04.180
+such as JSON.
+
+01:34:04.180 --> 01:34:07.180
+And one question that
+you might ask yourself,
+
+01:34:07.180 --> 01:34:10.460
+let's say you want to
+generate a piece of data
+
+01:34:10.460 --> 01:34:13.760
+in this specific format and
+then this matters to you.
+
+01:34:13.760 --> 01:34:15.240
+Because if it
+doesn't do it right,
+
+01:34:15.240 --> 01:34:18.500
+then parsing fails downstream
+and you're in trouble.
+
+01:34:18.500 --> 01:34:20.180
+How do you do so?
+
+01:34:20.180 --> 01:34:23.660
+So one first approach
+that you could think about
+
+01:34:23.660 --> 01:34:27.380
+is just ask the LLM for
+it, do this in JSON format
+
+01:34:27.380 --> 01:34:29.560
+and hope for the best.
+
+01:34:29.560 --> 01:34:32.760
+With today's models,
+even the lightest,
+
+01:34:32.760 --> 01:34:35.000
+this usually works well.
+
+01:34:35.000 --> 01:34:38.680
+But it's not 100% and
+what you want is 100%.
+
+01:34:38.680 --> 01:34:40.920
+So how can you do that?
+
+01:34:40.920 --> 01:34:44.240
+So there is a concept
+called guided decoding,
+
+01:34:44.240 --> 01:34:48.800
+where the span of
+available tokens
+
+01:34:48.800 --> 01:34:52.680
+to be predicted at the
+next step is restricted,
+
+01:34:52.680 --> 01:34:56.400
+depending on the syntax
+of the language you
+
+01:34:56.400 --> 01:34:58.140
+want to decode this in.
+
+01:34:58.140 --> 01:34:59.700
+So let's say you are in JSON.
+
+01:34:59.700 --> 01:35:03.920
+You know That your
+first token must
+
+01:35:03.920 --> 01:35:10.080
+be a specific symbol and so on.
+
+01:35:10.080 --> 01:35:14.240
+And this is how you
+could deal with it.
+
+01:35:14.240 --> 01:35:17.320
+OK, so I hope all made sense.
+
+01:35:17.320 --> 01:35:20.600
+And now we're going to talk
+about one exciting part, which
+
+01:35:20.600 --> 01:35:23.640
+is prompting.
+
+01:35:23.640 --> 01:35:27.420
+And I want to
+introduce some terms,
+
+01:35:27.420 --> 01:35:32.540
+so that we all know some
+basics of vocabulary there.
+
+01:35:32.540 --> 01:35:36.540
+So let's say you want to
+issue a request to an LLM.
+
+01:35:36.540 --> 01:35:39.620
+Usually, you do not
+put just the BOS token
+
+01:35:39.620 --> 01:35:42.340
+and let it generate
+everything afterwards.
+
+01:35:42.340 --> 01:35:44.020
+You have a given prompt.
+
+01:35:44.020 --> 01:35:47.580
+So here my prompt
+could be a teddy bear.
+
+01:35:47.580 --> 01:35:50.340
+And I want to generate
+the next tokens out of it.
+
+01:35:50.340 --> 01:35:54.580
+So what happens is that I
+will put all of them as input.
+
+01:35:54.580 --> 01:35:59.500
+And then autoregressively, it
+will compute each token one
+
+01:35:59.500 --> 01:36:01.340
+at a time.
+
+01:36:01.340 --> 01:36:05.900
+And you might have heard of this
+concept called context window.
+
+01:36:05.900 --> 01:36:09.620
+Where does it come at play here?
+
+01:36:09.620 --> 01:36:14.620
+So at the stage of next
+token prediction, anywhere
+
+01:36:14.620 --> 01:36:19.820
+you are, what is as input
+is your context window.
+
+01:36:19.820 --> 01:36:23.000
+And when you look at
+your whole prediction,
+
+01:36:23.000 --> 01:36:26.960
+once it's completely done,
+whatever tokens were generated
+
+01:36:26.960 --> 01:36:30.080
+are called the output tokens.
+
+01:36:30.080 --> 01:36:31.600
+So you might be
+tempted sometimes
+
+01:36:31.600 --> 01:36:34.720
+to say that the context
+window is exactly what you
+
+01:36:34.720 --> 01:36:38.700
+put as input as a user, but
+it actually is more than that,
+
+01:36:38.700 --> 01:36:41.000
+because every token
+that you generate
+
+01:36:41.000 --> 01:36:44.520
+needs to be put back at
+the input level, which
+
+01:36:44.520 --> 01:36:47.820
+is why when you think
+about these large numbers,
+
+01:36:47.820 --> 01:36:50.200
+you think I can input anything.
+
+01:36:50.200 --> 01:36:52.040
+These are large numbers
+as context window,
+
+01:36:52.040 --> 01:36:54.600
+as we'll see in the slide.
+
+01:36:54.600 --> 01:36:56.180
+You need to take
+that into account.
+
+01:36:56.180 --> 01:37:00.280
+So it's linked
+with output length.
+
+01:37:00.280 --> 01:37:02.840
+Yep.
+
+01:37:02.840 --> 01:37:05.240
+So the question
+is, why if you need
+
+01:37:05.240 --> 01:37:08.640
+to have a fixed context length,
+like a maximum context length?
+
+01:37:08.640 --> 01:37:10.960
+So the reason is a
+computational one.
+
+01:37:10.960 --> 01:37:14.520
+And we'll see very soon
+why it might not even
+
+01:37:14.520 --> 01:37:17.180
+be desirable to have
+higher context length.
+
+01:37:17.180 --> 01:37:21.132
+So there is also an
+intuition based one reason.
+
+01:37:21.132 --> 01:37:22.340
+We'll it in seen in a second.
+
+01:37:25.140 --> 01:37:27.220
+That makes sense?
+
+01:37:27.220 --> 01:37:30.860
+So I want to give some
+orders of magnitude here.
+
+01:37:30.860 --> 01:37:33.020
+So in terms of
+context length, you
+
+01:37:33.020 --> 01:37:36.900
+might all know about that
+O of 1 million tokens
+
+01:37:36.900 --> 01:37:39.880
+as input, which is
+the industry standard.
+
+01:37:39.880 --> 01:37:43.780
+And then as output tokens,
+it's usually in the order
+
+01:37:43.780 --> 01:37:46.380
+of magnitude of 100k.
+
+01:37:46.380 --> 01:37:49.300
+That was true until
+two days ago where
+
+01:37:49.300 --> 01:37:51.080
+I had to rework this slide.
+
+01:37:51.080 --> 01:37:52.700
+Actually, maybe
+soon, we're going
+
+01:37:52.700 --> 01:37:55.420
+to move into the million
+territory there as well.
+
+01:37:55.420 --> 01:38:00.980
+And this new LLM that came out
+didn't publish an input maximum
+
+01:38:00.980 --> 01:38:01.480
+length.
+
+01:38:01.480 --> 01:38:05.420
+So maybe we might have gone one
+order of magnitude higher there.
+
+01:38:05.420 --> 01:38:08.460
+But these are some good
+orders of magnitude.
+
+01:38:08.460 --> 01:38:13.060
+And then to give you some
+intuition on what token means.
+
+01:38:13.060 --> 01:38:21.680
+So usually, a token is 3/4 of
+a word and a page is about 500
+
+01:38:21.680 --> 01:38:22.560
+tokens.
+
+01:38:22.560 --> 01:38:24.900
+So when you talk about
+orders of magnitude,
+
+01:38:24.900 --> 01:38:29.100
+if you take 100k tokens, it's
+about a book, and a million,
+
+01:38:29.100 --> 01:38:33.040
+it's a large book.
+
+01:38:33.040 --> 01:38:35.480
+And now coming back
+to your question,
+
+01:38:35.480 --> 01:38:39.080
+is it the case that always
+having more tokens as input
+
+01:38:39.080 --> 01:38:40.200
+is better?
+
+01:38:40.200 --> 01:38:43.920
+Well, you need to beware of
+a phenomenon that's called
+
+01:38:43.920 --> 01:38:48.240
+"context rot," where there
+is this test called needle
+
+01:38:48.240 --> 01:38:51.440
+in a haystack, where you put a
+piece of information that you
+
+01:38:51.440 --> 01:38:55.320
+care about somewhere in that
+context window and the task is
+
+01:38:55.320 --> 01:38:56.800
+a retrieval one.
+
+01:38:56.800 --> 01:39:01.720
+And it turns out that as the
+context length goes higher,
+
+01:39:01.720 --> 01:39:04.280
+the LLM has more
+and more difficulty
+
+01:39:04.280 --> 01:39:07.640
+to retrieve that
+piece of information.
+
+01:39:07.640 --> 01:39:11.220
+So sometimes it's a problem
+that comes from the LLM itself.
+
+01:39:11.220 --> 01:39:14.240
+So you will always see
+in the model releases
+
+01:39:14.240 --> 01:39:18.000
+the hallucination rate
+that goes down and so on.
+
+01:39:18.000 --> 01:39:21.250
+But this is not something
+that you could perfectly
+
+01:39:21.250 --> 01:39:24.010
+solve, because
+conceptually, when
+
+01:39:24.010 --> 01:39:27.010
+you mix a piece of
+information, among others,
+
+01:39:27.010 --> 01:39:29.570
+it might be the case that
+there is so much noise
+
+01:39:29.570 --> 01:39:31.970
+around that the
+task of retrieving
+
+01:39:31.970 --> 01:39:36.050
+exactly that piece of
+information is not realistic.
+
+01:39:36.050 --> 01:39:41.290
+And in general, putting
+more and more as inputs
+
+01:39:41.290 --> 01:39:45.530
+pushes that risk up, which
+is why in general you
+
+01:39:45.530 --> 01:39:47.070
+hear about context compaction.
+
+01:39:47.070 --> 01:39:49.450
+You should start a
+new chat every time.
+
+01:39:49.450 --> 01:39:52.290
+These things still
+apply conceptually.
+
+01:39:52.290 --> 01:39:57.130
+And this is why we are not here
+with unlimited context window.
+
+01:39:57.130 --> 01:40:00.770
+It's also like a good practice.
+
+01:40:00.770 --> 01:40:02.130
+OK, awesome.
+
+01:40:02.130 --> 01:40:05.770
+And I'm going to spend the
+last minutes on techniques
+
+01:40:05.770 --> 01:40:08.890
+to improve performance
+without you changing
+
+01:40:08.890 --> 01:40:11.130
+any weights of your model.
+
+01:40:11.130 --> 01:40:16.730
+So there is a large concept
+called in-context learning,
+
+01:40:16.730 --> 01:40:21.790
+where instead of teaching
+in terms of weights tuning
+
+01:40:21.790 --> 01:40:27.970
+your LLM, you give examples
+and solutions of what you want.
+
+01:40:27.970 --> 01:40:33.470
+So let's say you are in the task
+of asking your LLM about the age
+
+01:40:33.470 --> 01:40:35.150
+of your teddy bear.
+
+01:40:35.150 --> 01:40:40.470
+So if you just ask it in zero
+shot versus give some question
+
+01:40:40.470 --> 01:40:43.150
+answers of what
+answer you expect,
+
+01:40:43.150 --> 01:40:49.190
+the LLM will learn the format
+and maybe even the reasoning
+
+01:40:49.190 --> 01:40:53.110
+that it needs to go
+through implicitly.
+
+01:40:53.110 --> 01:40:57.390
+And these days, you will
+see few shot learning
+
+01:40:57.390 --> 01:41:00.330
+being less and less used
+because the reasoning models,
+
+01:41:00.330 --> 01:41:02.190
+they get better and better.
+
+01:41:02.190 --> 01:41:05.830
+And the bad effects
+of few shot learning
+
+01:41:05.830 --> 01:41:09.750
+is that it will make your model
+overfit on the specific examples
+
+01:41:09.750 --> 01:41:11.630
+that you give it,
+whereas what you want
+
+01:41:11.630 --> 01:41:13.830
+is be more reasoning-based.
+
+01:41:13.830 --> 01:41:17.130
+So you will see some prompt
+tuning techniques that
+
+01:41:17.130 --> 01:41:20.230
+turn these examples
+into instructions,
+
+01:41:20.230 --> 01:41:23.450
+and people typically
+handcraft such instructions
+
+01:41:23.450 --> 01:41:26.610
+and put them
+instead of examples.
+
+01:41:26.610 --> 01:41:31.170
+And then again, some other
+obvious downsides are also
+
+01:41:31.170 --> 01:41:34.090
+you have more
+input tokens, which
+
+01:41:34.090 --> 01:41:36.250
+increases cost and latency.
+
+01:41:36.250 --> 01:41:38.650
+So on that reasoning
+part, you might
+
+01:41:38.650 --> 01:41:42.610
+say, how about we put
+some reasoning in there?
+
+01:41:42.610 --> 01:41:48.170
+So there is this landmark
+paper called chain of thought,
+
+01:41:48.170 --> 01:41:52.930
+where it takes in-context
+learning to the next stage
+
+01:41:52.930 --> 01:41:57.810
+by teaching the model in
+these few short prompts how
+
+01:41:57.810 --> 01:41:59.530
+it gets there.
+
+01:41:59.530 --> 01:42:04.130
+And the authors, they saw that
+the model learned the reasoning
+
+01:42:04.130 --> 01:42:08.730
+path, and overall it
+improved performance.
+
+01:42:08.730 --> 01:42:11.930
+And I don't want you to
+consider chain of thought
+
+01:42:11.930 --> 01:42:17.090
+to be purely an in-context
+learning technique.
+
+01:42:17.090 --> 01:42:18.490
+It's way more than that.
+
+01:42:18.490 --> 01:42:20.230
+And we will talk
+about reasoning models
+
+01:42:20.230 --> 01:42:24.210
+where thinking tokens are used
+and the same concept applies.
+
+01:42:24.210 --> 01:42:26.430
+So we'll talk about it then.
+
+01:42:26.430 --> 01:42:31.510
+And one technique that one
+might be tempted to use offline
+
+01:42:31.510 --> 01:42:33.910
+is called self-consistency.
+
+01:42:33.910 --> 01:42:38.710
+So how about, instead of
+generating one reasoning path, I
+
+01:42:38.710 --> 01:42:40.950
+generate several ones?
+
+01:42:40.950 --> 01:42:44.630
+Then one nice thing is that it
+makes the output that you might
+
+01:42:44.630 --> 01:42:47.750
+be interested in, let's say
+in the arithmetic world,
+
+01:42:47.750 --> 01:42:49.030
+more stable.
+
+01:42:49.030 --> 01:42:53.270
+And by majority voting,
+you can get to an answer
+
+01:42:53.270 --> 01:42:56.750
+where more generations agree to.
+
+01:42:56.750 --> 01:43:00.270
+Yeah, we'll see in reasoning
+models lectures, more
+
+01:43:00.270 --> 01:43:02.030
+about these.
+
+01:43:02.030 --> 01:43:03.750
+And that's all I
+had for you today.
+
+01:43:03.750 --> 01:43:07.070
+And I hope you have
+a great weekend.
+
+01:43:07.070 --> 01:43:08.210
+Thank you.
+
+01:43:08.210 --> 01:43:12.160
+[APPLAUSE]
+

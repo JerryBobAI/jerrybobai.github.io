@@ -1,0 +1,6644 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:05.680 --> 00:00:12.320
+Hello, everyone, and welcome
+to lecture 3 of CME 295.
+
+00:00:12.320 --> 00:00:14.480
+So today is an
+exciting day because we
+
+00:00:14.480 --> 00:00:18.200
+will learn how to actually
+train a large language
+
+00:00:18.200 --> 00:00:22.520
+model in a way that
+aligns with our end goal.
+
+00:00:22.520 --> 00:00:25.300
+But before we do
+that, as always,
+
+00:00:25.300 --> 00:00:28.480
+we will recap what
+we saw last time.
+
+00:00:28.480 --> 00:00:31.240
+So if you remember,
+last time, we
+
+00:00:31.240 --> 00:00:35.320
+talked about how we could use
+the transformer architecture
+
+00:00:35.320 --> 00:00:39.240
+that we had seen in lecture
+1 and, in particular,
+
+00:00:39.240 --> 00:00:42.880
+see if there is any
+component of the transformer
+
+00:00:42.880 --> 00:00:46.080
+that we could leverage
+for something bigger.
+
+00:00:46.080 --> 00:00:48.680
+So we saw that the
+transformer was composed
+
+00:00:48.680 --> 00:00:51.800
+of an encoder and a decoder.
+
+00:00:51.800 --> 00:00:57.120
+And in particular, if you
+remove the encoder part,
+
+00:00:57.120 --> 00:01:00.810
+you could have a much
+simpler architecture
+
+00:01:00.810 --> 00:01:07.050
+that would reframe the problem
+as a text-to-text problem.
+
+00:01:07.050 --> 00:01:12.490
+And we saw that if we were
+to scale such an architecture
+
+00:01:12.490 --> 00:01:16.530
+in terms of number of
+parameters-- so model size,
+
+00:01:16.530 --> 00:01:20.370
+number of tokens that
+the model is trained on--
+
+00:01:20.370 --> 00:01:23.610
+we saw a better and
+better performance.
+
+00:01:23.610 --> 00:01:26.930
+So these were the
+scaling laws that we saw.
+
+00:01:26.930 --> 00:01:29.690
+But something else
+that we saw is
+
+00:01:29.690 --> 00:01:33.890
+that, given that we only have
+a limited amount of compute,
+
+00:01:33.890 --> 00:01:38.330
+that in order for us, given
+some amount of compute,
+
+00:01:38.330 --> 00:01:41.490
+to use it in the
+best way possible,
+
+00:01:41.490 --> 00:01:46.770
+that we should be careful
+to not undertrain our model.
+
+00:01:46.770 --> 00:01:50.290
+And in particular, there was
+a paper, the Chinchilla paper,
+
+00:01:50.290 --> 00:01:54.670
+that saw that actually,
+roughly speaking,
+
+00:01:54.670 --> 00:01:59.740
+for every parameter you have to
+actually train it on 20 tokens.
+
+00:01:59.740 --> 00:02:02.660
+And it found that many of the
+architectures that were scaled
+
+00:02:02.660 --> 00:02:06.540
+up were actually undertrained.
+
+00:02:06.540 --> 00:02:10.539
+And then, given that
+having bigger models lead
+
+00:02:10.539 --> 00:02:14.780
+to better performance,
+we then wondered
+
+00:02:14.780 --> 00:02:19.900
+if actually activating all the
+parameters was actually useful.
+
+00:02:19.900 --> 00:02:22.540
+So we saw a class
+of models called
+
+00:02:22.540 --> 00:02:25.980
+mixture of experts,
+which selected
+
+00:02:25.980 --> 00:02:31.100
+specific experts to activate
+for a given forward pass.
+
+00:02:31.100 --> 00:02:34.340
+And we saw that
+such an architecture
+
+00:02:34.340 --> 00:02:37.380
+was something we could place
+within the feedforward neural
+
+00:02:37.380 --> 00:02:43.860
+network, which was where most
+of the compute was happening.
+
+00:02:43.860 --> 00:02:46.220
+And we saw a bunch
+of other methods
+
+00:02:46.220 --> 00:02:51.460
+that improved the way we use
+transformer-based architectures
+
+00:02:51.460 --> 00:02:52.880
+since it was first released.
+
+00:02:52.880 --> 00:02:56.280
+So in particular, we saw
+the position embeddings,
+
+00:02:56.280 --> 00:02:58.660
+which was actually
+something that
+
+00:02:58.660 --> 00:03:01.280
+would be better to happen
+within the attention layer.
+
+00:03:01.280 --> 00:03:02.660
+So we saw RoPE.
+
+00:03:02.660 --> 00:03:06.960
+We saw some other forms of
+attention-- so not global,
+
+00:03:06.960 --> 00:03:08.160
+but Sliding Window.
+
+00:03:08.160 --> 00:03:11.500
+We saw a Group Query
+Attention as a way
+
+00:03:11.500 --> 00:03:16.060
+to save on the keys and values
+that we need to store in order
+
+00:03:16.060 --> 00:03:18.340
+to decode our sequence.
+
+00:03:18.340 --> 00:03:22.460
+And we also saw some
+normalizing methods.
+
+00:03:22.460 --> 00:03:24.820
+And this is where we left off--
+
+00:03:24.820 --> 00:03:26.140
+lecture 2.
+
+00:03:26.140 --> 00:03:29.220
+And as I mentioned,
+this lecture is
+
+00:03:29.220 --> 00:03:33.540
+about learning how we can
+actually train a large language
+
+00:03:33.540 --> 00:03:35.300
+model.
+
+00:03:35.300 --> 00:03:38.700
+So we're going to start
+with the first step, which
+
+00:03:38.700 --> 00:03:40.820
+is called pretraining.
+
+00:03:40.820 --> 00:03:43.700
+And I want to motivate
+that step by telling you
+
+00:03:43.700 --> 00:03:49.340
+about how people usually
+trained models traditionally.
+
+00:03:49.340 --> 00:03:53.790
+So if this class was being
+held maybe 15 years ago,
+
+00:03:53.790 --> 00:03:59.790
+we would actually try to train
+models on a per-use-case basis.
+
+00:03:59.790 --> 00:04:02.010
+So if, for instance, we
+wanted to detect spam,
+
+00:04:02.010 --> 00:04:05.670
+we would have one model for spam
+detection, another model for,
+
+00:04:05.670 --> 00:04:08.950
+let's say, sentiment extraction,
+another one for, let's say,
+
+00:04:08.950 --> 00:04:12.510
+translation and so on.
+
+00:04:12.510 --> 00:04:19.430
+But the idea here is to actually
+leverage what we learn in one
+
+00:04:19.430 --> 00:04:22.110
+go and re-use that
+for other use cases.
+
+00:04:22.110 --> 00:04:25.790
+So this is also something that
+is known as transfer learning.
+
+00:04:25.790 --> 00:04:28.950
+So actually, the idea
+behind what we want to do
+
+00:04:28.950 --> 00:04:32.870
+is to do a one-time
+big what we call
+
+00:04:32.870 --> 00:04:36.950
+pretraining to
+learn about language
+
+00:04:36.950 --> 00:04:40.230
+and then start from there
+if we want to specialize
+
+00:04:40.230 --> 00:04:43.710
+that for a specific use case.
+
+00:04:43.710 --> 00:04:45.230
+So this is the idea.
+
+00:04:45.230 --> 00:04:48.270
+We want to have the first
+step of our training
+
+00:04:48.270 --> 00:04:52.700
+process as being something
+that learns about language.
+
+00:04:52.700 --> 00:04:54.580
+So it's called pretraining.
+
+00:04:54.580 --> 00:04:56.960
+And we're going to
+talk more about this.
+
+00:04:56.960 --> 00:05:00.240
+And then the second
+stage is more about
+
+00:05:00.240 --> 00:05:02.560
+tuning this for a
+specific use case.
+
+00:05:02.560 --> 00:05:05.400
+So in the previous
+example, let's assume
+
+00:05:05.400 --> 00:05:07.060
+we don't have a
+general-purpose model
+
+00:05:07.060 --> 00:05:09.460
+but we have one big
+pretrained model.
+
+00:05:09.460 --> 00:05:14.600
+We would tune that pretrained
+model for this specific task.
+
+00:05:14.600 --> 00:05:18.360
+And we will actually see
+that LLMs are general enough
+
+00:05:18.360 --> 00:05:21.880
+to be able to actually
+tackle a bunch of tasks
+
+00:05:21.880 --> 00:05:24.100
+without us having
+to retrain those,
+
+00:05:24.100 --> 00:05:28.480
+but we will see
+that more later on.
+
+00:05:28.480 --> 00:05:29.180
+Cool.
+
+00:05:29.180 --> 00:05:33.200
+So as I mentioned,
+this first step
+
+00:05:33.200 --> 00:05:35.880
+is about learning
+about language.
+
+00:05:35.880 --> 00:05:40.980
+So what we want to do is
+to see a bunch of texts,
+
+00:05:40.980 --> 00:05:45.800
+a bunch of codes, a bunch
+of generated generations,
+
+00:05:45.800 --> 00:05:47.720
+all over the internet.
+
+00:05:47.720 --> 00:05:51.890
+So here, typically, we would
+assemble pieces of text
+
+00:05:51.890 --> 00:05:54.490
+in English, but also
+in other languages.
+
+00:05:54.490 --> 00:05:57.950
+We would assemble, let's
+say, codes in Python,
+
+00:05:57.950 --> 00:06:02.530
+in other languages-- math,
+science, you name it.
+
+00:06:02.530 --> 00:06:09.850
+And we would train our model in
+a next-token-prediction fashion.
+
+00:06:09.850 --> 00:06:13.730
+So I'm going to tell you
+exactly how that would work.
+
+00:06:13.730 --> 00:06:18.010
+So let's assume we have a
+piece of text on which we want
+
+00:06:18.010 --> 00:06:20.930
+our model to be pretrained on.
+
+00:06:20.930 --> 00:06:27.530
+So here what we would try to do
+is to feed some text as input
+
+00:06:27.530 --> 00:06:32.650
+and ask the model to
+predict the next token,
+
+00:06:32.650 --> 00:06:38.330
+and repeat that process for
+all the tokens in the text.
+
+00:06:38.330 --> 00:06:41.130
+So in this example, let's assume
+we have this piece of text,
+
+00:06:41.130 --> 00:06:44.910
+and we tokenize that with
+your favorite tokenizer.
+
+00:06:44.910 --> 00:06:49.180
+So here it's an arbitrary
+way of tokenizing things.
+
+00:06:49.180 --> 00:06:53.840
+And what we would do is we would
+take our LLM, which, as we saw,
+
+00:06:53.840 --> 00:06:58.780
+is typically a
+decoder-only-based architecture,
+
+00:06:58.780 --> 00:07:01.460
+and we would feed
+in the first token.
+
+00:07:01.460 --> 00:07:04.780
+And what we would do is try
+to predict the next token.
+
+00:07:04.780 --> 00:07:09.460
+So here, the very beginning
+of the prediction task,
+
+00:07:09.460 --> 00:07:12.180
+we only have the
+beginning-of-sequence token
+
+00:07:12.180 --> 00:07:13.040
+that is fed.
+
+00:07:13.040 --> 00:07:16.220
+And here we would try to
+predict the first token.
+
+00:07:16.220 --> 00:07:19.660
+And then we would
+input that token
+
+00:07:19.660 --> 00:07:24.000
+to try to predict the next
+one, and so on and so forth.
+
+00:07:26.980 --> 00:07:32.340
+And actually, you don't
+need to do that sequentially
+
+00:07:32.340 --> 00:07:34.140
+when you do your
+pretraining, because it's
+
+00:07:34.140 --> 00:07:36.340
+highly parallelizable.
+
+00:07:36.340 --> 00:07:42.460
+So what you would actually do is
+feed the entire input as inputs
+
+00:07:42.460 --> 00:07:47.330
+and try to predict the next
+token for all these inputs.
+
+00:07:50.110 --> 00:07:51.570
+So it's highly parallelizable.
+
+00:07:51.570 --> 00:07:54.990
+You can think of it as a huge
+matrix multiplication that
+
+00:07:54.990 --> 00:07:56.830
+is happening under the hood.
+
+00:07:56.830 --> 00:07:58.670
+And it's something
+that you will also
+
+00:07:58.670 --> 00:08:04.210
+find as being mentioned as being
+teacher-forcing because here,
+
+00:08:04.210 --> 00:08:07.408
+no matter what the LLM
+predicts-- so by the way,
+
+00:08:07.408 --> 00:08:08.450
+it's the same thing here.
+
+00:08:08.450 --> 00:08:11.750
+No matter what the LLM
+predicts, we always
+
+00:08:11.750 --> 00:08:15.310
+put as input for the
+next step which word
+
+00:08:15.310 --> 00:08:17.070
+it should have predicted.
+
+00:08:17.070 --> 00:08:20.190
+So we're forcing the
+model, given some input,
+
+00:08:20.190 --> 00:08:25.710
+to predict the next token
+that is in that text.
+
+00:08:25.710 --> 00:08:29.490
+And we saw that this
+is possible because--
+
+00:08:29.490 --> 00:08:32.909
+oh, you have a question.
+
+00:08:32.909 --> 00:08:33.890
+So excellent question.
+
+00:08:33.890 --> 00:08:36.789
+The question is, well,
+if you teacher-force
+
+00:08:36.789 --> 00:08:38.330
+the model to learn
+a certain way,
+
+00:08:38.330 --> 00:08:40.770
+it is not actually
+having things.
+
+00:08:40.770 --> 00:08:42.770
+It is generating
+itself as inputs.
+
+00:08:42.770 --> 00:08:45.850
+So there is a mismatch between
+training and inference.
+
+00:08:45.850 --> 00:08:47.290
+So that's an excellent point.
+
+00:08:47.290 --> 00:08:50.590
+And we will see, actually, how
+we can solve that later on.
+
+00:08:50.590 --> 00:08:52.170
+So it's a great remark.
+
+00:08:52.170 --> 00:08:54.310
+We will see some methods.
+
+00:08:54.310 --> 00:08:56.790
+Yeah?
+
+00:08:56.790 --> 00:08:59.830
+So the question is, if you give
+only the beginning of sequence,
+
+00:08:59.830 --> 00:09:02.970
+the LLM has no information,
+and so do you give a prompt?
+
+00:09:02.970 --> 00:09:05.070
+So the answer is
+not at this stage.
+
+00:09:05.070 --> 00:09:08.190
+But if you don't give
+anything to your LLM,
+
+00:09:08.190 --> 00:09:11.110
+it will learn to just start the
+sequence with something that
+
+00:09:11.110 --> 00:09:12.530
+starts the sequence.
+
+00:09:12.530 --> 00:09:15.790
+So it will learn
+tokens that could
+
+00:09:15.790 --> 00:09:18.810
+be likely to appear at the
+beginning of the sequence.
+
+00:09:18.810 --> 00:09:21.050
+But to your point,
+there is no information.
+
+00:09:21.050 --> 00:09:25.550
+So-- yeah.
+
+00:09:25.550 --> 00:09:26.890
+Cool.
+
+00:09:26.890 --> 00:09:29.950
+One thing I wanted
+to add here is
+
+00:09:29.950 --> 00:09:33.510
+that we can do that in a
+parallel fashion because
+
+00:09:33.510 --> 00:09:36.230
+of a trick that I
+believe we briefly
+
+00:09:36.230 --> 00:09:42.120
+saw during lecture 1, which is
+the masked self-attention that
+
+00:09:42.120 --> 00:09:46.520
+allows you to only
+attend to tokens that
+
+00:09:46.520 --> 00:09:49.760
+are before you and yourself.
+
+00:09:49.760 --> 00:09:52.880
+So in other words, if you
+want to predict, let's say,
+
+00:09:52.880 --> 00:09:59.320
+the next token after "teddy,"
+you would only be able to attend
+
+00:09:59.320 --> 00:10:04.680
+to the token "teddy" and
+all the tokens before you,
+
+00:10:04.680 --> 00:10:09.440
+thanks to the Masked
+self-attention.
+
+00:10:09.440 --> 00:10:12.920
+Great, and so just formalizing
+that a little bit more,
+
+00:10:12.920 --> 00:10:15.800
+so what we're doing is
+we're inputting something
+
+00:10:15.800 --> 00:10:17.600
+into the LLM,
+which you can think
+
+00:10:17.600 --> 00:10:23.320
+of it as a sequence of tokens,
+until, let's say, t minus 1.
+
+00:10:23.320 --> 00:10:26.360
+And what you want
+to do is the LLM
+
+00:10:26.360 --> 00:10:31.360
+to actually produce the
+probability of the next token
+
+00:10:31.360 --> 00:10:33.720
+given your input.
+
+00:10:33.720 --> 00:10:36.720
+And so in a more
+formal fashion, you
+
+00:10:36.720 --> 00:10:41.330
+will use the cross-entropy
+loss in order to do that.
+
+00:10:41.330 --> 00:10:43.590
+So I have a formula
+on the slide,
+
+00:10:43.590 --> 00:10:47.850
+but I'm going to just derive
+it from first principles.
+
+00:10:47.850 --> 00:10:56.170
+So as with a usual training
+setup, what we're trying to do
+
+00:10:56.170 --> 00:11:00.890
+is to learn
+parameters theta such
+
+00:11:00.890 --> 00:11:05.530
+that the probability of our
+model seeing the training data
+
+00:11:05.530 --> 00:11:08.370
+is maximized.
+
+00:11:08.370 --> 00:11:12.410
+So the probability
+of the sequence--
+
+00:11:12.410 --> 00:11:21.250
+you can think of it as p of
+the token-- so x1 until xn.
+
+00:11:21.250 --> 00:11:24.050
+And this probability
+is something
+
+00:11:24.050 --> 00:11:26.050
+that is produced by the model.
+
+00:11:26.050 --> 00:11:30.410
+So it's parameterized by theta.
+
+00:11:30.410 --> 00:11:35.250
+So what you want to do is to
+find the parameters theta that
+
+00:11:35.250 --> 00:11:41.860
+maximize the probability of a
+model seeing the training set.
+
+00:11:41.860 --> 00:11:46.180
+So your goal is to
+maximize this quantity.
+
+00:11:46.180 --> 00:11:50.900
+And just going back to
+the basics of probability,
+
+00:11:50.900 --> 00:11:54.060
+it just turns out
+that you can have
+
+00:11:54.060 --> 00:11:58.040
+some other way of writing this.
+
+00:11:58.040 --> 00:12:09.060
+So you have p of x1 times p of
+x2 given x1 times all the way
+
+00:12:09.060 --> 00:12:17.820
+to p of x, let's say, n,
+given x1 until xn minus 1,
+
+00:12:17.820 --> 00:12:22.540
+which you can rewrite
+with this product.
+
+00:12:22.540 --> 00:12:30.160
+So it's t from 1 to n of p of
+theta of xt given your input.
+
+00:12:32.860 --> 00:12:34.480
+You want to maximize
+this quantity.
+
+00:12:34.480 --> 00:12:38.570
+The problem with maximizing
+the products of probabilities,
+
+00:12:38.570 --> 00:12:45.330
+which are each between 0 and 1,
+is that the product tends to 0,
+
+00:12:45.330 --> 00:12:48.790
+so it can lead to
+numerical instabilities.
+
+00:12:48.790 --> 00:12:51.310
+So what people do is
+they typically take
+
+00:12:51.310 --> 00:12:53.870
+the log of this quantity.
+
+00:12:53.870 --> 00:12:56.710
+So I'll just do the following.
+
+00:12:56.710 --> 00:13:00.230
+We have-- so let's see--
+
+00:13:00.230 --> 00:13:01.650
+log of this quantity.
+
+00:13:01.650 --> 00:13:07.110
+So we just take log of this.
+
+00:13:07.110 --> 00:13:13.590
+And this gets transformed
+to a sum of the log
+
+00:13:13.590 --> 00:13:14.850
+of the probabilities.
+
+00:13:19.070 --> 00:13:22.830
+So this is just a
+property of the logarithm.
+
+00:13:22.830 --> 00:13:28.630
+And then what we do is we want
+to maximize this quantity.
+
+00:13:28.630 --> 00:13:31.150
+But in machine learning,
+what we like to do
+
+00:13:31.150 --> 00:13:33.310
+is to minimize things.
+
+00:13:33.310 --> 00:13:39.590
+So we actually minimize
+the minus of this quantity.
+
+00:13:39.590 --> 00:13:42.510
+And then we just want to
+not have this quantity be
+
+00:13:42.510 --> 00:13:44.990
+a function of the number of
+tokens in the sequence in terms
+
+00:13:44.990 --> 00:13:49.750
+of scale, which is why we
+divide by the number of tokens.
+
+00:13:49.750 --> 00:13:52.370
+And this is our loss.
+
+00:13:59.990 --> 00:14:01.570
+And it's a function of theta.
+
+00:14:01.570 --> 00:14:04.050
+And the theta comes
+from the p of theta,
+
+00:14:04.050 --> 00:14:07.150
+which is something
+that our model outputs
+
+00:14:07.150 --> 00:14:09.910
+in the last layer--
+
+00:14:09.910 --> 00:14:13.390
+so all that to say that you
+will find the cross-entropy loss
+
+00:14:13.390 --> 00:14:15.270
+in a lot of places.
+
+00:14:15.270 --> 00:14:17.890
+And just instead of
+memorizing this formula,
+
+00:14:17.890 --> 00:14:19.970
+just think of it from
+first principles.
+
+00:14:19.970 --> 00:14:24.830
+It's just you trying to
+find parameters theta that
+
+00:14:24.830 --> 00:14:31.270
+maximize the probability of your
+model seeing the training data.
+
+00:14:31.270 --> 00:14:32.180
+OK, cool.
+
+00:14:32.180 --> 00:14:35.480
+So as I mentioned, p theta
+is the predicted probability,
+
+00:14:35.480 --> 00:14:44.160
+exceeds your target token x
+less than t is the past tokens.
+
+00:14:44.160 --> 00:14:48.200
+And big T is the
+number of tokens.
+
+00:14:48.200 --> 00:14:53.760
+So you will sometimes
+see another loss that
+
+00:14:53.760 --> 00:14:56.440
+is actually the same
+loss but rescaled called
+
+00:14:56.440 --> 00:15:01.640
+Bits Per Byte, BPB.
+
+00:15:01.640 --> 00:15:05.760
+And the idea is that in the
+cross-entropy loss that I just
+
+00:15:05.760 --> 00:15:11.320
+mentioned, the absolute
+value is actually
+
+00:15:11.320 --> 00:15:14.600
+a function of your tokenizer.
+
+00:15:14.600 --> 00:15:18.480
+Depending on how you
+tokenize your data,
+
+00:15:18.480 --> 00:15:22.240
+this value might be different.
+
+00:15:22.240 --> 00:15:25.820
+So in case you want to
+compare your loss between,
+
+00:15:25.820 --> 00:15:28.480
+let's say, a given model that
+has a certain type of tokenizer
+
+00:15:28.480 --> 00:15:32.290
+and another model that has
+another kind of tokenizer,
+
+00:15:32.290 --> 00:15:35.850
+things may not be
+exactly comparable,
+
+00:15:35.850 --> 00:15:41.610
+which is why sometimes
+you will see this loss
+
+00:15:41.610 --> 00:15:47.510
+expressed in a tokenizer-free
+manner where you take that loss,
+
+00:15:47.510 --> 00:15:51.370
+you actually multiply this by
+the number of tokens divided
+
+00:15:51.370 --> 00:15:54.810
+by the number of
+bytes, and you also
+
+00:15:54.810 --> 00:15:58.490
+multiply this by
+1 over log of 2,
+
+00:15:58.490 --> 00:16:00.690
+just so that you can
+interpret this as bits,
+
+00:16:00.690 --> 00:16:02.390
+which is why bits per byte.
+
+00:16:05.690 --> 00:16:08.690
+Cool, OK, so now that we know--
+
+00:16:08.690 --> 00:16:11.570
+yeah, you have a question.
+
+00:16:11.570 --> 00:16:13.430
+So the question is, what is B?
+
+00:16:13.430 --> 00:16:17.570
+So B is the number of
+bytes in your input
+
+00:16:17.570 --> 00:16:21.770
+because each character
+can be encoded with bytes.
+
+00:16:21.770 --> 00:16:22.390
+So yeah.
+
+00:16:25.010 --> 00:16:27.090
+Yeah?
+
+00:16:27.090 --> 00:16:30.220
+So the question is, you use the
+masked self-attention so that
+
+00:16:30.220 --> 00:16:32.440
+you cannot attend to
+something in the future.
+
+00:16:32.440 --> 00:16:35.600
+Is it something that is only
+for decoder or also for encoder?
+
+00:16:35.600 --> 00:16:38.740
+So here in this case, we
+don't have an encoder,
+
+00:16:38.740 --> 00:16:41.100
+and we only have a decoder.
+
+00:16:41.100 --> 00:16:44.020
+And our goal is to
+predict the next token.
+
+00:16:44.020 --> 00:16:48.140
+We need to make sure that when
+we predict the next token,
+
+00:16:48.140 --> 00:16:51.820
+we can only rely on the things
+that we have decoded so far
+
+00:16:51.820 --> 00:16:54.100
+to mimic the inference setup.
+
+00:16:54.100 --> 00:16:58.220
+So long story short is we're
+in a decoder-only setup.
+
+00:16:58.220 --> 00:17:00.440
+If we were in an
+encoder-only setup,
+
+00:17:00.440 --> 00:17:02.760
+we could not do this
+in this fashion.
+
+00:17:02.760 --> 00:17:05.460
+We could not predict
+tokens one at a time,
+
+00:17:05.460 --> 00:17:07.859
+unless you do something else.
+
+00:17:07.859 --> 00:17:10.800
+And we will see
+that in lecture 8.
+
+00:17:10.800 --> 00:17:11.300
+Yeah.
+
+00:17:14.460 --> 00:17:15.940
+OK, cool.
+
+00:17:15.940 --> 00:17:20.140
+So now we know how we can
+train our model, which loss we
+
+00:17:20.140 --> 00:17:20.800
+can use.
+
+00:17:20.800 --> 00:17:22.619
+So here's the
+cross-entropy loss.
+
+00:17:22.619 --> 00:17:25.869
+The next question
+is, what kind of data
+
+00:17:25.869 --> 00:17:28.190
+can we actually
+train our model on?
+
+00:17:28.190 --> 00:17:30.110
+And so here there
+is a lot of effort
+
+00:17:30.110 --> 00:17:32.630
+that is actually put
+into the kind of data
+
+00:17:32.630 --> 00:17:34.990
+that you want to train on.
+
+00:17:34.990 --> 00:17:38.050
+This data can come from the web.
+
+00:17:38.050 --> 00:17:44.790
+It can come from repositories,
+from places where there's code.
+
+00:17:44.790 --> 00:17:47.350
+Lately there's an
+emphasis on being
+
+00:17:47.350 --> 00:17:51.310
+able to solve things with math,
+with science just in general.
+
+00:17:51.310 --> 00:17:56.710
+The idea is to have a
+big-sized corpus on which you
+
+00:17:56.710 --> 00:18:02.030
+can have your model learn about
+patterns of language, patterns
+
+00:18:02.030 --> 00:18:06.810
+of codes, and it's
+typically very big in size.
+
+00:18:06.810 --> 00:18:11.710
+Think of it as
+trillions of tokens.
+
+00:18:11.710 --> 00:18:14.110
+And I think last time
+there was a question
+
+00:18:14.110 --> 00:18:18.790
+on whether we would actually
+repeat the same data if we
+
+00:18:18.790 --> 00:18:22.270
+train it, or if we only
+were seeing unique tokens.
+
+00:18:22.270 --> 00:18:26.470
+Well, there has been some papers
+actually looking into this.
+
+00:18:26.470 --> 00:18:28.790
+And there's one
+paper that is here
+
+00:18:28.790 --> 00:18:31.950
+on the slide, which
+was looking at the case
+
+00:18:31.950 --> 00:18:35.030
+where you're in a
+data-constrained regime
+
+00:18:35.030 --> 00:18:38.790
+where you only have, let's
+say, a set amount of tokens.
+
+00:18:38.790 --> 00:18:43.990
+The question is, would you
+rather stop the training,
+
+00:18:43.990 --> 00:18:47.710
+or is it worth for you actually
+training multiple times
+
+00:18:47.710 --> 00:18:49.390
+on the same tokens?
+
+00:18:49.390 --> 00:18:53.850
+And the answer in this case is
+actually yes, up to four times.
+
+00:18:53.850 --> 00:18:55.830
+It's actually something
+that is allowing
+
+00:18:55.830 --> 00:18:58.470
+you to get better performance.
+
+00:18:58.470 --> 00:19:04.150
+So there is this trade-off of
+whether you would rather see
+
+00:19:04.150 --> 00:19:08.110
+more unique tokens-- is it
+of high or low quality?--
+
+00:19:08.110 --> 00:19:11.930
+and whether you want to
+actually repeat that as well.
+
+00:19:11.930 --> 00:19:14.170
+So that's the question
+that people ask themselves.
+
+00:19:17.030 --> 00:19:23.360
+Again, on the topic of figuring
+out which data to use--
+
+00:19:23.360 --> 00:19:26.460
+so there's been a lot of work
+in trying to figure that out.
+
+00:19:26.460 --> 00:19:29.660
+And so I'll just cite
+this work as well,
+
+00:19:29.660 --> 00:19:36.880
+DataComp-LM, which tries to
+tease out the impact of having
+
+00:19:36.880 --> 00:19:42.040
+a high-quality data set versus
+having a better architecture,
+
+00:19:42.040 --> 00:19:47.600
+Because two people can
+try to train their model
+
+00:19:47.600 --> 00:19:51.320
+and wonder if a given data
+is of high enough quality
+
+00:19:51.320 --> 00:19:52.585
+for their setup.
+
+00:19:52.585 --> 00:19:53.960
+But then the
+performance could be
+
+00:19:53.960 --> 00:19:58.520
+actually due to their
+own model architecture.
+
+00:19:58.520 --> 00:20:03.600
+So this is trying to normalize
+the architecture side so that we
+
+00:20:03.600 --> 00:20:09.680
+can only tease out the impact of
+having a better data versus not.
+
+00:20:09.680 --> 00:20:12.680
+There's a lot of work
+on that piece as well.
+
+00:20:12.680 --> 00:20:14.780
+And you can also
+wonder, well, OK,
+
+00:20:14.780 --> 00:20:18.380
+how can I obtain
+my final data set?
+
+00:20:18.380 --> 00:20:22.730
+Should I put 20% of code,
+50% of web, and so on, so on?
+
+00:20:22.730 --> 00:20:26.710
+And so here people have been
+doing that in multiple ways.
+
+00:20:26.710 --> 00:20:32.690
+And here one way is to
+train multiple small models
+
+00:20:32.690 --> 00:20:36.250
+on different mixtures
+of data and see
+
+00:20:36.250 --> 00:20:41.450
+how each of these small models
+perform so that we can then
+
+00:20:41.450 --> 00:20:47.450
+infer a potential good mix
+of data that could work well
+
+00:20:47.450 --> 00:20:50.090
+if we were to scale that up.
+
+00:20:50.090 --> 00:20:52.690
+So yeah, I highly recommend
+also reading that paper in case
+
+00:20:52.690 --> 00:20:54.210
+you're interested.
+
+00:20:54.210 --> 00:20:58.450
+And again, I want to emphasize
+that the data, preparation data
+
+00:20:58.450 --> 00:21:01.410
+work, is actually
+an involved one.
+
+00:21:01.410 --> 00:21:07.050
+So I wanted to cite this
+diagram from Olmol 3, which
+
+00:21:07.050 --> 00:21:09.450
+is an open-weight model.
+
+00:21:09.450 --> 00:21:13.650
+And here it just goes through
+the training pipeline, the data
+
+00:21:13.650 --> 00:21:18.180
+preparation pipeline,
+which is quite involved.
+
+00:21:18.180 --> 00:21:22.900
+And as I mentioned, the size
+of the pretraining data set
+
+00:21:22.900 --> 00:21:28.580
+is typically huge, on the
+order of trillions of tokens,
+
+00:21:28.580 --> 00:21:31.460
+and lately, even tens
+of trillions of tokens.
+
+00:21:31.460 --> 00:21:36.460
+So as an example, GLM-5,
+which is a relatively recent
+
+00:21:36.460 --> 00:21:41.540
+open-weight model, was trained
+on 30 trillion tokens, just as
+
+00:21:41.540 --> 00:21:44.780
+a point of reference.
+
+00:21:44.780 --> 00:21:50.040
+So you can imagine that in
+order to train such a big model,
+
+00:21:50.040 --> 00:21:53.380
+you need to have the
+right infra in place.
+
+00:21:53.380 --> 00:21:55.460
+So I just wanted to
+say that we will not
+
+00:21:55.460 --> 00:21:58.780
+focus on that in this
+lecture, but we'll
+
+00:21:58.780 --> 00:22:00.660
+focus on that in lecture 5.
+
+00:22:00.660 --> 00:22:06.740
+So stay tuned if you're
+interested on that topic.
+
+00:22:06.740 --> 00:22:12.260
+Cool, so this was
+traditionally the first step
+
+00:22:12.260 --> 00:22:15.540
+that people would do in
+order to train their LLMs.
+
+00:22:15.540 --> 00:22:18.630
+But in recent years,
+there is a second stage
+
+00:22:18.630 --> 00:22:23.350
+that has emerged which is
+called midtraining, which
+
+00:22:23.350 --> 00:22:28.470
+aims at injecting knowledge
+on tasks that are more
+
+00:22:28.470 --> 00:22:31.550
+aligned with your use case.
+
+00:22:31.550 --> 00:22:34.170
+So if, for instance, you
+care about your model,
+
+00:22:34.170 --> 00:22:37.230
+let's say, being able to
+reason, what you want to do
+
+00:22:37.230 --> 00:22:41.310
+is to expose your model
+to more of that code
+
+00:22:41.310 --> 00:22:45.150
+and masked text data.
+
+00:22:45.150 --> 00:22:48.750
+And so here you would
+use midtraining and rely
+
+00:22:48.750 --> 00:22:53.470
+on higher-quality data, still
+doing next-token prediction,
+
+00:22:53.470 --> 00:22:55.830
+in order to have
+your model learn more
+
+00:22:55.830 --> 00:22:59.830
+about these use cases.
+
+00:22:59.830 --> 00:23:01.430
+So that's one.
+
+00:23:01.430 --> 00:23:05.550
+And the second thing
+is training your model
+
+00:23:05.550 --> 00:23:12.870
+to see longer contexts, inputs,
+because one thing that I did not
+
+00:23:12.870 --> 00:23:16.400
+emphasize here is for
+pretraining, typically
+
+00:23:16.400 --> 00:23:19.760
+for efficiency
+purposes, we pretrain
+
+00:23:19.760 --> 00:23:23.120
+based on sequence
+lengths that are
+
+00:23:23.120 --> 00:23:27.240
+on the order of several
+thousands of tokens.
+
+00:23:27.240 --> 00:23:32.320
+But in reality, you could
+have tens of thousands
+
+00:23:32.320 --> 00:23:35.800
+of tokens as inputs or even
+hundreds of thousands of tokens.
+
+00:23:35.800 --> 00:23:37.880
+And you need to teach
+your model to actually
+
+00:23:37.880 --> 00:23:40.920
+be able to handle that.
+
+00:23:40.920 --> 00:23:44.360
+So we're going to spend
+maybe one or two minutes
+
+00:23:44.360 --> 00:23:46.160
+on the long context training.
+
+00:23:46.160 --> 00:23:53.080
+So we saw that this was
+dependent on our ability
+
+00:23:53.080 --> 00:23:56.000
+to encode positions,
+which is something
+
+00:23:56.000 --> 00:23:58.000
+that nowadays people do.
+
+00:23:58.000 --> 00:24:00.920
+People use RoPE.
+
+00:24:00.920 --> 00:24:04.540
+We saw that there is no
+learned parameter within RoPE.
+
+00:24:04.540 --> 00:24:09.800
+So we could, in theory,
+use that out of the box.
+
+00:24:09.800 --> 00:24:12.540
+But the problem is, if
+you don't do anything,
+
+00:24:12.540 --> 00:24:16.360
+if you just train your
+model on short sequences
+
+00:24:16.360 --> 00:24:19.920
+and want to actually use
+that for inference for longer
+
+00:24:19.920 --> 00:24:24.000
+sequences, the reality is that
+your model actually has never
+
+00:24:24.000 --> 00:24:28.380
+seen the rotations of
+these longer sequences,
+
+00:24:28.380 --> 00:24:31.240
+so it may get confused.
+
+00:24:31.240 --> 00:24:35.680
+So this is the reason why we
+have this long context training
+
+00:24:35.680 --> 00:24:41.560
+stage where we're trying to
+expose our model on these longer
+
+00:24:41.560 --> 00:24:43.440
+sequences.
+
+00:24:43.440 --> 00:24:46.840
+And in particular, there are
+typically some little tweaks
+
+00:24:46.840 --> 00:24:51.080
+that are made to
+the RoPE frequencies
+
+00:24:51.080 --> 00:24:55.400
+in order to help our
+model learn better.
+
+00:24:55.400 --> 00:24:58.720
+So in particular, you will see
+a bunch of extension methods
+
+00:24:58.720 --> 00:24:59.580
+from RoPE.
+
+00:24:59.580 --> 00:25:00.920
+So I'll cite one.
+
+00:25:00.920 --> 00:25:03.080
+You may see YaRN.
+
+00:25:03.080 --> 00:25:07.640
+And you may wonder, well,
+why do you need that?
+
+00:25:07.640 --> 00:25:12.570
+So if you were to simply train
+your model that you previously
+
+00:25:12.570 --> 00:25:15.050
+trained on shorter
+contexts, if you
+
+00:25:15.050 --> 00:25:20.610
+were to train that model
+on long context inputs,
+
+00:25:20.610 --> 00:25:25.410
+then you would actually
+give your model a hard time
+
+00:25:25.410 --> 00:25:29.930
+to learn these longer
+context position
+
+00:25:29.930 --> 00:25:31.410
+differences, because
+this would be
+
+00:25:31.410 --> 00:25:35.730
+completely unseen from
+the model perspective.
+
+00:25:35.730 --> 00:25:39.970
+So what people do
+is they actually
+
+00:25:39.970 --> 00:25:44.050
+interpolate the
+frequencies in order
+
+00:25:44.050 --> 00:25:49.450
+to have long position
+differences be
+
+00:25:49.450 --> 00:25:51.530
+within the range of
+frequencies that were
+
+00:25:51.530 --> 00:25:55.930
+seen during the short
+context training.
+
+00:25:55.930 --> 00:25:59.170
+So there are some little
+tweaks on the frequencies
+
+00:25:59.170 --> 00:26:04.650
+that are used by RoPE in order
+to help the model learn better.
+
+00:26:04.650 --> 00:26:08.100
+And in addition to that, there
+is this concept of curriculum
+
+00:26:08.100 --> 00:26:12.460
+learning, so learning-- yes?
+
+00:26:12.460 --> 00:26:15.420
+So the question is,
+how do they figure out
+
+00:26:15.420 --> 00:26:18.020
+what is the length that
+they will encounter?
+
+00:26:18.020 --> 00:26:20.500
+So it's preplanned.
+
+00:26:20.500 --> 00:26:22.460
+So they will say, OK--
+
+00:26:22.460 --> 00:26:26.540
+on the figure, actually, you
+can see an example from GLM-5.
+
+00:26:26.540 --> 00:26:31.820
+The short context training
+is done on 4,000 long inputs.
+
+00:26:31.820 --> 00:26:34.140
+And then for the longer
+context training,
+
+00:26:34.140 --> 00:26:38.540
+it's elongated to
+128k or even 200k.
+
+00:26:38.540 --> 00:26:41.020
+So they know that
+number from the start,
+
+00:26:41.020 --> 00:26:43.140
+and they will
+interpolate accordingly.
+
+00:26:43.140 --> 00:26:47.380
+And then they will use
+that tweaked frequency
+
+00:26:47.380 --> 00:26:50.540
+and do the training and then
+let the model learn the weights
+
+00:26:50.540 --> 00:26:52.740
+accordingly.
+
+00:26:52.740 --> 00:26:54.920
+So the question is,
+how about inference?
+
+00:26:54.920 --> 00:26:57.100
+So they would use the
+tweaked frequencies
+
+00:26:57.100 --> 00:27:00.620
+after the long context training.
+
+00:27:00.620 --> 00:27:05.460
+So they would initially train
+the model for short context
+
+00:27:05.460 --> 00:27:09.930
+on some frequencies, and then
+they perform midtraining.
+
+00:27:09.930 --> 00:27:11.710
+They perform long
+context training
+
+00:27:11.710 --> 00:27:14.870
+in which they tweak a
+little bit the frequencies.
+
+00:27:14.870 --> 00:27:17.830
+And then they use these
+frequencies for inference
+
+00:27:17.830 --> 00:27:20.150
+and so on.
+
+00:27:20.150 --> 00:27:21.750
+Yeah?
+
+00:27:21.750 --> 00:27:23.830
+So the question is,
+if you use YaRN,
+
+00:27:23.830 --> 00:27:25.530
+do you completely
+change your setup?
+
+00:27:25.530 --> 00:27:28.670
+So here you actually
+rely on the RoPE
+
+00:27:28.670 --> 00:27:34.470
+that you had, but you change the
+frequencies so that the model is
+
+00:27:34.470 --> 00:27:37.950
+more familiar with the ranges
+of frequencies encountered
+
+00:27:37.950 --> 00:27:43.210
+during long contexts and is
+more familiar with that, as in,
+
+00:27:43.210 --> 00:27:46.110
+it has seen such frequencies
+during the short context
+
+00:27:46.110 --> 00:27:46.690
+training.
+
+00:27:50.670 --> 00:27:54.810
+Exactly, yeah.
+
+00:27:54.810 --> 00:27:55.490
+Great.
+
+00:27:58.230 --> 00:28:00.830
+So why is this hard?
+
+00:28:00.830 --> 00:28:05.020
+So if you remember, transformer
+is based on self-attention.
+
+00:28:05.020 --> 00:28:08.120
+Self-attention is everything
+attends to everything else--
+
+00:28:08.120 --> 00:28:10.600
+O of n squared complexity.
+
+00:28:10.600 --> 00:28:16.360
+So if you scale up from 4,000 as
+inputs to hundreds of thousands,
+
+00:28:16.360 --> 00:28:19.013
+well, you have a lot
+more computation.
+
+00:28:19.013 --> 00:28:20.180
+But it's not the only thing.
+
+00:28:20.180 --> 00:28:21.960
+The second thing
+is it's actually
+
+00:28:21.960 --> 00:28:28.360
+hard to get data on which
+some parts of the data
+
+00:28:28.360 --> 00:28:33.040
+need some other parts
+in a long range fashion
+
+00:28:33.040 --> 00:28:35.380
+in order to predict
+that specific token.
+
+00:28:35.380 --> 00:28:37.880
+So I'll give you an example.
+
+00:28:37.880 --> 00:28:45.460
+You need your model to learn to
+use information far in the past
+
+00:28:45.460 --> 00:28:47.460
+in order to make a
+prediction far in the future.
+
+00:28:47.460 --> 00:28:51.520
+So you need to have
+some observation
+
+00:28:51.520 --> 00:28:54.540
+that makes use of something
+that is far in the past
+
+00:28:54.540 --> 00:28:57.240
+and that is not something
+that is trivially--
+
+00:28:57.240 --> 00:28:58.740
+something that you
+can come up with.
+
+00:28:58.740 --> 00:29:02.440
+So there is some amount of
+work that is around coming up
+
+00:29:02.440 --> 00:29:05.080
+with such observations.
+
+00:29:05.080 --> 00:29:07.840
+So there's a number
+of challenges.
+
+00:29:07.840 --> 00:29:10.320
+But at the end of
+the day, if you
+
+00:29:10.320 --> 00:29:14.240
+do your pretraining,
+your midtraining,
+
+00:29:14.240 --> 00:29:19.760
+and your long context training,
+at the end of that stage,
+
+00:29:19.760 --> 00:29:24.720
+you will, first of all, have
+spent a bunch of dollars.
+
+00:29:24.720 --> 00:29:28.600
+But then the nice
+thing is you will
+
+00:29:28.600 --> 00:29:33.640
+have a model that knows about
+text, that knows about codes,
+
+00:29:33.640 --> 00:29:36.480
+and that has acquired a certain
+amount of knowledge that
+
+00:29:36.480 --> 00:29:39.160
+was in that data.
+
+00:29:39.160 --> 00:29:41.600
+And in particular
+here, if you look
+
+00:29:41.600 --> 00:29:44.720
+at the model cards of
+your favorite models
+
+00:29:44.720 --> 00:29:47.520
+on third-party
+providers, you will
+
+00:29:47.520 --> 00:29:50.960
+see that there is a
+knowledge cutoff date, which
+
+00:29:50.960 --> 00:29:54.720
+is the date that is
+used up until which
+
+00:29:54.720 --> 00:29:58.320
+you have your training data.
+
+00:29:58.320 --> 00:30:01.070
+So for instance, in the
+case of GPT-6 Astra,
+
+00:30:01.070 --> 00:30:04.450
+you know that the data that was
+used to train that model was up
+
+00:30:04.450 --> 00:30:09.850
+till April 30th of 2026.
+
+00:30:09.850 --> 00:30:15.370
+And the problem is that that
+knowledge is fixed in time.
+
+00:30:15.370 --> 00:30:17.430
+So that means that
+out of the box,
+
+00:30:17.430 --> 00:30:20.610
+if you were to ask your model
+about something that happened
+
+00:30:20.610 --> 00:30:23.290
+after that cutoff
+date, your model
+
+00:30:23.290 --> 00:30:26.650
+would have no idea about
+it because it didn't see it
+
+00:30:26.650 --> 00:30:28.630
+at training.
+
+00:30:28.630 --> 00:30:31.610
+So it doesn't have
+the knowledge.
+
+00:30:31.610 --> 00:30:35.390
+But we will see techniques
+to actually circumvent that.
+
+00:30:35.390 --> 00:30:39.210
+So more on that later.
+
+00:30:39.210 --> 00:30:41.010
+So I have a question for you.
+
+00:30:41.010 --> 00:30:42.770
+We've done all this work.
+
+00:30:42.770 --> 00:30:45.810
+We've started from
+our LLM, just did
+
+00:30:45.810 --> 00:30:48.170
+all of that pretraining,
+midtraining, and long context
+
+00:30:48.170 --> 00:30:48.670
+training.
+
+00:30:48.670 --> 00:30:53.330
+And let's suppose we input
+the following prompt.
+
+00:30:53.330 --> 00:30:57.970
+"Can I put my teddy
+bear in the washer?"
+
+00:30:57.970 --> 00:31:02.920
+What is one response that the
+LLM can give us at that stage?
+
+00:31:07.460 --> 00:31:09.258
+Yeah?
+
+00:31:09.258 --> 00:31:10.800
+I think you have
+the right intuition.
+
+00:31:10.800 --> 00:31:13.280
+So here what it
+will do is-- well,
+
+00:31:13.280 --> 00:31:14.840
+it will not respond
+to the question.
+
+00:31:14.840 --> 00:31:18.500
+Typically, it will actually
+try to autocomplete
+
+00:31:18.500 --> 00:31:20.540
+because the model
+so far has been
+
+00:31:20.540 --> 00:31:23.560
+trained in a next token
+prediction fashion.
+
+00:31:23.560 --> 00:31:28.020
+It has been trained to
+guess the next word.
+
+00:31:28.020 --> 00:31:30.480
+So here it will respond
+something along these lines.
+
+00:31:30.480 --> 00:31:32.320
+So, "Can I put my teddy
+bear in the washer?"
+
+00:31:32.320 --> 00:31:35.380
+Well, "Teddy bears are often
+made of materials like polyester
+
+00:31:35.380 --> 00:31:37.558
+and cotton, with plastic
+eyes and sometimes small
+
+00:31:37.558 --> 00:31:40.100
+accessories"-- typically the
+kind of thing that you would see
+
+00:31:40.100 --> 00:31:42.700
+in text.
+
+00:31:42.700 --> 00:31:44.700
+Is it useful?
+
+00:31:44.700 --> 00:31:46.180
+No, it's not useful.
+
+00:31:46.180 --> 00:31:47.980
+So we're not done.
+
+00:31:47.980 --> 00:31:51.020
+This was pretraining.
+
+00:31:51.020 --> 00:31:53.040
+Now let's go into
+the next stage,
+
+00:31:53.040 --> 00:31:57.530
+which is trying to
+make our LLM useful.
+
+00:31:57.530 --> 00:32:01.550
+So if we ask it questions,
+we want answers.
+
+00:32:01.550 --> 00:32:04.030
+So in this stage--
+
+00:32:04.030 --> 00:32:08.350
+so first, this stage is called
+SFT, Supervised Fine-Tuning.
+
+00:32:08.350 --> 00:32:13.670
+And the goal is to change
+the model behavior to align
+
+00:32:13.670 --> 00:32:16.190
+with what we wanted to do.
+
+00:32:16.190 --> 00:32:19.370
+So in the previous example,
+if you want to ask a question,
+
+00:32:19.370 --> 00:32:24.990
+you want an answer, so you want
+to an assistantlike behavior.
+
+00:32:24.990 --> 00:32:28.270
+So the idea behind this
+stage is to come up
+
+00:32:28.270 --> 00:32:33.230
+with input/output pairs for
+which you want your model
+
+00:32:33.230 --> 00:32:36.770
+to respond like the
+output for a given input.
+
+00:32:39.350 --> 00:32:43.310
+So here the objective
+function will still
+
+00:32:43.310 --> 00:32:45.530
+be next token prediction.
+
+00:32:45.530 --> 00:32:48.150
+You want some
+input, and you want
+
+00:32:48.150 --> 00:32:51.350
+to predict what
+the next token is.
+
+00:32:51.350 --> 00:32:58.160
+So in particular, when it comes
+to acquiring a behavior that
+
+00:32:58.160 --> 00:33:01.280
+is like an assistant,
+you want pairs
+
+00:33:01.280 --> 00:33:04.880
+of instructions and responses.
+
+00:33:04.880 --> 00:33:08.640
+So as an example, let's
+say the instruction can be,
+
+00:33:08.640 --> 00:33:11.280
+"Write a short story about a
+teddy bear who likes to read
+
+00:33:11.280 --> 00:33:11.780
+poetry."
+
+00:33:11.780 --> 00:33:14.960
+And then you have
+some poem, let's say.
+
+00:33:14.960 --> 00:33:18.020
+Another one about "explain why
+a teddy bear is a great friend,"
+
+00:33:18.020 --> 00:33:19.840
+and then you have the response.
+
+00:33:19.840 --> 00:33:26.600
+And what you would do here
+is pass the input, which
+
+00:33:26.600 --> 00:33:30.200
+is the instruction,
+into your LLM,
+
+00:33:30.200 --> 00:33:32.920
+and try to predict
+the next token based
+
+00:33:32.920 --> 00:33:38.560
+on that input, via the
+next-token-prediction objective
+
+00:33:38.560 --> 00:33:41.760
+function, which here we
+saw is, for instance, done
+
+00:33:41.760 --> 00:33:45.040
+via the cross-entropy loss.
+
+00:33:45.040 --> 00:33:47.540
+So to make sure we're all
+on the same page here,
+
+00:33:47.540 --> 00:33:49.140
+the instruction
+could be in blue.
+
+00:33:49.140 --> 00:33:51.200
+And then what we
+would try to do is
+
+00:33:51.200 --> 00:33:55.170
+to have our model
+predict the ones
+
+00:33:55.170 --> 00:33:58.850
+in pink, which is the answer.
+
+00:33:58.850 --> 00:34:01.610
+So the setup is slightly
+different with respect
+
+00:34:01.610 --> 00:34:02.470
+to pretraining.
+
+00:34:02.470 --> 00:34:04.810
+Yes?
+
+00:34:04.810 --> 00:34:08.350
+So the question is, how is SFT
+different from midtraining?
+
+00:34:08.350 --> 00:34:11.810
+So midtraining is about
+higher-quality data.
+
+00:34:11.810 --> 00:34:14.530
+But you don't have one
+specific prompt as input
+
+00:34:14.530 --> 00:34:18.210
+that you're trying to just
+mimic a behavior as output.
+
+00:34:18.210 --> 00:34:20.889
+It is still a corpus of
+texts for which you're trying
+
+00:34:20.889 --> 00:34:23.929
+to predict the next token.
+
+00:34:23.929 --> 00:34:26.250
+The main difference is
+in midtraining compared
+
+00:34:26.250 --> 00:34:30.650
+to pretraining, you have
+higher-quality data and data
+
+00:34:30.650 --> 00:34:33.462
+that is more aligned with
+the task of interest.
+
+00:34:33.462 --> 00:34:35.670
+So if you're interested in,
+let's say, math problems,
+
+00:34:35.670 --> 00:34:38.730
+you would have more
+math-related data.
+
+00:34:38.730 --> 00:34:41.730
+But here the idea
+is specifically
+
+00:34:41.730 --> 00:34:45.050
+to tweak your behavior,
+the behavior of a model,
+
+00:34:45.050 --> 00:34:47.090
+to align with what you want.
+
+00:34:47.090 --> 00:34:52.090
+And in this example, we're
+passing it an input x.
+
+00:34:52.090 --> 00:34:56.929
+So we're not telling our model
+to predict the x's as input.
+
+00:34:56.929 --> 00:34:59.810
+And what we want it
+to do is to predict
+
+00:34:59.810 --> 00:35:03.410
+the next token of the answer.
+
+00:35:03.410 --> 00:35:06.730
+So the slight change with
+respect to the previous setup
+
+00:35:06.730 --> 00:35:14.570
+is the input here is x, the
+instruction or the prompts,
+
+00:35:14.570 --> 00:35:18.770
+and then whatever answer
+that has been decoded so far.
+
+00:35:18.770 --> 00:35:23.250
+And what you want to do is to
+predict the next token, again,
+
+00:35:23.250 --> 00:35:27.250
+with a cross-entropy-like loss.
+
+00:35:27.250 --> 00:35:32.370
+So you would have the log of
+the probability of the target
+
+00:35:32.370 --> 00:35:36.090
+token given the input prompt
+and the past tokens, typically
+
+00:35:36.090 --> 00:35:39.050
+averaged across tokens.
+
+00:35:39.050 --> 00:35:41.490
+So in terms of the kind of
+data that you would use,
+
+00:35:41.490 --> 00:35:44.390
+you would use data that is
+aligned with what you want.
+
+00:35:44.390 --> 00:35:49.020
+So here I mentioned one kind
+of data, which is assistance-
+
+00:35:49.020 --> 00:35:50.920
+or instruction-related data.
+
+00:35:50.920 --> 00:35:53.900
+But you could very well
+have other kinds of data.
+
+00:35:53.900 --> 00:35:55.620
+So let's assume you
+want, I don't know,
+
+00:35:55.620 --> 00:35:59.520
+specifically writing about
+poems in a very specific style.
+
+00:35:59.520 --> 00:36:02.860
+You would have only
+data about that.
+
+00:36:02.860 --> 00:36:09.020
+And the size of your SFT data,
+which would be much lower
+
+00:36:09.020 --> 00:36:11.420
+compared to the
+pretraining one--
+
+00:36:11.420 --> 00:36:14.880
+so if, for instance, it is
+a very specific use case,
+
+00:36:14.880 --> 00:36:18.700
+you would have of
+hundreds or thousands--
+
+00:36:18.700 --> 00:36:21.540
+hundreds or thousands.
+
+00:36:21.540 --> 00:36:23.500
+But if you want something
+bigger, let's say,
+
+00:36:23.500 --> 00:36:27.520
+having an assistant-like
+behavior on a variety of tasks,
+
+00:36:27.520 --> 00:36:30.060
+you would have maybe
+millions of examples,
+
+00:36:30.060 --> 00:36:32.140
+but much lower
+magnitude compared
+
+00:36:32.140 --> 00:36:33.680
+to the pretraining stage.
+
+00:36:36.300 --> 00:36:42.180
+So back to our example-- let's
+assume I am asking my LLM,
+
+00:36:42.180 --> 00:36:45.740
+"Can I put my teddy
+bear in the washer?"
+
+00:36:45.740 --> 00:36:49.470
+What is the kind of-- yes?
+
+00:36:49.470 --> 00:36:52.970
+So the question is, do you
+penalize predicting the input?
+
+00:36:52.970 --> 00:36:54.110
+The answer is no.
+
+00:36:54.110 --> 00:36:57.358
+You only penalize
+predicting the output.
+
+00:36:57.358 --> 00:36:58.650
+You don't care about the input.
+
+00:36:58.650 --> 00:36:59.850
+The input is given to you.
+
+00:37:04.230 --> 00:37:06.710
+So from this formula
+you would have,
+
+00:37:06.710 --> 00:37:09.670
+the sum over t of
+the p theta of--
+
+00:37:09.670 --> 00:37:13.230
+log of p theta of
+t given x and y.
+
+00:37:13.230 --> 00:37:16.810
+Yeah, x is an input, yes, yeah.
+
+00:37:20.870 --> 00:37:23.840
+So the question is, if you
+compute the loss of the prompt,
+
+00:37:23.840 --> 00:37:25.090
+would it hurt the performance?
+
+00:37:25.090 --> 00:37:26.450
+So you would not really.
+
+00:37:26.450 --> 00:37:27.930
+So it's not your intention.
+
+00:37:27.930 --> 00:37:31.030
+Your intention is to not
+predict what the prompt is.
+
+00:37:31.030 --> 00:37:33.750
+So it's just not aligned
+with what you want to do.
+
+00:37:33.750 --> 00:37:35.950
+Yeah.
+
+00:37:35.950 --> 00:37:39.310
+Any other questions?
+
+00:37:39.310 --> 00:37:44.590
+OK, back to the question
+that I had for you-- so
+
+00:37:44.590 --> 00:37:48.140
+let's assume we have the
+same inputs as last time,
+
+00:37:48.140 --> 00:37:52.440
+but this time with an LLM that
+is not only pretrained, but also
+
+00:37:52.440 --> 00:37:55.720
+instruction-tuned with SFT.
+
+00:37:55.720 --> 00:37:59.360
+What would be the kind of
+response you would get?
+
+00:37:59.360 --> 00:38:01.880
+No.
+
+00:38:01.880 --> 00:38:05.800
+Yeah, exactly, no, but it will
+say also some other things.
+
+00:38:05.800 --> 00:38:07.940
+Maybe, "No, it
+might get damaged,
+
+00:38:07.940 --> 00:38:12.880
+try hand-washing instead,"
+which is much better because it
+
+00:38:12.880 --> 00:38:16.440
+answers your question.
+
+00:38:16.440 --> 00:38:21.120
+But maybe you're
+someone who wants
+
+00:38:21.120 --> 00:38:26.360
+to have an answer that is
+a bit more friendly, maybe
+
+00:38:26.360 --> 00:38:29.920
+with some specific tone.
+
+00:38:29.920 --> 00:38:35.560
+So the next section will
+be about trying to see
+
+00:38:35.560 --> 00:38:38.880
+how we can improve that answer.
+
+00:38:38.880 --> 00:38:42.680
+But before we do that,
+I wanted to just go over
+
+00:38:42.680 --> 00:38:47.050
+some challenges
+of the SFT stage.
+
+00:38:47.050 --> 00:38:49.070
+So the first one
+is, as I mentioned,
+
+00:38:49.070 --> 00:38:51.370
+we need very high-quality
+data because when
+
+00:38:51.370 --> 00:38:54.370
+we train our model
+on that SFT data,
+
+00:38:54.370 --> 00:38:58.070
+the model will really behave
+exactly like we told it to.
+
+00:38:58.070 --> 00:39:00.690
+So we really need to make
+sure that the data is
+
+00:39:00.690 --> 00:39:04.050
+exactly what we want.
+
+00:39:04.050 --> 00:39:07.450
+The other thing is, if we have
+too much data with respect
+
+00:39:07.450 --> 00:39:09.890
+to one specific
+piece, the model may
+
+00:39:09.890 --> 00:39:12.342
+be biased to answer in
+a very specific way.
+
+00:39:12.342 --> 00:39:14.050
+So there are some
+challenges with respect
+
+00:39:14.050 --> 00:39:18.290
+to just making sure we
+have the right distribution
+
+00:39:18.290 --> 00:39:20.930
+of the prompts that
+we're tuning it on,
+
+00:39:20.930 --> 00:39:23.050
+along with being
+able to generalize
+
+00:39:23.050 --> 00:39:24.850
+and actually evaluating it.
+
+00:39:24.850 --> 00:39:28.710
+There's one thing that I want
+to spend a few minutes on,
+
+00:39:28.710 --> 00:39:32.730
+which is the computational part.
+
+00:39:32.730 --> 00:39:36.690
+So as we mentioned,
+our LLM is typically
+
+00:39:36.690 --> 00:39:38.930
+on the order of
+billions of parameters
+
+00:39:38.930 --> 00:39:43.770
+or even tens or hundreds
+of billions of parameters.
+
+00:39:43.770 --> 00:39:49.190
+And your model knows
+already a lot about text,
+
+00:39:49.190 --> 00:39:51.250
+already knows a lot.
+
+00:39:51.250 --> 00:39:53.930
+And what you're
+doing here is trying
+
+00:39:53.930 --> 00:39:58.810
+to just steer its behavior
+towards something that you
+
+00:39:58.810 --> 00:40:02.850
+would like the model to behave.
+
+00:40:02.850 --> 00:40:05.250
+So the question
+is, do you really
+
+00:40:05.250 --> 00:40:09.810
+need to tweak all
+the parameters,
+
+00:40:09.810 --> 00:40:14.410
+or can you actually get away
+by just tweaking some of them?
+
+00:40:14.410 --> 00:40:18.210
+And this is exactly
+what people have asked.
+
+00:40:18.210 --> 00:40:20.870
+And this is something
+that motivates LoRA.
+
+00:40:20.870 --> 00:40:23.170
+So who has heard of LoRA?
+
+00:40:23.170 --> 00:40:23.708
+Yeah?
+
+00:40:23.708 --> 00:40:24.250
+Other people?
+
+00:40:24.250 --> 00:40:24.870
+Great.
+
+00:40:24.870 --> 00:40:28.410
+So LoRA stands for
+Low-Rank Adaptation.
+
+00:40:28.410 --> 00:40:31.850
+And the idea behind
+LoRA is you actually
+
+00:40:31.850 --> 00:40:35.010
+probably don't need to update
+all the weights of your model
+
+00:40:35.010 --> 00:40:36.770
+in order to behave
+a certain way,
+
+00:40:36.770 --> 00:40:39.900
+because you're
+almost there already.
+
+00:40:39.900 --> 00:40:46.500
+So the idea is you take the
+learnable parameters that you
+
+00:40:46.500 --> 00:40:51.540
+have, which is
+typically as a matrix,
+
+00:40:51.540 --> 00:40:55.420
+and you decompose that
+as your pretrained,
+
+00:40:55.420 --> 00:41:04.180
+already-learned weights, W0, and
+then some tunable parameters.
+
+00:41:04.180 --> 00:41:07.060
+And these tunable
+parameters, they're
+
+00:41:07.060 --> 00:41:12.660
+actually living in much
+lower-rank matrices,
+
+00:41:12.660 --> 00:41:18.075
+so here B and A. And
+it slashes completely
+
+00:41:18.075 --> 00:41:20.200
+the number of parameters
+that you need to train on.
+
+00:41:20.200 --> 00:41:25.020
+So the good thing is
+it's much more efficient,
+
+00:41:25.020 --> 00:41:27.260
+and it turns out to
+be actually leading
+
+00:41:27.260 --> 00:41:30.180
+to roughly similar
+performance, depending
+
+00:41:30.180 --> 00:41:35.140
+on the size of your data and
+your task, which is great.
+
+00:41:35.140 --> 00:41:39.890
+And also-- let's assume,
+back to our initial example,
+
+00:41:39.890 --> 00:41:42.990
+you have several use
+cases, and you, let's say,
+
+00:41:42.990 --> 00:41:47.710
+want to tune your model with
+LoRA for each specific use case.
+
+00:41:47.710 --> 00:41:50.990
+The good thing is
+that you only need
+
+00:41:50.990 --> 00:41:55.830
+to store the pretrained
+weights, W0, and then
+
+00:41:55.830 --> 00:42:00.010
+the smaller matrices that
+are task-specific matrices.
+
+00:42:00.010 --> 00:42:03.590
+So here, for spam,
+if you train LoRA,
+
+00:42:03.590 --> 00:42:10.110
+you get B and A that are
+specific to the spam use case.
+
+00:42:10.110 --> 00:42:12.630
+For sentiment, you
+can reuse W0, but then
+
+00:42:12.630 --> 00:42:15.550
+have the B and A tuned
+specifically for the sentiment
+
+00:42:15.550 --> 00:42:19.990
+extraction task-- same
+for translation and so on.
+
+00:42:19.990 --> 00:42:24.750
+So in other words, if
+you didn't use LoRA,
+
+00:42:24.750 --> 00:42:28.510
+you would have to
+store all the weights
+
+00:42:28.510 --> 00:42:30.850
+for the first one, all the
+weights for the second one,
+
+00:42:30.850 --> 00:42:31.410
+and so on.
+
+00:42:31.410 --> 00:42:37.520
+But here you only need
+to store the delta.
+
+00:42:37.520 --> 00:42:41.720
+So it's also great
+for storage purposes.
+
+00:42:41.720 --> 00:42:47.520
+So originally, the
+authors of LoRA, they
+
+00:42:47.520 --> 00:42:54.160
+mentioned people should do
+that on the matrices that
+
+00:42:54.160 --> 00:42:57.360
+are within the
+self-attention layer.
+
+00:42:57.360 --> 00:43:00.280
+But since then, people have
+tried different setups,
+
+00:43:00.280 --> 00:43:04.920
+and they have experimented
+with different data sets.
+
+00:43:04.920 --> 00:43:09.480
+And the latest recommendation
+is to actually also leverage
+
+00:43:09.480 --> 00:43:13.080
+the matrices that are within
+the feedforward neural network,
+
+00:43:13.080 --> 00:43:15.620
+because it's actually where
+all the compute is happening.
+
+00:43:15.620 --> 00:43:18.560
+This is where a lot
+of the parameters are.
+
+00:43:18.560 --> 00:43:22.100
+So it actually leads to a
+lot of performance gain.
+
+00:43:22.100 --> 00:43:27.160
+And as a suggested reading,
+there is a great article,
+
+00:43:27.160 --> 00:43:28.880
+I believe, from
+Thinking Machine that
+
+00:43:28.880 --> 00:43:31.660
+is worth reading that is at
+the bottom of the slides.
+
+00:43:31.660 --> 00:43:36.370
+So I highly recommend taking
+a look if you're interested.
+
+00:43:36.370 --> 00:43:38.450
+Cool.
+
+00:43:38.450 --> 00:43:40.450
+Yeah?
+
+00:43:40.450 --> 00:43:43.190
+So the question is, let's assume
+I'm asking a given question.
+
+00:43:43.190 --> 00:43:47.290
+How do I know which
+model takes the task?
+
+00:43:47.290 --> 00:43:50.450
+Well, the answer here is
+you would typically not
+
+00:43:50.450 --> 00:43:52.250
+have different
+weights if you want
+
+00:43:52.250 --> 00:43:54.530
+a general-purpose assistant.
+
+00:43:54.530 --> 00:43:56.570
+And we'll see this
+a little bit later.
+
+00:43:56.570 --> 00:43:59.170
+Typically, you would
+train one big model
+
+00:43:59.170 --> 00:44:01.290
+and have it have as
+much knowledge that you
+
+00:44:01.290 --> 00:44:06.730
+want, as much knowledge as you
+can, and answer these questions.
+
+00:44:06.730 --> 00:44:11.410
+So here it's mostly if you have
+some very, very specific use
+
+00:44:11.410 --> 00:44:12.450
+cases.
+
+00:44:12.450 --> 00:44:14.930
+Let's suppose something
+extremely custom, and you need,
+
+00:44:14.930 --> 00:44:17.730
+let's say, fine-tuning for that.
+
+00:44:17.730 --> 00:44:23.130
+But for the general case, you
+typically would not do that.
+
+00:44:23.130 --> 00:44:24.930
+Yeah?
+
+00:44:24.930 --> 00:44:30.450
+So the question is, you said the
+data that is required for SFT
+
+00:44:30.450 --> 00:44:33.770
+is 10 to the power of 6, which
+is several order of magnitude
+
+00:44:33.770 --> 00:44:36.070
+less than for pretraining.
+
+00:44:36.070 --> 00:44:37.990
+So it's less than pretraining.
+
+00:44:37.990 --> 00:44:38.990
+Why don't you do that?
+
+00:44:38.990 --> 00:44:41.410
+Well, people who
+want to fine-tune,
+
+00:44:41.410 --> 00:44:43.930
+they're usually people
+like you and I. They
+
+00:44:43.930 --> 00:44:46.610
+don't have super big hardware.
+
+00:44:46.610 --> 00:44:50.090
+And so we cannot afford having
+to tune billions and hundreds
+
+00:44:50.090 --> 00:44:53.490
+of billions of parameters.
+
+00:44:53.490 --> 00:44:54.270
+So that's one.
+
+00:44:54.270 --> 00:44:59.330
+The second thing is here,
+your model is already there.
+
+00:44:59.330 --> 00:45:00.910
+It has all the knowledge.
+
+00:45:00.910 --> 00:45:03.170
+It has everything.
+
+00:45:03.170 --> 00:45:07.370
+It just is not as efficient
+to have to retune everything,
+
+00:45:07.370 --> 00:45:09.250
+considering that
+you're almost there.
+
+00:45:09.250 --> 00:45:12.250
+So it's also, just when
+you think about it,
+
+00:45:12.250 --> 00:45:14.850
+you don't need all
+these degrees of freedom
+
+00:45:14.850 --> 00:45:17.850
+to get where you want to be.
+
+00:45:17.850 --> 00:45:20.650
+So the question
+is, are the models
+
+00:45:20.650 --> 00:45:23.310
+across different companies
+different after this stage?
+
+00:45:23.310 --> 00:45:27.430
+So the answer is, it depends on
+the architecture that you chose.
+
+00:45:27.430 --> 00:45:29.300
+It depends on the
+kind of data mixture
+
+00:45:29.300 --> 00:45:30.780
+that they're training this on.
+
+00:45:30.780 --> 00:45:34.520
+And it varies quite a
+lot from model to model.
+
+00:45:34.520 --> 00:45:37.300
+So yeah, they can be
+different in some way that
+
+00:45:37.300 --> 00:45:40.500
+is determined by these
+two factors, typically.
+
+00:45:40.500 --> 00:45:42.480
+So yeah, but the
+data matters a lot.
+
+00:45:45.940 --> 00:45:46.540
+Cool.
+
+00:45:49.340 --> 00:45:55.540
+Now I want to just motivate
+the need-- oh, yes?
+
+00:45:55.540 --> 00:45:57.512
+So the question is,
+how often do you update
+
+00:45:57.512 --> 00:45:58.720
+the parameters of your model?
+
+00:45:58.720 --> 00:46:00.920
+Well it depends which
+use case you have.
+
+00:46:00.920 --> 00:46:03.980
+So I would say if
+you're in a use case
+
+00:46:03.980 --> 00:46:08.220
+where you want your model
+to do a very specific task
+
+00:46:08.220 --> 00:46:11.500
+and you care, let's
+say, about costs,
+
+00:46:11.500 --> 00:46:14.580
+you don't want to
+have a big prompt that
+
+00:46:14.580 --> 00:46:17.620
+always tells your model to
+behave in a certain way.
+
+00:46:17.620 --> 00:46:21.460
+Maybe you want to tweak
+the weights of your model
+
+00:46:21.460 --> 00:46:23.720
+once with this
+fine-tuning process,
+
+00:46:23.720 --> 00:46:27.750
+and then re-use that
+model many times.
+
+00:46:27.750 --> 00:46:30.730
+That is one example, but it
+highly depends on your use case,
+
+00:46:30.730 --> 00:46:31.250
+I would say.
+
+00:46:33.910 --> 00:46:35.270
+Cool.
+
+00:46:35.270 --> 00:46:40.190
+OK, so far, we've
+seen how to have
+
+00:46:40.190 --> 00:46:44.090
+our model learn more about
+knowledge, about text,
+
+00:46:44.090 --> 00:46:45.310
+about code.
+
+00:46:45.310 --> 00:46:48.670
+We learned about how to steer
+the behavior of our model
+
+00:46:48.670 --> 00:46:51.250
+towards something that
+we want-- for instance,
+
+00:46:51.250 --> 00:46:52.910
+answering questions.
+
+00:46:52.910 --> 00:46:56.830
+In this section, we will
+see how we can actually
+
+00:46:56.830 --> 00:47:02.430
+have our model align with
+human preference data.
+
+00:47:02.430 --> 00:47:06.630
+And in particular, I want
+to motivate this section
+
+00:47:06.630 --> 00:47:08.990
+with the following example.
+
+00:47:08.990 --> 00:47:12.190
+So let's assume we
+have our LLM, which we
+
+00:47:12.190 --> 00:47:14.750
+have pretrained and fine-tuned.
+
+00:47:14.750 --> 00:47:20.257
+So it knows how to respond to
+questions or to instructions.
+
+00:47:20.257 --> 00:47:22.590
+So let's suppose we have
+"Suggest a new activity I could
+
+00:47:22.590 --> 00:47:24.110
+do with my teddy bear."
+
+00:47:24.110 --> 00:47:27.600
+And our LLM says, well, "I'd
+suggest you actually do not
+
+00:47:27.600 --> 00:47:29.840
+spend time with the teddy bear."
+
+00:47:29.840 --> 00:47:32.440
+Well, it's an answer, but
+it's maybe not the answer
+
+00:47:32.440 --> 00:47:34.960
+that you wanted to output.
+
+00:47:34.960 --> 00:47:39.040
+What you want is
+to tell your model
+
+00:47:39.040 --> 00:47:43.080
+that this is not the kind
+of output that you want.
+
+00:47:43.080 --> 00:47:48.320
+So, so far, we've only
+told our model what to do.
+
+00:47:48.320 --> 00:47:53.093
+We have not told
+it what to not do,
+
+00:47:53.093 --> 00:47:54.760
+because, so far, we've
+been only saying,
+
+00:47:54.760 --> 00:47:56.300
+OK, next token prediction.
+
+00:47:56.300 --> 00:47:58.160
+Given this input, I want this.
+
+00:47:58.160 --> 00:48:00.220
+And to your point, you
+had a great point earlier,
+
+00:48:00.220 --> 00:48:03.920
+which is that this
+data is not something
+
+00:48:03.920 --> 00:48:06.582
+that the model has produced.
+
+00:48:06.582 --> 00:48:07.540
+It is actually modeled.
+
+00:48:07.540 --> 00:48:10.760
+We are forcing that data in.
+
+00:48:10.760 --> 00:48:14.240
+And so this is what we
+want to resolve here.
+
+00:48:14.240 --> 00:48:16.400
+So in order to resolve
+that, what we do,
+
+00:48:16.400 --> 00:48:21.600
+the first stage is to collect
+preference-paired data.
+
+00:48:21.600 --> 00:48:24.210
+So here for a given
+prompts, we would
+
+00:48:24.210 --> 00:48:28.330
+collect the negative piece,
+which is here, not spending time
+
+00:48:28.330 --> 00:48:31.610
+with your teddy bear, and then a
+positive example, which is maybe
+
+00:48:31.610 --> 00:48:35.170
+something that you
+want about them
+
+00:48:35.170 --> 00:48:37.590
+being great companions
+for sleep and so on.
+
+00:48:37.590 --> 00:48:43.490
+So you would have prompts with
+positive/negative example.
+
+00:48:43.490 --> 00:48:48.810
+And the reason why you would
+frame that as a pairwise problem
+
+00:48:48.810 --> 00:48:53.390
+is just because it is
+easier to collect such data.
+
+00:48:53.390 --> 00:48:57.090
+So as a human, it is
+much simpler for you
+
+00:48:57.090 --> 00:49:00.830
+to figure out that something
+is better than something else,
+
+00:49:00.830 --> 00:49:03.170
+as opposed to stating
+that something
+
+00:49:03.170 --> 00:49:05.030
+is good in absolute scale.
+
+00:49:07.690 --> 00:49:11.330
+Also, for SFT, I mentioned that
+the distribution of prompts
+
+00:49:11.330 --> 00:49:14.570
+is typically something
+that causes the model
+
+00:49:14.570 --> 00:49:15.710
+to be quite sensitive.
+
+00:49:15.710 --> 00:49:18.170
+So here the great
+thing we will see
+
+00:49:18.170 --> 00:49:24.220
+is that the model is not as
+sensitive to that aspect.
+
+00:49:24.220 --> 00:49:33.520
+And we want to steer the model
+to not misbehave in some way.
+
+00:49:33.520 --> 00:49:37.820
+So here, for instance, the fact
+of responding as, I actually
+
+00:49:37.820 --> 00:49:41.100
+do not suggest you do
+anything, it's maybe something
+
+00:49:41.100 --> 00:49:44.240
+that the model would respond,
+and you did your SFT correctly.
+
+00:49:44.240 --> 00:49:48.260
+But sometimes, the
+model misbehaving
+
+00:49:48.260 --> 00:49:51.020
+actually tells you something
+about maybe something
+
+00:49:51.020 --> 00:49:54.960
+that happened in the SFT
+stage that was not intended.
+
+00:49:54.960 --> 00:49:58.940
+So maybe you fed it
+data that actually you
+
+00:49:58.940 --> 00:50:00.860
+were not intending to do so.
+
+00:50:00.860 --> 00:50:05.660
+The misbehaving
+parts is also a stage
+
+00:50:05.660 --> 00:50:09.540
+where, looking at your SFT
+data and just making sure
+
+00:50:09.540 --> 00:50:13.460
+that you have trained your
+model on data that you intended,
+
+00:50:13.460 --> 00:50:15.980
+with the quality
+that you intended,
+
+00:50:15.980 --> 00:50:19.740
+it's a good time
+to do that there.
+
+00:50:19.740 --> 00:50:22.040
+So how do you collect
+preference data?
+
+00:50:22.040 --> 00:50:25.080
+So you can either have a
+pointwise scoring system--
+
+00:50:25.080 --> 00:50:28.100
+so you have a prompt and then
+you have several answers.
+
+00:50:28.100 --> 00:50:28.880
+This one is good.
+
+00:50:28.880 --> 00:50:31.140
+This one is not good
+on an absolute scale.
+
+00:50:31.140 --> 00:50:34.540
+But we said that this is
+kind of hard to do as humans,
+
+00:50:34.540 --> 00:50:39.180
+to have an absolute judgment.
+
+00:50:39.180 --> 00:50:44.140
+You can have this pairwise
+preference data, which
+
+00:50:44.140 --> 00:50:46.380
+is exactly what
+we just mentioned,
+
+00:50:46.380 --> 00:50:50.700
+where we have two
+responses, and then we
+
+00:50:50.700 --> 00:50:53.420
+say which one is
+better than the other.
+
+00:50:53.420 --> 00:50:55.000
+So this is the pairwise setting.
+
+00:50:55.000 --> 00:50:57.200
+And then the listwise
+setting is you have a prompt
+
+00:50:57.200 --> 00:51:00.540
+and then you have a list
+of possible answers.
+
+00:51:00.540 --> 00:51:03.300
+And you just rank
+those from, let's say,
+
+00:51:03.300 --> 00:51:06.220
+most preferred to
+least preferred way.
+
+00:51:06.220 --> 00:51:12.180
+For simplicity purposes,
+most of the time, people
+
+00:51:12.180 --> 00:51:15.300
+collect pairwise
+data when it comes
+
+00:51:15.300 --> 00:51:19.790
+to quantifying what kind of
+preference you want to inject.
+
+00:51:19.790 --> 00:51:23.660
+So the next question
+is, how can you
+
+00:51:23.660 --> 00:51:27.390
+know, for data that
+you don't know outside,
+
+00:51:27.390 --> 00:51:34.570
+how can you know that a given
+response is good or bad?
+
+00:51:34.570 --> 00:51:37.470
+How can you generalize that?
+
+00:51:37.470 --> 00:51:44.790
+And this is what is
+motivating the first step
+
+00:51:44.790 --> 00:51:48.910
+that we're going to talk about,
+which is called reward modeling.
+
+00:51:48.910 --> 00:51:52.270
+So here what we want
+to do is to build
+
+00:51:52.270 --> 00:51:58.750
+a model that can tell us whether
+a response to a given prompt
+
+00:51:58.750 --> 00:52:01.830
+is good or not.
+
+00:52:01.830 --> 00:52:07.830
+If we have such a model, then
+the idea in the second stage
+
+00:52:07.830 --> 00:52:15.920
+is to align our model to align
+with good behavior, which
+
+00:52:15.920 --> 00:52:18.720
+is quantified by
+our reward model
+
+00:52:18.720 --> 00:52:22.680
+actually outputting good
+scores for some answers
+
+00:52:22.680 --> 00:52:31.000
+and avoiding outputs that are
+associated with lower scores.
+
+00:52:31.000 --> 00:52:36.920
+And this is where RLHF
+comes into the picture.
+
+00:52:36.920 --> 00:52:39.880
+So who has heard of RLHF?
+
+00:52:39.880 --> 00:52:40.740
+Yeah, a lot of you.
+
+00:52:40.740 --> 00:52:45.360
+So RLHF stands for Reinforcement
+Learning from Human Feedback.
+
+00:52:45.360 --> 00:52:52.520
+And it is a method to align your
+model with human preferences.
+
+00:52:52.520 --> 00:52:55.560
+So why is it called RLHF?
+
+00:52:55.560 --> 00:52:58.520
+Because in the
+first stage, where
+
+00:52:58.520 --> 00:53:03.160
+you want to learn how to
+distinguish good from bad,
+
+00:53:03.160 --> 00:53:10.120
+you are training your reward
+model on human preference data.
+
+00:53:10.120 --> 00:53:13.610
+So this is where the human
+preference gets modeled.
+
+00:53:13.610 --> 00:53:16.770
+And the second stage is
+to use the model that
+
+00:53:16.770 --> 00:53:21.890
+was trained on human preferences
+in order to align your model
+
+00:53:21.890 --> 00:53:25.170
+to behave better.
+
+00:53:25.170 --> 00:53:28.250
+So that's the idea.
+
+00:53:28.250 --> 00:53:33.330
+So one thing that I will
+say is that RLHF, and just,
+
+00:53:33.330 --> 00:53:37.370
+in general, reinforcement
+learning-based methods,
+
+00:53:37.370 --> 00:53:43.290
+they are quite technical, which
+is the reason why, today, we'll
+
+00:53:43.290 --> 00:53:47.330
+focus first and foremost
+on the intuition.
+
+00:53:47.330 --> 00:53:51.050
+And we're keeping all
+the mathematical part
+
+00:53:51.050 --> 00:53:53.250
+for next lecture.
+
+00:53:53.250 --> 00:53:55.570
+So I hope next lecture
+you'll come prepared.
+
+00:53:55.570 --> 00:53:56.590
+We'll do some math.
+
+00:53:56.590 --> 00:54:01.050
+But this lecture, we will
+focus more on the intuition.
+
+00:54:01.050 --> 00:54:03.170
+And the reason why we're
+distinguishing the two
+
+00:54:03.170 --> 00:54:05.490
+is because it's actually
+quite technical,
+
+00:54:05.490 --> 00:54:08.270
+and there are some
+details to take care of.
+
+00:54:11.490 --> 00:54:16.260
+With that being said, let's
+now go through the two steps
+
+00:54:16.260 --> 00:54:19.340
+that we mentioned-- so reward
+modeling and reinforcement
+
+00:54:19.340 --> 00:54:20.660
+learning.
+
+00:54:20.660 --> 00:54:27.220
+So reward modeling, our goal
+is to learn how to distinguish
+
+00:54:27.220 --> 00:54:31.740
+good answers from bad answers.
+
+00:54:31.740 --> 00:54:36.980
+And here, given a prompt
+and given some answer,
+
+00:54:36.980 --> 00:54:39.300
+we want our model
+to say, yes, it's
+
+00:54:39.300 --> 00:54:42.740
+a good answer to that prompt,
+or, no, it's not a good answer.
+
+00:54:42.740 --> 00:54:44.700
+So that is our goal.
+
+00:54:44.700 --> 00:54:48.500
+And in order to do
+that, people typically
+
+00:54:48.500 --> 00:54:54.440
+use a formulation that
+is quite specific.
+
+00:54:54.440 --> 00:54:57.260
+It's called the
+Bradley-Terry formulation.
+
+00:54:57.260 --> 00:55:00.660
+And it is a
+formulation that models
+
+00:55:00.660 --> 00:55:04.580
+the probability of something
+being preferred over something
+
+00:55:04.580 --> 00:55:07.280
+else in a very specific manner.
+
+00:55:07.280 --> 00:55:10.620
+So here it's probability
+of, let's say,
+
+00:55:10.620 --> 00:55:14.060
+yi being preferred
+over yj, which
+
+00:55:14.060 --> 00:55:20.500
+is equal to the
+sigmoid of ri minus rj.
+
+00:55:20.500 --> 00:55:26.300
+So we're just saying that yi,
+there is some reward ri that
+
+00:55:26.300 --> 00:55:29.180
+characterizes it, yj
+there is some reward
+
+00:55:29.180 --> 00:55:31.340
+rj that characterizes it.
+
+00:55:31.340 --> 00:55:33.820
+What we're saying
+is the probability
+
+00:55:33.820 --> 00:55:39.460
+of yi being preferred over yj
+is the sigmoid of the difference
+
+00:55:39.460 --> 00:55:41.780
+between the two rewards.
+
+00:55:41.780 --> 00:55:45.060
+That is what we're saying.
+
+00:55:45.060 --> 00:55:46.820
+So here, as a reminder--
+so I'm not sure
+
+00:55:46.820 --> 00:55:48.862
+if you're all familiar
+with the sigmoid function.
+
+00:55:48.862 --> 00:55:51.820
+The sigmoid function
+is equal to 1 over 1
+
+00:55:51.820 --> 00:55:53.940
+plus exponential of minus x.
+
+00:55:53.940 --> 00:55:57.600
+So it has the shape
+and the slides.
+
+00:55:57.600 --> 00:56:00.340
+So when it tends to
+minus infinity, it's 0,
+
+00:56:00.340 --> 00:56:05.060
+and over plus infinity, it is 1.
+
+00:56:05.060 --> 00:56:09.230
+And the way we're going
+to train our reward model
+
+00:56:09.230 --> 00:56:13.470
+is we're going to leverage
+the pairwise preference
+
+00:56:13.470 --> 00:56:15.090
+data that we have collected.
+
+00:56:15.090 --> 00:56:16.830
+So if you remember,
+we had mentioned
+
+00:56:16.830 --> 00:56:20.670
+that in order to
+collect preference data,
+
+00:56:20.670 --> 00:56:25.050
+pairwise was the
+easiest way to do that.
+
+00:56:25.050 --> 00:56:31.990
+So we have for each prompt a
+winning response and a losing
+
+00:56:31.990 --> 00:56:33.830
+response.
+
+00:56:33.830 --> 00:56:36.290
+So let's assume we
+have a prompt x.
+
+00:56:36.290 --> 00:56:41.150
+And then we have a response
+yw, winning response,
+
+00:56:41.150 --> 00:56:45.710
+and a losing response yl.
+
+00:56:45.710 --> 00:56:50.810
+And our goal is to train our
+reward model in order to say,
+
+00:56:50.810 --> 00:56:53.870
+well, the winning is
+indeed the high reward
+
+00:56:53.870 --> 00:56:56.950
+and the losing is
+a lower reward.
+
+00:56:56.950 --> 00:57:00.150
+So the way we train
+our reward model
+
+00:57:00.150 --> 00:57:05.840
+is by using a pairwise loss.
+
+00:57:05.840 --> 00:57:10.900
+So for a given prompt,
+we would put yw and yl.
+
+00:57:10.900 --> 00:57:14.160
+We would compute the
+reward through our model.
+
+00:57:14.160 --> 00:57:19.240
+And then we would update
+the weights of the model
+
+00:57:19.240 --> 00:57:22.920
+by using this pairwise loss.
+
+00:57:22.920 --> 00:57:27.660
+So this pairwise loss may
+be a little bit scary.
+
+00:57:27.660 --> 00:57:33.120
+So I'm going to
+just motivate that.
+
+00:57:33.120 --> 00:57:38.040
+So if you remember for
+cross-entropy, what we said was,
+
+00:57:38.040 --> 00:57:43.120
+intuitively, you want to
+learn parameters theta that
+
+00:57:43.120 --> 00:57:48.800
+maximize the probability of your
+model seeing the training set.
+
+00:57:48.800 --> 00:57:55.900
+And so here the event that
+you want to model is yw--
+
+00:57:55.900 --> 00:57:58.640
+so winning response
+being preferred
+
+00:57:58.640 --> 00:58:02.000
+over a losing response.
+
+00:58:02.000 --> 00:58:08.690
+So here what you want to
+maximizes the probability
+
+00:58:08.690 --> 00:58:14.210
+that your model says
+that, let's say,
+
+00:58:14.210 --> 00:58:19.290
+winning response is preferred
+over a losing response, roughly
+
+00:58:19.290 --> 00:58:22.130
+speaking.
+
+00:58:22.130 --> 00:58:25.050
+So if you remember,
+so that piece
+
+00:58:25.050 --> 00:58:30.450
+the Bradley-Terry formulation,
+what does it tell us?
+
+00:58:30.450 --> 00:58:36.730
+It is equal to sigma
+of r theta, which
+
+00:58:36.730 --> 00:58:40.730
+is your reward model,
+of-- so your prompts
+
+00:58:40.730 --> 00:58:46.890
+and the winning answer minus
+the reward model of your prompt
+
+00:58:46.890 --> 00:58:48.110
+and the losing answer.
+
+00:58:50.690 --> 00:58:53.130
+So this is what the
+Bradley-Terry formulation
+
+00:58:53.130 --> 00:58:55.570
+tells us.
+
+00:58:55.570 --> 00:59:02.580
+So you want to maximize
+this across all your pairs.
+
+00:59:02.580 --> 00:59:07.340
+But as we said,
+you like logarithm
+
+00:59:07.340 --> 00:59:09.000
+because it is monotonic.
+
+00:59:09.000 --> 00:59:12.220
+And these quantities
+can be very small
+
+00:59:12.220 --> 00:59:13.800
+and can lead to instability.
+
+00:59:13.800 --> 00:59:16.717
+So you take the log.
+
+00:59:16.717 --> 00:59:18.300
+And actually, in the
+machine learning,
+
+00:59:18.300 --> 00:59:21.240
+you like to minimize things as
+opposed to maximizing things.
+
+00:59:21.240 --> 00:59:23.780
+So here you want
+to maximize this,
+
+00:59:23.780 --> 00:59:27.700
+maximizing the log of this,
+which is the same as minimizing
+
+00:59:27.700 --> 00:59:31.940
+minus the log of this.
+
+00:59:31.940 --> 00:59:36.500
+And if you look at the slide,
+it's exactly what is written.
+
+00:59:36.500 --> 00:59:41.220
+So you want to
+minimize minus log
+
+00:59:41.220 --> 00:59:47.340
+of sigma of reward of winning
+minus reward of losing.
+
+00:59:47.340 --> 00:59:52.140
+That is just a result of the
+Bradley-Terry formulation.
+
+00:59:52.140 --> 00:59:53.720
+So let's assume you do that.
+
+00:59:53.720 --> 00:59:56.160
+So in order to-- yeah?
+
+00:59:56.160 --> 00:59:57.640
+Yeah, the question
+is, what is e?
+
+00:59:57.640 --> 00:59:59.680
+Yes, it's the expectation
+over your whole data.
+
+00:59:59.680 --> 01:00:03.572
+So you can think of it as a
+sum or an average if you want.
+
+01:00:03.572 --> 01:00:06.030
+So the question is, what is
+the architecture of your reward
+
+01:00:06.030 --> 01:00:06.610
+model?
+
+01:00:06.610 --> 01:00:09.670
+Well, there's been
+several ways people
+
+01:00:09.670 --> 01:00:11.830
+have been modeling rewards.
+
+01:00:11.830 --> 01:00:17.550
+One way is to leverage
+the backbone of your LLM.
+
+01:00:17.550 --> 01:00:22.910
+But your LLM is trained in a
+next-token-prediction fashion.
+
+01:00:22.910 --> 01:00:27.430
+So what you can do is
+if you put some inputs,
+
+01:00:27.430 --> 01:00:32.230
+you can take the embedding
+representation corresponding
+
+01:00:32.230 --> 01:00:35.550
+to the last token that
+was input and project that
+
+01:00:35.550 --> 01:00:36.410
+onto some space.
+
+01:00:36.410 --> 01:00:37.693
+You can do that.
+
+01:00:37.693 --> 01:00:39.110
+Another way you
+can do that is you
+
+01:00:39.110 --> 01:00:40.730
+can use an encoder-only model.
+
+01:00:40.730 --> 01:00:44.150
+So you put everything,
+self-attention, and just project
+
+01:00:44.150 --> 01:00:45.410
+on the data.
+
+01:00:45.410 --> 01:00:47.070
+So the first method,
+the good thing
+
+01:00:47.070 --> 01:00:51.350
+is that you can leverage the
+backbone that you already have.
+
+01:00:51.350 --> 01:00:52.890
+So yeah, you can do either way.
+
+01:00:52.890 --> 01:00:57.270
+But typically, you can
+do one of these two.
+
+01:00:57.270 --> 01:00:59.470
+OK, cool.
+
+01:00:59.470 --> 01:01:03.630
+So the label here
+is human preference
+
+01:01:03.630 --> 01:01:06.130
+because you need that in
+order to say it's RLHF.
+
+01:01:08.710 --> 01:01:12.270
+And actually, I
+just realized, yeah,
+
+01:01:12.270 --> 01:01:13.615
+this was exactly my next slide.
+
+01:01:13.615 --> 01:01:14.990
+So the kind of
+model would either
+
+01:01:14.990 --> 01:01:18.270
+be a backbone of LLM
+with the classification
+
+01:01:18.270 --> 01:01:23.510
+head on the last token
+that you want to leverage
+
+01:01:23.510 --> 01:01:25.210
+or an encoder-only model.
+
+01:01:28.350 --> 01:01:31.710
+Cool, OK, so that
+first stage, you
+
+01:01:31.710 --> 01:01:35.510
+went from just having
+preference pairs
+
+01:01:35.510 --> 01:01:40.270
+and just wanting to learn good
+responses from bad responses
+
+01:01:40.270 --> 01:01:42.630
+to actually having a
+model that tells you,
+
+01:01:42.630 --> 01:01:45.230
+for a given prompt
+and a given response,
+
+01:01:45.230 --> 01:01:49.070
+whether that is actually a good
+response or a bad response.
+
+01:01:49.070 --> 01:01:52.830
+So now the second stage, which
+is the more mathematically
+
+01:01:52.830 --> 01:01:58.680
+involved stage, is the
+reinforcement learning stage.
+
+01:01:58.680 --> 01:02:01.400
+And here the purpose
+of that stage
+
+01:02:01.400 --> 01:02:04.640
+is to change the
+weights of your model
+
+01:02:04.640 --> 01:02:08.480
+so that it aligns with the
+rewards that are mentioned
+
+01:02:08.480 --> 01:02:10.960
+by that reward model.
+
+01:02:10.960 --> 01:02:14.080
+So how would you do that?
+
+01:02:14.080 --> 01:02:19.800
+So here, you would have a
+prompt and ask your model
+
+01:02:19.800 --> 01:02:23.200
+to generate a response.
+
+01:02:23.200 --> 01:02:27.040
+And here, you want to know if
+this is the kind of behavior you
+
+01:02:27.040 --> 01:02:29.440
+want to promote or demote.
+
+01:02:29.440 --> 01:02:31.840
+So here what you
+would do is you would
+
+01:02:31.840 --> 01:02:34.800
+input your input
+prompts and the response
+
+01:02:34.800 --> 01:02:37.080
+into your reward model--
+
+01:02:37.080 --> 01:02:40.480
+let's suppose it says,
+no, it's a bad response--
+
+01:02:40.480 --> 01:02:49.560
+and use that judgment to
+update the weights of your LLM.
+
+01:02:49.560 --> 01:02:51.560
+So there's a lot
+of math involved.
+
+01:02:51.560 --> 01:02:54.873
+But long story short,
+the reward model
+
+01:02:54.873 --> 01:02:56.290
+is something that
+you have trained
+
+01:02:56.290 --> 01:02:59.050
+in stage 1 that is now frozen.
+
+01:02:59.050 --> 01:03:01.330
+The weights that you're
+changing are the weights
+
+01:03:01.330 --> 01:03:03.610
+of your LLM, which
+is the LLM that you
+
+01:03:03.610 --> 01:03:07.650
+want to align the behavior for.
+
+01:03:07.650 --> 01:03:13.290
+And the way you do that is by
+using an objective function that
+
+01:03:13.290 --> 01:03:16.790
+is typically composed
+of two parts.
+
+01:03:16.790 --> 01:03:21.690
+The first part is trying
+to maximize the rewards,
+
+01:03:21.690 --> 01:03:27.150
+but also to not deviate too
+much from the reference model,
+
+01:03:27.150 --> 01:03:30.630
+because, similar to my
+earlier comment with LoRA,
+
+01:03:30.630 --> 01:03:33.850
+with respect to the
+pretrained model,
+
+01:03:33.850 --> 01:03:35.810
+your model here is
+already good enough.
+
+01:03:35.810 --> 01:03:38.350
+It knows how to
+respond to questions.
+
+01:03:38.350 --> 01:03:40.030
+It knows a bunch of things.
+
+01:03:40.030 --> 01:03:44.330
+You don't want to change
+your weights too much.
+
+01:03:44.330 --> 01:03:48.610
+And the thing is, your
+reward model is not perfect.
+
+01:03:48.610 --> 01:03:52.660
+Sometimes it will say, oh,
+it's bad, whereas it's good.
+
+01:03:52.660 --> 01:03:57.020
+So you don't want your model to
+go too far from your reference
+
+01:03:57.020 --> 01:03:58.020
+model.
+
+01:03:58.020 --> 01:03:59.740
+So you typically have
+an additional term
+
+01:03:59.740 --> 01:04:03.100
+that penalizes too big of
+a difference with respect
+
+01:04:03.100 --> 01:04:05.580
+to the reference.
+
+01:04:05.580 --> 01:04:08.020
+So here, typically, the
+number of observations
+
+01:04:08.020 --> 01:04:12.220
+is orders of magnitude
+higher than the reward model.
+
+01:04:12.220 --> 01:04:15.340
+And you would initialize
+your model at the SFT model
+
+01:04:15.340 --> 01:04:17.700
+that you obtained previously.
+
+01:04:17.700 --> 01:04:19.900
+And you would have an
+objective function, which
+
+01:04:19.900 --> 01:04:25.480
+is exactly what I mentioned, a
+trade-off between two pieces,
+
+01:04:25.480 --> 01:04:27.820
+which are maximizing
+the rewards,
+
+01:04:27.820 --> 01:04:31.500
+but also not deviating too
+much from the base model.
+
+01:04:31.500 --> 01:04:35.860
+And there's actually a key term
+that I want to mention here.
+
+01:04:35.860 --> 01:04:39.440
+People sometimes
+say reward hacking.
+
+01:04:39.440 --> 01:04:42.700
+So reward hacking is the
+fact or the phenomenon
+
+01:04:42.700 --> 01:04:48.020
+of your model trying to please
+the reward model by going
+
+01:04:48.020 --> 01:04:52.750
+into the direction that the
+reward model likes without this
+
+01:04:52.750 --> 01:04:55.710
+being necessarily a
+good thing, if you just
+
+01:04:55.710 --> 01:04:59.230
+forget about your reward
+model from your perspective,
+
+01:04:59.230 --> 01:05:04.210
+just because the reward
+model is not perfect.
+
+01:05:04.210 --> 01:05:04.710
+Yeah?
+
+01:05:07.510 --> 01:05:08.490
+It's a great question.
+
+01:05:08.490 --> 01:05:12.290
+So your question is, how do we
+update the weights of the model?
+
+01:05:12.290 --> 01:05:14.730
+And we'll need to go
+into details for that.
+
+01:05:14.730 --> 01:05:17.510
+So save your question
+for next week.
+
+01:05:17.510 --> 01:05:19.510
+We'll go into that in detail.
+
+01:05:19.510 --> 01:05:24.490
+But the one thing I want you to
+remember here is in this stage,
+
+01:05:24.490 --> 01:05:25.770
+the reward model is fixed.
+
+01:05:25.770 --> 01:05:27.370
+We're not updating its weights.
+
+01:05:27.370 --> 01:05:31.370
+We're only updating
+the weights of the LLM.
+
+01:05:31.370 --> 01:05:33.650
+And we will see next week
+exactly how we do that.
+
+01:05:37.310 --> 01:05:38.990
+Cool.
+
+01:05:38.990 --> 01:05:41.190
+So we just saw RLHF.
+
+01:05:41.190 --> 01:05:46.230
+You need to train a reward
+model and then do RL on your LLM
+
+01:05:46.230 --> 01:05:48.350
+in order to update
+its weights in order
+
+01:05:48.350 --> 01:05:50.670
+to align the behavior
+with what you want.
+
+01:05:50.670 --> 01:05:54.510
+The problem is,
+RL is complicated.
+
+01:05:54.510 --> 01:05:56.950
+You need a reward model.
+
+01:05:56.950 --> 01:06:00.750
+A lot of attention is needed
+to select the hyperparameters
+
+01:06:00.750 --> 01:06:04.590
+and so on, which is why
+people have tried to formulate
+
+01:06:04.590 --> 01:06:08.830
+this problem in a
+supervised manner, which
+
+01:06:08.830 --> 01:06:14.190
+is the idea behind DPO, which
+stands for Direct Preference
+
+01:06:14.190 --> 01:06:15.950
+Optimization.
+
+01:06:15.950 --> 01:06:18.110
+So we will not go
+into the math here,
+
+01:06:18.110 --> 01:06:22.110
+but I just want to tell you
+that the loss function that
+
+01:06:22.110 --> 01:06:24.710
+is derived is something
+that is actually
+
+01:06:24.710 --> 01:06:28.150
+very similar to
+the loss function
+
+01:06:28.150 --> 01:06:31.110
+that we obtained for
+the reward model.
+
+01:06:31.110 --> 01:06:36.990
+If you assume that r is
+equal to some quantity
+
+01:06:36.990 --> 01:06:41.550
+times the logarithm of the
+probability from the model
+
+01:06:41.550 --> 01:06:46.760
+that you're trying to tweak
+over the reference model,
+
+01:06:46.760 --> 01:06:49.320
+and if you see
+that, you will also
+
+01:06:49.320 --> 01:06:55.440
+see that this loss function
+incentivizes your model
+
+01:06:55.440 --> 01:07:01.360
+to increase the probability of
+generating the winning answer
+
+01:07:01.360 --> 01:07:03.680
+compared to the reference.
+
+01:07:03.680 --> 01:07:08.080
+And it incentivizes
+your model to decrease
+
+01:07:08.080 --> 01:07:11.800
+the probability of generating
+a losing answer compared
+
+01:07:11.800 --> 01:07:15.160
+to the reference.
+
+01:07:15.160 --> 01:07:19.560
+So I'll go through
+that super quickly.
+
+01:07:19.560 --> 01:07:24.720
+So here what we're
+saying is something,
+
+01:07:24.720 --> 01:07:34.760
+let's say, minus expectation of,
+let's say, log of your sigmoids,
+
+01:07:34.760 --> 01:07:40.820
+and then you have this
+huge thing, like minus rl--
+
+01:07:43.360 --> 01:07:51.050
+so your loss is such
+that you want rw minus rl
+
+01:07:51.050 --> 01:07:54.530
+to be as big as possible.
+
+01:07:54.530 --> 01:07:56.110
+So what does that mean?
+
+01:07:56.110 --> 01:08:02.090
+So if you say r is equal
+to some quantity times
+
+01:08:02.090 --> 01:08:08.930
+log of probability from the
+model that you're tweaking to,
+
+01:08:08.930 --> 01:08:12.690
+let's say, generate an
+answer over probability
+
+01:08:12.690 --> 01:08:17.850
+of your reference model
+to generate an answer--
+
+01:08:17.850 --> 01:08:22.890
+so what this is saying is
+in order for the difference
+
+01:08:22.890 --> 01:08:27.450
+to be big, which is what
+your loss is trying to do,
+
+01:08:27.450 --> 01:08:31.830
+it will try to make
+rw as big as possible.
+
+01:08:31.830 --> 01:08:33.290
+So how can I do that?
+
+01:08:33.290 --> 01:08:37.130
+It is by having the
+probability of the model
+
+01:08:37.130 --> 01:08:40.330
+we're trying to tweak be
+higher than the probability
+
+01:08:40.330 --> 01:08:45.939
+of your reference model for
+that output given the inputs.
+
+01:08:45.939 --> 01:08:49.380
+So this means that
+we're trying to increase
+
+01:08:49.380 --> 01:08:55.899
+the probability of the winning
+answer being generated.
+
+01:08:55.899 --> 01:08:58.359
+And what you want to
+do is to decrease rl.
+
+01:08:58.359 --> 01:09:00.020
+How do you decrease rl?
+
+01:09:00.020 --> 01:09:03.580
+You actually decrease
+the probability
+
+01:09:03.580 --> 01:09:10.500
+of your model generating that
+losing answer given your input.
+
+01:09:10.500 --> 01:09:12.180
+Yes?
+
+01:09:12.180 --> 01:09:13.680
+So the question is, what is pi?
+
+01:09:13.680 --> 01:09:15.620
+So here pi is--
+
+01:09:15.620 --> 01:09:19.700
+we will see next week
+that this model LLM,
+
+01:09:19.700 --> 01:09:21.899
+we will call it a policy.
+
+01:09:21.899 --> 01:09:24.420
+And when you talk about
+policy, you typically
+
+01:09:24.420 --> 01:09:27.160
+talk about its predicted
+probability in terms of pi.
+
+01:09:27.160 --> 01:09:30.390
+So yeah, so this
+notation is rl-specific.
+
+01:09:30.390 --> 01:09:31.640
+And yeah-- to your point, yes.
+
+01:09:34.700 --> 01:09:35.939
+OK, great.
+
+01:09:35.939 --> 01:09:39.720
+I just want to say that
+this formula can be scary.
+
+01:09:39.720 --> 01:09:43.109
+But if you take the
+Bradley-Terry formulation
+
+01:09:43.109 --> 01:09:47.149
+in mind and interpret
+the left and right term
+
+01:09:47.149 --> 01:09:50.910
+as a function of the
+ratio between the model
+
+01:09:50.910 --> 01:09:54.930
+that you're trying to tweak
+over the reference model,
+
+01:09:54.930 --> 01:09:57.950
+if you think about
+that this way,
+
+01:09:57.950 --> 01:10:01.150
+then, hopefully, it
+makes a bit more sense.
+
+01:10:01.150 --> 01:10:02.750
+Yeah?
+
+01:10:02.750 --> 01:10:04.750
+So yeah, the question is,
+is the reference model
+
+01:10:04.750 --> 01:10:06.650
+the supervised fine-tuned model?
+
+01:10:06.650 --> 01:10:10.190
+Yes, it is the model that
+you start from when you
+
+01:10:10.190 --> 01:10:12.390
+perform that training, yeah.
+
+01:10:14.990 --> 01:10:16.150
+OK, cool.
+
+01:10:16.150 --> 01:10:22.310
+Moving on, so you will see and
+hear RLHF and DPO out there.
+
+01:10:22.310 --> 01:10:25.910
+I just want to tell you a little
+bit about the differences.
+
+01:10:25.910 --> 01:10:30.350
+So RLHF, as we mentioned,
+is composed of two stages.
+
+01:10:30.350 --> 01:10:33.390
+The first stage is
+reward modeling.
+
+01:10:33.390 --> 01:10:36.350
+The second stage is
+reinforcement learning.
+
+01:10:36.350 --> 01:10:43.470
+So there is models to train,
+and it can be compute-heavy,
+
+01:10:43.470 --> 01:10:49.030
+whereas DPO is a supervised
+learning way to do that.
+
+01:10:49.030 --> 01:10:55.990
+But one thing with
+DPO is it is not
+
+01:10:55.990 --> 01:10:59.790
+penalizing the loss
+based on outputs
+
+01:10:59.790 --> 01:11:01.250
+that the model is producing.
+
+01:11:01.250 --> 01:11:03.550
+It is actually on fixed outputs.
+
+01:11:03.550 --> 01:11:06.830
+So to your point, this
+problem is still present here.
+
+01:11:06.830 --> 01:11:09.390
+And we will see that
+in a few slides,
+
+01:11:09.390 --> 01:11:13.470
+that RLHF is an
+on-policy method,
+
+01:11:13.470 --> 01:11:17.710
+because it is actually
+leveraging the actual outputs
+
+01:11:17.710 --> 01:11:23.510
+from the LLM, which contrasts
+with off-policy methods, which
+
+01:11:23.510 --> 01:11:28.630
+are actually training the model
+based on fixed outputs that
+
+01:11:28.630 --> 01:11:33.870
+are not necessarily
+generated by the model.
+
+01:11:33.870 --> 01:11:37.680
+So with that, going
+back to our example,
+
+01:11:37.680 --> 01:11:40.520
+now let's assume we
+have the same inputs.
+
+01:11:40.520 --> 01:11:41.780
+Now it's pretrained.
+
+01:11:41.780 --> 01:11:43.540
+It's instruction fine-tuned.
+
+01:11:43.540 --> 01:11:45.800
+And it's also preference-tuned.
+
+01:11:45.800 --> 01:11:50.960
+Now we will have a response that
+is maybe more friendly in tone.
+
+01:11:50.960 --> 01:11:53.920
+So here, "Can I put my
+teddy bear in the washer?"
+
+01:11:53.920 --> 01:11:56.760
+Instead of saying, "No," we will
+have something that is maybe
+
+01:11:56.760 --> 01:11:57.460
+more friendly.
+
+01:11:57.460 --> 01:11:58.860
+No, "It's better not to.
+
+01:11:58.860 --> 01:12:00.520
+Your teddy could get hurt!
+
+01:12:00.520 --> 01:12:02.640
+A gentle hand wash is safer."
+
+01:12:02.640 --> 01:12:05.020
+So you can use this
+method to, let's say,
+
+01:12:05.020 --> 01:12:08.280
+change the tone as an example.
+
+01:12:08.280 --> 01:12:10.960
+So now I want to talk to
+you about a topic that
+
+01:12:10.960 --> 01:12:17.920
+has increased in importance
+in the past two years.
+
+01:12:17.920 --> 01:12:20.600
+And this is the
+topic of reasoning,
+
+01:12:20.600 --> 01:12:24.800
+which I will define here in a
+very simple way as the ability
+
+01:12:24.800 --> 01:12:27.880
+to solve a problem.
+
+01:12:27.880 --> 01:12:32.520
+So just to contrast prompts
+that are nonreasoning versus
+
+01:12:32.520 --> 01:12:36.850
+reasoning-- so here, if you
+ask a knowledge-based question,
+
+01:12:36.850 --> 01:12:40.450
+what is the course code for
+Stanford's Transformers &amp; LLMs
+
+01:12:40.450 --> 01:12:41.250
+class?"
+
+01:12:41.250 --> 01:12:45.010
+Well, it's something that
+you know or you don't know.
+
+01:12:45.010 --> 01:12:47.730
+It is different from,
+let's say, a math question.
+
+01:12:47.730 --> 01:12:51.510
+Let's assume you ask, OK, so
+your bear was born in 2020.
+
+01:12:51.510 --> 01:12:53.210
+How old is the bear now?
+
+01:12:53.210 --> 01:12:56.370
+You need to think a little
+bit about what year we're in
+
+01:12:56.370 --> 01:13:01.010
+and what is the difference in
+year in order to get the answer.
+
+01:13:01.010 --> 01:13:04.130
+So this right
+example is the kind
+
+01:13:04.130 --> 01:13:08.690
+of prompts that we're
+trying to improve the model
+
+01:13:08.690 --> 01:13:11.250
+performance on.
+
+01:13:11.250 --> 01:13:17.010
+And if you remember, at the
+end of last week's lecture,
+
+01:13:17.010 --> 01:13:21.970
+we saw a prompt technique
+called Chain of Thought that
+
+01:13:21.970 --> 01:13:27.570
+tried to elicit this
+behavior from the model
+
+01:13:27.570 --> 01:13:32.170
+by incentivizing it to
+reveal its reasoning chain
+
+01:13:32.170 --> 01:13:33.440
+through a few-shot examples.
+
+01:13:33.440 --> 01:13:37.140
+So here we saw that if
+we told the LLM, well,
+
+01:13:37.140 --> 01:13:41.500
+let's say, on this example,
+how old is the bear,
+
+01:13:41.500 --> 01:13:42.900
+so in order to
+get to the answer,
+
+01:13:42.900 --> 01:13:45.720
+I want you to output this chain.
+
+01:13:45.720 --> 01:13:48.940
+Then the LLM can learn to
+output a reasoning chain
+
+01:13:48.940 --> 01:13:51.180
+before the answer.
+
+01:13:51.180 --> 01:13:54.940
+The problem with
+that method is we
+
+01:13:54.940 --> 01:13:57.720
+don't want to always
+tell the LLM to do that.
+
+01:13:57.720 --> 01:14:01.580
+We want the LLM to
+do that by itself.
+
+01:14:01.580 --> 01:14:05.340
+And this is exactly
+what we will see here.
+
+01:14:05.340 --> 01:14:13.320
+So in 2024, in September
+of 2024, OpenAI, I believe,
+
+01:14:13.320 --> 01:14:20.620
+was the first company to tell
+about improved performance
+
+01:14:20.620 --> 01:14:25.260
+on math and coding tasks
+using this technique.
+
+01:14:25.260 --> 01:14:31.950
+And shortly after that,
+almost all other frontier labs
+
+01:14:31.950 --> 01:14:38.970
+also had models that
+used the same strategy.
+
+01:14:38.970 --> 01:14:41.010
+And we will see exactly
+what that strategy is.
+
+01:14:43.830 --> 01:14:50.870
+In particular, DeepSeek-R1 was
+the first open-weight model
+
+01:14:50.870 --> 01:14:57.790
+in January of 2025 to
+actually go through the how.
+
+01:14:57.790 --> 01:15:00.990
+So that paper is
+probably the first paper
+
+01:15:00.990 --> 01:15:05.170
+that really explains how
+reasoning models are trained.
+
+01:15:05.170 --> 01:15:07.550
+And we will see exactly
+how we do that here.
+
+01:15:07.550 --> 01:15:12.270
+So if we were in,
+let's say, 2025,
+
+01:15:12.270 --> 01:15:15.790
+the way you would
+recognize a reasoning model
+
+01:15:15.790 --> 01:15:19.370
+is because it was written
+everywhere on the UI.
+
+01:15:19.370 --> 01:15:21.750
+So here, an example
+of OpenAI-- there
+
+01:15:21.750 --> 01:15:24.490
+was a model called
+ChatGPT-5 Thinking.
+
+01:15:24.490 --> 01:15:25.950
+So here it's a hint.
+
+01:15:25.950 --> 01:15:27.830
+And then the reasoning
+chain, because it
+
+01:15:27.830 --> 01:15:32.580
+thought for some seconds, it
+used to output the actual chain,
+
+01:15:32.580 --> 01:15:36.880
+maybe in a summarized way, and
+you would have also an option
+
+01:15:36.880 --> 01:15:39.840
+to think more.
+
+01:15:39.840 --> 01:15:42.080
+But fast-forward to
+today-- these models
+
+01:15:42.080 --> 01:15:44.880
+are actually everywhere.
+
+01:15:44.880 --> 01:15:47.760
+Almost all models are
+reasoning models these days.
+
+01:15:47.760 --> 01:15:49.760
+And so the only place
+where, let's say,
+
+01:15:49.760 --> 01:15:53.060
+if you interact with OpenAI,
+the ChatGPT and so on,
+
+01:15:53.060 --> 01:15:56.760
+the only place you would see
+a hint of the model being
+
+01:15:56.760 --> 01:15:59.540
+a reasoning model is
+the thinking effort.
+
+01:16:02.400 --> 01:16:08.640
+So one thing that I want to
+say is that the reasoning chain
+
+01:16:08.640 --> 01:16:11.720
+is something that is
+actually important
+
+01:16:11.720 --> 01:16:18.640
+because it encapsulates the
+previous input that the user has
+
+01:16:18.640 --> 01:16:20.680
+mentioned to the model.
+
+01:16:20.680 --> 01:16:23.860
+And I'm not sure if
+you've heard in the news,
+
+01:16:23.860 --> 01:16:27.160
+but a couple of
+months ago, there
+
+01:16:27.160 --> 01:16:34.000
+was a paper that showed that,
+for some third-party providers,
+
+01:16:34.000 --> 01:16:38.360
+you could actually
+recover the full reasoning
+
+01:16:38.360 --> 01:16:43.080
+chain by playing with the API.
+
+01:16:43.080 --> 01:16:47.280
+And the reason why that
+paper did a lot of noise
+
+01:16:47.280 --> 01:16:50.160
+is because these
+reasoning chains,
+
+01:16:50.160 --> 01:16:53.720
+they can actually contain
+a lot of information
+
+01:16:53.720 --> 01:16:57.960
+about the user, about the chat,
+what was mentioned before,
+
+01:16:57.960 --> 01:17:01.440
+which is probably not something
+that you want to expose,
+
+01:17:01.440 --> 01:17:03.120
+for safety reasons.
+
+01:17:03.120 --> 01:17:07.680
+But also, another reason is to
+not have the reasoning chain
+
+01:17:07.680 --> 01:17:11.800
+revealed for other
+people to train on it,
+
+01:17:11.800 --> 01:17:16.120
+because we will see that having
+a high-quality reasoning chain
+
+01:17:16.120 --> 01:17:20.160
+can actually improve the
+performance of your model--
+
+01:17:20.160 --> 01:17:24.600
+so just to say that in
+general, the reasoning chain
+
+01:17:24.600 --> 01:17:29.650
+is something that people are
+trying to protect, to not show,
+
+01:17:29.650 --> 01:17:31.450
+for these two reasons.
+
+01:17:31.450 --> 01:17:33.370
+And this is the
+reason why you would
+
+01:17:33.370 --> 01:17:37.850
+see the UI that has changed
+quite a bit between 2025 5
+
+01:17:37.850 --> 01:17:41.010
+and now, because right
+now, actually don't really
+
+01:17:41.010 --> 01:17:45.850
+get the reasoning chain out
+of the box like you used to.
+
+01:17:45.850 --> 01:17:52.850
+So the idea is to
+incentivize the model
+
+01:17:52.850 --> 01:17:58.890
+to actually output a reasoning
+chain before getting its answer.
+
+01:17:58.890 --> 01:18:03.970
+So just on the what is
+what, the reasoning chain
+
+01:18:03.970 --> 01:18:07.410
+is actually considered
+as a model output.
+
+01:18:07.410 --> 01:18:09.590
+So if you think
+about output token,
+
+01:18:09.590 --> 01:18:14.970
+you actually need to consider
+the reasoning as part of it.
+
+01:18:14.970 --> 01:18:19.070
+So if you were to consider
+using this reasoning models,
+
+01:18:19.070 --> 01:18:22.210
+and if you have a
+finite budget, just
+
+01:18:22.210 --> 01:18:27.140
+keep in mind that you're being
+charged for both what you see,
+
+01:18:27.140 --> 01:18:29.540
+but also, the typically
+hidden reasoning
+
+01:18:29.540 --> 01:18:32.460
+chain that the model produces.
+
+01:18:32.460 --> 01:18:35.100
+And so here I just
+highlighted in the slides
+
+01:18:35.100 --> 01:18:38.960
+the parts in the main providers
+where this is mentioned.
+
+01:18:38.960 --> 01:18:40.260
+Yeah?
+
+01:18:40.260 --> 01:18:40.780
+Yep.
+
+01:18:40.780 --> 01:18:42.700
+So the question is,
+can the model decide
+
+01:18:42.700 --> 01:18:44.480
+on what to reason versus not?
+
+01:18:44.480 --> 01:18:47.420
+Yes, typically, it
+has a way to decide.
+
+01:18:47.420 --> 01:18:49.460
+It's part of the
+training process.
+
+01:18:49.460 --> 01:18:52.300
+You as a user can also
+set that, typically
+
+01:18:52.300 --> 01:18:54.500
+by some toggle thinking effort.
+
+01:18:54.500 --> 01:18:56.500
+But even within that,
+typically, models
+
+01:18:56.500 --> 01:19:01.020
+are trained to categorize
+prompts that are maybe
+
+01:19:01.020 --> 01:19:03.660
+worth less effort versus more.
+
+01:19:03.660 --> 01:19:04.920
+So short answer is yes.
+
+01:19:07.500 --> 01:19:10.700
+So moving on, the
+main question now
+
+01:19:10.700 --> 01:19:12.900
+is how we can train
+such a model, how
+
+01:19:12.900 --> 01:19:16.820
+we can incentivize a model
+to output a reasoning
+
+01:19:16.820 --> 01:19:18.940
+chain before its answer.
+
+01:19:18.940 --> 01:19:26.310
+So the idea is to train
+our model on rewards,
+
+01:19:26.310 --> 01:19:28.070
+but this time, they're
+not the rewards
+
+01:19:28.070 --> 01:19:30.330
+that we saw a few slides ago.
+
+01:19:30.330 --> 01:19:33.990
+They are actually
+verifiable, because when
+
+01:19:33.990 --> 01:19:38.630
+it comes to math
+and coding problems,
+
+01:19:38.630 --> 01:19:43.150
+when you get an answer, you
+can tell if the answer is
+
+01:19:43.150 --> 01:19:44.963
+right or wrong.
+
+01:19:44.963 --> 01:19:46.130
+So I'll give you an example.
+
+01:19:46.130 --> 01:19:48.470
+Let's assume you
+do a coding task.
+
+01:19:48.470 --> 01:19:50.030
+You have a solution.
+
+01:19:50.030 --> 01:19:52.110
+How do you know if
+your solution works?
+
+01:19:52.110 --> 01:19:55.350
+Well, you run through
+some test cases.
+
+01:19:55.350 --> 01:20:00.030
+Let's assume you want to
+resolve a math problem.
+
+01:20:00.030 --> 01:20:01.910
+How do you know if it's correct?
+
+01:20:01.910 --> 01:20:06.990
+Well, you just compare your
+answer with the ground truth?
+
+01:20:06.990 --> 01:20:14.230
+So the nice thing
+with this setup
+
+01:20:14.230 --> 01:20:18.920
+is that for every
+model answer, you
+
+01:20:18.920 --> 01:20:24.400
+can tell if your model
+had it right or wrong.
+
+01:20:24.400 --> 01:20:32.920
+So you can design a reward that
+relies on the final answer,
+
+01:20:32.920 --> 01:20:36.400
+and also on the fact
+that the answer needs
+
+01:20:36.400 --> 01:20:40.400
+to contain a reasoning chain.
+
+01:20:40.400 --> 01:20:42.440
+And so here you
+can actually have
+
+01:20:42.440 --> 01:20:47.440
+a reward that is composed
+of the answer being correct
+
+01:20:47.440 --> 01:20:51.920
+and the answer containing a
+reasoning chain-- so typically
+
+01:20:51.920 --> 01:20:57.080
+having reasoning tokens.
+
+01:20:57.080 --> 01:20:59.760
+And the way you would
+train your model
+
+01:20:59.760 --> 01:21:03.900
+would be using rl algorithms.
+
+01:21:03.900 --> 01:21:07.640
+So we will see next week
+in-depth one such algorithm
+
+01:21:07.640 --> 01:21:11.880
+that has grown in popularity
+that is called GRPO.
+
+01:21:11.880 --> 01:21:14.925
+That stands for Group
+Relative Policy optimization.
+
+01:21:14.925 --> 01:21:15.800
+Don't worry the math.
+
+01:21:15.800 --> 01:21:16.780
+We'll see it next week.
+
+01:21:16.780 --> 01:21:20.220
+But at a very high level, what
+we're doing is given a query,
+
+01:21:20.220 --> 01:21:22.860
+given a prompt, we're
+telling our LLM,
+
+01:21:22.860 --> 01:21:28.480
+which is here, the policy,
+to output several responses.
+
+01:21:28.480 --> 01:21:32.920
+And we figure out if these
+responses are correct or not.
+
+01:21:32.920 --> 01:21:37.480
+And what we do is we
+compute advantages,
+
+01:21:37.480 --> 01:21:44.360
+which is how much better a given
+answer is relative to the group.
+
+01:21:44.360 --> 01:21:50.180
+If it's much better, let's
+have the model do more of that.
+
+01:21:50.180 --> 01:21:53.400
+If not, let's have the
+model do less of that,
+
+01:21:53.400 --> 01:21:58.120
+and still by penalizing with
+respect to a reference model.
+
+01:21:58.120 --> 01:22:03.520
+So again, the objective
+is maximize the advantages
+
+01:22:03.520 --> 01:22:06.860
+while not deviating too
+much from the base model.
+
+01:22:06.860 --> 01:22:09.800
+So here it's the same mindset.
+
+01:22:09.800 --> 01:22:13.000
+The main difference
+here is you're actually
+
+01:22:13.000 --> 01:22:15.390
+relying on verifiable rewards.
+
+01:22:15.390 --> 01:22:17.250
+You don't need a reward model.
+
+01:22:17.250 --> 01:22:20.210
+So here you're just
+using the knowledge
+
+01:22:20.210 --> 01:22:24.930
+that you have on the
+ground truth of a problem
+
+01:22:24.930 --> 01:22:29.450
+and comparing whether the answer
+that is output by the model
+
+01:22:29.450 --> 01:22:31.670
+is matching the ground truth.
+
+01:22:36.370 --> 01:22:38.370
+Does that make sense?
+
+01:22:38.370 --> 01:22:43.890
+So again, I want to emphasize
+next week we'll see the details.
+
+01:22:43.890 --> 01:22:48.970
+If you do that, then you will
+see that your model actually
+
+01:22:48.970 --> 01:22:52.890
+gets better and better at
+these reasoning problems.
+
+01:22:52.890 --> 01:22:55.290
+So on the left side,
+we have the performance
+
+01:22:55.290 --> 01:22:58.210
+of the model as a
+function of the rl step.
+
+01:22:58.210 --> 01:23:01.605
+So it's a measure of how far
+you are in the training process.
+
+01:23:01.605 --> 01:23:03.230
+So here it's getting
+better and better.
+
+01:23:03.230 --> 01:23:07.370
+And on the right side, you
+have the empirical length
+
+01:23:07.370 --> 01:23:12.750
+of the reasoning chain,
+which gets increasingly high.
+
+01:23:15.760 --> 01:23:17.940
+I think I already told
+you, but lecture 4
+
+01:23:17.940 --> 01:23:19.820
+is where we'll talk
+about the details.
+
+01:23:19.820 --> 01:23:22.680
+So here, if we have
+some reasoning problem,
+
+01:23:22.680 --> 01:23:25.580
+we tell the model,
+well, now, the model
+
+01:23:25.580 --> 01:23:32.420
+can answer in a way that
+aligns with what we want.
+
+01:23:32.420 --> 01:23:34.300
+There is something,
+before giving it
+
+01:23:34.300 --> 01:23:36.580
+to Shervine, that I want
+to talk to you about.
+
+01:23:36.580 --> 01:23:38.460
+There is a limitation,
+core limitation
+
+01:23:38.460 --> 01:23:41.940
+of this approach, which
+is that you're actually
+
+01:23:41.940 --> 01:23:46.900
+getting a very coarse reward.
+
+01:23:46.900 --> 01:23:50.300
+You're getting a reward
+for your whole output.
+
+01:23:50.300 --> 01:23:53.380
+It's either the whole
+output is correct
+
+01:23:53.380 --> 01:23:56.820
+or the whole output
+is incorrect.
+
+01:23:56.820 --> 01:24:00.740
+So that is one problem.
+
+01:24:00.740 --> 01:24:05.180
+The second problem is that
+the methods that we saw that
+
+01:24:05.180 --> 01:24:11.470
+had a token-level signal,
+they had the limitation
+
+01:24:11.470 --> 01:24:14.950
+of being based on sequences
+that were actually not
+
+01:24:14.950 --> 01:24:16.430
+produced by the model.
+
+01:24:16.430 --> 01:24:19.130
+So we call such
+sequences off-policy.
+
+01:24:19.130 --> 01:24:21.670
+So it's an off-policy method.
+
+01:24:21.670 --> 01:24:23.990
+So it's a dense
+signal, but it's not
+
+01:24:23.990 --> 01:24:27.750
+produced by the model, which
+can deviate from actually what
+
+01:24:27.750 --> 01:24:31.350
+the model is generating.
+
+01:24:31.350 --> 01:24:32.710
+So we have plus.
+
+01:24:32.710 --> 01:24:35.770
+It's a dense signal, but
+it's not from the model.
+
+01:24:35.770 --> 01:24:38.790
+And on the other side, what we
+just saw with preference tuning
+
+01:24:38.790 --> 01:24:42.150
+and with how to train
+a reasoning model
+
+01:24:42.150 --> 01:24:46.950
+is that we're actually
+leveraging outputs
+
+01:24:46.950 --> 01:24:50.870
+from the model at
+training time, but we
+
+01:24:50.870 --> 01:24:54.790
+are relying on a sparse
+signal, which is a reward that
+
+01:24:54.790 --> 01:24:56.170
+is at the sequence level.
+
+01:24:56.170 --> 01:24:58.670
+We don't have any
+token-level way
+
+01:24:58.670 --> 01:25:00.690
+of just figuring
+out what is good,
+
+01:25:00.690 --> 01:25:04.910
+what is not good,
+at least for GRPO.
+
+01:25:04.910 --> 01:25:10.320
+And so there is a new set
+of training strategies
+
+01:25:10.320 --> 01:25:12.300
+that are emerging.
+
+01:25:12.300 --> 01:25:13.960
+And there's one
+such technique that
+
+01:25:13.960 --> 01:25:16.300
+has been becoming
+more and more popular,
+
+01:25:16.300 --> 01:25:20.920
+which is called
+on-policy distillation.
+
+01:25:20.920 --> 01:25:22.480
+So the idea behind
+this method is
+
+01:25:22.480 --> 01:25:26.880
+to combine the best
+of both worlds.
+
+01:25:26.880 --> 01:25:33.760
+So given a prompt, your model
+is generating a response.
+
+01:25:33.760 --> 01:25:38.360
+But what you're doing
+is instead of relying
+
+01:25:38.360 --> 01:25:43.360
+on a sparse signal that is
+across the whole sequence,
+
+01:25:43.360 --> 01:25:47.800
+you're actually
+asking a teacher model
+
+01:25:47.800 --> 01:25:53.320
+to evaluate every single
+token that was generated.
+
+01:25:53.320 --> 01:25:58.000
+And you penalize deviations
+between your model, the student
+
+01:25:58.000 --> 01:26:00.280
+model, and the teacher model.
+
+01:26:00.280 --> 01:26:02.800
+So at a very high
+level, here, it's
+
+01:26:02.800 --> 01:26:08.370
+as if you were putting
+the whole sequence
+
+01:26:08.370 --> 01:26:09.670
+that the student is generating.
+
+01:26:09.670 --> 01:26:15.130
+So think of it as just one at a
+time, you generate the sequence.
+
+01:26:15.130 --> 01:26:20.670
+And you ask the teacher what
+its prediction would be.
+
+01:26:20.670 --> 01:26:24.410
+And you compare the prediction
+of the student and the teacher.
+
+01:26:24.410 --> 01:26:27.930
+And you penalize deviations.
+
+01:26:27.930 --> 01:26:31.330
+So the good thing here
+is it is on-policy
+
+01:26:31.330 --> 01:26:35.450
+because you're actually using
+the generation of the student.
+
+01:26:35.450 --> 01:26:38.930
+And it is also
+dense because you're
+
+01:26:38.930 --> 01:26:42.890
+getting a token-level signal.
+
+01:26:42.890 --> 01:26:45.785
+So you have a few
+variations of that strategy.
+
+01:26:45.785 --> 01:26:47.410
+So how do you come
+up with the teacher?
+
+01:26:47.410 --> 01:26:49.650
+If a teacher is not there,
+there is a variation
+
+01:26:49.650 --> 01:26:53.490
+called on-policy
+self-distillation, which
+
+01:26:53.490 --> 01:26:57.970
+is you use the same
+model for a task,
+
+01:26:57.970 --> 01:27:01.930
+but you tell that teacher
+model, which is the same model,
+
+01:27:01.930 --> 01:27:03.930
+you tell it the answer.
+
+01:27:03.930 --> 01:27:10.570
+So you tell it the answer so it
+knows how to steer its response.
+
+01:27:10.570 --> 01:27:16.210
+And this technique is being
+incorporated in, I would say,
+
+01:27:16.210 --> 01:27:19.930
+most of the frontier
+open white models.
+
+01:27:19.930 --> 01:27:23.050
+And as an example
+here, you will see
+
+01:27:23.050 --> 01:27:26.290
+that you have setups
+where you actually
+
+01:27:26.290 --> 01:27:29.530
+have specialized teachers--
+for instance, one that
+
+01:27:29.530 --> 01:27:32.770
+is very good at math, one that
+is very, very good at, let's
+
+01:27:32.770 --> 01:27:34.010
+say, engineering.
+
+01:27:34.010 --> 01:27:38.490
+And then what you do is you
+perform a dense supervision
+
+01:27:38.490 --> 01:27:42.970
+of the model you're trying
+to train versus these teacher
+
+01:27:42.970 --> 01:27:46.010
+models.
+
+01:27:46.010 --> 01:27:50.490
+And with that, I'll
+give it to Shervine.
+
+01:27:50.490 --> 01:27:52.170
+Thank you, Afshine.
+
+01:27:52.170 --> 01:27:54.330
+So in this last
+part, we're going
+
+01:27:54.330 --> 01:27:57.270
+to focus on a
+practical use case.
+
+01:27:57.270 --> 01:27:59.170
+We're going to see
+everything that Afshine
+
+01:27:59.170 --> 01:28:01.970
+mentioned in real life.
+
+01:28:01.970 --> 01:28:08.340
+So there is this website called
+Artificial Analysis Intelligence
+
+01:28:08.340 --> 01:28:10.060
+Index that I recommend.
+
+01:28:10.060 --> 01:28:11.940
+In case you don't
+know about it, it's
+
+01:28:11.940 --> 01:28:14.460
+an aggregator of
+benchmarks, and it
+
+01:28:14.460 --> 01:28:18.100
+translates into a
+single number, roughly
+
+01:28:18.100 --> 01:28:20.000
+what counts as
+intelligence these days.
+
+01:28:20.000 --> 01:28:23.900
+So it's a good way to rank
+models between each other.
+
+01:28:23.900 --> 01:28:28.938
+And there is this filter
+called Open Source Models.
+
+01:28:28.938 --> 01:28:30.480
+So usually, these
+open-source models,
+
+01:28:30.480 --> 01:28:32.940
+they are slightly
+behind the true frontier
+
+01:28:32.940 --> 01:28:35.000
+from closed-source models.
+
+01:28:35.000 --> 01:28:39.100
+But the great thing about
+them is that oftentimes they
+
+01:28:39.100 --> 01:28:42.620
+tell all the secret recipe
+behind the preparation
+
+01:28:42.620 --> 01:28:46.660
+of these LLMs and
+their open weights.
+
+01:28:46.660 --> 01:28:49.120
+And so we see this ranking.
+
+01:28:49.120 --> 01:28:51.680
+We have a few strong models.
+
+01:28:51.680 --> 01:28:54.740
+And there is one in
+particular that has
+
+01:28:54.740 --> 01:28:57.620
+a great technical report, GLM--
+
+01:28:57.620 --> 01:29:01.150
+so GLM-5, which came
+out earlier this year.
+
+01:29:01.150 --> 01:29:04.230
+And this will be one
+that we will anchor on
+
+01:29:04.230 --> 01:29:10.270
+to see everything that Afshine
+mentioned into practical terms.
+
+01:29:10.270 --> 01:29:14.290
+So we're going to go through
+each stage of training
+
+01:29:14.290 --> 01:29:16.050
+the large language
+model together,
+
+01:29:16.050 --> 01:29:21.470
+and then we're going to see what
+they have put into each stage.
+
+01:29:21.470 --> 01:29:23.630
+So the first stage
+that Afshine mentioned
+
+01:29:23.630 --> 01:29:27.750
+was pretraining, where the main
+goal is to learn about language.
+
+01:29:27.750 --> 01:29:31.110
+So they put some web data.
+
+01:29:31.110 --> 01:29:35.430
+So what you use is
+usually Common Crawl
+
+01:29:35.430 --> 01:29:39.830
+that has about everything
+on the internet.
+
+01:29:39.830 --> 01:29:42.870
+And a lot of it these
+days is polluted
+
+01:29:42.870 --> 01:29:46.630
+by AI-generated contents
+and other things, which
+
+01:29:46.630 --> 01:29:51.310
+is why you have heuristics
+based on this data that
+
+01:29:51.310 --> 01:29:53.470
+trims everything down.
+
+01:29:53.470 --> 01:29:58.710
+So you have some papers that
+go into the reasoning of how
+
+01:29:58.710 --> 01:29:59.820
+you do that.
+
+01:29:59.820 --> 01:30:03.560
+Usually, you have about 1%
+of your input in the end.
+
+01:30:03.560 --> 01:30:05.400
+So it's a great filter.
+
+01:30:05.400 --> 01:30:08.720
+And then it's a good
+time to teach the model
+
+01:30:08.720 --> 01:30:10.860
+about main lines of knowledge.
+
+01:30:10.860 --> 01:30:13.920
+So usually, you have
+authoritative websites,
+
+01:30:13.920 --> 01:30:17.280
+such as Wikipedia, that
+give a lot of great things
+
+01:30:17.280 --> 01:30:18.460
+on general knowledge.
+
+01:30:18.460 --> 01:30:20.880
+But you have other
+facts that might not
+
+01:30:20.880 --> 01:30:25.080
+be on these main websites, where
+you need more care into curating
+
+01:30:25.080 --> 01:30:28.200
+what goes into your data mix.
+
+01:30:28.200 --> 01:30:31.880
+So Afshine mentioned
+the reasoning aspect
+
+01:30:31.880 --> 01:30:34.680
+as being one that is very
+important these days.
+
+01:30:34.680 --> 01:30:38.440
+So alongside coding, that is
+at the foundation of everything
+
+01:30:38.440 --> 01:30:41.760
+that powers today's systems.
+
+01:30:41.760 --> 01:30:44.280
+So when we talk about
+agents or we talk about them
+
+01:30:44.280 --> 01:30:47.120
+in the second part
+of the class, these
+
+01:30:47.120 --> 01:30:53.000
+are mostly coding problems that
+are put at different flavors, so
+
+01:30:53.000 --> 01:30:55.560
+which is why, as
+early as pretraining,
+
+01:30:55.560 --> 01:30:59.890
+we want to train next-token
+prediction on coding data-- so
+
+01:30:59.890 --> 01:31:02.130
+typically GitHub and the likes.
+
+01:31:02.130 --> 01:31:04.130
+And then sometimes you
+have some languages
+
+01:31:04.130 --> 01:31:07.830
+that you care about that might
+not be as present in your mix.
+
+01:31:07.830 --> 01:31:13.050
+So in particular,
+mobile-specific data
+
+01:31:13.050 --> 01:31:14.650
+is an example of one.
+
+01:31:14.650 --> 01:31:19.730
+So this is where some
+curation is needed.
+
+01:31:19.730 --> 01:31:24.370
+And then, finally,
+you use material
+
+01:31:24.370 --> 01:31:30.170
+that has this
+reasoning-like type of data
+
+01:31:30.170 --> 01:31:32.310
+to augment your training.
+
+01:31:32.310 --> 01:31:36.210
+So you also have things
+like papers and math
+
+01:31:36.210 --> 01:31:40.010
+and science-focused.
+
+01:31:40.010 --> 01:31:43.110
+So in terms of numbers,
+as Afshine mentioned,
+
+01:31:43.110 --> 01:31:46.010
+the pretraining stage
+usually operates
+
+01:31:46.010 --> 01:31:48.870
+on a low-context-length regime.
+
+01:31:48.870 --> 01:31:53.250
+So GLM-5 was at
+4K, about, tokens.
+
+01:31:53.250 --> 01:31:55.570
+And some orders of magnitude--
+
+01:31:55.570 --> 01:31:59.490
+so it's divided pretraining
+into two stages, so first
+
+01:31:59.490 --> 01:32:01.570
+one that is very
+coarse, where we just
+
+01:32:01.570 --> 01:32:03.930
+want to learn about
+language structure,
+
+01:32:03.930 --> 01:32:07.490
+where we focus on web data.
+
+01:32:07.490 --> 01:32:09.770
+And then, once
+this is done, then
+
+01:32:09.770 --> 01:32:12.050
+there is a mix of
+coding and reasoning
+
+01:32:12.050 --> 01:32:17.450
+that comes in, alongside still
+web, but at a lesser extent.
+
+01:32:17.450 --> 01:32:20.130
+And now I'm going to
+talk about exactly
+
+01:32:20.130 --> 01:32:22.070
+what happens at training time.
+
+01:32:22.070 --> 01:32:26.370
+So there was a question here
+on what do you actually learn.
+
+01:32:26.370 --> 01:32:30.650
+So here we learn purely
+next-token prediction.
+
+01:32:30.650 --> 01:32:34.230
+And our goal is not to
+generate useful sentences.
+
+01:32:34.230 --> 01:32:38.890
+We just want to learn large
+concepts about language.
+
+01:32:38.890 --> 01:32:42.330
+So we do not have a
+nicely-formatted speaking
+
+01:32:42.330 --> 01:32:47.030
+sequence end of sequence batch
+that we just put it as is.
+
+01:32:47.030 --> 01:32:51.210
+We have a ton of
+data that we chunk,
+
+01:32:51.210 --> 01:32:52.890
+and then we
+concatenate documents
+
+01:32:52.890 --> 01:32:56.200
+that go together at once.
+
+01:32:56.200 --> 01:33:00.540
+So you will see things
+like documents that
+
+01:33:00.540 --> 01:33:04.680
+are cut and then concatenated.
+
+01:33:04.680 --> 01:33:06.980
+And you don't necessarily
+start your batch
+
+01:33:06.980 --> 01:33:09.660
+with the beginning-of-sequence
+token, for example.
+
+01:33:09.660 --> 01:33:16.860
+So you do that in order to
+fill your context length.
+
+01:33:16.860 --> 01:33:19.300
+And again, we mentioned a
+typical order of magnitude
+
+01:33:19.300 --> 01:33:21.420
+is like a few K.
+
+01:33:21.420 --> 01:33:26.140
+And now I want to
+focus a bit more
+
+01:33:26.140 --> 01:33:30.300
+on what I mentioned on
+the importance of curating
+
+01:33:30.300 --> 01:33:31.500
+your data.
+
+01:33:31.500 --> 01:33:38.080
+So in the first LLMs that came
+out in 2022, it was great.
+
+01:33:38.080 --> 01:33:41.220
+The internet was mostly
+human-generated data.
+
+01:33:41.220 --> 01:33:46.180
+So you didn't need to worry
+about the quality of who
+
+01:33:46.180 --> 01:33:47.420
+put data in.
+
+01:33:47.420 --> 01:33:49.820
+And I want to talk about
+a phenomenon called
+
+01:33:49.820 --> 01:33:52.070
+model collapse.
+
+01:33:52.070 --> 01:33:55.010
+So who has heard
+about model collapse?
+
+01:33:55.010 --> 01:33:56.790
+Yeah, a few folks.
+
+01:33:56.790 --> 01:34:02.990
+So the thing is, imagine
+you have a perfect model,
+
+01:34:02.990 --> 01:34:07.430
+and let's say you have
+human-generated data out there.
+
+01:34:07.430 --> 01:34:09.310
+Let's say you want
+to train your model.
+
+01:34:09.310 --> 01:34:13.750
+You will sample a
+finite number of samples
+
+01:34:13.750 --> 01:34:16.830
+from this larger corpus.
+
+01:34:16.830 --> 01:34:18.950
+But the thing is
+the distribution
+
+01:34:18.950 --> 01:34:22.710
+that you have out
+there is very diverse.
+
+01:34:22.710 --> 01:34:25.990
+So you might have some
+nonzero probability for things
+
+01:34:25.990 --> 01:34:28.470
+that are super long-tail.
+
+01:34:28.470 --> 01:34:31.490
+And the thing is, since
+your sampling is finite,
+
+01:34:31.490 --> 01:34:35.350
+you will not capture
+all these details
+
+01:34:35.350 --> 01:34:38.150
+into training your
+model, which means
+
+01:34:38.150 --> 01:34:41.270
+that the output of your
+model is by nature doomed.
+
+01:34:41.270 --> 01:34:44.310
+So you will not have the
+same distribution as output.
+
+01:34:44.310 --> 01:34:47.890
+And this is with the assumption
+that the model is perfect.
+
+01:34:47.890 --> 01:34:51.800
+But on top of that, just imagine
+the model is an approximator.
+
+01:34:51.800 --> 01:34:54.140
+It will not output the
+perfect distribution.
+
+01:34:54.140 --> 01:34:56.520
+It is taught to learn.
+
+01:34:56.520 --> 01:35:01.320
+And to add insult to injury--
+and you might have seen that
+
+01:35:01.320 --> 01:35:03.840
+into your own use of LLMs--
+
+01:35:03.840 --> 01:35:07.000
+you have, at later
+stages, some preferences
+
+01:35:07.000 --> 01:35:10.000
+that vendors and
+experts in language
+
+01:35:10.000 --> 01:35:12.260
+insert into the
+behavior of the LLM.
+
+01:35:12.260 --> 01:35:15.720
+So if I talk to you about
+things that are load-bearing,
+
+01:35:15.720 --> 01:35:19.800
+byte-identical, that might ring
+a bell about your experience
+
+01:35:19.800 --> 01:35:20.740
+with LLMs.
+
+01:35:20.740 --> 01:35:24.480
+These are heavily upweighted
+in frequency with respect
+
+01:35:24.480 --> 01:35:26.160
+to the true distribution.
+
+01:35:26.160 --> 01:35:29.560
+So this is another
+problem that adds
+
+01:35:29.560 --> 01:35:35.600
+to this initial observation,
+which is why all the curation
+
+01:35:35.600 --> 01:35:39.480
+techniques that these papers
+try to achieve at first
+
+01:35:39.480 --> 01:35:41.960
+become really important.
+
+01:35:41.960 --> 01:35:45.160
+And then I know there was a
+question a lecture or two ago
+
+01:35:45.160 --> 01:35:49.790
+about the number of epochs
+that this kind of data runs on.
+
+01:35:49.790 --> 01:35:53.010
+So usually it's [? Of1. ?]
+But in this paper,
+
+01:35:53.010 --> 01:35:56.330
+the data that is of higher
+quality per classifiers
+
+01:35:56.330 --> 01:36:00.130
+might run for a bit more.
+
+01:36:00.130 --> 01:36:03.590
+So the second part,
+which is midtraining--
+
+01:36:03.590 --> 01:36:07.010
+so Afshine mentioned it's where
+you have higher-quality data
+
+01:36:07.010 --> 01:36:08.350
+come into the picture.
+
+01:36:08.350 --> 01:36:11.610
+And in the case
+of GLM-5, the goal
+
+01:36:11.610 --> 01:36:15.650
+was purely to increase
+context length,
+
+01:36:15.650 --> 01:36:22.130
+and do it in a way that works,
+which is why the data mixture is
+
+01:36:22.130 --> 01:36:26.370
+mostly composed
+longer-form data that
+
+01:36:26.370 --> 01:36:28.870
+matches the domains that
+we're interested in.
+
+01:36:28.870 --> 01:36:31.330
+So for example, in
+the case of code,
+
+01:36:31.330 --> 01:36:35.190
+we are looking at PRs with
+issues and then code diffs.
+
+01:36:35.190 --> 01:36:40.290
+So these typically occupy
+much more context length.
+
+01:36:40.290 --> 01:36:47.010
+And then you can afford to put
+in entire books now and so on.
+
+01:36:47.010 --> 01:36:50.130
+And I had mentioned
+last time the problem
+
+01:36:50.130 --> 01:36:55.450
+of context rot, where,
+at larger context length,
+
+01:36:55.450 --> 01:36:58.570
+the LLM might have trouble
+to remember a fact that
+
+01:36:58.570 --> 01:37:00.570
+was mentioned earlier on.
+
+01:37:00.570 --> 01:37:03.170
+So this is also a nice
+place to take that
+
+01:37:03.170 --> 01:37:07.930
+into account, where,
+in synthetic data,
+
+01:37:07.930 --> 01:37:12.090
+you might want to inject
+some fact in the middle of it
+
+01:37:12.090 --> 01:37:15.450
+and then try to
+refer of it later on.
+
+01:37:15.450 --> 01:37:19.770
+So it's another nice
+place for doing so.
+
+01:37:19.770 --> 01:37:22.850
+And some orders
+of magnitude-- so
+
+01:37:22.850 --> 01:37:26.190
+you have a similarly, [? then ?]
+pretraining several stages--
+
+01:37:26.190 --> 01:37:28.730
+so a first one that
+focuses on coding,
+
+01:37:28.730 --> 01:37:34.730
+and then a second one on
+other longer-form data.
+
+01:37:34.730 --> 01:37:38.150
+And then the strategy to train
+these is slightly different.
+
+01:37:38.150 --> 01:37:41.150
+So this paper mentions
+exactly what's the difference.
+
+01:37:41.150 --> 01:37:45.140
+So here, instead of chunking
+everything, just putting
+
+01:37:45.140 --> 01:37:47.700
+all to predict the
+next token-- we
+
+01:37:47.700 --> 01:37:49.700
+are slightly smarter about it.
+
+01:37:49.700 --> 01:37:53.460
+We try to pack documents
+in a way that they fit
+
+01:37:53.460 --> 01:37:55.140
+and that they're not cut.
+
+01:37:55.140 --> 01:37:57.860
+So it's called the
+best-fit packing.
+
+01:37:57.860 --> 01:38:05.820
+And if there is too much
+left, we may pad the context.
+
+01:38:05.820 --> 01:38:07.740
+And yeah, just like
+pretraining, it's
+
+01:38:07.740 --> 01:38:11.660
+next token prediction, still.
+
+01:38:11.660 --> 01:38:17.200
+So now we want to make the
+model a useful assistant.
+
+01:38:17.200 --> 01:38:21.260
+So this is the SFT
+stage, where data
+
+01:38:21.260 --> 01:38:23.800
+that is of much higher
+quality comes in.
+
+01:38:23.800 --> 01:38:26.140
+And then the orders of
+magnitude of the tokens
+
+01:38:26.140 --> 01:38:29.060
+that go into training
+just go down much more.
+
+01:38:29.060 --> 01:38:32.180
+So there is an emphasis
+on general helpfulness.
+
+01:38:32.180 --> 01:38:35.160
+And then, just like Afshine
+mentioned, today's models,
+
+01:38:35.160 --> 01:38:38.480
+they have seen that focusing
+on reasoning is high-value.
+
+01:38:38.480 --> 01:38:40.500
+So there is a lot of
+reasoning and encoding
+
+01:38:40.500 --> 01:38:43.710
+data injected there.
+
+01:38:43.710 --> 01:38:47.950
+And the paper
+mentions that there
+
+01:38:47.950 --> 01:38:52.630
+is the strategy of inserting the
+reasoning that leads to a given
+
+01:38:52.630 --> 01:38:58.950
+tool calls, and that is also
+great for training the reasoning
+
+01:38:58.950 --> 01:39:02.570
+abilities when the model
+wants to perform a tool call.
+
+01:39:02.570 --> 01:39:07.010
+So you will see interleaved
+reasoning and the presence
+
+01:39:07.010 --> 01:39:08.330
+of think tokens.
+
+01:39:08.330 --> 01:39:10.690
+So I think we'll mention it
+next time more in detail.
+
+01:39:10.690 --> 01:39:13.470
+So all this reasoning
+that counts in your
+
+01:39:13.470 --> 01:39:15.510
+[? bill ?] and
+that you don't see,
+
+01:39:15.510 --> 01:39:19.110
+the reason why you don't see
+it is that it's between tokens
+
+01:39:19.110 --> 01:39:20.990
+called think tokens.
+
+01:39:20.990 --> 01:39:23.230
+So it's a way for
+the model to have
+
+01:39:23.230 --> 01:39:25.350
+a scratchpad of
+where it needs to go,
+
+01:39:25.350 --> 01:39:29.030
+but it doesn't
+display it to you.
+
+01:39:29.030 --> 01:39:32.990
+And moving on, this
+time, we do not
+
+01:39:32.990 --> 01:39:35.370
+do pure next-token prediction.
+
+01:39:35.370 --> 01:39:37.790
+So everything that's
+about the input-- so let's
+
+01:39:37.790 --> 01:39:40.700
+say you are on a
+general Q&amp;A use case.
+
+01:39:40.700 --> 01:39:42.140
+You have an input prompt.
+
+01:39:42.140 --> 01:39:46.200
+You do not try to guess
+the next token there
+
+01:39:46.200 --> 01:39:47.860
+because it's a user input.
+
+01:39:47.860 --> 01:39:51.680
+What you want to fit a
+next-token prediction on
+
+01:39:51.680 --> 01:39:54.480
+is the answer that you
+want your LLM to have,
+
+01:39:54.480 --> 01:39:59.200
+which is why the loss
+is more localized.
+
+01:39:59.200 --> 01:40:02.600
+And then the last stage,
+RL-- so these days,
+
+01:40:02.600 --> 01:40:07.040
+RL is heavily used to develop
+reasoning capabilities.
+
+01:40:07.040 --> 01:40:11.320
+And the GLM-5 paper divides
+this into three parts.
+
+01:40:11.320 --> 01:40:15.320
+So the first one is on
+reasoning RL, it calls.
+
+01:40:15.320 --> 01:40:18.400
+So for example, you have
+these math competitions
+
+01:40:18.400 --> 01:40:24.760
+and other similar kinds of
+data where you have a place
+
+01:40:24.760 --> 01:40:26.880
+to think about
+what the answer is
+
+01:40:26.880 --> 01:40:29.440
+and an answer that
+is verifiable.
+
+01:40:29.440 --> 01:40:33.720
+So this is the kind of
+data that reasoning RL is.
+
+01:40:33.720 --> 01:40:38.050
+Agentic RL-- you put
+your LLM into a harness,
+
+01:40:38.050 --> 01:40:40.930
+where it can use things
+like running tests
+
+01:40:40.930 --> 01:40:45.210
+to verify that what it does
+is correct-- for example,
+
+01:40:45.210 --> 01:40:46.070
+bug fixes.
+
+01:40:46.070 --> 01:40:50.330
+You might want to fix a
+failing test to a passing test,
+
+01:40:50.330 --> 01:40:52.410
+and so on.
+
+01:40:52.410 --> 01:40:56.090
+And then general RL is
+a bit more open-ended.
+
+01:40:56.090 --> 01:41:00.630
+So it comes up with dimensions
+like foundational correctness,
+
+01:41:00.630 --> 01:41:03.330
+emotional intelligence,
+and task-specific quality,
+
+01:41:03.330 --> 01:41:07.770
+which respectively denote
+the quality of instruction
+
+01:41:07.770 --> 01:41:08.610
+following.
+
+01:41:08.610 --> 01:41:13.690
+Emotional intelligence is the
+expert data curator's opinion
+
+01:41:13.690 --> 01:41:17.610
+about what a helpful answer
+is, and so on, so they
+
+01:41:17.610 --> 01:41:21.890
+can inject that opinion there.
+
+01:41:21.890 --> 01:41:26.890
+And in this time-- so we'll
+see more about it next time.
+
+01:41:26.890 --> 01:41:28.950
+So we generate the answer.
+
+01:41:28.950 --> 01:41:32.250
+And then, based on whether
+the answer corresponds
+
+01:41:32.250 --> 01:41:33.970
+to what we're
+looking for, we might
+
+01:41:33.970 --> 01:41:37.820
+want to upweight the probability
+of some tokens happening
+
+01:41:37.820 --> 01:41:41.100
+versus not.
+
+01:41:41.100 --> 01:41:45.220
+And I want to connect
+to the last topic
+
+01:41:45.220 --> 01:41:46.680
+that Afshine mentioned.
+
+01:41:46.680 --> 01:41:51.540
+So we have seen many stages
+that try to do many things.
+
+01:41:51.540 --> 01:41:54.260
+And one thing you
+might wonder about
+
+01:41:54.260 --> 01:41:59.100
+is, are we sure that
+everything that we have learned
+
+01:41:59.100 --> 01:42:00.820
+is preserved?
+
+01:42:00.820 --> 01:42:02.720
+And it's a valid concern.
+
+01:42:02.720 --> 01:42:09.940
+It sometimes isn't, which is
+why, at the last stage of RL,
+
+01:42:09.940 --> 01:42:14.000
+there is this stage of on-policy
+cross-stage distillation,
+
+01:42:14.000 --> 01:42:16.980
+where the process that Afshine
+mentioned is done against
+
+01:42:16.980 --> 01:42:20.620
+teachers that are at
+previous checkpoints--
+
+01:42:20.620 --> 01:42:23.900
+so more specifically,
+the one after SFT,
+
+01:42:23.900 --> 01:42:28.780
+and the one after
+the first RL stage.
+
+01:42:28.780 --> 01:42:36.460
+So it's to make sure that we
+haven't lost any capabilities.
+
+01:42:36.460 --> 01:42:41.480
+And so these open-weight
+models, they're great.
+
+01:42:41.480 --> 01:42:44.940
+They give technical
+papers with many details.
+
+01:42:44.940 --> 01:42:48.060
+And some of the secret
+sauce behind the data
+
+01:42:48.060 --> 01:42:50.220
+isn't always spelled out.
+
+01:42:50.220 --> 01:42:52.780
+And I just want to say that--
+
+01:42:52.780 --> 01:42:54.920
+keep a critical eye
+on everything you see,
+
+01:42:54.920 --> 01:42:56.780
+because you see
+oftentimes, popping up
+
+01:42:56.780 --> 01:43:03.020
+in the news, some providers that
+complain about others distilling
+
+01:43:03.020 --> 01:43:03.760
+their data.
+
+01:43:03.760 --> 01:43:06.360
+So this might be also
+part of the data mixture,
+
+01:43:06.360 --> 01:43:09.140
+but of course not written
+in the technical report.
+
+01:43:09.140 --> 01:43:13.180
+So there are some
+allegations of it.
+
+01:43:13.180 --> 01:43:19.220
+And also, I want to mention the
+case of Pi, the coding agent
+
+01:43:19.220 --> 01:43:21.260
+that you might know already.
+
+01:43:21.260 --> 01:43:26.420
+So this is a minimal agent
+that boasts great performance
+
+01:43:26.420 --> 01:43:28.660
+with minimal harness.
+
+01:43:28.660 --> 01:43:32.150
+And the author, who I
+believe was a precursor
+
+01:43:32.150 --> 01:43:36.270
+into understanding really well
+how these models can perform
+
+01:43:36.270 --> 01:43:41.590
+great, he understood
+that all these RL
+
+01:43:41.590 --> 01:43:45.990
+stages, they focus on developing
+reasoning capabilities, which
+
+01:43:45.990 --> 01:43:49.950
+enable you to avoid
+putting in too much context
+
+01:43:49.950 --> 01:43:51.990
+into your harness.
+
+01:43:51.990 --> 01:43:54.130
+So this is one
+great consequence.
+
+01:43:54.130 --> 01:43:58.230
+And you might see the decrease
+of the need of harness
+
+01:43:58.230 --> 01:44:02.150
+engineering more and
+more thanks to that.
+
+01:44:02.150 --> 01:44:05.770
+And sharing things
+recently in the news--
+
+01:44:05.770 --> 01:44:09.950
+so all this reasoning
+data and training
+
+01:44:09.950 --> 01:44:14.050
+enables advances, such
+as in the field of math.
+
+01:44:14.050 --> 01:44:18.870
+So very recently, OpenAI
+released some solutions
+
+01:44:18.870 --> 01:44:22.030
+to open problems,
+which is great.
+
+01:44:22.030 --> 01:44:24.010
+And with that, I hope
+you have a great weekend.
+
+01:44:24.010 --> 01:44:26.460
+[APPLAUSE]
+

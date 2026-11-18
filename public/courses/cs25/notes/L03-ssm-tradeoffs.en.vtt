@@ -1,0 +1,6108 @@
+WEBVTT
+Kind: captions
+Language: en-US
+
+00:00:05.400 --> 00:00:07.760
+All right, so now
+it's my pleasure
+
+00:00:07.760 --> 00:00:10.960
+to welcome our speaker
+for today, Albert Gu.
+
+00:00:10.960 --> 00:00:13.680
+He's an assistant professor in
+the Machine Learning Department
+
+00:00:13.680 --> 00:00:16.920
+at Carnegie Mellon University
+and the chief scientist
+
+00:00:16.920 --> 00:00:18.640
+of Cartesian AI.
+
+00:00:18.640 --> 00:00:20.280
+And his research
+broadly focuses on
+
+00:00:20.280 --> 00:00:23.640
+theoretical and empirical
+foundations of deep learning.
+
+00:00:23.640 --> 00:00:25.960
+And he is particularly
+known for new approaches
+
+00:00:25.960 --> 00:00:29.840
+to deep sequence modeling and
+neural network architectures.
+
+00:00:29.840 --> 00:00:32.600
+And was recognized
+on the Time AI 100
+
+00:00:32.600 --> 00:00:36.300
+list of most influential
+researchers in 2024.
+
+00:00:36.300 --> 00:00:39.480
+And previously, he completed
+his PhD here at Stanford.
+
+00:00:39.480 --> 00:00:43.264
+So, without further ado,
+let's welcome Albert.
+
+00:00:43.264 --> 00:00:46.480
+[APPLAUSE]
+
+00:00:46.480 --> 00:00:48.880
+All right, thank you, Steven.
+
+00:00:48.880 --> 00:00:49.380
+This work?
+
+00:00:49.380 --> 00:00:51.880
+So I'll just get started.
+
+00:00:51.880 --> 00:00:52.900
+It's good to be back.
+
+00:00:52.900 --> 00:00:55.140
+I think I haven't been
+back on campus in a while,
+
+00:00:55.140 --> 00:00:57.660
+even though it's only been
+two years since I graduated.
+
+00:01:00.470 --> 00:01:02.108
+Just has a disclaimer,
+so the talk
+
+00:01:02.108 --> 00:01:04.150
+is called On the Trade
+Offs of State-Space Models
+
+00:01:04.150 --> 00:01:05.750
+and Transformers.
+
+00:01:05.750 --> 00:01:10.222
+I've given versions of this
+talk over the last year or so.
+
+00:01:10.222 --> 00:01:11.930
+And I turned it into
+a blog post as well.
+
+00:01:11.930 --> 00:01:15.930
+So if you've seen those, this
+talk won't be too different.
+
+00:01:15.930 --> 00:01:18.590
+There is a little
+bit of new content,
+
+00:01:18.590 --> 00:01:20.550
+but don't expect
+anything that new.
+
+00:01:20.550 --> 00:01:22.657
+And afterwards, the
+blog post will also
+
+00:01:22.657 --> 00:01:24.490
+be a good supplement
+to this as well, if you
+
+00:01:24.490 --> 00:01:27.433
+want to take a look at it.
+
+00:01:27.433 --> 00:01:28.850
+So in the last two
+or three years,
+
+00:01:28.850 --> 00:01:30.710
+there's been a big
+surge of popularity
+
+00:01:30.710 --> 00:01:34.310
+of alternative architectures
+to transformers.
+
+00:01:34.310 --> 00:01:37.030
+Particularly models that
+are so-called subquadratic
+
+00:01:37.030 --> 00:01:39.110
+or linear in complexity.
+
+00:01:39.110 --> 00:01:43.190
+Some examples of these include
+the original Mamba model,
+
+00:01:43.190 --> 00:01:45.830
+which came out just
+over two years ago
+
+00:01:45.830 --> 00:01:49.630
+and arguably popularized a lot
+of the subsequent line of work.
+
+00:01:49.630 --> 00:01:52.710
+There have now been
+follow-ups to Mamba, Mamba 2,
+
+00:01:52.710 --> 00:01:55.430
+and just a month ago,
+we published Mamba 3.
+
+00:01:55.430 --> 00:01:58.300
+So there's continually
+progress being made here.
+
+00:01:58.300 --> 00:01:59.940
+Other models you may
+have heard include
+
+00:01:59.940 --> 00:02:04.060
+xLSTM, which is a refinement
+of the original LSTM, which
+
+00:02:04.060 --> 00:02:08.860
+is in some ways the
+original most popular RNN.
+
+00:02:08.860 --> 00:02:13.620
+That was the canonical sequence
+model used before transformers.
+
+00:02:13.620 --> 00:02:15.420
+Other models that
+are popular are
+
+00:02:15.420 --> 00:02:18.400
+DeltaNet and the
+follow-up Gated DeltaNet,
+
+00:02:18.400 --> 00:02:20.540
+which combines
+DeltaNet with Mamba 2.
+
+00:02:20.540 --> 00:02:22.980
+This is another very
+popular model that's been--
+
+00:02:22.980 --> 00:02:25.660
+is now pretty widely used.
+
+00:02:25.660 --> 00:02:28.160
+And also another paradigm
+called Test-Time Training,
+
+00:02:28.160 --> 00:02:32.020
+which views recurrence as
+a form of test-time updates
+
+00:02:32.020 --> 00:02:34.075
+that optimize an
+optimization function.
+
+00:02:34.075 --> 00:02:35.700
+So these are a couple
+umbrella families
+
+00:02:35.700 --> 00:02:38.820
+of models that are
+all quite popular now.
+
+00:02:38.820 --> 00:02:41.380
+And we're seeing them
+use more and more
+
+00:02:41.380 --> 00:02:46.340
+in actual large-scale
+production quality models.
+
+00:02:46.340 --> 00:02:50.100
+After Mamba came out, it became
+used in a bunch of hybrid models
+
+00:02:50.100 --> 00:02:54.140
+that combine these linear
+layers with attention layers,
+
+00:02:54.140 --> 00:02:58.050
+including Jamba from
+AI21, Zamba from Zyphra,
+
+00:02:58.050 --> 00:03:00.130
+and Samba from Microsoft.
+
+00:03:00.130 --> 00:03:01.970
+More recently, there
+are models that
+
+00:03:01.970 --> 00:03:07.410
+include Hunyuan from
+Tencent, which was actually
+
+00:03:07.410 --> 00:03:09.970
+several hundred
+billion parameters.
+
+00:03:09.970 --> 00:03:14.690
+The latest Qwen models are
+now based on Gated DeltaNet.
+
+00:03:14.690 --> 00:03:17.170
+Kimi-Linear is
+another hybrid model
+
+00:03:17.170 --> 00:03:21.970
+that's based on some
+follow-up data DeltaNet.
+
+00:03:21.970 --> 00:03:26.810
+I think very recently, AI2
+also released a new Olmo model
+
+00:03:26.810 --> 00:03:29.170
+that is hybrid, and it
+also uses Gated DeltaNet
+
+00:03:29.170 --> 00:03:30.970
+combined with attention.
+
+00:03:30.970 --> 00:03:33.610
+And somewhere here I forgot
+to list the Nemotron models
+
+00:03:33.610 --> 00:03:36.550
+from NVIDIA are also very new.
+
+00:03:36.550 --> 00:03:40.010
+I think the latest one is
+the Nemontron 3 models, which
+
+00:03:40.010 --> 00:03:42.010
+have been scaled to,
+again, hundreds of billions
+
+00:03:42.010 --> 00:03:44.090
+of parameters.
+
+00:03:44.090 --> 00:03:45.950
+And that model uses Mamba 2.
+
+00:03:45.950 --> 00:03:49.250
+So again, these models are
+actually very, very widely used
+
+00:03:49.250 --> 00:03:51.090
+now.
+
+00:03:51.090 --> 00:03:53.490
+And so today, I'm
+going to be talking
+
+00:03:53.490 --> 00:03:55.070
+about a lot of these models.
+
+00:03:55.070 --> 00:03:57.500
+And rather than focusing
+on any particular one,
+
+00:03:57.500 --> 00:04:00.200
+I'm going to zoom out and talk
+about general characteristics
+
+00:04:00.200 --> 00:04:02.663
+of these models, how do
+I think about them, how
+
+00:04:02.663 --> 00:04:05.080
+do I think about transformers,
+and how these models relate
+
+00:04:05.080 --> 00:04:05.820
+to each other.
+
+00:04:09.360 --> 00:04:11.360
+There's a lot of
+different models
+
+00:04:11.360 --> 00:04:14.000
+here, like these
+and many, many more.
+
+00:04:14.000 --> 00:04:16.260
+And there's a lot of names
+used to refer to them.
+
+00:04:16.260 --> 00:04:18.079
+So in this talk, I'm
+going to call them
+
+00:04:18.079 --> 00:04:24.240
+state-space models, which is
+what Mamba was considered to be.
+
+00:04:24.240 --> 00:04:26.880
+But there are actually many
+different lineages of work
+
+00:04:26.880 --> 00:04:29.280
+that have appeared in parallel.
+
+00:04:29.280 --> 00:04:32.520
+And there are other
+names for related models
+
+00:04:32.520 --> 00:04:35.040
+that, for the most
+part, at least
+
+00:04:35.040 --> 00:04:37.700
+for the purposes of this talk,
+are largely interchangeable.
+
+00:04:37.700 --> 00:04:39.400
+So other things that
+you can call these
+
+00:04:39.400 --> 00:04:43.040
+include linear attention.
+
+00:04:43.040 --> 00:04:44.740
+They're all kind of
+recurrent models.
+
+00:04:44.740 --> 00:04:47.560
+So you can call them
+just recurrent models.
+
+00:04:47.560 --> 00:04:49.480
+Sometimes called modern
+recurrent models,
+
+00:04:49.480 --> 00:04:52.840
+as opposed to the older
+ones like the LSTM.
+
+00:04:52.840 --> 00:04:56.750
+You can call them linear RNNs.
+
+00:04:56.750 --> 00:04:58.510
+Or just broadly, linear models.
+
+00:04:58.510 --> 00:05:01.330
+So usually these days when
+people say any of these words,
+
+00:05:01.330 --> 00:05:05.670
+it kind of broadly refers to
+really any of these models.
+
+00:05:05.670 --> 00:05:07.270
+And when we say
+hybrid models, we
+
+00:05:07.270 --> 00:05:10.910
+mean one of these combined
+with quadratic attention.
+
+00:05:10.910 --> 00:05:14.370
+So these, again, are actually
+generic architectures.
+
+00:05:14.370 --> 00:05:16.232
+And they can be used
+pretty much anywhere.
+
+00:05:16.232 --> 00:05:17.690
+But for the most
+part in this talk,
+
+00:05:17.690 --> 00:05:20.230
+we will also focus on
+autoregressive modeling.
+
+00:05:20.230 --> 00:05:24.470
+So this is something you're
+probably all familiar with.
+
+00:05:24.470 --> 00:05:27.430
+Paradigm, such as
+for language models
+
+00:05:27.430 --> 00:05:32.070
+where you have a model that
+models next token probabilities
+
+00:05:32.070 --> 00:05:33.250
+of a sequence.
+
+00:05:33.250 --> 00:05:35.252
+And then it can act
+as a generative model
+
+00:05:35.252 --> 00:05:36.710
+where you can sample
+from the model
+
+00:05:36.710 --> 00:05:39.270
+by repeatedly sampling a
+token and feeding it back
+
+00:05:39.270 --> 00:05:41.390
+to the model.
+
+00:05:41.390 --> 00:05:44.250
+The reason we focus on
+this is for two reasons.
+
+00:05:44.250 --> 00:05:46.470
+First of all, it's, in some
+sense, the most important
+
+00:05:46.470 --> 00:05:48.095
+modeling paradigm
+right now, especially
+
+00:05:48.095 --> 00:05:49.310
+for language modeling.
+
+00:05:49.310 --> 00:05:52.030
+And second of all, for
+understanding the trade offs
+
+00:05:52.030 --> 00:05:54.400
+of these different
+sequence models,
+
+00:05:54.400 --> 00:05:58.540
+it's actually helpful to think
+about autoregressive modeling.
+
+00:05:58.540 --> 00:06:01.860
+And so just to put us
+all on the same page,
+
+00:06:01.860 --> 00:06:05.420
+we'll really quickly go over
+what does inference or sampling
+
+00:06:05.420 --> 00:06:07.380
+look like for these models.
+
+00:06:07.380 --> 00:06:11.100
+So I'm not going to redefine
+attention everything.
+
+00:06:11.100 --> 00:06:13.920
+But from a zoomed-out
+point of view,
+
+00:06:13.920 --> 00:06:15.780
+what attention does
+at inference time
+
+00:06:15.780 --> 00:06:21.180
+is that you give it a prompt,
+which is a set of tokens,
+
+00:06:21.180 --> 00:06:27.860
+and then the model tries to
+predict the next token or word
+
+00:06:27.860 --> 00:06:29.700
+by doing these
+pairwise comparisons
+
+00:06:29.700 --> 00:06:31.840
+against every single previous
+token that it's seen.
+
+00:06:31.840 --> 00:06:37.080
+So you do these comparisons,
+you run some calculations,
+
+00:06:37.080 --> 00:06:39.982
+and then you can
+predict the next word.
+
+00:06:39.982 --> 00:06:41.940
+And then you can put this
+back into your prompt
+
+00:06:41.940 --> 00:06:42.815
+and then repeat this.
+
+00:06:42.815 --> 00:06:45.860
+So what characterizes
+attention is this ability
+
+00:06:45.860 --> 00:06:48.260
+to look over every
+single past token
+
+00:06:48.260 --> 00:06:51.370
+that you've seen in the context.
+
+00:06:51.370 --> 00:06:56.250
+So even without defining
+exactly what attention is,
+
+00:06:56.250 --> 00:06:59.210
+this, I think, is a very
+useful characterization of it.
+
+00:06:59.210 --> 00:07:02.610
+Because I think of transformers
+as the canonical model
+
+00:07:02.610 --> 00:07:04.490
+that caches every past token.
+
+00:07:04.490 --> 00:07:06.450
+Because it needs to cache
+every token in order
+
+00:07:06.450 --> 00:07:09.613
+to do these comparisons.
+
+00:07:09.613 --> 00:07:11.030
+To get a little
+bit more specific,
+
+00:07:11.030 --> 00:07:12.530
+this is called the
+KV cache, which I
+
+00:07:12.530 --> 00:07:15.010
+think everyone probably knows.
+
+00:07:15.010 --> 00:07:17.130
+A lot of the work
+around transformers
+
+00:07:17.130 --> 00:07:20.130
+basically has to deal with the
+KV cache, ways of compressing
+
+00:07:20.130 --> 00:07:22.450
+it and so on and so forth.
+
+00:07:22.450 --> 00:07:25.090
+And again, it doesn't
+actually matter
+
+00:07:25.090 --> 00:07:26.510
+that it's called the KV cache.
+
+00:07:26.510 --> 00:07:28.802
+That's an artifact of the
+way transformers are defined.
+
+00:07:28.802 --> 00:07:31.330
+But at an even higher level,
+basically, transformer
+
+00:07:31.330 --> 00:07:33.575
+is just a model that
+stores this cache.
+
+00:07:33.575 --> 00:07:34.950
+And because it
+stores this cache,
+
+00:07:34.950 --> 00:07:37.970
+this really defines its
+computational characteristics.
+
+00:07:37.970 --> 00:07:40.575
+In particular, it's heavily
+dependent on the size
+
+00:07:40.575 --> 00:07:42.450
+of its context and the
+memory and computation
+
+00:07:42.450 --> 00:07:45.650
+scales with the context.
+
+00:07:45.650 --> 00:07:50.640
+Now if you amortize this
+over inference, then instead
+
+00:07:50.640 --> 00:07:52.260
+of scaling linearly
+with the context,
+
+00:07:52.260 --> 00:07:54.220
+the model scales
+quadratically in compute.
+
+00:07:54.220 --> 00:07:59.000
+And so this is why attention
+is considered quadratic model.
+
+00:07:59.000 --> 00:08:01.960
+And at a high level,
+again, what attention does
+
+00:08:01.960 --> 00:08:04.240
+is it does all
+these comparisons.
+
+00:08:04.240 --> 00:08:05.800
+And what [INAUDIBLE]
+models do is
+
+00:08:05.800 --> 00:08:11.800
+that, again, in inference time,
+as your token stream in, instead
+
+00:08:11.800 --> 00:08:15.520
+of storing all of them
+explicitly, the model
+
+00:08:15.520 --> 00:08:17.760
+squishes them all into
+a state, basically,
+
+00:08:17.760 --> 00:08:19.520
+represented by this
+blue ball here.
+
+00:08:19.520 --> 00:08:21.920
+And then the individual tokens
+are kind of thrown away,
+
+00:08:21.920 --> 00:08:26.833
+and the model only interacts
+with data through the state.
+
+00:08:26.833 --> 00:08:28.500
+And then it does this
+repeatedly online.
+
+00:08:28.500 --> 00:08:32.159
+So you can generate new token
+and put it back into your state.
+
+00:08:32.159 --> 00:08:33.836
+The state is highly
+compressed, which
+
+00:08:33.836 --> 00:08:36.419
+means that every single step of
+inference takes constant time.
+
+00:08:36.419 --> 00:08:39.020
+And then summing this over a
+sequence takes linear time.
+
+00:08:39.020 --> 00:08:41.520
+So this is why we call
+them linear models.
+
+00:08:41.520 --> 00:08:43.590
+And so this is really
+just a high-level way
+
+00:08:43.590 --> 00:08:44.340
+to think about it.
+
+00:08:44.340 --> 00:08:46.400
+And these are the ways
+that really distinguish
+
+00:08:46.400 --> 00:08:48.230
+these families of models.
+
+00:08:48.230 --> 00:08:51.670
+So now let me talk a little
+bit about the actual definition
+
+00:08:51.670 --> 00:08:54.790
+of these models and what I
+think are the most important
+
+00:08:54.790 --> 00:08:56.270
+ingredients that go in.
+
+00:08:56.270 --> 00:08:59.190
+So first of all,
+state-space models
+
+00:08:59.190 --> 00:09:03.070
+are basically defined by
+this equation down here.
+
+00:09:03.070 --> 00:09:08.230
+So it is essentially a
+special type of recurrence
+
+00:09:08.230 --> 00:09:10.230
+with a few key characteristics.
+
+00:09:10.230 --> 00:09:14.470
+We think of this recurrence as a
+sequence mapping from an input,
+
+00:09:14.470 --> 00:09:17.965
+x, to an output, y.
+
+00:09:17.965 --> 00:09:20.090
+And when you unbind this
+along the sequence length,
+
+00:09:20.090 --> 00:09:22.423
+you can think of x as basically
+a one-dimensional number
+
+00:09:22.423 --> 00:09:24.830
+or a scalar.
+
+00:09:24.830 --> 00:09:28.630
+It gets blown up
+with a vector B,
+
+00:09:28.630 --> 00:09:30.830
+and then summed into
+some transformation
+
+00:09:30.830 --> 00:09:31.610
+of a hidden state.
+
+00:09:31.610 --> 00:09:33.745
+So every step, just like
+a normal occurrence,
+
+00:09:33.745 --> 00:09:36.370
+you update the hidden state and
+then you incorporate the input.
+
+00:09:36.370 --> 00:09:38.830
+And then there's this
+recurrent hidden state
+
+00:09:38.830 --> 00:09:43.790
+denoted by h that kind
+characterizes recurrent models.
+
+00:09:43.790 --> 00:09:48.100
+Some differences between SSMs
+and some of the older RNNs
+
+00:09:48.100 --> 00:09:53.660
+are that first of all,
+this recurrence is linear.
+
+00:09:53.660 --> 00:09:57.620
+There's no non-linearity that's
+applied after this equation
+
+00:09:57.620 --> 00:10:02.260
+like they are in GRUs, LSTMs
+and some of the older RNNs.
+
+00:10:02.260 --> 00:10:04.900
+Second of all, some
+of the big differences
+
+00:10:04.900 --> 00:10:06.980
+include these ingredients.
+
+00:10:06.980 --> 00:10:09.180
+So the first kind
+of main one that
+
+00:10:09.180 --> 00:10:12.820
+differs a lot from
+past traditional RNNs
+
+00:10:12.820 --> 00:10:16.300
+is that the state
+size is much larger.
+
+00:10:16.300 --> 00:10:18.540
+So the way I define
+this is that x here
+
+00:10:18.540 --> 00:10:21.045
+is a one-dimensional input.
+
+00:10:21.045 --> 00:10:23.420
+And for a one-dimensional
+input, the hidden state becomes
+
+00:10:23.420 --> 00:10:27.020
+N-dimensional, where N is
+usually on the order of--
+
+00:10:27.020 --> 00:10:28.600
+it's like 64 or 128 or so.
+
+00:10:28.600 --> 00:10:32.420
+So the state is 100 times
+bigger than the input.
+
+00:10:32.420 --> 00:10:36.940
+And so this is very different
+than how LSTMs were defined.
+
+00:10:36.940 --> 00:10:39.100
+The reason this is
+important is because
+
+00:10:39.100 --> 00:10:43.620
+your autoregressive state here
+is a bottleneck of your context,
+
+00:10:43.620 --> 00:10:46.230
+because all the context got
+compressed into the state.
+
+00:10:46.230 --> 00:10:49.090
+So the larger your state is, the
+more information your model can
+
+00:10:49.090 --> 00:10:51.290
+remember, which is really
+important on information
+
+00:10:51.290 --> 00:10:54.930
+dense modalities, such
+as for language modeling.
+
+00:10:54.930 --> 00:10:57.850
+The second key ingredient is
+that not only does the state
+
+00:10:57.850 --> 00:11:00.410
+have to be large, but it
+has to be expressive enough
+
+00:11:00.410 --> 00:11:03.570
+to remember exactly what
+the model wants to remember.
+
+00:11:03.570 --> 00:11:05.570
+So abstractly, you
+can think of any RNN
+
+00:11:05.570 --> 00:11:08.610
+as a function that combines
+the previous hidden state
+
+00:11:08.610 --> 00:11:10.410
+with a new input.
+
+00:11:10.410 --> 00:11:12.170
+And so you have a
+black box function,
+
+00:11:12.170 --> 00:11:14.128
+and different parameterizations
+of the function
+
+00:11:14.128 --> 00:11:15.410
+define different RNNs.
+
+00:11:15.410 --> 00:11:18.690
+And making this more
+expressive allows the model
+
+00:11:18.690 --> 00:11:23.970
+to be more precise about the
+information it's modeling.
+
+00:11:23.970 --> 00:11:29.670
+So one key difference with
+some of the later SSMs,
+
+00:11:29.670 --> 00:11:32.650
+such as Mamba compared
+to older models,
+
+00:11:32.650 --> 00:11:36.770
+is that the parameters
+here are defined to be
+
+00:11:36.770 --> 00:11:39.170
+functions of the input itself.
+
+00:11:39.170 --> 00:11:41.810
+And this is, again, different
+not only from older SSMs
+
+00:11:41.810 --> 00:11:44.902
+but also, again,
+different from LSTMs.
+
+00:11:44.902 --> 00:11:46.360
+We call this
+selectivity because it
+
+00:11:46.360 --> 00:11:49.600
+means that the model, by having
+its own parameters be functions
+
+00:11:49.600 --> 00:11:53.040
+of the input, the
+model can control,
+
+00:11:53.040 --> 00:11:56.560
+based on the input, how to
+control the recurrence, which
+
+00:11:56.560 --> 00:11:58.880
+lets the model be more
+precise in selecting
+
+00:11:58.880 --> 00:12:00.600
+what information to remember.
+
+00:12:00.600 --> 00:12:04.800
+Because for example, if A here
+is a function of the input
+
+00:12:04.800 --> 00:12:06.720
+and I don't want to
+remember the input,
+
+00:12:06.720 --> 00:12:10.960
+then I can look at the
+input and then decide
+
+00:12:10.960 --> 00:12:13.240
+that I want A to be 0.
+
+00:12:13.240 --> 00:12:16.040
+Or sorry, I want A to
+be 1 and B to be 0.
+
+00:12:16.040 --> 00:12:17.860
+Or if I really want
+to remember the input,
+
+00:12:17.860 --> 00:12:21.160
+maybe throw away the previous
+context, I could set A to be 0.
+
+00:12:21.160 --> 00:12:24.000
+So this selectivity makes the
+state update function much more
+
+00:12:24.000 --> 00:12:24.700
+expressive.
+
+00:12:24.700 --> 00:12:26.200
+And this was really
+a key ingredient
+
+00:12:26.200 --> 00:12:28.760
+in getting these
+models to be effective.
+
+00:12:28.760 --> 00:12:32.380
+The final ingredient is that
+both the first two ingredients,
+
+00:12:32.380 --> 00:12:34.360
+the state size and the
+more expressive state
+
+00:12:34.360 --> 00:12:38.400
+update function, make the
+model much more expressive
+
+00:12:38.400 --> 00:12:41.220
+and have much more capacity.
+
+00:12:41.220 --> 00:12:44.070
+But also makes the model
+much harder to compute.
+
+00:12:44.070 --> 00:12:47.230
+And so in particular,
+unlike a traditional RNN,
+
+00:12:47.230 --> 00:12:48.790
+it's actually
+basically impossible
+
+00:12:48.790 --> 00:12:51.150
+to compute this by
+computing the recurrence.
+
+00:12:51.150 --> 00:12:52.670
+And so a lot of
+the work involved
+
+00:12:52.670 --> 00:12:58.630
+in these family of models was
+to find clever ways of rewriting
+
+00:12:58.630 --> 00:13:01.690
+the computation, to compute the
+training parts of this much,
+
+00:13:01.690 --> 00:13:02.450
+much faster.
+
+00:13:05.310 --> 00:13:07.610
+Some ideas here include
+associative scan,
+
+00:13:07.610 --> 00:13:09.950
+which is what the
+original Mamba model used.
+
+00:13:09.950 --> 00:13:12.930
+Basically by exploiting the fact
+that this recurrence is linear,
+
+00:13:12.930 --> 00:13:14.550
+you can parallelize
+the computation
+
+00:13:14.550 --> 00:13:16.510
+using a specific algorithm.
+
+00:13:16.510 --> 00:13:18.590
+And later versions of
+this, including Mamba 2
+
+00:13:18.590 --> 00:13:21.030
+and including many
+of the other variants
+
+00:13:21.030 --> 00:13:23.990
+like the Gated
+Delta-Net, completely
+
+00:13:23.990 --> 00:13:29.310
+rewrite this in terms of this
+chunked matrix multiplication.
+
+00:13:29.310 --> 00:13:32.125
+So really, I think
+these are the three
+
+00:13:32.125 --> 00:13:33.250
+most important ingredients.
+
+00:13:33.250 --> 00:13:34.630
+There's a lot more
+details that are involved
+
+00:13:34.630 --> 00:13:36.590
+in how exactly do
+parametrize all of these,
+
+00:13:36.590 --> 00:13:39.990
+how to initialize all
+of these, and so on.
+
+00:13:39.990 --> 00:13:43.260
+But I think these are
+the main reasons that
+
+00:13:43.260 --> 00:13:45.060
+made these models effective.
+
+00:13:45.060 --> 00:13:47.180
+And all of these
+ingredients actually
+
+00:13:47.180 --> 00:13:50.400
+existed prior to this
+recent line of work.
+
+00:13:50.400 --> 00:13:55.080
+For example, linear attention
+first was published, I think,
+
+00:13:55.080 --> 00:13:55.733
+in 2020.
+
+00:13:55.733 --> 00:13:57.900
+And it basically used
+something similar to this that
+
+00:13:57.900 --> 00:14:00.780
+had this state size expansion.
+
+00:14:00.780 --> 00:14:03.660
+Classical RNNs can be viewed
+as some form of selectivity
+
+00:14:03.660 --> 00:14:05.980
+or gating.
+
+00:14:05.980 --> 00:14:08.980
+And many models have
+already used these ideas
+
+00:14:08.980 --> 00:14:12.180
+for more efficient computation,
+including these older
+
+00:14:12.180 --> 00:14:15.560
+linear RNNs.
+
+00:14:15.560 --> 00:14:17.900
+All these ingredients
+were used before,
+
+00:14:17.900 --> 00:14:20.740
+but Mamba can be viewed as
+the first model that actually
+
+00:14:20.740 --> 00:14:22.040
+combined all three of these.
+
+00:14:22.040 --> 00:14:25.620
+And that was critical for it to
+be actually really effective.
+
+00:14:25.620 --> 00:14:27.453
+And it was perhaps
+the first model
+
+00:14:27.453 --> 00:14:29.620
+that demonstrated that
+recurrent models can actually
+
+00:14:29.620 --> 00:14:34.300
+be competitive with transformers
+on information-dense modalities
+
+00:14:34.300 --> 00:14:36.620
+like language.
+
+00:14:36.620 --> 00:14:39.930
+We now that this statement
+has a bit of a caveat.
+
+00:14:39.930 --> 00:14:43.310
+There is much more nuance to
+modeling than just perplexity,
+
+00:14:43.310 --> 00:14:44.110
+for example.
+
+00:14:44.110 --> 00:14:46.890
+But this certainly
+showed that from
+
+00:14:46.890 --> 00:14:49.198
+a coarse-grained
+perspective like perplexity,
+
+00:14:49.198 --> 00:14:51.490
+these completely different
+architectures could actually
+
+00:14:51.490 --> 00:14:53.530
+be competitive.
+
+00:14:53.530 --> 00:14:55.890
+Since then, there's been,
+again, a lot of work.
+
+00:14:55.890 --> 00:14:59.210
+This is a nice table
+from the DeltaNet paper.
+
+00:14:59.210 --> 00:15:01.530
+But since then, there's
+been even more models.
+
+00:15:01.530 --> 00:15:03.697
+But basically, there's a
+lot of different variations
+
+00:15:03.697 --> 00:15:06.190
+of these models that
+are really effective.
+
+00:15:06.190 --> 00:15:09.230
+But I think all of them are kind
+of pretty similar to each other.
+
+00:15:09.230 --> 00:15:12.610
+They're all variants that all
+include these three ingredients
+
+00:15:12.610 --> 00:15:16.470
+and tweak different
+definitions of them.
+
+00:15:16.470 --> 00:15:18.748
+So many of these vary the
+state update a little bit,
+
+00:15:18.748 --> 00:15:20.790
+some of them change the
+computation a little bit,
+
+00:15:20.790 --> 00:15:24.050
+but all care a lot
+about efficiency.
+
+00:15:24.050 --> 00:15:27.970
+And to give a
+off-the-record kind
+
+00:15:27.970 --> 00:15:32.210
+of what I think are the most
+effective ones, probably right
+
+00:15:32.210 --> 00:15:35.610
+now, the most tried and
+true variants of these
+
+00:15:35.610 --> 00:15:37.593
+are Mamba 2 and Gated DeltaNet.
+
+00:15:37.593 --> 00:15:39.760
+Those are also the ones
+that are most popularly used
+
+00:15:39.760 --> 00:15:42.120
+in large-scale hybrid models.
+
+00:15:42.120 --> 00:15:46.280
+Gated DeltaNet is a little more
+powerful, but a little slower
+
+00:15:46.280 --> 00:15:47.180
+version of Mamba 2.
+
+00:15:47.180 --> 00:15:49.940
+So depending on your needs,
+both of these are pretty good,
+
+00:15:49.940 --> 00:15:52.000
+but it depends on
+what exactly you want.
+
+00:15:52.000 --> 00:15:54.820
+Mamba 3 just came out and it's a
+little bit less tested at scale,
+
+00:15:54.820 --> 00:15:57.120
+but also will
+probably be up there.
+
+00:15:57.120 --> 00:15:59.247
+But more importantly, all
+of these models I think
+
+00:15:59.247 --> 00:16:01.080
+are actually much more
+similar to each other
+
+00:16:01.080 --> 00:16:04.240
+than they are to attention.
+
+00:16:04.240 --> 00:16:06.920
+Instead of talking about the
+exact details between all
+
+00:16:06.920 --> 00:16:09.080
+of these, I think it's
+more interesting to think
+
+00:16:09.080 --> 00:16:11.038
+about the higher level
+trade offs between these
+
+00:16:11.038 --> 00:16:12.680
+and attention.
+
+00:16:12.680 --> 00:16:16.120
+So that's what the rest
+of the talk will be about.
+
+00:16:16.120 --> 00:16:18.400
+So again, we're
+going to examine this
+
+00:16:18.400 --> 00:16:20.460
+through the nature of
+autoregressive modeling.
+
+00:16:20.460 --> 00:16:23.120
+And one of the
+key points here is
+
+00:16:23.120 --> 00:16:25.320
+that I claim that the trade
+offs of sequence models
+
+00:16:25.320 --> 00:16:27.120
+can be understood
+through examining
+
+00:16:27.120 --> 00:16:29.960
+their autoregressive state.
+
+00:16:29.960 --> 00:16:32.040
+What is the
+autoregressive state?
+
+00:16:32.040 --> 00:16:34.640
+So in some sense, every
+autoregressive model
+
+00:16:34.640 --> 00:16:37.250
+can be viewed as carrying
+an implicit state.
+
+00:16:37.250 --> 00:16:42.990
+So this can literally
+be defined as if you're
+
+00:16:42.990 --> 00:16:45.830
+examining an autoregressive
+model during generation time,
+
+00:16:45.830 --> 00:16:48.310
+like in this
+animation, the state
+
+00:16:48.310 --> 00:16:51.190
+is what the model stores in
+memory in between each step
+
+00:16:51.190 --> 00:16:54.030
+of generation.
+
+00:16:54.030 --> 00:16:56.830
+So for an SSM, the
+state is just going
+
+00:16:56.830 --> 00:16:59.910
+to be its fixed size, kind
+of a matrix-valued state.
+
+00:16:59.910 --> 00:17:05.150
+For attention, the state is
+going to be its KV cache.
+
+00:17:05.150 --> 00:17:07.150
+And the definitions
+of these states
+
+00:17:07.150 --> 00:17:11.150
+really inform the trade
+offs of these models
+
+00:17:11.150 --> 00:17:14.608
+and their inductive biases.
+
+00:17:14.608 --> 00:17:16.650
+Again, we talked about
+how these models generate.
+
+00:17:16.650 --> 00:17:21.270
+So transformers are
+quadratic by looking
+
+00:17:21.270 --> 00:17:22.869
+at every single past token.
+
+00:17:22.869 --> 00:17:25.550
+And SSMs are linear time
+because they compress everything
+
+00:17:25.550 --> 00:17:27.790
+into a state.
+
+00:17:27.790 --> 00:17:31.670
+A simple analogy that I like
+is that I think of transformers
+
+00:17:31.670 --> 00:17:32.910
+like a database.
+
+00:17:32.910 --> 00:17:35.620
+So if you think about the
+nature of its state, which
+
+00:17:35.620 --> 00:17:37.500
+is the KV cache,
+what it's doing is
+
+00:17:37.500 --> 00:17:39.940
+it's storing a representation
+of every single token
+
+00:17:39.940 --> 00:17:42.940
+or every single element of a
+sequence that's seen before.
+
+00:17:42.940 --> 00:17:45.120
+And it's basically writing
+it down to its database.
+
+00:17:45.120 --> 00:17:46.520
+And as the sequence
+length grows,
+
+00:17:46.520 --> 00:17:48.660
+it's kind of expanding
+its database.
+
+00:17:48.660 --> 00:17:52.180
+And it's able to attend or
+look back very precisely
+
+00:17:52.180 --> 00:17:55.940
+onto any element
+of this database.
+
+00:17:55.940 --> 00:17:59.460
+On the other hand, SSMs are
+more like a brain in that it
+
+00:17:59.460 --> 00:18:02.900
+is a fixed-size method.
+
+00:18:02.900 --> 00:18:05.400
+And again, it kind of
+compresses all the information
+
+00:18:05.400 --> 00:18:08.620
+it's seen into this
+fixed-size state.
+
+00:18:08.620 --> 00:18:13.060
+So this has a completely
+different characteristics
+
+00:18:13.060 --> 00:18:14.860
+than a database.
+
+00:18:14.860 --> 00:18:17.180
+And many of the trade
+offs of these models
+
+00:18:17.180 --> 00:18:19.940
+can be kind of intuited
+from this analogy.
+
+00:18:19.940 --> 00:18:24.740
+So for example, some of
+the weaknesses of SSMs
+
+00:18:24.740 --> 00:18:27.580
+are that they are not
+so good at retrieval.
+
+00:18:27.580 --> 00:18:30.420
+And this is exactly the way
+that brains work as well.
+
+00:18:30.420 --> 00:18:32.940
+Humans are notoriously bad
+at remembering exact strings
+
+00:18:32.940 --> 00:18:36.210
+of numbers and so on.
+
+00:18:36.210 --> 00:18:38.030
+But it also comes
+with advantages.
+
+00:18:41.070 --> 00:18:46.050
+So at a first pass, so talking
+about the trade offs of SSMs,
+
+00:18:46.050 --> 00:18:50.370
+they're the canonical,
+stateful and compressive model.
+
+00:18:50.370 --> 00:18:52.250
+Statefulness is really
+powerful because it's
+
+00:18:52.250 --> 00:18:55.090
+what allows these
+models to be really
+
+00:18:55.090 --> 00:18:58.048
+efficient in online settings.
+
+00:18:58.048 --> 00:18:59.590
+Kind of, again, just
+like brains are,
+
+00:18:59.590 --> 00:19:01.890
+it's always online, always
+able to consume information
+
+00:19:01.890 --> 00:19:05.930
+at a constant rate and interact
+with the world in real time.
+
+00:19:05.930 --> 00:19:08.410
+These are places that
+these linear models
+
+00:19:08.410 --> 00:19:11.450
+are likely to be very good at.
+
+00:19:11.450 --> 00:19:15.570
+The compressiveness of it also
+has subtle benefits, which I'll
+
+00:19:15.570 --> 00:19:17.170
+talk about later in the talk.
+
+00:19:17.170 --> 00:19:19.670
+And the downsides are that,
+because of the fixed-size state,
+
+00:19:19.670 --> 00:19:22.530
+these lack fine-grained recall
+and retrieval abilities.
+
+00:19:22.530 --> 00:19:26.130
+So there's many kind of
+synthetic tasks like Haystack,
+
+00:19:26.130 --> 00:19:30.250
+associative recall, these things
+that involve asking a query
+
+00:19:30.250 --> 00:19:34.950
+and digging out a precise bit of
+information from your context.
+
+00:19:34.950 --> 00:19:39.750
+These models are not so good
+at it, just like brains are.
+
+00:19:39.750 --> 00:19:41.950
+Now again, the analogy
+has more implications.
+
+00:19:41.950 --> 00:19:45.410
+Because for example, if you
+think about human intelligence,
+
+00:19:45.410 --> 00:19:47.150
+it's actually not
+just the brain.
+
+00:19:47.150 --> 00:19:50.850
+Humans use a lot of
+external tools to assist,
+
+00:19:50.850 --> 00:19:54.290
+and that this really augments
+our ability to process,
+
+00:19:54.290 --> 00:19:58.070
+and it augments intelligence.
+
+00:19:58.070 --> 00:20:00.330
+So if you think of
+human-like intelligence
+
+00:20:00.330 --> 00:20:04.750
+really as the combination
+of our processing unit
+
+00:20:04.750 --> 00:20:10.230
+as well as external
+scratchpads, then this analogy
+
+00:20:10.230 --> 00:20:12.450
+also predicts the
+behavior of models.
+
+00:20:12.450 --> 00:20:17.390
+And so this is one high-level
+inspiration for hybrid models.
+
+00:20:17.390 --> 00:20:20.450
+Starting from the advent of
+these state-space models,
+
+00:20:20.450 --> 00:20:24.430
+they've been used in hybrid
+models for this reason.
+
+00:20:24.430 --> 00:20:26.230
+There's a few references
+here that refer
+
+00:20:26.230 --> 00:20:28.790
+to some of the older ones.
+
+00:20:28.790 --> 00:20:33.780
+But again, there's now many,
+many more versions some of which
+
+00:20:33.780 --> 00:20:36.220
+are very, very large scale.
+
+00:20:36.220 --> 00:20:38.700
+And one thing that's
+been pretty remarkable
+
+00:20:38.700 --> 00:20:43.100
+is that many different
+groups independently
+
+00:20:43.100 --> 00:20:47.357
+verified the optimal
+ratios of hybrid models.
+
+00:20:47.357 --> 00:20:48.940
+So the simplest way
+to define a hybrid
+
+00:20:48.940 --> 00:20:52.540
+is just to interleave
+your linear layer
+
+00:20:52.540 --> 00:20:54.100
+with your quadratic
+attention layer.
+
+00:20:54.100 --> 00:20:56.820
+And then the question is,
+what ratio of these layers
+
+00:20:56.820 --> 00:20:59.100
+should you include?
+
+00:20:59.100 --> 00:21:02.780
+Many of these older papers found
+something remarkably consistent
+
+00:21:02.780 --> 00:21:06.140
+that it's something close to
+a 10-to-1 ratio of SSM layers
+
+00:21:06.140 --> 00:21:08.140
+to attention layers
+seem optimal,
+
+00:21:08.140 --> 00:21:11.380
+at least from a
+perplexity standpoint.
+
+00:21:11.380 --> 00:21:13.860
+Nowadays, this
+ratio seems to have
+
+00:21:13.860 --> 00:21:17.420
+changed a little bit as models
+have been getting better.
+
+00:21:17.420 --> 00:21:21.300
+But I think that it's still very
+consistent that people typically
+
+00:21:21.300 --> 00:21:24.660
+use something like, at minimum,
+a 3-to-1 or 4-to-1 ratio
+
+00:21:24.660 --> 00:21:27.740
+of linear layers to
+quadratic layers.
+
+00:21:27.740 --> 00:21:29.330
+And so what's
+interesting about this
+
+00:21:29.330 --> 00:21:31.170
+is that if you use
+the analogy and you
+
+00:21:31.170 --> 00:21:34.630
+think about human intelligence,
+you might also predict this.
+
+00:21:34.630 --> 00:21:38.490
+Because we tend to think of the
+brain as the main processing
+
+00:21:38.490 --> 00:21:42.670
+unit and the external databases,
+scratchpads and so on,
+
+00:21:42.670 --> 00:21:46.470
+as a supplement that helps
+you store information,
+
+00:21:46.470 --> 00:21:49.170
+but is not actually the
+main computational lifter.
+
+00:21:49.170 --> 00:21:52.290
+And so the fact that when you
+actually do these very careful
+
+00:21:52.290 --> 00:21:54.930
+ablations and find that you
+want more linear layers than
+
+00:21:54.930 --> 00:21:57.590
+quadratic-- and this is not
+accounting for computation,
+
+00:21:57.590 --> 00:21:59.437
+it's just what makes
+the best performance--
+
+00:21:59.437 --> 00:22:01.770
+it's pretty interesting that
+kind of follows the analogy
+
+00:22:01.770 --> 00:22:03.490
+as well.
+
+00:22:03.490 --> 00:22:09.490
+And so a thought is that,
+while these linear models are
+
+00:22:09.490 --> 00:22:11.530
+sometimes viewed as
+having a critical drawback
+
+00:22:11.530 --> 00:22:14.510
+because the finite state means
+you can't remember everything,
+
+00:22:14.510 --> 00:22:18.130
+it seems like this
+compression is a weakness,
+
+00:22:18.130 --> 00:22:19.368
+it's actually not so clear.
+
+00:22:19.368 --> 00:22:21.410
+Because even if we're just
+looking at performance
+
+00:22:21.410 --> 00:22:24.770
+without looking at
+speed, you actually do
+
+00:22:24.770 --> 00:22:26.550
+want a lot of
+linear layers here.
+
+00:22:26.550 --> 00:22:30.052
+And so I think a
+general theme is about,
+
+00:22:30.052 --> 00:22:31.760
+is the compression
+actually fundamentally
+
+00:22:31.760 --> 00:22:34.880
+important to intelligence, and
+what role does it play there?
+
+00:22:34.880 --> 00:22:38.120
+And once again, there will be
+a very interesting experiment
+
+00:22:38.120 --> 00:22:41.440
+I'll show later that hopefully
+touches on this again.
+
+00:22:41.440 --> 00:22:46.840
+So now we're going to switch and
+talk about just transformers.
+
+00:22:46.840 --> 00:22:49.600
+So although there's
+a lot of work
+
+00:22:49.600 --> 00:22:51.440
+here on transformer
+alternatives,
+
+00:22:51.440 --> 00:22:54.920
+transformers are
+still the to-go model
+
+00:22:54.920 --> 00:22:56.540
+for many things,
+especially language.
+
+00:22:56.540 --> 00:22:57.420
+And for good reason.
+
+00:22:57.420 --> 00:23:00.080
+They're very, very powerful.
+
+00:23:00.080 --> 00:23:04.520
+And there's a prevailing
+mindset that they basically
+
+00:23:04.520 --> 00:23:05.700
+work on everything.
+
+00:23:05.700 --> 00:23:09.240
+And they're really used
+in pretty much all fields,
+
+00:23:09.240 --> 00:23:11.520
+from language to
+vision to many more.
+
+00:23:11.520 --> 00:23:15.080
+And many people think that
+you basically should just
+
+00:23:15.080 --> 00:23:18.820
+use a transformer and just
+put your data into it,
+
+00:23:18.820 --> 00:23:21.120
+and it just works.
+
+00:23:21.120 --> 00:23:22.840
+And this is true, actually.
+
+00:23:22.840 --> 00:23:24.480
+But there are nuances to it.
+
+00:23:24.480 --> 00:23:28.310
+So the way I think about it
+is that attention is actually
+
+00:23:28.310 --> 00:23:31.510
+most effective when your
+data is at the right level
+
+00:23:31.510 --> 00:23:33.590
+of abstraction.
+
+00:23:33.590 --> 00:23:35.530
+What this means is
+that in any pipeline
+
+00:23:35.530 --> 00:23:38.670
+you actually see where
+transformers are used,
+
+00:23:38.670 --> 00:23:41.710
+there are pretty substantial
+encoder decoder layers
+
+00:23:41.710 --> 00:23:44.150
+that transform the
+data to a form that
+
+00:23:44.150 --> 00:23:46.590
+is suitable for a
+transformative process.
+
+00:23:46.590 --> 00:23:48.470
+So to give some examples.
+
+00:23:48.470 --> 00:23:52.870
+When you use these models
+in vision domains--
+
+00:23:52.870 --> 00:23:56.270
+for example, this
+figure is from I
+
+00:23:56.270 --> 00:23:57.990
+think the original
+vision transformer
+
+00:23:57.990 --> 00:24:01.270
+paper for classification--
+
+00:24:01.270 --> 00:24:02.950
+what they do is
+they take your image
+
+00:24:02.950 --> 00:24:06.150
+and divide it into these
+patches, which are basically
+
+00:24:06.150 --> 00:24:07.870
+vision tokens.
+
+00:24:07.870 --> 00:24:10.230
+And then encode it a
+little bit and then pass it
+
+00:24:10.230 --> 00:24:12.430
+into the transformer.
+
+00:24:12.430 --> 00:24:16.070
+And so basically, it's kind of
+making your data much coarser
+
+00:24:16.070 --> 00:24:20.750
+and in a form that's more
+suitable for the transformer.
+
+00:24:20.750 --> 00:24:23.030
+And I claim that this
+encoding step is actually
+
+00:24:23.030 --> 00:24:25.980
+critical for the
+transformer to work well.
+
+00:24:25.980 --> 00:24:29.180
+In language, this encoder
+is called the tokenizer.
+
+00:24:29.180 --> 00:24:33.500
+So if you have a
+string of characters,
+
+00:24:33.500 --> 00:24:35.780
+like if you're modeling
+English, technically, you
+
+00:24:35.780 --> 00:24:40.180
+could just put this into your
+model and it should work.
+
+00:24:40.180 --> 00:24:43.540
+But we actually process it using
+a tokenization step that splits
+
+00:24:43.540 --> 00:24:47.140
+it into these coarser chunks.
+
+00:24:47.140 --> 00:24:49.880
+And many people actually don't
+really think about this step.
+
+00:24:49.880 --> 00:24:52.745
+We kind of always just use
+off-the-shelf tokenization.
+
+00:24:52.745 --> 00:24:54.620
+But again, I claim that
+this step is actually
+
+00:24:54.620 --> 00:24:56.640
+really critical for
+transformers to work.
+
+00:24:56.640 --> 00:24:58.540
+Not just for efficiency
+reasons, but actually
+
+00:24:58.540 --> 00:25:00.740
+from a modeling
+perspective in terms
+
+00:25:00.740 --> 00:25:04.820
+of what features and
+transformations the transformer
+
+00:25:04.820 --> 00:25:07.300
+can capture.
+
+00:25:07.300 --> 00:25:09.100
+So tokenization is low
+notorious because it
+
+00:25:09.100 --> 00:25:11.100
+has a lot of problems.
+
+00:25:11.100 --> 00:25:15.180
+So we can ask what happens
+if you don't tokenize.
+
+00:25:15.180 --> 00:25:18.360
+There's a number of outspoken
+critics against tokenization.
+
+00:25:18.360 --> 00:25:22.020
+This is a tweet taken
+from Andrej Karpathy where
+
+00:25:22.020 --> 00:25:27.450
+he kind of enumerates a bunch
+of edge cases with tokenization.
+
+00:25:27.450 --> 00:25:34.250
+It causes issues in spelling,
+It has many edge cases.
+
+00:25:34.250 --> 00:25:38.090
+If you ever kind of prompt
+your model with out ending it
+
+00:25:38.090 --> 00:25:43.730
+in a space, or maybe it's ending
+it in a space, one of these two
+
+00:25:43.730 --> 00:25:44.870
+will screw up your model.
+
+00:25:44.870 --> 00:25:46.287
+So you have to be
+very deliberate.
+
+00:25:46.287 --> 00:25:49.130
+And these are all edge
+cases and tokenization.
+
+00:25:49.130 --> 00:25:52.445
+However, most of these
+edge cases are understood.
+
+00:25:52.445 --> 00:25:54.570
+You can engineer away a
+lot of these with good data
+
+00:25:54.570 --> 00:25:56.250
+or with other tricks.
+
+00:25:56.250 --> 00:25:59.330
+And so many people think that
+this is not a real problem.
+
+00:25:59.330 --> 00:26:01.250
+But if you could
+solve tokenization,
+
+00:26:01.250 --> 00:26:04.890
+or if you can get rid of it,
+you would solve these for free.
+
+00:26:04.890 --> 00:26:10.310
+And I think that even if the
+engineering solution just works,
+
+00:26:10.310 --> 00:26:12.570
+it's still a worthwhile
+problem to address
+
+00:26:12.570 --> 00:26:14.330
+for philosophical reasons.
+
+00:26:14.330 --> 00:26:19.810
+Because AI has always been
+about learning automatically
+
+00:26:19.810 --> 00:26:20.970
+from raw data.
+
+00:26:20.970 --> 00:26:23.240
+And models that are
+more and more end-to-end
+
+00:26:23.240 --> 00:26:25.240
+generally tend to be better.
+
+00:26:25.240 --> 00:26:28.000
+This also reflects
+on the bitter lesson.
+
+00:26:28.000 --> 00:26:30.160
+If you can find models
+that are more generic
+
+00:26:30.160 --> 00:26:32.800
+and work with less
+feature engineering,
+
+00:26:32.800 --> 00:26:34.308
+but benefit more
+from scale, you'll
+
+00:26:34.308 --> 00:26:36.600
+eventually get better models
+that learn better features
+
+00:26:36.600 --> 00:26:38.567
+from data.
+
+00:26:38.567 --> 00:26:40.400
+So what happens if you
+actually train models
+
+00:26:40.400 --> 00:26:41.560
+without tokenization?
+
+00:26:41.560 --> 00:26:43.280
+So one simple
+thing you can do is
+
+00:26:43.280 --> 00:26:46.817
+just look at language
+modeling but not
+
+00:26:46.817 --> 00:26:47.900
+tokenize your data before.
+
+00:26:47.900 --> 00:26:50.640
+So basically, you can just
+pass in raw characters
+
+00:26:50.640 --> 00:26:53.480
+into your model.
+
+00:26:53.480 --> 00:26:58.422
+So this is a plot from
+a recent paper of ours.
+
+00:26:58.422 --> 00:27:00.880
+But it was first done by this
+paper called MambaByte, which
+
+00:27:00.880 --> 00:27:04.400
+basically just tried to compare
+Mamba against transformers
+
+00:27:04.400 --> 00:27:06.400
+on byte-level modeling.
+
+00:27:06.400 --> 00:27:08.480
+So again, here,
+you basically just
+
+00:27:08.480 --> 00:27:11.200
+don't use your BPE
+tokenizer on the data.
+
+00:27:11.200 --> 00:27:14.560
+And these are some
+training curves
+
+00:27:14.560 --> 00:27:17.520
+for models that
+are matched in size
+
+00:27:17.520 --> 00:27:20.910
+and just trained for longer.
+
+00:27:20.910 --> 00:27:27.070
+So what you see here is that the
+SSM here is actually much, much
+
+00:27:27.070 --> 00:27:28.370
+better than the transformer.
+
+00:27:28.370 --> 00:27:32.910
+So the purple line here is a
+sliding-window attention model.
+
+00:27:32.910 --> 00:27:36.170
+And the blue line is
+just the Mamba model.
+
+00:27:36.170 --> 00:27:39.350
+And these are isotropic
+models that are basically
+
+00:27:39.350 --> 00:27:41.290
+equivalent in every way.
+
+00:27:41.290 --> 00:27:44.590
+And you can see there's a
+very, very large gap here.
+
+00:27:44.590 --> 00:27:47.870
+If you draw the horizontal
+line to see the data efficiency
+
+00:27:47.870 --> 00:27:51.670
+difference, it's
+basically 2x or something.
+
+00:27:51.670 --> 00:27:54.510
+And even if you let the
+attention be global,
+
+00:27:54.510 --> 00:27:57.010
+and in this case because
+byte sequences are so long,
+
+00:27:57.010 --> 00:28:01.070
+this is really increasing the
+computation so that the global
+
+00:28:01.070 --> 00:28:05.110
+attention model in the dashed
+line here is doing 2x as much
+
+00:28:05.110 --> 00:28:10.350
+compute as the Mamba model,
+it's actually still not as good.
+
+00:28:10.350 --> 00:28:12.990
+And so what this means
+is that there's actually
+
+00:28:12.990 --> 00:28:14.430
+a fundamental difference here.
+
+00:28:14.430 --> 00:28:19.580
+And it's not just because
+of that attention is slower.
+
+00:28:19.580 --> 00:28:21.780
+The comparison between
+these two bottom lines
+
+00:28:21.780 --> 00:28:26.540
+are the same model size, same
+data, same sequence length,
+
+00:28:26.540 --> 00:28:29.340
+and it's simply letting the
+attention do its quadratic thing
+
+00:28:29.340 --> 00:28:31.020
+and using much more compute.
+
+00:28:31.020 --> 00:28:33.380
+But it's still a bit worse.
+
+00:28:33.380 --> 00:28:37.560
+So this phenomenon occurs
+in other settings too.
+
+00:28:37.560 --> 00:28:41.660
+So we can look at sequence-like
+data that is not just
+
+00:28:41.660 --> 00:28:46.503
+language or language with
+alternative vocabularies.
+
+00:28:46.503 --> 00:28:48.420
+This is a figure from
+the original Mamba paper
+
+00:28:48.420 --> 00:28:52.220
+that we investigated the
+model on DNA modeling.
+
+00:28:52.220 --> 00:28:54.540
+So again, you can basically
+just take DNA sequences
+
+00:28:54.540 --> 00:28:57.820
+and do autoregressive
+modeling on them.
+
+00:28:57.820 --> 00:29:01.740
+And here, the comparison between
+the orange and the red line
+
+00:29:01.740 --> 00:29:06.300
+is the Mamba versus transformer,
+where, once again, we
+
+00:29:06.300 --> 00:29:08.400
+see that there's actually
+a really big gap.
+
+00:29:08.400 --> 00:29:12.180
+And if you try to match for
+compute or match for parameters,
+
+00:29:12.180 --> 00:29:16.900
+the Mamba model is
+about 3x more efficient.
+
+00:29:16.900 --> 00:29:19.930
+So these are settings
+that basically
+
+00:29:19.930 --> 00:29:21.730
+don't have tokenization.
+
+00:29:21.730 --> 00:29:24.330
+And so what is going on here?
+
+00:29:24.330 --> 00:29:26.953
+So when I think about
+what attention is good at,
+
+00:29:26.953 --> 00:29:28.370
+there's a couple
+heuristics that I
+
+00:29:28.370 --> 00:29:34.490
+think are really helpful for
+thinking about what it does
+
+00:29:34.490 --> 00:29:37.348
+and the types of settings
+that it excels at.
+
+00:29:37.348 --> 00:29:38.890
+So first of all,
+once again, thinking
+
+00:29:38.890 --> 00:29:41.810
+about the autoregressive state.
+
+00:29:41.810 --> 00:29:44.850
+So we thought of the attention
+as storing a database
+
+00:29:44.850 --> 00:29:47.130
+of every token it's seen.
+
+00:29:47.130 --> 00:29:52.210
+That means that it should
+make sense to actually cache
+
+00:29:52.210 --> 00:29:53.450
+every single token.
+
+00:29:55.992 --> 00:29:57.450
+You can think of
+many types of data
+
+00:29:57.450 --> 00:30:00.610
+where it actually doesn't make
+sense to cache every token.
+
+00:30:00.610 --> 00:30:03.610
+Obvious examples include
+if your data is noisy
+
+00:30:03.610 --> 00:30:07.130
+and there's spurious
+tokens that you don't need.
+
+00:30:07.130 --> 00:30:13.890
+Or you can think, perhaps,
+in the language setting.
+
+00:30:13.890 --> 00:30:15.760
+When we read
+English, we can often
+
+00:30:15.760 --> 00:30:19.060
+identify words, even if you
+drop out a lot of the tokens.
+
+00:30:19.060 --> 00:30:22.600
+And that's just a
+very coarse analogy
+
+00:30:22.600 --> 00:30:25.920
+that shows that you don't need
+to spend all of that memory, all
+
+00:30:25.920 --> 00:30:28.420
+that computation, to cache a
+representation for every token,
+
+00:30:28.420 --> 00:30:31.600
+because not every
+token is meaningful.
+
+00:30:31.600 --> 00:30:35.600
+Another heuristic is
+that, in some ways,
+
+00:30:35.600 --> 00:30:38.400
+softmax attention was
+developed as a alternative
+
+00:30:38.400 --> 00:30:39.780
+to hard attention.
+
+00:30:39.780 --> 00:30:42.025
+What hard attention
+means is that--
+
+00:30:42.025 --> 00:30:43.400
+softmax attention,
+basically, you
+
+00:30:43.400 --> 00:30:46.480
+take a weighted combination of
+every token in your context.
+
+00:30:46.480 --> 00:30:48.280
+Hard attention
+means that imagine
+
+00:30:48.280 --> 00:30:53.400
+you can only look at a
+single token at a time.
+
+00:30:53.400 --> 00:30:55.480
+So this is also, I
+think, a useful proxy
+
+00:30:55.480 --> 00:30:57.040
+for what attention does.
+
+00:30:57.040 --> 00:31:01.520
+And once again, it's
+helpful to think about this
+
+00:31:01.520 --> 00:31:05.920
+because attention
+excels at data where
+
+00:31:05.920 --> 00:31:07.920
+hard attention makes sense.
+
+00:31:07.920 --> 00:31:11.360
+And so this is why, again,
+use applying attention to,
+
+00:31:11.360 --> 00:31:15.530
+say, character level data
+is much less effective,
+
+00:31:15.530 --> 00:31:19.070
+because if you can think
+about the nature of the data
+
+00:31:19.070 --> 00:31:21.230
+and how we process
+it, you're never going
+
+00:31:21.230 --> 00:31:23.590
+to look at a single character.
+
+00:31:23.590 --> 00:31:25.630
+You're kind of paying
+attention to the data
+
+00:31:25.630 --> 00:31:29.150
+at the semantic level of
+words or even coarser,
+
+00:31:29.150 --> 00:31:31.150
+not at the level of characters.
+
+00:31:31.150 --> 00:31:35.430
+And this kind of is a
+very heuristic explanation
+
+00:31:35.430 --> 00:31:38.390
+for the phenomenon
+that we just saw.
+
+00:31:38.390 --> 00:31:41.510
+And so if we look at the
+different types of data
+
+00:31:41.510 --> 00:31:44.550
+that you can use
+this really, I think
+
+00:31:44.550 --> 00:31:48.150
+is useful for thinking about
+where attention is useful.
+
+00:31:48.150 --> 00:31:51.590
+So if you have things like
+words or subwords, which
+
+00:31:51.590 --> 00:31:54.790
+is what we typically
+apply transformers on,
+
+00:31:54.790 --> 00:31:58.510
+they really excel because
+these tokens are intrinsically
+
+00:31:58.510 --> 00:32:00.150
+semantically meaningful.
+
+00:32:00.150 --> 00:32:01.490
+They're modular and composable.
+
+00:32:01.490 --> 00:32:04.630
+It makes sense to want
+to look at a single word
+
+00:32:04.630 --> 00:32:07.310
+or store a
+representation of a word.
+
+00:32:07.310 --> 00:32:10.390
+When we start looking at other
+settings, they make less sense.
+
+00:32:10.390 --> 00:32:14.940
+If we're modeling characters
+or DNA base pairs,
+
+00:32:14.940 --> 00:32:16.740
+every individual
+character basically
+
+00:32:16.740 --> 00:32:20.700
+doesn't have any meaning,
+every individual DNA base
+
+00:32:20.700 --> 00:32:21.800
+doesn't have any meaning.
+
+00:32:21.800 --> 00:32:24.900
+And so this is one explanation
+for why attention does so much
+
+00:32:24.900 --> 00:32:28.100
+worse here than other models.
+
+00:32:28.100 --> 00:32:31.420
+And many other settings
+are not so clean.
+
+00:32:31.420 --> 00:32:34.980
+For example, in vision, if you
+look at a patch of an image,
+
+00:32:34.980 --> 00:32:36.960
+it's not really clear
+which camp you fall into.
+
+00:32:36.960 --> 00:32:40.423
+Some of the patches may
+have a lot of information.
+
+00:32:40.423 --> 00:32:41.840
+Some of them may
+have very little.
+
+00:32:41.840 --> 00:32:43.580
+You might just get a
+patch of sky that's
+
+00:32:43.580 --> 00:32:45.000
+kind of useless to your model.
+
+00:32:45.000 --> 00:32:49.020
+And so the trade offs there
+are a little bit less clear.
+
+00:32:49.020 --> 00:32:51.660
+But it goes to show
+why when we move away
+
+00:32:51.660 --> 00:32:55.100
+from pure tokenized
+language, actually,
+
+00:32:55.100 --> 00:32:59.700
+these alternative models
+become more and more popular.
+
+00:32:59.700 --> 00:33:03.260
+And I think it's because of
+basically this reason that when
+
+00:33:03.260 --> 00:33:07.220
+you don't have very
+well defined tokenizers,
+
+00:33:07.220 --> 00:33:09.020
+the power of
+transformers goes down
+
+00:33:09.020 --> 00:33:12.350
+and the power of models that are
+doing this implicit compression,
+
+00:33:12.350 --> 00:33:14.290
+which in some ways
+can be viewed maybe
+
+00:33:14.290 --> 00:33:16.690
+as sharing a similar
+role as tokenization,
+
+00:33:16.690 --> 00:33:18.130
+these models get better.
+
+00:33:18.130 --> 00:33:21.530
+So this is a graph taken pretty
+soon after the Mamba paper came
+
+00:33:21.530 --> 00:33:28.210
+out about where it was most
+popularly used in applications.
+
+00:33:28.210 --> 00:33:33.450
+And even though the model was
+kind of pitched as a language
+
+00:33:33.450 --> 00:33:37.570
+model, actually language
+only took up about 10%
+
+00:33:37.570 --> 00:33:38.730
+of the applications.
+
+00:33:38.730 --> 00:33:41.850
+And instead, it was viewed as
+just a generally useful sequence
+
+00:33:41.850 --> 00:33:43.610
+model for all sorts
+of modalities,
+
+00:33:43.610 --> 00:33:47.750
+from time series to audio
+to especially vision.
+
+00:33:50.450 --> 00:33:55.050
+So now, while we're on
+the topic of tokenizers,
+
+00:33:55.050 --> 00:33:57.670
+a very recent application
+of these models has been,
+
+00:33:57.670 --> 00:34:01.410
+again, in the domain of
+tokenizer-free models.
+
+00:34:01.410 --> 00:34:05.410
+So very recently,
+my group published
+
+00:34:05.410 --> 00:34:10.360
+a paper called H-Net, which
+is maybe the latest model that
+
+00:34:10.360 --> 00:34:13.239
+tries to do actual
+tokenizer-free modeling
+
+00:34:13.239 --> 00:34:15.639
+of language.
+
+00:34:15.639 --> 00:34:19.960
+So in a nutshell, the way I
+would describe H-Net is that
+
+00:34:19.960 --> 00:34:21.960
+it's an end-to-end
+hierarchical network--
+
+00:34:21.960 --> 00:34:26.320
+and that's what it stands
+for, hierarchical network--
+
+00:34:26.320 --> 00:34:29.159
+that operates on raw
+data and compresses it
+
+00:34:29.159 --> 00:34:32.880
+through a data-dependent
+chunking process.
+
+00:34:32.880 --> 00:34:35.120
+So I'll unpack this
+in a little bit.
+
+00:34:35.120 --> 00:34:37.600
+But basically you think
+of this as a model that
+
+00:34:37.600 --> 00:34:41.199
+is operating on raw
+data and implicitly
+
+00:34:41.199 --> 00:34:46.000
+trying to tokenize it by
+chunking it inside the model.
+
+00:34:46.000 --> 00:34:50.199
+This work was largely led by my
+student [INAUDIBLE] Hwang here.
+
+00:34:50.199 --> 00:34:53.280
+And this is the
+name of the paper.
+
+00:34:53.280 --> 00:34:56.320
+This is a really general
+neural network architecture
+
+00:34:56.320 --> 00:35:00.400
+that's really about the
+idea of compression.
+
+00:35:00.400 --> 00:35:04.360
+Where it's most obviously
+useful is simply
+
+00:35:04.360 --> 00:35:06.760
+on tokenizer-free
+language modeling.
+
+00:35:06.760 --> 00:35:11.830
+So to contrast, again, the way
+that all of our language models
+
+00:35:11.830 --> 00:35:14.790
+work is through an
+explicit tokenization step.
+
+00:35:14.790 --> 00:35:18.390
+If you're familiar with
+this, the most common one
+
+00:35:18.390 --> 00:35:20.550
+is called BPE or
+byte-pair encoding.
+
+00:35:20.550 --> 00:35:23.030
+And it's basically
+some form of heuristics
+
+00:35:23.030 --> 00:35:26.750
+that take your sentence
+of low-level data,
+
+00:35:26.750 --> 00:35:32.470
+like characters, and then
+implement some merge rules
+
+00:35:32.470 --> 00:35:34.490
+that group them together
+into bigger chunks.
+
+00:35:34.490 --> 00:35:37.270
+So for example, this sentence
+might be tokenized exactly
+
+00:35:37.270 --> 00:35:42.190
+like this where characters got
+merged together into these--
+
+00:35:42.190 --> 00:35:45.950
+I'm calling them chunks, but
+we usually call them tokens.
+
+00:35:45.950 --> 00:35:48.390
+What the H-Net does
+is that instead
+
+00:35:48.390 --> 00:35:50.690
+of doing this as a
+separate offline step
+
+00:35:50.690 --> 00:35:53.030
+and then passing
+these into the model,
+
+00:35:53.030 --> 00:35:57.670
+the H-Net only sees the
+original characters.
+
+00:35:57.670 --> 00:36:00.270
+So, for example, the
+vocab size would be just,
+
+00:36:00.270 --> 00:36:03.350
+say, like 256 if you're
+working on bytes.
+
+00:36:03.350 --> 00:36:07.050
+And then the model, it's looking
+for boundaries like this.
+
+00:36:07.050 --> 00:36:09.420
+But this is all happening
+inside the model.
+
+00:36:09.420 --> 00:36:12.580
+And this is a visualization
+of what the model actually
+
+00:36:12.580 --> 00:36:14.700
+might do during training.
+
+00:36:14.700 --> 00:36:19.500
+So this depicts the
+training stage of the model.
+
+00:36:19.500 --> 00:36:22.620
+I think the animation started
+partway through for some reason.
+
+00:36:22.620 --> 00:36:25.820
+But basically, the model
+is modeling just bytes.
+
+00:36:25.820 --> 00:36:27.660
+And the green denotes
+where the model
+
+00:36:27.660 --> 00:36:30.127
+is trying to put boundaries.
+
+00:36:30.127 --> 00:36:31.960
+And so this is at the
+beginning of training,
+
+00:36:31.960 --> 00:36:34.100
+the model is doing
+a lot of exploring
+
+00:36:34.100 --> 00:36:35.860
+because it doesn't how.
+
+00:36:35.860 --> 00:36:37.887
+And then it eventually
+kind of stabilizes
+
+00:36:37.887 --> 00:36:40.220
+on boundaries that are quite
+aligned with where we would
+
+00:36:40.220 --> 00:36:43.220
+expect a good tokenizer to do.
+
+00:36:43.220 --> 00:36:44.780
+In particular on
+English, it happens
+
+00:36:44.780 --> 00:36:47.500
+to coincide that
+your tokens generally
+
+00:36:47.500 --> 00:36:49.060
+want to be where spaces are.
+
+00:36:49.060 --> 00:36:53.600
+But if you look closely, you can
+see that the model is like here,
+
+00:36:53.600 --> 00:36:54.355
+for example--
+
+00:36:54.355 --> 00:36:55.480
+OK, the animations started.
+
+00:36:55.480 --> 00:36:56.660
+But you can see that
+the model is actually
+
+00:36:56.660 --> 00:36:59.020
+finding semantically
+meaningful subwords as well.
+
+00:36:59.020 --> 00:37:00.632
+And if you compose
+this, you'll find
+
+00:37:00.632 --> 00:37:02.340
+that the model finds
+semantically meaning
+
+00:37:02.340 --> 00:37:05.220
+groups of words.
+
+00:37:05.220 --> 00:37:08.890
+So this was a major step
+towards actually doing
+
+00:37:08.890 --> 00:37:13.450
+tokenizer-free modeling without
+the separate offline step.
+
+00:37:13.450 --> 00:37:16.163
+So I won't go fully
+into the details
+
+00:37:16.163 --> 00:37:17.830
+because the model is
+pretty complicated,
+
+00:37:17.830 --> 00:37:22.170
+but I'll try to give a high
+level of how this works.
+
+00:37:22.170 --> 00:37:27.010
+So this, here on the left,
+depicts the general structure
+
+00:37:27.010 --> 00:37:29.068
+of the model.
+
+00:37:29.068 --> 00:37:30.610
+And so we think of
+it as hierarchical
+
+00:37:30.610 --> 00:37:35.422
+because there are
+two main stages.
+
+00:37:35.422 --> 00:37:37.130
+There's parts of the
+model that interface
+
+00:37:37.130 --> 00:37:40.410
+with the fine-grained data.
+
+00:37:40.410 --> 00:37:42.890
+So what happens is,
+let's say, we're
+
+00:37:42.890 --> 00:37:46.410
+operating directly on
+bytes or characters here.
+
+00:37:46.410 --> 00:37:49.570
+The sequence gets passed through
+a lightweight encoder, which
+
+00:37:49.570 --> 00:37:53.650
+will just be a generic sequence
+model or several layers
+
+00:37:53.650 --> 00:37:56.010
+of a sequence model.
+
+00:37:56.010 --> 00:37:58.370
+Then there is a special
+routing mechanism
+
+00:37:58.370 --> 00:38:01.330
+that for every single
+character predicts,
+
+00:38:01.330 --> 00:38:04.800
+do I want this character
+to be a boundary or not?
+
+00:38:04.800 --> 00:38:08.720
+Or do I want it to be
+the end of a chunk?
+
+00:38:08.720 --> 00:38:10.720
+Then for the ones
+that are decided
+
+00:38:10.720 --> 00:38:14.200
+to be chunks, which are
+highlighted in the colors here,
+
+00:38:14.200 --> 00:38:17.920
+we summarize each chunk
+and then compress them down
+
+00:38:17.920 --> 00:38:19.553
+into one representation.
+
+00:38:19.553 --> 00:38:21.720
+And so you can think of the
+encoder and the chunking
+
+00:38:21.720 --> 00:38:25.780
+as playing the same role as
+the standard BPE tokenizer.
+
+00:38:28.720 --> 00:38:31.520
+And then once that
+is compressed down,
+
+00:38:31.520 --> 00:38:34.080
+then you have a much
+shorter sequence,
+
+00:38:34.080 --> 00:38:37.240
+then you pass this into
+what we call the main model.
+
+00:38:37.240 --> 00:38:39.480
+And this model you can
+just think of as, again,
+
+00:38:39.480 --> 00:38:42.820
+a generic sequence model
+that is effective on chunks.
+
+00:38:42.820 --> 00:38:44.920
+And so here, for
+example, by default,
+
+00:38:44.920 --> 00:38:47.040
+we will just use a
+transformer because they're
+
+00:38:47.040 --> 00:38:48.920
+a tried and true model
+that operate well
+
+00:38:48.920 --> 00:38:53.200
+on words or chunks or tokens.
+
+00:38:53.200 --> 00:38:56.440
+And so this is the inner stage.
+
+00:38:56.440 --> 00:38:59.800
+Then after your main model, you
+take your output representations
+
+00:38:59.800 --> 00:39:02.420
+and then you expand them back
+out to the original resolution
+
+00:39:02.420 --> 00:39:04.290
+and pass them through a decoder.
+
+00:39:04.290 --> 00:39:06.650
+And then do your autoregressive
+prediction there.
+
+00:39:06.650 --> 00:39:11.390
+So at a very coarse level,
+it's kind of, honestly,
+
+00:39:11.390 --> 00:39:14.470
+similar to the existing pipeline
+with a tokenizer and then
+
+00:39:14.470 --> 00:39:15.470
+a transformer.
+
+00:39:15.470 --> 00:39:17.590
+Except the tokenization
+happens inside the model
+
+00:39:17.590 --> 00:39:19.830
+through an encoder and
+then a routing mechanism
+
+00:39:19.830 --> 00:39:21.090
+to predict the boundaries.
+
+00:39:24.155 --> 00:39:25.530
+So there's a lot
+of details here.
+
+00:39:25.530 --> 00:39:27.447
+But the one thing I'll
+emphasize for this talk
+
+00:39:27.447 --> 00:39:30.470
+is that the outer stages
+of this model, which
+
+00:39:30.470 --> 00:39:35.390
+are the ones that interface with
+the byte-level data, strongly
+
+00:39:35.390 --> 00:39:37.390
+benefit from being SSMs.
+
+00:39:37.390 --> 00:39:40.390
+So just like the
+previous experiment
+
+00:39:40.390 --> 00:39:43.590
+I saw where if you run these
+models on character-level data,
+
+00:39:43.590 --> 00:39:45.710
+like an SSM versus
+a transformer,
+
+00:39:45.710 --> 00:39:47.510
+the SSM is way better.
+
+00:39:47.510 --> 00:39:50.550
+Similarly here, you'll find
+that any part of the model that
+
+00:39:50.550 --> 00:39:57.230
+touches byte-level data strongly
+benefits from being an SSM.
+
+00:39:57.230 --> 00:40:00.230
+And then outside
+of this, there are
+
+00:40:00.230 --> 00:40:02.740
+lot of details in the
+exact chunking mechanism
+
+00:40:02.740 --> 00:40:04.493
+and other parts
+of the model that
+
+00:40:04.493 --> 00:40:06.160
+needed to be optimized
+for this to work.
+
+00:40:06.160 --> 00:40:09.020
+So this is a pretty
+non-trivial problem,
+
+00:40:09.020 --> 00:40:11.940
+because this is like a discrete
+optimization problem that's
+
+00:40:11.940 --> 00:40:15.320
+really unstable and difficult.
+But if you get all right,
+
+00:40:15.320 --> 00:40:16.120
+it actually works.
+
+00:40:16.120 --> 00:40:17.780
+And you actually
+can train a model
+
+00:40:17.780 --> 00:40:22.740
+that operates fully
+on tokenized data
+
+00:40:22.740 --> 00:40:25.340
+and actually seems to
+scale pretty reasonably.
+
+00:40:25.340 --> 00:40:32.780
+And can actually outperform your
+standard tokenized pipeline.
+
+00:40:32.780 --> 00:40:36.740
+So these are some of
+the results that we see.
+
+00:40:36.740 --> 00:40:38.580
+On the left here is,
+again, a training
+
+00:40:38.580 --> 00:40:41.300
+plots where we're
+fixing a model size
+
+00:40:41.300 --> 00:40:44.740
+and we're just showing how
+the validation, perplexity
+
+00:40:44.740 --> 00:40:50.900
+or bits per byte decreases as
+a function of the data seen.
+
+00:40:50.900 --> 00:40:56.580
+And one thing to also emphasize
+is that here in this diagram,
+
+00:40:56.580 --> 00:40:59.840
+the main stage I said can just
+be a generic sequence model.
+
+00:40:59.840 --> 00:41:02.710
+That means that the main stage
+itself can be another H-Net.
+
+00:41:02.710 --> 00:41:04.210
+So that means that
+you can basically
+
+00:41:04.210 --> 00:41:07.170
+compose this model to have
+multiple stages of chunking.
+
+00:41:07.170 --> 00:41:13.570
+And so what H-Net that really
+means is that it's not, per se,
+
+00:41:13.570 --> 00:41:16.730
+about tokenizer-free modeling.
+
+00:41:16.730 --> 00:41:18.910
+It is about dynamic chunking.
+
+00:41:18.910 --> 00:41:21.330
+So it's about the idea
+of taking any data
+
+00:41:21.330 --> 00:41:24.330
+and compressing it
+into larger chunks that
+
+00:41:24.330 --> 00:41:28.530
+ideally represent more higher
+level semantic meaning.
+
+00:41:28.530 --> 00:41:30.550
+And because it's done
+completely end to end,
+
+00:41:30.550 --> 00:41:32.810
+this is the first
+model that can not only
+
+00:41:32.810 --> 00:41:35.090
+chunk things, but
+also chunk things
+
+00:41:35.090 --> 00:41:38.530
+multiple times to get more and
+more levels of abstraction.
+
+00:41:38.530 --> 00:41:42.850
+And what we see on
+the plot on the left
+
+00:41:42.850 --> 00:41:47.530
+is that the transformer
+baseline here is the black line.
+
+00:41:47.530 --> 00:41:50.930
+And then if you train that
+H-Net with just a single stage
+
+00:41:50.930 --> 00:41:54.010
+of chunking, like in
+the previous diagram,
+
+00:41:54.010 --> 00:41:56.570
+it starts off worse
+than the transformer.
+
+00:41:56.570 --> 00:41:59.360
+But after seeing enough
+data, it crosses over
+
+00:41:59.360 --> 00:42:03.880
+and seems to be scaling better.
+
+00:42:03.880 --> 00:42:11.200
+And the reason for this is that
+basically, feature engineering
+
+00:42:11.200 --> 00:42:13.240
+generally is a form
+of inductive bias
+
+00:42:13.240 --> 00:42:17.080
+that can help your model in
+data constrained regimes,
+
+00:42:17.080 --> 00:42:19.125
+but usually benefits
+less from scaling.
+
+00:42:19.125 --> 00:42:21.500
+So this is the common theme
+that we see in deep learning.
+
+00:42:21.500 --> 00:42:23.240
+This is the bitter lesson.
+
+00:42:23.240 --> 00:42:25.560
+And so we see this
+exactly in this plot.
+
+00:42:25.560 --> 00:42:27.880
+If you apply a stage
+of chunking then
+
+00:42:27.880 --> 00:42:30.360
+it takes some amount of
+data before the model learns
+
+00:42:30.360 --> 00:42:34.720
+how to create good chunks,
+like we saw in the animation.
+
+00:42:34.720 --> 00:42:36.640
+But once it does, it
+should theoretically
+
+00:42:36.640 --> 00:42:39.360
+be able to create better chunks
+than what your hard-coded BP
+
+00:42:39.360 --> 00:42:41.720
+algorithm gave you.
+
+00:42:41.720 --> 00:42:43.120
+And then if you
+compose the model
+
+00:42:43.120 --> 00:42:46.320
+by nesting it again and
+doing two stages of chunking,
+
+00:42:46.320 --> 00:42:47.940
+the model seems to
+scale even better.
+
+00:42:47.940 --> 00:42:50.960
+Although, there are
+other challenges that
+
+00:42:50.960 --> 00:42:54.480
+occur in this case, because
+you have more parameters,
+
+00:42:54.480 --> 00:42:56.520
+it's harder to train and so on.
+
+00:42:56.520 --> 00:42:59.350
+But at least these
+plots track what
+
+00:42:59.350 --> 00:43:00.730
+we would intuitively expect.
+
+00:43:05.452 --> 00:43:06.910
+It's not shown in
+this plot, sorry.
+
+00:43:06.910 --> 00:43:09.310
+But you could also
+ask yourself, what
+
+00:43:09.310 --> 00:43:13.790
+happens if you run the H-Net
+directly on BPE tokens?
+
+00:43:13.790 --> 00:43:17.050
+And then the behavior kind of,
+again, tracks what you expect.
+
+00:43:17.050 --> 00:43:22.870
+So compared to a H-Net on bytes,
+BPE gives you some free boost
+
+00:43:22.870 --> 00:43:25.510
+because you're getting
+the chunk of the model
+
+00:43:25.510 --> 00:43:29.190
+based on this kind of
+hard-coded features.
+
+00:43:29.190 --> 00:43:32.410
+But if you just added another
+stage of chunking to the H-Net
+
+00:43:32.410 --> 00:43:33.910
+and operate on
+bytes, then the model
+
+00:43:33.910 --> 00:43:35.770
+learns better features
+than your BPE tokens.
+
+00:43:35.770 --> 00:43:37.950
+And this is what it looks like.
+
+00:43:37.950 --> 00:43:40.110
+And so if you look at these
+comparisons, especially
+
+00:43:40.110 --> 00:43:42.190
+these two circled
+in the red boxes,
+
+00:43:42.190 --> 00:43:47.470
+the theme is that no matter
+what setting you're in,
+
+00:43:47.470 --> 00:43:50.490
+if you train a model
+operating on BPE tokens,
+
+00:43:50.490 --> 00:43:51.490
+it works pretty good.
+
+00:43:51.490 --> 00:43:54.430
+But if you can manage
+to throw away the BPE
+
+00:43:54.430 --> 00:43:56.700
+and learn these
+chunks end to end,
+
+00:43:56.700 --> 00:43:58.200
+then your model
+will do even better.
+
+00:44:00.940 --> 00:44:04.860
+One variation of this that
+is particularly interesting
+
+00:44:04.860 --> 00:44:06.192
+is that--
+
+00:44:06.192 --> 00:44:08.400
+so again, so each net is
+just a generic architecture.
+
+00:44:08.400 --> 00:44:10.460
+It doesn't have to
+be applied on bytes.
+
+00:44:10.460 --> 00:44:16.032
+This plot shows what happens if
+you apply it on the BPE data.
+
+00:44:16.032 --> 00:44:17.740
+And I think this one's
+really interesting
+
+00:44:17.740 --> 00:44:22.140
+because it relates back to
+this compression argument
+
+00:44:22.140 --> 00:44:23.780
+that I talked about earlier.
+
+00:44:23.780 --> 00:44:28.260
+So what we did here is that
+we applied a single stage
+
+00:44:28.260 --> 00:44:32.260
+net to BPE tokens, and we
+varied the architecture
+
+00:44:32.260 --> 00:44:34.220
+in the encoder and decoder.
+
+00:44:34.220 --> 00:44:36.500
+So this plot,
+basically, if we just
+
+00:44:36.500 --> 00:44:38.780
+look at this top
+line and bottom line,
+
+00:44:38.780 --> 00:44:45.152
+this says that the encoder
+is only transformer layers.
+
+00:44:45.152 --> 00:44:47.860
+The purple line and the red line
+is where the encoder and decoder
+
+00:44:47.860 --> 00:44:49.080
+only layers.
+
+00:44:49.080 --> 00:44:53.300
+And in between, you can vary
+any combinations of these.
+
+00:44:53.300 --> 00:44:55.970
+And then what we see
+here is that if you only
+
+00:44:55.970 --> 00:44:58.810
+have pure transformer layers
+in the encoder and decoder,
+
+00:44:58.810 --> 00:45:00.970
+there is the model
+is noticeably worse.
+
+00:45:00.970 --> 00:45:02.970
+And as soon as you start
+putting in Mamba layers
+
+00:45:02.970 --> 00:45:07.170
+into the encoder decoder,
+model gets much better.
+
+00:45:07.170 --> 00:45:09.090
+And so what is really
+interesting here
+
+00:45:09.090 --> 00:45:14.890
+is that, previously, we
+said that transformers
+
+00:45:14.890 --> 00:45:19.130
+are great when your data
+is already compressed,
+
+00:45:19.130 --> 00:45:21.210
+like BPE tokens.
+
+00:45:21.210 --> 00:45:23.450
+And they're less good in
+your data is not compressed.
+
+00:45:23.450 --> 00:45:26.590
+So on characters, Mamba is
+much better than transformers.
+
+00:45:26.590 --> 00:45:28.890
+But in this experiment,
+we are entirely
+
+00:45:28.890 --> 00:45:32.130
+operating over BPE tokens,
+even in the outer stages.
+
+00:45:32.130 --> 00:45:36.770
+And so one might expect
+that putting transformers
+
+00:45:36.770 --> 00:45:39.090
+in the outer layers is
+completely fine, maybe
+
+00:45:39.090 --> 00:45:42.592
+even better because they're
+only seeing BPE tokens.
+
+00:45:42.592 --> 00:45:44.050
+This plot is showing
+that even when
+
+00:45:44.050 --> 00:45:46.210
+your compute
+matching everything,
+
+00:45:46.210 --> 00:45:48.410
+it's better to put Mamba
+in the outer stages.
+
+00:45:48.410 --> 00:45:54.240
+And so the lesson here to me is
+that the benefit of these SSMs
+
+00:45:54.240 --> 00:45:57.600
+is not just about the resolution
+of the data they're seeing,
+
+00:45:57.600 --> 00:46:00.880
+but also about this
+implicit inductive
+
+00:46:00.880 --> 00:46:04.080
+bias toward compression.
+
+00:46:04.080 --> 00:46:05.720
+So I guess if you
+look at the diagram
+
+00:46:05.720 --> 00:46:08.280
+here, the role of
+the encoder layers
+
+00:46:08.280 --> 00:46:11.940
+is not just to interface with
+the given resolution of data,
+
+00:46:11.940 --> 00:46:13.920
+but it's also passing
+these representations
+
+00:46:13.920 --> 00:46:17.300
+into the chunking layer which is
+deciding how to chunk the data.
+
+00:46:17.300 --> 00:46:19.000
+And so you can imagine
+that the encoder
+
+00:46:19.000 --> 00:46:23.640
+layers are playing some
+role of compression as well.
+
+00:46:23.640 --> 00:46:25.240
+Because literally,
+the goal of it
+
+00:46:25.240 --> 00:46:28.000
+is to try to produce
+a literal compression
+
+00:46:28.000 --> 00:46:31.840
+of the data in temporal sense.
+
+00:46:31.840 --> 00:46:34.840
+And so even when the data comes
+not as characters but as BPE,
+
+00:46:34.840 --> 00:46:37.673
+it seems that applying
+linear models--
+
+00:46:37.673 --> 00:46:39.340
+or you can call them
+compressive models,
+
+00:46:39.340 --> 00:46:42.860
+because, again of the fixed-size
+state, it's very critical.
+
+00:46:42.860 --> 00:46:45.600
+And so this is I think,
+the best evidence
+
+00:46:45.600 --> 00:46:49.680
+I've seen so far that
+the finite-size state
+
+00:46:49.680 --> 00:46:53.290
+of recurrent models is again,
+not just for efficiency,
+
+00:46:53.290 --> 00:46:55.830
+but actually has fundamentally
+different inductive biases.
+
+00:46:55.830 --> 00:46:57.330
+And perhaps in a
+setting like this,
+
+00:46:57.330 --> 00:46:59.230
+it's actually doing
+something like--
+
+00:46:59.230 --> 00:47:01.430
+I think of the
+H-Net, the goal of it
+
+00:47:01.430 --> 00:47:03.990
+is to create better
+abstractions.
+
+00:47:03.990 --> 00:47:05.290
+That's the goal of chunking.
+
+00:47:05.290 --> 00:47:07.248
+You want to take your
+characters and chunk them
+
+00:47:07.248 --> 00:47:08.730
+into abstractions like words.
+
+00:47:08.730 --> 00:47:10.105
+You might want to
+turn your words
+
+00:47:10.105 --> 00:47:11.950
+into phrases that have meaning.
+
+00:47:11.950 --> 00:47:13.670
+And towards this
+goal of creating
+
+00:47:13.670 --> 00:47:15.430
+abstractions, that's
+fundamentally related
+
+00:47:15.430 --> 00:47:16.430
+to compression.
+
+00:47:16.430 --> 00:47:18.390
+And somehow these models
+actually, empirically
+
+00:47:18.390 --> 00:47:20.790
+seem very important for that.
+
+00:47:20.790 --> 00:47:22.870
+A final result I'll
+show on this topic
+
+00:47:22.870 --> 00:47:28.002
+is, again, you can apply these
+to different types of data.
+
+00:47:28.002 --> 00:47:29.710
+This is, again, another
+very recent paper
+
+00:47:29.710 --> 00:47:32.470
+that was just put on
+archive a month ago,
+
+00:47:32.470 --> 00:47:36.670
+where we tried applying a
+couple of different established
+
+00:47:36.670 --> 00:47:39.390
+architectures to
+DNA modeling again.
+
+00:47:39.390 --> 00:47:40.870
+And once again,
+DNA is interesting
+
+00:47:40.870 --> 00:47:44.590
+because in language,
+modeling characters is
+
+00:47:44.590 --> 00:47:45.970
+a bit of an academic exercise.
+
+00:47:45.970 --> 00:47:50.620
+It's a long-term direction
+because we do have tokenizers
+
+00:47:50.620 --> 00:47:53.500
+and most people are like, why
+not just use the tokenizer?
+
+00:47:53.500 --> 00:47:56.112
+In DNA, it's actually really
+difficult to define tokenizers,
+
+00:47:56.112 --> 00:47:57.820
+at least in a semantically
+meaningful way
+
+00:47:57.820 --> 00:48:00.900
+like you can for English.
+
+00:48:00.900 --> 00:48:03.220
+And we see even bigger
+gaps, generally,
+
+00:48:03.220 --> 00:48:06.340
+for these kind of
+alternative models.
+
+00:48:06.340 --> 00:48:09.780
+This plot here shows instead
+of just fixing a model
+
+00:48:09.780 --> 00:48:12.040
+and running out
+the training curve,
+
+00:48:12.040 --> 00:48:14.180
+this is actually showing
+formal scaling laws.
+
+00:48:14.180 --> 00:48:16.580
+So each point here is a
+different flop budget.
+
+00:48:16.580 --> 00:48:23.500
+And then the model size
+to data amount was swept.
+
+00:48:23.500 --> 00:48:28.340
+So these are standard
+scaling laws, but for DNA.
+
+00:48:28.340 --> 00:48:33.620
+And we found remarkably
+linear trends here.
+
+00:48:33.620 --> 00:48:37.100
+And what's interesting, again,
+is that these trends actually
+
+00:48:37.100 --> 00:48:39.820
+are so different from language
+that usually in language
+
+00:48:39.820 --> 00:48:43.940
+these lines are just shifted
+and you get a constant magnitude
+
+00:48:43.940 --> 00:48:44.900
+of improvement.
+
+00:48:44.900 --> 00:48:49.840
+But when it comes
+to DNA, the H-Net
+
+00:48:49.840 --> 00:48:52.090
+is actually discovering
+patterns that you can't really
+
+00:48:52.090 --> 00:48:55.610
+find with off-the-shelf
+tokenizers,
+
+00:48:55.610 --> 00:49:00.130
+and it's actually scaling
+fundamentally better.
+
+00:49:00.130 --> 00:49:04.370
+So hopefully, all of these
+have painted the picture
+
+00:49:04.370 --> 00:49:07.690
+that the different
+types of models
+
+00:49:07.690 --> 00:49:09.670
+really are doing very
+different things.
+
+00:49:09.670 --> 00:49:12.690
+They have very different
+inductive biases.
+
+00:49:12.690 --> 00:49:15.150
+And this goes back to my
+main thesis that I claimed,
+
+00:49:15.150 --> 00:49:19.043
+which is that transformers
+work really, really well.
+
+00:49:19.043 --> 00:49:21.210
+But they're particularly
+effective when the data has
+
+00:49:21.210 --> 00:49:22.930
+already been encoded properly.
+
+00:49:22.930 --> 00:49:24.970
+And you often need
+different types
+
+00:49:24.970 --> 00:49:27.490
+of models when your
+data is not encoded
+
+00:49:27.490 --> 00:49:29.748
+or it's very
+difficult to encode.
+
+00:49:29.748 --> 00:49:31.290
+And so I think the
+future of modeling
+
+00:49:31.290 --> 00:49:33.510
+will require not
+just transformers,
+
+00:49:33.510 --> 00:49:37.130
+but a lot of other ideas.
+
+00:49:37.130 --> 00:49:39.610
+So far, most people
+have viewed transformers
+
+00:49:39.610 --> 00:49:41.565
+as basically just like
+a very powerful tool.
+
+00:49:41.565 --> 00:49:43.190
+We don't really look
+at it or touch it,
+
+00:49:43.190 --> 00:49:45.290
+and we designed the
+whole pipeline around it
+
+00:49:45.290 --> 00:49:48.500
+instead through a lot
+of feature engineering,
+
+00:49:48.500 --> 00:49:52.310
+through the way we process
+the data and so on.
+
+00:49:52.310 --> 00:49:54.560
+But hopefully, I've kind of
+conveyed that there really
+
+00:49:54.560 --> 00:49:56.700
+is a lot of different
+alternatives out there.
+
+00:49:56.700 --> 00:49:58.880
+There's really a lot of
+room for improvement.
+
+00:49:58.880 --> 00:50:01.320
+I personally believe that
+there's actually still
+
+00:50:01.320 --> 00:50:04.160
+a lot of room for major
+improvements in architecture
+
+00:50:04.160 --> 00:50:07.180
+design.
+
+00:50:07.180 --> 00:50:10.370
+So just to come back now
+to the title of the talk
+
+00:50:10.370 --> 00:50:11.120
+on the trade offs.
+
+00:50:11.120 --> 00:50:13.800
+Just to summarize.
+
+00:50:13.800 --> 00:50:19.680
+SSMs are largely thought of
+as a alternative model that
+
+00:50:19.680 --> 00:50:22.360
+is more efficient
+than transformers,
+
+00:50:22.360 --> 00:50:25.040
+but potentially more weak.
+
+00:50:25.040 --> 00:50:27.260
+So just by the way
+they're defined,
+
+00:50:27.260 --> 00:50:29.400
+they're obviously
+more efficient.
+
+00:50:29.400 --> 00:50:32.880
+But it's often pointed out the
+specific problems they have,
+
+00:50:32.880 --> 00:50:36.560
+especially with
+retrieval-like abilities.
+
+00:50:36.560 --> 00:50:38.240
+But I actually think
+that the efficiency
+
+00:50:38.240 --> 00:50:40.160
+is a bit of a red herring.
+
+00:50:40.160 --> 00:50:41.980
+These models are not
+just more efficient,
+
+00:50:41.980 --> 00:50:44.940
+but they're actually doing
+different form of modeling.
+
+00:50:44.940 --> 00:50:48.030
+So again, I think of
+them as being a stateful
+
+00:50:48.030 --> 00:50:49.250
+and a compressive model.
+
+00:50:49.250 --> 00:50:54.310
+And these lead to very
+different types of benefits
+
+00:50:54.310 --> 00:50:57.270
+that they have from things like
+state tracking, which I didn't
+
+00:50:57.270 --> 00:51:01.430
+talk about today, to things like
+building abstractions, which
+
+00:51:01.430 --> 00:51:04.270
+we saw through the H-Net.
+
+00:51:04.270 --> 00:51:06.670
+And both of these pros
+and cons are two sides
+
+00:51:06.670 --> 00:51:09.830
+of the same coin, which is the
+way it's autoregressive state is
+
+00:51:09.830 --> 00:51:14.190
+defined in terms of
+this brain-like state.
+
+00:51:14.190 --> 00:51:17.310
+Similarly, attention,
+the strengths
+
+00:51:17.310 --> 00:51:20.670
+are that it gets the
+ability to pay attention
+
+00:51:20.670 --> 00:51:24.367
+to very specific
+details in its context.
+
+00:51:24.367 --> 00:51:26.450
+It's exceptionally strong
+at recall and retrieval,
+
+00:51:26.450 --> 00:51:29.070
+which is where SSMs struggle.
+
+00:51:29.070 --> 00:51:30.830
+And usually people
+think of the downside
+
+00:51:30.830 --> 00:51:36.078
+as the efficiency, the
+quadratic scaling of attention.
+
+00:51:36.078 --> 00:51:37.870
+But once again, I think
+that the efficiency
+
+00:51:37.870 --> 00:51:39.150
+is a bit of a red herring.
+
+00:51:39.150 --> 00:51:42.630
+And the way I really
+think about attention
+
+00:51:42.630 --> 00:51:45.460
+is that the downside
+is that it is highly
+
+00:51:45.460 --> 00:51:47.860
+dependent on the resolution
+and the semantic meaning
+
+00:51:47.860 --> 00:51:50.220
+of the data.
+
+00:51:50.220 --> 00:51:53.040
+Through the examples we saw,
+when you change the resolution,
+
+00:51:53.040 --> 00:51:57.500
+even in language modeling
+from BPE tokens to bytes,
+
+00:51:57.500 --> 00:52:00.900
+the performance of attention
+changes dramatically.
+
+00:52:00.900 --> 00:52:03.020
+And another way to put
+this is that attention
+
+00:52:03.020 --> 00:52:04.940
+is beholden to the
+tokens it's given.
+
+00:52:04.940 --> 00:52:09.940
+Because of the way it's kind of
+caching every single token it
+
+00:52:09.940 --> 00:52:13.660
+means that it's very sensitive
+to the resolution of the tokens
+
+00:52:13.660 --> 00:52:14.700
+it's given.
+
+00:52:14.700 --> 00:52:18.122
+It has no ability to change
+what a token means to it.
+
+00:52:18.122 --> 00:52:19.580
+And once again,
+these pros and cons
+
+00:52:19.580 --> 00:52:22.700
+are both two sides of
+the same coin, which
+
+00:52:22.700 --> 00:52:25.740
+is the way that it's
+autoregressive state is defined
+
+00:52:25.740 --> 00:52:30.620
+through this
+database-like cache.
+
+00:52:30.620 --> 00:52:35.140
+And so I think that the
+efficiency arguments
+
+00:52:35.140 --> 00:52:38.200
+for both of these
+models are, again,
+
+00:52:38.200 --> 00:52:39.500
+a little bit of a distraction.
+
+00:52:39.500 --> 00:52:42.140
+Because at the end
+of the day, we just
+
+00:52:42.140 --> 00:52:44.970
+want the models to model
+the things we want.
+
+00:52:44.970 --> 00:52:48.678
+And the exact efficiency
+there actually-- it's
+
+00:52:48.678 --> 00:52:49.970
+not the right thing to look at.
+
+00:52:49.970 --> 00:52:53.330
+Because there may be tasks, for
+example, where you really do
+
+00:52:53.330 --> 00:52:55.548
+need the quadratic attention.
+
+00:52:55.548 --> 00:52:57.090
+There may be tasks
+where you actually
+
+00:52:57.090 --> 00:52:59.710
+have to cache and memorize every
+single thing in your context,
+
+00:52:59.710 --> 00:53:01.010
+and you can't get around that.
+
+00:53:01.010 --> 00:53:02.510
+And then so there's
+no point arguing
+
+00:53:02.510 --> 00:53:03.990
+that the quadratic
+scaling is bad.
+
+00:53:06.610 --> 00:53:09.450
+And to give a
+final picture here.
+
+00:53:09.450 --> 00:53:11.810
+So one way to think about
+architecture design in general
+
+00:53:11.810 --> 00:53:16.090
+is that there's a
+picture where we
+
+00:53:16.090 --> 00:53:18.810
+think of models
+as this black box,
+
+00:53:18.810 --> 00:53:23.610
+where during training, you
+give it compute and data.
+
+00:53:23.610 --> 00:53:27.210
+And then you create
+an intelligent model
+
+00:53:27.210 --> 00:53:31.330
+that has a wide range of
+capabilities on the other side.
+
+00:53:31.330 --> 00:53:34.650
+And in this picture,
+you basically
+
+00:53:34.650 --> 00:53:37.090
+think of your model
+training as a vehicle
+
+00:53:37.090 --> 00:53:41.760
+that converts compute or
+flops into intelligence
+
+00:53:41.760 --> 00:53:43.920
+or capabilities.
+
+00:53:43.920 --> 00:53:47.120
+And what you want is to find
+the most efficient vehicle that
+
+00:53:47.120 --> 00:53:50.200
+does this conversion.
+
+00:53:50.200 --> 00:53:54.960
+And so the central
+question to ask is simply,
+
+00:53:54.960 --> 00:53:59.680
+is my model using every
+single flop it's given wisely?
+
+00:53:59.680 --> 00:54:05.000
+And so again, there are
+settings where you actually
+
+00:54:05.000 --> 00:54:06.720
+need to spend a lot
+of compute in order
+
+00:54:06.720 --> 00:54:08.740
+to do certain capabilities.
+
+00:54:08.740 --> 00:54:10.600
+But there are also
+settings where
+
+00:54:10.600 --> 00:54:13.520
+your model is doing a lot of
+compute that doesn't really
+
+00:54:13.520 --> 00:54:14.100
+make sense.
+
+00:54:14.100 --> 00:54:16.980
+For example, if your transformer
+is given character-level data,
+
+00:54:16.980 --> 00:54:19.147
+it doesn't need to be caching
+every single character
+
+00:54:19.147 --> 00:54:21.000
+into its KV cache.
+
+00:54:21.000 --> 00:54:23.500
+And so this is the central
+question of architecture design
+
+00:54:23.500 --> 00:54:25.760
+is designing better
+and better black boxes
+
+00:54:25.760 --> 00:54:27.800
+here that perform
+this conversion.
+
+00:54:27.800 --> 00:54:31.080
+And I think there's still a lot
+of room for improvement there.
+
+00:54:31.080 --> 00:54:35.560
+OK, that's the end of the talk.
+
+00:54:35.560 --> 00:54:37.636
+Questions?
+
+00:54:37.636 --> 00:54:41.122
+[APPLAUSE]
+
+00:54:46.110 --> 00:54:46.810
+OK, awesome.
+
+00:54:46.810 --> 00:54:48.990
+Thanks, Albert, for the
+very insightful talk.
+
+00:54:48.990 --> 00:54:51.750
+We're going to be soliciting
+some questions now.
+
+00:54:51.750 --> 00:54:54.550
+We're going to be balancing
+between in-person questions
+
+00:54:54.550 --> 00:54:56.670
+and those online.
+
+00:54:56.670 --> 00:54:59.070
+So we can get started with
+some in-person questions
+
+00:54:59.070 --> 00:55:01.170
+if anybody here has any.
+
+00:55:08.990 --> 00:55:09.810
+Thank you.
+
+00:55:09.810 --> 00:55:11.370
+I really admire your work.
+
+00:55:11.370 --> 00:55:13.450
+I'm a PhD in Chris
+Ray's lab as well.
+
+00:55:13.450 --> 00:55:16.010
+And we are constantly looking
+through all your old papers,
+
+00:55:16.010 --> 00:55:18.150
+so I really appreciate it.
+
+00:55:18.150 --> 00:55:23.310
+A lot of the current
+SSM inspiration
+
+00:55:23.310 --> 00:55:28.670
+is trying to trade off
+some recurrent expressivity
+
+00:55:28.670 --> 00:55:32.150
+for trainability under the
+condition of using backprop
+
+00:55:32.150 --> 00:55:33.210
+or backprop through time.
+
+00:55:33.210 --> 00:55:35.050
+Which you mentioned the
+brain a bunch of times,
+
+00:55:35.050 --> 00:55:36.675
+there's very little
+evidence that we're
+
+00:55:36.675 --> 00:55:39.860
+keeping C copies of the brain,
+and doing backprop through time.
+
+00:55:39.860 --> 00:55:42.380
+It would be very unrealistic
+that we're doing that.
+
+00:55:42.380 --> 00:55:44.620
+So there must exist
+some other solver
+
+00:55:44.620 --> 00:55:47.420
+that is happening inside
+your brain right now.
+
+00:55:47.420 --> 00:55:48.750
+What are your thoughts on that?
+
+00:55:48.750 --> 00:55:50.000
+Yeah, that's a great question.
+
+00:55:50.000 --> 00:55:54.620
+So I'm actually a big fan
+of some of these works
+
+00:55:54.620 --> 00:55:59.060
+that try to look at completely
+different computation paradigms.
+
+00:55:59.060 --> 00:56:03.020
+I think a lot of what drives
+my work is the idea that we are
+
+00:56:03.020 --> 00:56:07.220
+probably in some of local
+optimum in the entire way
+
+00:56:07.220 --> 00:56:09.420
+that all of our
+training is set up
+
+00:56:09.420 --> 00:56:12.380
+from the architecture, which is
+where a lot of this is focused.
+
+00:56:12.380 --> 00:56:16.740
+But also even to bigger things
+like backprop and so on.
+
+00:56:16.740 --> 00:56:18.740
+It is also not clear
+to me that backprop
+
+00:56:18.740 --> 00:56:20.600
+is the best thing to do.
+
+00:56:24.448 --> 00:56:26.740
+There's a lot of co-dependence
+between the model design
+
+00:56:26.740 --> 00:56:29.700
+and just the physical
+hardware we have
+
+00:56:29.700 --> 00:56:32.220
+and the realities
+of these things.
+
+00:56:32.220 --> 00:56:34.960
+I personally haven't thought
+that much about backprop myself.
+
+00:56:34.960 --> 00:56:39.050
+But I have thought about, it
+could cause serious issues
+
+00:56:39.050 --> 00:56:44.038
+with-- for example, one issue
+is it causes a physical memory
+
+00:56:44.038 --> 00:56:45.830
+constraint on your
+long-range dependencies.
+
+00:56:45.830 --> 00:56:47.310
+Because if you're
+using backprop,
+
+00:56:47.310 --> 00:56:49.630
+then if you can't fit your
+entire sequence in memory,
+
+00:56:49.630 --> 00:56:52.210
+you literally can't
+learn dependencies.
+
+00:56:52.210 --> 00:56:54.162
+You can cook up
+pathological examples
+
+00:56:54.162 --> 00:56:56.370
+where you just literally
+can never learn dependencies
+
+00:56:56.370 --> 00:56:57.650
+that are long enough.
+
+00:56:57.650 --> 00:56:59.748
+So it could be a problem.
+
+00:56:59.748 --> 00:57:02.290
+It could be the case that for
+any realistic task that we care
+
+00:57:02.290 --> 00:57:05.070
+about, we can engineer
+it to be good enough,
+
+00:57:05.070 --> 00:57:08.170
+which is the way
+the world's going.
+
+00:57:08.170 --> 00:57:11.876
+But I do think that there
+are probably other--
+
+00:57:11.876 --> 00:57:15.810
+getting out of the local optimum
+and doing much bigger changes
+
+00:57:15.810 --> 00:57:16.810
+in these models.
+
+00:57:16.810 --> 00:57:19.185
+Another example is
+that, as I mentioned,
+
+00:57:19.185 --> 00:57:20.810
+a lot of the work
+that's been done here
+
+00:57:20.810 --> 00:57:24.490
+is on making these models
+efficient on current hardware,
+
+00:57:24.490 --> 00:57:27.290
+like GPUs, you
+actually sacrifice
+
+00:57:27.290 --> 00:57:29.690
+a bunch of expressivity
+that you could gain back
+
+00:57:29.690 --> 00:57:31.168
+by adding true recurrence.
+
+00:57:31.168 --> 00:57:33.710
+And there has been another line
+of work on trying to do this,
+
+00:57:33.710 --> 00:57:36.387
+but it really struggles because
+it's just so hard to compute.
+
+00:57:36.387 --> 00:57:38.720
+I actually think that that's
+another line of work that's
+
+00:57:38.720 --> 00:57:39.500
+quite promising.
+
+00:57:39.500 --> 00:57:43.240
+And I have some of
+my own ideas there.
+
+00:57:43.240 --> 00:57:46.080
+Again, you might be able to
+get fundamentally better models
+
+00:57:46.080 --> 00:57:49.080
+by completely reimagining
+the constraints
+
+00:57:49.080 --> 00:57:50.140
+that we currently have.
+
+00:57:53.880 --> 00:57:54.380
+Great.
+
+00:57:54.380 --> 00:57:56.260
+Any other in-person questions?
+
+00:58:01.640 --> 00:58:03.875
+Thanks for the amazing talk.
+
+00:58:03.875 --> 00:58:06.000
+Yeah, it was really
+interesting to see your results
+
+00:58:06.000 --> 00:58:09.740
+with H-net and the dynamic
+chunking mechanism.
+
+00:58:09.740 --> 00:58:12.720
+And yeah, it's really cool
+that it gets better performance
+
+00:58:12.720 --> 00:58:14.380
+on DNA sequence
+modeling and stuff.
+
+00:58:14.380 --> 00:58:16.480
+I was curious if you
+feel the chunking
+
+00:58:16.480 --> 00:58:19.440
+mechanism is elegant and
+will play a substantial role
+
+00:58:19.440 --> 00:58:21.297
+in future models?
+
+00:58:21.297 --> 00:58:22.380
+Yeah, so it's hard to say.
+
+00:58:22.380 --> 00:58:26.520
+So we worked on this, which
+took a long time because I
+
+00:58:26.520 --> 00:58:28.920
+did fundamentally
+believe that chunking
+
+00:58:28.920 --> 00:58:31.840
+is a really critical primitive
+that will lead to better
+
+00:58:31.840 --> 00:58:35.140
+models in the long term.
+
+00:58:35.140 --> 00:58:39.000
+The version that we published
+is just the first step there.
+
+00:58:39.000 --> 00:58:42.260
+I think it was the first really
+end-to-end model that works.
+
+00:58:42.260 --> 00:58:44.983
+I don't think that is
+the end game at all.
+
+00:58:44.983 --> 00:58:46.900
+There are improvements
+that you could probably
+
+00:58:46.900 --> 00:58:48.940
+make to all parts
+of it, including
+
+00:58:48.940 --> 00:58:52.460
+the chunking mechanism itself.
+
+00:58:52.460 --> 00:58:54.140
+And I think, so far,
+it has not really
+
+00:58:54.140 --> 00:58:56.000
+been validated at larger scales.
+
+00:58:58.820 --> 00:59:02.300
+The way I think about it is
+that, philosophically even,
+
+00:59:02.300 --> 00:59:04.620
+it just feels like it's
+so important to learn
+
+00:59:04.620 --> 00:59:06.555
+these things from
+scratch that I do
+
+00:59:06.555 --> 00:59:09.180
+think that coming up with better
+and better chunking mechanisms
+
+00:59:09.180 --> 00:59:11.160
+could be really important
+for future models.
+
+00:59:21.020 --> 00:59:22.820
+Thank you.
+
+00:59:22.820 --> 00:59:24.680
+So just one technical question.
+
+00:59:24.680 --> 00:59:28.220
+I'm curious, since you're
+setting the separators
+
+00:59:28.220 --> 00:59:31.700
+at arbitrary points,
+typically with a tokenizer
+
+00:59:31.700 --> 00:59:33.650
+you have a set
+dictionary, so I'm
+
+00:59:33.650 --> 00:59:39.810
+curious how you feed that
+sequence in when the sequence
+
+00:59:39.810 --> 00:59:43.610
+chunks can vary
+very dynamically.
+
+00:59:43.610 --> 00:59:47.530
+But I guess more generally,
+you've drawn several comparisons
+
+00:59:47.530 --> 00:59:50.390
+to how the human brain works.
+
+00:59:50.390 --> 00:59:55.010
+And this is something I'm also
+interested in, this aspect of
+
+00:59:55.010 --> 01:00:00.550
+are we doing some of dynamic
+like analysis of incoming data?
+
+01:00:00.550 --> 01:00:05.610
+What data do we need to
+remember or compress or curate?
+
+01:00:05.610 --> 01:00:10.450
+And I've been interested
+in that towards improving
+
+01:00:10.450 --> 01:00:13.610
+the amount of memory that
+models have access to.
+
+01:00:13.610 --> 01:00:16.090
+So I'm curious what
+your perspective would
+
+01:00:16.090 --> 01:00:20.590
+be on using these types
+of state-based models
+
+01:00:20.590 --> 01:00:27.250
+perhaps to curate memories or
+curate more efficient memory
+
+01:00:27.250 --> 01:00:31.120
+for an attention-based
+or a lookup-based model
+
+01:00:31.120 --> 01:00:34.480
+to use down the line to
+extend the amount that we're
+
+01:00:34.480 --> 01:00:39.683
+able to actually memorize
+in a continuous interaction.
+
+01:00:39.683 --> 01:00:41.100
+All right, so two
+questions there.
+
+01:00:41.100 --> 01:00:42.808
+So first, I think the
+first one was about
+
+01:00:42.808 --> 01:00:46.100
+a little more mechanically
+how the model works.
+
+01:00:46.100 --> 01:00:50.740
+So this is actually one
+key advantage of the model.
+
+01:00:50.740 --> 01:00:53.360
+So I think the
+question is about--
+
+01:00:53.360 --> 01:00:55.960
+normally when you use
+BPE you have a fixed
+
+01:00:55.960 --> 01:00:58.640
+vocabulary and each
+vocabulary, you'll
+
+01:00:58.640 --> 01:01:01.120
+look up an embedding
+to pass to your model.
+
+01:01:01.120 --> 01:01:03.200
+One of the challenges
+of tokenized-free models
+
+01:01:03.200 --> 01:01:05.300
+is that if you have an
+infinite size vocabulary,
+
+01:01:05.300 --> 01:01:08.600
+you can't have
+infinite embeddings.
+
+01:01:08.600 --> 01:01:10.487
+So what happens here
+is that we don't
+
+01:01:10.487 --> 01:01:12.320
+need to think about
+those embeddings at all.
+
+01:01:12.320 --> 01:01:16.180
+Because everything is happening
+inside the model end to end,
+
+01:01:16.180 --> 01:01:18.040
+there is no lookup
+table at all once you
+
+01:01:18.040 --> 01:01:20.837
+get past the very
+first encoding stage.
+
+01:01:20.837 --> 01:01:22.920
+So here, you think of this
+model as just operating
+
+01:01:22.920 --> 01:01:25.740
+on a vocabulary of whatever
+fine-grained units you have,
+
+01:01:25.740 --> 01:01:29.590
+which might be, a size
+of 256 if it's a byte.
+
+01:01:29.590 --> 01:01:31.292
+You get embeddings here.
+
+01:01:31.292 --> 01:01:32.750
+Then you pass this
+into your model.
+
+01:01:32.750 --> 01:01:34.270
+And at every future
+stage, you're
+
+01:01:34.270 --> 01:01:36.710
+just working in embedding space.
+
+01:01:36.710 --> 01:01:40.070
+And so for example, the
+you create this embedding,
+
+01:01:40.070 --> 01:01:41.630
+the simplest way is just--
+
+01:01:41.630 --> 01:01:45.310
+so let's say this embedding
+corresponds to this chunk here.
+
+01:01:45.310 --> 01:01:48.290
+The simplest way is just to
+literally just copy and paste,
+
+01:01:48.290 --> 01:01:50.990
+whatever this embedding
+is on the other side just
+
+01:01:50.990 --> 01:01:54.490
+gets passed through and we
+ignore all the ones in between.
+
+01:01:54.490 --> 01:01:58.593
+Or you can just pull
+over this chunk here.
+
+01:01:58.593 --> 01:02:00.510
+So basically, at the end
+of the encoder stage,
+
+01:02:00.510 --> 01:02:02.963
+you have embeddings
+in some latent space.
+
+01:02:02.963 --> 01:02:05.130
+And then you decide where
+you want the chunks to be.
+
+01:02:05.130 --> 01:02:07.505
+And you're embedding that gets
+passed into the main stage
+
+01:02:07.505 --> 01:02:10.627
+is just, say, pooling
+over that chunk.
+
+01:02:10.627 --> 01:02:12.210
+The second question
+is about, I think,
+
+01:02:12.210 --> 01:02:15.670
+the analogy to brains and so on.
+
+01:02:15.670 --> 01:02:19.790
+To be clear, these analogies
+are very, very coarse.
+
+01:02:19.790 --> 01:02:21.910
+I'm not a neuroscientist.
+
+01:02:21.910 --> 01:02:24.630
+They might yell at me if
+they heard these analogies.
+
+01:02:24.630 --> 01:02:28.060
+But I think, a lot of
+this is just inspiration.
+
+01:02:28.060 --> 01:02:29.900
+I use humans more as
+a proof of concept
+
+01:02:29.900 --> 01:02:33.980
+of what things should be
+possible with intelligence,
+
+01:02:33.980 --> 01:02:36.460
+and what are some really
+high-level ways that these
+
+01:02:36.460 --> 01:02:39.920
+might be achievable.
+
+01:02:39.920 --> 01:02:41.380
+I mean, I will say
+that chunking, I
+
+01:02:41.380 --> 01:02:43.255
+think is a concept that
+was directly inspired
+
+01:02:43.255 --> 01:02:45.680
+by cognitive psychology.
+
+01:02:48.700 --> 01:02:50.460
+Actually, one of the
+things I do think
+
+01:02:50.460 --> 01:02:54.260
+it will be useful for is kind of
+as a more clever way of creating
+
+01:02:54.260 --> 01:02:56.400
+these databases or caches.
+
+01:02:56.400 --> 01:02:59.740
+Because one of the key
+challenges of long context
+
+01:02:59.740 --> 01:03:03.380
+is knowing what things do
+you store or not again.
+
+01:03:03.380 --> 01:03:06.060
+And I think that one of
+the potential, for example,
+
+01:03:06.060 --> 01:03:10.380
+use cases of things like H-Nets
+is exploring their potential
+
+01:03:10.380 --> 01:03:11.520
+for long context modeling.
+
+01:03:11.520 --> 01:03:14.260
+Because what you can
+do is you can imagine
+
+01:03:14.260 --> 01:03:16.220
+if you can keep
+iterating this, then you
+
+01:03:16.220 --> 01:03:18.940
+can basically try to
+compress your context
+
+01:03:18.940 --> 01:03:22.260
+into higher and higher level
+abstractions or memories that
+
+01:03:22.260 --> 01:03:24.800
+are like core summaries
+of this thing.
+
+01:03:24.800 --> 01:03:29.170
+But then allows an inner model
+to attend over much fewer things
+
+01:03:29.170 --> 01:03:31.755
+and in a much kind
+high-level way.
+
+01:03:31.755 --> 01:03:33.130
+So I think that's
+really directly
+
+01:03:33.130 --> 01:03:35.530
+an inspiration for this.
+
+01:03:35.530 --> 01:03:38.550
+I don't have a further progress
+on that particular idea,
+
+01:03:38.550 --> 01:03:40.490
+but I do think it's
+clearly related
+
+01:03:40.490 --> 01:03:45.690
+to the whole philosophy of
+why one might want to do this.
+
+01:03:45.690 --> 01:03:49.530
+I'll read a couple
+questions from online.
+
+01:03:49.530 --> 01:03:52.890
+Someone asked, do SSMs
+outperform transformers
+
+01:03:52.890 --> 01:03:56.350
+in data-constrained or small
+language model settings,
+
+01:03:56.350 --> 01:04:00.530
+or vice versa, given their
+different inductive biases?
+
+01:04:00.530 --> 01:04:01.350
+Good question.
+
+01:04:01.350 --> 01:04:04.770
+I don't the answer to that
+off the top of my head.
+
+01:04:04.770 --> 01:04:06.310
+Yeah, I think for
+language modeling,
+
+01:04:06.310 --> 01:04:08.933
+a lot of people
+care about scaling.
+
+01:04:08.933 --> 01:04:09.850
+I actually don't know.
+
+01:04:09.850 --> 01:04:12.990
+I will say, I found out a little
+tidbit of information yesterday,
+
+01:04:12.990 --> 01:04:16.650
+which is I think OpenAI recently
+released this parameter golf
+
+01:04:16.650 --> 01:04:17.150
+challenge.
+
+01:04:17.150 --> 01:04:18.395
+If you guys have seen it.
+
+01:04:18.395 --> 01:04:20.770
+But people have been trying
+to train really small models.
+
+01:04:20.770 --> 01:04:22.330
+And I saw that
+somebody was trying
+
+01:04:22.330 --> 01:04:24.150
+to train a Mamba 3
+base model there,
+
+01:04:24.150 --> 01:04:27.400
+which was doing decently well.
+
+01:04:27.400 --> 01:04:30.820
+But they had a lot of
+ablations on their submission.
+
+01:04:30.820 --> 01:04:33.440
+And one thing they said is that,
+even though the model works
+
+01:04:33.440 --> 01:04:36.560
+well, at least including
+a little bit of attention
+
+01:04:36.560 --> 01:04:38.680
+was actually pretty
+critical when you
+
+01:04:38.680 --> 01:04:40.680
+have these really tiny models.
+
+01:04:40.680 --> 01:04:44.240
+That's actually something
+I didn't about before.
+
+01:04:44.240 --> 01:04:45.860
+So I don't really
+know the answer,
+
+01:04:45.860 --> 01:04:48.320
+but that's as far as I know.
+
+01:04:48.320 --> 01:04:49.720
+One last one.
+
+01:04:49.720 --> 01:04:51.960
+With transformers, people
+look at attention maps
+
+01:04:51.960 --> 01:04:53.920
+as a form of interpretability.
+
+01:04:53.920 --> 01:04:57.960
+Is there a similar work or proxy
+for SSMs given the information
+
+01:04:57.960 --> 01:04:59.440
+compression?
+
+01:04:59.440 --> 01:05:02.475
+I think this one is harder.
+
+01:05:02.475 --> 01:05:04.100
+I don't think I have
+the slides for it,
+
+01:05:04.100 --> 01:05:07.240
+but there is a correspondence
+between some flavors
+
+01:05:07.240 --> 01:05:10.200
+of SSMs and attention.
+
+01:05:10.200 --> 01:05:13.220
+So I guess as I mentioned
+at the very beginning,
+
+01:05:13.220 --> 01:05:15.460
+there's many names
+for these models.
+
+01:05:15.460 --> 01:05:17.580
+And one of the names
+is linear attention.
+
+01:05:17.580 --> 01:05:19.960
+So there's a much deeper
+connection between SSMs
+
+01:05:19.960 --> 01:05:21.180
+and linear attention.
+
+01:05:21.180 --> 01:05:23.640
+And that's implicitly
+related to attention.
+
+01:05:23.640 --> 01:05:27.150
+But at the end of the day,
+basically one thing you can do
+
+01:05:27.150 --> 01:05:30.950
+is visualize an
+attention-like map.
+
+01:05:30.950 --> 01:05:32.530
+It's not literally
+attention matrix,
+
+01:05:32.530 --> 01:05:36.390
+but basically you can visualize
+the dependence on every token
+
+01:05:36.390 --> 01:05:39.890
+with every other token in
+a similar way to attention.
+
+01:05:43.503 --> 01:05:45.170
+I mean, it's basically
+an attention map,
+
+01:05:45.170 --> 01:05:47.833
+and you can do the
+same comparisons.
+
+01:05:47.833 --> 01:05:49.750
+And it's actually pretty
+revealing of the type
+
+01:05:49.750 --> 01:05:51.170
+of behavior that it can do.
+
+01:05:51.170 --> 01:05:54.690
+So for example, that
+visualization, for example,
+
+01:05:54.690 --> 01:05:58.030
+shows that attention
+sometimes can really
+
+01:05:58.030 --> 01:06:00.230
+act like hard attention
+and only pay attention
+
+01:06:00.230 --> 01:06:03.470
+to specific tokens, while
+SSMs generally always
+
+01:06:03.470 --> 01:06:05.310
+kind of squish
+everything together
+
+01:06:05.310 --> 01:06:08.230
+and it can be pretty diffuse.
+
+01:06:08.230 --> 01:06:12.950
+This is probably not the only
+visualization that's relevant.
+
+01:06:12.950 --> 01:06:16.190
+But yeah, I think a lot of
+this is ongoing work, too,
+
+01:06:16.190 --> 01:06:17.710
+do more mechanistic
+interpretability
+
+01:06:17.710 --> 01:06:19.990
+of these models.
+
+01:06:19.990 --> 01:06:20.490
+OK, great.
+
+01:06:20.490 --> 01:06:23.080
+Let's give another round of
+applause for our speaker,
+
+01:06:23.080 --> 01:06:25.026
+Albert.
+
+01:06:25.026 --> 01:06:28.407
+[APPLAUSE]
+
+01:06:29.380 --> 01:06:36.020
+All right, so now, we have
+some brief information
+
+01:06:36.020 --> 01:06:40.058
+from some of our sponsors,
+in particular MongoDB.
+
+01:06:40.058 --> 01:06:41.600
+Thank you all so
+much for being here.
+
+01:06:41.600 --> 01:06:44.420
+I promise I'll be very quick,
+about 10 minutes or so.
+
+01:06:44.420 --> 01:06:45.560
+But hi, everyone.
+
+01:06:45.560 --> 01:06:47.400
+My name is Anaiya Raisinghani.
+
+01:06:47.400 --> 01:06:50.860
+I'm a senior technical
+evangelist at MongoDB.
+
+01:06:50.860 --> 01:06:54.980
+And we are so excited to be
+sponsoring CS25 this quarter.
+
+01:06:54.980 --> 01:06:58.460
+And I'm here right now because
+there's a genuinely interesting
+
+01:06:58.460 --> 01:07:01.200
+engineering problem that
+I think is worth about 10
+
+01:07:01.200 --> 01:07:02.580
+minutes of your time.
+
+01:07:02.580 --> 01:07:06.060
+And because MongoDB happens to
+be a really great way of solving
+
+01:07:06.060 --> 01:07:06.872
+it.
+
+01:07:06.872 --> 01:07:08.580
+So you're all in this
+room because you're
+
+01:07:08.580 --> 01:07:12.000
+thinking about transformers,
+about multimodal models,
+
+01:07:12.000 --> 01:07:14.460
+and about what comes next in AI.
+
+01:07:14.460 --> 01:07:17.740
+Here's what I want to help
+add to that conversation.
+
+01:07:17.740 --> 01:07:21.050
+The latest multimodal models
+have gotten really good
+
+01:07:21.050 --> 01:07:24.930
+at understanding a document
+the way a human being does.
+
+01:07:24.930 --> 01:07:28.090
+The question now is whether
+your data infrastructure
+
+01:07:28.090 --> 01:07:30.113
+is accurately keeping up.
+
+01:07:30.113 --> 01:07:31.530
+And today, I want
+to show you what
+
+01:07:31.530 --> 01:07:34.730
+it looks like when the
+model and the database
+
+01:07:34.730 --> 01:07:37.130
+are actually designed
+to work together.
+
+01:07:37.130 --> 01:07:39.610
+So I'm going to start off
+with a concrete scenario,
+
+01:07:39.610 --> 01:07:43.190
+walk you through why the
+standard approach breaks down.
+
+01:07:43.190 --> 01:07:45.690
+And then show you what a better
+architecture actually looks
+
+01:07:45.690 --> 01:07:47.210
+like end to end.
+
+01:07:47.210 --> 01:07:49.930
+So let's get into it.
+
+01:07:49.930 --> 01:07:52.290
+So first off, let's
+set the scene.
+
+01:07:52.290 --> 01:07:54.730
+We're going to be talking
+about an insurance company.
+
+01:07:54.730 --> 01:07:58.090
+Not the sexiest example,
+but a really good example.
+
+01:07:58.090 --> 01:08:01.570
+So let's say that your insurance
+company gets about 10,000 claims
+
+01:08:01.570 --> 01:08:02.290
+a day.
+
+01:08:02.290 --> 01:08:04.970
+And each one of these
+claims is a PDF.
+
+01:08:04.970 --> 01:08:08.810
+And these claims include
+damage photos, tables of repair
+
+01:08:08.810 --> 01:08:10.890
+estimates, signatures.
+
+01:08:10.890 --> 01:08:15.170
+And the key here is that no
+two claims look the same.
+
+01:08:15.170 --> 01:08:16.850
+This is actually
+a real dashboard
+
+01:08:16.850 --> 01:08:19.303
+that was built by MongoDB.
+
+01:08:19.303 --> 01:08:20.720
+And what you're
+seeing on the left
+
+01:08:20.720 --> 01:08:23.620
+is an active claim, which
+is a smashed windshield.
+
+01:08:23.620 --> 01:08:25.479
+On the right, claims like this.
+
+01:08:25.479 --> 01:08:28.520
+Five similar claims are
+pulled back instantly
+
+01:08:28.520 --> 01:08:31.880
+with loss amounts, dates,
+and notes attached.
+
+01:08:31.880 --> 01:08:35.240
+And the adjuster simply asked,
+"show me crashes like this one,"
+
+01:08:35.240 --> 01:08:37.920
+and the system knew
+exactly what to return.
+
+01:08:37.920 --> 01:08:39.779
+So the question is,
+how do you build that?
+
+01:08:39.779 --> 01:08:41.800
+And how do you build
+that with retrieving back
+
+01:08:41.800 --> 01:08:43.234
+accurate information?
+
+01:08:43.234 --> 01:08:45.359
+Because the hard part, as
+most of us probably know,
+
+01:08:45.359 --> 01:08:48.680
+isn't the search, it's
+what happens to those PDFs
+
+01:08:48.680 --> 01:08:52.120
+before retrieval even starts.
+
+01:08:52.120 --> 01:08:56.200
+And until recently, the standard
+approach looked a lot like this.
+
+01:08:56.200 --> 01:09:00.760
+You would OCR the document and
+extract whatever text you could,
+
+01:09:00.760 --> 01:09:04.859
+chunk it into pieces, pass those
+chunks to an embedding model,
+
+01:09:04.859 --> 01:09:07.600
+store the vectors, and
+then retrieve a query.
+
+01:09:07.600 --> 01:09:12.080
+And this works completely fine
+for very clean text documents.
+
+01:09:12.080 --> 01:09:13.859
+But how many
+documents out there,
+
+01:09:13.859 --> 01:09:17.089
+especially when you're dealing
+with insurance claims, health
+
+01:09:17.089 --> 01:09:21.830
+care, law, how many of those
+are truly, perfectly clean text?
+
+01:09:21.830 --> 01:09:26.029
+A lot of context can get lost
+even before you start searching.
+
+01:09:26.029 --> 01:09:28.510
+And the moment you
+OCR a damaged photo,
+
+01:09:28.510 --> 01:09:31.130
+the tables in the documents,
+the handwritten notes,
+
+01:09:31.130 --> 01:09:33.510
+so much important
+information, that
+
+01:09:33.510 --> 01:09:36.670
+can completely alter the whole
+trajectory of your claim.
+
+01:09:36.670 --> 01:09:38.590
+It can be accently omitted.
+
+01:09:38.590 --> 01:09:40.189
+And in situations
+like these, you
+
+01:09:40.189 --> 01:09:44.710
+don't want any crucial
+information to be left out.
+
+01:09:44.710 --> 01:09:47.710
+So Vision RAG makes
+one fundamental change.
+
+01:09:47.710 --> 01:09:50.550
+Instead of parsing the
+document into text first,
+
+01:09:50.550 --> 01:09:53.229
+you actually embed
+the entire page itself
+
+01:09:53.229 --> 01:09:55.870
+as a single multimodal vector.
+
+01:09:55.870 --> 01:09:58.390
+So let's chat about the
+new pipeline a little bit.
+
+01:09:58.390 --> 01:10:00.770
+You have text and image
+documents that come in.
+
+01:10:00.770 --> 01:10:02.830
+They go straight to a
+multi-modal embedding
+
+01:10:02.830 --> 01:10:04.990
+model with no OCR step.
+
+01:10:04.990 --> 01:10:08.390
+The references and embeddings
+go straight into MongoDB Atlas
+
+01:10:08.390 --> 01:10:09.790
+as your vector store.
+
+01:10:09.790 --> 01:10:11.870
+And then at query
+time, the same model
+
+01:10:11.870 --> 01:10:15.870
+is able to embed the query and
+search, finds the closest pages.
+
+01:10:15.870 --> 01:10:19.300
+And a vision capable LM
+reads the actual images
+
+01:10:19.300 --> 01:10:22.180
+to help generate your answer.
+
+01:10:22.180 --> 01:10:23.260
+So what makes this work?
+
+01:10:23.260 --> 01:10:26.280
+And have any of you in the
+audience heard of Voyage AI.
+
+01:10:26.280 --> 01:10:30.350
+I know Tengyu is a professor
+here, so maybe some of you have.
+
+01:10:30.350 --> 01:10:31.100
+No worries if not.
+
+01:10:31.100 --> 01:10:33.300
+You can look him up after.
+
+01:10:33.300 --> 01:10:34.240
+So how does this work?
+
+01:10:34.240 --> 01:10:36.020
+But to ensure your
+important data
+
+01:10:36.020 --> 01:10:38.580
+isn't getting omitted
+in the process,
+
+01:10:38.580 --> 01:10:41.260
+it all really comes down
+to the embedding model.
+
+01:10:41.260 --> 01:10:44.660
+So with earlier
+multimodal models
+
+01:10:44.660 --> 01:10:46.880
+which were CLIP-based
+architectures,
+
+01:10:46.880 --> 01:10:49.700
+they ran separate encoders
+for text and images.
+
+01:10:49.700 --> 01:10:52.960
+So vision trunk on one
+side, text on the other.
+
+01:10:52.960 --> 01:10:54.940
+And then they were
+just routed together.
+
+01:10:54.940 --> 01:10:58.100
+The problem is that those
+outputs are very independently
+
+01:10:58.100 --> 01:10:59.100
+biased.
+
+01:10:59.100 --> 01:11:01.380
+Your text query and
+your image query
+
+01:11:01.380 --> 01:11:03.600
+aren't really in the
+same vector space,
+
+01:11:03.600 --> 01:11:07.780
+which means cross-modal
+retrieval completely unreliable.
+
+01:11:07.780 --> 01:11:12.760
+The Voyage multimodal 3.5 model
+uses a single encoder for both.
+
+01:11:12.760 --> 01:11:16.330
+So text and visual inputs
+go in together and come out
+
+01:11:16.330 --> 01:11:18.650
+in one unified vector space.
+
+01:11:18.650 --> 01:11:21.230
+This is what really
+closes that modality gap.
+
+01:11:21.230 --> 01:11:25.050
+So a text query like "smashed
+windshield from rear impact,"
+
+01:11:25.050 --> 01:11:28.770
+and an image of exactly
+that damage are now directly
+
+01:11:28.770 --> 01:11:30.450
+comparable one to one.
+
+01:11:30.450 --> 01:11:33.450
+It also supports
+interleaved text and images.
+
+01:11:33.450 --> 01:11:37.890
+So for a PDF page where a table
+might sit next to a paragraph,
+
+01:11:37.890 --> 01:11:39.310
+they both get captured together.
+
+01:11:39.310 --> 01:11:43.330
+Whereas before, they might
+get routed separately.
+
+01:11:43.330 --> 01:11:46.330
+So now let's go back to
+our insurance example
+
+01:11:46.330 --> 01:11:50.130
+using an image example
+and the actual data flow.
+
+01:11:50.130 --> 01:11:52.470
+So a claims adjuster
+uploads a photo.
+
+01:11:52.470 --> 01:11:54.950
+The query image, which
+is a cracked windshield.
+
+01:11:54.950 --> 01:11:58.030
+That image goes to the embedder,
+which produces a vector.
+
+01:11:58.030 --> 01:12:00.250
+And that vector goes
+into MongoDB Atlas,
+
+01:12:00.250 --> 01:12:02.890
+where it's compared against
+your entire vectorized claims
+
+01:12:02.890 --> 01:12:05.130
+collection using vector search.
+
+01:12:05.130 --> 01:12:06.630
+And what comes back from that?
+
+01:12:06.630 --> 01:12:10.570
+The top five most
+visually similar
+
+01:12:10.570 --> 01:12:12.327
+claims from your history.
+
+01:12:12.327 --> 01:12:14.160
+This means that you're
+not dependent on just
+
+01:12:14.160 --> 01:12:17.360
+keyword matches, but
+actual visual similarity.
+
+01:12:17.360 --> 01:12:21.020
+And the system found these
+because of the damage patterns,
+
+01:12:21.020 --> 01:12:23.360
+the angle, the type of impact.
+
+01:12:23.360 --> 01:12:25.720
+All of these live
+inside of the embedding.
+
+01:12:25.720 --> 01:12:28.640
+And because MongoDB stores the
+vector in the same document
+
+01:12:28.640 --> 01:12:31.322
+as everything else, because
+we are a vector database
+
+01:12:31.322 --> 01:12:33.280
+and it's storing that
+vector next to your claim
+
+01:12:33.280 --> 01:12:35.760
+ID, the loss amount, the
+adjuster notes, the repair
+
+01:12:35.760 --> 01:12:39.660
+history, you get all of that
+context back in one query,
+
+01:12:39.660 --> 01:12:43.502
+not in a separate system,
+but the exact same record.
+
+01:12:43.502 --> 01:12:45.960
+So let's zoom out a little bit
+and look at the architecture
+
+01:12:45.960 --> 01:12:46.860
+in question.
+
+01:12:46.860 --> 01:12:50.560
+On the left side, we have what
+most RAG stacks look like today.
+
+01:12:50.560 --> 01:12:52.960
+You have your operational
+database for your application
+
+01:12:52.960 --> 01:12:56.760
+data, and a completely separate
+vector database for retrieval.
+
+01:12:56.760 --> 01:12:59.360
+You have embedding models
+running in between.
+
+01:12:59.360 --> 01:13:00.780
+A reranker layer.
+
+01:13:00.780 --> 01:13:02.420
+So many moving pieces.
+
+01:13:02.420 --> 01:13:04.460
+And now let's take a
+look at the right side.
+
+01:13:04.460 --> 01:13:06.520
+MongoDB Atlas is
+a single platform
+
+01:13:06.520 --> 01:13:10.080
+with full text search, vector
+search, embedding models,
+
+01:13:10.080 --> 01:13:12.770
+rerankers, everything
+all in one.
+
+01:13:12.770 --> 01:13:15.350
+So this means that your
+multimodal data, your vectors
+
+01:13:15.350 --> 01:13:16.810
+are all in the same document.
+
+01:13:16.810 --> 01:13:19.910
+And for those 10,000
+insurance claims,
+
+01:13:19.910 --> 01:13:22.370
+your vectors actually live
+right next to your claim notes
+
+01:13:22.370 --> 01:13:24.870
+and your other source data,
+which means that there's nothing
+
+01:13:24.870 --> 01:13:28.030
+that you need to sync
+or glue together.
+
+01:13:28.030 --> 01:13:32.110
+And this leaves us with a truly
+genuine architectural shift.
+
+01:13:32.110 --> 01:13:34.875
+It changes how you handle
+your unstructured data, which
+
+01:13:34.875 --> 01:13:36.750
+was the old pipeline
+that started leaving out
+
+01:13:36.750 --> 01:13:39.390
+very crucial information.
+
+01:13:39.390 --> 01:13:41.390
+It starts to think
+about, well, can
+
+01:13:41.390 --> 01:13:44.770
+change how you think about the
+modality gap in your retrieval.
+
+01:13:44.770 --> 01:13:48.010
+So once again, you have one
+encoder, one vector space,
+
+01:13:48.010 --> 01:13:50.750
+and your text queries
+and your visual documents
+
+01:13:50.750 --> 01:13:52.310
+are directly comparable.
+
+01:13:52.310 --> 01:13:55.550
+And then it also changes how
+you design the database layer
+
+01:13:55.550 --> 01:13:57.810
+beneath your AI applications.
+
+01:13:57.810 --> 01:14:00.270
+So when your operational
+store and your vector store
+
+01:14:00.270 --> 01:14:04.030
+are the exact same system, you
+eliminate an entire category
+
+01:14:04.030 --> 01:14:06.310
+of infrastructure complexity.
+
+01:14:06.310 --> 01:14:08.870
+And just to sum it all
+up, when your database
+
+01:14:08.870 --> 01:14:10.860
+thinks and documents
+the same way
+
+01:14:10.860 --> 01:14:13.060
+that your models
+think in tokens,
+
+01:14:13.060 --> 01:14:15.220
+you stop fighting
+your infrastructure
+
+01:14:15.220 --> 01:14:17.500
+and you start to get results.
+
+01:14:17.500 --> 01:14:20.828
+For a deeper dive into vision
+RAG and also video RAG,
+
+01:14:20.828 --> 01:14:22.620
+please check out the
+article that this talk
+
+01:14:22.620 --> 01:14:26.460
+is based from by my fantastic
+coworker, Thibaut Gourdel, who's
+
+01:14:26.460 --> 01:14:28.840
+a senior technical
+PM for MongoDB.
+
+01:14:28.840 --> 01:14:31.540
+And I've linked the
+article right up here.
+
+01:14:31.540 --> 01:14:34.680
+And I'm going to quickly hand
+it over to my other coworker,
+
+01:14:34.680 --> 01:14:37.260
+Patrick, who's just going to
+sum up MongoDB for Startups
+
+01:14:37.260 --> 01:14:37.880
+for you all.
+
+01:14:37.880 --> 01:14:41.040
+And then also talk a little bit
+about the Frontier Lunch Club.
+
+01:14:41.040 --> 01:14:43.388
+But thank you so
+much for having me.
+
+01:14:43.388 --> 01:14:45.180
+[APPLAUSE]
+
+01:14:45.180 --> 01:14:46.020
+Hello.
+
+01:14:46.020 --> 01:14:47.258
+Thank you so much, Anaiya.
+
+01:14:47.258 --> 01:14:47.800
+Hi, everyone.
+
+01:14:47.800 --> 01:14:51.060
+I just wanted a quick
+second to introduce myself.
+
+01:14:51.060 --> 01:14:52.680
+My name is Patrick Steyn.
+
+01:14:52.680 --> 01:14:55.860
+I'm on our ventures
+team at MongoDB.
+
+01:14:55.860 --> 01:14:58.260
+Just want to quickly say
+thank you for having us
+
+01:14:58.260 --> 01:15:00.700
+here today, getting
+to talk with everyone,
+
+01:15:00.700 --> 01:15:05.580
+and also introduce our
+MongoDB for Startups program.
+
+01:15:05.580 --> 01:15:08.220
+Being at Stanford gives a really
+high signal that a lot of you
+
+01:15:08.220 --> 01:15:10.230
+are interested in
+being future founders.
+
+01:15:10.230 --> 01:15:13.890
+I feel like on Zoom and in this
+class, we got some here today.
+
+01:15:13.890 --> 01:15:18.370
+So I just wanted to offer all
+of you being able to sign up
+
+01:15:18.370 --> 01:15:19.870
+to our startup program.
+
+01:15:19.870 --> 01:15:22.610
+This will allow you to
+access Atlas credits,
+
+01:15:22.610 --> 01:15:26.930
+special one-on-one technical
+expertise and advice, as well
+
+01:15:26.930 --> 01:15:29.790
+as some go-to-market
+opportunities.
+
+01:15:29.790 --> 01:15:31.310
+We host a lot of
+different events.
+
+01:15:31.310 --> 01:15:34.170
+I feel like being a founder,
+having a great product
+
+01:15:34.170 --> 01:15:35.270
+is half the battle.
+
+01:15:35.270 --> 01:15:38.410
+So building relationships
+and getting to utilize that
+
+01:15:38.410 --> 01:15:40.810
+is something we would
+love to help you with.
+
+01:15:40.810 --> 01:15:43.210
+So yeah, feel free to
+hit me up on LinkedIn
+
+01:15:43.210 --> 01:15:45.970
+if you guys have any ideas or
+I can help connect you at all.
+
+01:15:45.970 --> 01:15:49.850
+And then secondly, I believe
+you guys have seen this before.
+
+01:15:49.850 --> 01:15:52.290
+Our Frontier Lunch
+Club that we are
+
+01:15:52.290 --> 01:15:54.263
+going to be
+sponsoring this year,
+
+01:15:54.263 --> 01:15:55.930
+it's got some really
+great opportunities
+
+01:15:55.930 --> 01:15:57.750
+partnered with the AGI house.
+
+01:15:57.750 --> 01:16:00.930
+This allows you to connect
+into their recruiting pipeline,
+
+01:16:00.930 --> 01:16:03.070
+help you get a leg up
+on future opportunities,
+
+01:16:03.070 --> 01:16:06.170
+you're looking to connect
+with different AI researchers
+
+01:16:06.170 --> 01:16:09.280
+and research institutions.
+
+01:16:09.280 --> 01:16:11.860
+Also, we are going to be
+hosting a couple events.
+
+01:16:11.860 --> 01:16:14.440
+One is going to be a
+dinner on the 30th.
+
+01:16:14.440 --> 01:16:15.940
+If you'd like to
+scan the QR code,
+
+01:16:15.940 --> 01:16:19.160
+it just takes 30 seconds
+to access that WhatsApp.
+
+01:16:19.160 --> 01:16:20.920
+And then also in
+the back, Alexa is
+
+01:16:20.920 --> 01:16:25.160
+going to be helping out
+passing out some pizza.
+
+01:16:25.160 --> 01:16:28.280
+She's also a great
+connection at the AGI house.
+
+01:16:28.280 --> 01:16:30.960
+They have a ton of different
+event opportunities
+
+01:16:30.960 --> 01:16:33.520
+as well as connections
+to pretty much everyone
+
+01:16:33.520 --> 01:16:35.800
+you would need to know
+be successful in the Bay.
+
+01:16:35.800 --> 01:16:38.520
+And then lastly, we're going
+to be hosting an event later
+
+01:16:38.520 --> 01:16:43.240
+in October where we're going to
+be doing a project competition
+
+01:16:43.240 --> 01:16:47.620
+ran on MongoDB, where you
+could potentially win $1,000.
+
+01:16:47.620 --> 01:16:51.280
+So yeah, just wanted to
+introduce myself and tell you
+
+01:16:51.280 --> 01:16:53.140
+a little bit about two things.
+
+01:16:53.140 --> 01:16:54.940
+But thank you so
+much for having us.
+
+01:16:54.940 --> 01:16:57.620
+And yeah thanks again.
+
+01:16:57.620 --> 01:17:00.970
+[APPLAUSE]
+

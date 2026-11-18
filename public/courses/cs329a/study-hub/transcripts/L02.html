@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L02 文字稿 · CS329A 学习中心</title>
+<style>
+:root{
+  --bg:#FAF8F5; --bg2:#F1EEE8; --card:#FFFFFF; --ink:#211D19; --ink2:#6B6459;
+  --line:#E3DDD2; --accent:#8C1515; --accent2:#B33A3A; --ok:#2E6B3F;
+  --code-bg:#F4F1EA; --shadow:0 1px 3px rgba(33,29,25,.08),0 8px 24px rgba(33,29,25,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#161311; --bg2:#1E1A17; --card:#211D19; --ink:#EDE7DE; --ink2:#9A9184;
+  --line:#332D27; --accent:#D06A6A; --accent2:#C75B5B; --ok:#7FBF8E;
+  --code-bg:#28231E; --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+}}
+:root[data-theme=dark]{
+  --bg:#161311; --bg2:#1E1A17; --card:#211D19; --ink:#EDE7DE; --ink2:#9A9184;
+  --line:#332D27; --accent:#D06A6A; --accent2:#C75B5B; --ok:#7FBF8E;
+  --code-bg:#28231E; --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.75;font-size:16px}
+a{color:var(--accent)}
+::selection{background:color-mix(in srgb,var(--accent) 20%,transparent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:5px}
+*{scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--ink2)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;
+  padding:14px 28px;background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .brand{font-weight:700;font-size:17px;letter-spacing:.02em}
+.topbar .brand .course{color:var(--accent)}
+.topbar .sub{font-size:12.5px;color:var(--ink2)}
+.topbar .spacer{flex:1}
+.progress-pill{font-size:12.5px;color:var(--ink2);border:1px solid var(--line);
+  border-radius:99px;padding:4px 12px;background:var(--card);font-variant-numeric:tabular-nums}
+.progress-pill b{color:var(--accent)}
+.theme-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;
+  display:inline-flex;align-items:center;gap:6px}
+.theme-btn svg{display:block}
+.theme-btn svg[hidden]{display:none}
+.badge{font-size:12.5px;border:1px solid var(--line);border-radius:99px;
+  padding:3px 11px;color:var(--ink2);display:inline-flex;align-items:center;gap:5px}
+.badge svg{flex-shrink:0}
+.layout{display:grid;grid-template-columns:var(--side-w,264px) 1fr;max-width:calc(1280px + var(--side-w,264px) - 264px);margin:0 auto}
+.side-handle{position:absolute;top:0;right:-3px;width:7px;height:100%;cursor:col-resize;z-index:5}
+.side-handle:hover,.side-handle.dragging{background:linear-gradient(90deg,transparent,var(--accent))}
+.nav-toc{padding:2px 0 8px 10px;margin:2px 0 6px 16px;border-left:2px solid var(--line)}
+.nav-sub{display:block;padding:4px 8px;border-radius:7px;font-size:12px;color:var(--ink2);text-decoration:none;line-height:1.45}
+.nav-sub:hover{background:var(--bg2);color:var(--accent)}
+.nav-sub .tno{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:10px;margin-right:5px;color:var(--accent)}
+@media(max-width:880px){.nav-toc{display:none}}
+.sidebar{position:sticky;top:63px;height:calc(100vh - 63px);overflow-y:auto;
+  border-right:1px solid var(--line);padding:22px 14px;background:var(--bg2)}
+.sidebar .group-label{font-size:11px;letter-spacing:.14em;color:var(--ink2);
+  text-transform:uppercase;margin:0 10px 8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;
+  cursor:pointer;color:var(--ink);text-decoration:none;font-size:13.8px}
+.nav-item:hover{background:var(--card)}
+.nav-item.active{background:var(--card);box-shadow:var(--shadow);color:var(--accent);font-weight:700}
+.nav-item .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex-shrink:0}
+.nav-item .dot.ready{background:var(--ok)}
+.nav-item .dot.done{background:var(--accent)}
+.nav-item .num{font-size:11px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.main{padding:34px 44px 80px;min-width:0}
+.view{display:none}.view.active{display:block;animation:fade .28s ease-out}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* overview */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:44px;align-items:center}
+.hero h1{font-size:30px;line-height:1.3;letter-spacing:-.015em}
+.hero .lede{color:var(--ink2);margin-top:10px;max-width:62ch}
+.hero .meta{display:flex;gap:18px;margin-top:14px;font-size:13px;color:var(--ink2);flex-wrap:wrap}
+.hero .meta b{color:var(--ink)}
+.hero-fig{--hairline-plate:transparent;--hairline-stroke:1.1}
+.hero-fig svg{max-width:100%}
+@media(max-width:1180px){.hero{grid-template-columns:minmax(0,1fr) 250px;gap:30px}}
+@media(max-width:880px){.hero{grid-template-columns:1fr}.hero-fig{display:none}}
+/* motion singles */
+.glyph-tray{position:relative;height:88px;margin-top:30px;cursor:crosshair;
+  border-bottom:1px solid var(--line)}
+.glyph-tray .tray-hint{position:absolute;right:2px;bottom:6px;font-size:11px;
+  color:var(--ink2);opacity:.75;pointer-events:none;letter-spacing:.02em}
+.gravity-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;touch-action:none;user-select:none;-webkit-user-select:none}
+.gravity-layer .gl{position:absolute;top:0;left:0;font-weight:600;line-height:1;color:var(--accent);opacity:.9;
+  transition:opacity .3s ease;will-change:transform;backface-visibility:hidden}
+.gravity-layer .gl>span{display:inline-block;transform-origin:bottom center}
+.brand{display:flex;align-items:center;gap:9px}
+.fluid-orb{width:26px;height:26px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  box-shadow:0 0 0 1px var(--line);opacity:.95}
+.fluid-orb canvas{width:100%;height:100%;display:block}
+.lec-card{will-change:transform}
+.lec-card.tilting{transition:none}
+.yt-frame{position:relative;aspect-ratio:16/9;background:var(--code-bg);border:1px solid var(--line);
+  border-radius:13px;overflow:hidden;margin:18px 0 4px;max-width:860px}
+.yt-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#000}
+.yt-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+/* share build: thumbnail card opening YouTube (embeds are blocked per-video) */
+.yt-card{display:block;text-decoration:none;overflow:hidden;
+  background:linear-gradient(135deg,#3a332c,#211d19)}
+.yt-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+.yt-card .yt-card-hint{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 12px;color:#fff;
+  font-size:13px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.7);
+  background:linear-gradient(transparent,rgba(0,0,0,.65))}
+.yt-card:hover img{opacity:1}
+.yt-missing{display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:13.5px;color:var(--ink2)}
+.yt-missing a{color:var(--accent)}
+.audio-bar{display:flex;align-items:center;gap:10px;margin:10px 0 4px;padding:10px 14px;
+  background:var(--card);border:1px solid var(--line);border-radius:11px;font-size:13px;color:var(--ink2)}
+.audio-bar audio{flex:1;height:34px;min-width:0}
+@media (max-width:720px){.audio-bar{flex-direction:column;align-items:stretch}}
+.yt-frame.float-panel{position:fixed;right:22px;bottom:22px;width:min(400px,44vw);max-width:860px;
+  margin:0;z-index:70;box-shadow:0 14px 44px rgba(0,0,0,.4);animation:floatIn .28s cubic-bezier(.215,.61,.355,1)}
+@keyframes floatIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.float-close{display:none;position:absolute;top:8px;right:8px;z-index:71;width:27px;height:27px;
+  border-radius:50%;border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.55);color:#fff;
+  align-items:center;justify-content:center;font-size:15px;line-height:1;cursor:pointer;padding:0}
+.float-close:hover{background:rgba(0,0,0,.78)}
+.float-panel .float-close{display:flex}
+@media (max-width:720px){.yt-frame.float-panel{left:12px;right:12px;bottom:12px;width:auto}}
+/* transcript pages */
+.crumb{color:var(--accent);text-decoration:none;font-size:14px}
+.crumb:hover{text-decoration:underline;text-underline-offset:3px}
+.tmain{max-width:860px;margin:0 auto;padding:38px 28px 90px}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-top:26px}
+.lec-card{display:block;background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:16px 17px;color:var(--ink);text-decoration:none;cursor:pointer;
+  transition:transform .15s ease-out,box-shadow .15s ease-out;position:relative}
+.lec-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.lec-card .no{font-size:11px;letter-spacing:.12em;color:var(--accent);font-weight:700}
+.lec-card h3{font-size:15.5px;margin:5px 0 6px;line-height:1.45}
+.lec-card p{font-size:12.8px;color:var(--ink2);line-height:1.55}
+.lec-card .who{margin-top:10px;font-size:12px;color:var(--ink2)}
+.lec-card .who b{color:var(--ink);font-weight:600}
+.lec-card .status{position:absolute;top:14px;right:15px;font-size:11px;color:var(--ok);
+  display:inline-flex;align-items:center;gap:4px}
+/* lecture content */
+.lecture h1{font-size:26px;line-height:1.35}
+.lecture .lecmeta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  margin:10px 0 4px;font-size:13px;color:var(--ink2)}
+.yt-link{font-size:12.5px;border:1px solid var(--line);border-radius:99px;
+  padding:3px 11px;text-decoration:none;color:var(--ink2)}
+.yt-link:hover{color:var(--accent);border-color:var(--accent)}
+.markdown{margin-top:22px;font-size:15.5px}
+.markdown h1,.markdown h2,.markdown h3{letter-spacing:-.015em}
+.markdown h2{font-size:20px;margin:34px 0 12px;padding-left:12px;
+  border-left:3px solid var(--accent);line-height:1.4}
+.markdown h3{font-size:16.5px;margin:26px 0 10px}
+.markdown p{margin:10px 0;max-width:72ch}
+.markdown a{text-underline-offset:3px;text-decoration-thickness:1px}
+.markdown ul,.markdown ol{margin:10px 0 10px 1.4em}
+.markdown li{margin:4px 0}
+.markdown blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--line);
+  background:var(--bg2);border-radius:0 9px 9px 0;color:var(--ink2);font-size:14.5px}
+.markdown code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:.86em;
+  background:var(--code-bg);padding:1.5px 6px;border-radius:5px}
+.markdown pre{background:var(--code-bg);border:1px solid var(--line);border-radius:11px;
+  padding:15px 17px;overflow-x:auto;margin:14px 0;line-height:1.6}
+.markdown pre code{background:none;padding:0;font-size:13px}
+.markdown table{border-collapse:collapse;margin:16px 0;font-size:14px;max-width:100%;
+  display:block;overflow-x:auto}
+.markdown th{background:var(--bg2);text-align:left;font-weight:700}
+.markdown th,.markdown td{border:1px solid var(--line);padding:8px 13px;vertical-align:top}
+.markdown tr:nth-child(even) td{background:color-mix(in srgb,var(--bg2) 55%,transparent)}
+.markdown details{background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:0;margin:12px 0;max-width:76ch}
+.markdown details summary{cursor:pointer;padding:11px 16px;font-weight:600;
+  font-size:14.5px;list-style-position:inside}
+.markdown details summary::marker{color:var(--accent)}
+.markdown details[open] summary{border-bottom:1px dashed var(--line);color:var(--accent)}
+.markdown details div{padding:11px 16px;font-size:14.5px}
+.markdown hr{border:none;border-top:1px solid var(--line);margin:30px 0}
+.markdown strong{font-weight:700}
+.papers{margin-top:34px;padding:18px 20px;background:var(--card);border:1px solid var(--line);
+  border-radius:13px;max-width:860px}
+.papers h2{margin:0 0 10px;font-size:15px;letter-spacing:.04em;color:var(--ink2)}
+.papers ul{list-style:none;margin:0;padding:0}
+.papers li{margin:6px 0;font-size:14px}
+.papers a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.papers a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.papers-more{margin:12px 0 0;font-size:12.5px;color:var(--ink2)}
+.markdown li>textarea.myans{display:block;width:100%;min-height:54px;margin:9px 0 2px;padding:8px 11px;
+  font:inherit;font-size:13.5px;line-height:1.6;color:var(--ink);background:var(--card);
+  border:1px solid var(--line);border-radius:9px;resize:vertical;box-sizing:border-box}
+.markdown li>textarea.myans::placeholder{color:var(--ink2);opacity:.75}
+.markdown li>textarea.myans:focus{outline:none;border-color:var(--accent)}
+.markdown li>details.quiz.answered summary{color:var(--ok);border-color:var(--ok)}
+.markdown li>.grade-row{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
+.grade-btn{font-size:12px;padding:3px 10px}
+.grade-btn:disabled{opacity:.55;cursor:default}
+.markdown li>.grade-out{display:none;margin:4px 0 2px;padding:8px 12px;font-size:13px;line-height:1.7;
+  background:var(--bg2);border-left:3px solid var(--line);border-radius:0 9px 9px 0;color:var(--ink)}
+.markdown li>.grade-out.show{display:block}
+.markdown li>.grade-out.v-ok{border-left-color:var(--ok)}
+.markdown li>.grade-out.v-part{border-left-color:#C08A2D}
+.markdown li>.grade-out.v-miss{border-left-color:var(--accent2)}
+.markdown li>.grade-out .gd-verdict{font-weight:700;margin-right:6px}
+.my-recap{margin:18px 0 6px}
+.my-recap>summary{cursor:pointer;font-weight:700;color:var(--accent);font-size:14.5px}
+.my-recap>.my-recap-body{margin-top:8px;padding:12px 16px;background:var(--bg2);border-radius:11px;font-size:13.5px;line-height:1.75}
+.my-recap .mr-item{margin:10px 0;padding-left:10px;border-left:2px solid var(--line)}
+.my-recap .mr-q{font-weight:700}
+.my-recap .mr-ans{color:var(--ink2)}
+.modal-mask{position:fixed;inset:0;background:rgba(20,16,12,.45);display:none;align-items:center;justify-content:center;z-index:50}
+.modal-mask.show{display:flex}
+.modal{width:min(460px,92vw);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.modal h3{margin:0 0 6px;font-size:16px}
+.modal p.hint{font-size:12.5px;color:var(--ink2);margin:0 0 14px;line-height:1.6}
+.modal label{display:block;font-size:12.5px;color:var(--ink2);margin:10px 0 4px}
+.modal input{width:100%;box-sizing:border-box;padding:7px 10px;font:inherit;font-size:13px;color:var(--ink);
+  background:var(--bg);border:1px solid var(--line);border-radius:8px}
+.modal input:focus{outline:none;border-color:var(--accent)}
+.modal .modal-btns{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+.markdown li>details.quiz{margin:7px 0 2px;background:none;border:none;padding:0}
+.markdown li>details.quiz summary{display:inline-block;padding:3px 12px;font-size:12.5px;
+  font-weight:600;color:var(--accent);background:var(--bg2);border:1px solid var(--line);
+  border-radius:999px;list-style:none}
+.markdown li>details.quiz summary::marker{content:none}
+.markdown li>details.quiz summary:hover{border-color:var(--accent)}
+.markdown li>details.quiz[open] summary{border-radius:11px 11px 0 0}
+.markdown li>details.quiz blockquote{margin:0;background:var(--card)}
+.markdown .ts{color:var(--accent);text-decoration:none;font-variant-numeric:tabular-nums;
+  border-bottom:1px dashed color-mix(in srgb,var(--accent) 45%,transparent)}
+.markdown .ts:hover{border-bottom-style:solid}
+.foot-note{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--ink2);font-size:12.5px}
+.toolbox{margin-top:44px}
+.toolbox h2{margin:0 0 14px;font-size:15px;letter-spacing:.04em;color:var(--ink2)}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.tool{display:flex;flex-direction:column;gap:7px;padding:16px 18px;background:var(--card);
+  border:1px solid var(--line);border-radius:13px;text-decoration:none;color:var(--ink);
+  transition:border-color .18s ease,transform .18s ease}
+a.tool:hover{border-color:var(--accent);transform:translateY(-2px)}
+.tool b{font-size:14.5px}
+.tool span{font-size:12.5px;color:var(--ink2);line-height:1.55}
+/* in-site spaced repetition */
+.rv-badge{margin-left:auto;min-width:18px;text-align:center;background:var(--accent);color:#fff;
+  border-radius:9px;padding:1px 6px;font-size:11px;font-variant-numeric:tabular-nums}
+.rv-wrap{max-width:720px;margin:48px auto 0;padding:0 22px}
+.rv-meta{display:flex;justify-content:space-between;gap:12px;font-size:12.5px;
+  color:var(--ink2);margin-bottom:14px;font-variant-numeric:tabular-nums}
+.rv-card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);padding:34px 32px;min-height:200px;cursor:pointer;
+  font-size:16.5px;line-height:1.8}
+.rv-q{font-weight:600}
+.rv-q p{margin:0}
+.rv-a{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+.rv-a p{margin:0}
+.rv-hint{margin-top:24px;font-size:12.5px;color:var(--ink2)}
+.rv-actions{display:flex;gap:12px;margin-top:18px;justify-content:center;flex-wrap:wrap}
+.rv-actions[hidden]{display:none}
+.rv-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);
+  padding:10px 18px;border-radius:10px;font-size:13.5px;cursor:pointer;
+  transition:transform .12s ease,box-shadow .12s ease}
+.rv-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.rv-btn.good{border-color:var(--ok);color:var(--ok)}
+.rv-btn.bad{border-color:var(--accent);color:var(--accent)}
+.rv-done{text-align:center;padding:56px 20px}
+.rv-done h1{font-size:24px}
+.rv-big{font-size:19px;font-weight:700;margin:16px 0 8px}
+.rv-sub{color:var(--ink2);font-size:13.5px;margin-bottom:26px}
+.rv-link{margin-left:12px;color:var(--ink2);font-size:13px}
+.rv-dl{margin-top:34px;text-align:center;font-size:12.5px}
+.rv-dl a{color:var(--ink2)}
+.rv-dl a:hover{color:var(--accent)}
+/* share build: inlined raw transcript */
+.xcript{margin-top:36px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.xcript summary{cursor:pointer;padding:13px 18px;font-size:13.5px;color:var(--ink2);font-weight:600}
+.xcript summary:hover{color:var(--accent)}
+.xcript .markdown{padding:4px 22px 20px;border-top:1px solid var(--line)}
+/* share build: inlined papers index */
+.pwrap{max-width:860px;margin:0 auto;padding:44px 26px 90px}
+.pwrap h1{font-size:26px;margin:0 0 6px}
+.pwrap .psub{color:var(--ink2);font-size:13.5px;margin:0 0 24px}
+.paper-list{list-style:none;margin:0;padding:0}
+.paper-list li{display:flex;align-items:baseline;gap:14px;padding:10px 2px;border-bottom:1px solid var(--line)}
+.paper-list a{color:var(--ink);text-decoration:none;font-size:14.5px;line-height:1.55}
+.paper-list a:hover{color:var(--accent)}
+.paper-none{color:var(--ink2);font-size:14.5px}
+.paper-tag{margin-left:auto;flex:none;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 10%, transparent);
+  border:1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius:999px;padding:2px 10px}
+@media(max-width:880px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--line);
+    display:flex;gap:6px;overflow-x:auto;padding:12px 14px}
+  .sidebar .group-label{display:none}
+  .sidebar #nav-list{display:flex;gap:6px}
+  .nav-item{white-space:nowrap;flex-shrink:0}
+  .main{padding:26px 20px 60px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <div class="brand"><a class="crumb" href="../index.html#L02">← 返回 L02 笔记</a></div>
+    <div class="sub">CS329A · Test-Time Compute Scaling · 原始文字稿（自动字幕，轻度去重）</div>
+  </div>
+  <div class="spacer"></div>
+  <button class="theme-btn" id="theme-btn" aria-label="切换深浅色主题">
+    <svg id="icon-moon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg id="icon-sun" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+  </button>
+</header>
+<main class="tmain"><article class="markdown"><h1 id="l02-test-time-compute-scaling">L02 · Test-Time Compute Scaling — 原始文字稿</h1>
+<blockquote>
+<p>Auto-generated captions, lightly deduplicated. Time anchors every ~5 min.</p>
+</blockquote>
+<h2 id="000"><a class="ts" href="../index.html#L02@0">[0:00]</a></h2>
+<p>So today we're going to talk about inference scaling. Um we briefly hinted on this uh in the first lecture. So there are three stages for LLM kind of development. The first one is pre-training. This stage historically takes a lot more time. It could take several months. a whole lot of uh GPUs uh that are used for training these. Um and then there's a fine-tuning step. Usually this is a less or historically has been a less kind of compute intense process. If you're talking about trillions of uh data tokens in the pre-training side on the fine-tuning side, this is orders of magnitude less data that we use for fine-tuning. And then there is the inference part where we get to use the model and uh we are going to see different ways that at inference time we can make the model be better and become more useful without changing uh the parameters of the model and without any kind of uh fine-tuning of the models. So uh let's first start with the large language monkeys paper. Again, uh you are familiar with the infinite monkey theorem by now because we discussed it on uh uh Monday. But to recap, the idea of this paper is that we have an LLM and we have a problem as input. Instead of generating the response for this problem only once, we are going to repeatedly ask the same input problem again and again. Uh this could be a number of times, it could be 10 times, 100 times and so on. uh and we will see how that affects the performance and then we are going to have a verifier that can tell us which one of these responses were the correct response and then that is going to be the output of this system. The reason we like that is that by doing this repeated sampling, we can make models that are inferior. For example, a llama 38B or 7P that is um not as capable at GPT40 with single attempt. By by doing this repeated sampling and selecting the correct one among the generated generated generated candidates, we can um significantly improve the performance of these inferior models and make them better than these uh larger and proprietary ones. And these are here you can see examples across uh really hard math coding uh uh and different styles of math problem uh question answering problems. Is that is this clear to everyone? Um it just seems like the models and smaller models already know the answers to these hard problems and we are just like by doing this repeated sampling we are kind of eliciting those and surfacing those answers. It just they don't and they they just don't tell us that in the first trial. Um now this um uh kind of paradigm of repeated sampling works well across pretty much any domain that we have tried in so far including agentic uh benchmarks such as bbench which kind of mimics like how a software engineer goes about um editing code and creating new patches. Um so here we are seeing the coverage meaning uh the the the uh fraction of problems that are solved by at least one of the samples and here on the x-axis we have the number of samples going from one to a thousand and what we are seeing here is that a model such as deepseek um can u uh I I believe this was the deepseek v3 model can perform can outperform models such as claw 3.5 or 01 uh preview um after a thousand samples like it can solve more coding and software engineering problems than those and the reason this is interesting is that we are doing um uh in this case for coding problems if we have unit tests that can that we can use to select which one of these samples is correct then we have an end toend automated way to create a more capable model um out of this in this case out of Deepseek and open source model. Um now again we saw pre-training scaling laws in the last class uh and that was we can predictably uh kind of reduce the test loss given these equations in in this paper and these equations might might change given</p>
+<h2 id="005"><a class="ts" href="../index.html#L02@300">[0:05]</a></h2>
+<p>the setup but there is a predictable path to increase data uh amount of compute used and the number of parameters in the model and use that uh to kind of uh predict or reduce the test loss. So this is for pre-training but it turns out we can define a similar scaling loss but this time for inference or test time compute. Um and that is something that we showed in this paper. Basically you're showing that the relationship between co coverage and the number of samples that are being drawn in parallel from the model follow an exponential power law. So assume this C is coverage meaning how many problems are solved by at least one of the samples and then K is the number of samples and A and B are these kind of coefficient that we can find through this uh the carefidding parameters that we can find through this scaling uh kind of u uh scaling behavior of the model. So concretely um as we scaled the number of samples across a range of models from llama 3 8b 7eb and models like gemma or pithia uh and this is for various range of parameter sizes going from 70 million parameter parameters all the way to 70 billion parameters. We can see that we can u predict this power law and have a predicted curve that um closely for for the most part very closely follows the actual u practical kind of coverage that we are seeing as we increase the number of samples. So basically the way to think about it is that we can predict how many sample to achieve a certain coverage how many samples we're going to need to and and how much we should how much resources we should allocate to achieve that. Um and again the these curves show that this behavior is true for a range of models and a range of parameter sizes. Again I think one of the very interesting properties that we saw here is that for a very small model like a 70 million parameter we also see this scaling behavior and of course this is true for much larger models as well and it is true across domains. Now, uh we looked a bit more into why we see this um kind of paral law behavior in in in repeated sample sampling. um because it's it might be at first a little non-intuitive because if the probability of um the pass atmon being correct the probability of a correct response to a question is for example P then we can calculate the probability of um at least one of the answers being correct at K for an individual problems. So for problem I, if we have the pass at one for problem I, we can calculate directly what is pass at K for problem I with this um exponential equation. I hope this is clear for everybody. But basically this 1 minus P is the probability of the first like K answers not being correct and then one minus that is the probability of at least one of these K answers being correct. So this is for an individual problem. But what we are seeing that across a suite of problems we are seeing the expon the power law uh scaling law meaning across um AC across these problems we are seeing the the the equations are changing. So the question that we wanted to answer is that how does this what kind of behavior should we see across uh the problem examples in a data set that justifies our exponential um uh sorry our power loss scaling loss. Um and by looking into that further um uh what was observed is that in order to have the scaling laws that we observed there has to be the sufficient and necessary condition for it is that we have a long tail of hard problems. Um Um Um basically from a ma mathematical perspective we are going to need that because this is the the power law scaling. This is the per problem uh exponential scaling laws and this is like this kind of these sort we need to have these sort of cur curve for the pass at one of problems in order to</p>
+<h2 id="010"><a class="ts" href="../index.html#L02@600">[0:10]</a></h2>
+<p>justify this um uh power loss scaling. And empirically when we looked into the problems we saw that this condition holds. And again what this condition is is that we have a long tail uh of really hard hard problems on the most complex side of things. For example, um let's take a look at this model and and the count of uh the count of problems that are solved at passad one and uh at more and more samples. It seems like across all these problems, a large portion of problems are simpler and they're solved in pass one. And as we increase the complexity of the problems uh where the pass one probability is going to become lower and lower we have like a long pair of problems that kind of have that property. So these kind of curve that you see here from high at simpler problems and low at harder and harder problems meaning lower and lower pass at one is the type of problems is the type of behavior that we are seeing across these uh task and that is why uh we can see the the scaling loss that we that that we have observed. Now Now Now um um um what this means for the the science and the engineering around LLMs is that while previously companies would would spend hundreds of millions of dollars or billion of dollar uh billions of dollar on pre-training alone and then a lot less on fine-tuning and then almost like nothing at each inference call because it used to be like a on time back and forth between the user and query and the model. Now we have a new paradigm where we can spend a whole lot more compute on inference and use that to increase the capability of model and this compute the inference compute can be done offline. We can kind of uh release our agents to go solve a problem and just keep generating tokens and keep uh improving the the the quality of the answers that they generate. Um now when we talk about this repeated sampling something that that's important to to to kind of have in mind is the need for automated verification because if you have a bunch of samples we still need to know which one of them are the correct ones and how to go about selecting them. um um um in certain domains uh verification is easier than the others. For example, for certain types of math problems, you can use formal formal proofs. So given a a proof u strategy, we can run them by these formal proof kind of software tools to verify whether each step is correct or not. Um we can write unit tests for coding and um in some cases writing a unit test arguably arguably is a much simpler task than writing the entire program that solves a problem. Right? So the unit test can be written for example by humans um and um we can use that as our verifier. Um there are other cases like AI as a compiler and this is one of the projects in the lab. um that and a direction that I'm very excited about and that is when we can generate compiler like lower level code like CUDA for a source code like P pietorch with LLM and the reason this is verifiable is that um for example here we can always um compare the output of CUDA with the source PyTorch and see if they're the same for for any given input. Right? So we don't need if we want to say whether the model has generate has generated the correct CUDA code for our source PyTorch code we can just see um whether their outputs match for any inputs. Um Um Um for those of you who are not familiar for CUDA, I hope you you all are, but it's like a lower level language for writing uh more hardware aware and optimized for hardware code uh for on on GPUs. Um for example, here um we we have a data set or a benchmark on CUDA generation called kernel bench. And here again we are seeing the same s sort of uh linear improving coverage uh in this case for CUDA code generation as we increase the number of samples that we take from the model. And in this case we</p>
+<h2 id="015"><a class="ts" href="../index.html#L02@900">[0:15]</a></h2>
+<p>have this again by by default perfect verifier that we can use for um measuring the correctness of our CUDA generated code. And and there are other examples of this um other any basically any kind of translation between two languages. If you want to like port from Python or C++ to Java or vice versa. This is again this is true. You can measure the the equivalency equivalency equivalency uh much easier. Um now there are domains that we don't have verifier for and in those domains what we observe was that there is a large gap between best of end methods uh such as majority v voting um and uh and model based rankers and what is the true coverage of the model. Let's take a look at one example here. Um so here we compared a few different methods. We are going to learn about reward models or verifiers on Monday more but let's take a look at these examples. So we have a number of samples and then we are measuring the success rate here like basically what would be the output of this system. Um majority voting or the green one is we we just see which answer among the generated answers has um appeared the most. So based on that we just select that answer or that response as the output of our system. Does that make sense? It's just majority voting. And uh the blue line here is coverage. This is assuming we had a perfect selector or verifier in this case. And as you can see here, there is a large difference between majority voting which plateau plateaus after 10 or 50 samples and what we could possibly get if we had a perfect verifier. So this is a very very large gap. Um especially and this gap is even more pronounced if you have harder problems. So for example the math capital math here data set is a harder more complex data set than GSM8K and we here we we compared other methods like using a reward model and com add and um that uh generates that measures gives a reward per answer and we take the best of those or ways to combine these two we'll learn more about these reward models basically they're LLM based kind of LLMs that are trained to to kind of um score their the response quality and even with those there is a large cap gap. Uh and this is what we call the generation verification gap. So the generation it turns out we can generate a lot of good responses but the verification is this basically this gap is tells us how much we can actually capture those responses or those uh correct answers. Um, the reason methods such as majority voting doesn't work is that as we look into the quality of answers, it turns out that for some problems that are hardest to solve, sometimes we see that they were solved maybe even once or two times or three times across the thousand or 10,000 samples that we take from the model. So these correct problems um uh are actually very rarely solved by the model with the samples that we are taking from it. So it makes sense that a majority voting mechanism cannot capture those because they're rare. But for many of the problems in this case especially for the GSM8K which is simpler because uh the the answers or responses are more are simpler to generate majority voting works for many of the problems. But even even in this case for some of the hardest problems the frequency of correct answer is actually pretty low. So that makes it harder from a verification perspective. How do you how do you find them? How do you find out which ones are correct? Um, now I want you to here are some questions that some discuss discussion questions that I want to put it here for like something like 2 minutes or so and I want you to think about it and hopefully we'll have some volunteers uh or our I um and volunteer some of you to answer some of them. So, two minutes for this. Maybe we talk after. &gt;&gt; Okay, let's get back. Who wants to answer question one?</p>
+<h2 id="020"><a class="ts" href="../index.html#L02@1200">[0:20]</a></h2>
+<p>This I I I I'm very interested in how you would build on this if you were to do some research here or or what what you what uh database you you got from these papers. anyone? &gt;&gt; Yes. Like one takeaway is that uh sampling many uh answers and can shoot like if you have a good verifier it really helps with your and the second take away is that the the quality of the verifier is very important of doing this approach. &gt;&gt; That's right. &gt;&gt; Anything else? Yes. &gt;&gt; Examples for example [clears throat] like the model generally the solutions and the model or each of the solution that I need to generate a new solution even if you're not sure the solution is &gt;&gt; are you talking about revising a solution solution solution &gt;&gt; uh yeah &gt;&gt; by next Yeah. &gt;&gt; Okay. We're going to hear about it in a minute. &gt;&gt; Sounds good. Yes. &gt;&gt; I'm looking at it in two directions. One is the science for safe and accuracy. And for that um I will look at a hybrid approach where I will develop a knowledge graph along with a advanced RA documentation method and then returns to the RA method when I do the inance time score is lesser on the accuracy and more or less rely on the knowledge to give you more accurate answers. That way you can increase the speed of the answer while also maintaining accuracy. So you were suggesting we use rack to to uh boost boost boost &gt;&gt; or compare we go with the knowledge first and then only when um we feel that the accuracies that are coming have to come up we go through because rag also learns the uh time and there is um &gt;&gt; yeah so you're asking rag can help with the efficiency in the time find time domain domain domain &gt;&gt; we're trying to reduce the dependency on to increase the accuracy Okay, one more. Maybe you were waiting. &gt;&gt; Um, yeah. So, I think something that I thought about also is just um a even if it's it's it's easy to medium level of difficulty respect or verification or like verifiable domains. Um this it it would be cool to see sort of how uh past K changes with respect to K when we kind of employ sort of initial search techniques like almost like a self-study approach. if there's some way to maybe consolidate like let's let the model explore this domain gather insights as if you know you're not asking it to sample any solutions yet and maybe that can get you know related to some output context and we can then follow into parallel sampling and we might see maybe better trends um with respect to &gt;&gt; absolutely &gt;&gt; and we're going to learn about some of the ways to improve test time scaling beyond just repeated sampling &gt;&gt; um including self-study search and tool use um maybe one more. &gt;&gt; Yes. &gt;&gt; Um well, one interesting might be like verifiers. Um I think like without a good verifier, then the best you can do is exactly as what you showed in the previous slide usually doesn't work very well for hard problems. But maybe there are some hard problems where like it's hard to identify if an answer is correct because it's too expensive or doesn't it's just too hard. But it's easy to find like an answer is wrong, right? So you can like project um like bad answers. Maybe that would be more obvious in terms of thinking and then you can just keep like an evolutionary pattern. So I guess one interesting direction would be like trying to look at different domains where like right and also maybe verification is not fully accurate. Maybe it's a bit lost like they verify it's it own model because of the simulation. It's like a physics or like a dynamic simulation, robotics, something how you would. &gt;&gt; Yeah, basically there are other ways to filter out the incorrect answers. Maybe use a simulation or some other tool use or another model to do that depending on the domain. So the all of the data set here the 10,000 different samples per problem is available on on on hugging face if anybody is interested to go around how to kind of improve like shrink that</p>
+<h2 id="025"><a class="ts" href="../index.html#L02@1500">[0:25]</a></h2>
+<p>generation verification gap. Um that could be a potentially a good research project for the course. Um yes last question. Yeah. Could one try to generate multiple verifiers like maybe generate 10,000 verifiers and then do a majority deing like what the result verifiers? &gt;&gt; Yes, that's also a very interesting research question. So on Monday we're going to learn about this we work that we've done on ensembling but like a week supervised ensembling of verifiers. We don't have a thousand of them, but we can have 10 or 20 of them. But that direction is definitely also interesting. It's very costly though from a compute perspective. Um maybe we should move on to the any any other like about the the other two questions. Anything? Um I think we discussed some of it in our discussion but anything that you want to share last minute? Yes. to what extent was it investigated whether the coverage number could be [clears throat] like engineering task for example like it could be test cases but it's actually not &gt;&gt; yeah for like for example for the math problems we manually looked into the to the answered questions and it was something above like a 90 like 7 8% by manually checking that but that's also always a a a case for a failure mode if your unit tests don't have true coverage of the code. &gt;&gt; So the quality of the verifier matters. &gt;&gt; Yes. &gt;&gt; Yeah. Maybe it's more generating it like trees. So but you're verifying each note. &gt;&gt; Yeah. Let's talk about that and what's coming next and how we can make uh different ways of uh test time scaling. So with the monkeys framework we we we see we saw that repeated sampling is effective but there are other ways to uh scale sampling and let's take a look at this paper uh scaling LLM test time compute optimally can be more effective than uh scaling model parameters. We're going to touch on certain as aspects of it that is most relevant to test time scaling. So there are two way like parallel sampling is one way for us to generate multiple answers per input question. But there is another way to generate or generate answers or use test time scaling to improve the quality and that is when we do sequential revisions. For example, we the model comes up with one initial steps of the problem or one initial approach for solving the problem and it keeps revising that or it keeps like improving and adding to that and that is the sequential approach. So instead of asking the model multiple times, we let the model know that it can keep revising its answers, look into that from a different angles and um and continue doing so until it's confident that it's ready to generate an answer and then finally output that. Yes. &gt;&gt; So is this by our own printing or is the model system? &gt;&gt; Um in this case, let's let's assume by our own prompting prompting. But when you look at the reasoning models, they are now trained like internally we have we see this kind of behavior in them. So they do this um uh revisions uh sometimes in their own answers. Um now there is another way to scale test time compute and that is how much how we select the answers. So for the parallel sampling, we we looked into the outcome like there are n different responses. We look into the outcome and see if they're correct or not. We mentioned unit test and so on. But there's also this other way of learning base or outcome reward models where they look into the outcome and and say whether they're correct or not. Of course, their accuracy or quality can be limited, especially if we uh go to new domains, but outcomebased reward model is another way that they look into the final answer and they generate a score. Basically, these models are trained to um to give a reward based on an output. Then there is also the process reward models. So in the difference between process and outcome is that process reward models are designed to give a score per step of the generated solution. For example, we have a math problems. There are like five steps that the model takes before generating a solution. outcome reward mo sorry process reward models again we learn about this more on Monday I believe um are trained to give a score for the steps of the generation so that's the difference between the two</p>
+<h2 id="030"><a class="ts" href="../index.html#L02@1800">[0:30]</a></h2>
+<p>uh now for best of end sampling with a verifier again the problem is easy we generate parallel samples and then we can use an outcomebased reward model um to to see which one has the highest score and then take that as um as our answer. Then there are um other ways that we can bring these reward models into the processing into the into our test time scaling framework. For example, here let's assume at each level of this answering this question, we can take four s we have a budget of four samples. uh we take these four samples and then here use a process reward model or PRM to to kind of like in this case we select the top two uh with the highest score from our PRM. Then again we sample from them uh and and we continue and we can have a threshold on what how the to for selecting the top kind of um two two kind responses in this case and expanding the tree from there. So here we are doing a beam search approach to that uses the process reward model to guide how we are sampling our model. Is that clear? Yes. &gt;&gt; How do you choose the option &gt;&gt; based on the PRM score? So the process reward model is trained to generate a score imagine between zero and one based on the a step given given the question and or or just a step alone &gt;&gt; is the PR function from the language model. Yes, PRMs are generally also fine from a language model. As you can imagine, they would work better for in domain kind of types of task. So, if you have a certain task that you want to uh a certain benchmark that you want to optimize for, of course, training a PRM on a like a subset of that task helps you with test time scaling on that task better than across new task. uh but because they're language model based they they do exhibit some generalization across task as well. &gt;&gt; Yes. &gt;&gt; For the process reward uh is this a reward that's being computed in practice? I don't know what the research is like per token that is being done or maybe like blocks of tokens and then it's being computed. &gt;&gt; Yeah, it's not per token. is per like step like imagine and this is something we're going to learn about in future lectures. Imagine these are like a math problem and then there are steps to answer that like in one way to do it is to have humans annotate the quality of each step like yes or no this is good or bad and then training the model based on each step which could be like you can assume it's like one kind of intellectually meaningful chunk of the result or it could be you can define it as a sentence and so on. And of course um as it's intuitive as it's very intuitive if you combine the two of outcomebased reward model and parallel best of end and sequential revisions you get better results. this field is still there's a lot of unknown kind of uh questions around this and but combining the two for example one simple way to kind combine that is um instead of one parallel one sample and revisions you do two and and you use your um and you get to two final answers and then you use um the best one either using your PRM or OM to select how the two are, but you're augmenting each parallel sample with these sequential revisions and you can use a PRM to guide that search for each parallel for each sequential revision. Um, something that's interesting is that the PRM there are many off-the-shelf PRMs that you can use for your task. So you can go and say take a pre-trained PRM and use that to guide the search for your own task and you can potentially find a PRM that is most kind of relevant to the type of task that you're doing and you want to do test time scaling on or you can train your own PRM and and OM based on your own data as well. Um so this paper looked into the math data set and uh something like 12k train set 500 test questions um used a palm model. And what was interesting here is that they defined a notion of difficulty uh for compute opt uh for for measuring</p>
+<h2 id="035"><a class="ts" href="../index.html#L02@2100">[0:35]</a></h2>
+<p>these different scaling behaviors and for that they looked into the pass at one performance of the model on each problem. Um and and by just measuring that they define okay these are the problems that are hard. These are the problems based on like how many of the generated answers are correct across a body of a number of samples. They had like different like five different bins for the complexity of the problem and they did that as we see to kind of get some conclusion about what test time scaling works better for harder or easier task. um they also train their own process reward model and even they fine-tune a model for creating these revisions. But right now the models every model that we use pretty much it's capable it's just as long as it's instruction tuned is capable of doing revisions if you prompt the model to do so ask the model to do so. Um and there are some interesting observations here. Uh for example, here is the majority voting for these problems. The accuracy as the generation budget increases. And then this is the the the purple one is the OM one. Um and the green one is the um PRM one and then the blue one if you really try to optimize different ways of mixing and matching things. Um and this is this area is the one that still is unopen research like how do we do that? How do we go about mixing and matching revisions and uh parallel scaling uh to optimize the test time scaling because at the end of the day we want for each uh accuracy we want the minimum generation budget to hit that accuracy. Um and in in a few slides ahead we talk about one method to optimize this um scaling and budget um performance per budget. Um they also looked into these different bins of difficulty. So number five is the most difficult questions because the accuracy is the lowest and number one and then here on the right there the these colors is the sequential to parallel ratio. And while they were saying that okay in the easier for the easier problems it seems like this darkest kind of the darkest purple color achieves highest accuracy and that's where we have a lot more sequential kind of tokens compared to parallel when the problems are more difficult and to some extent those are some of the more interesting problems. This optimality is kind of harder to say. It's harder to say whether it's sequential or uh the the ratio changes even from bucket four to bucket five on how you should allocate that. Um another uh observation from this paper was that um and this is a still work in progress and I believe still the true observation as of today is true the true observation as of today is that for easy and medium questions it seems like additional test time compute can be more favorable than scaling pre-training of the model. So here we have these two like the easy are the green medium is blue and orange uh is the hard questions. It seems like if we look into the ratio of inference tokens to pre-training tokens uh it's positive uh uh here but as we get to uh it's positive for the uh easy and medium problem but for the hardest problem it seems like larger models like a more pre-training or larger models still do better if you are from a tokens optimized perspective. And this is something that we we we have seen in many of our research in the lab and or around the lab as well. Um it seems like like models simpler like open source models or smaller models are becoming more and more useful as we take more test time compute apply more test time compute on them. But still for the very very hard problem still the frontier models which presumably use more pre-training and they're larger they do better uh even if we had a whole lot like infinite budget for test time scaling. Of course we don't have infinite budget but any reasonably large test time scale. Yes. Um, in this case, how are you? Does it seem like for inverse use it once like pressure tokens, it's like use it once and you can use it. &gt;&gt; Yes, that that is true. But in general from a but this is a still so</p>
+<h2 id="040"><a class="ts" href="../index.html#L02@2400">[0:40]</a></h2>
+<p>basically yes in pre-training is done once but scaling is every time right every time we run the model but but still um so so so but still this is an interesting observation from the perspective of are we done doing pre-training because we can just keep sampling from the models we have or no pre-training is still helpful and we should do more and more right um not everyone can pre-train a large model right so even if pre-training was an option for u achieving was better than test time scaling in any scale not everyone can do that because it's a very expensive process so this is very interesting that for many problems we can do test time scaling even if it's we do every time for a new problem because that's feasible. But also on the other hand, for the hardest problems, we still need to do pre-training and better models still do better, &gt;&gt; right? Um that makes sense. I was just curious like precisely like in the middle graph when it says like the ratio is one of the difference to that or like what what what there's also one is used for a single task. &gt;&gt; No, no, it's not exactly that. It's more like some some ratio of pre-training to inference compute. It's not a one to one because it doesn't make sense in that case, right? &gt;&gt; For the hard questions part, why is it that larger models still better? So, can can you take a smaller model and yet make it an expert on hard questions? Yeah, you can always like fine-tune a model model model to become better on a certain set of questions, but we are talking about a more general perspective of like let's have a whole lot of data that's like general, not specific to a specific task and just like compare like the the common recipes that you use for training models. Let's just follow that and then see how much they do better at test time. Um any other questions? Okay. Um so here are maybe we discussed some of these already but here are some more questions that I give you another two minutes. Let me check the time. And yes, we do have time um to think about this. I think this helps you kind of like uh absorb some of the the topics that we learned uh or uh heard about in the previous slides and then we discuss them in 2 minutes. Okay. Should we should we start? Anyone wants to add any comments here or any questions you might have? Yes. &gt;&gt; Um, so do you try sequential and you try curl? What about tree search? And in that case, like you're kind of doing &gt;&gt; you're mixing the both. &gt;&gt; Yeah. You're kind of mixing, right? &gt;&gt; Yeah. There's no universal answer that can be there. But the general sentiment was that that does better like some sort of combining the two &gt;&gt; than doing like you do some kind of like cleaning and like reduce a lot of the confuse that you're doing, right? or like reuse control that you're doing because it's a tree like yes [clears throat] &gt;&gt; that is when we discuss the beam search stuff and the PRM like bringing a PRM to kind of cut the uh tree at it at each level and explore only the more uh promising branches. &gt;&gt; Anything else? Yes, &gt;&gt; we have discussion with it for example point for you was thinking that bigger problem the more paths you have towards the success of solving it therefore you require it could be more sequential while with harder problems you would there's few paths to solving that you would need many paralle to find at least one viable solution and we started thinking a bit also why could you do this in a chain of thoughts kind of way where you are doing your chain fault but verifying throughout the steps in the uniforms is that pruning and these branches that are violating anything. &gt;&gt; Yeah. So in terms of sequential you're saying that for easier ones easier problems the for harder problems you mean you need more exploration potentially for easier &gt;&gt; to the correct answer. Well, for easier problems problems problems um because like any kind of path might lead us to the correct answer. We might</p>
+<h2 id="045"><a class="ts" href="../index.html#L02@2700">[0:45]</a></h2>
+<p>not need to explore different parallel solutions. Yeah, that is an intuitive kind of way of thinking about this. Any other thoughts? Um in general this is a very interesting appro kind of problem to think about how do you how do let's assume that this tokens that you generate is like a knob that you have to increase problem the quality of the responses how do you allocate this knob and how do you elicit these uh generations from the model so let's think about like in the following I'm going to talk about one way to do to optimize these kind of test time scale scaling to generate optimized answers and that is the archon paper um an architecture research framework for inference time scaling um uh so the problem state and your TA is uh one of the co-authors of this work so the problem in this paper is that again we are interesting interested to see um how we can mix and match different inference time scaling methods to build a kind of optimize the frontier of uh capability or correctness versus cost. Um and and and the the other thing that um again all of these questions basically saying the same thing that how how we can optimize assigning in press compute two different task um and basically design mechanisms that gets us to the high quality answers while not wasting too many tokens and generations. So here is the RQ like in this case we thought of inference scaling in this uh project as like an inference architecture design problem. Um so here is how this uh the frame archive framework works on the input side we had a set of target benchmarks that we wanted to get good good results on these benchmarks. So these are the benchmarks we are optimizing for. There's an inference called budget and then there's also a set of available LLMs because we can always mix and match different models also to get to and to a correct answer for a input question. And then we have a set of inference time techniques which I'm going to describe in the following slides. And then we have we designed this optimizer uh it's called itas. It's inference time architecture search that basically tells us how to put together these different models and different inference time techniques together whether it's parallel sampling sequential and all that in order to uh get high quality results given the budget the inference call budget that we have. how to optimize the quality of results based on that and then the output is this architecture that mixes and matches these different techniques and models together. Um so let's take a look at different inference time operations. So first we have the gen we called it the generation but this is basically um the the just sampling from the model and this can be part of the repeated sampling approach right so if we generate n we use n generations at a time that means we have generated n different responses to our input question so that's one one type of inference time scaling another one is fusion which is surprisingly a very effective method. So fusion is let's say we have k um k different responses and we want to generate one output response out of these k um fusion takes an llm and asks an llm the same exact question that I just said basically it says here's the input question here are k different responses to this input question given all of this generate or synthes ize one output response for the input question. Basically, we are showing all of the K generations to the model such that the the LLM can generate an output answer while being aware of all the possible ways that uh this question is answered. Um and this is kind of it goes under the C category of sequential update, right? we have this parallel samples but then we are kind of fusing them into one answer. Then there is the um um critic which which which basically for any given response we can ask a model to um</p>
+<h2 id="050"><a class="ts" href="../index.html#L02@3000">[0:50]</a></h2>
+<p>generate or describe the weaknesses or strengths of these response and that could be one kind of inference scaling action. Um and then we have the ranker. This is again these are all prompting based optimization for the model. We don't have we haven't trained the model to do this specific test time scaling task. We just ask the model in the instruction prompt that um can you rank these generated responses from the previous step um based on the their quality. Um Um Um and then the vifiers generates the returns the response with while also talking about the reasoning of how why it came came to this um kind of way to score a certain answer. Um I'll get to the next two uh unit test generation and evaluation in a bit but just to show you how effective these different uh inference time scaling techniques are let's take a look at this win win win rate um um for what task we don't have the task here but it's one of the task of like uh one of these benchmarks that I don't know if you remember the task. &gt;&gt; Yeah. Um, so it's some some pro question answering reasoning benchmark. So here let's take a look at how these things work. So uh first we have let's say we have a number of repeated samples from the model. Uh it goes from 1 to 10 on the left side. Let's focus on the graph on the left side. And then the orange one is the kind of worst possible way of approaching. We just randomly select one and look at the quality and the correctness of this response. Um the green one is when we use the model to rank them to rank the responses and we select the top one ranked by the model and and report that that already does better than uh [clears throat] that already does better than the the orange one. The blue one is um oracle selection meaning let's assume we are not mixing these responses in any way. We we just select the best one generated. Let's say we have an Oracle verifier that can tell us which one of these is correct. And that obviously does better than just asking the model to rank them because it's an Oracle verifier. And then we get to the red one which is where we when we use the fusion. So basically for each each point here let's say we are at five. Uh the red data point is basically we have given these five responses to the model and asked the model to synthesize one answer one final answer given all this information. And it's so interesting and this paradigm is so powerful that that can on its own improve the quality of responses over oracle selection. Um and then finally the purple one is where we um instead of fusing um all the uh all the responses we first selected the top five um in the and and then we went about fusing them. So it seems like some sort of a filtering of the two does better. Now on the right side we are doing a different experiment and that is we are um on the left side we had only one model generating everything. On the left side we had we were using we we were adding models. So first one is just one model generating one answer. Two the baseline is two different models generating one answer and 10 is 10 different models each generating one answer. And we see that of course the random result um becomes worse because the model we looked on the left was I think it was among the better models in this ensemble. But we still see the same trend trend even if these responses are coming from different models like basically the same trend of how these uh all follow each other. Yes. Which model is like using if you're using like 10 different models you're asking like somebody else to rank or fuse your &gt;&gt; uh I think it's the model number one in this case the same the model that was in all of those and this was uh kind of the way we created the ensemble was first with the best model and then added the second best model and so on. Okay. Now let's take a look at a couple other inference time techniques and that</p>
+<h2 id="055"><a class="ts" href="../index.html#L02@3300">[0:55]</a></h2>
+<p>is unit test generation and evaluation. I think one of you was were were mentioning something like this earlier as well that where we can ask the model to generate these unit tests say when it gets to coding task or math optim math problem solving or other reasoning task tasks. Um, and the unit test evaluation is even crazier. Like instead of like running the unit test, you're asking the model to evaluate a generated answer uh against a unit test. For example, um here is a prompt uh check for so the coding problem in this case is check for balancness of round brackets in an input string. That that's a coding question. And then here is an example input. Here is the type of unit test that the model could generate. Um for example, given a string with an odd number of brackets, the solution should output no, which is like a good unit test in this case. Uh another one is when a closing bracket is encountered, it must match the most recently open brackets that hasn't been matched yet. That's another kind of reasonable unit test. And then you can ask the model to actually generate the code to test this as well. Um, now let's take a look at the types. I don't know if you guys see this well, but the type, but this is so big there's no way for me to put it here with like large font. But this is the type of architectures that aron found. So basically now think about it this way. we have different ways of mixing and matching models and inference time techniques and we can define these layers of optimization. Uh for example, the first layer in this case is generation and then these generations are from different models in this case and then we have a a critic and a ranker. So basically the critique will criticize these generations and then we rank them and then we the optimizer found that we could have a bunch of fusers at this point like each fuses these gener these responses into one output um and then we can go from there um continue this critique ranker. And this was like a rather complicated architecture. And the way that we optimized this architecture is that uh we did some kind of pre-processing to reduce the space of uh optimization. For example, the fact that we found this uh sequence of generation, critique, ranker and fuser do really well. We did that offline. So we limited the search space just because doing this search is very expensive. We need to run a lot of inference calls. But then the way we optimize it that we had a held out data set that we could we had a training data set that we could optimize against that and create this accuracy versus the number of calls that we are making to these models kind of as a metric that we are optimizing against. We want to maximize accuracy and min for any given um budget inference budget that we have. Um and this is for one some of the coding problems. This was an optimized architecture. Basically we generate a ton of samples. Uh we generate unit tests and then we evaluate them. Now Now Now um um um an interesting property here is that we found that stacking more and more layers of these inference time techniques or making it deep in a way actually does help with our um accuracy. Um in this case for example the rightmost pink uh graph is uh where we have an ensemble have uh where we have an ensemble meaning we have different models in our loop and we have three layers of critique critiques and fusers and a final fuser fuser layer. Um and this is like significantly better across many of these tasks over both just using a simple the best model only once or the best model eight times with like one layer of fusion. So it seems like these additional layers that we are adding here is actually just like in deep learning we are adding layers and pre-training and the model gets better. Seems like these careful kind of addition of these inference layers are helping the model become more and more accurate. across many of the tasks. Um this is true. And so now the optimizer itself, we used an Beijian optimizer again to simplify the search space. We did a few things. Um for example, we limited the optimizer to only use one inference time technique per layer. Um and the first layer was always just the generator. And then we had this cascade</p>
+<h2 id="10000"><a class="ts" href="../index.html#L02@3600">[1:00:00]</a></h2>
+<p>of ranker, critic, verifier. Uh they they could go anywhere, but we we made certain kind of modifications to the search search space. For example, a critic should go before a ranker or a fuser always because we did some testing locally and saw this is a better choice. Um and then a unit test generator must be followed by an evaluator op. Um and uh we again we use a Beijan optimizer to do this. Um this is often a very powerful um method methodology um uh a a ton of like good open-source software to do Beijan optimization for you. Basically you have this search space that you want to configure it with different uh different kind of uh choices for the architecture and the output side you have the accuracy and you want to optimize for that. Um and this does better than greedy search or random selection. We are much more sample efficient in terms of number of configurations that aron searches until it reaches a final kind of architecture and we can define different objectives for it. For example, um available models uh inference time inference call budget is are one of them are are some of them. Um the thing that I want you to uh pay attention to in this graph is that this interesting property that archon is at the end generating one response at the very end right so it's like you're optimizing pass at one at the very end and what was interesting here is that u while using just the open-source models we could match or exceed um these closed source models at the time uh the frontier co source model at the time by a large mar mar margin across many of these task in terms of pass at one here's the average pass at one improvement and not only that we we could train archon to be task specific so when we are doing the Beijan optimizing we only look into a certain task and we test on that or we could train archon to be general purpose so we wanted it to do whether bad good across many to do well across many tasks and even that the general purpose one does really really well and better than the the frontier models across these task and that was like a very interesting observation um that you can design these inference time architectures that do well beyond the task or uh the limited task that they're trained of. So on average in this case we were outperforming GPT40 or COD 3.5 sonnet in pass one uh by an average of 14.1% across these uh instruction following reasoning and math and coding problems. Uh here are some questions but um that I want you to think think about but since we're out of time um hopefully you think about it uh yourself and hope you have a happy weekend.</p></article></main>
+<script>
+(function(){
+  const btn = document.getElementById('theme-btn');
+  const dark = () => document.documentElement.dataset.theme === 'dark' ||
+    (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+  const sync = () => { document.getElementById('icon-sun').hidden = !dark(); document.getElementById('icon-moon').hidden = dark(); };
+  btn.addEventListener('click', () => {
+    document.documentElement.dataset.theme = dark() ? 'light' : 'dark';
+    localStorage.setItem('cs329a-theme', document.documentElement.dataset.theme);
+    sync();
+  });
+  const saved = localStorage.getItem('cs329a-theme');
+  if (saved) document.documentElement.dataset.theme = saved;
+  sync();
+})();
+</script>
+</body>
+</html>

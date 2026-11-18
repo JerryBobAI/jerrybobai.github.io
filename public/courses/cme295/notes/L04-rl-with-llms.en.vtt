@@ -1,0 +1,6431 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:05.960 --> 00:00:12.720
+Hello, everyone, and welcome
+to lecture 4 of CME 285.
+
+00:00:12.720 --> 00:00:15.080
+So today is a very
+special day because we'll
+
+00:00:15.080 --> 00:00:18.960
+be talking about reinforcement
+learning-based training
+
+00:00:18.960 --> 00:00:22.540
+methods that are actually
+getting quite popular,
+
+00:00:22.540 --> 00:00:26.600
+especially when it comes
+to post-training LLMs.
+
+00:00:26.600 --> 00:00:30.920
+And the reason why today's
+session is a little bit special
+
+00:00:30.920 --> 00:00:34.200
+is because contrary
+to the previous ones,
+
+00:00:34.200 --> 00:00:37.600
+there is going to be a
+little bit of math involved,
+
+00:00:37.600 --> 00:00:42.600
+which is why last time we said
+all the RL-based methods we will
+
+00:00:42.600 --> 00:00:44.460
+just reserve them for today.
+
+00:00:44.460 --> 00:00:46.280
+So today is the day.
+
+00:00:46.280 --> 00:00:49.960
+And yeah, so I wanted to
+start with this disclaimer.
+
+00:00:49.960 --> 00:00:52.120
+And the second thing
+I wanted to say
+
+00:00:52.120 --> 00:00:58.160
+is we will try to start from
+intuition first and then stay
+
+00:00:58.160 --> 00:00:59.810
+rigorous on the math.
+
+00:00:59.810 --> 00:01:03.410
+But please don't be intimidated
+by the big formulas.
+
+00:01:03.410 --> 00:01:06.730
+Yeah, hope it's going
+to be a good one.
+
+00:01:06.730 --> 00:01:10.370
+With that, we're going to
+start as usual by recapping
+
+00:01:10.370 --> 00:01:13.010
+what we saw last time.
+
+00:01:13.010 --> 00:01:15.410
+So if you remember,
+last time we were
+
+00:01:15.410 --> 00:01:18.530
+talking about training LLMs.
+
+00:01:18.530 --> 00:01:24.650
+And the first step of training
+LLMs is called pretraining.
+
+00:01:24.650 --> 00:01:28.290
+It is a step that is meant
+to teach the model how
+
+00:01:28.290 --> 00:01:32.090
+to understand texts,
+how to understand codes.
+
+00:01:32.090 --> 00:01:36.250
+And this step typically
+involves training your model
+
+00:01:36.250 --> 00:01:37.890
+on a lot of data.
+
+00:01:37.890 --> 00:01:42.330
+By a lot of data, I mean
+trillions of tokens.
+
+00:01:42.330 --> 00:01:47.210
+So there's a lot of work around
+finding the right mixtures, how
+
+00:01:47.210 --> 00:01:50.210
+much web should it be in
+there, how the books should
+
+00:01:50.210 --> 00:01:52.450
+be in there, and so on.
+
+00:01:52.450 --> 00:01:54.690
+And the loss
+function for this one
+
+00:01:54.690 --> 00:01:58.700
+is the cross-entropy
+loss, which tries
+
+00:01:58.700 --> 00:02:02.180
+to penalize any
+deviation from the token
+
+00:02:02.180 --> 00:02:06.900
+that the model needs to predict,
+so its next token prediction.
+
+00:02:06.900 --> 00:02:12.100
+And we saw some emerging stages,
+such as mid training which
+
+00:02:12.100 --> 00:02:17.120
+involves higher quality data
+and also long context training,
+
+00:02:17.120 --> 00:02:21.340
+which involves training your
+model on longer contexts data
+
+00:02:21.340 --> 00:02:22.700
+as well.
+
+00:02:22.700 --> 00:02:24.500
+So that's the first step.
+
+00:02:24.500 --> 00:02:28.900
+The second step that we saw was
+called Supervised Fine Tuning,
+
+00:02:28.900 --> 00:02:29.620
+a.k.a.
+
+00:02:29.620 --> 00:02:31.060
+SFT.
+
+00:02:31.060 --> 00:02:35.460
+And in this step, we're
+trying to take our model that
+
+00:02:35.460 --> 00:02:39.860
+understands text, that
+understands code, and tune it
+
+00:02:39.860 --> 00:02:41.540
+to be useful.
+
+00:02:41.540 --> 00:02:43.000
+So what do I mean by useful?
+
+00:02:43.000 --> 00:02:45.860
+For instance, if you want
+to have an assistant,
+
+00:02:45.860 --> 00:02:50.700
+you would want your model to
+give answers to questions.
+
+00:02:50.700 --> 00:02:56.140
+And that is one of the examples
+where people would use SFT for.
+
+00:02:56.140 --> 00:02:58.670
+So in terms of
+the loss function,
+
+00:02:58.670 --> 00:03:01.230
+we still have the cross entropy.
+
+00:03:01.230 --> 00:03:05.950
+Except here we're only
+trying to penalize deviations
+
+00:03:05.950 --> 00:03:09.750
+for token predictions that
+are on the output side.
+
+00:03:09.750 --> 00:03:13.550
+So it's next token
+prediction but for outputs.
+
+00:03:13.550 --> 00:03:18.050
+At the end of this stage,
+our model understand text.
+
+00:03:18.050 --> 00:03:19.670
+Our model is useful.
+
+00:03:19.670 --> 00:03:24.290
+But here we may want to
+inject human preferences.
+
+00:03:24.290 --> 00:03:28.910
+And we saw this third step
+called preference tuning.
+
+00:03:28.910 --> 00:03:33.070
+And this is the step that
+involves RL-based methods
+
+00:03:33.070 --> 00:03:35.230
+that we're going to see today.
+
+00:03:35.230 --> 00:03:41.870
+We did not see any specifics
+about the exact loss formula.
+
+00:03:41.870 --> 00:03:44.270
+So we're going to see today.
+
+00:03:44.270 --> 00:03:48.070
+And the other piece
+that we saw was the fact
+
+00:03:48.070 --> 00:03:53.030
+of increasing the model's
+reasoning capabilities, so
+
+00:03:53.030 --> 00:03:57.320
+reasoning, which also
+happens to be performed
+
+00:03:57.320 --> 00:03:59.760
+with this RL-based techniques.
+
+00:03:59.760 --> 00:04:03.000
+And we're also going
+to see that today.
+
+00:04:03.000 --> 00:04:06.880
+And this is where we
+left off last time.
+
+00:04:06.880 --> 00:04:11.680
+And today, we're going to
+focus on these last two stages,
+
+00:04:11.680 --> 00:04:17.240
+and in particular, emphasize how
+we come up with the loss, which
+
+00:04:17.240 --> 00:04:20.000
+right now, we don't
+know what the loss is
+
+00:04:20.000 --> 00:04:23.960
+and see how we can use that.
+
+00:04:23.960 --> 00:04:25.800
+Cool.
+
+00:04:25.800 --> 00:04:29.000
+I want to, again, have
+a big disclaimer here
+
+00:04:29.000 --> 00:04:32.400
+that these methods, they
+are typically mathematically
+
+00:04:32.400 --> 00:04:34.860
+involved, not just
+for this lecture,
+
+00:04:34.860 --> 00:04:39.440
+but if you were to read
+papers on that topic.
+
+00:04:39.440 --> 00:04:44.040
+And so if you feel
+like it's too much,
+
+00:04:44.040 --> 00:04:47.380
+here is the proposed
+steps for remediation.
+
+00:04:47.380 --> 00:04:51.360
+So first one, focus on
+the intuition on why
+
+00:04:51.360 --> 00:04:53.240
+a certain thing is needed.
+
+00:04:53.240 --> 00:04:56.770
+Second one is if there
+are formulas or symbols
+
+00:04:56.770 --> 00:05:01.290
+that you are not familiar with,
+just make sure to review them.
+
+00:05:01.290 --> 00:05:04.210
+And then the third one is
+just to interpret the formulas
+
+00:05:04.210 --> 00:05:06.970
+from first principles.
+
+00:05:06.970 --> 00:05:09.890
+And I actually have
+a second disclaimer,
+
+00:05:09.890 --> 00:05:14.250
+which is that on top
+of all of that, papers,
+
+00:05:14.250 --> 00:05:18.130
+they tend to choose conventions
+that are different from one
+
+00:05:18.130 --> 00:05:19.570
+paper to another.
+
+00:05:19.570 --> 00:05:22.410
+So that may add
+to the confusion.
+
+00:05:22.410 --> 00:05:24.970
+So we will see that,
+for instance, we're
+
+00:05:24.970 --> 00:05:27.330
+going to talk about rewards.
+
+00:05:27.330 --> 00:05:29.690
+Rewards are usually denoted r.
+
+00:05:29.690 --> 00:05:32.890
+But sometimes in
+papers, r could also
+
+00:05:32.890 --> 00:05:36.890
+mean a ratio, a ratio
+of probabilities.
+
+00:05:36.890 --> 00:05:40.590
+So here, to make sure we
+distinguish them properly,
+
+00:05:40.590 --> 00:05:43.890
+we will note them
+rho in this class.
+
+00:05:43.890 --> 00:05:49.410
+Second one is the policy, and
+we will see what a policy is.
+
+00:05:49.410 --> 00:05:52.870
+There are several
+kinds of policy.
+
+00:05:52.870 --> 00:05:55.230
+Is it the old policies,
+the reference policy?
+
+00:05:55.230 --> 00:05:59.410
+And sometimes these
+notations are also mixed.
+
+00:05:59.410 --> 00:06:01.650
+And then the third
+one to call out
+
+00:06:01.650 --> 00:06:05.130
+is that so far,
+we've been focusing
+
+00:06:05.130 --> 00:06:07.970
+on minimizing a loss function.
+
+00:06:07.970 --> 00:06:13.090
+And we noted the loss
+function L. Well, here
+
+00:06:13.090 --> 00:06:17.455
+most of the time we will
+want to maximize quantities.
+
+00:06:17.455 --> 00:06:19.330
+But the problem is
+sometimes these quantities
+
+00:06:19.330 --> 00:06:24.190
+are also noted L which usually
+you think of as being a loss.
+
+00:06:24.190 --> 00:06:27.830
+But just make sure that you
+know what you want to do.
+
+00:06:27.830 --> 00:06:28.830
+Do you want to minimize?
+
+00:06:28.830 --> 00:06:30.050
+You want to maximize?
+
+00:06:30.050 --> 00:06:32.070
+So that's also another
+thing to keep in mind.
+
+00:06:34.730 --> 00:06:35.930
+Cool.
+
+00:06:35.930 --> 00:06:39.530
+Well, with all of that
+said, let's start.
+
+00:06:39.530 --> 00:06:43.090
+And I wanted to first start
+with a refresher on what
+
+00:06:43.090 --> 00:06:45.130
+reinforcement learning is.
+
+00:06:45.130 --> 00:06:48.850
+So I'm not sure if any of you
+has ever taken a reinforcement
+
+00:06:48.850 --> 00:06:50.490
+learning-based class.
+
+00:06:50.490 --> 00:06:53.580
+But at a very high
+level, the way it works
+
+00:06:53.580 --> 00:06:57.580
+is you have an agent
+that is interacting
+
+00:06:57.580 --> 00:07:01.780
+with an environment
+that is in a given state
+
+00:07:01.780 --> 00:07:07.900
+and that wonders what action
+to take to go to another state.
+
+00:07:07.900 --> 00:07:13.700
+So the way it tries to decide
+on which action to take
+
+00:07:13.700 --> 00:07:18.300
+is something that is
+leveraging a policy.
+
+00:07:18.300 --> 00:07:23.420
+So pi theta is typically
+how it's denoted.
+
+00:07:23.420 --> 00:07:30.540
+And after the agent performs an
+action, it receives a reward.
+
+00:07:30.540 --> 00:07:33.380
+And the goal of
+RL-based problems
+
+00:07:33.380 --> 00:07:36.580
+is to maximize
+the sum of rewards
+
+00:07:36.580 --> 00:07:39.580
+that your agent is collecting.
+
+00:07:39.580 --> 00:07:42.180
+Now you may be
+wondering, well, how
+
+00:07:42.180 --> 00:07:45.860
+does that have to do with LLMs?
+
+00:07:45.860 --> 00:07:47.940
+So here, we're going
+to see a little bit how
+
+00:07:47.940 --> 00:07:50.870
+things map to the LLM world.
+
+00:07:50.870 --> 00:08:00.150
+So the agent here is the LLM
+that takes some input as a state
+
+00:08:00.150 --> 00:08:02.850
+and tries to decide
+what to do next,
+
+00:08:02.850 --> 00:08:05.290
+so what token to sample next.
+
+00:08:05.290 --> 00:08:08.550
+So the action is a token.
+
+00:08:08.550 --> 00:08:13.710
+And in order to decide
+what token to go next to,
+
+00:08:13.710 --> 00:08:18.430
+what it does is it relies on
+the probability distribution
+
+00:08:18.430 --> 00:08:20.830
+that it outputs, given an input.
+
+00:08:20.830 --> 00:08:24.170
+And so here that one
+will be noted pi theta.
+
+00:08:24.170 --> 00:08:26.290
+So back to the
+notation last time,
+
+00:08:26.290 --> 00:08:31.590
+so this is where the pi is
+coming from, pi as in policy.
+
+00:08:31.590 --> 00:08:34.909
+And it collects rewards.
+
+00:08:34.909 --> 00:08:40.830
+So one note here is that it
+can be challenging to define
+
+00:08:40.830 --> 00:08:43.270
+token-level rewards.
+
+00:08:43.270 --> 00:08:48.600
+So a lot of the time, we will
+also encounter this setup
+
+00:08:48.600 --> 00:08:52.800
+not at the token level,
+but at the response level
+
+00:08:52.800 --> 00:08:55.400
+or at the completion level.
+
+00:08:55.400 --> 00:08:57.680
+And so here you
+can also consider
+
+00:08:57.680 --> 00:09:01.840
+an input as being
+your prompt, an action
+
+00:09:01.840 --> 00:09:06.920
+as being your
+response, and pi theta
+
+00:09:06.920 --> 00:09:10.120
+as being just the probability
+of you outputting a response,
+
+00:09:10.120 --> 00:09:12.600
+given your prompt.
+
+00:09:12.600 --> 00:09:17.920
+And then as a result of
+that, you will get a reward.
+
+00:09:17.920 --> 00:09:21.840
+So we're going to spend a few
+minutes on the reward part.
+
+00:09:21.840 --> 00:09:26.040
+And I know we spent
+maybe 10 minutes
+
+00:09:26.040 --> 00:09:29.140
+last time talking about
+this in different settings.
+
+00:09:29.140 --> 00:09:33.440
+So here I just want to
+summarize what we saw.
+
+00:09:33.440 --> 00:09:39.480
+So in order for you to quantify
+how good a response is,
+
+00:09:39.480 --> 00:09:44.080
+you actually have typically
+two different categories
+
+00:09:44.080 --> 00:09:47.250
+of situations you can be in.
+
+00:09:47.250 --> 00:09:48.890
+The first one,
+the first category
+
+00:09:48.890 --> 00:09:52.610
+is where there is
+no absolute ground
+
+00:09:52.610 --> 00:09:55.730
+truth to the answer, where
+actually judging your answer
+
+00:09:55.730 --> 00:09:58.730
+is a little bit more subjective.
+
+00:09:58.730 --> 00:10:03.890
+And this is where we saw in
+the preference tuning case
+
+00:10:03.890 --> 00:10:08.250
+where we could have
+human preferences that
+
+00:10:08.250 --> 00:10:13.830
+try to up rank, let's say,
+responses that have, let's say,
+
+00:10:13.830 --> 00:10:19.210
+a better tone compared to
+ones that have a worse tone.
+
+00:10:19.210 --> 00:10:23.210
+And this is something that
+you would typically model.
+
+00:10:23.210 --> 00:10:27.770
+You would model with
+a reward model that
+
+00:10:27.770 --> 00:10:33.930
+leverages what we saw last time,
+the Bradley-Terry formulation,
+
+00:10:33.930 --> 00:10:38.970
+which is a way to express your
+loss in a pairwise fashion
+
+00:10:38.970 --> 00:10:42.330
+and train a reward model.
+
+00:10:42.330 --> 00:10:46.180
+So here the first category is
+you don't have a ground truth.
+
+00:10:46.180 --> 00:10:48.020
+And you try to
+come up with a way
+
+00:10:48.020 --> 00:10:50.840
+to quantify how good
+responses are, for instance,
+
+00:10:50.840 --> 00:10:53.180
+with human preferences.
+
+00:10:53.180 --> 00:10:56.500
+And you would use the
+Bradley-Terry formulation,
+
+00:10:56.500 --> 00:11:02.200
+and these methods
+would be called RLHF,
+
+00:11:02.200 --> 00:11:06.340
+because you would use human
+feedback as a way to quantify
+
+00:11:06.340 --> 00:11:10.460
+how good the responses are.
+
+00:11:10.460 --> 00:11:15.380
+And then the second big category
+of situations you can be into
+
+00:11:15.380 --> 00:11:21.980
+is where you can
+actually verifiably tell
+
+00:11:21.980 --> 00:11:24.260
+if your answer is
+correct or not.
+
+00:11:24.260 --> 00:11:27.600
+And so here are some
+examples of situations
+
+00:11:27.600 --> 00:11:30.100
+could be if you want to
+solve a math problem,
+
+00:11:30.100 --> 00:11:31.880
+you know what the solution is.
+
+00:11:31.880 --> 00:11:35.200
+Or if you want to write
+a piece of software,
+
+00:11:35.200 --> 00:11:37.380
+you know if your
+solution is correct
+
+00:11:37.380 --> 00:11:42.260
+or not if, let's say, it
+passes the test cases.
+
+00:11:42.260 --> 00:11:48.110
+So you have a deterministic way
+to check whether your answer is
+
+00:11:48.110 --> 00:11:49.830
+correct or not.
+
+00:11:49.830 --> 00:11:53.590
+And so these methods
+you will also find them
+
+00:11:53.590 --> 00:11:57.470
+under the name RLVR,
+Reinforcement Learning
+
+00:11:57.470 --> 00:12:00.470
+with Verifiable Rewards.
+
+00:12:00.470 --> 00:12:03.110
+And these are
+typically in the field
+
+00:12:03.110 --> 00:12:09.350
+of reasoning, so math
+problems and coding problems.
+
+00:12:09.350 --> 00:12:13.370
+So this is how you
+can have your rewards.
+
+00:12:13.370 --> 00:12:15.790
+And so it would be more
+at the completion level,
+
+00:12:15.790 --> 00:12:20.150
+not at the token level,
+at the completion level.
+
+00:12:20.150 --> 00:12:24.370
+So given this
+definition of reward,
+
+00:12:24.370 --> 00:12:29.870
+you may want to tweak the
+parameters of your model
+
+00:12:29.870 --> 00:12:33.150
+to maximize the rewards
+that you're getting.
+
+00:12:33.150 --> 00:12:35.710
+So coming back to the
+examples that we saw last week
+
+00:12:35.710 --> 00:12:38.590
+in the preference tuning
+case, what you want
+
+00:12:38.590 --> 00:12:42.300
+is to align your model
+with human preferences.
+
+00:12:42.300 --> 00:12:44.640
+So you would start
+with a prompt,
+
+00:12:44.640 --> 00:12:50.440
+and then you would generate
+a completion with your LLM.
+
+00:12:50.440 --> 00:12:52.900
+And then given the completion
+that you would generate,
+
+00:12:52.900 --> 00:12:56.440
+you would pass in the
+prompt and the completion
+
+00:12:56.440 --> 00:12:59.400
+into a reward model
+that is frozen
+
+00:12:59.400 --> 00:13:02.520
+that tells you whether
+the answer is good or not
+
+00:13:02.520 --> 00:13:05.240
+with respect to the prompt.
+
+00:13:05.240 --> 00:13:10.320
+And depending on how the
+reward model responds,
+
+00:13:10.320 --> 00:13:13.520
+you would tweak the
+parameters of your LLM
+
+00:13:13.520 --> 00:13:17.560
+in order to maximize the
+rewards, the expected rewards
+
+00:13:17.560 --> 00:13:20.560
+that is generated.
+
+00:13:20.560 --> 00:13:22.220
+So this is the
+preference tuning case
+
+00:13:22.220 --> 00:13:26.560
+and you have similarly
+for the reasoning case,
+
+00:13:26.560 --> 00:13:31.360
+when you have a prompt that is
+maybe more of a reasoning prompt
+
+00:13:31.360 --> 00:13:33.240
+or a coding prompt.
+
+00:13:33.240 --> 00:13:36.760
+And here you have
+a deterministic way
+
+00:13:36.760 --> 00:13:39.500
+to evaluate the
+quality of your answer.
+
+00:13:39.500 --> 00:13:44.570
+And so here you would only
+look at the final answer.
+
+00:13:44.570 --> 00:13:48.090
+And you would use
+that in order to tweak
+
+00:13:48.090 --> 00:13:51.950
+the parameters of your LLM
+which is here, your policy.
+
+00:13:54.910 --> 00:13:55.410
+OK.
+
+00:13:55.410 --> 00:13:58.390
+So now we talked
+about the setting.
+
+00:13:58.390 --> 00:13:59.750
+Now let's go into the math.
+
+00:13:59.750 --> 00:14:00.590
+Yeah?
+
+00:14:00.590 --> 00:14:01.930
+[INAUDIBLE]
+
+00:14:01.930 --> 00:14:05.090
+So the question is, would the
+probability of a full response
+
+00:14:05.090 --> 00:14:06.690
+be very low?
+
+00:14:06.690 --> 00:14:08.190
+Yes, indeed it would.
+
+00:14:08.190 --> 00:14:10.530
+That is the reason why
+people use logarithm
+
+00:14:10.530 --> 00:14:12.670
+in order to have some
+numerical stability.
+
+00:14:12.670 --> 00:14:14.810
+But yeah, great point.
+
+00:14:14.810 --> 00:14:15.790
+Yeah?
+
+00:14:15.790 --> 00:14:17.210
+[INAUDIBLE]
+
+00:14:17.210 --> 00:14:19.530
+So the question is, do you
+need a human every time
+
+00:14:19.530 --> 00:14:20.910
+you generate a completion?
+
+00:14:20.910 --> 00:14:24.810
+So the answer is no, which is
+the reason why you're actually
+
+00:14:24.810 --> 00:14:28.450
+training a reward
+model firsthand.
+
+00:14:28.450 --> 00:14:31.210
+You're training it
+at human preferences.
+
+00:14:31.210 --> 00:14:34.050
+And the reason why you're doing
+that is because you don't want
+
+00:14:34.050 --> 00:14:36.490
+to have a human in the
+loop every time you
+
+00:14:36.490 --> 00:14:37.930
+generate a completion.
+
+00:14:37.930 --> 00:14:41.340
+And what you would do is
+to use that reward model
+
+00:14:41.340 --> 00:14:44.100
+for any responses that
+you're generating,
+
+00:14:44.100 --> 00:14:45.900
+and you're using
+that reward model
+
+00:14:45.900 --> 00:14:48.720
+in order to assess how
+good the response is.
+
+00:14:48.720 --> 00:14:52.600
+So yeah, you are actually not
+leveraging humans in this loop.
+
+00:14:55.360 --> 00:14:55.860
+OK.
+
+00:14:55.860 --> 00:14:57.180
+Perfect.
+
+00:14:57.180 --> 00:15:00.380
+So I was saying let's
+go into the math.
+
+00:15:00.380 --> 00:15:08.220
+So here, our objective function
+is to maximize the expected
+
+00:15:08.220 --> 00:15:10.660
+rewards that you're getting.
+
+00:15:10.660 --> 00:15:14.100
+So in mathematical terms,
+what you want to do
+
+00:15:14.100 --> 00:15:18.980
+is to find parameters
+theta of your model
+
+00:15:18.980 --> 00:15:22.540
+that maximize the
+objective function, which
+
+00:15:22.540 --> 00:15:30.380
+is the expectation of rewards
+as you're sampling trajectories
+
+00:15:30.380 --> 00:15:36.100
+from your policy pi theta,
+which is your model.
+
+00:15:36.100 --> 00:15:41.110
+And so I know what
+you're thinking.
+
+00:15:41.110 --> 00:15:42.790
+In machine learning,
+when you want
+
+00:15:42.790 --> 00:15:44.770
+to optimize an
+objective function,
+
+00:15:44.770 --> 00:15:48.350
+typically what you want
+to get is the gradient
+
+00:15:48.350 --> 00:15:50.590
+because you want to
+perform your updates.
+
+00:15:50.590 --> 00:15:53.030
+So the first question that
+we want to tackle here
+
+00:15:53.030 --> 00:15:58.710
+is how do you get the
+gradients of this objective?
+
+00:15:58.710 --> 00:16:00.710
+And so I know a lot
+of us are coming
+
+00:16:00.710 --> 00:16:02.210
+from different backgrounds.
+
+00:16:02.210 --> 00:16:05.590
+And I want to make sure we're
+speaking the same language.
+
+00:16:05.590 --> 00:16:10.510
+So little refresher
+on gradients.
+
+00:16:10.510 --> 00:16:14.350
+You can think of
+gradients as a way for you
+
+00:16:14.350 --> 00:16:19.270
+to get the direction
+and the magnitude
+
+00:16:19.270 --> 00:16:22.670
+of the steepest increase.
+
+00:16:22.670 --> 00:16:29.730
+So in the 1D case where your
+function has an input x,
+
+00:16:29.730 --> 00:16:35.070
+that is just one number,
+you all know the derivative.
+
+00:16:35.070 --> 00:16:37.220
+So if the derivative
+is positive,
+
+00:16:37.220 --> 00:16:40.460
+what that means is your function
+increases as x increases.
+
+00:16:40.460 --> 00:16:45.520
+If it's negative, it
+increases as x decreases.
+
+00:16:45.520 --> 00:16:50.560
+So the generalization of that
+for the n dimensional case
+
+00:16:50.560 --> 00:16:52.400
+is the gradient.
+
+00:16:52.400 --> 00:16:56.120
+And the gradient
+of f in this case
+
+00:16:56.120 --> 00:17:00.120
+is the partial derivative of
+that function with respect
+
+00:17:00.120 --> 00:17:05.300
+to all the dimensions of
+your input x, which is in Rn.
+
+00:17:08.720 --> 00:17:10.140
+Are we all good on this?
+
+00:17:10.140 --> 00:17:10.640
+OK.
+
+00:17:10.640 --> 00:17:14.640
+So with that being
+said, let's go back
+
+00:17:14.640 --> 00:17:18.440
+to our original problem, which
+is we have an objective function
+
+00:17:18.440 --> 00:17:20.040
+to maximize.
+
+00:17:20.040 --> 00:17:23.880
+And what we want to do is
+to compute the gradient.
+
+00:17:23.880 --> 00:17:28.720
+And so I will just do that.
+
+00:17:28.720 --> 00:17:37.880
+So what we want is for us to
+maximize the expected rewards.
+
+00:17:37.880 --> 00:17:42.280
+And so in mathematical
+terms, what that means is
+
+00:17:42.280 --> 00:17:52.080
+we want to maximize
+the rewards such
+
+00:17:52.080 --> 00:17:55.760
+that the trajectory is
+sampled from your policy.
+
+00:17:55.760 --> 00:18:00.240
+So this is exactly what
+is on the slide means.
+
+00:18:00.240 --> 00:18:05.880
+And so if you want to
+take the gradient of that,
+
+00:18:05.880 --> 00:18:13.780
+well, you would just compute
+what is in between the integral.
+
+00:18:13.780 --> 00:18:19.980
+So what you would do is
+just wander for a second
+
+00:18:19.980 --> 00:18:21.660
+what is a function of theta.
+
+00:18:21.660 --> 00:18:23.020
+So is R a function of theta?
+
+00:18:23.020 --> 00:18:24.040
+No, it is frozen.
+
+00:18:24.040 --> 00:18:28.040
+Is pi theta a function of theta?
+
+00:18:28.040 --> 00:18:29.360
+Yes.
+
+00:18:29.360 --> 00:18:33.450
+So what you would do is
+actually go and put the gradient
+
+00:18:33.450 --> 00:18:35.210
+in there.
+
+00:18:35.210 --> 00:18:38.250
+And of course, you
+have some regularity
+
+00:18:38.250 --> 00:18:44.150
+that you assume is in place.
+
+00:18:44.150 --> 00:18:44.650
+OK.
+
+00:18:44.650 --> 00:18:46.290
+Mathematical trick.
+
+00:18:46.290 --> 00:18:49.770
+What is the gradient
+of pi of theta?
+
+00:18:49.770 --> 00:18:55.690
+So you may know that the
+gradient of log of a function
+
+00:18:55.690 --> 00:19:00.970
+is the gradient of that
+function over that function.
+
+00:19:00.970 --> 00:19:03.330
+So that's a mathematical result.
+
+00:19:03.330 --> 00:19:06.530
+So what that means is that
+the gradient of a function
+
+00:19:06.530 --> 00:19:12.650
+is equal to the gradient of
+the log of that function times
+
+00:19:12.650 --> 00:19:14.890
+that function.
+
+00:19:14.890 --> 00:19:21.810
+So here this is equal to the
+gradient of the log of pi theta
+
+00:19:21.810 --> 00:19:25.390
+times pi theta.
+
+00:19:28.810 --> 00:19:32.260
+And so what does that mean?
+
+00:19:32.260 --> 00:19:34.060
+I'm going to just
+rewrite everything
+
+00:19:34.060 --> 00:19:35.560
+so that we're all clear.
+
+00:19:38.540 --> 00:19:51.060
+So it's integral of R tau
+gradient of log of pi theta pi
+
+00:19:51.060 --> 00:19:56.980
+theta of t and d tau.
+
+00:19:56.980 --> 00:19:59.680
+So this is nothing else.
+
+00:20:03.140 --> 00:20:12.220
+This is nothing else than the
+expected value of your rewards
+
+00:20:12.220 --> 00:20:25.300
+times the gradient of the
+logarithm of pi theta,
+
+00:20:25.300 --> 00:20:31.690
+where tau is sampled from your
+policy of parameters theta.
+
+00:20:35.670 --> 00:20:37.170
+Does everyone agree
+with the math?
+
+00:20:37.170 --> 00:20:37.670
+Yes?
+
+00:20:37.670 --> 00:20:39.070
+[INAUDIBLE]
+
+00:20:39.070 --> 00:20:41.590
+So the question is, how
+did you introduce the log?
+
+00:20:41.590 --> 00:20:48.950
+So I just used the
+fact that the gradient
+
+00:20:48.950 --> 00:20:51.150
+of the log of a
+function phi of theta
+
+00:20:51.150 --> 00:21:01.130
+is equal to the gradient of that
+function over that function.
+
+00:21:01.130 --> 00:21:03.790
+So it's just a
+mathematical identity.
+
+00:21:03.790 --> 00:21:07.070
+[INAUDIBLE]
+
+00:21:07.070 --> 00:21:07.850
+Yes, exactly.
+
+00:21:07.850 --> 00:21:11.950
+So what we did is we
+just put that here.
+
+00:21:11.950 --> 00:21:14.310
+[INAUDIBLE]
+
+00:21:14.310 --> 00:21:15.610
+Yes, exactly.
+
+00:21:15.610 --> 00:21:17.930
+Thank you.
+
+00:21:17.930 --> 00:21:18.430
+Great.
+
+00:21:18.430 --> 00:21:20.050
+Does everyone agree
+with the math?
+
+00:21:23.630 --> 00:21:25.590
+OK, cool.
+
+00:21:25.590 --> 00:21:28.190
+So the reason why I'm doing
+the math on the blackboard
+
+00:21:28.190 --> 00:21:30.920
+is not because I like writing
+on the blackboard, but I mean,
+
+00:21:30.920 --> 00:21:31.420
+I do.
+
+00:21:31.420 --> 00:21:35.400
+But here you will see
+this formula quite a lot.
+
+00:21:35.400 --> 00:21:40.120
+And it's just important to
+know where this comes from.
+
+00:21:40.120 --> 00:21:43.760
+And so what that means
+is that the gradient
+
+00:21:43.760 --> 00:21:49.920
+of your objective function
+is incentivizing your model
+
+00:21:49.920 --> 00:21:54.440
+to increase probabilities
+of actions that
+
+00:21:54.440 --> 00:21:58.680
+have a positive
+reward and decrease
+
+00:21:58.680 --> 00:22:03.740
+the probability of actions
+that have a negative reward.
+
+00:22:03.740 --> 00:22:04.240
+Yeah?
+
+00:22:04.240 --> 00:22:05.800
+[INAUDIBLE]
+
+00:22:05.800 --> 00:22:10.560
+So the question is, what does
+the tilde in the tau tilde
+
+00:22:10.560 --> 00:22:11.920
+pi of theta mean?
+
+00:22:11.920 --> 00:22:16.200
+So that means that you're
+sampling your trajectory
+
+00:22:16.200 --> 00:22:19.240
+from the probability
+distribution given
+
+00:22:19.240 --> 00:22:21.640
+by your policy of
+parameters theta.
+
+00:22:21.640 --> 00:22:24.100
+So tilde means sampled from.
+
+00:22:28.890 --> 00:22:32.950
+So again, I will just
+repeat the intuition.
+
+00:22:32.950 --> 00:22:35.450
+So what you can take
+away from this formula
+
+00:22:35.450 --> 00:22:41.210
+is that if the
+reward is positive,
+
+00:22:41.210 --> 00:22:44.050
+the gradient will
+incentivize your model
+
+00:22:44.050 --> 00:22:49.270
+to increase the probability
+of such actions.
+
+00:22:49.270 --> 00:22:52.450
+And it will
+incentivize your model
+
+00:22:52.450 --> 00:22:54.810
+to decrease the
+probability of actions
+
+00:22:54.810 --> 00:22:59.510
+that have negative reward.
+
+00:22:59.510 --> 00:23:00.010
+OK.
+
+00:23:00.010 --> 00:23:04.430
+So based on that,
+there's one little thing
+
+00:23:04.430 --> 00:23:05.930
+that I want to tell
+you about, which
+
+00:23:05.930 --> 00:23:10.570
+is that we talked in
+terms of trajectories.
+
+00:23:10.570 --> 00:23:15.450
+And in the LLM case, what we
+typically do is we first have
+
+00:23:15.450 --> 00:23:18.770
+a set of prompts, the x's.
+
+00:23:18.770 --> 00:23:26.100
+And then we sample the responses
+from the policy of our model,
+
+00:23:26.100 --> 00:23:30.180
+given these prompts.
+
+00:23:30.180 --> 00:23:35.140
+So the reason why we only did
+the tau sample from pi theta
+
+00:23:35.140 --> 00:23:39.220
+is just because it didn't
+want to make it more
+
+00:23:39.220 --> 00:23:40.440
+confusing on the blackboard.
+
+00:23:40.440 --> 00:23:45.500
+But just think of expectations
+as being over prompts and then
+
+00:23:45.500 --> 00:23:50.000
+over responses,
+given these prompts.
+
+00:23:50.000 --> 00:23:50.500
+OK.
+
+00:23:50.500 --> 00:23:55.020
+So now you may wonder,
+well, how can you
+
+00:23:55.020 --> 00:23:58.900
+update the weights of your
+model given what we saw?
+
+00:23:58.900 --> 00:24:03.180
+So here what we would do is
+we would have a prompt x,
+
+00:24:03.180 --> 00:24:05.460
+and we would
+generate a completion
+
+00:24:05.460 --> 00:24:14.780
+y sampled from our
+LLM, given the input x.
+
+00:24:14.780 --> 00:24:16.940
+What we would do is
+we would evaluate
+
+00:24:16.940 --> 00:24:20.180
+the reward that is
+associated with the prompt
+
+00:24:20.180 --> 00:24:22.780
+and the response.
+
+00:24:22.780 --> 00:24:26.630
+And then we would compute
+the gradient, which we saw
+
+00:24:26.630 --> 00:24:31.730
+is R times the gradient
+of the log of pi.
+
+00:24:31.730 --> 00:24:35.990
+And so here's exactly
+what's on the slides.
+
+00:24:35.990 --> 00:24:38.710
+And then you would
+update your parameters.
+
+00:24:38.710 --> 00:24:41.850
+So you may be familiar
+with gradient descent.
+
+00:24:41.850 --> 00:24:46.050
+So it's theta minus, but here we
+want to maximize the objective.
+
+00:24:46.050 --> 00:24:51.450
+We want to maximize our
+model generating high reward.
+
+00:24:51.450 --> 00:24:56.110
+So here it's actually theta
+plus alpha times the gradient
+
+00:24:56.110 --> 00:24:57.970
+because it's gradient ascent.
+
+00:25:00.510 --> 00:25:08.090
+So one thing that I want to say
+is that contrary to pretraining,
+
+00:25:08.090 --> 00:25:14.630
+contrary to SFT, here we need
+to always generate the response.
+
+00:25:14.630 --> 00:25:16.850
+Because here we're in
+an on policy setting.
+
+00:25:16.850 --> 00:25:19.230
+We're generating the
+response and then
+
+00:25:19.230 --> 00:25:22.770
+performing the update on the
+response generated by the model.
+
+00:25:22.770 --> 00:25:24.300
+This is not a fixed response.
+
+00:25:24.300 --> 00:25:26.480
+It is generated by the model.
+
+00:25:26.480 --> 00:25:28.880
+So the problem
+with that is you're
+
+00:25:28.880 --> 00:25:31.560
+asking your model to
+generate responses every time
+
+00:25:31.560 --> 00:25:34.640
+you want to make an update.
+
+00:25:34.640 --> 00:25:38.160
+And that step is very expensive.
+
+00:25:38.160 --> 00:25:40.400
+You cannot parallelize it
+because you need to ask
+
+00:25:40.400 --> 00:25:42.380
+your model, OK, what
+is the next token?
+
+00:25:42.380 --> 00:25:45.500
+And then you take that token and
+you ask, what is the next token?
+
+00:25:45.500 --> 00:25:50.760
+And one at a time you're
+generating these responses.
+
+00:25:50.760 --> 00:25:53.840
+And so one thing that
+I want to tell you
+
+00:25:53.840 --> 00:26:00.680
+is a method that
+people can use in order
+
+00:26:00.680 --> 00:26:03.480
+to limit the number
+of times they
+
+00:26:03.480 --> 00:26:05.900
+need to generate completions.
+
+00:26:09.000 --> 00:26:10.620
+And I want to write that down.
+
+00:26:14.080 --> 00:26:17.240
+So here what we're
+saying is that we
+
+00:26:17.240 --> 00:26:21.810
+want to maximize the
+expected rewards when
+
+00:26:21.810 --> 00:26:26.650
+the trajectory is sampled
+from the current policy.
+
+00:26:26.650 --> 00:26:28.350
+So we want to maximize this.
+
+00:26:32.730 --> 00:26:38.770
+So we want to maximize the
+expectation of R of tau
+
+00:26:38.770 --> 00:26:44.750
+when R, sorry, when tau is
+sampled from the current policy.
+
+00:26:48.090 --> 00:26:50.170
+Which is equal to
+the integral of R
+
+00:26:50.170 --> 00:26:57.570
+of tau pi theta of tau d tau.
+
+00:26:57.570 --> 00:27:05.090
+But another way of writing this
+could be to say if we have,
+
+00:27:05.090 --> 00:27:13.530
+let's say, another
+policy tau fixed,
+
+00:27:13.530 --> 00:27:20.620
+we could express this quantity
+as a function of tau fixed
+
+00:27:20.620 --> 00:27:23.880
+by letting this be popped up.
+
+00:27:23.880 --> 00:27:36.100
+So here we do pi theta of tau
+over pi theta fixed of tau times
+
+00:27:36.100 --> 00:27:43.320
+pi theta fixed of tau d tau.
+
+00:27:43.320 --> 00:27:47.540
+Which is equal to
+the expectation
+
+00:27:47.540 --> 00:28:07.840
+of R of tau times pi theta of
+tau over pi theta fixed of tau.
+
+00:28:07.840 --> 00:28:15.260
+Where tau is sampled
+from pi theta fixed.
+
+00:28:15.260 --> 00:28:17.040
+So I want to just highlight.
+
+00:28:19.550 --> 00:28:24.670
+So we went from maximizing
+the expected value when
+
+00:28:24.670 --> 00:28:31.310
+tau is sampled from
+pi theta of a quantity
+
+00:28:31.310 --> 00:28:37.710
+over to a quantity which samples
+the trajectory from a policy
+
+00:28:37.710 --> 00:28:43.270
+of fixed given parameters.
+
+00:28:43.270 --> 00:28:46.430
+So why did I do that?
+
+00:28:46.430 --> 00:28:48.990
+So let's imagine for
+a second that we're
+
+00:28:48.990 --> 00:28:52.270
+tired of always generating
+completions every time we
+
+00:28:52.270 --> 00:28:54.510
+want to perform an update.
+
+00:28:54.510 --> 00:29:00.990
+Let's assume we generate
+completions, let's say once.
+
+00:29:00.990 --> 00:29:07.710
+And then we perform updates
+using the completions
+
+00:29:07.710 --> 00:29:14.150
+of that one time but by
+reweighting the rewards
+
+00:29:14.150 --> 00:29:17.910
+for a given trajectory
+with the ratio
+
+00:29:17.910 --> 00:29:21.950
+of the probability of
+your current policy
+
+00:29:21.950 --> 00:29:26.150
+over your fixed policy.
+
+00:29:26.150 --> 00:29:29.510
+So the reason why I wrote
+that is because sometimes we
+
+00:29:29.510 --> 00:29:30.810
+don't want to always do that.
+
+00:29:30.810 --> 00:29:33.310
+We want to have a
+fixed policy that
+
+00:29:33.310 --> 00:29:38.110
+does that once and then just
+reweight the terms in a way that
+
+00:29:38.110 --> 00:29:41.110
+makes it still
+mathematically valid,
+
+00:29:41.110 --> 00:29:42.770
+because this is
+what we care about.
+
+00:29:46.510 --> 00:29:49.790
+So one thing that
+I want to add is
+
+00:29:49.790 --> 00:29:58.650
+this term is called
+importance sampling ratio.
+
+00:29:58.650 --> 00:29:59.150
+Yes?
+
+00:29:59.150 --> 00:30:00.510
+[INAUDIBLE]
+
+00:30:00.510 --> 00:30:02.950
+So the question is I
+don't get the benefits.
+
+00:30:02.950 --> 00:30:05.230
+We're still computing
+pi theta of tau.
+
+00:30:05.230 --> 00:30:06.310
+What is the benefit?
+
+00:30:06.310 --> 00:30:12.510
+So the trick is
+evaluating the policy
+
+00:30:12.510 --> 00:30:15.720
+is different with
+generating a rollout.
+
+00:30:15.720 --> 00:30:17.680
+Because evaluating
+the policy, you're
+
+00:30:17.680 --> 00:30:21.320
+taking everything as input
+in parallel and computing
+
+00:30:21.320 --> 00:30:23.220
+everything, all
+the probabilities.
+
+00:30:23.220 --> 00:30:25.100
+But here when you
+do the rollout,
+
+00:30:25.100 --> 00:30:27.560
+as in when you
+generate a response,
+
+00:30:27.560 --> 00:30:30.920
+you need to take the first
+token to generate the token.
+
+00:30:30.920 --> 00:30:35.760
+And then take that token
+and generate the next token
+
+00:30:35.760 --> 00:30:37.840
+over and over.
+
+00:30:37.840 --> 00:30:39.260
+So this is expensive.
+
+00:30:39.260 --> 00:30:40.060
+This is cheap.
+
+00:30:42.820 --> 00:30:43.320
+Yeah?
+
+00:30:43.320 --> 00:30:44.480
+[INAUDIBLE]
+
+00:30:44.480 --> 00:30:47.000
+So the question is, please
+explain a bit more what
+
+00:30:47.000 --> 00:30:48.600
+you mean by this is cheap.
+
+00:30:48.600 --> 00:30:50.860
+So here you know
+the full response.
+
+00:30:50.860 --> 00:30:52.720
+You know the full response.
+
+00:30:52.720 --> 00:30:57.520
+So you're putting all
+the responses inputs,
+
+00:30:57.520 --> 00:30:58.380
+all in parallel.
+
+00:30:58.380 --> 00:31:01.220
+So it's all being computed
+in a nice parallel fashion.
+
+00:31:04.320 --> 00:31:11.280
+So maybe I can do something
+else that could be more helpful.
+
+00:31:11.280 --> 00:31:13.630
+You mean that [INAUDIBLE]?
+
+00:31:18.810 --> 00:31:19.630
+Yeah, exactly.
+
+00:31:22.974 --> 00:31:35.070
+So here, so generation, what
+you're doing is you're putting--
+
+00:31:35.070 --> 00:31:37.490
+so this is your model--
+
+00:31:37.490 --> 00:31:43.050
+putting a token in, token out.
+
+00:31:43.050 --> 00:31:53.130
+That token in, token
+out, and so on.
+
+00:31:53.130 --> 00:32:01.130
+But for evaluation,
+what you're doing is
+
+00:32:01.130 --> 00:32:03.310
+you already know
+the full completion.
+
+00:32:03.310 --> 00:32:04.310
+You already know it.
+
+00:32:04.310 --> 00:32:06.310
+You know all the tokens.
+
+00:32:09.010 --> 00:32:15.252
+So you're putting everything
+as inputs all at once.
+
+00:32:15.252 --> 00:32:18.760
+And you know that your
+LLM is a decoder only LLM,
+
+00:32:18.760 --> 00:32:21.240
+so it has the masked
+self-attention.
+
+00:32:21.240 --> 00:32:23.960
+So it's able to nicely
+only attend to itself.
+
+00:32:23.960 --> 00:32:26.900
+And the ones before all
+that is very parallel.
+
+00:32:26.900 --> 00:32:30.860
+And you can get the
+corresponding probabilities
+
+00:32:30.860 --> 00:32:31.680
+as outputs.
+
+00:32:34.380 --> 00:32:36.460
+This is expensive.
+
+00:32:36.460 --> 00:32:37.560
+This is cheap.
+
+00:32:40.440 --> 00:32:40.940
+OK.
+
+00:32:40.940 --> 00:32:41.960
+Great question.
+
+00:32:41.960 --> 00:32:42.460
+Yeah?
+
+00:32:42.460 --> 00:32:43.460
+[INAUDIBLE]
+
+00:32:43.460 --> 00:32:46.420
+So the question is we're still
+doing the expensive calculation
+
+00:32:46.420 --> 00:32:47.280
+with theta fixed.
+
+00:32:47.280 --> 00:32:51.140
+Yes, but you can do it once
+and reuse that several times.
+
+00:32:51.140 --> 00:32:53.480
+You don't need to
+do that every time.
+
+00:32:53.480 --> 00:32:54.767
+[INAUDIBLE]
+
+00:32:54.767 --> 00:32:56.600
+The question is for
+multiple training steps.
+
+00:32:56.600 --> 00:32:57.620
+Yes.
+
+00:32:57.620 --> 00:32:59.240
+So we will see that
+more in detail.
+
+00:32:59.240 --> 00:33:01.620
+I just didn't want this
+to come out of the blue.
+
+00:33:01.620 --> 00:33:05.100
+This is the reason.
+
+00:33:05.100 --> 00:33:11.630
+So now, what I want to do is
+to go through some challenges
+
+00:33:11.630 --> 00:33:15.550
+that such a vanilla
+approach can exhibit.
+
+00:33:15.550 --> 00:33:18.130
+So this is not one challenge.
+
+00:33:18.130 --> 00:33:23.990
+This is just like a small FYI.
+
+00:33:23.990 --> 00:33:26.990
+The first challenge
+that I want to mention
+
+00:33:26.990 --> 00:33:33.550
+is that if we use a reward
+function that does not
+
+00:33:33.550 --> 00:33:40.630
+have a concept of relative
+compared to some baseline,
+
+00:33:40.630 --> 00:33:45.190
+we may get gradients that
+are of high variance.
+
+00:33:45.190 --> 00:33:47.070
+So I'll give you an example.
+
+00:33:47.070 --> 00:33:51.510
+Let's assume we have a prompt,
+and we have two answers.
+
+00:33:51.510 --> 00:33:55.230
+Let's say one is good
+and the other one is bad.
+
+00:33:55.230 --> 00:34:00.390
+In the first case, the good
+answer has a reward of 101,
+
+00:34:00.390 --> 00:34:05.470
+and the bad answer
+has a reward of 100.
+
+00:34:05.470 --> 00:34:10.600
+So you know that 101
+is greater than 100,
+
+00:34:10.600 --> 00:34:14.320
+but both are very high, and you
+don't exactly get the difference
+
+00:34:14.320 --> 00:34:17.960
+relative to one another.
+
+00:34:17.960 --> 00:34:20.820
+The problem is that
+this will lead--
+
+00:34:20.820 --> 00:34:23.440
+this will lead to
+noisy gradients,
+
+00:34:23.440 --> 00:34:29.639
+because you know that your
+model will update parameters
+
+00:34:29.639 --> 00:34:33.679
+as a function of
+R and the gradient
+
+00:34:33.679 --> 00:34:36.199
+of the log of the policy.
+
+00:34:36.199 --> 00:34:42.280
+So if R is always big
+to make big updates,
+
+00:34:42.280 --> 00:34:48.320
+it will make big updates to
+get good answers pop up more.
+
+00:34:48.320 --> 00:34:51.280
+It will make big updates to
+make the bad answer pop up
+
+00:34:51.280 --> 00:34:55.400
+more but in a lower magnitude,
+because the reward is
+
+00:34:55.400 --> 00:34:59.400
+lower than the one for
+than for the good one.
+
+00:34:59.400 --> 00:35:01.780
+So at the end of the day,
+if you do that enough times,
+
+00:35:01.780 --> 00:35:05.560
+you will get the parameters
+that you want to get,
+
+00:35:05.560 --> 00:35:09.450
+but you will have very
+high variance gradients.
+
+00:35:09.450 --> 00:35:13.410
+As in you will have big updates
+for good, then big updates
+
+00:35:13.410 --> 00:35:17.050
+for bad and so on.
+
+00:35:17.050 --> 00:35:20.970
+So what you want
+is to actually get
+
+00:35:20.970 --> 00:35:25.770
+a sense of what is the expected
+reward that you should receive
+
+00:35:25.770 --> 00:35:28.930
+for a given state.
+
+00:35:28.930 --> 00:35:32.690
+And then contrast the
+reward of each action
+
+00:35:32.690 --> 00:35:36.090
+with respect to that.
+
+00:35:36.090 --> 00:35:43.410
+So if you say that OK, on
+average 100.5 is roughly OK,
+
+00:35:43.410 --> 00:35:49.510
+then if you have plus 0.5,
+then you know it's good.
+
+00:35:49.510 --> 00:35:54.090
+And if you have minus 0.5,
+then you know it's not good.
+
+00:35:54.090 --> 00:35:58.130
+And you can show
+on a toy example
+
+00:35:58.130 --> 00:36:01.810
+that the gradients that
+you get as a result of that
+
+00:36:01.810 --> 00:36:05.370
+are of much lower
+variance when you do
+
+00:36:05.370 --> 00:36:10.660
+have that baseline, when you
+do have that sense of relative
+
+00:36:10.660 --> 00:36:13.540
+to something.
+
+00:36:13.540 --> 00:36:16.220
+So that's the first challenge.
+
+00:36:16.220 --> 00:36:22.100
+The second challenge is that the
+two types of reward that we saw
+
+00:36:22.100 --> 00:36:24.860
+are at the completion
+level, meaning
+
+00:36:24.860 --> 00:36:27.340
+that you either know
+that everything is good
+
+00:36:27.340 --> 00:36:29.428
+or either know that
+everything is bad.
+
+00:36:29.428 --> 00:36:31.220
+You either know that
+everything is correct,
+
+00:36:31.220 --> 00:36:34.420
+or you know that
+everything is not correct.
+
+00:36:34.420 --> 00:36:36.440
+Well, I'll tell
+you this example.
+
+00:36:36.440 --> 00:36:39.180
+So let's assume your
+prompt is about Teddy
+
+00:36:39.180 --> 00:36:40.840
+who is in a sealed box.
+
+00:36:40.840 --> 00:36:42.660
+And you want to--
+you're actually
+
+00:36:42.660 --> 00:36:44.080
+moving the box to the kitchen.
+
+00:36:44.080 --> 00:36:47.260
+And now you're asking
+yourself where is Teddy?
+
+00:36:47.260 --> 00:36:50.460
+And let's assume your
+model says, OK, step 1,
+
+00:36:50.460 --> 00:36:52.360
+Teddy climbs out of the box.
+
+00:36:52.360 --> 00:36:54.180
+Step 2, teddy walks
+to the kitchen.
+
+00:36:54.180 --> 00:36:57.100
+And step 3, answer-- kitchen.
+
+00:36:57.100 --> 00:36:59.860
+So know that the
+answer is correct
+
+00:36:59.860 --> 00:37:04.830
+because you move the
+box to the kitchen.
+
+00:37:04.830 --> 00:37:07.270
+But what is not
+correct is Teddy who's
+
+00:37:07.270 --> 00:37:12.830
+working because Teddy is
+in the box the whole time.
+
+00:37:12.830 --> 00:37:17.310
+And in the vanilla
+case, you would
+
+00:37:17.310 --> 00:37:19.950
+incentivize all tokens
+of this response
+
+00:37:19.950 --> 00:37:22.390
+to happen more frequently.
+
+00:37:22.390 --> 00:37:24.910
+And this is not
+what you want to do.
+
+00:37:24.910 --> 00:37:30.750
+So you're lacking an explicit
+token level credit assignment.
+
+00:37:30.750 --> 00:37:34.230
+That is something that
+we need to work on.
+
+00:37:34.230 --> 00:37:36.750
+And then the third
+one I think we briefly
+
+00:37:36.750 --> 00:37:40.030
+mentioned it last time.
+
+00:37:40.030 --> 00:37:42.710
+The policy that you already
+have at the beginning
+
+00:37:42.710 --> 00:37:46.750
+of this training stage is
+already at a good state.
+
+00:37:46.750 --> 00:37:48.770
+You already did pretraining.
+
+00:37:48.770 --> 00:37:49.930
+You already did your SFT.
+
+00:37:49.930 --> 00:37:54.950
+Your model is useful, and you
+don't want your trained model
+
+00:37:54.950 --> 00:37:58.150
+to deviate too
+much from the model
+
+00:37:58.150 --> 00:38:02.230
+that you trained because
+it's already good.
+
+00:38:02.230 --> 00:38:06.440
+And on top of that, sometimes
+the rewards that you have,
+
+00:38:06.440 --> 00:38:10.840
+they're not exactly
+aligned to your end goal.
+
+00:38:10.840 --> 00:38:13.120
+So I'll give you the
+following example.
+
+00:38:13.120 --> 00:38:20.600
+So let's assume me I
+come here, and in order
+
+00:38:20.600 --> 00:38:24.940
+to know if I did a good
+job at giving this lecture,
+
+00:38:24.940 --> 00:38:27.840
+I would rely on the
+intensity of the claps
+
+00:38:27.840 --> 00:38:30.520
+that you would make at
+the end of the lecture.
+
+00:38:30.520 --> 00:38:34.840
+So if I were to only
+optimize for that,
+
+00:38:34.840 --> 00:38:37.680
+then that would not be ideal,
+because maybe I would just
+
+00:38:37.680 --> 00:38:40.320
+spend an hour or two
+hours making jokes that
+
+00:38:40.320 --> 00:38:42.060
+are not related to the class.
+
+00:38:42.060 --> 00:38:44.880
+I would still
+receive claps, maybe,
+
+00:38:44.880 --> 00:38:48.560
+but it would not be
+aligned with my objective.
+
+00:38:48.560 --> 00:38:52.320
+And so there is this
+risk of reward hacking,
+
+00:38:52.320 --> 00:38:57.640
+where your reward model,
+may actually be imperfect.
+
+00:38:57.640 --> 00:38:59.120
+And you may have
+your model who's
+
+00:38:59.120 --> 00:39:04.530
+just trying to game the reward
+model, and you don't want that.
+
+00:39:04.530 --> 00:39:09.630
+So I hope I convinced you
+that we don't want the policy.
+
+00:39:09.630 --> 00:39:12.850
+We don't want the model to
+be too far from the model
+
+00:39:12.850 --> 00:39:14.570
+that you already have.
+
+00:39:14.570 --> 00:39:21.290
+So we want to have some sense
+of constraints in there.
+
+00:39:21.290 --> 00:39:23.530
+And we will see how we can
+quantify the difference
+
+00:39:23.530 --> 00:39:24.670
+between distribution.
+
+00:39:24.670 --> 00:39:25.170
+Yeah?
+
+00:39:25.170 --> 00:39:27.010
+[INAUDIBLE]
+
+00:39:27.010 --> 00:39:28.770
+So the question
+is, what do we mean
+
+00:39:28.770 --> 00:39:30.870
+by don't want to regress
+on previous tasks?
+
+00:39:30.870 --> 00:39:33.810
+So your model was trained
+for specific things.
+
+00:39:33.810 --> 00:39:38.090
+And you're now asking it to
+be better at something else.
+
+00:39:38.090 --> 00:39:42.290
+And so the capabilities
+that it has acquired
+
+00:39:42.290 --> 00:39:47.970
+can be something that it loses
+if you emphasize too much
+
+00:39:47.970 --> 00:39:51.290
+on the task of interest here.
+
+00:39:51.290 --> 00:39:54.450
+And so you also want your
+model to not deviate too much
+
+00:39:54.450 --> 00:39:55.350
+because of that.
+
+00:40:00.000 --> 00:40:00.500
+OK.
+
+00:40:00.500 --> 00:40:01.080
+Cool.
+
+00:40:01.080 --> 00:40:02.510
+Summary.
+
+00:40:02.510 --> 00:40:03.760
+What are the three challenges?
+
+00:40:03.760 --> 00:40:07.140
+The first one is
+gradients can be noisy.
+
+00:40:07.140 --> 00:40:11.540
+Second one is we don't have
+out-of-the-box an explicit
+
+00:40:11.540 --> 00:40:15.300
+token-level credit assignment.
+
+00:40:15.300 --> 00:40:20.780
+And the third one is we don't
+have any explicit constraints
+
+00:40:20.780 --> 00:40:24.460
+on how far the policy can go
+with respect to the policy
+
+00:40:24.460 --> 00:40:27.380
+that we're starting from.
+
+00:40:27.380 --> 00:40:30.620
+So with these three
+challenges in mind,
+
+00:40:30.620 --> 00:40:36.140
+what we will do is talk about
+the most common RL algorithms
+
+00:40:36.140 --> 00:40:40.820
+that are out there, which
+I'm sure you've heard of.
+
+00:40:40.820 --> 00:40:45.580
+We will start with
+the first one, PPO.
+
+00:40:45.580 --> 00:40:51.820
+So PPO stands for Proximal
+Policy Optimization.
+
+00:40:51.820 --> 00:40:54.860
+And what it tries
+to do is it tries
+
+00:40:54.860 --> 00:40:58.380
+to maximize your
+objective function
+
+00:40:58.380 --> 00:41:03.580
+but with two differences
+compared to the first one.
+
+00:41:03.580 --> 00:41:07.740
+The first difference is it
+tries to maximize advantages
+
+00:41:07.740 --> 00:41:10.180
+and not rewards.
+
+00:41:10.180 --> 00:41:12.180
+And the second
+difference is it tries
+
+00:41:12.180 --> 00:41:18.020
+to not deviate too much from
+the policy that you had before.
+
+00:41:18.020 --> 00:41:22.140
+And we will see exactly how
+these two terms are obtained.
+
+00:41:22.140 --> 00:41:24.100
+But just one note.
+
+00:41:24.100 --> 00:41:28.060
+PPO, the P in PPO is
+for that second term.
+
+00:41:28.060 --> 00:41:35.740
+You want a bit of proximity
+to that policy of reference.
+
+00:41:35.740 --> 00:41:40.200
+So with that being said,
+let's go into the first term,
+
+00:41:40.200 --> 00:41:43.580
+which is the advantage term.
+
+00:41:43.580 --> 00:41:46.260
+So the reward
+function that you have
+
+00:41:46.260 --> 00:41:50.300
+is wondering how good is
+this answer with respect
+
+00:41:50.300 --> 00:41:51.980
+to the prompt.
+
+00:41:51.980 --> 00:41:55.220
+But what we really
+want to ask is,
+
+00:41:55.220 --> 00:41:59.670
+compared to what we would expect
+for this prompt, how good is
+
+00:41:59.670 --> 00:42:02.030
+this response?
+
+00:42:02.030 --> 00:42:07.070
+So we want to have some form
+of relative to a baseline,
+
+00:42:07.070 --> 00:42:12.350
+and that is what
+advantages are aiming for.
+
+00:42:12.350 --> 00:42:17.550
+And in order to illustrate that,
+let's go through an example.
+
+00:42:17.550 --> 00:42:20.470
+So let's assume that we
+have the following prompts.
+
+00:42:20.470 --> 00:42:21.750
+Teddy is in a box.
+
+00:42:21.750 --> 00:42:23.230
+Where it's Teddy?
+
+00:42:23.230 --> 00:42:25.150
+And then you have
+your response--
+
+00:42:25.150 --> 00:42:27.630
+in the box.
+
+00:42:27.630 --> 00:42:30.190
+So the reward for
+that one-- let's
+
+00:42:30.190 --> 00:42:31.650
+assume it's a correct response.
+
+00:42:31.650 --> 00:42:34.070
+So the reward for
+the whole completion
+
+00:42:34.070 --> 00:42:37.990
+relative to that prompt
+is, let's say, plus 1.
+
+00:42:37.990 --> 00:42:44.590
+But you want to know how these
+different tokens are actually
+
+00:42:44.590 --> 00:42:50.790
+receiving the credits relative
+to what they are expecting.
+
+00:42:50.790 --> 00:42:55.110
+So the question that we
+want to ask ourselves
+
+00:42:55.110 --> 00:43:00.960
+is, given a partial
+completion, what
+
+00:43:00.960 --> 00:43:05.080
+is the expected
+final reward if you
+
+00:43:05.080 --> 00:43:07.800
+were to continue
+sampling from the policy
+
+00:43:07.800 --> 00:43:10.320
+for the rest of the tokens?
+
+00:43:10.320 --> 00:43:12.520
+So I'll give you an example.
+
+00:43:12.520 --> 00:43:15.280
+So let's assume you
+have the whole input.
+
+00:43:15.280 --> 00:43:17.320
+And then you're
+decoding, let's say,
+
+00:43:17.320 --> 00:43:21.320
+in here you want to
+ask yourself, OK,
+
+00:43:21.320 --> 00:43:25.120
+if I were to continue like
+this on average, what would
+
+00:43:25.120 --> 00:43:28.000
+be the expected final rewards?
+
+00:43:28.000 --> 00:43:31.040
+And here, let's
+suppose it's 0.6.
+
+00:43:31.040 --> 00:43:31.900
+Then you decode.
+
+00:43:31.900 --> 00:43:37.360
+You go to the, OK, 0.7 box.
+
+00:43:37.360 --> 00:43:38.500
+It's the correct answer.
+
+00:43:38.500 --> 00:43:44.440
+So it should have a big bump,
+so let's say 0.95 and 1.
+
+00:43:44.440 --> 00:43:51.160
+So what did we do here, what we
+tried to do is to ask ourselves,
+
+00:43:51.160 --> 00:43:56.730
+given a partial completion, what
+the expected final reward would
+
+00:43:56.730 --> 00:43:58.130
+be.
+
+00:43:58.130 --> 00:44:02.210
+And the nice thing
+with this approach
+
+00:44:02.210 --> 00:44:04.870
+is we have a sense
+of a baseline.
+
+00:44:04.870 --> 00:44:08.170
+And the baseline
+here is compared
+
+00:44:08.170 --> 00:44:13.050
+to how we would have
+completed if you
+
+00:44:13.050 --> 00:44:15.770
+were to sample the policy.
+
+00:44:15.770 --> 00:44:21.890
+And you can exactly pinpoint the
+contribution of a given token
+
+00:44:21.890 --> 00:44:23.730
+when you do that.
+
+00:44:23.730 --> 00:44:27.130
+So in this example,
+if you were to compute
+
+00:44:27.130 --> 00:44:34.370
+the very simple version of the
+advantage for the token box,
+
+00:44:34.370 --> 00:44:40.010
+you would take
+the value with box
+
+00:44:40.010 --> 00:44:42.770
+and subtract the
+value without box.
+
+00:44:42.770 --> 00:44:47.230
+So it's 0.95 minus
+7, so plus 25.
+
+00:44:50.010 --> 00:44:54.540
+So I hope this example
+motivates the fact
+
+00:44:54.540 --> 00:45:00.020
+that we're introducing a
+new function, which here we
+
+00:45:00.020 --> 00:45:03.380
+call the value function.
+
+00:45:03.380 --> 00:45:07.700
+That is a function that is
+defined at the token level.
+
+00:45:07.700 --> 00:45:11.140
+So what that function
+does, so the math
+
+00:45:11.140 --> 00:45:13.180
+formula on the
+slide, what it says
+
+00:45:13.180 --> 00:45:18.420
+is it tries to determine
+what is the expected
+
+00:45:18.420 --> 00:45:22.100
+future rewards if
+you were to start
+
+00:45:22.100 --> 00:45:27.100
+from the input and
+the partial completion
+
+00:45:27.100 --> 00:45:31.340
+and if you were to continue
+decoding by sampling
+
+00:45:31.340 --> 00:45:35.140
+from your LLM, by sampling
+from the policy, what would
+
+00:45:35.140 --> 00:45:38.380
+be the expected value of that?
+
+00:45:38.380 --> 00:45:40.380
+That is your baseline.
+
+00:45:40.380 --> 00:45:44.940
+So in this case, the
+model is actually
+
+00:45:44.940 --> 00:45:50.500
+trained along with the policy
+because you need to ask yourself
+
+00:45:50.500 --> 00:45:52.750
+what would be the
+expected reward if you
+
+00:45:52.750 --> 00:45:55.150
+were to sample from the policy?
+
+00:45:55.150 --> 00:45:59.270
+So you need to leverage the
+parameters of the policy
+
+00:45:59.270 --> 00:46:02.030
+that you're training.
+
+00:46:02.030 --> 00:46:04.110
+Here, the way you would
+train such a model
+
+00:46:04.110 --> 00:46:08.630
+is you would try to
+predict the reward
+
+00:46:08.630 --> 00:46:13.230
+at the end of the completion,
+given a partial completion along
+
+00:46:13.230 --> 00:46:16.110
+with the prompt.
+
+00:46:16.110 --> 00:46:19.630
+And this quantity would be
+defined at the token level.
+
+00:46:19.630 --> 00:46:25.630
+So for each token of the
+output, you would have a value.
+
+00:46:25.630 --> 00:46:28.950
+So this is the value function.
+
+00:46:28.950 --> 00:46:32.550
+And the way you would
+compute the advantage
+
+00:46:32.550 --> 00:46:37.390
+is by taking the
+value up to that
+
+00:46:37.390 --> 00:46:44.470
+token and do minus the value
+up to the token right before.
+
+00:46:44.470 --> 00:46:47.790
+And here you're
+able to tease out
+
+00:46:47.790 --> 00:46:53.000
+the impact of that token itself.
+
+00:46:53.000 --> 00:46:56.880
+So one thing that
+I want to say it
+
+00:46:56.880 --> 00:46:59.160
+is actually more
+complicated than that.
+
+00:46:59.160 --> 00:47:01.780
+So this, that's
+why it's in quotes.
+
+00:47:01.780 --> 00:47:03.878
+So it's a quote unquote.
+
+00:47:03.878 --> 00:47:05.920
+The reason why it's a
+little bit more complicated
+
+00:47:05.920 --> 00:47:11.400
+than that is if you were
+to generate a token,
+
+00:47:11.400 --> 00:47:15.660
+you may increase the likelihood
+of you getting a high reward,
+
+00:47:15.660 --> 00:47:17.040
+let's say.
+
+00:47:17.040 --> 00:47:20.720
+But you may also put
+yourself in a position
+
+00:47:20.720 --> 00:47:24.120
+where future tokens would
+benefit from the token
+
+00:47:24.120 --> 00:47:26.040
+that you generated.
+
+00:47:26.040 --> 00:47:29.920
+So let me give you an example.
+
+00:47:29.920 --> 00:47:33.880
+Let's assume you're teaching
+a concept to someone.
+
+00:47:33.880 --> 00:47:38.160
+You're teaching it
+some math concepts.
+
+00:47:38.160 --> 00:47:43.360
+You teaching the concepts
+may lead to your friends
+
+00:47:43.360 --> 00:47:45.440
+acing the math exam.
+
+00:47:45.440 --> 00:47:48.520
+So that's a short-term reward.
+
+00:47:48.520 --> 00:47:55.570
+But you can also assume that the
+fact of them succeeding the exam
+
+00:47:55.570 --> 00:48:01.150
+is also placing them on a good
+path for succeeding later exams
+
+00:48:01.150 --> 00:48:04.970
+and maybe being
+successful at work
+
+00:48:04.970 --> 00:48:07.790
+and then starting a
+company, being a CEO,
+
+00:48:07.790 --> 00:48:08.750
+being a billionaire.
+
+00:48:08.750 --> 00:48:11.810
+So you cannot completely
+attribute you teaching
+
+00:48:11.810 --> 00:48:15.810
+the concept to your friend as
+being the sole reason for them
+
+00:48:15.810 --> 00:48:17.270
+being successful in the future.
+
+00:48:17.270 --> 00:48:19.210
+But there is some
+part of it that
+
+00:48:19.210 --> 00:48:22.250
+should be attributed to that.
+
+00:48:22.250 --> 00:48:27.210
+And that is the idea behind the
+generalized advantage estimation
+
+00:48:27.210 --> 00:48:29.310
+paper, which is not
+part of the exam.
+
+00:48:29.310 --> 00:48:31.910
+It's not part of the
+scope of this class.
+
+00:48:31.910 --> 00:48:36.930
+But in case you're interested,
+feel free to look at it.
+
+00:48:36.930 --> 00:48:43.010
+The idea is to also look at
+how future values also perform
+
+00:48:43.010 --> 00:48:45.790
+and link that back
+to a given token.
+
+00:48:50.100 --> 00:48:51.300
+Cool.
+
+00:48:51.300 --> 00:48:53.040
+So, so far, does
+that make sense?
+
+00:48:53.040 --> 00:48:58.220
+So here what we saw was a way
+to compute advantages, which
+
+00:48:58.220 --> 00:49:04.740
+are a quantity that tells you
+how a given token, predicted
+
+00:49:04.740 --> 00:49:09.880
+token is impacting your
+purpose of getting, let's say,
+
+00:49:09.880 --> 00:49:13.620
+high rewards or getting
+token level signal?
+
+00:49:13.620 --> 00:49:17.780
+And you also have a
+sense of a baseline
+
+00:49:17.780 --> 00:49:22.680
+by comparing your value with the
+value without that given token.
+
+00:49:22.680 --> 00:49:23.180
+Yes?
+
+00:49:23.180 --> 00:49:25.300
+[INAUDIBLE]
+
+00:49:25.300 --> 00:49:28.620
+So the question is, is there any
+interaction between the value
+
+00:49:28.620 --> 00:49:30.040
+function and the policy?
+
+00:49:30.040 --> 00:49:33.500
+So these two are
+actually two models.
+
+00:49:33.500 --> 00:49:37.100
+In practice, you
+train them jointly.
+
+00:49:37.100 --> 00:49:39.620
+So you would have
+one loss function
+
+00:49:39.620 --> 00:49:42.980
+and have a penalization
+for the value
+
+00:49:42.980 --> 00:49:47.750
+and the penalization
+for the actual policy.
+
+00:49:47.750 --> 00:49:50.890
+But in this case, these two
+are completely disjoint.
+
+00:49:50.890 --> 00:49:53.870
+The value function is not
+being fed as input anywhere.
+
+00:49:57.410 --> 00:49:57.910
+Yeah?
+
+00:49:57.910 --> 00:49:58.710
+[INAUDIBLE]
+
+00:49:58.710 --> 00:50:00.310
+So the question is
+the reward model
+
+00:50:00.310 --> 00:50:03.130
+and the value model
+are both trained.
+
+00:50:03.130 --> 00:50:05.230
+So the reward model
+is trained beforehand.
+
+00:50:05.230 --> 00:50:08.510
+And the value model is trained
+at the same time as when
+
+00:50:08.510 --> 00:50:10.390
+you're training your policy.
+
+00:50:10.390 --> 00:50:12.150
+And the main reason
+why you want to do
+
+00:50:12.150 --> 00:50:17.310
+that this way is because the
+definition of your value model
+
+00:50:17.310 --> 00:50:21.650
+is to determine the
+expected rewards
+
+00:50:21.650 --> 00:50:24.590
+if you were to continue
+according to the policies
+
+00:50:24.590 --> 00:50:25.570
+that you're training.
+
+00:50:30.310 --> 00:50:32.150
+Cool.
+
+00:50:32.150 --> 00:50:32.690
+Yeah?
+
+00:50:32.690 --> 00:50:34.550
+[INAUDIBLE]
+
+00:50:34.550 --> 00:50:37.810
+So the question is value
+function is a function of theta.
+
+00:50:37.810 --> 00:50:39.970
+So yes, there is a
+backbone that is shared.
+
+00:50:39.970 --> 00:50:44.120
+And the gradients are determined
+by your loss function, which
+
+00:50:44.120 --> 00:50:47.960
+contains a value loss
+function and then
+
+00:50:47.960 --> 00:50:52.707
+a policy, the actual
+loss function.
+
+00:50:52.707 --> 00:50:54.540
+So in case you're
+interested in the details,
+
+00:50:54.540 --> 00:50:58.260
+actually the PPO paper does
+have some technical details.
+
+00:50:58.260 --> 00:51:01.420
+They're interesting to look at.
+
+00:51:04.440 --> 00:51:07.280
+So now what we're
+saying is we're not
+
+00:51:07.280 --> 00:51:10.500
+trying to optimize the
+expected value of the rewards.
+
+00:51:10.500 --> 00:51:12.880
+We're trying to optimize
+the expected value
+
+00:51:12.880 --> 00:51:15.160
+of the advantages.
+
+00:51:15.160 --> 00:51:18.800
+Well, not exactly.
+
+00:51:18.800 --> 00:51:23.000
+So if you remember
+this, so assuming you
+
+00:51:23.000 --> 00:51:29.440
+can all see the
+blackboard at the top, we
+
+00:51:29.440 --> 00:51:35.320
+that generating
+completions were expensive.
+
+00:51:35.320 --> 00:51:37.560
+So do we want to generate
+completions every time?
+
+00:51:37.560 --> 00:51:39.680
+No.
+
+00:51:39.680 --> 00:51:45.530
+So what you want to do is
+to leverage completions
+
+00:51:45.530 --> 00:51:47.570
+for multiple updates.
+
+00:51:47.570 --> 00:51:50.490
+And here you can do
+that by generating
+
+00:51:50.490 --> 00:51:58.810
+a batch using pi theta
+and then update pi theta
+
+00:51:58.810 --> 00:52:00.030
+on that same batch.
+
+00:52:00.030 --> 00:52:01.810
+And the pi theta
+would become pi old
+
+00:52:01.810 --> 00:52:06.450
+because it's not the
+current policy anymore.
+
+00:52:06.450 --> 00:52:09.810
+And so that is the
+reason why you would see
+
+00:52:09.810 --> 00:52:13.170
+in papers that ratio pop up.
+
+00:52:13.170 --> 00:52:16.830
+So you're not optimizing for
+expectation of the advantage.
+
+00:52:16.830 --> 00:52:19.970
+You're optimizing for the
+expectation of the ratio
+
+00:52:19.970 --> 00:52:21.770
+times the advantage.
+
+00:52:21.770 --> 00:52:25.970
+And this is because you
+want to adjust for the fact
+
+00:52:25.970 --> 00:52:28.790
+that you're actually
+sampling from the old policy.
+
+00:52:28.790 --> 00:52:30.610
+But you want to
+make sure that this
+
+00:52:30.610 --> 00:52:33.170
+is corresponding to
+the current policy.
+
+00:52:33.170 --> 00:52:36.470
+So you have this
+corrective term,
+
+00:52:36.470 --> 00:52:39.950
+which is the ratio between the
+current and the old policy.
+
+00:52:43.090 --> 00:52:45.870
+And this is where I want
+to give a disclaimer.
+
+00:52:45.870 --> 00:52:48.170
+So some papers they
+note this ratio
+
+00:52:48.170 --> 00:52:51.430
+R. So this can be confusing
+with respect to the rewards.
+
+00:52:51.430 --> 00:52:56.890
+So here we note this rho,
+and it is called importance
+
+00:52:56.890 --> 00:52:59.770
+sampling ratio.
+
+00:52:59.770 --> 00:53:01.290
+You have a question?
+
+00:53:01.290 --> 00:53:02.310
+No?
+
+00:53:02.310 --> 00:53:02.810
+OK.
+
+00:53:02.810 --> 00:53:04.130
+Great.
+
+00:53:04.130 --> 00:53:09.610
+So what can happen if
+you do things this way?
+
+00:53:09.610 --> 00:53:14.530
+Well, you can run into the issue
+that we discussed previously
+
+00:53:14.530 --> 00:53:18.770
+where you may run
+into a situation
+
+00:53:18.770 --> 00:53:22.610
+where you're updating your
+theta such that it deviates too
+
+00:53:22.610 --> 00:53:25.770
+much from previous policies.
+
+00:53:25.770 --> 00:53:27.810
+So what you actually
+want to do is
+
+00:53:27.810 --> 00:53:33.650
+to have some form of a
+control over that ratio.
+
+00:53:33.650 --> 00:53:39.090
+And you don't want that ratio to
+be, let's say, too far from one.
+
+00:53:39.090 --> 00:53:41.140
+So there is a formula for that.
+
+00:53:41.140 --> 00:53:44.100
+And I don't want you to look
+at the formula right now.
+
+00:53:44.100 --> 00:53:47.180
+I want us to just
+take a look at it
+
+00:53:47.180 --> 00:53:50.700
+from an intuitive perspective.
+
+00:53:50.700 --> 00:53:54.820
+So here is what I want us to do.
+
+00:53:54.820 --> 00:53:59.860
+So let's assume that
+we're interested in how
+
+00:53:59.860 --> 00:54:05.420
+much your model is
+updating the policy.
+
+00:54:05.420 --> 00:54:10.780
+So here we said it's
+something like the ratio
+
+00:54:10.780 --> 00:54:13.940
+times the advantage.
+
+00:54:13.940 --> 00:54:18.100
+So it's linear as a
+function of the advantage.
+
+00:54:18.100 --> 00:54:21.340
+So if you were to draw--
+
+00:54:21.340 --> 00:54:26.140
+I'm going to just replicate
+what we have here--
+
+00:54:26.140 --> 00:54:31.940
+the evolution of this objective
+function, which I will note J,
+
+00:54:31.940 --> 00:54:36.140
+as a function of the ratio--
+
+00:54:36.140 --> 00:54:39.250
+so if A is positive, so if
+your advantage is positive,
+
+00:54:39.250 --> 00:54:41.870
+meaning you want your
+model to increase
+
+00:54:41.870 --> 00:54:46.230
+the probability of a given
+action from occurring,
+
+00:54:46.230 --> 00:54:49.670
+then you will have
+something like this.
+
+00:54:49.670 --> 00:54:53.270
+Like, A is positive.
+
+00:54:53.270 --> 00:54:56.230
+Does everyone agree with me?
+
+00:54:56.230 --> 00:54:59.130
+So let's assume here we have 1.
+
+00:55:01.770 --> 00:55:03.290
+So I'm just going to recap.
+
+00:55:03.290 --> 00:55:09.390
+So rho is pi theta over pi old.
+
+00:55:09.390 --> 00:55:15.550
+So 1 means that your current
+policy and the old policy
+
+00:55:15.550 --> 00:55:18.070
+are saying the same thing.
+
+00:55:18.070 --> 00:55:21.390
+And so if you're
+here, then what you
+
+00:55:21.390 --> 00:55:27.790
+want to do in order to perform
+your update is to maximize J.
+
+00:55:27.790 --> 00:55:29.110
+So how do you maximize J?
+
+00:55:29.110 --> 00:55:35.830
+You maximize J by increasing
+the probability of your policy
+
+00:55:35.830 --> 00:55:37.090
+performing that action.
+
+00:55:37.090 --> 00:55:41.560
+So you would go more
+somewhere there.
+
+00:55:41.560 --> 00:55:46.800
+You would have your new policy
+be updated and correspond here.
+
+00:55:46.800 --> 00:55:52.040
+The problem is, if you don't
+do anything to that expression,
+
+00:55:52.040 --> 00:55:56.920
+the gradient is always
+nonzero and incentivizing
+
+00:55:56.920 --> 00:56:00.800
+you to increase rho to
+increase the probability
+
+00:56:00.800 --> 00:56:06.160
+of your policy generating
+that action more and more.
+
+00:56:06.160 --> 00:56:14.960
+So what you want to do is to
+break that incentive and clip
+
+00:56:14.960 --> 00:56:19.480
+that function in order for
+you to have a 0 gradient
+
+00:56:19.480 --> 00:56:22.740
+region where if you
+were to, let's say,
+
+00:56:22.740 --> 00:56:26.960
+perform an update to your
+policy and it would become here,
+
+00:56:26.960 --> 00:56:32.680
+you would have no
+incentive to increase rho.
+
+00:56:32.680 --> 00:56:36.970
+And this is exactly
+what is on the slides.
+
+00:56:36.970 --> 00:56:40.490
+What we want to do is
+to clip that function,
+
+00:56:40.490 --> 00:56:45.250
+to remove the incentive
+from the update
+
+00:56:45.250 --> 00:56:50.650
+to increase the probability
+of an action being generated.
+
+00:56:50.650 --> 00:56:55.410
+And you want to avoid your
+policy from increasing
+
+00:56:55.410 --> 00:56:57.370
+that probability even more.
+
+00:56:57.370 --> 00:56:59.370
+So in other words, you
+don't want your policy
+
+00:56:59.370 --> 00:57:02.650
+to deviate too much
+from the old policy.
+
+00:57:02.650 --> 00:57:05.690
+So this is when the
+advantage is positive.
+
+00:57:05.690 --> 00:57:09.890
+Similarly, very similar
+fashion when it's negative.
+
+00:57:09.890 --> 00:57:15.930
+Here, the objective function
+will incentivize your model
+
+00:57:15.930 --> 00:57:18.970
+to decrease your ratio, to
+decrease the probability
+
+00:57:18.970 --> 00:57:23.770
+that your model has from
+generating an action that
+
+00:57:23.770 --> 00:57:26.050
+leads to negative advantage.
+
+00:57:26.050 --> 00:57:28.370
+So you will have
+something like this.
+
+00:57:28.370 --> 00:57:30.510
+So if you come back
+to the formula,
+
+00:57:30.510 --> 00:57:33.270
+this is what the
+formula is doing.
+
+00:57:33.270 --> 00:57:33.770
+Yes?
+
+00:57:33.770 --> 00:57:36.820
+[INAUDIBLE]
+
+00:57:36.820 --> 00:57:40.720
+So the question is you had
+introduced the KL divergence.
+
+00:57:40.720 --> 00:57:41.800
+Why don't you use that?
+
+00:57:41.800 --> 00:57:43.580
+Well, it's my next slide.
+
+00:57:43.580 --> 00:57:46.160
+So I will say a little
+bit about how that works.
+
+00:57:46.160 --> 00:57:50.540
+But this is one way of
+constraining your model
+
+00:57:50.540 --> 00:57:53.720
+from being updated too much.
+
+00:57:53.720 --> 00:57:55.720
+So to your point, let's
+go to the KL divergence.
+
+00:57:55.720 --> 00:57:58.780
+So what is the KL
+divergence doing?
+
+00:57:58.780 --> 00:58:02.020
+So it is an operator that
+is taking in two probability
+
+00:58:02.020 --> 00:58:06.340
+distributions, let's
+assume p and q.
+
+00:58:06.340 --> 00:58:13.300
+So here this operator is
+assuming that p is true,
+
+00:58:13.300 --> 00:58:16.460
+and it is weighting
+that by log of pi/q.
+
+00:58:19.380 --> 00:58:22.020
+You have also the
+continuous version, which
+
+00:58:22.020 --> 00:58:23.480
+is just take the integral.
+
+00:58:26.060 --> 00:58:29.860
+So you have a second way
+of quantifying deviations
+
+00:58:29.860 --> 00:58:35.590
+of your model by saying you
+actually want a penalization
+
+00:58:35.590 --> 00:58:42.710
+term in your loss function that
+compares the current policy
+
+00:58:42.710 --> 00:58:45.950
+and some other policy.
+
+00:58:45.950 --> 00:58:51.270
+So here typically what
+people do is they actually
+
+00:58:51.270 --> 00:58:53.350
+penalize your current
+policy from being
+
+00:58:53.350 --> 00:58:56.830
+too different from your
+SFT policy, from your base
+
+00:58:56.830 --> 00:58:59.590
+policy, your reference
+policy, which
+
+00:58:59.590 --> 00:59:01.110
+is why I want you
+to pay attention
+
+00:59:01.110 --> 00:59:05.030
+to the subscripts of every
+pi that you see out there.
+
+00:59:05.030 --> 00:59:08.430
+So here it's pi theta
+with respect to pi ref.
+
+00:59:08.430 --> 00:59:12.550
+Pi ref is reference,
+as in the base policy.
+
+00:59:12.550 --> 00:59:16.230
+And this contrasts
+with pi old, which
+
+00:59:16.230 --> 00:59:22.070
+is the policy that you use
+to generate the completions.
+
+00:59:22.070 --> 00:59:24.870
+So I'll give you a full story.
+
+00:59:24.870 --> 00:59:27.830
+You start with your pi ref.
+
+00:59:27.830 --> 00:59:31.200
+You train your model,
+so you generate a batch.
+
+00:59:31.200 --> 00:59:32.540
+This becomes pi old.
+
+00:59:32.540 --> 00:59:36.340
+You perform several updates, and
+then you generate another batch.
+
+00:59:36.340 --> 00:59:39.840
+This becomes your pi
+old, several updates.
+
+00:59:39.840 --> 00:59:45.280
+Pi ref stays fixed, and this
+is what you're comparing
+
+00:59:45.280 --> 00:59:48.920
+your current policy to.
+
+00:59:48.920 --> 00:59:54.680
+And so I want to
+very quickly mention
+
+00:59:54.680 --> 00:59:57.700
+a scary formula
+we saw last week,
+
+00:59:57.700 --> 01:00:00.640
+which was the one from DPO.
+
+01:00:00.640 --> 01:00:03.460
+And I'm not sure
+if you remember,
+
+01:00:03.460 --> 01:00:09.360
+but we had said that
+there was a supervised way
+
+01:00:09.360 --> 01:00:15.200
+to express the RL
+objective by using
+
+01:00:15.200 --> 01:00:18.680
+the Bradley-Terry formulation.
+
+01:00:18.680 --> 01:00:23.280
+And what we said was that the
+objective function was following
+
+01:00:23.280 --> 01:00:26.000
+something that was very
+much into the line of what
+
+01:00:26.000 --> 01:00:29.280
+the Bradley-Terry was saying,
+which is something like,
+
+01:00:29.280 --> 01:00:39.970
+so this one is like L minus
+expectation of log of sigma.
+
+01:00:39.970 --> 01:00:44.850
+And sigma is your sigmoidal
+which is sigma of, let's say,
+
+01:00:44.850 --> 01:00:48.050
+Rw minus Rl.
+
+01:00:48.050 --> 01:00:52.290
+And we had said
+that R was defined
+
+01:00:52.290 --> 01:01:03.130
+as beta log of your policy
+compared to some other policy.
+
+01:01:03.130 --> 01:01:05.690
+And here let's say
+it's a reference.
+
+01:01:05.690 --> 01:01:11.450
+And we had said that beta was
+a quantity, some quantity.
+
+01:01:11.450 --> 01:01:14.850
+So I just want to
+draw a connection here
+
+01:01:14.850 --> 01:01:17.730
+that the beta that
+you're seeing in the KL
+
+01:01:17.730 --> 01:01:21.000
+divergence, the beta that
+is actually penalizing
+
+01:01:21.000 --> 01:01:23.250
+for your model being too
+different from your reference
+
+01:01:23.250 --> 01:01:27.330
+model, is actually
+the same beta.
+
+01:01:27.330 --> 01:01:31.300
+So the higher the
+beta, the more you
+
+01:01:31.300 --> 01:01:36.620
+will try to not deviate too
+much from your reference policy.
+
+01:01:36.620 --> 01:01:38.540
+And I just want to
+show you mathematically
+
+01:01:38.540 --> 01:01:41.540
+why that is the
+case intuitively.
+
+01:01:41.540 --> 01:01:48.180
+So sigma, if you were
+to draw the function,
+
+01:01:48.180 --> 01:01:50.300
+it's something like this.
+
+01:01:50.300 --> 01:01:51.220
+Whoop.
+
+01:01:51.220 --> 01:01:52.780
+Like this.
+
+01:01:52.780 --> 01:01:55.980
+It's like 1 and 0.
+
+01:01:55.980 --> 01:02:04.120
+So sigma of x is 1 over 1
+plus exponential of minus x.
+
+01:02:04.120 --> 01:02:08.380
+So when x is 0, it's 0.5.
+
+01:02:08.380 --> 01:02:11.460
+If x goes to plus
+infinity, this goes to 1.
+
+01:02:11.460 --> 01:02:17.060
+And when x goes to minus
+infinity, this goes to 0.
+
+01:02:17.060 --> 01:02:25.140
+So there is a region where the
+sigmoid evolves very quickly.
+
+01:02:25.140 --> 01:02:30.670
+And so we had said that
+the incentive of your loss
+
+01:02:30.670 --> 01:02:37.430
+is for this difference
+to be as big as possible.
+
+01:02:37.430 --> 01:02:39.590
+And how do you do that?
+
+01:02:39.590 --> 01:02:42.250
+You want to do Rw
+as big as possible.
+
+01:02:42.250 --> 01:02:43.510
+And how do you do that?
+
+01:02:43.510 --> 01:02:47.030
+You do that by increasing the
+probability of your policy
+
+01:02:47.030 --> 01:02:51.350
+generating the winning answer.
+
+01:02:51.350 --> 01:02:58.750
+But if the better that
+you have is a big beta,
+
+01:02:58.750 --> 01:03:02.430
+then that means that
+even a slight deviation
+
+01:03:02.430 --> 01:03:10.150
+from the reference policy will
+make this whole value big.
+
+01:03:10.150 --> 01:03:13.150
+And you will already
+be in a region
+
+01:03:13.150 --> 01:03:14.690
+where you're already close to 1.
+
+01:03:17.830 --> 01:03:22.790
+So in other words, if
+you have a big beta,
+
+01:03:22.790 --> 01:03:25.830
+your policy will have
+a lower incentive
+
+01:03:25.830 --> 01:03:29.470
+to be far from the
+reference policy.
+
+01:03:29.470 --> 01:03:32.190
+And this contrasts
+with the lower beta.
+
+01:03:32.190 --> 01:03:34.390
+So if you have a
+low beta, then you
+
+01:03:34.390 --> 01:03:38.430
+need this quantity to be much
+higher than this quantity
+
+01:03:38.430 --> 01:03:40.290
+for this to be big.
+
+01:03:43.190 --> 01:03:46.010
+So I'm not sure if that helps.
+
+01:03:46.010 --> 01:03:50.590
+But all that to say,
+that beta is actually
+
+01:03:50.590 --> 01:03:56.910
+linked to your incentive
+to want to make
+
+01:03:56.910 --> 01:03:59.450
+this close to the
+reference policy or not.
+
+01:03:59.450 --> 01:04:02.130
+And this is the same beta
+that is in the DPO loss.
+
+01:04:02.130 --> 01:04:02.630
+Yes?
+
+01:04:02.630 --> 01:04:05.110
+[INAUDIBLE]
+
+01:04:05.110 --> 01:04:07.810
+So the question is rho
+t, is it using pi old?
+
+01:04:07.810 --> 01:04:09.510
+Typically, yes.
+
+01:04:09.510 --> 01:04:11.210
+And here it is pi ref.
+
+01:04:11.210 --> 01:04:11.710
+Yes?
+
+01:04:11.710 --> 01:04:12.697
+[INAUDIBLE]
+
+01:04:12.697 --> 01:04:14.530
+So just to confirm there
+are three policies.
+
+01:04:14.530 --> 01:04:15.910
+Yes, there are three policies.
+
+01:04:15.910 --> 01:04:19.110
+So pi theta is the current
+policy that you're updating.
+
+01:04:19.110 --> 01:04:22.610
+Pi old is the one that you
+use to generate the batch.
+
+01:04:22.610 --> 01:04:25.520
+And then pi ref is
+your base model.
+
+01:04:25.520 --> 01:04:26.820
+Yes, was it the same question?
+
+01:04:26.820 --> 01:04:28.400
+[INAUDIBLE]
+
+01:04:28.400 --> 01:04:30.800
+Yeah, so the question
+is, if you only
+
+01:04:30.800 --> 01:04:34.360
+care about how a policy
+deviates from its old value,
+
+01:04:34.360 --> 01:04:36.360
+how do you make sure that
+it doesn't deviate too
+
+01:04:36.360 --> 01:04:38.300
+much from the reference one?
+
+01:04:38.300 --> 01:04:40.960
+Typically what people do
+is they have these two
+
+01:04:40.960 --> 01:04:43.400
+constraints simultaneously.
+
+01:04:43.400 --> 01:04:46.080
+They have the clipping
+of the ratio with respect
+
+01:04:46.080 --> 01:04:49.480
+to the old policy,
+so the iteration
+
+01:04:49.480 --> 01:04:54.800
+constraints, along with
+the absolute respect
+
+01:04:54.800 --> 01:04:57.840
+to the reference policy one.
+
+01:04:57.840 --> 01:05:02.680
+So they're both penalizing for
+deviation with the old policy
+
+01:05:02.680 --> 01:05:05.860
+but also with respect to
+the absolute base policy.
+
+01:05:05.860 --> 01:05:08.540
+[INAUDIBLE]
+
+01:05:08.540 --> 01:05:09.040
+Yeah?
+
+01:05:09.040 --> 01:05:10.680
+[INAUDIBLE]
+
+01:05:10.680 --> 01:05:12.398
+The question is,
+how you compute KL?
+
+01:05:12.398 --> 01:05:13.440
+So it's a great question.
+
+01:05:13.440 --> 01:05:16.140
+Because KL is expensive because
+it's over the whole vocabulary,
+
+01:05:16.140 --> 01:05:17.920
+you have some
+estimator for that.
+
+01:05:17.920 --> 01:05:20.388
+Yeah.
+
+01:05:20.388 --> 01:05:21.180
+You had a question?
+
+01:05:21.180 --> 01:05:22.030
+No.
+
+01:05:22.030 --> 01:05:22.530
+OK.
+
+01:05:22.530 --> 01:05:23.850
+Great.
+
+01:05:23.850 --> 01:05:26.090
+Let's move on.
+
+01:05:26.090 --> 01:05:28.750
+So if I were to
+recap what we saw,
+
+01:05:28.750 --> 01:05:33.850
+we saw a way to maximize the
+quantity that is actually
+
+01:05:33.850 --> 01:05:36.330
+as a function of, let's
+say, a baseline, which
+
+01:05:36.330 --> 01:05:37.570
+is called advantage.
+
+01:05:37.570 --> 01:05:41.370
+And here we used the
+value function to do that.
+
+01:05:41.370 --> 01:05:46.810
+And we also mentioned that
+we had some things in place
+
+01:05:46.810 --> 01:05:48.770
+in order for us to
+not deviate too much
+
+01:05:48.770 --> 01:05:50.450
+from what we had before.
+
+01:05:50.450 --> 01:05:55.770
+So we saw the clipping mechanism
+with respect to the old policy,
+
+01:05:55.770 --> 01:06:00.530
+but we also saw the KL penalty
+term between the current policy
+
+01:06:00.530 --> 01:06:02.690
+and the reference policy.
+
+01:06:02.690 --> 01:06:04.810
+So these are ideas.
+
+01:06:04.810 --> 01:06:07.570
+But some methods they
+mix both, some methods
+
+01:06:07.570 --> 01:06:09.230
+they use one but not the other.
+
+01:06:09.230 --> 01:06:12.370
+Some methods mix them.
+
+01:06:12.370 --> 01:06:13.868
+There are multiple
+flavors of it.
+
+01:06:13.868 --> 01:06:15.410
+But I think what is
+important for you
+
+01:06:15.410 --> 01:06:18.050
+to remember is the
+different methods
+
+01:06:18.050 --> 01:06:23.740
+that you can use in order
+to achieve these goals.
+
+01:06:23.740 --> 01:06:26.220
+And I wanted to have
+a dedicated slide
+
+01:06:26.220 --> 01:06:30.740
+to say if you were to read the
+PPO paper, please be careful.
+
+01:06:30.740 --> 01:06:32.913
+L is not a loss.
+
+01:06:32.913 --> 01:06:34.080
+It is an objective function.
+
+01:06:34.080 --> 01:06:36.860
+You want to maximize
+that quantity.
+
+01:06:36.860 --> 01:06:38.420
+You don't want to minimize.
+
+01:06:38.420 --> 01:06:41.960
+And the second one is you
+will see R for the ratio.
+
+01:06:41.960 --> 01:06:42.560
+Be careful.
+
+01:06:42.560 --> 01:06:43.560
+It is not a reward.
+
+01:06:43.560 --> 01:06:45.740
+It is a ratio.
+
+01:06:45.740 --> 01:06:48.180
+And with that, I
+will just recap what
+
+01:06:48.180 --> 01:06:52.220
+we saw with respect to the
+challenges that we mentioned.
+
+01:06:52.220 --> 01:06:55.740
+Gradients being noisy,
+well, we have a way
+
+01:06:55.740 --> 01:07:01.420
+to compute a baseline,
+which also turns out to give
+
+01:07:01.420 --> 01:07:03.940
+token-level credit assignments.
+
+01:07:03.940 --> 01:07:08.300
+And we said we could also
+use either clipping or the KL
+
+01:07:08.300 --> 01:07:11.980
+divergence methods in order to
+ensure that the policy is not
+
+01:07:11.980 --> 01:07:16.580
+deviating too much
+from what we had.
+
+01:07:16.580 --> 01:07:19.790
+But the big problem
+with this approach
+
+01:07:19.790 --> 01:07:25.990
+is that you need to
+train a value function.
+
+01:07:25.990 --> 01:07:28.710
+That is a lot of hassle.
+
+01:07:28.710 --> 01:07:32.550
+And so this is the reason why
+this is not the only method
+
+01:07:32.550 --> 01:07:34.470
+we're seeing in, this lecture.
+
+01:07:34.470 --> 01:07:37.830
+There's a second method, which
+has gained a lot of importance
+
+01:07:37.830 --> 01:07:42.790
+in the past couple of
+years, which is called GRPO.
+
+01:07:42.790 --> 01:07:48.630
+So GRPO stands for Group
+Relative Policy Optimization.
+
+01:07:48.630 --> 01:07:54.510
+And what it does is it
+tries to maximize advantages
+
+01:07:54.510 --> 01:07:58.630
+but without a value function.
+
+01:07:58.630 --> 01:08:02.230
+That is the big added value.
+
+01:08:02.230 --> 01:08:05.110
+But without the value
+function of GRPO
+
+01:08:05.110 --> 01:08:09.790
+is it doesn't need a value
+function in order to work,
+
+01:08:09.790 --> 01:08:13.670
+and we're going to see
+exactly what it does instead.
+
+01:08:13.670 --> 01:08:17.149
+So back to the
+intuition that we had
+
+01:08:17.149 --> 01:08:23.720
+around having something
+to compare a reward to,
+
+01:08:23.720 --> 01:08:28.720
+the intuition behind
+GRPO is given a prompt,
+
+01:08:28.720 --> 01:08:31.960
+you're going to sample
+multiple responses
+
+01:08:31.960 --> 01:08:36.200
+in order to get
+that expected value.
+
+01:08:36.200 --> 01:08:37.460
+So you take some prompt.
+
+01:08:37.460 --> 01:08:40.340
+You take a positive temperature.
+
+01:08:40.340 --> 01:08:42.380
+And when you generate
+several responses,
+
+01:08:42.380 --> 01:08:44.279
+they hopefully
+are all different.
+
+01:08:44.279 --> 01:08:47.760
+And you will get some responses
+that are better than others.
+
+01:08:47.760 --> 01:08:51.800
+And if you do that,
+and if you compute
+
+01:08:51.800 --> 01:08:54.800
+the reward for each of
+these outputs with respect
+
+01:08:54.800 --> 01:08:59.040
+to the prompts, then
+if you compare that
+
+01:08:59.040 --> 01:09:02.279
+to the mean of reward
+and you standardize them,
+
+01:09:02.279 --> 01:09:07.920
+you can get a sense of which
+response is better to other one
+
+01:09:07.920 --> 01:09:09.800
+with respect to other ones.
+
+01:09:09.800 --> 01:09:13.760
+And you don't need a
+value function for that.
+
+01:09:13.760 --> 01:09:17.970
+And of course, you also
+want to not deviate
+
+01:09:17.970 --> 01:09:20.250
+too much from what
+you had before.
+
+01:09:20.250 --> 01:09:21.910
+So the same tricks apply.
+
+01:09:21.910 --> 01:09:27.529
+So you have the clipping
+mechanism which is making sure
+
+01:09:27.529 --> 01:09:29.890
+that you don't have
+nonzero gradients if you're
+
+01:09:29.890 --> 01:09:32.609
+too far from the old policy.
+
+01:09:32.609 --> 01:09:35.350
+And you also have that
+KL divergence term,
+
+01:09:35.350 --> 01:09:39.410
+which allows you to penalize any
+deviations from the reference
+
+01:09:39.410 --> 01:09:42.010
+model.
+
+01:09:42.010 --> 01:09:45.069
+So it's a lot of math,
+a lot of formulas.
+
+01:09:45.069 --> 01:09:49.130
+So let's relax for a second
+and just walk through
+
+01:09:49.130 --> 01:09:51.689
+that illustration together.
+
+01:09:51.689 --> 01:09:57.850
+So how would we go about
+updating the weights of our LLM
+
+01:09:57.850 --> 01:10:01.890
+if we were to follow GRPO?
+
+01:10:01.890 --> 01:10:07.610
+So first, we take
+a prompt and ask
+
+01:10:07.610 --> 01:10:12.970
+our LLM, which is the policy
+model, to generate responses.
+
+01:10:12.970 --> 01:10:14.790
+So it would generate one output.
+
+01:10:14.790 --> 01:10:19.420
+It will generate two
+outputs, actually g outputs.
+
+01:10:19.420 --> 01:10:24.820
+And what you want is to know
+how good these outputs are.
+
+01:10:24.820 --> 01:10:27.620
+So each of these outputs
+with respect to the input
+
+01:10:27.620 --> 01:10:31.660
+would be evaluated with
+respect to your reward
+
+01:10:31.660 --> 01:10:37.380
+model, which can be a model
+or something deterministic.
+
+01:10:37.380 --> 01:10:41.980
+And then you would
+compute advantage values
+
+01:10:41.980 --> 01:10:45.500
+by subtracting the reward
+with the mean of the rewards
+
+01:10:45.500 --> 01:10:49.300
+of that group and dividing this
+with the standard deviation
+
+01:10:49.300 --> 01:10:51.620
+of the rewards.
+
+01:10:51.620 --> 01:10:58.300
+So here you get a relative sense
+of how each output performs
+
+01:10:58.300 --> 01:11:01.260
+with respect to the group.
+
+01:11:01.260 --> 01:11:03.420
+And what you would
+do is you would
+
+01:11:03.420 --> 01:11:11.860
+use these advantages in order
+to compute your gradient.
+
+01:11:11.860 --> 01:11:14.150
+But you would also
+make sure to penalize
+
+01:11:14.150 --> 01:11:17.590
+for any deviations with respect
+to your reference model.
+
+01:11:17.590 --> 01:11:19.350
+So you would also
+have a KL divergence
+
+01:11:19.350 --> 01:11:23.350
+term along with the clipping.
+
+01:11:23.350 --> 01:11:26.190
+And you would not have
+any value function.
+
+01:11:26.190 --> 01:11:27.690
+No value function needed.
+
+01:11:27.690 --> 01:11:29.930
+You only need your policy model.
+
+01:11:29.930 --> 01:11:32.968
+You need the reward model
+and a reference model.
+
+01:11:32.968 --> 01:11:35.010
+And by the way, the reward
+model is optional too.
+
+01:11:35.010 --> 01:11:37.710
+Because if you're
+doing, let's say,
+
+01:11:37.710 --> 01:11:43.770
+reasoning or math or coding, you
+can leverage verifiable rewards.
+
+01:11:43.770 --> 01:11:44.270
+OK.
+
+01:11:44.270 --> 01:11:48.790
+So how does that
+compare with PPO?
+
+01:11:48.790 --> 01:11:53.190
+So PPO, you took some inputs.
+
+01:11:53.190 --> 01:11:54.930
+You put that into
+your policy model.
+
+01:11:54.930 --> 01:11:57.630
+You generate one response.
+
+01:11:57.630 --> 01:12:01.710
+And what you do is
+you input that prompt
+
+01:12:01.710 --> 01:12:03.870
+and response into
+a reward model,
+
+01:12:03.870 --> 01:12:07.790
+tells you how good
+how well you're doing.
+
+01:12:07.790 --> 01:12:14.680
+There are many variations of how
+to incorporate the KL penalty.
+
+01:12:14.680 --> 01:12:18.160
+But one of the variations
+is to incorporate
+
+01:12:18.160 --> 01:12:22.040
+as part of the rewards.
+
+01:12:22.040 --> 01:12:24.440
+So you would do that.
+
+01:12:24.440 --> 01:12:29.880
+And in parallel to that, you
+would use your value model
+
+01:12:29.880 --> 01:12:34.680
+in order to get a token-level
+prediction of what
+
+01:12:34.680 --> 01:12:39.640
+is the expected final reward if
+you were to follow that policy.
+
+01:12:39.640 --> 01:12:45.240
+And you would compute an
+advantage quantity, which
+
+01:12:45.240 --> 01:12:49.100
+we saw is if we want to
+be extremely vanilla,
+
+01:12:49.100 --> 01:12:52.145
+it can be the difference
+between the value functions.
+
+01:12:52.145 --> 01:12:54.020
+But it's actually more
+complicated than that.
+
+01:12:54.020 --> 01:12:56.360
+And you have a method
+that does that that
+
+01:12:56.360 --> 01:12:59.600
+is called the Generalized
+Advantage Estimation, that
+
+01:12:59.600 --> 01:13:02.280
+is called GAE.
+
+01:13:02.280 --> 01:13:04.480
+So you can do that.
+
+01:13:04.480 --> 01:13:08.760
+And then take your
+advantage and use that
+
+01:13:08.760 --> 01:13:15.130
+in order to compute the gradient
+that will update your policy.
+
+01:13:15.130 --> 01:13:17.358
+So I want us to--
+
+01:13:17.358 --> 01:13:19.150
+so by the way, does
+that make sense so far?
+
+01:13:22.890 --> 01:13:23.890
+Yeah?
+
+01:13:23.890 --> 01:13:26.050
+OK.
+
+01:13:26.050 --> 01:13:28.490
+So with that being
+said, I just want
+
+01:13:28.490 --> 01:13:31.090
+to do a recap of what are
+the models that are involved
+
+01:13:31.090 --> 01:13:34.810
+and which ones are the ones
+that we're training versus not.
+
+01:13:34.810 --> 01:13:37.630
+So if you remember, the
+reference model is fixed.
+
+01:13:37.630 --> 01:13:40.130
+So it's the one that
+you started from.
+
+01:13:40.130 --> 01:13:43.870
+And you have optionally
+a reward model,
+
+01:13:43.870 --> 01:13:47.890
+which you train beforehand and
+that you're leveraging here.
+
+01:13:47.890 --> 01:13:50.850
+You're not training
+your reward model.
+
+01:13:50.850 --> 01:13:55.570
+But what you're training is
+obviously your policy model.
+
+01:13:55.570 --> 01:14:01.810
+And in the case of PPO, you're
+also training a value model.
+
+01:14:01.810 --> 01:14:05.330
+And you're training it
+jointly with the policy model.
+
+01:14:05.330 --> 01:14:08.010
+Because as we saw,
+the value model
+
+01:14:08.010 --> 01:14:11.340
+tries to estimate the
+expected rewards if you
+
+01:14:11.340 --> 01:14:14.012
+were to follow the policy.
+
+01:14:14.012 --> 01:14:15.720
+And you are actually
+training the policy.
+
+01:14:15.720 --> 01:14:19.380
+So you need to make sure
+that these two are in sync.
+
+01:14:19.380 --> 01:14:23.140
+And that is the core reason why
+PPO is a hassle, because you
+
+01:14:23.140 --> 01:14:29.540
+need to have all the bandwidth
+to host the value model
+
+01:14:29.540 --> 01:14:30.160
+training.
+
+01:14:32.900 --> 01:14:34.920
+And at the end, you
+obtain these formulas.
+
+01:14:34.920 --> 01:14:37.720
+And I'm glad we didn't
+start from these formulas,
+
+01:14:37.720 --> 01:14:41.340
+because they can be a
+little bit intimidating.
+
+01:14:41.340 --> 01:14:44.020
+So something that is
+similar between the two
+
+01:14:44.020 --> 01:14:46.380
+formulas, the ratios.
+
+01:14:46.380 --> 01:14:49.300
+So here we have the ratio
+between the probability given
+
+01:14:49.300 --> 01:14:53.380
+by the policy that
+we're training over
+
+01:14:53.380 --> 01:14:56.780
+the probability of the policy
+that is the one that generated
+
+01:14:56.780 --> 01:14:59.340
+the batch, so the old policy.
+
+01:14:59.340 --> 01:15:05.380
+That one is the quantity that
+you see across both formulas.
+
+01:15:05.380 --> 01:15:07.340
+You also see the clipping.
+
+01:15:07.340 --> 01:15:09.460
+And here we saw
+that the clipping
+
+01:15:09.460 --> 01:15:15.380
+was meant for us to make sure
+that our policy is not going
+
+01:15:15.380 --> 01:15:17.520
+too far from the old policy.
+
+01:15:20.220 --> 01:15:23.460
+And then we also have
+a KL divergence term.
+
+01:15:23.460 --> 01:15:26.140
+So I mentioned that there
+are many variations.
+
+01:15:26.140 --> 01:15:30.540
+In here, GRPO actually
+expresses the KL divergence
+
+01:15:30.540 --> 01:15:32.620
+in the loss function.
+
+01:15:32.620 --> 01:15:35.580
+But you can very well express
+it as part of the advantage
+
+01:15:35.580 --> 01:15:39.840
+that you're computing,
+which is the case of PPO.
+
+01:15:43.340 --> 01:15:48.020
+In terms of the differences, so
+the previous thing that we saw
+
+01:15:48.020 --> 01:15:49.500
+was one difference, by the way.
+
+01:15:49.500 --> 01:15:52.460
+So where you put the KL
+penalty is something that
+
+01:15:52.460 --> 01:15:55.980
+can vary from method to method.
+
+01:15:55.980 --> 01:16:01.740
+The second difference is the
+way you compute the advantage.
+
+01:16:01.740 --> 01:16:06.470
+So in the GRPO case, what you
+do is you compute the advantage
+
+01:16:06.470 --> 01:16:10.310
+at the completion
+level, and you compare
+
+01:16:10.310 --> 01:16:13.910
+that with the other outputs.
+
+01:16:13.910 --> 01:16:16.870
+And so by the way, if you
+look at the GRPO formula,
+
+01:16:16.870 --> 01:16:21.710
+you will see that T
+denotes the token.
+
+01:16:21.710 --> 01:16:25.950
+And you see that the advantage
+is a function of the output
+
+01:16:25.950 --> 01:16:28.950
+I and the token T. And you
+may wonder, well why is there
+
+01:16:28.950 --> 01:16:31.310
+a T if it's at the
+completion level?
+
+01:16:31.310 --> 01:16:33.870
+You can define the
+advantage either
+
+01:16:33.870 --> 01:16:37.710
+at the completion level or the
+token level, which is why there
+
+01:16:37.710 --> 01:16:39.170
+is this more generic formula.
+
+01:16:39.170 --> 01:16:42.670
+But people typically use
+the completion level 1
+
+01:16:42.670 --> 01:16:45.070
+just because it's easier,
+because the token level
+
+01:16:45.070 --> 01:16:49.470
+1 you need to have some way
+of distinguishing token level
+
+01:16:49.470 --> 01:16:53.830
+contributions, which
+you're typically not doing.
+
+01:16:53.830 --> 01:16:56.590
+So anyway, going
+back, you see I and T,
+
+01:16:56.590 --> 01:16:59.570
+but it's actually a
+function of I for GRPO.
+
+01:16:59.570 --> 01:17:03.470
+So you compute that by comparing
+your reward with respect
+
+01:17:03.470 --> 01:17:06.840
+to the mean of the
+rewards of your group,
+
+01:17:06.840 --> 01:17:09.100
+and you divide that by
+the standard deviation.
+
+01:17:09.100 --> 01:17:12.440
+But for PPO, you're
+computing the advantage
+
+01:17:12.440 --> 01:17:15.880
+at the token level,
+and you're using
+
+01:17:15.880 --> 01:17:17.960
+the value function for that.
+
+01:17:17.960 --> 01:17:19.680
+And as a reminder,
+the value function
+
+01:17:19.680 --> 01:17:23.880
+is also at the token level,
+and it's trained jointly
+
+01:17:23.880 --> 01:17:24.820
+with the policy.
+
+01:17:28.200 --> 01:17:29.360
+And that's a lot.
+
+01:17:29.360 --> 01:17:32.640
+So I'll just pause
+for maybe one minute
+
+01:17:32.640 --> 01:17:37.400
+to see if there is any questions
+on these two big formulas.
+
+01:17:37.400 --> 01:17:39.540
+Now if you see this slide,
+does that make sense?
+
+01:17:43.760 --> 01:17:45.760
+Yeah?
+
+01:17:45.760 --> 01:17:46.260
+Yeah?
+
+01:17:46.260 --> 01:17:48.080
+[INAUDIBLE]
+
+01:17:48.080 --> 01:17:50.840
+So the question is you
+added in your previous slide
+
+01:17:50.840 --> 01:17:52.260
+the KL divergence for PPO.
+
+01:17:52.260 --> 01:17:56.840
+Yes, I did, but
+these were more meant
+
+01:17:56.840 --> 01:18:01.640
+to illustrate two types
+of strategies to penalize.
+
+01:18:01.640 --> 01:18:04.848
+But in the general
+PPO implementation,
+
+01:18:04.848 --> 01:18:07.390
+you would actually incorporate
+that as part of the advantage.
+
+01:18:11.010 --> 01:18:13.570
+And by the way,
+it's a common thing.
+
+01:18:13.570 --> 01:18:16.430
+Every paper has a different
+way of implementing this.
+
+01:18:16.430 --> 01:18:21.590
+So don't be surprised.
+
+01:18:21.590 --> 01:18:22.090
+OK.
+
+01:18:22.090 --> 01:18:23.330
+Cool.
+
+01:18:23.330 --> 01:18:25.710
+Well, everyone is good
+with these big formulas.
+
+01:18:25.710 --> 01:18:26.210
+Great.
+
+01:18:26.210 --> 01:18:28.730
+So let's assume you
+do that for GRPO.
+
+01:18:28.730 --> 01:18:30.810
+It was actually something
+that the authors
+
+01:18:30.810 --> 01:18:36.290
+performed on math problems,
+on reasoning problems.
+
+01:18:36.290 --> 01:18:39.350
+And what they saw was-- so
+if you remember last week,
+
+01:18:39.350 --> 01:18:44.090
+we said that this was used
+to incentivize the model
+
+01:18:44.090 --> 01:18:48.430
+to produce chains of reasoning
+before producing an answer,
+
+01:18:48.430 --> 01:18:51.450
+and it allowed the
+performance to increase.
+
+01:18:51.450 --> 01:18:56.210
+And one thing that is also
+something that the authors saw
+
+01:18:56.210 --> 01:19:00.290
+was that the length
+of the response
+
+01:19:00.290 --> 01:19:05.380
+tended to increase as you
+were performing the training.
+
+01:19:05.380 --> 01:19:08.340
+And it even tended
+to increase even
+
+01:19:08.340 --> 01:19:12.660
+when the performance of the
+model was reaching a plateau.
+
+01:19:12.660 --> 01:19:15.300
+So on the left side, the
+y-axis is the performance
+
+01:19:15.300 --> 01:19:17.840
+of the model for a math problem.
+
+01:19:17.840 --> 01:19:25.060
+And then on the right side, it
+is the average response length.
+
+01:19:25.060 --> 01:19:28.340
+And so you may wonder,
+well, why is that happening?
+
+01:19:28.340 --> 01:19:33.260
+Why would the model
+incentivize the response
+
+01:19:33.260 --> 01:19:37.060
+from getting longer and longer
+even when the performance is
+
+01:19:37.060 --> 01:19:40.020
+reaching a plateau?
+
+01:19:40.020 --> 01:19:45.660
+So this has to do with, again,
+this big formula and how you are
+
+01:19:45.660 --> 01:19:48.740
+performing your normalization.
+
+01:19:48.740 --> 01:19:55.300
+So here I want you to focus on
+just one piece of the slide.
+
+01:19:55.300 --> 01:19:58.960
+So do you see the 1 over
+the response of the outputs?
+
+01:19:58.960 --> 01:20:02.030
+Do you see this term?
+
+01:20:02.030 --> 01:20:09.870
+So when responses are short,
+this term, is it big or small?
+
+01:20:09.870 --> 01:20:12.950
+[INAUDIBLE]
+
+01:20:12.950 --> 01:20:14.230
+Big, yes.
+
+01:20:14.230 --> 01:20:19.310
+So when O is small, 1/O is big.
+
+01:20:19.310 --> 01:20:22.590
+How about when O
+is big, is small.
+
+01:20:22.590 --> 01:20:25.790
+So this coefficient
+is actually something
+
+01:20:25.790 --> 01:20:30.230
+that is multiplied with
+the contribution of a token
+
+01:20:30.230 --> 01:20:32.750
+to the objective function.
+
+01:20:32.750 --> 01:20:34.950
+And here we're
+saying that if you
+
+01:20:34.950 --> 01:20:41.670
+have a token that happens to
+be in a short response, then
+
+01:20:41.670 --> 01:20:45.810
+the contribution will be bigger
+than if it's in a long response.
+
+01:20:48.910 --> 01:20:50.750
+So far, nothing incredible.
+
+01:20:50.750 --> 01:20:54.820
+But now let's assume you
+are thinking of it in terms
+
+01:20:54.820 --> 01:20:57.070
+of when the advantage is
+positive versus the advantage
+
+01:20:57.070 --> 01:20:59.400
+is negative.
+
+01:20:59.400 --> 01:21:04.200
+So if you are in a
+short output, then
+
+01:21:04.200 --> 01:21:09.640
+if your advantage
+is positive, it
+
+01:21:09.640 --> 01:21:13.160
+will be a big
+contribution upwards.
+
+01:21:13.160 --> 01:21:17.340
+If you are in a case
+where it's negative,
+
+01:21:17.340 --> 01:21:21.240
+it will be a big
+contribution downwards.
+
+01:21:21.240 --> 01:21:24.860
+And if you're in a long output,
+if it's advantage positive,
+
+01:21:24.860 --> 01:21:28.320
+then it's a slight
+upward increase.
+
+01:21:28.320 --> 01:21:30.560
+And if you're in a
+negative advantage output,
+
+01:21:30.560 --> 01:21:33.700
+it's a slight
+downward contribution.
+
+01:21:33.700 --> 01:21:35.400
+So what does that mean?
+
+01:21:35.400 --> 01:21:40.440
+So if you look at the
+cases where you're actually
+
+01:21:40.440 --> 01:21:46.360
+outputting bad answers,
+relatively speaking,
+
+01:21:46.360 --> 01:21:49.720
+the model will
+prefer a bad answer
+
+01:21:49.720 --> 01:21:56.160
+that is longer compared to a
+bad answer that is shorter.
+
+01:21:56.160 --> 01:22:01.490
+So if we go back here, what that
+means is when the model comes
+
+01:22:01.490 --> 01:22:04.890
+to a situation where, OK, it
+cannot do anything about the bad
+
+01:22:04.890 --> 01:22:08.450
+answers, it just
+generates bad answers,
+
+01:22:08.450 --> 01:22:11.830
+it will then prefer
+generating longer,
+
+01:22:11.830 --> 01:22:16.570
+bad answers compared
+to shorter bad answers.
+
+01:22:16.570 --> 01:22:20.310
+And that is the reason
+why in this graph,
+
+01:22:20.310 --> 01:22:23.790
+you are seeing a
+plateau of performance,
+
+01:22:23.790 --> 01:22:26.250
+but the length that is
+increasing because the model
+
+01:22:26.250 --> 01:22:31.830
+prefers longer bad responses
+compared to shorter ones.
+
+01:22:34.530 --> 01:22:37.610
+Does everyone agree with this?
+
+01:22:37.610 --> 01:22:39.110
+And so why is this a problem?
+
+01:22:39.110 --> 01:22:42.050
+Well, it's a problem
+because you don't want that.
+
+01:22:42.050 --> 01:22:44.570
+And that is one of
+the motivations where
+
+01:22:44.570 --> 01:22:46.610
+there are some papers
+that follow GRPO that
+
+01:22:46.610 --> 01:22:49.330
+try to tweak some little parts.
+
+01:22:49.330 --> 01:22:51.770
+This included the
+normalization term.
+
+01:22:51.770 --> 01:22:55.690
+So here, in the case
+of DAPO, it wanted
+
+01:22:55.690 --> 01:22:58.160
+to have the same
+contribution for all tokens.
+
+01:22:58.160 --> 01:23:00.420
+So the normalization
+is with respect
+
+01:23:00.420 --> 01:23:02.460
+to the sum of the outputs.
+
+01:23:02.460 --> 01:23:05.853
+And another one GRPO
+done right, or Dr. GRPO.
+
+01:23:05.853 --> 01:23:07.520
+I don't know how you
+would pronounce it,
+
+01:23:07.520 --> 01:23:12.740
+but they would just forego
+of that normalization term.
+
+01:23:12.740 --> 01:23:16.440
+And I want to talk about
+other problems that can occur.
+
+01:23:16.440 --> 01:23:18.780
+So the one other that
+I want to mention
+
+01:23:18.780 --> 01:23:22.500
+is the way the
+advantages are computed.
+
+01:23:22.500 --> 01:23:26.280
+They are divided by the standard
+deviation of the rewards.
+
+01:23:26.280 --> 01:23:29.700
+You will have varying
+standard deviations depending
+
+01:23:29.700 --> 01:23:32.540
+on how complex your input is.
+
+01:23:32.540 --> 01:23:34.700
+And that may introduce a bias.
+
+01:23:34.700 --> 01:23:36.100
+And that's not good.
+
+01:23:36.100 --> 01:23:40.100
+So you may want to remove
+the standard deviation.
+
+01:23:40.100 --> 01:23:42.300
+And the second
+one which I wanted
+
+01:23:42.300 --> 01:23:46.020
+to come back to the
+point around epsilon
+
+01:23:46.020 --> 01:23:51.100
+is that if you
+have an action that
+
+01:23:51.100 --> 01:23:56.030
+is of a very small
+probability, and if you
+
+01:23:56.030 --> 01:24:00.710
+use the same epsilon
+for both the lower
+
+01:24:00.710 --> 01:24:03.790
+bound and the upper bound,
+you're actually not giving
+
+01:24:03.790 --> 01:24:08.990
+a chance for smaller
+probability outputs
+
+01:24:08.990 --> 01:24:11.250
+to be generated even
+significantly more.
+
+01:24:11.250 --> 01:24:13.030
+So let's assume your
+probability is like,
+
+01:24:13.030 --> 01:24:18.830
+let's say, 0.001 and your
+epsilon is, I don't know, 0.2,
+
+01:24:18.830 --> 01:24:21.150
+you only are giving a
+small amount of margin
+
+01:24:21.150 --> 01:24:24.470
+for this to be actually
+more discovered.
+
+01:24:24.470 --> 01:24:26.850
+And so it is not
+encouraging diversity.
+
+01:24:26.850 --> 01:24:29.830
+So you may want
+to choose epsilons
+
+01:24:29.830 --> 01:24:35.190
+that are different for the
+lower bound and the upper bound.
+
+01:24:35.190 --> 01:24:35.710
+Cool.
+
+01:24:35.710 --> 01:24:36.210
+OK.
+
+01:24:36.210 --> 01:24:37.710
+I wanted to recap.
+
+01:24:37.710 --> 01:24:43.430
+GRPO, we saw that the gradients
+are less noisy because they're
+
+01:24:43.430 --> 01:24:47.830
+computing advantages with
+respect to the group average.
+
+01:24:47.830 --> 01:24:51.150
+And we saw that the
+magnitude of policy updates
+
+01:24:51.150 --> 01:24:54.960
+are also handled by the
+regular suspects when
+
+01:24:54.960 --> 01:24:59.880
+it comes to the methods,
+so clipping and KL penalty.
+
+01:24:59.880 --> 01:25:05.880
+But we saw that we didn't have
+explicit token-level credit
+
+01:25:05.880 --> 01:25:09.320
+assignments, and
+that's not good.
+
+01:25:09.320 --> 01:25:11.300
+We don't have a value
+function anymore,
+
+01:25:11.300 --> 01:25:14.700
+but we don't have token-level
+credit assignments.
+
+01:25:14.700 --> 01:25:16.440
+And we want to solve that.
+
+01:25:16.440 --> 01:25:20.760
+And with that, I'll
+give it to Shervin.
+
+01:25:20.760 --> 01:25:22.480
+Thank you, Afshin.
+
+01:25:22.480 --> 01:25:25.040
+So to illustrate
+this point, we're
+
+01:25:25.040 --> 01:25:27.120
+going to go back to
+our favorite example
+
+01:25:27.120 --> 01:25:29.120
+that we saw earlier
+in the lecture
+
+01:25:29.120 --> 01:25:33.640
+regarding a Teddy bear that
+moves within a sealed box.
+
+01:25:33.640 --> 01:25:38.840
+And we're going to recap what
+GRPO and verifiable rewards
+
+01:25:38.840 --> 01:25:40.120
+incentivize.
+
+01:25:40.120 --> 01:25:44.800
+So here, regardless of the
+reasoning steps, what matters
+
+01:25:44.800 --> 01:25:47.840
+was only the answer.
+
+01:25:47.840 --> 01:25:49.140
+So why is it a problem?
+
+01:25:49.140 --> 01:25:51.890
+As Afshin mentioned,
+you are going
+
+01:25:51.890 --> 01:25:55.350
+to miss on the
+intermediary steps.
+
+01:25:55.350 --> 01:25:59.530
+So here I showed what G
+completions could give
+
+01:25:59.530 --> 01:26:01.270
+in terms of intermediary steps.
+
+01:26:01.270 --> 01:26:03.770
+So you could have a
+combination of steps
+
+01:26:03.770 --> 01:26:07.410
+that go both well, steps that
+go both wrong or just one
+
+01:26:07.410 --> 01:26:09.850
+of the two.
+
+01:26:09.850 --> 01:26:15.890
+And as you can see, every token
+when you look at the formula
+
+01:26:15.890 --> 01:26:20.690
+is going to be associated
+to the same end reward.
+
+01:26:20.690 --> 01:26:23.390
+So you're going to attribute
+the same advantage as the end,
+
+01:26:23.390 --> 01:26:28.050
+even though the step is
+wrong, which is one downside.
+
+01:26:28.050 --> 01:26:31.950
+And in the longer run,
+so you might argue,
+
+01:26:31.950 --> 01:26:36.570
+OK, you might have completions
+for which the intermediary steps
+
+01:26:36.570 --> 01:26:40.250
+don't make sense, but
+on average they will.
+
+01:26:40.250 --> 01:26:43.690
+And on average, the
+model will learn exactly
+
+01:26:43.690 --> 01:26:46.050
+which ones are good.
+
+01:26:46.050 --> 01:26:50.170
+But the thing is it's highly
+inefficient because you see,
+
+01:26:50.170 --> 01:26:54.230
+you're not leveraging what
+you can leverage at each step.
+
+01:26:54.230 --> 01:26:58.010
+So each of your terms
+of your loss functions
+
+01:26:58.010 --> 01:27:02.210
+might not be correctly
+rewarding the right things.
+
+01:27:02.210 --> 01:27:04.130
+So it's noisy locally.
+
+01:27:04.130 --> 01:27:07.930
+And then this phenomenon of
+learning the correct behavior
+
+01:27:07.930 --> 01:27:11.050
+is one that is based
+on the long-term.
+
+01:27:11.050 --> 01:27:15.530
+So this is not great.
+
+01:27:15.530 --> 01:27:18.930
+And Afshin just mentioned
+a few minutes ago
+
+01:27:18.930 --> 01:27:23.730
+that in the GRPO formula you had
+an advantage that was actually
+
+01:27:23.730 --> 01:27:26.930
+written out as a function
+of T. So let's just
+
+01:27:26.930 --> 01:27:30.930
+suppose that we're not following
+the common practice of being
+
+01:27:30.930 --> 01:27:33.030
+based on outcome supervision.
+
+01:27:33.030 --> 01:27:36.290
+Let's say you're on the process
+supervision methodology,
+
+01:27:36.290 --> 01:27:38.650
+and you do follow that path.
+
+01:27:38.650 --> 01:27:42.690
+Then as we mentioned,
+you need dedicated
+
+01:27:42.690 --> 01:27:47.390
+labeling for these token-level
+advantage to make sense.
+
+01:27:47.390 --> 01:27:51.500
+And if you look at
+the paper, they're
+
+01:27:51.500 --> 01:27:53.500
+slicing it at the
+step level, which is
+
+01:27:53.500 --> 01:27:54.880
+here, what truly makes sense.
+
+01:27:54.880 --> 01:27:59.660
+So you need to label
+each of them separately.
+
+01:27:59.660 --> 01:28:05.060
+And you might argue if
+you go back to each step,
+
+01:28:05.060 --> 01:28:09.300
+that you could similarly have an
+ambiguity of exactly what goes
+
+01:28:09.300 --> 01:28:11.580
+wrong in that step.
+
+01:28:11.580 --> 01:28:16.040
+So let's say you talk about
+Teddy who works in the kitchen.
+
+01:28:16.040 --> 01:28:21.260
+Is the issue that Teddy works
+or that he walks to the kitchen.
+
+01:28:21.260 --> 01:28:27.080
+So it could be a recursive
+problem down to the token level.
+
+01:28:27.080 --> 01:28:31.320
+So you would be bound to
+label token at the ends.
+
+01:28:31.320 --> 01:28:36.900
+And a reward on each token
+might be a hard model to train.
+
+01:28:36.900 --> 01:28:41.460
+And as we mentioned here, one
+of the reasons why we moved away
+
+01:28:41.460 --> 01:28:43.900
+from PPO in the first
+place is to avoid
+
+01:28:43.900 --> 01:28:47.350
+maintaining the weights of
+multiple models to train.
+
+01:28:47.350 --> 01:28:51.150
+So this is not
+what we want to do.
+
+01:28:51.150 --> 01:28:54.150
+So if I had to recap
+the benefits that we
+
+01:28:54.150 --> 01:28:57.870
+have in this reinforcement
+learning stages
+
+01:28:57.870 --> 01:29:02.310
+that we want to keep, so we
+want on-policy part to stay.
+
+01:29:02.310 --> 01:29:08.230
+So we like to train off of the
+outputs of the model at stake.
+
+01:29:08.230 --> 01:29:12.270
+Then GRPO had these
+downside of not
+
+01:29:12.270 --> 01:29:15.870
+crediting each token
+individually, but rather
+
+01:29:15.870 --> 01:29:18.830
+the overall outcome and hoping
+for the best on the things
+
+01:29:18.830 --> 01:29:20.870
+that we learn out of it.
+
+01:29:20.870 --> 01:29:23.510
+And we mentioned just
+now that we do not
+
+01:29:23.510 --> 01:29:27.110
+want to train any additional
+model to remedy that.
+
+01:29:27.110 --> 01:29:33.110
+So I wrote down a proposal of
+what we could do to remedy it.
+
+01:29:33.110 --> 01:29:38.310
+So on-policy training is
+typically us interested
+
+01:29:38.310 --> 01:29:40.530
+in the model's own generation.
+
+01:29:40.530 --> 01:29:42.030
+So that is set.
+
+01:29:42.030 --> 01:29:47.000
+One proposal is to train next
+token prediction regarding
+
+01:29:47.000 --> 01:29:48.700
+the loss.
+
+01:29:48.700 --> 01:29:54.320
+And for the lack of additional
+training as a constraint,
+
+01:29:54.320 --> 01:29:58.960
+maybe we could look around at
+any strong models around there
+
+01:29:58.960 --> 01:30:03.440
+and then see what we
+could learn from it.
+
+01:30:03.440 --> 01:30:05.960
+So I want to ask you a question.
+
+01:30:05.960 --> 01:30:08.400
+I talked about next
+token prediction
+
+01:30:08.400 --> 01:30:12.360
+and a model that is stronger
+than the one at stake.
+
+01:30:12.360 --> 01:30:16.280
+So is there a concept that
+comes to mind as potentially
+
+01:30:16.280 --> 01:30:17.220
+attractive here?
+
+01:30:21.940 --> 01:30:22.440
+Yep?
+
+01:30:22.440 --> 01:30:23.640
+[INAUDIBLE]
+
+01:30:23.640 --> 01:30:24.140
+Yeah.
+
+01:30:24.140 --> 01:30:25.820
+So yeah the comment
+is distillation.
+
+01:30:25.820 --> 01:30:27.680
+Yeah, exactly,
+because distillation
+
+01:30:27.680 --> 01:30:31.880
+is about next token prediction,
+transfer of information
+
+01:30:31.880 --> 01:30:33.260
+from one model to the other.
+
+01:30:33.260 --> 01:30:34.840
+Yes, spot on.
+
+01:30:34.840 --> 01:30:36.520
+But not the kind
+that maybe you know.
+
+01:30:36.520 --> 01:30:39.920
+It's a new one.
+
+01:30:39.920 --> 01:30:44.850
+So before we do that, I'm going
+to do a quick recap on the last
+
+01:30:44.850 --> 01:30:47.610
+that we use to
+compare distributions
+
+01:30:47.610 --> 01:30:49.890
+of next token predictions,
+which is the one that we're
+
+01:30:49.890 --> 01:30:53.210
+going to be interested
+in, so this KL divergence.
+
+01:30:53.210 --> 01:30:57.290
+And I wanted to frame
+it in very simple terms.
+
+01:30:57.290 --> 01:31:02.450
+So as you know, this loss
+function is not symmetric.
+
+01:31:02.450 --> 01:31:06.850
+So KL divergence between
+P and Q is not the same
+
+01:31:06.850 --> 01:31:09.650
+as the one between
+Q and P. And if you
+
+01:31:09.650 --> 01:31:16.250
+want a way to know
+instinctively what it means,
+
+01:31:16.250 --> 01:31:18.730
+so you look at the
+sum, and you see
+
+01:31:18.730 --> 01:31:22.890
+that you sum based on weights
+of the probability distribution
+
+01:31:22.890 --> 01:31:24.850
+of the first argument.
+
+01:31:24.850 --> 01:31:27.370
+So you're supposing
+here that the world
+
+01:31:27.370 --> 01:31:30.210
+is governed by that
+probability distribution.
+
+01:31:30.210 --> 01:31:33.250
+And then you have
+the sum of logs
+
+01:31:33.250 --> 01:31:39.650
+of ratios that will
+translate in penalization
+
+01:31:39.650 --> 01:31:45.420
+when the probability
+weights of the two differ.
+
+01:31:45.420 --> 01:31:51.020
+So the way I propose we
+interpret this, so KL of P and Q
+
+01:31:51.020 --> 01:31:57.100
+is in a world governed by P. How
+bad is it to approximate with Q?
+
+01:31:57.100 --> 01:31:59.780
+So typically when
+you do distillation,
+
+01:31:59.780 --> 01:32:05.000
+you would govern the world
+with the teacher model.
+
+01:32:05.000 --> 01:32:06.460
+So T would be the
+first argument,
+
+01:32:06.460 --> 01:32:09.220
+and the student would
+be the second argument.
+
+01:32:09.220 --> 01:32:13.260
+But here I said we want to
+do it on policy with respect
+
+01:32:13.260 --> 01:32:15.340
+to the students.
+
+01:32:15.340 --> 01:32:18.260
+So one natural way
+to formulate this
+
+01:32:18.260 --> 01:32:24.400
+is not to do KL divergence of T
+and S, but rather the opposite.
+
+01:32:24.400 --> 01:32:29.140
+And this is called the
+reverse KL divergence.
+
+01:32:29.140 --> 01:32:34.340
+And it has some interesting
+properties attached to it.
+
+01:32:34.340 --> 01:32:40.700
+So when you look
+at the sum and you
+
+01:32:40.700 --> 01:32:44.630
+look at the distribution of
+the student and the teacher,
+
+01:32:44.630 --> 01:32:52.790
+you see that when T is not equal
+to 0 and if S is close to 0,
+
+01:32:52.790 --> 01:32:56.830
+then the contributions
+of these terms to the sum
+
+01:32:56.830 --> 01:32:58.550
+are not that big.
+
+01:32:58.550 --> 01:33:02.950
+So we say they are forgiving
+to these mismatches
+
+01:33:02.950 --> 01:33:06.390
+between these two distributions.
+
+01:33:06.390 --> 01:33:13.790
+But on the other hand, if ti
+for a given term is small,
+
+01:33:13.790 --> 01:33:17.030
+but SI is nonzero,
+then you're going
+
+01:33:17.030 --> 01:33:21.710
+to have this ratio that
+is going to be very big.
+
+01:33:21.710 --> 01:33:24.810
+And that is associated to
+a weight that is nonzero.
+
+01:33:24.810 --> 01:33:29.070
+So you're going to
+get a huge term.
+
+01:33:29.070 --> 01:33:36.110
+And these latter points combined
+with a typical student model's
+
+01:33:36.110 --> 01:33:39.430
+architecture to not have
+as many degrees of freedom
+
+01:33:39.430 --> 01:33:43.200
+as the teacher one to
+make it be mode seeking,
+
+01:33:43.200 --> 01:33:45.880
+meaning that the peaks in the
+distribution of the teacher
+
+01:33:45.880 --> 01:33:51.600
+will be those that will be
+learned by the students.
+
+01:33:51.600 --> 01:33:56.480
+So these did this
+make sense here,
+
+01:33:56.480 --> 01:34:01.320
+the fact that we use
+reverse KL divergence?
+
+01:34:01.320 --> 01:34:03.520
+So I'm asking the question
+because even though it's
+
+01:34:03.520 --> 01:34:06.560
+what people use today,
+the original paper
+
+01:34:06.560 --> 01:34:07.940
+did a mix of both.
+
+01:34:07.940 --> 01:34:12.240
+So I think it's not obvious that
+this is obviously the better
+
+01:34:12.240 --> 01:34:15.320
+one, but--
+
+01:34:15.320 --> 01:34:17.760
+So now let's go back
+to our favorite example
+
+01:34:17.760 --> 01:34:21.880
+and apply this way of
+measuring the loss based
+
+01:34:21.880 --> 01:34:24.520
+on the distributions
+of student and teacher.
+
+01:34:24.520 --> 01:34:27.920
+So here what we want to do
+in on-policy distillation
+
+01:34:27.920 --> 01:34:33.840
+is that we want the student
+to generate a completion based
+
+01:34:33.840 --> 01:34:34.940
+on a prompt.
+
+01:34:34.940 --> 01:34:39.170
+And then we ask the teacher
+based on the standard context,
+
+01:34:39.170 --> 01:34:42.210
+how much does the token
+generated by the students
+
+01:34:42.210 --> 01:34:43.810
+make sense to you?
+
+01:34:43.810 --> 01:34:48.090
+And we ask this question at
+each new generated token.
+
+01:34:48.090 --> 01:34:51.530
+So let's say you have this
+prompt with the problem
+
+01:34:51.530 --> 01:34:54.450
+statement of Teddy
+in a sealed box.
+
+01:34:54.450 --> 01:34:56.730
+And you ask, where is Teddy?
+
+01:34:56.730 --> 01:34:59.510
+So let's say the sentence
+starts with Teddy.
+
+01:34:59.510 --> 01:35:01.550
+So Teddy makes sense
+to the teacher.
+
+01:35:01.550 --> 01:35:03.170
+I would generate also Teddy.
+
+01:35:03.170 --> 01:35:06.570
+But then the student
+says, Teddy climbs.
+
+01:35:06.570 --> 01:35:09.050
+And the teacher
+would say, OK, wait.
+
+01:35:09.050 --> 01:35:15.050
+Climbs is not a high-probability
+token in my distribution.
+
+01:35:15.050 --> 01:35:18.970
+So this is what the
+teacher would penalize here
+
+01:35:18.970 --> 01:35:23.450
+and what the reverse KL
+divergence would penalize and so
+
+01:35:23.450 --> 01:35:24.290
+on.
+
+01:35:24.290 --> 01:35:28.850
+Do you see anything that is
+not being penalized here.
+
+01:35:28.850 --> 01:35:31.070
+And that is a surprise
+to you in this example?
+
+01:35:31.070 --> 01:35:33.690
+So the things that are
+penalized in this toy example
+
+01:35:33.690 --> 01:35:36.030
+are things in red.
+
+01:35:36.030 --> 01:35:36.530
+Yeah?
+
+01:35:36.530 --> 01:35:37.030
+[INAUDIBLE]
+
+01:35:37.030 --> 01:35:38.440
+So the suggestion is work.
+
+01:35:38.440 --> 01:35:43.120
+So in O2 why is works
+not penalized either?
+
+01:35:43.120 --> 01:35:45.060
+So do you have an
+explanation for it?
+
+01:35:45.060 --> 01:35:48.700
+Or does it make sense
+that it's not penalized?
+
+01:35:48.700 --> 01:35:49.600
+Yeah?
+
+01:35:49.600 --> 01:35:51.900
+[INAUDIBLE]
+
+01:35:51.900 --> 01:35:54.320
+So yeah, the intuition is great.
+
+01:35:54.320 --> 01:35:56.580
+But the answer was
+maybe the teacher
+
+01:35:56.580 --> 01:35:59.520
+interprets the Teddy
+bear as being a human.
+
+01:35:59.520 --> 01:36:04.320
+So as we said, once you
+generate the next token,
+
+01:36:04.320 --> 01:36:07.720
+all the tokens generated
+before come into the context.
+
+01:36:07.720 --> 01:36:10.180
+So let's say you
+are a teacher model.
+
+01:36:10.180 --> 01:36:15.140
+Now in your context that Teddy
+can do things like climbing.
+
+01:36:15.140 --> 01:36:18.360
+Then walking might be in
+the span of possibilities.
+
+01:36:18.360 --> 01:36:22.540
+So it's not something
+that is super surprising.
+
+01:36:22.540 --> 01:36:26.900
+So that is one property
+that is interesting.
+
+01:36:26.900 --> 01:36:31.100
+And yeah, that's all
+I had to say here.
+
+01:36:31.100 --> 01:36:36.190
+So when we look at
+on-policy distillation,
+
+01:36:36.190 --> 01:36:41.110
+we see that we have this
+supervision signal that is dense
+
+01:36:41.110 --> 01:36:44.710
+because it comes at the token
+level instead of the outcome
+
+01:36:44.710 --> 01:36:45.990
+level.
+
+01:36:45.990 --> 01:36:52.010
+And contrary to SFT, as the
+name suggests, on-policy,
+
+01:36:52.010 --> 01:36:54.430
+meaning that you're
+training the model
+
+01:36:54.430 --> 01:37:00.310
+to be better at with respect
+to its own completions.
+
+01:37:00.310 --> 01:37:03.750
+And you see in practice
+great results coming from it.
+
+01:37:03.750 --> 01:37:05.850
+And when you go even
+further than that,
+
+01:37:05.850 --> 01:37:08.270
+with the same amount
+of compute, you
+
+01:37:08.270 --> 01:37:13.630
+see that you get more bang out
+of your buck from this method.
+
+01:37:13.630 --> 01:37:20.950
+And also it is more friendly to
+parameter constraint situations.
+
+01:37:20.950 --> 01:37:24.590
+So there is this great blog
+post by Thinking Machine
+
+01:37:24.590 --> 01:37:28.270
+that did some toy
+ablation studies.
+
+01:37:28.270 --> 01:37:32.270
+And for example, if you play
+with the rank of the weights
+
+01:37:32.270 --> 01:37:35.560
+that you want to
+tune and you do SFT
+
+01:37:35.560 --> 01:37:38.280
+first and on-policy
+distillation next,
+
+01:37:38.280 --> 01:37:42.880
+you see that the delta between
+the performance that you
+
+01:37:42.880 --> 01:37:47.200
+get after SFT is
+shortened greatly
+
+01:37:47.200 --> 01:37:50.600
+after you apply on-policy
+distillation, which
+
+01:37:50.600 --> 01:37:54.520
+shows that the method
+is great at operating
+
+01:37:54.520 --> 01:37:55.900
+under compute constraints.
+
+01:37:59.920 --> 01:38:01.840
+OK, great.
+
+01:38:01.840 --> 01:38:04.580
+And also, since there
+is no reward model,
+
+01:38:04.580 --> 01:38:06.082
+there is nothing to hack.
+
+01:38:06.082 --> 01:38:07.540
+And if there was
+something to hack,
+
+01:38:07.540 --> 01:38:08.860
+it would be more than happy to.
+
+01:38:08.860 --> 01:38:13.440
+Because if on-policy decision
+wants to bring the loss down
+
+01:38:13.440 --> 01:38:16.300
+to 0, then you would align
+with the teacher distribution,
+
+01:38:16.300 --> 01:38:19.520
+which is a good edge case.
+
+01:38:19.520 --> 01:38:21.480
+That is great.
+
+01:38:21.480 --> 01:38:26.080
+But then when I mentioned
+we need a teacher model,
+
+01:38:26.080 --> 01:38:28.760
+then you need to have
+that in the first place.
+
+01:38:28.760 --> 01:38:33.315
+Let's say you're
+training a model,
+
+01:38:33.315 --> 01:38:34.440
+then you need to have that.
+
+01:38:34.440 --> 01:38:35.982
+And you're training
+a frontier model.
+
+01:38:35.982 --> 01:38:40.840
+Maybe you're the best, so there
+is no one that could teach you.
+
+01:38:40.840 --> 01:38:46.260
+And then the second thing
+is that contrary to GRPO
+
+01:38:46.260 --> 01:38:50.000
+where the signal that you're
+basing your updates on
+
+01:38:50.000 --> 01:38:54.760
+is true labels, now
+you're comparing yourself
+
+01:38:54.760 --> 01:38:58.700
+to a teacher models
+output distribution.
+
+01:38:58.700 --> 01:39:01.560
+And it might not be
+perfect, nor might it
+
+01:39:01.560 --> 01:39:05.040
+be complete in terms of
+coverage on the domains
+
+01:39:05.040 --> 01:39:06.720
+that you're interested in.
+
+01:39:06.720 --> 01:39:11.440
+Which is why it might
+also come as a limitation.
+
+01:39:11.440 --> 01:39:12.500
+Does that make sense?
+
+01:39:15.400 --> 01:39:16.540
+OK, great.
+
+01:39:16.540 --> 01:39:19.120
+So now I'm going to see
+each of these limitations
+
+01:39:19.120 --> 01:39:20.240
+more in detail.
+
+01:39:20.240 --> 01:39:22.960
+So do you see a
+way where we could
+
+01:39:22.960 --> 01:39:27.360
+avoid the need for a teacher?
+
+01:39:27.360 --> 01:39:30.120
+OK, I know it's not obvious,
+but once you're going to see it,
+
+01:39:30.120 --> 01:39:31.590
+it sounds magical.
+
+01:39:31.590 --> 01:39:35.530
+So you just need to
+recall that everything
+
+01:39:35.530 --> 01:39:40.450
+that you're inputting for you to
+obtain the output distributions
+
+01:39:40.450 --> 01:39:42.850
+is done by teacher forcing way.
+
+01:39:42.850 --> 01:39:47.810
+So the figure that
+Afshin had, I think here
+
+01:39:47.810 --> 01:39:52.010
+between generation and training,
+you would be on the right side,
+
+01:39:52.010 --> 01:39:56.170
+where once you generate the
+tokens from your student model,
+
+01:39:56.170 --> 01:39:59.270
+you put all of
+them, the prompts,
+
+01:39:59.270 --> 01:40:03.010
+plus the tokens from the student
+model as input of your teacher.
+
+01:40:03.010 --> 01:40:06.850
+And you look at the output
+next token prediction
+
+01:40:06.850 --> 01:40:08.890
+of your teacher model.
+
+01:40:08.890 --> 01:40:12.370
+So nothing prevents you
+from injecting things
+
+01:40:12.370 --> 01:40:17.130
+that could help a potential
+teacher as part of the prompt,
+
+01:40:17.130 --> 01:40:20.050
+including the answer
+and everything that
+
+01:40:20.050 --> 01:40:21.690
+leads up to the answer.
+
+01:40:21.690 --> 01:40:25.170
+So this is what the
+self-distillation paper does.
+
+01:40:25.170 --> 01:40:27.330
+So you have a prompt.
+
+01:40:27.330 --> 01:40:30.380
+Then you have the
+complete answer.
+
+01:40:30.380 --> 01:40:35.740
+And you ask the model to come
+back with an answer once again.
+
+01:40:35.740 --> 01:40:39.500
+And this is just a trick for
+you to get this nice probability
+
+01:40:39.500 --> 01:40:42.940
+distributions ready to
+compare with a student.
+
+01:40:42.940 --> 01:40:44.660
+And the nice thing
+here is that you can
+
+01:40:44.660 --> 01:40:46.400
+do that with the same model.
+
+01:40:49.300 --> 01:40:51.700
+Does that look magical?
+
+01:40:51.700 --> 01:40:52.600
+Yeah?
+
+01:40:52.600 --> 01:40:55.380
+Yeah, I know, it looks great.
+
+01:40:55.380 --> 01:40:55.880
+OK.
+
+01:40:55.880 --> 01:40:57.660
+So the second thing
+that we mentioned
+
+01:40:57.660 --> 01:41:00.160
+is the-- oh, yeah,
+there was a question?
+
+01:41:00.160 --> 01:41:01.860
+[INAUDIBLE]
+
+01:41:01.860 --> 01:41:04.740
+So the question is,
+if I had to summarize
+
+01:41:04.740 --> 01:41:08.440
+is, when would you benefit most
+from on-policy distillation?
+
+01:41:08.440 --> 01:41:10.900
+So yeah, you're
+right that let's say
+
+01:41:10.900 --> 01:41:13.260
+you're the best model
+out there, maybe
+
+01:41:13.260 --> 01:41:17.920
+you will have a lesser
+benefit from this method.
+
+01:41:17.920 --> 01:41:20.020
+And maybe you would
+use on-policy decision
+
+01:41:20.020 --> 01:41:23.100
+for other needs.
+
+01:41:23.100 --> 01:41:27.580
+The GLM 5 paper that we saw
+last week is one example where
+
+01:41:27.580 --> 01:41:31.430
+you would use it to calibrate
+the fact that you do not
+
+01:41:31.430 --> 01:41:34.170
+lose knowledge that you
+have learned in the past,
+
+01:41:34.170 --> 01:41:37.550
+so you would distill yourself
+on previously gained knowledge.
+
+01:41:37.550 --> 01:41:38.610
+But you're right.
+
+01:41:38.610 --> 01:41:46.490
+You would typically use it on
+faster models of your series.
+
+01:41:46.490 --> 01:41:49.050
+So let's say you have
+your frontier lab.
+
+01:41:49.050 --> 01:41:50.840
+You have a pro
+and a flash model.
+
+01:41:50.840 --> 01:41:52.590
+Maybe on-policy
+distillation would be what
+
+01:41:52.590 --> 01:41:54.050
+you use on your flash series.
+
+01:41:54.050 --> 01:41:59.250
+And then your pro series
+might be more foundational
+
+01:41:59.250 --> 01:42:02.550
+GRPO and then these
+core techniques
+
+01:42:02.550 --> 01:42:06.430
+that might need more compute
+but that are based off
+
+01:42:06.430 --> 01:42:09.070
+hardcore labels.
+
+01:42:09.070 --> 01:42:09.670
+Thank you.
+
+01:42:09.670 --> 01:42:10.990
+Yep.
+
+01:42:10.990 --> 01:42:12.110
+Awesome.
+
+01:42:12.110 --> 01:42:15.630
+So the last thing that I wanted
+to mention is on the fact
+
+01:42:15.630 --> 01:42:19.030
+that you might be bounded
+by the teacher's abilities.
+
+01:42:19.030 --> 01:42:25.030
+So one approach
+is to take a model
+
+01:42:25.030 --> 01:42:30.080
+and then use these verifiable
+rewards across domains.
+
+01:42:30.080 --> 01:42:33.080
+And then have experts
+for each domain.
+
+01:42:33.080 --> 01:42:36.360
+And then when you want to do
+these on-policy distillation,
+
+01:42:36.360 --> 01:42:41.680
+do it against the
+expert of that domain.
+
+01:42:41.680 --> 01:42:46.057
+So this is why there is a multi
+teacher on policy distillation
+
+01:42:46.057 --> 01:42:47.140
+that comes in the picture.
+
+01:42:47.140 --> 01:42:49.200
+So now is it a
+surprise to anyone
+
+01:42:49.200 --> 01:42:53.760
+that we need multiple teachers
+here and not just one?
+
+01:42:53.760 --> 01:42:58.640
+Well, empirically if you do
+these post-training RL on just
+
+01:42:58.640 --> 01:43:00.760
+a single one, you
+might have things
+
+01:43:00.760 --> 01:43:03.360
+like forgetting
+that happens and you
+
+01:43:03.360 --> 01:43:06.080
+might use a given
+set of parameters
+
+01:43:06.080 --> 01:43:08.080
+towards multiple objectives.
+
+01:43:08.080 --> 01:43:15.940
+So this is a method that has
+shown to be more efficient.
+
+01:43:15.940 --> 01:43:16.440
+OK.
+
+01:43:16.440 --> 01:43:16.942
+Awesome.
+
+01:43:16.942 --> 01:43:18.900
+And with that, I hope
+you have a great weekend.
+
+01:43:18.900 --> 01:43:22.250
+[APPLAUSE]
+

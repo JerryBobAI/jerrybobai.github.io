@@ -1,0 +1,6491 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:05.640 --> 00:00:12.160
+Hello, everyone, and welcome
+to lecture 5 of CME 295.
+
+00:00:12.160 --> 00:00:14.280
+So today is an exciting
+day because we'll
+
+00:00:14.280 --> 00:00:18.400
+be talking about LLM
+systems and, in particular,
+
+00:00:18.400 --> 00:00:24.640
+how we can train and serve
+large language models at scale.
+
+00:00:24.640 --> 00:00:28.080
+But before we do that,
+I want to first motivate
+
+00:00:28.080 --> 00:00:30.280
+why we would want to do that.
+
+00:00:30.280 --> 00:00:32.800
+So today is lecture
+5, which means we
+
+00:00:32.800 --> 00:00:35.260
+had four lectures before that.
+
+00:00:35.260 --> 00:00:37.400
+And during those
+four lectures, we
+
+00:00:37.400 --> 00:00:42.800
+had a buildup where we saw the
+foundations of LLMs and the fact
+
+00:00:42.800 --> 00:00:45.400
+that they were based
+on the transformer.
+
+00:00:45.400 --> 00:00:47.760
+And we saw that
+LLMs in particular,
+
+00:00:47.760 --> 00:00:53.200
+they frame these problems
+as text-to-text problems.
+
+00:00:53.200 --> 00:00:55.920
+And in particular,
+what they do is
+
+00:00:55.920 --> 00:01:01.150
+they take the decoder
+part of transformers,
+
+00:01:01.150 --> 00:01:03.270
+and they scale that up.
+
+00:01:03.270 --> 00:01:07.390
+And in particular, they scale
+that in terms of model size.
+
+00:01:07.390 --> 00:01:12.430
+So LLMs typically have a size
+on the order of billions,
+
+00:01:12.430 --> 00:01:14.430
+if not trillions.
+
+00:01:14.430 --> 00:01:16.990
+So it is huge.
+
+00:01:16.990 --> 00:01:19.550
+And then the second
+aspect, among others,
+
+00:01:19.550 --> 00:01:23.070
+is they're trained
+on a lot of data.
+
+00:01:23.070 --> 00:01:24.790
+So we had seen that,
+for instance, there
+
+00:01:24.790 --> 00:01:29.670
+is this very expensive stage
+called pre-training, where
+
+00:01:29.670 --> 00:01:32.830
+these models are trained
+on trillions of tokens
+
+00:01:32.830 --> 00:01:36.430
+or even tens of
+trillions of tokens.
+
+00:01:36.430 --> 00:01:41.610
+So all of that means that we
+need to have the hardware.
+
+00:01:41.610 --> 00:01:44.310
+We need to have
+infrastructure that
+
+00:01:44.310 --> 00:01:51.110
+allows us to serve these models
+but also train these models.
+
+00:01:51.110 --> 00:01:54.270
+And the key question
+is, well, how can
+
+00:01:54.270 --> 00:01:55.930
+we make this work in practice?
+
+00:01:55.930 --> 00:01:58.550
+So all of that was
+theoretical, but how
+
+00:01:58.550 --> 00:02:01.590
+can we actually make that work?
+
+00:02:01.590 --> 00:02:06.590
+So as you all know, if
+we look at under the hood
+
+00:02:06.590 --> 00:02:12.630
+of the decoder, we actually have
+a relatively simple architecture
+
+00:02:12.630 --> 00:02:16.150
+that is composed
+of two main layers.
+
+00:02:16.150 --> 00:02:20.910
+So the first one is the
+masked multi-head attention,
+
+00:02:20.910 --> 00:02:25.230
+and the second one is the
+feedforward neural network.
+
+00:02:25.230 --> 00:02:29.430
+But if you think about
+it, these two layers,
+
+00:02:29.430 --> 00:02:34.710
+they're actually just a bunch
+of matrix multiplications.
+
+00:02:34.710 --> 00:02:37.610
+And so I know we're not
+even two minutes in,
+
+00:02:37.610 --> 00:02:40.550
+but I have a question for you.
+
+00:02:40.550 --> 00:02:42.150
+What is the piece
+of hardware that
+
+00:02:42.150 --> 00:02:47.390
+is excellent at matrix
+multiplications?
+
+00:02:47.390 --> 00:02:49.790
+GPUs, yes, exactly.
+
+00:02:49.790 --> 00:02:53.390
+So the key of this
+lecture is to see
+
+00:02:53.390 --> 00:02:57.500
+how we can leverage these
+GPUs in a smart way.
+
+00:02:57.500 --> 00:02:59.820
+And by the way, I'm
+not sure if you all
+
+00:02:59.820 --> 00:03:04.740
+know why GPUs are very
+relevant for this kind of task.
+
+00:03:04.740 --> 00:03:10.060
+So GPUs, they have a
+lot of cores that allow
+
+00:03:10.060 --> 00:03:12.940
+you to parallelize operations.
+
+00:03:12.940 --> 00:03:17.860
+And so if you think about
+matrix multiplications,
+
+00:03:17.860 --> 00:03:21.780
+let's assume you
+have some matrix A,
+
+00:03:21.780 --> 00:03:23.860
+let's say with some
+number of rows,
+
+00:03:23.860 --> 00:03:28.900
+and some matrix B with
+some number of columns.
+
+00:03:28.900 --> 00:03:33.780
+If you were to compute the
+result of this operation,
+
+00:03:33.780 --> 00:03:39.820
+each element can be computed
+in a parallel fashion.
+
+00:03:39.820 --> 00:03:45.580
+So for instance, this element is
+just this dot product of this.
+
+00:03:45.580 --> 00:03:52.020
+This one is this dot
+product of this, and so on.
+
+00:03:52.020 --> 00:03:54.850
+So everything can be
+nicely parallelized
+
+00:03:54.850 --> 00:03:59.010
+and GPUs actually have a
+lot of cores that allow
+
+00:03:59.010 --> 00:04:01.130
+you to do that in parallel.
+
+00:04:01.130 --> 00:04:06.210
+They actually have specialized
+hardware to do that very well.
+
+00:04:06.210 --> 00:04:09.930
+So with that being
+said, I want us
+
+00:04:09.930 --> 00:04:14.810
+to talk about what
+features these GPUs have.
+
+00:04:14.810 --> 00:04:18.810
+But in order to do that, we
+need to have some metrics.
+
+00:04:18.810 --> 00:04:21.290
+So if you remember
+in lecture 2, we
+
+00:04:21.290 --> 00:04:24.190
+are talking about how
+we could scale LLMs.
+
+00:04:24.190 --> 00:04:28.090
+And we had mentioned two
+metrics that people use.
+
+00:04:28.090 --> 00:04:32.690
+So we had said we have the
+number of floating point
+
+00:04:32.690 --> 00:04:36.430
+operations, which is
+a measure of computes,
+
+00:04:36.430 --> 00:04:38.810
+and in particular,
+compute budget.
+
+00:04:38.810 --> 00:04:41.410
+And this one is
+typically spelled
+
+00:04:41.410 --> 00:04:44.530
+as flops with a
+little S. And we had
+
+00:04:44.530 --> 00:04:47.010
+said there is
+another flops which
+
+00:04:47.010 --> 00:04:49.290
+people can confuse very easily.
+
+00:04:49.290 --> 00:04:53.330
+There is actually a
+measure of compute speed.
+
+00:04:53.330 --> 00:04:57.170
+So flops either with
+a big S or with a /s.
+
+00:04:57.170 --> 00:05:01.770
+So this one is floating
+point operations per second.
+
+00:05:01.770 --> 00:05:06.610
+So that one is a measure of how
+performant your hardware is.
+
+00:05:06.610 --> 00:05:08.930
+And I believe we
+had not actually
+
+00:05:08.930 --> 00:05:10.970
+used that second metric.
+
+00:05:10.970 --> 00:05:12.930
+But today, we'll be using it.
+
+00:05:12.930 --> 00:05:15.610
+So just as an FYI.
+
+00:05:15.610 --> 00:05:20.450
+So if we were to take a
+look at a very good GPU
+
+00:05:20.450 --> 00:05:23.730
+out there, so the
+H200 from NVIDIA,
+
+00:05:23.730 --> 00:05:28.690
+you would have a datasheet
+that looks like this.
+
+00:05:28.690 --> 00:05:32.290
+You would have a bunch
+of characteristics that
+
+00:05:32.290 --> 00:05:35.090
+characterize the compute speed.
+
+00:05:35.090 --> 00:05:38.830
+And as you can see here, it's
+measured as a function of flops.
+
+00:05:38.830 --> 00:05:42.130
+So teraflops in this case.
+
+00:05:42.130 --> 00:05:46.670
+Then you also have some
+indication of how much memory
+
+00:05:46.670 --> 00:05:48.850
+this device has.
+
+00:05:48.850 --> 00:05:51.120
+And in particular,
+we will see that this
+
+00:05:51.120 --> 00:05:56.120
+is something we can use to store
+computations, either temporary
+
+00:05:56.120 --> 00:06:00.720
+or ones we want to use
+to update our model.
+
+00:06:00.720 --> 00:06:02.680
+And then we have
+also some indication
+
+00:06:02.680 --> 00:06:10.360
+of the speed of how we can
+transfer these pieces of data.
+
+00:06:10.360 --> 00:06:16.400
+And here, we can see it's on the
+order of terabytes per second.
+
+00:06:16.400 --> 00:06:20.720
+So the problem with this is--
+
+00:06:20.720 --> 00:06:27.000
+I mentioned a few slides ago
+that we want to serve and train
+
+00:06:27.000 --> 00:06:31.080
+huge models on the order of
+billions of parameters, hundreds
+
+00:06:31.080 --> 00:06:32.840
+of billions of parameters.
+
+00:06:32.840 --> 00:06:35.660
+And as with all
+pieces of hardware,
+
+00:06:35.660 --> 00:06:39.240
+these numbers are quite limited.
+
+00:06:39.240 --> 00:06:43.640
+And in particular, the memory,
+which is used for us to,
+
+00:06:43.640 --> 00:06:48.080
+let's say, for instance, store
+the parameters of our model,
+
+00:06:48.080 --> 00:06:51.730
+it's only on the order
+of hundreds of gigabytes.
+
+00:06:51.730 --> 00:06:57.110
+So in this case, 141
+gigabyte, to be more precise.
+
+00:06:57.110 --> 00:07:01.150
+So if we were to do
+some napkin math,
+
+00:07:01.150 --> 00:07:07.650
+let's assume you have a model
+of size 100 billion parameters.
+
+00:07:07.650 --> 00:07:11.610
+And if you have, let's say,
+2 bytes per parameter--
+
+00:07:11.610 --> 00:07:13.870
+and by the way, this is,
+I think, a fair assumption
+
+00:07:13.870 --> 00:07:19.910
+because let's suppose you store
+your parameters in floating
+
+00:07:19.910 --> 00:07:24.350
+point 16, which is a way to
+store your parameter at a given
+
+00:07:24.350 --> 00:07:25.130
+granularity.
+
+00:07:25.130 --> 00:07:28.830
+You actually are storing
+this in 16 bits, which
+
+00:07:28.830 --> 00:07:32.030
+is equal to 2 bytes.
+
+00:07:32.030 --> 00:07:34.270
+So if you do that,
+then that means
+
+00:07:34.270 --> 00:07:39.150
+that just the fact of
+storing your parameters
+
+00:07:39.150 --> 00:07:43.590
+will cost you 200
+gigabytes of memory, which
+
+00:07:43.590 --> 00:07:47.810
+is greater than the memory
+limit of the GPU that we saw,
+
+00:07:47.810 --> 00:07:51.790
+which, by the way,
+is a very good GPU.
+
+00:07:51.790 --> 00:07:54.470
+And on top of that--
+
+00:07:54.470 --> 00:07:56.970
+so this is just to
+have the parameters.
+
+00:07:56.970 --> 00:07:59.750
+But on top of that, for
+training, what you need to do
+
+00:07:59.750 --> 00:08:04.190
+is to actually train your
+model, learn on its mistakes,
+
+00:08:04.190 --> 00:08:06.470
+and update the weights.
+
+00:08:06.470 --> 00:08:11.310
+And if you want to do
+that, well, you don't just
+
+00:08:11.310 --> 00:08:12.330
+store your parameters.
+
+00:08:12.330 --> 00:08:15.590
+You also need to store, for
+instance, the activations.
+
+00:08:15.590 --> 00:08:17.410
+You need to store,
+your gradients.
+
+00:08:17.410 --> 00:08:19.830
+You need to store
+the optimizer states.
+
+00:08:19.830 --> 00:08:23.270
+And all of that is
+a lot of memory.
+
+00:08:23.270 --> 00:08:28.830
+So anyways, I hope I convinced
+you that GPU memory is limited.
+
+00:08:28.830 --> 00:08:32.070
+And this is the
+first limitation.
+
+00:08:32.070 --> 00:08:35.669
+And the second limitation
+is that in order
+
+00:08:35.669 --> 00:08:40.210
+to use these models, well,
+it's going to be expensive.
+
+00:08:40.210 --> 00:08:42.190
+On the training
+side, you'll have
+
+00:08:42.190 --> 00:08:44.790
+a bunch of tokens you
+want to train this on.
+
+00:08:44.790 --> 00:08:46.660
+And on the inference
+side, well, maybe you
+
+00:08:46.660 --> 00:08:50.300
+have a lot of requests
+you want to serve.
+
+00:08:50.300 --> 00:08:54.980
+And this is the reason why,
+throughout this lecture,
+
+00:08:54.980 --> 00:08:58.820
+we'll try to answer two
+key questions, which
+
+00:08:58.820 --> 00:09:03.020
+are, how do we
+make the model fit
+
+00:09:03.020 --> 00:09:05.500
+within the piece of hardware?
+
+00:09:05.500 --> 00:09:08.080
+And the second question
+is, how do we make it fast?
+
+00:09:12.380 --> 00:09:13.660
+Cool.
+
+00:09:13.660 --> 00:09:17.700
+And the way we're going
+to approach this is we're
+
+00:09:17.700 --> 00:09:22.260
+first going to see at the
+GPU level, like within a GPU,
+
+00:09:22.260 --> 00:09:27.020
+if there are things we can do in
+order to answer these questions.
+
+00:09:27.020 --> 00:09:29.660
+So we're first going to
+start with a method that
+
+00:09:29.660 --> 00:09:34.340
+is called flash
+attention that aims
+
+00:09:34.340 --> 00:09:38.420
+at improving how we
+perform these operations
+
+00:09:38.420 --> 00:09:40.420
+on a single GPU.
+
+00:09:40.420 --> 00:09:44.100
+And we're going to see that
+this method is an exact method.
+
+00:09:44.100 --> 00:09:46.890
+We're not making
+any approximations.
+
+00:09:46.890 --> 00:09:48.650
+We're just performing
+the computations
+
+00:09:48.650 --> 00:09:53.890
+in a way that is making
+things more efficient.
+
+00:09:53.890 --> 00:09:58.370
+So I mentioned right
+before that LLMs
+
+00:09:58.370 --> 00:10:01.710
+are composed of decoders
+from the transformers.
+
+00:10:01.710 --> 00:10:05.570
+And I mentioned that there
+are two layers in the decoder.
+
+00:10:05.570 --> 00:10:07.530
+One is the masked
+self-attention,
+
+00:10:07.530 --> 00:10:10.210
+and the other one is the
+feedforward neural network.
+
+00:10:10.210 --> 00:10:16.050
+Well, if you take a look at the
+masked self-attention layer,
+
+00:10:16.050 --> 00:10:18.850
+what you see is
+that you actually
+
+00:10:18.850 --> 00:10:25.890
+need to compute and potentially
+store a huge matrix.
+
+00:10:25.890 --> 00:10:30.150
+So that layer is where you
+perform your self-attention.
+
+00:10:30.150 --> 00:10:33.790
+So each token attends
+to everyone else
+
+00:10:33.790 --> 00:10:37.890
+or rather, in the case of the
+decoder, to itself and the ones
+
+00:10:37.890 --> 00:10:39.970
+before it.
+
+00:10:39.970 --> 00:10:45.370
+And here, you need to have
+Q times K transpose, which
+
+00:10:45.370 --> 00:10:49.770
+is the dot product of all your
+queries with all the other keys.
+
+00:10:49.770 --> 00:10:55.850
+And n here is the
+sequence length.
+
+00:10:55.850 --> 00:10:57.650
+So it can be big.
+
+00:10:57.650 --> 00:10:59.610
+It can be tens of thousands.
+
+00:10:59.610 --> 00:11:04.610
+So even for, let's say, 1,000,
+1,000 times 1,000 is a million.
+
+00:11:04.610 --> 00:11:09.130
+So you'd have 1 million entries
+that you need to populate
+
+00:11:09.130 --> 00:11:14.410
+for just a sequence
+length of 1,000 tokens.
+
+00:11:14.410 --> 00:11:19.410
+And this, well,
+is very expensive
+
+00:11:19.410 --> 00:11:21.890
+to store in particular.
+
+00:11:21.890 --> 00:11:25.770
+So let's see how we
+can actually do this.
+
+00:11:25.770 --> 00:11:30.490
+So if we take a look
+at a GPU, we actually
+
+00:11:30.490 --> 00:11:32.170
+see that there are
+a few components
+
+00:11:32.170 --> 00:11:34.170
+that we're leveraging.
+
+00:11:34.170 --> 00:11:36.490
+The first component
+that I want to call out
+
+00:11:36.490 --> 00:11:44.280
+is called the HBM, which stands
+for high bandwidth memory,
+
+00:11:44.280 --> 00:11:49.200
+and it is the kind of memory
+where the memory size was
+
+00:11:49.200 --> 00:11:51.300
+posted in a few slides before.
+
+00:11:51.300 --> 00:11:53.840
+So the memory that you
+see here is actually
+
+00:11:53.840 --> 00:11:57.640
+the memory from the HBM.
+
+00:11:57.640 --> 00:12:01.600
+So that one is a
+kind of memory that
+
+00:12:01.600 --> 00:12:06.120
+has enough space to have big
+intermediary computations.
+
+00:12:06.120 --> 00:12:08.640
+And it is relatively fast.
+
+00:12:08.640 --> 00:12:12.600
+I mean, on the absolute
+scale, it's fast.
+
+00:12:12.600 --> 00:12:16.440
+But on a relative scale
+compared to the SRAM,
+
+00:12:16.440 --> 00:12:18.880
+it is relatively slow.
+
+00:12:18.880 --> 00:12:20.100
+And what do I mean by slow?
+
+00:12:20.100 --> 00:12:25.880
+I mean by if you want to
+read or write data to it,
+
+00:12:25.880 --> 00:12:34.440
+it has roughly one order of
+magnitude less transfer speeds.
+
+00:12:34.440 --> 00:12:39.870
+So you can think of the HBM as
+a piece that has roughly, let's
+
+00:12:39.870 --> 00:12:45.250
+say, one or so terabyte per
+second of transfer speed,
+
+00:12:45.250 --> 00:12:50.990
+whereas the SRAM, which is
+another piece of memory,
+
+00:12:50.990 --> 00:12:54.510
+has a much higher
+transfer speed.
+
+00:12:54.510 --> 00:12:56.950
+So you can access it on
+the order of, let's say,
+
+00:12:56.950 --> 00:13:00.390
+tens of terabyte per second.
+
+00:13:00.390 --> 00:13:04.650
+And that piece of
+memory, it's faster,
+
+00:13:04.650 --> 00:13:07.070
+but it's also much smaller,
+which means that you cannot
+
+00:13:07.070 --> 00:13:13.270
+store these big entities
+in that kind of memory.
+
+00:13:13.270 --> 00:13:19.030
+So in the case of the
+self-attention, what you naively
+
+00:13:19.030 --> 00:13:26.190
+need to do is to store that
+huge matrix in the HBM, which
+
+00:13:26.190 --> 00:13:29.430
+is big but also slow.
+
+00:13:29.430 --> 00:13:31.790
+And the key question
+that we want to answer
+
+00:13:31.790 --> 00:13:36.030
+is, is there any
+way for us to avoid
+
+00:13:36.030 --> 00:13:39.580
+storing that big
+matrix in a place that
+
+00:13:39.580 --> 00:13:43.720
+is slow to read and write into?
+
+00:13:43.720 --> 00:13:44.220
+Yeah?
+
+00:13:47.060 --> 00:13:49.180
+So the question is,
+when you say you
+
+00:13:49.180 --> 00:13:52.440
+have one 40 gigabytes of
+memory, is it the HBM or SRAM?
+
+00:13:52.440 --> 00:13:54.940
+So SRAM actually
+has much less memory
+
+00:13:54.940 --> 00:13:57.900
+on the order of, I believe,
+hundreds of megabytes.
+
+00:13:57.900 --> 00:14:02.880
+And the 141 gigabytes is
+actually from the HBM.
+
+00:14:02.880 --> 00:14:07.460
+So it's the big and slow memory.
+
+00:14:07.460 --> 00:14:11.420
+So one thing that I want
+to say is that in a GPU,
+
+00:14:11.420 --> 00:14:13.500
+computations are
+happening in what
+
+00:14:13.500 --> 00:14:23.860
+we call the compute unit, which
+is on chip, and HBM is off chip.
+
+00:14:23.860 --> 00:14:27.020
+So just a little detail.
+
+00:14:27.020 --> 00:14:31.200
+So what we want to do
+is, as I mentioned,
+
+00:14:31.200 --> 00:14:37.940
+to limit the number of
+reads and writes operations
+
+00:14:37.940 --> 00:14:40.460
+to that big and slow components.
+
+00:14:40.460 --> 00:14:43.740
+So let's see how we can do that.
+
+00:14:43.740 --> 00:14:49.620
+So the self-attention
+operation involves an operator,
+
+00:14:49.620 --> 00:14:53.100
+which is a softmax
+operator, which
+
+00:14:53.100 --> 00:14:57.380
+is defined as, if you
+consider a vector,
+
+00:14:57.380 --> 00:15:01.860
+the softmax of that vector
+at a particular component
+
+00:15:01.860 --> 00:15:06.580
+is the exponential
+of that component
+
+00:15:06.580 --> 00:15:10.020
+over the sum of the
+exponential of all components
+
+00:15:10.020 --> 00:15:13.100
+in that vector.
+
+00:15:13.100 --> 00:15:18.520
+And the problem is that operator
+requires, in a naive way,
+
+00:15:18.520 --> 00:15:24.900
+for you to compute all these
+components across your vector.
+
+00:15:24.900 --> 00:15:29.820
+So in other words, you cannot
+obtain softmax of x at component
+
+00:15:29.820 --> 00:15:35.450
+i without processing
+the whole row.
+
+00:15:35.450 --> 00:15:37.410
+You cannot.
+
+00:15:37.410 --> 00:15:41.010
+And the problem
+with that is, given
+
+00:15:41.010 --> 00:15:44.410
+that you need to process the
+whole row, well, in order
+
+00:15:44.410 --> 00:15:49.570
+to compute the self-attention
+operation in a naive way, what
+
+00:15:49.570 --> 00:15:53.050
+you would need to
+do is to actually
+
+00:15:53.050 --> 00:15:57.570
+load the query and
+the key matrices
+
+00:15:57.570 --> 00:16:02.970
+and to perform the
+whole matrix operations,
+
+00:16:02.970 --> 00:16:06.370
+and then write that to the HBM.
+
+00:16:06.370 --> 00:16:11.050
+And then you need to
+read that whole matrix
+
+00:16:11.050 --> 00:16:16.530
+and then perform the softmax
+computation on the whole matrix
+
+00:16:16.530 --> 00:16:18.350
+and write that to the HBM again.
+
+00:16:21.050 --> 00:16:25.730
+And then loads that
+resulting quantity
+
+00:16:25.730 --> 00:16:29.010
+and then multiply
+that by your value
+
+00:16:29.010 --> 00:16:32.170
+in order to obtain your output.
+
+00:16:32.170 --> 00:16:35.880
+So in other words, let me
+just recap what we just said.
+
+00:16:35.880 --> 00:16:38.880
+The limitation of the
+softmax is that you
+
+00:16:38.880 --> 00:16:44.180
+need to compute that
+sum over the whole row.
+
+00:16:44.180 --> 00:16:45.640
+So that assumes
+that you actually
+
+00:16:45.640 --> 00:16:47.200
+process the whole
+row, which is why
+
+00:16:47.200 --> 00:16:49.840
+you need to do all these
+steps and do all these
+
+00:16:49.840 --> 00:16:54.080
+reads and writes from the HBM.
+
+00:16:54.080 --> 00:16:56.520
+So the key question
+that we want to ask
+
+00:16:56.520 --> 00:17:03.280
+is, is there a way for us to not
+have to process the whole row?
+
+00:17:03.280 --> 00:17:05.040
+Is there a way for
+us to actually do
+
+00:17:05.040 --> 00:17:09.200
+that in an iterative fashion?
+
+00:17:09.200 --> 00:17:12.960
+So this is the key question
+that the flash attention
+
+00:17:12.960 --> 00:17:16.560
+method tries to answer.
+
+00:17:16.560 --> 00:17:22.079
+So we're going to do some--
+
+00:17:22.079 --> 00:17:25.119
+I wouldn't call it math but,
+yeah, some little writing
+
+00:17:25.119 --> 00:17:26.220
+on the blackboards.
+
+00:17:28.920 --> 00:17:39.880
+So let's assume you have
+a row vector s and then
+
+00:17:39.880 --> 00:17:45.000
+a column vector v. So why
+are we in this situation?
+
+00:17:45.000 --> 00:17:48.200
+Well, it is because
+if you have your,
+
+00:17:48.200 --> 00:17:53.820
+let's say, query and
+then key transpose,
+
+00:17:53.820 --> 00:18:00.920
+so the softmax operation of
+this with some, let's say,
+
+00:18:00.920 --> 00:18:03.680
+scaling factor times v.
+
+00:18:03.680 --> 00:18:11.000
+So if you take your
+query, which has
+
+00:18:11.000 --> 00:18:14.900
+row vectors and
+your key transpose,
+
+00:18:14.900 --> 00:18:25.280
+which has some column vectors,
+in order to have the attention
+
+00:18:25.280 --> 00:18:31.230
+weights of a given query
+and all the other keys,
+
+00:18:31.230 --> 00:18:36.350
+you will perform these dot
+products between your query
+
+00:18:36.350 --> 00:18:39.947
+and all the other keys.
+
+00:18:39.947 --> 00:18:41.530
+So you would have
+something like this.
+
+00:18:41.530 --> 00:18:48.870
+So for the first query, you
+would have this times this.
+
+00:18:48.870 --> 00:18:51.430
+So let's assume it's s1.
+
+00:18:51.430 --> 00:18:59.510
+And then this times
+this, it is s2, up to sn.
+
+00:18:59.510 --> 00:19:04.830
+And what you want to
+do is to find a way
+
+00:19:04.830 --> 00:19:14.670
+to compute softmax of this
+vector times some scaling
+
+00:19:14.670 --> 00:19:20.990
+factor times the values.
+
+00:19:20.990 --> 00:19:26.230
+And the values here,
+you can think of it
+
+00:19:26.230 --> 00:19:32.320
+as the matrix with
+some row vectors.
+
+00:19:36.020 --> 00:19:39.100
+So what we want
+to figure out is,
+
+00:19:39.100 --> 00:19:46.420
+is there a way for us to compute
+the softmax times this vector
+
+00:19:46.420 --> 00:19:50.860
+without having to compute
+everything within here first,
+
+00:19:50.860 --> 00:19:56.060
+and then compute the
+softmax of all this thing
+
+00:19:56.060 --> 00:19:59.380
+and multiply that by the vector?
+
+00:19:59.380 --> 00:20:02.100
+This is what we
+want to figure out.
+
+00:20:02.100 --> 00:20:07.000
+And so this is why we have a
+simple example on the slide,
+
+00:20:07.000 --> 00:20:10.740
+which is the row vector s,
+which you can think of it
+
+00:20:10.740 --> 00:20:16.260
+as just your attention
+scores before the softmax
+
+00:20:16.260 --> 00:20:19.860
+that you want to figure
+out if you can compute
+
+00:20:19.860 --> 00:20:23.580
+the softmax for that, times v.
+
+00:20:23.580 --> 00:20:27.660
+So in mathematical
+terms, we want
+
+00:20:27.660 --> 00:20:33.980
+to know if we can compute
+softmax of s times v
+
+00:20:33.980 --> 00:20:36.900
+in a smart way.
+
+00:20:36.900 --> 00:20:41.080
+So softmax of s times
+v, in other words,
+
+00:20:41.080 --> 00:20:48.780
+it is the weighted
+sum of the values
+
+00:20:48.780 --> 00:20:52.380
+as a function of the
+attention scores, which
+
+00:20:52.380 --> 00:20:54.760
+are softmax as you see.
+
+00:20:54.760 --> 00:21:01.180
+So it's exponential of the si's
+over the sum of the exponential
+
+00:21:01.180 --> 00:21:02.520
+of all the sj's.
+
+00:21:05.620 --> 00:21:09.280
+So far, does it make sense
+what we're trying to achieve?
+
+00:21:09.280 --> 00:21:09.780
+Yeah?
+
+00:21:09.780 --> 00:21:11.660
+OK, great.
+
+00:21:11.660 --> 00:21:13.900
+So this is our objective.
+
+00:21:13.900 --> 00:21:18.100
+And so as I mentioned, the
+problem with this quantity
+
+00:21:18.100 --> 00:21:21.740
+is that every
+attention score needs
+
+00:21:21.740 --> 00:21:27.610
+to have the full row processed
+because the denominator has
+
+00:21:27.610 --> 00:21:32.490
+the sum of the exponential
+of all the components.
+
+00:21:32.490 --> 00:21:38.330
+But if you think about it
+and if you put the sum symbol
+
+00:21:38.330 --> 00:21:41.410
+at the numerator,
+it just turns out
+
+00:21:41.410 --> 00:21:45.450
+that you actually
+have two quantities
+
+00:21:45.450 --> 00:21:50.210
+that you could compute
+in an iterative fashion.
+
+00:21:50.210 --> 00:21:55.410
+So you have the numerator, which
+is the sum of the exponential
+
+00:21:55.410 --> 00:22:00.490
+of the si's times the vi's
+over the sum of the exponential
+
+00:22:00.490 --> 00:22:01.470
+of the sj's.
+
+00:22:06.260 --> 00:22:13.450
+So maybe one idea could be
+to have an iterative fashion
+
+00:22:13.450 --> 00:22:17.970
+to compute the numerator
+and the denominator
+
+00:22:17.970 --> 00:22:23.840
+so that we don't need to compute
+the matrix within the softmax
+
+00:22:23.840 --> 00:22:26.520
+and then the softmax
+within the matrix
+
+00:22:26.520 --> 00:22:28.000
+and then do the multiplication.
+
+00:22:28.000 --> 00:22:30.120
+We can do all at once.
+
+00:22:30.120 --> 00:22:32.100
+You can fuse the operations.
+
+00:22:35.120 --> 00:22:37.620
+And so this is what we're
+going to see right now.
+
+00:22:37.620 --> 00:22:41.000
+So in other words,
+we're just noticing
+
+00:22:41.000 --> 00:22:43.600
+that if we want
+to express a given
+
+00:22:43.600 --> 00:22:45.880
+vector as a function of
+all the other vectors
+
+00:22:45.880 --> 00:22:49.120
+by doing our attention
+computation, which
+
+00:22:49.120 --> 00:22:53.360
+is you interact the query
+with all the other keys
+
+00:22:53.360 --> 00:22:57.520
+that you softmax and you
+multiply with the values,
+
+00:22:57.520 --> 00:23:03.920
+you realize that this
+expression is equal to something
+
+00:23:03.920 --> 00:23:06.760
+over something else
+that can be computed
+
+00:23:06.760 --> 00:23:08.100
+in an iterative fashion.
+
+00:23:11.160 --> 00:23:15.320
+And here we denote the
+numerator and the denominator
+
+00:23:15.320 --> 00:23:16.900
+with some quantities.
+
+00:23:16.900 --> 00:23:23.720
+So nt and dt, where t
+is the index up to which
+
+00:23:23.720 --> 00:23:27.180
+we're constructing these sums.
+
+00:23:27.180 --> 00:23:27.680
+Yeah?
+
+00:23:30.320 --> 00:23:33.180
+So the question is, why
+are you doing it this way?
+
+00:23:33.180 --> 00:23:35.460
+You can scale your
+sum iteratively.
+
+00:23:35.460 --> 00:23:36.940
+So I think you
+have the intuition.
+
+00:23:36.940 --> 00:23:39.600
+This is actually what
+we're going to do.
+
+00:23:39.600 --> 00:23:43.440
+So hold your thought,
+let's say, five minutes.
+
+00:23:43.440 --> 00:23:45.460
+We're going to see exactly
+how we can do that.
+
+00:23:49.960 --> 00:23:50.980
+Am I scaring you?
+
+00:23:50.980 --> 00:23:54.600
+Does it make sense?
+
+00:23:54.600 --> 00:23:55.400
+Yeah?
+
+00:23:55.400 --> 00:23:56.000
+OK.
+
+00:23:56.000 --> 00:24:00.040
+I'm saying this because
+I think this methods,
+
+00:24:00.040 --> 00:24:03.460
+beyond the actual thing
+that we want to do,
+
+00:24:03.460 --> 00:24:06.600
+I think the key thing is to
+understand why we're doing it.
+
+00:24:06.600 --> 00:24:09.080
+And the why we're
+doing it here is
+
+00:24:09.080 --> 00:24:15.400
+because we don't want to compute
+the whole sum of the components
+
+00:24:15.400 --> 00:24:16.420
+for all indices.
+
+00:24:16.420 --> 00:24:19.160
+We want to be able
+to actually process
+
+00:24:19.160 --> 00:24:21.750
+that in an iterative
+fashion by fusing
+
+00:24:21.750 --> 00:24:25.270
+all the operations, which
+is what we're seeing here.
+
+00:24:25.270 --> 00:24:33.150
+So let's take a very simple
+example of a row vector
+
+00:24:33.150 --> 00:24:37.270
+with three elements, s1,
+s2, s3, which we're assuming
+
+00:24:37.270 --> 00:24:42.150
+is just a dot product
+of q and k1, k2, k3.
+
+00:24:42.150 --> 00:24:45.990
+So it's your query
+attending to three keys.
+
+00:24:45.990 --> 00:24:49.870
+And you want to know
+how you can compute
+
+00:24:49.870 --> 00:24:56.670
+the average or the
+weighted sum of how
+
+00:24:56.670 --> 00:24:59.350
+your query is similar
+to the other keys
+
+00:24:59.350 --> 00:25:00.850
+times the respective values.
+
+00:25:00.850 --> 00:25:03.350
+That's what you want to compute.
+
+00:25:03.350 --> 00:25:07.870
+So as we mentioned, the
+way we want to compute this
+
+00:25:07.870 --> 00:25:10.030
+is in an iterative
+fashion because we
+
+00:25:10.030 --> 00:25:15.310
+saw that that formula can
+be computed iteratively.
+
+00:25:15.310 --> 00:25:20.140
+So we're going to start
+with the first element,
+
+00:25:20.140 --> 00:25:23.780
+and we're going to see
+that n1, the numerator,
+
+00:25:23.780 --> 00:25:29.860
+is just equal to
+exponential of s1 times v1.
+
+00:25:29.860 --> 00:25:33.740
+The denominator is equal
+to exponential of s1.
+
+00:25:33.740 --> 00:25:36.980
+So far, so good?
+
+00:25:36.980 --> 00:25:39.280
+Then we proceed to
+the second element.
+
+00:25:39.280 --> 00:25:42.940
+So we perform s2 and v2.
+
+00:25:42.940 --> 00:25:47.100
+The numerator is
+exponential of s2 times v2,
+
+00:25:47.100 --> 00:25:51.460
+and then the denominator
+is exponential of s2.
+
+00:25:51.460 --> 00:25:53.700
+So far, we're just adding.
+
+00:25:53.700 --> 00:25:57.220
+The third one is
+exponential of s3 times v3
+
+00:25:57.220 --> 00:25:59.720
+and then exponential of s3.
+
+00:26:03.100 --> 00:26:06.340
+In other words, we have
+a simple relationship
+
+00:26:06.340 --> 00:26:13.980
+between the expression of the
+numerator up to index t plus 1
+
+00:26:13.980 --> 00:26:17.980
+as a function of the
+numerator up to index t,
+
+00:26:17.980 --> 00:26:24.860
+and the element s at t
+plus 1, and v at t plus 1.
+
+00:26:24.860 --> 00:26:27.420
+Same for dt plus 1.
+
+00:26:27.420 --> 00:26:32.380
+And as a result of that,
+you're able to compute
+
+00:26:32.380 --> 00:26:37.300
+this whole expression
+by just dividing
+
+00:26:37.300 --> 00:26:46.060
+the n3 and d3 that we obtained
+in an iterative fashion.
+
+00:26:46.060 --> 00:26:52.980
+So just note that
+what we did is we
+
+00:26:52.980 --> 00:26:59.060
+did not have to sum the whole
+row and then to have that sum
+
+00:26:59.060 --> 00:27:01.760
+and then divide
+everything with that sum.
+
+00:27:01.760 --> 00:27:06.540
+We were able to actually perform
+that operation iteratively
+
+00:27:06.540 --> 00:27:10.040
+and obtain the results
+in an iterative fashion.
+
+00:27:10.040 --> 00:27:12.920
+So I just want to emphasize
+on the iterative nature of it.
+
+00:27:17.410 --> 00:27:21.370
+So, so far, I think
+it's pretty easy.
+
+00:27:21.370 --> 00:27:24.250
+But there is one thing
+in practice that happens,
+
+00:27:24.250 --> 00:27:28.290
+which is that when we're
+handling exponentials,
+
+00:27:28.290 --> 00:27:33.250
+the exponential of something
+can be in, in fact, very big.
+
+00:27:33.250 --> 00:27:38.970
+And it can lead to numerical
+instabilities, which
+
+00:27:38.970 --> 00:27:42.290
+is the reason why
+what we want to do
+
+00:27:42.290 --> 00:27:47.250
+is to control how
+big of the numbers
+
+00:27:47.250 --> 00:27:51.730
+we're using to actually
+perform the summation.
+
+00:27:51.730 --> 00:27:54.810
+And in order to
+control that, I first
+
+00:27:54.810 --> 00:27:58.570
+want to say that we
+first need to see
+
+00:27:58.570 --> 00:28:03.370
+that if you multiply the
+numerator and the denominator
+
+00:28:03.370 --> 00:28:07.130
+by the same quantity
+by some constant, well,
+
+00:28:07.130 --> 00:28:10.450
+that expression is exactly
+equal to the numerator
+
+00:28:10.450 --> 00:28:12.290
+over the denominator.
+
+00:28:12.290 --> 00:28:17.200
+It's just a simple observation.
+
+00:28:17.200 --> 00:28:22.120
+So if you agree with my
+statement, what that means is we
+
+00:28:22.120 --> 00:28:27.120
+just need to be smart in
+choosing the constants by which
+
+00:28:27.120 --> 00:28:30.440
+we're multiplying the
+numerator and the denominator
+
+00:28:30.440 --> 00:28:37.560
+to avoid us having to compute
+big quantities that can lead
+
+00:28:37.560 --> 00:28:41.600
+to numerical instabilities.
+
+00:28:41.600 --> 00:28:44.920
+So everything that we
+said so far is correct.
+
+00:28:44.920 --> 00:28:48.280
+Now, the thing that
+we want to tweak
+
+00:28:48.280 --> 00:28:51.160
+is making sure that
+what we compute
+
+00:28:51.160 --> 00:28:53.895
+is not numerically unstable.
+
+00:28:53.895 --> 00:28:55.520
+So in other words,
+we want to make sure
+
+00:28:55.520 --> 00:28:58.800
+that these quantities
+are not too big.
+
+00:28:58.800 --> 00:29:01.760
+So how are we going to do that?
+
+00:29:01.760 --> 00:29:09.080
+Well, one way is to multiply the
+numerator and the denominator
+
+00:29:09.080 --> 00:29:15.360
+with a constant that will
+allow these quantities to not
+
+00:29:15.360 --> 00:29:16.440
+be too big.
+
+00:29:16.440 --> 00:29:20.680
+And that constant
+could be exponential
+
+00:29:20.680 --> 00:29:25.240
+of minus the maximum
+size that you
+
+00:29:25.240 --> 00:29:32.280
+have encountered up to the
+element that you're processing.
+
+00:29:32.280 --> 00:29:34.980
+So let's look at this
+on a simple example.
+
+00:29:34.980 --> 00:29:37.160
+So back to our example
+with three elements.
+
+00:29:37.160 --> 00:29:38.640
+Yeah?
+
+00:29:38.640 --> 00:29:41.360
+So the question
+is, wouldn't that
+
+00:29:41.360 --> 00:29:43.600
+lead to another
+instability, which
+
+00:29:43.600 --> 00:29:45.540
+is that c could be equal to 0?
+
+00:29:45.540 --> 00:29:49.960
+So you will see that actually
+we're not computing C directly.
+
+00:29:49.960 --> 00:29:54.400
+We're going to use a property
+of the exponential, which
+
+00:29:54.400 --> 00:29:57.040
+is that if you
+multiply an exponential
+
+00:29:57.040 --> 00:30:00.820
+by another exponential,
+their exponent, they can add.
+
+00:30:00.820 --> 00:30:02.960
+So you don't need to
+actually compute that first.
+
+00:30:02.960 --> 00:30:05.040
+You can compute what
+is in the exponent
+
+00:30:05.040 --> 00:30:06.900
+and then exponentiate that.
+
+00:30:10.710 --> 00:30:11.930
+Any other questions here?
+
+00:30:15.950 --> 00:30:17.090
+OK, great.
+
+00:30:17.090 --> 00:30:19.013
+But I think that's
+a great point.
+
+00:30:19.013 --> 00:30:20.930
+And we're going to see
+exactly how we do that.
+
+00:30:20.930 --> 00:30:22.950
+So we said, what
+we want to do is
+
+00:30:22.950 --> 00:30:29.110
+to compute the ratio without
+having to compute something that
+
+00:30:29.110 --> 00:30:29.810
+is very big.
+
+00:30:29.810 --> 00:30:32.750
+So here, what we're
+doing is we're
+
+00:30:32.750 --> 00:30:36.630
+keeping track of the
+biggest element we
+
+00:30:36.630 --> 00:30:39.710
+have encountered so far.
+
+00:30:39.710 --> 00:30:44.510
+And we're storing that
+in a variable called m,
+
+00:30:44.510 --> 00:30:47.230
+as in maximum.
+
+00:30:47.230 --> 00:30:52.110
+So when we process the first
+element the maximum element we
+
+00:30:52.110 --> 00:30:57.510
+have encountered so far is s1.
+
+00:30:57.510 --> 00:31:00.110
+So here, if we go
+about computing
+
+00:31:00.110 --> 00:31:04.030
+the numerator and
+the denominator,
+
+00:31:04.030 --> 00:31:09.620
+what we said is we want to make
+sure that we're multiplying this
+
+00:31:09.620 --> 00:31:13.020
+by this constant, which
+is equal to exponential
+
+00:31:13.020 --> 00:31:19.220
+of minus the maximum component
+we have encountered so far.
+
+00:31:19.220 --> 00:31:25.740
+And so here, it's nothing else,
+that exponential of minus m1.
+
+00:31:25.740 --> 00:31:28.940
+So if you do that, and
+to answer your point,
+
+00:31:28.940 --> 00:31:32.100
+the nice thing with
+exponentials is
+
+00:31:32.100 --> 00:31:34.460
+if you multiply the
+quantity in the numerator
+
+00:31:34.460 --> 00:31:36.940
+and the denominator,
+which are times
+
+00:31:36.940 --> 00:31:40.140
+exponentials with
+an exponential,
+
+00:31:40.140 --> 00:31:44.020
+then what that means is the
+exponential becomes exponential
+
+00:31:44.020 --> 00:31:46.900
+of s1 minus m1.
+
+00:31:46.900 --> 00:31:48.780
+And so here in the
+order of things,
+
+00:31:48.780 --> 00:31:53.560
+you would first compute s1 minus
+m1 and then exponentiate that.
+
+00:31:57.500 --> 00:32:01.540
+So first iteration,
+does that make sense?
+
+00:32:01.540 --> 00:32:03.620
+Yeah?
+
+00:32:03.620 --> 00:32:04.160
+OK.
+
+00:32:04.160 --> 00:32:06.420
+So now, let's go to the
+second iteration, which
+
+00:32:06.420 --> 00:32:09.860
+is a little bit more tricky.
+
+00:32:09.860 --> 00:32:14.140
+Second iteration, we compute
+the maximum of the elements
+
+00:32:14.140 --> 00:32:15.900
+we have seen so far.
+
+00:32:15.900 --> 00:32:22.420
+And so here we perform
+max of s1 and s2,
+
+00:32:22.420 --> 00:32:25.020
+so whichever is the biggest one.
+
+00:32:25.020 --> 00:32:27.420
+And what we do is
+actually something
+
+00:32:27.420 --> 00:32:30.460
+a little bit more involved.
+
+00:32:30.460 --> 00:32:36.500
+So here, we are
+multiplying that constant
+
+00:32:36.500 --> 00:32:38.340
+on the numerator
+and the denominator
+
+00:32:38.340 --> 00:32:40.440
+of the element
+that we just added,
+
+00:32:40.440 --> 00:32:44.220
+which is the one
+on the far right.
+
+00:32:44.220 --> 00:32:47.580
+But then, and I think it
+was back to your intuition,
+
+00:32:47.580 --> 00:32:53.220
+we are scaling
+everything we have summed
+
+00:32:53.220 --> 00:32:59.220
+so far with the new constant.
+
+00:32:59.220 --> 00:33:02.740
+So actually, I think it
+sounds more complicated
+
+00:33:02.740 --> 00:33:04.970
+than what it actually is.
+
+00:33:04.970 --> 00:33:07.870
+So I'm just going to
+tell you what that means.
+
+00:33:10.970 --> 00:33:13.310
+So here, let's assume--
+
+00:33:24.530 --> 00:33:29.530
+so the question is, what
+happens if m2 is very big
+
+00:33:29.530 --> 00:33:32.930
+and m1 minus m2
+becomes very small?
+
+00:33:32.930 --> 00:33:36.110
+So exponential of m1 minus
+m2 becomes very small.
+
+00:33:36.110 --> 00:33:37.577
+And this becomes 0.
+
+00:33:37.577 --> 00:33:38.910
+Do you think that's the problem?
+
+00:33:43.610 --> 00:33:45.990
+So the second term
+would not be 0.
+
+00:33:45.990 --> 00:33:48.170
+But the point that
+I wanted to get at
+
+00:33:48.170 --> 00:33:54.930
+is if exponential of m1
+minus m2 is very small,
+
+00:33:54.930 --> 00:33:58.610
+what that means is
+the second term was
+
+00:33:58.610 --> 00:34:01.090
+meant to be very big anyways.
+
+00:34:01.090 --> 00:34:03.680
+So if that one is
+very small, then that
+
+00:34:03.680 --> 00:34:06.100
+is just doing the thing
+that it's supposed to do.
+
+00:34:06.100 --> 00:34:08.280
+But I think maybe
+your question was,
+
+00:34:08.280 --> 00:34:11.600
+wouldn't we run into
+numerical instabilities?
+
+00:34:11.600 --> 00:34:15.116
+And in that case, well, if your
+thing is very small and you
+
+00:34:15.116 --> 00:34:16.699
+cannot represent
+something very small,
+
+00:34:16.699 --> 00:34:18.980
+it's not the end of the world.
+
+00:34:18.980 --> 00:34:21.560
+It's just like approximately 0.
+
+00:34:21.560 --> 00:34:25.000
+The thing that is very bad is if
+you have something very big that
+
+00:34:25.000 --> 00:34:27.960
+you cannot represent, because
+that thing that is very big is
+
+00:34:27.960 --> 00:34:30.480
+actually contributing
+to your sum.
+
+00:34:30.480 --> 00:34:31.540
+So that's not good.
+
+00:34:31.540 --> 00:34:34.400
+But if something is
+very, very small,
+
+00:34:34.400 --> 00:34:37.760
+if you cannot represent
+it, you just set it to 0,
+
+00:34:37.760 --> 00:34:40.560
+and problem solved.
+
+00:34:40.560 --> 00:34:42.360
+So here, what I
+wanted to tell you
+
+00:34:42.360 --> 00:34:47.139
+was why do we need to
+rescale that component?
+
+00:34:47.139 --> 00:34:52.760
+Why do we need to rescale
+the sum that we have computed
+
+00:34:52.760 --> 00:34:58.360
+so far on top of adding
+the constant to the element
+
+00:34:58.360 --> 00:35:01.160
+that we just added?
+
+00:35:01.160 --> 00:35:04.990
+So I wanted to tell you that
+this is probably not something
+
+00:35:04.990 --> 00:35:09.170
+that is extremely complicated.
+
+00:35:09.170 --> 00:35:16.310
+So let's assume you have your
+numerator and your denominator.
+
+00:35:16.310 --> 00:35:23.590
+And let's assume you had some
+constants that you were using.
+
+00:35:23.590 --> 00:35:28.030
+And then let's assume I
+am multiplying that by,
+
+00:35:28.030 --> 00:35:30.270
+let's say, numerator so far.
+
+00:35:30.270 --> 00:35:31.270
+OK, let me see.
+
+00:35:31.270 --> 00:35:40.010
+Maybe let's say
+n1 and n2 and d1.
+
+00:35:40.010 --> 00:35:42.970
+I just want to make sure my
+notations are not confusing.
+
+00:35:42.970 --> 00:35:45.550
+So let's assume that you
+were computing your numerator
+
+00:35:45.550 --> 00:35:48.590
+and denominator
+iteratively, let's suppose,
+
+00:35:48.590 --> 00:35:50.690
+for the first iteration.
+
+00:35:50.690 --> 00:35:53.830
+And then you had one constant
+that you were applying there,
+
+00:35:53.830 --> 00:35:55.790
+let's say C1.
+
+00:35:55.790 --> 00:35:57.430
+And now let's assume
+that you're adding
+
+00:35:57.430 --> 00:36:03.310
+a new elements on the
+numerator and the denominator.
+
+00:36:03.310 --> 00:36:04.670
+Let's assume you're adding--
+
+00:36:09.310 --> 00:36:14.430
+OK, not great, n2 and d2
+lowercase, because these are not
+
+00:36:14.430 --> 00:36:15.830
+sums.
+
+00:36:15.830 --> 00:36:22.270
+So here, if you adjust
+these quantities with c2,
+
+00:36:22.270 --> 00:36:25.910
+the problem is if
+you do the ratio,
+
+00:36:25.910 --> 00:36:27.410
+you're going to
+have a problem here.
+
+00:36:27.410 --> 00:36:29.870
+It's not the same constant.
+
+00:36:29.870 --> 00:36:36.950
+So here, what you want to do
+is to adjust the constants
+
+00:36:36.950 --> 00:36:44.950
+in a way that makes c2 be the
+constant for the whole sum.
+
+00:36:44.950 --> 00:36:46.710
+So here, what are
+we going to do?
+
+00:36:46.710 --> 00:36:48.630
+You're going to simply--
+
+00:36:48.630 --> 00:36:55.890
+so for this example,
+do over c1 times c2.
+
+00:37:00.540 --> 00:37:02.860
+Over c1-- sorry.
+
+00:37:02.860 --> 00:37:03.980
+c1.
+
+00:37:03.980 --> 00:37:12.100
+So you compute this portion, and
+you multiply it by c2 over c1.
+
+00:37:12.100 --> 00:37:14.660
+So the constant that you're
+using here over the constant
+
+00:37:14.660 --> 00:37:17.980
+that you were using, which
+is exactly the element
+
+00:37:17.980 --> 00:37:21.060
+in green on the slide.
+
+00:37:21.060 --> 00:37:26.780
+So exponential of m1 minus
+m2 is your second constant
+
+00:37:26.780 --> 00:37:28.800
+over your first constant.
+
+00:37:28.800 --> 00:37:33.060
+Because here, we
+were saying that c1
+
+00:37:33.060 --> 00:37:36.780
+was equal to
+exponential of minus m1,
+
+00:37:36.780 --> 00:37:41.560
+and c2 is equal to
+exponential of minus m2.
+
+00:37:41.560 --> 00:37:46.500
+And we said it is
+now c2 over c1,
+
+00:37:46.500 --> 00:37:56.180
+which is equal to exponential
+of m1 minus m2, which
+
+00:37:56.180 --> 00:37:59.010
+is what is on the slides.
+
+00:37:59.010 --> 00:38:01.690
+Does that make sense?
+
+00:38:01.690 --> 00:38:06.730
+So I think this is
+probably the hardest part.
+
+00:38:06.730 --> 00:38:09.390
+I'm just reiterating here
+that we have two elements.
+
+00:38:09.390 --> 00:38:11.150
+The first one is the
+new scaling factor.
+
+00:38:11.150 --> 00:38:14.130
+And the second one, which is the
+rescaling factor of everything
+
+00:38:14.130 --> 00:38:16.730
+we have computed so far.
+
+00:38:16.730 --> 00:38:22.890
+And we obtain these
+identities for us
+
+00:38:22.890 --> 00:38:26.330
+to iterate on the numerator
+and the denominator.
+
+00:38:26.330 --> 00:38:28.610
+And then what I'm
+going to show you
+
+00:38:28.610 --> 00:38:32.690
+is that this way
+of computing things
+
+00:38:32.690 --> 00:38:38.970
+will make you read and write
+less to the HBM, which is
+
+00:38:38.970 --> 00:38:41.610
+the whole point of this method.
+
+00:38:41.610 --> 00:38:45.250
+So let's see how
+this looks like.
+
+00:38:45.250 --> 00:38:49.310
+Let's go back to our
+self-attention computation,
+
+00:38:49.310 --> 00:38:55.450
+which, as a reminder, is
+the softmax of q k transpose
+
+00:38:55.450 --> 00:38:59.930
+times v with some scaling
+factor that we ignore right now.
+
+00:38:59.930 --> 00:39:02.690
+So here, what we're
+saying is that we
+
+00:39:02.690 --> 00:39:10.130
+can compute the dot
+product of q and k
+
+00:39:10.130 --> 00:39:12.650
+to obtain the s we had before.
+
+00:39:12.650 --> 00:39:18.570
+So here, s1, you can
+think of it as q1 and k1.
+
+00:39:18.570 --> 00:39:24.770
+So what you can do is to
+transfer these small elements
+
+00:39:24.770 --> 00:39:30.650
+to your SRAM, which
+is small and fast.
+
+00:39:30.650 --> 00:39:33.690
+And you can transfer v1.
+
+00:39:33.690 --> 00:39:38.690
+v1, which is also a small
+quantity to your SRAM.
+
+00:39:38.690 --> 00:39:43.690
+And what you can do
+is compute iteratively
+
+00:39:43.690 --> 00:39:46.930
+your numerator and
+your denominator
+
+00:39:46.930 --> 00:39:52.710
+for the weighted sum that
+is corresponding to q1.
+
+00:39:55.360 --> 00:39:57.920
+And then you repeat
+that for the other keys.
+
+00:39:57.920 --> 00:40:00.572
+Because your query is
+attending to the other keys,
+
+00:40:00.572 --> 00:40:01.780
+so you repeat the same thing.
+
+00:40:01.780 --> 00:40:04.360
+So you're iterating on your sum.
+
+00:40:04.360 --> 00:40:08.480
+You're sending that
+portion of the key
+
+00:40:08.480 --> 00:40:12.020
+and that portion of the
+value over to the SRAM.
+
+00:40:12.020 --> 00:40:15.000
+You are iterating on
+these two quantities.
+
+00:40:15.000 --> 00:40:18.320
+And you're doing
+this again and again.
+
+00:40:18.320 --> 00:40:22.520
+And what that means is
+you're able to populate
+
+00:40:22.520 --> 00:40:27.960
+the results in your output
+without having to materialize
+
+00:40:27.960 --> 00:40:31.800
+your whole softmax matrix.
+
+00:40:31.800 --> 00:40:35.840
+You don't need to store your
+whole-- the huge n times n
+
+00:40:35.840 --> 00:40:37.840
+matrix, you don't
+have to do that.
+
+00:40:37.840 --> 00:40:42.960
+You can do that by sending small
+components over to the SRAM,
+
+00:40:42.960 --> 00:40:49.680
+do the computation, update the
+numerator and the denominator.
+
+00:40:49.680 --> 00:40:53.150
+And then at the end, just
+have the two in order
+
+00:40:53.150 --> 00:40:58.470
+to obtain your desired results.
+
+00:40:58.470 --> 00:41:01.470
+So you do that again and
+again, and congrats, now you
+
+00:41:01.470 --> 00:41:09.070
+have far fewer reads
+and writes on your HBM.
+
+00:41:09.070 --> 00:41:12.350
+Does that make sense?
+
+00:41:12.350 --> 00:41:18.750
+So I see a lot of places
+that just present to you
+
+00:41:18.750 --> 00:41:20.250
+this whole formulas.
+
+00:41:20.250 --> 00:41:24.630
+And I just want to highlight
+that these formulas illustrate
+
+00:41:24.630 --> 00:41:25.570
+a few ideas.
+
+00:41:25.570 --> 00:41:28.630
+The first idea is that
+you can iteratively
+
+00:41:28.630 --> 00:41:32.550
+compute your numerator
+and your denominator.
+
+00:41:32.550 --> 00:41:35.030
+And then the second
+thing is we want
+
+00:41:35.030 --> 00:41:39.270
+to avoid numerical
+instabilities by having
+
+00:41:39.270 --> 00:41:44.070
+an exponential of something
+that is very big, which
+
+00:41:44.070 --> 00:41:47.870
+is the reason why we're
+doing this rescaling.
+
+00:41:47.870 --> 00:41:51.310
+And this is the reason why
+we have these formulas, which
+
+00:41:51.310 --> 00:41:55.450
+may seem scary, but it's
+because of these two ideas.
+
+00:41:58.510 --> 00:41:59.210
+OK, cool.
+
+00:41:59.210 --> 00:42:01.590
+So all of that is a
+long way of saying
+
+00:42:01.590 --> 00:42:07.830
+that we are able to compute
+the self-attention operation
+
+00:42:07.830 --> 00:42:10.510
+without having to read and
+write to the HBM, which
+
+00:42:10.510 --> 00:42:18.470
+means that we're able to perform
+that operation much faster.
+
+00:42:18.470 --> 00:42:21.990
+And so that is one thing.
+
+00:42:21.990 --> 00:42:24.670
+The second thing that I
+want to highlight here
+
+00:42:24.670 --> 00:42:32.830
+is, when you are training your
+model, during the backward pass,
+
+00:42:32.830 --> 00:42:36.550
+you need to have
+this matrix in order
+
+00:42:36.550 --> 00:42:40.110
+to compute the
+relevant quantity.
+
+00:42:40.110 --> 00:42:42.590
+Like when you do the
+partial derivative
+
+00:42:42.590 --> 00:42:46.950
+of the loss with respect to
+your parameter, this pops up.
+
+00:42:46.950 --> 00:42:52.520
+And so before, if you want
+to reuse these computations,
+
+00:42:52.520 --> 00:42:56.860
+you could store them in
+the HBM, which is big.
+
+00:42:56.860 --> 00:43:01.660
+And you can read from it
+during the backward pass.
+
+00:43:01.660 --> 00:43:06.240
+But here, it turns out that
+during the backward pass,
+
+00:43:06.240 --> 00:43:10.940
+you actually can
+afford to recompute
+
+00:43:10.940 --> 00:43:12.900
+these quantities on the fly.
+
+00:43:12.900 --> 00:43:16.220
+Even though you had computed
+it in the forward pass,
+
+00:43:16.220 --> 00:43:19.540
+you can recompute them
+in the backward pass
+
+00:43:19.540 --> 00:43:30.260
+and use that trick by using the
+SRAM with this fused operation.
+
+00:43:30.260 --> 00:43:33.700
+And if you do that,
+well, you actually
+
+00:43:33.700 --> 00:43:36.460
+have also some speedups.
+
+00:43:36.460 --> 00:43:38.660
+So I'm going to
+state the obvious.
+
+00:43:38.660 --> 00:43:41.980
+If you have computed
+something, well, usually you
+
+00:43:41.980 --> 00:43:45.180
+don't have to compute it again,
+otherwise, it's a waste of time.
+
+00:43:45.180 --> 00:43:48.870
+But here, what we're saying
+is when we compute something,
+
+00:43:48.870 --> 00:43:51.610
+if that something
+is really big and we
+
+00:43:51.610 --> 00:43:57.250
+have to materialize it somewhere
+that is slow to access,
+
+00:43:57.250 --> 00:44:02.370
+then it is sometimes worth it,
+for instance, in this case,
+
+00:44:02.370 --> 00:44:05.930
+to just discard these
+results and recompute
+
+00:44:05.930 --> 00:44:13.330
+that results on the fly again
+to lead to these speedups.
+
+00:44:13.330 --> 00:44:16.330
+So in other words,
+flash attention
+
+00:44:16.330 --> 00:44:20.350
+leads to more computations
+at training time
+
+00:44:20.350 --> 00:44:21.890
+because in the
+backward pass, you're
+
+00:44:21.890 --> 00:44:26.370
+not reusing the computations you
+have done in the forward pass.
+
+00:44:26.370 --> 00:44:29.890
+You're actually recomputing
+these quantities
+
+00:44:29.890 --> 00:44:31.810
+with this trick.
+
+00:44:31.810 --> 00:44:36.410
+So you have a higher compute,
+higher number of gflops
+
+00:44:36.410 --> 00:44:37.870
+that you can see on the table.
+
+00:44:37.870 --> 00:44:40.710
+So it's 75.2 versus 66.6.
+
+00:44:40.710 --> 00:44:42.290
+By the way, these
+numbers are just
+
+00:44:42.290 --> 00:44:44.610
+for your orders of magnitude.
+
+00:44:44.610 --> 00:44:48.510
+But the runtime
+here is much less.
+
+00:44:51.250 --> 00:44:52.730
+So I hope that makes sense.
+
+00:44:52.730 --> 00:44:54.810
+So that is flash attention.
+
+00:44:54.810 --> 00:44:56.913
+Yes?
+
+00:44:56.913 --> 00:44:57.830
+It's a great question.
+
+00:44:57.830 --> 00:45:00.430
+So the question is, is the
+softmax that we computed,
+
+00:45:00.430 --> 00:45:03.050
+is it an approximation
+of the original thing,
+
+00:45:03.050 --> 00:45:05.430
+or is it the actual thing?
+
+00:45:05.430 --> 00:45:08.490
+And the answer is, it's
+an exact computation.
+
+00:45:08.490 --> 00:45:11.470
+You're not doing any
+approximation whatsoever.
+
+00:45:11.470 --> 00:45:16.050
+What you're doing is
+you're just sending
+
+00:45:16.050 --> 00:45:20.090
+parts of what you want
+to compute in a smart way
+
+00:45:20.090 --> 00:45:24.570
+in order to leverage the
+asymmetry in the read
+
+00:45:24.570 --> 00:45:27.730
+and write time of some
+components versus others.
+
+00:45:27.730 --> 00:45:31.990
+But here, if you compute the
+numerator and the denominator--
+
+00:45:31.990 --> 00:45:33.750
+and as we saw in
+the very beginning,
+
+00:45:33.750 --> 00:45:37.690
+if you just divide
+them and compare it
+
+00:45:37.690 --> 00:45:40.410
+to just your regular
+formula, these
+
+00:45:40.410 --> 00:45:42.530
+are exactly the same
+formulas, but it's
+
+00:45:42.530 --> 00:45:46.400
+just that we're sending
+them in a smarter way.
+
+00:45:46.400 --> 00:45:51.260
+It's a great question because
+this, I want to emphasize,
+
+00:45:51.260 --> 00:45:52.500
+is an exact method.
+
+00:45:52.500 --> 00:45:54.560
+We're not
+approximating anything.
+
+00:45:54.560 --> 00:45:58.200
+We're just leveraging the
+components of our GPUs
+
+00:45:58.200 --> 00:46:01.020
+in order to make these
+operations just be faster.
+
+00:46:04.360 --> 00:46:06.400
+OK, great.
+
+00:46:06.400 --> 00:46:08.640
+And I just want to
+say, in the literature,
+
+00:46:08.640 --> 00:46:13.600
+you may see different versions
+of the flash attention methods.
+
+00:46:13.600 --> 00:46:16.480
+Flash attention 2,
+3, 4, I just want
+
+00:46:16.480 --> 00:46:21.200
+to say that these papers, they
+offer some optimization on top
+
+00:46:21.200 --> 00:46:25.840
+of what we saw, and they're also
+being adapted to the new GPU
+
+00:46:25.840 --> 00:46:27.267
+versions.
+
+00:46:27.267 --> 00:46:29.100
+So yeah, they are also
+a bit more technical.
+
+00:46:29.100 --> 00:46:30.780
+So feel free to read them.
+
+00:46:30.780 --> 00:46:33.120
+We put some links on the slides.
+
+00:46:33.120 --> 00:46:36.720
+But if there's something
+that I want you to remember
+
+00:46:36.720 --> 00:46:41.600
+is this fused operation
+trick that we saw
+
+00:46:41.600 --> 00:46:47.030
+and the fact that we can also
+recompute these quantities
+
+00:46:47.030 --> 00:46:53.270
+without storing them but still
+have faster runtimes, which
+
+00:46:53.270 --> 00:46:56.590
+is not intuitively something
+that would make sense.
+
+00:46:56.590 --> 00:47:01.270
+Because if you recompute
+something, you would think
+
+00:47:01.270 --> 00:47:03.750
+it takes more time,
+but here it does not.
+
+00:47:03.750 --> 00:47:04.910
+Yeah?
+
+00:47:04.910 --> 00:47:06.970
+So the question is, is
+this only for training?
+
+00:47:06.970 --> 00:47:11.670
+Yes, the recomputation is for
+training because here, you
+
+00:47:11.670 --> 00:47:13.570
+need to compute the gradient.
+
+00:47:13.570 --> 00:47:15.950
+So that's why you need
+that for the first one.
+
+00:47:15.950 --> 00:47:18.630
+You actually can do
+that for forward pass.
+
+00:47:18.630 --> 00:47:22.450
+So you need to compute your
+self-attention operation,
+
+00:47:22.450 --> 00:47:25.973
+and you can use
+that first trick.
+
+00:47:25.973 --> 00:47:26.890
+It's a great question.
+
+00:47:26.890 --> 00:47:29.057
+The question is, well, if
+you are at inference time,
+
+00:47:29.057 --> 00:47:31.140
+you don't need to do this
+whole computation again.
+
+00:47:31.140 --> 00:47:32.130
+That's a great point.
+
+00:47:32.130 --> 00:47:33.730
+And Shervine will cover that.
+
+00:47:36.590 --> 00:47:38.710
+Yeah.
+
+00:47:38.710 --> 00:47:42.910
+So the question here is you
+would use the same blocks
+
+00:47:42.910 --> 00:47:45.310
+in the vanilla case versus now.
+
+00:47:45.310 --> 00:47:46.630
+So what is the difference?
+
+00:47:46.630 --> 00:47:47.650
+Is that your question?
+
+00:47:47.650 --> 00:47:48.450
+OK, great.
+
+00:47:48.450 --> 00:47:52.430
+So the main difference
+is, in the vanilla case,
+
+00:47:52.430 --> 00:47:55.510
+in order for you
+to be able to make
+
+00:47:55.510 --> 00:47:59.630
+the softmax of these
+quantities times v operation,
+
+00:47:59.630 --> 00:48:03.310
+you would need to have
+the sum of the components
+
+00:48:03.310 --> 00:48:07.710
+through the whole
+s matrix in store.
+
+00:48:07.710 --> 00:48:09.110
+You would need to have that.
+
+00:48:09.110 --> 00:48:11.890
+But here, you don't
+need to have that.
+
+00:48:11.890 --> 00:48:16.270
+You can actually compute
+that in an iterative fashion.
+
+00:48:16.270 --> 00:48:17.830
+And so here, what
+you need to do is
+
+00:48:17.830 --> 00:48:20.550
+to just update your
+numerator and denominator
+
+00:48:20.550 --> 00:48:22.590
+and just keep on
+going without having
+
+00:48:22.590 --> 00:48:24.970
+to wait to have the whole row.
+
+00:48:24.970 --> 00:48:30.590
+And as I mentioned, so the
+matrix, that is this one,
+
+00:48:30.590 --> 00:48:31.850
+is upsized.
+
+00:48:31.850 --> 00:48:34.870
+So q and k, the
+result is upsized
+
+00:48:34.870 --> 00:48:37.630
+n times n, which can be huge.
+
+00:48:37.630 --> 00:48:39.080
+And that's what
+we want to avoid.
+
+00:48:43.700 --> 00:48:44.200
+OK, cool.
+
+00:48:44.200 --> 00:48:45.940
+Yeah?
+
+00:48:45.940 --> 00:48:48.300
+So the question is,
+what is the difference
+
+00:48:48.300 --> 00:48:50.160
+between, for instance, 3, and 4?
+
+00:48:50.160 --> 00:48:54.300
+So in parentheses, there is the
+name of the series of the GPU
+
+00:48:54.300 --> 00:48:56.220
+that is on the slide.
+
+00:48:56.220 --> 00:49:00.700
+So whenever you see
+h, let's say 100, 200,
+
+00:49:00.700 --> 00:49:03.360
+it is actually part
+of the Hopper series.
+
+00:49:03.360 --> 00:49:06.360
+And when you see,
+let's say, B100, B200,
+
+00:49:06.360 --> 00:49:08.060
+it's the Blackwell series.
+
+00:49:08.060 --> 00:49:13.940
+And these series, each
+have some characteristics
+
+00:49:13.940 --> 00:49:17.100
+that are different from
+one series to another.
+
+00:49:17.100 --> 00:49:22.980
+So these papers are just
+meant to be even smarter
+
+00:49:22.980 --> 00:49:26.100
+by taking the specificities
+of these series
+
+00:49:26.100 --> 00:49:28.940
+in into consideration.
+
+00:49:28.940 --> 00:49:31.700
+So it's a long way of
+saying that it is a way
+
+00:49:31.700 --> 00:49:35.420
+to optimize this even more to
+the specific type of GPU that
+
+00:49:35.420 --> 00:49:38.030
+is, for instance, in the
+Hopper or the Blackwell series.
+
+00:49:40.930 --> 00:49:41.750
+OK, great.
+
+00:49:41.750 --> 00:49:44.850
+So this lecture is
+meant to provide you
+
+00:49:44.850 --> 00:49:49.530
+with the methods that are
+behind making all of this work
+
+00:49:49.530 --> 00:49:51.250
+without going too
+much into the details.
+
+00:49:51.250 --> 00:49:52.770
+Because at the
+end of the day, we
+
+00:49:52.770 --> 00:49:57.410
+don't want to go too
+much into the low level.
+
+00:49:57.410 --> 00:50:00.350
+That being said, flash attention
+is a very important method.
+
+00:50:00.350 --> 00:50:05.230
+So in case you understand
+the reason why we're doing it
+
+00:50:05.230 --> 00:50:07.450
+and how we're doing
+it, then that's
+
+00:50:07.450 --> 00:50:11.210
+the main thing that,
+I think, matters here.
+
+00:50:11.210 --> 00:50:13.450
+So going back to
+the two questions
+
+00:50:13.450 --> 00:50:16.210
+that we asked at the very
+beginning of the lecture, so
+
+00:50:16.210 --> 00:50:18.290
+how do we make this fit?
+
+00:50:18.290 --> 00:50:21.690
+So we saw here that
+we were using a trick
+
+00:50:21.690 --> 00:50:27.290
+to avoid having to store
+the n by n attention matrix.
+
+00:50:27.290 --> 00:50:29.890
+So this is how we're
+answering this question.
+
+00:50:29.890 --> 00:50:32.210
+The second one is, how
+do we make it fast?
+
+00:50:32.210 --> 00:50:36.050
+And so here, we're
+avoiding having
+
+00:50:36.050 --> 00:50:40.570
+to read and write from the HBM,
+which is big but also slower
+
+00:50:40.570 --> 00:50:42.250
+than the SRAM.
+
+00:50:42.250 --> 00:50:47.370
+And that is how flash
+attention is tackling this.
+
+00:50:47.370 --> 00:50:48.170
+Cool.
+
+00:50:48.170 --> 00:50:48.670
+OK.
+
+00:50:48.670 --> 00:50:52.170
+So now, we're moving on to
+the second section, which
+
+00:50:52.170 --> 00:50:56.010
+is dedicated to training.
+
+00:50:56.010 --> 00:50:59.590
+And here, what we want to
+do is to ask ourselves--
+
+00:50:59.590 --> 00:51:01.630
+OK, let's suppose
+we have one GPU.
+
+00:51:01.630 --> 00:51:04.050
+Let's suppose we do
+this flash attention.
+
+00:51:04.050 --> 00:51:04.910
+That's great.
+
+00:51:04.910 --> 00:51:07.990
+We can make things fit better.
+
+00:51:07.990 --> 00:51:10.070
+We can make things faster.
+
+00:51:10.070 --> 00:51:13.370
+But we may still
+run out of memory
+
+00:51:13.370 --> 00:51:15.670
+because our model is too big.
+
+00:51:15.670 --> 00:51:16.170
+Cool.
+
+00:51:16.170 --> 00:51:20.250
+So here we're going to
+tackle some methods for us
+
+00:51:20.250 --> 00:51:25.170
+to be able to leverage
+more than one GPU.
+
+00:51:25.170 --> 00:51:29.770
+And I want to just motivate
+the need for this section
+
+00:51:29.770 --> 00:51:35.320
+by just saying that in order
+for us to train LLMs, we take,
+
+00:51:35.320 --> 00:51:38.380
+as we mentioned, the
+decoder of the transformer.
+
+00:51:38.380 --> 00:51:39.480
+We stack them up.
+
+00:51:39.480 --> 00:51:43.120
+And then we're finding
+just a bunch of tokens.
+
+00:51:43.120 --> 00:51:47.800
+And we just train that
+model on a lot of data.
+
+00:51:47.800 --> 00:51:51.960
+And we'll see that we'll need
+more than one GPU to do that.
+
+00:51:51.960 --> 00:51:55.200
+And I hope the back
+of the napkin math
+
+00:51:55.200 --> 00:51:59.480
+that we did is something
+that is convincing you.
+
+00:51:59.480 --> 00:52:03.880
+And here, I want to just
+go over some reasons why
+
+00:52:03.880 --> 00:52:09.440
+the memory that we have on
+one GPU can be insufficient.
+
+00:52:09.440 --> 00:52:12.640
+So one of the things that you
+need to store on your memory
+
+00:52:12.640 --> 00:52:14.520
+is, well, your model.
+
+00:52:14.520 --> 00:52:17.080
+Your model is on the order
+of billions or trillions
+
+00:52:17.080 --> 00:52:18.520
+of parameters.
+
+00:52:18.520 --> 00:52:21.180
+And you need to
+store that somewhere.
+
+00:52:21.180 --> 00:52:22.840
+So that's one.
+
+00:52:22.840 --> 00:52:25.480
+The second thing is
+you need to compute
+
+00:52:25.480 --> 00:52:26.745
+the loss during training.
+
+00:52:26.745 --> 00:52:28.120
+And in order to
+compute the loss,
+
+00:52:28.120 --> 00:52:30.960
+you need to do one forward pass.
+
+00:52:30.960 --> 00:52:35.510
+And so here, the
+bigger your model,
+
+00:52:35.510 --> 00:52:39.710
+the bigger the amount of
+activations you need to store.
+
+00:52:39.710 --> 00:52:45.830
+But it's also a function of the
+sequence length and the batch
+
+00:52:45.830 --> 00:52:46.710
+size.
+
+00:52:46.710 --> 00:52:49.950
+So why sequence length?
+
+00:52:49.950 --> 00:52:55.590
+So we said that the transformer
+is having all tokens interact
+
+00:52:55.590 --> 00:52:57.990
+with every other token.
+
+00:52:57.990 --> 00:53:02.230
+And so whenever you
+process one single token,
+
+00:53:02.230 --> 00:53:06.310
+you compute activations that
+are specific to that token.
+
+00:53:06.310 --> 00:53:10.070
+But you need to do that for
+all other tokens as well.
+
+00:53:10.070 --> 00:53:11.990
+So this is the reason
+why activations,
+
+00:53:11.990 --> 00:53:16.310
+they scale as a function
+of your sequence length
+
+00:53:16.310 --> 00:53:23.150
+and, for obvious reasons, in
+terms of the batch size as well.
+
+00:53:23.150 --> 00:53:26.550
+The other thing during
+training is you need to learn
+
+00:53:26.550 --> 00:53:28.550
+and you need to
+update your weights.
+
+00:53:28.550 --> 00:53:31.550
+So you do a backward
+pass in order
+
+00:53:31.550 --> 00:53:36.510
+to compute the direction that
+will make your loss minimal,
+
+00:53:36.510 --> 00:53:40.190
+in other words, your gradient.
+
+00:53:40.190 --> 00:53:44.750
+And you need these
+quantities as well.
+
+00:53:44.750 --> 00:53:48.950
+And you also need to potentially
+store additional quantities.
+
+00:53:48.950 --> 00:53:51.790
+Because a lot of
+the models nowadays,
+
+00:53:51.790 --> 00:53:56.070
+they're being trained with a
+variant of the Adam optimizer.
+
+00:53:56.070 --> 00:53:58.210
+And just to illustrate,
+in this case,
+
+00:53:58.210 --> 00:54:01.710
+the Adam optimizer
+requires several quantities
+
+00:54:01.710 --> 00:54:03.870
+that you need to keep track of.
+
+00:54:03.870 --> 00:54:09.590
+And all these quantities also
+need to be stored somewhere.
+
+00:54:09.590 --> 00:54:14.190
+So all of that to say that
+the limited memory that we
+
+00:54:14.190 --> 00:54:20.990
+saw in the very first slides
+is nowhere near enough.
+
+00:54:20.990 --> 00:54:26.750
+And this is the reason why
+we need more than one GPU.
+
+00:54:26.750 --> 00:54:31.980
+And I want to use that
+as a motivation to talk
+
+00:54:31.980 --> 00:54:34.908
+about parallelism methods.
+
+00:54:34.908 --> 00:54:36.700
+The first method that
+I want to talk to you
+
+00:54:36.700 --> 00:54:41.020
+about is called
+data parallelism.
+
+00:54:41.020 --> 00:54:43.060
+And the idea behind
+data parallelism
+
+00:54:43.060 --> 00:54:49.540
+is when you want to compute your
+forward and your backward pass,
+
+00:54:49.540 --> 00:54:52.820
+you don't have to do
+that for all the data
+
+00:54:52.820 --> 00:54:55.400
+all at once in one device.
+
+00:54:55.400 --> 00:55:02.300
+You can very well divide your
+data into multiple devices
+
+00:55:02.300 --> 00:55:07.980
+and then perform that
+operation independently.
+
+00:55:07.980 --> 00:55:11.100
+So in a very naive
+fashion, if you
+
+00:55:11.100 --> 00:55:13.360
+were to do that, you
+could tell yourself,
+
+00:55:13.360 --> 00:55:19.620
+well, let's replicate the
+model on all these devices.
+
+00:55:19.620 --> 00:55:23.660
+So we would have the same
+copy of parameters everywhere,
+
+00:55:23.660 --> 00:55:28.330
+copies of gradients everywhere,
+copies of the optimizer state
+
+00:55:28.330 --> 00:55:30.890
+everywhere.
+
+00:55:30.890 --> 00:55:36.050
+But it's a lot of
+redundant information.
+
+00:55:36.050 --> 00:55:38.530
+So this is the
+reason why there's
+
+00:55:38.530 --> 00:55:42.210
+one method that is
+particularly popular,
+
+00:55:42.210 --> 00:55:47.810
+which is called 0, which stands
+for 0 redundancy optimizer,
+
+00:55:47.810 --> 00:55:54.290
+which actually shards these
+quantities through your GPUs.
+
+00:55:54.290 --> 00:55:57.070
+So the idea is, well,
+let's not repeat ourselves.
+
+00:55:57.070 --> 00:55:59.690
+Let's not store duplicates.
+
+00:55:59.690 --> 00:56:03.430
+And let's instead partition
+them across our GPUs.
+
+00:56:03.430 --> 00:56:07.050
+So you could do that
+with the optimizer state.
+
+00:56:07.050 --> 00:56:10.770
+You could do that for
+gradients, and you
+
+00:56:10.770 --> 00:56:14.090
+could do that for parameters.
+
+00:56:14.090 --> 00:56:17.270
+Well, it's not a free lunch
+because if you want to perform,
+
+00:56:17.270 --> 00:56:18.890
+let's say, a forward
+pass and if you
+
+00:56:18.890 --> 00:56:22.730
+don't have all your
+parameters on your device,
+
+00:56:22.730 --> 00:56:26.240
+you need to have a way
+to get those parameters.
+
+00:56:26.240 --> 00:56:28.320
+And so here, the way
+you get those parameters
+
+00:56:28.320 --> 00:56:33.080
+is by communicating
+with the other devices,
+
+00:56:33.080 --> 00:56:37.000
+performing some operations
+to just retrieve those.
+
+00:56:37.000 --> 00:56:40.200
+And this adds some
+communication costs.
+
+00:56:40.200 --> 00:56:42.480
+So it is not a free lunch.
+
+00:56:42.480 --> 00:56:50.760
+But it is allowing you to have
+to store less memory per device.
+
+00:56:50.760 --> 00:56:52.820
+So that is one way.
+
+00:56:52.820 --> 00:56:56.380
+So data parallelism,
+you divide your data.
+
+00:56:56.380 --> 00:56:59.560
+You distribute that
+to several devices,
+
+00:56:59.560 --> 00:57:02.377
+and you perform
+that independently.
+
+00:57:02.377 --> 00:57:03.960
+I mean, not independently
+because then
+
+00:57:03.960 --> 00:57:06.060
+you need to synchronize
+your gradient updates.
+
+00:57:06.060 --> 00:57:08.200
+So there is some
+amount of communication
+
+00:57:08.200 --> 00:57:12.240
+that also is relevant
+when it comes to when
+
+00:57:12.240 --> 00:57:13.660
+you shard your parameters.
+
+00:57:16.200 --> 00:57:17.880
+So that is one way.
+
+00:57:17.880 --> 00:57:23.940
+The other way is to
+tell yourself, well,
+
+00:57:23.940 --> 00:57:29.560
+I don't want to just
+split operations
+
+00:57:29.560 --> 00:57:32.720
+through the data dimension.
+
+00:57:32.720 --> 00:57:36.040
+I also want to leverage
+different devices
+
+00:57:36.040 --> 00:57:38.760
+to perform model computations.
+
+00:57:38.760 --> 00:57:43.160
+So I want, let's say, device 1
+to perform one part of the model
+
+00:57:43.160 --> 00:57:43.820
+computations.
+
+00:57:43.820 --> 00:57:47.120
+I want another part to be
+performed on another device,
+
+00:57:47.120 --> 00:57:49.360
+and so on.
+
+00:57:49.360 --> 00:57:56.360
+So these methods are within the
+category of model parallelism
+
+00:57:56.360 --> 00:57:58.040
+techniques.
+
+00:57:58.040 --> 00:58:01.160
+I'm just going to
+mention a few of them.
+
+00:58:01.160 --> 00:58:05.200
+So the first one is
+called tensor parallelism.
+
+00:58:05.200 --> 00:58:06.640
+Yes?
+
+00:58:06.640 --> 00:58:11.200
+So the question is, if you
+shard your optimizer state,
+
+00:58:11.200 --> 00:58:14.340
+why is it not model parallelism?
+
+00:58:14.340 --> 00:58:15.840
+It's a great question.
+
+00:58:15.840 --> 00:58:20.360
+So the key difference is
+that, for model parallelism,
+
+00:58:20.360 --> 00:58:24.070
+you are performing
+mean the computations
+
+00:58:24.070 --> 00:58:29.230
+for your model in a different
+location, in a different device.
+
+00:58:29.230 --> 00:58:33.470
+But here, what we're saying
+is that all the computations
+
+00:58:33.470 --> 00:58:37.870
+for a given subbatch of
+data is on that device.
+
+00:58:37.870 --> 00:58:42.510
+And the way we're obtaining
+the necessary information
+
+00:58:42.510 --> 00:58:47.070
+is by communicating
+with the other devices.
+
+00:58:47.070 --> 00:58:48.670
+So I'll give you an example.
+
+00:58:48.670 --> 00:58:50.950
+Let's assume you have only
+part of the parameters
+
+00:58:50.950 --> 00:58:52.090
+on your device.
+
+00:58:52.090 --> 00:58:56.230
+But you need to do the full,
+let's say, forward pass.
+
+00:58:56.230 --> 00:58:59.370
+What you do is you
+do your computations.
+
+00:58:59.370 --> 00:59:02.870
+And for the parameters that
+you don't have on the device,
+
+00:59:02.870 --> 00:59:06.390
+you just ask your
+other devices to send
+
+00:59:06.390 --> 00:59:08.502
+the necessary parameters.
+
+00:59:08.502 --> 00:59:10.710
+So you receive them, and
+you perform the computations
+
+00:59:10.710 --> 00:59:13.390
+on that same device.
+
+00:59:13.390 --> 00:59:17.230
+And the same thing happens for
+gradients and optimizer states.
+
+00:59:17.230 --> 00:59:21.740
+And these two
+quantities are actually
+
+00:59:21.740 --> 00:59:23.780
+associated with parameters.
+
+00:59:23.780 --> 00:59:26.740
+So what happens is, when
+you shard the parameters
+
+00:59:26.740 --> 00:59:30.300
+across devices, along with
+gradients and optimizer states,
+
+00:59:30.300 --> 00:59:34.340
+at the end of the day,
+your GPU will only
+
+00:59:34.340 --> 00:59:37.340
+store the gradients
+and optimizer
+
+00:59:37.340 --> 00:59:42.700
+states that are relevant to the
+parameters that it has at hand.
+
+00:59:42.700 --> 00:59:46.540
+So long story short, this
+is not model parallelism
+
+00:59:46.540 --> 00:59:49.380
+because we're performing
+all the computations
+
+00:59:49.380 --> 00:59:52.000
+throughout the model
+on that same device.
+
+00:59:56.140 --> 00:59:58.300
+Yeah?
+
+00:59:58.300 --> 01:00:00.760
+So the question
+is, if we do this,
+
+01:00:00.760 --> 01:00:03.160
+don't we lose a lot of time
+loading the parameters?
+
+01:00:03.160 --> 01:00:04.360
+So you have a great point.
+
+01:00:04.360 --> 01:00:05.200
+Yes, you do.
+
+01:00:05.200 --> 01:00:08.400
+But then you need to make
+this run in the first place.
+
+01:00:08.400 --> 01:00:13.260
+So if you cannot fit what you
+need to compute on one device,
+
+01:00:13.260 --> 01:00:17.060
+so you're choosing between not
+being able to train it versus
+
+01:00:17.060 --> 01:00:19.460
+training it slowly.
+
+01:00:19.460 --> 01:00:23.460
+So yeah, the question is,
+well, why is this one--
+
+01:00:23.460 --> 01:00:26.640
+how does this one compare
+with tensor parallelism?
+
+01:00:26.640 --> 01:00:28.500
+And we're going to
+see it right now.
+
+01:00:28.500 --> 01:00:30.500
+So tensor parallelism,
+what we're saying
+
+01:00:30.500 --> 01:00:34.700
+is we're actually
+splitting the computations
+
+01:00:34.700 --> 01:00:37.020
+across several devices.
+
+01:00:37.020 --> 01:00:38.820
+And in particular,
+as we mentioned,
+
+01:00:38.820 --> 01:00:40.980
+there's a bunch of
+matrix multiplications
+
+01:00:40.980 --> 01:00:43.420
+all over the place.
+
+01:00:43.420 --> 01:00:46.020
+And in the context
+of self-attention,
+
+01:00:46.020 --> 01:00:49.700
+well, you have several heads.
+
+01:00:49.700 --> 01:00:53.100
+These computations can
+be done independently.
+
+01:00:53.100 --> 01:00:58.620
+And so these, you can just
+split it across devices.
+
+01:00:58.620 --> 01:01:01.540
+In this figure, you do,
+let's say, first device.
+
+01:01:01.540 --> 01:01:04.260
+Does the first head, the second
+device does the second head.
+
+01:01:04.260 --> 01:01:05.802
+And then they each
+do the projection,
+
+01:01:05.802 --> 01:01:07.820
+and then they get combined.
+
+01:01:07.820 --> 01:01:11.980
+So that one is an efficient
+way of doing this because you
+
+01:01:11.980 --> 01:01:15.460
+can just independently do that.
+
+01:01:15.460 --> 01:01:17.890
+You can also do that
+for other layers,
+
+01:01:17.890 --> 01:01:21.130
+for instance, the
+feedforward neural network.
+
+01:01:21.130 --> 01:01:22.890
+And in particular,
+here, if you see
+
+01:01:22.890 --> 01:01:29.010
+that matrix A can be decomposed
+through the row, and then matrix
+
+01:01:29.010 --> 01:01:32.670
+B can be decomposed
+across the y-axis.
+
+01:01:32.670 --> 01:01:36.090
+Then you can also
+be smarter about it.
+
+01:01:36.090 --> 01:01:38.930
+I want to answer your
+question directly.
+
+01:01:38.930 --> 01:01:41.770
+It is not a question
+of either/or.
+
+01:01:41.770 --> 01:01:43.730
+It's not either you
+do data parallelism
+
+01:01:43.730 --> 01:01:45.550
+or you do tensor parallelism.
+
+01:01:45.550 --> 01:01:47.890
+You can actually
+combine the methods.
+
+01:01:47.890 --> 01:01:50.570
+So nothing is stopping
+you from doing
+
+01:01:50.570 --> 01:01:54.610
+this method, along with the
+data parallelism methods,
+
+01:01:54.610 --> 01:02:00.010
+if you feel like it's not
+going to fit in your memory.
+
+01:02:00.010 --> 01:02:04.090
+So this is tensor parallelism
+is the first kind of model
+
+01:02:04.090 --> 01:02:05.543
+parallelism technique.
+
+01:02:05.543 --> 01:02:07.210
+The second one that
+I want to talk about
+
+01:02:07.210 --> 01:02:10.690
+is called pipeline parallelism.
+
+01:02:10.690 --> 01:02:17.240
+And here, what we're saying is
+that if we draw the whole model
+
+01:02:17.240 --> 01:02:19.960
+computation as,
+let's say, a sequence
+
+01:02:19.960 --> 01:02:22.720
+of different components-- so
+you have, let's say, component
+
+01:02:22.720 --> 01:02:25.560
+0, component 1, component 2,
+component 3, what we're saying
+
+01:02:25.560 --> 01:02:31.220
+is the first part of the
+computation is on one device.
+
+01:02:31.220 --> 01:02:35.320
+The second part is on
+another device, and so on.
+
+01:02:35.320 --> 01:02:39.200
+So this allows us to
+split the computations
+
+01:02:39.200 --> 01:02:44.120
+through across the layers.
+
+01:02:44.120 --> 01:02:49.400
+And so here, I just want you
+to pay attention to the arrows.
+
+01:02:49.400 --> 01:02:54.880
+So here, the first device will
+be sending the information
+
+01:02:54.880 --> 01:02:58.520
+to the second device
+in the forward pass.
+
+01:02:58.520 --> 01:03:01.680
+But it will also
+keep some information
+
+01:03:01.680 --> 01:03:03.820
+for the backward
+pass for that stage.
+
+01:03:03.820 --> 01:03:06.900
+Because in the backward pass,
+you're computing the gradients.
+
+01:03:06.900 --> 01:03:08.520
+And when you compute
+the gradients,
+
+01:03:08.520 --> 01:03:11.640
+you have the activation
+that is required to perform
+
+01:03:11.640 --> 01:03:15.240
+the gradient operation.
+
+01:03:15.240 --> 01:03:22.080
+The problem when you do that
+is that your GPUs can be idle.
+
+01:03:22.080 --> 01:03:24.440
+They can be just sitting
+and doing nothing,
+
+01:03:24.440 --> 01:03:29.600
+and you will see this phenomenon
+being branded as bubble.
+
+01:03:29.600 --> 01:03:33.360
+So if you have your, let's say,
+device 0 doing the forward pass
+
+01:03:33.360 --> 01:03:39.320
+and then passing it to
+device 1, your device 0
+
+01:03:39.320 --> 01:03:43.440
+will be waiting up until
+it is its turn in order
+
+01:03:43.440 --> 01:03:45.680
+to do the backward pass.
+
+01:03:45.680 --> 01:03:49.320
+So people, they come up
+with a bunch of strategies
+
+01:03:49.320 --> 01:03:51.760
+to minimize that idle time.
+
+01:03:51.760 --> 01:03:54.360
+We will not cover this
+here, but just want
+
+01:03:54.360 --> 01:03:57.440
+to say that this is
+an area that people
+
+01:03:57.440 --> 01:04:01.880
+are working towards optimizing.
+
+01:04:01.880 --> 01:04:03.940
+So we've seen
+tensor parallelism.
+
+01:04:03.940 --> 01:04:08.260
+So we divide operations
+at the matrix level.
+
+01:04:08.260 --> 01:04:12.150
+Pipeline parallelism, it's
+across the whole layers.
+
+01:04:12.150 --> 01:04:16.750
+Third one is
+context parallelism.
+
+01:04:16.750 --> 01:04:22.710
+That one is with respect
+to the sequence length.
+
+01:04:22.710 --> 01:04:26.470
+Because if you remember,
+when we do self-attention,
+
+01:04:26.470 --> 01:04:31.030
+we do one token attends
+to every other token.
+
+01:04:31.030 --> 01:04:33.970
+But sometimes your sequence
+length is very big,
+
+01:04:33.970 --> 01:04:38.830
+so you need to compute
+queries and keys and values
+
+01:04:38.830 --> 01:04:42.270
+for everything and just
+do a bunch of operations.
+
+01:04:42.270 --> 01:04:47.470
+So here, what we're
+proposing is to reserve
+
+01:04:47.470 --> 01:04:54.230
+groups of queries per device and
+then move the keys and values
+
+01:04:54.230 --> 01:04:55.990
+around.
+
+01:04:55.990 --> 01:04:57.290
+So I'll give you an example.
+
+01:04:57.290 --> 01:05:02.270
+Let's say I have two devices
+and I have two tokens.
+
+01:05:02.270 --> 01:05:05.230
+The first token is on device 1.
+
+01:05:05.230 --> 01:05:08.150
+The second token is on device 2.
+
+01:05:08.150 --> 01:05:12.260
+So an idea is to say, OK,
+device 1 does query 1.
+
+01:05:12.260 --> 01:05:15.660
+Device 2 does query 2.
+
+01:05:15.660 --> 01:05:20.740
+Device 1 computes
+key 1 and value 1.
+
+01:05:20.740 --> 01:05:26.100
+Device 2 computes
+key 2 and value 2.
+
+01:05:26.100 --> 01:05:32.660
+Device 1 and device 2 do
+the operation of the query 1
+
+01:05:32.660 --> 01:05:39.140
+with k1, v1, query
+2, and k2, v2.
+
+01:05:39.140 --> 01:05:44.100
+And when they're done, they
+just give their keys and values
+
+01:05:44.100 --> 01:05:46.500
+to the other device.
+
+01:05:46.500 --> 01:05:47.640
+And they repeat that.
+
+01:05:47.640 --> 01:05:50.640
+So I mentioned this
+example for two elements.
+
+01:05:50.640 --> 01:05:54.700
+But just imagine for a
+bigger number of elements,
+
+01:05:54.700 --> 01:06:02.100
+you can actually divide this
+operation per groups of tokens
+
+01:06:02.100 --> 01:06:05.100
+and just give the keys and
+values to your neighbor
+
+01:06:05.100 --> 01:06:08.020
+to do that again.
+
+01:06:08.020 --> 01:06:10.340
+That is context parallelism.
+
+01:06:10.340 --> 01:06:14.320
+And then you have a fifth one.
+
+01:06:14.320 --> 01:06:16.240
+So it's a fourth for
+model parallelism.
+
+01:06:16.240 --> 01:06:19.540
+But on top of data parallelism
+is the fifth type of parallelism
+
+01:06:19.540 --> 01:06:23.540
+that we see, expert parallelism.
+
+01:06:23.540 --> 01:06:30.500
+So let me remind you that we saw
+that as we scale large language
+
+01:06:30.500 --> 01:06:34.700
+models, we may not want
+to use all the parameters
+
+01:06:34.700 --> 01:06:35.840
+during a forward pass.
+
+01:06:35.840 --> 01:06:39.460
+And we may introduce
+the concept of experts
+
+01:06:39.460 --> 01:06:43.180
+at the level of feedforward
+neural networks.
+
+01:06:43.180 --> 01:06:48.540
+And here, what we're saying
+is when we do our model
+
+01:06:48.540 --> 01:06:51.460
+computation, we're
+actually deciding
+
+01:06:51.460 --> 01:06:56.260
+on which expert to send
+our token to and only
+
+01:06:56.260 --> 01:07:00.340
+performing computation
+on that expert.
+
+01:07:00.340 --> 01:07:06.540
+So here, an idea
+is to say that we
+
+01:07:06.540 --> 01:07:10.410
+put our experts on
+different devices,
+
+01:07:10.410 --> 01:07:13.930
+and we start, let's
+say, with a random way
+
+01:07:13.930 --> 01:07:16.570
+of assigning our tokens
+to different devices.
+
+01:07:16.570 --> 01:07:19.250
+We perform the
+self-attention operation.
+
+01:07:19.250 --> 01:07:23.050
+And when it comes to going into
+the feedforward neural network
+
+01:07:23.050 --> 01:07:31.170
+part, we figure out where
+each token should go to.
+
+01:07:31.170 --> 01:07:34.330
+And then we send that
+token on the device
+
+01:07:34.330 --> 01:07:39.930
+that has the expert that
+the token was assigned to.
+
+01:07:39.930 --> 01:07:44.210
+And then it does that, and then
+it comes back to the device,
+
+01:07:44.210 --> 01:07:47.290
+and so on.
+
+01:07:47.290 --> 01:07:49.130
+So all of that to
+say-- so I hope I
+
+01:07:49.130 --> 01:07:51.810
+didn't overwhelm you with
+all these different types
+
+01:07:51.810 --> 01:07:52.710
+of parallelism.
+
+01:07:52.710 --> 01:07:57.770
+All of that to say that if
+you have more than one GPU,
+
+01:07:57.770 --> 01:08:03.490
+you can find ways to
+divide your computations
+
+01:08:03.490 --> 01:08:08.040
+either from a data perspective
+or from a model computation
+
+01:08:08.040 --> 01:08:09.960
+perspective.
+
+01:08:09.960 --> 01:08:14.720
+And we saw five different
+types of parallelisms.
+
+01:08:14.720 --> 01:08:18.880
+And you will see out there
+the five D's, five dimension
+
+01:08:18.880 --> 01:08:23.720
+of parallelism,
+data parallelism.
+
+01:08:23.720 --> 01:08:25.560
+Let me see.
+
+01:08:25.560 --> 01:08:27.479
+Tensor parallelism.
+
+01:08:27.479 --> 01:08:29.040
+Pipeline parallelism.
+
+01:08:29.040 --> 01:08:33.240
+Context parallelism
+and parallelism.
+
+01:08:33.240 --> 01:08:37.160
+Nothing prevents you from
+mixing some form of parallelism
+
+01:08:37.160 --> 01:08:38.960
+with another one.
+
+01:08:38.960 --> 01:08:43.560
+The reason why you would
+not want to parallelize this
+
+01:08:43.560 --> 01:08:48.500
+to the max is because, well,
+if you parallelize this,
+
+01:08:48.500 --> 01:08:51.640
+you are trading that
+off with your devices
+
+01:08:51.640 --> 01:08:54.200
+not being fully utilized.
+
+01:08:54.200 --> 01:08:58.600
+And you may or may not know,
+but GPUs are very expensive.
+
+01:08:58.600 --> 01:09:04.120
+And people rent GPUs with
+some price tag per hour.
+
+01:09:04.120 --> 01:09:07.160
+And then I think you
+mentioned that very clearly,
+
+01:09:07.160 --> 01:09:10.000
+you also incur some
+communication costs.
+
+01:09:10.000 --> 01:09:14.720
+Because in some cases, for
+instance, the 0, 3 data
+
+01:09:14.720 --> 01:09:18.880
+parallelism variant, you need
+to communicate the parameters
+
+01:09:18.880 --> 01:09:21.460
+in order to be able to
+perform your computation.
+
+01:09:21.460 --> 01:09:24.720
+So it's not a free lunch either.
+
+01:09:24.720 --> 01:09:28.520
+Just to summarize,
+how do we make it fit?
+
+01:09:28.520 --> 01:09:32.580
+Well, we distribute parameters,
+activations, gradients,
+
+01:09:32.580 --> 01:09:34.080
+states across GPUs.
+
+01:09:34.080 --> 01:09:36.840
+And how do we make it fast?
+
+01:09:36.840 --> 01:09:40.120
+Well, we can process these
+different batches in parallel
+
+01:09:40.120 --> 01:09:41.920
+with data parallelism
+techniques.
+
+01:09:41.920 --> 01:09:45.040
+And we can also parallelize
+model computations
+
+01:09:45.040 --> 01:09:49.960
+with model parallelism
+techniques.
+
+01:09:49.960 --> 01:09:54.240
+And with that, I'll
+give it to Shervine.
+
+01:09:54.240 --> 01:09:55.840
+Thank you, Afshine.
+
+01:09:55.840 --> 01:09:59.200
+So now, I want us to
+build some intuition
+
+01:09:59.200 --> 01:10:01.960
+for what happens when it
+comes to optimizations
+
+01:10:01.960 --> 01:10:03.990
+at inference time.
+
+01:10:03.990 --> 01:10:06.790
+So I'm going to
+start with two cases,
+
+01:10:06.790 --> 01:10:08.790
+and I'm going to need your help.
+
+01:10:08.790 --> 01:10:15.350
+So let's suppose in one case, I
+have a 10-token query and I ask
+
+01:10:15.350 --> 01:10:19.710
+for a 10k-token output.
+
+01:10:19.710 --> 01:10:24.630
+So again, generate a story for
+my teddy bear to fall asleep.
+
+01:10:24.630 --> 01:10:26.910
+And the second one
+being opposites,
+
+01:10:26.910 --> 01:10:33.350
+so I have a 10k-token input
+and a 10-token output.
+
+01:10:33.350 --> 01:10:36.510
+So which one is faster
+in your opinion?
+
+01:10:39.070 --> 01:10:39.930
+The second one?
+
+01:10:39.930 --> 01:10:40.430
+Why?
+
+01:10:46.350 --> 01:10:48.650
+So the answer is you don't
+have to compute the loss.
+
+01:10:48.650 --> 01:10:51.590
+So we're not at
+training time here.
+
+01:10:51.590 --> 01:10:54.330
+But this is the good path.
+
+01:10:54.330 --> 01:10:56.790
+Yeah?
+
+01:10:56.790 --> 01:11:00.150
+So the answer here is
+that in the second one,
+
+01:11:00.150 --> 01:11:02.700
+you need to do
+autoregressive decoding one
+
+01:11:02.700 --> 01:11:06.000
+at a time versus everything
+in parallel at first.
+
+01:11:06.000 --> 01:11:07.800
+So that's a great answer.
+
+01:11:07.800 --> 01:11:10.180
+Is that the same that
+you wanted to say?
+
+01:11:10.180 --> 01:11:12.380
+So this is great.
+
+01:11:12.380 --> 01:11:16.240
+So your intuition can be written
+down in terms of an equation.
+
+01:11:16.240 --> 01:11:20.580
+And we're going to see which one
+contributed here to the latency.
+
+01:11:20.580 --> 01:11:23.660
+So when you issue
+a request, there
+
+01:11:23.660 --> 01:11:26.820
+is a time that we
+have not talked
+
+01:11:26.820 --> 01:11:30.820
+so far about, which is Tq.
+
+01:11:30.820 --> 01:11:34.020
+So of course, your LLM
+provider has more than just you
+
+01:11:34.020 --> 01:11:34.800
+as a user.
+
+01:11:34.800 --> 01:11:39.180
+So you have your query
+but others have this.
+
+01:11:39.180 --> 01:11:41.620
+This is part of
+batching strategies
+
+01:11:41.620 --> 01:11:43.400
+that we're not going
+to cover today,
+
+01:11:43.400 --> 01:11:46.700
+but they do influence
+the latency that you're
+
+01:11:46.700 --> 01:11:48.660
+going to see as a user.
+
+01:11:48.660 --> 01:11:53.940
+But then you have a time
+to compute all these keys
+
+01:11:53.940 --> 01:11:58.300
+and values that you mentioned
+well, which is T prefill.
+
+01:11:58.300 --> 01:12:01.980
+And since you're doing this
+operation in a teacher forcing
+
+01:12:01.980 --> 01:12:05.780
+way, meaning that you put all
+your tokens of your prompts
+
+01:12:05.780 --> 01:12:08.620
+as input at the same
+time, this is typically
+
+01:12:08.620 --> 01:12:12.380
+fast relatively to the
+number of tokens at stake.
+
+01:12:12.380 --> 01:12:16.940
+And on the other hand,
+this autoregression concept
+
+01:12:16.940 --> 01:12:20.420
+is what takes you a lot of time.
+
+01:12:20.420 --> 01:12:24.260
+So here, I'm going to
+introduce some variables to put
+
+01:12:24.260 --> 01:12:27.200
+some numbers into all
+of these phenomenons.
+
+01:12:27.200 --> 01:12:37.540
+So TTFT, time to first token,
+and TPOT, time per output token,
+
+01:12:37.540 --> 01:12:44.060
+and TTLT, time to last token.
+
+01:12:44.060 --> 01:12:46.620
+So now, if you are
+an infra person,
+
+01:12:46.620 --> 01:12:50.940
+you're going to be interested
+in monitoring the two first ones
+
+01:12:50.940 --> 01:12:52.780
+quite closely because
+you want to know
+
+01:12:52.780 --> 01:12:56.980
+whether your queuing strategy
+and your prefill strategy,
+
+01:12:56.980 --> 01:13:01.270
+like how you parallelize
+all these input tokens,
+
+01:13:01.270 --> 01:13:03.970
+you want to know
+whether that works well.
+
+01:13:03.970 --> 01:13:06.650
+Also, you want to make sure
+that your time per input
+
+01:13:06.650 --> 01:13:12.250
+token per output token is good
+because you want your user
+
+01:13:12.250 --> 01:13:17.490
+to see the outputs being
+generated in a convenient way.
+
+01:13:17.490 --> 01:13:23.390
+So you will see also TTLT being
+reported in the infra world,
+
+01:13:23.390 --> 01:13:28.010
+but this matters a bit less
+from a pure infra perspective,
+
+01:13:28.010 --> 01:13:32.690
+because one could argue that
+TTLT is intrinsically linked
+
+01:13:32.690 --> 01:13:34.810
+to what your model does.
+
+01:13:34.810 --> 01:13:38.010
+So let's say it does
+a bunch of reasoning.
+
+01:13:38.010 --> 01:13:41.370
+Then everything that's
+in the reasoning parts
+
+01:13:41.370 --> 01:13:45.010
+will artificially increase
+the time to last token.
+
+01:13:45.010 --> 01:13:49.330
+Let's say your users issue a
+lot of queries about asking
+
+01:13:49.330 --> 01:13:51.570
+for teddy bear stories.
+
+01:13:51.570 --> 01:13:54.810
+That will increase the TTLT
+but not necessarily mean
+
+01:13:54.810 --> 01:13:56.720
+that your system is bad.
+
+01:13:56.720 --> 01:13:59.480
+So the two first
+ones are typically
+
+01:13:59.480 --> 01:14:02.760
+what you want to minimize.
+
+01:14:02.760 --> 01:14:05.920
+And yeah, there is
+a question here.
+
+01:14:05.920 --> 01:14:08.460
+So the comment here,
+what are you saying?
+
+01:14:08.460 --> 01:14:11.640
+Why is the per
+output token set slow
+
+01:14:11.640 --> 01:14:12.940
+whereas prefilled is set fast?
+
+01:14:12.940 --> 01:14:15.560
+So it's relative to
+what you would expect.
+
+01:14:15.560 --> 01:14:17.760
+So you're right that the
+per output token might
+
+01:14:17.760 --> 01:14:19.880
+be faster than the T prefilled.
+
+01:14:19.880 --> 01:14:23.780
+But I just want to give an
+overview of why this is fast.
+
+01:14:23.780 --> 01:14:26.800
+Typically, if you ask
+several questions to your LLM
+
+01:14:26.800 --> 01:14:31.100
+or if you go and
+issue further prompts,
+
+01:14:31.100 --> 01:14:34.440
+you have all these tokens
+that are pre-computed,
+
+01:14:34.440 --> 01:14:37.040
+and you have this
+concept of also caching
+
+01:14:37.040 --> 01:14:39.960
+of your past interactions
+or caching of the system
+
+01:14:39.960 --> 01:14:43.440
+prompt that will
+come into the picture
+
+01:14:43.440 --> 01:14:46.360
+and that will contribute
+into you not seeing
+
+01:14:46.360 --> 01:14:49.420
+the time for prefilling
+all this to be that long.
+
+01:14:49.420 --> 01:14:53.900
+So the short story is that
+it's all relative to per token.
+
+01:14:58.025 --> 01:15:01.160
+Does that make sense?
+
+01:15:01.160 --> 01:15:03.380
+Awesome.
+
+01:15:03.380 --> 01:15:07.400
+So now, let's take a
+look at some prices just
+
+01:15:07.400 --> 01:15:10.880
+to hone our intuition.
+
+01:15:10.880 --> 01:15:17.000
+So here, you see some big labs
+with input prices and output
+
+01:15:17.000 --> 01:15:17.580
+prices.
+
+01:15:17.580 --> 01:15:22.600
+So you see that the output price
+is empirically five times more
+
+01:15:22.600 --> 01:15:23.660
+than input prices.
+
+01:15:23.660 --> 01:15:26.800
+So there is no ground
+truth relationship that
+
+01:15:26.800 --> 01:15:28.180
+dictates it should be five.
+
+01:15:28.180 --> 01:15:31.120
+But it's interesting
+to note that.
+
+01:15:31.120 --> 01:15:36.440
+And we will motivate why this is
+an expensive computation later
+
+01:15:36.440 --> 01:15:36.940
+on.
+
+01:15:36.940 --> 01:15:43.240
+But I feel you have already
+gotten a gist of why.
+
+01:15:43.240 --> 01:15:46.360
+And when you are
+managing an LLM,
+
+01:15:46.360 --> 01:15:48.520
+you're interested
+in several things.
+
+01:15:48.520 --> 01:15:55.830
+So two of them are the focus of
+today, which are fast and cheap.
+
+01:15:55.830 --> 01:15:59.630
+And when we say fast
+and cheap, I just
+
+01:15:59.630 --> 01:16:01.990
+want to put some
+quantitative number.
+
+01:16:01.990 --> 01:16:05.510
+Maybe you have some
+requirements as a system owner.
+
+01:16:05.510 --> 01:16:08.170
+So maybe tau 1,
+tau 2 requirements.
+
+01:16:08.170 --> 01:16:12.230
+And you want for your
+times per first token
+
+01:16:12.230 --> 01:16:17.790
+or time per output token to
+be within this upper bound.
+
+01:16:17.790 --> 01:16:22.670
+Same for the cost, so maybe you
+have some quantitative number
+
+01:16:22.670 --> 01:16:26.110
+that you want to
+constrain this on.
+
+01:16:26.110 --> 01:16:30.950
+And now, I want to
+introduce some concepts that
+
+01:16:30.950 --> 01:16:34.270
+can help us gauge where
+we are with respect
+
+01:16:34.270 --> 01:16:40.030
+to the memory versus compute
+game, because both of them
+
+01:16:40.030 --> 01:16:44.110
+compete for not
+being the bottleneck.
+
+01:16:44.110 --> 01:16:47.490
+So first, let's talk about
+computational throughput.
+
+01:16:47.490 --> 01:16:51.900
+So when we take the specs sheet
+that Afshine had mentioned,
+
+01:16:51.900 --> 01:16:55.740
+it's all these teraflops
+numbers that you see there.
+
+01:16:55.740 --> 01:16:57.800
+So this is a function
+of your data type.
+
+01:16:57.800 --> 01:17:02.840
+So of course, if your numbers
+are more likely represented,
+
+01:17:02.840 --> 01:17:07.540
+it will be able to perform
+more operations per second.
+
+01:17:07.540 --> 01:17:09.720
+And then you have
+a memory bandwidth,
+
+01:17:09.720 --> 01:17:14.220
+which is bottlenecked by how
+fast you can transfer data
+
+01:17:14.220 --> 01:17:18.220
+from the HBM to the SRAM
+towards computation.
+
+01:17:18.220 --> 01:17:22.140
+So here, we had seen an order
+of magnitude in the past.
+
+01:17:22.140 --> 01:17:25.900
+And now, I want to
+introduce a concept that
+
+01:17:25.900 --> 01:17:30.600
+is going to be of interest for
+us, called arithmetic intensity.
+
+01:17:30.600 --> 01:17:36.460
+That will link compute
+speed with memory moved.
+
+01:17:36.460 --> 01:17:39.940
+So it's defined by the
+ratio of computations
+
+01:17:39.940 --> 01:17:42.740
+done over memory moves.
+
+01:17:42.740 --> 01:17:48.020
+And we're going to see very
+soon how they relate to others.
+
+01:17:48.020 --> 01:17:50.010
+So I want to take a
+pause and make sure
+
+01:17:50.010 --> 01:17:55.050
+that these three definitions
+make sense to everyone.
+
+01:17:55.050 --> 01:17:55.630
+Yeah?
+
+01:17:58.510 --> 01:18:01.270
+So the question is, which
+one is easiest to achieve?
+
+01:18:01.270 --> 01:18:05.610
+So these are all given
+by your hardware.
+
+01:18:05.610 --> 01:18:09.850
+So you'll have some number
+that come out at the end.
+
+01:18:09.850 --> 01:18:13.210
+And depending on your workflow,
+we're going to see in a second
+
+01:18:13.210 --> 01:18:17.570
+that we're going to be faced
+with either too slow of a memory
+
+01:18:17.570 --> 01:18:20.050
+or too slow of computations.
+
+01:18:20.050 --> 01:18:22.930
+And I think this
+is going to define
+
+01:18:22.930 --> 01:18:24.270
+the trade-off between the two.
+
+01:18:24.270 --> 01:18:28.650
+But as a user, I mean,
+you should take them as
+
+01:18:28.650 --> 01:18:29.590
+given to you.
+
+01:18:29.590 --> 01:18:32.880
+And I don't see any sense
+of relative difficulty.
+
+01:18:32.880 --> 01:18:34.630
+But I think they all
+have their challenge,
+
+01:18:34.630 --> 01:18:37.490
+if you were to ask
+a hardware person.
+
+01:18:37.490 --> 01:18:41.290
+Yeah OK.
+
+01:18:41.290 --> 01:18:47.650
+So now I'm going to zoom
+in to Afshine's GPU schema,
+
+01:18:47.650 --> 01:18:50.450
+and then we're going to put
+these orders of magnitude
+
+01:18:50.450 --> 01:18:52.782
+on there just to
+make sure we are
+
+01:18:52.782 --> 01:18:53.990
+talking about the same thing.
+
+01:18:53.990 --> 01:19:00.330
+So the HBM, we saw its order
+of magnitude of 100 gigabytes.
+
+01:19:00.330 --> 01:19:05.610
+The SRAM is much
+less, 100 megabytes.
+
+01:19:05.610 --> 01:19:09.330
+And we said that
+the memory bandwidth
+
+01:19:09.330 --> 01:19:13.810
+was in the order of magnitude
+of terabytes per second.
+
+01:19:13.810 --> 01:19:17.270
+And then compute units,
+thousands of teraflops.
+
+01:19:17.270 --> 01:19:20.230
+But as we saw, it's highly
+dependent on your data type.
+
+01:19:20.230 --> 01:19:23.350
+So do not quote me on
+this without details.
+
+01:19:23.350 --> 01:19:25.090
+Yeah?
+
+01:19:25.090 --> 01:19:29.210
+So the question is, how come
+you have a TB versus MB?
+
+01:19:29.210 --> 01:19:32.650
+So it means that you are
+going to transfer things
+
+01:19:32.650 --> 01:19:35.770
+in below a second
+because per second
+
+01:19:35.770 --> 01:19:38.850
+is a measure-- a unit of time.
+
+01:19:38.850 --> 01:19:39.530
+Yeah.
+
+01:19:39.530 --> 01:19:40.990
+But I mean, great point.
+
+01:19:40.990 --> 01:19:43.050
+It's happening quite fast.
+
+01:19:43.050 --> 01:19:45.250
+That's the intuition here.
+
+01:19:45.250 --> 01:19:46.560
+Yeah?
+
+01:19:46.560 --> 01:19:49.280
+So the question here
+is you're talking
+
+01:19:49.280 --> 01:19:53.717
+to me about memory bandwidth
+being some bottleneck.
+
+01:19:53.717 --> 01:19:55.300
+Why don't you just
+make it run faster?
+
+01:19:55.300 --> 01:19:56.758
+So if you're a
+hardware person, you
+
+01:19:56.758 --> 01:20:00.180
+will know that these,
+when you print them,
+
+01:20:00.180 --> 01:20:01.780
+they are much bigger in size.
+
+01:20:01.780 --> 01:20:06.640
+So you have some trade-off to
+make when you design your GPU.
+
+01:20:06.640 --> 01:20:10.360
+So yeah, HBM is much bigger
+and also much smaller
+
+01:20:10.360 --> 01:20:11.220
+to put in place.
+
+01:20:11.220 --> 01:20:15.200
+So you have some trade-off here.
+
+01:20:15.200 --> 01:20:18.900
+But in a perfect world, you will
+have the biggest SRAM possible.
+
+01:20:18.900 --> 01:20:24.720
+You have the most CU, compute
+units, power possible.
+
+01:20:24.720 --> 01:20:26.700
+But yeah, sadly, not possible.
+
+01:20:29.680 --> 01:20:31.040
+OK, awesome.
+
+01:20:31.040 --> 01:20:33.800
+So now, I'm going to talk to
+you about the relationship
+
+01:20:33.800 --> 01:20:36.820
+between two of those
+dimensions that we mentioned.
+
+01:20:36.820 --> 01:20:39.400
+So one, arithmetic intensity.
+
+01:20:39.400 --> 01:20:42.280
+That shows the
+amount of compute you
+
+01:20:42.280 --> 01:20:45.950
+can get done per
+memory moved and that
+
+01:20:45.950 --> 01:20:48.730
+as a function of
+computational throughput.
+
+01:20:48.730 --> 01:20:51.230
+So how many
+operations per second?
+
+01:20:51.230 --> 01:20:54.630
+And when you draw the
+relationship between the two,
+
+01:20:54.630 --> 01:21:00.110
+you see that there is an upper
+bound to it, which is this line.
+
+01:21:00.110 --> 01:21:05.270
+And we call it the
+roofline model.
+
+01:21:05.270 --> 01:21:07.970
+Has anyone heard of the
+roofline model so far?
+
+01:21:07.970 --> 01:21:09.110
+Yeah, a few people.
+
+01:21:09.110 --> 01:21:11.830
+So it's called roofline
+model because the line just
+
+01:21:11.830 --> 01:21:13.030
+looks like a roof.
+
+01:21:13.030 --> 01:21:16.230
+There is no deeper
+meaning to it.
+
+01:21:16.230 --> 01:21:19.390
+And the breaking point that
+you see between the two
+
+01:21:19.390 --> 01:21:21.590
+is called the ridge point.
+
+01:21:21.590 --> 01:21:24.950
+And it's the point
+at which you are
+
+01:21:24.950 --> 01:21:31.190
+being neither memory-bound
+nor compute-bound.
+
+01:21:31.190 --> 01:21:33.310
+And just to give
+some intuition as
+
+01:21:33.310 --> 01:21:35.910
+to what is going to
+be of interest to us
+
+01:21:35.910 --> 01:21:42.230
+at inference time, so as the
+intuition was said previously,
+
+01:21:42.230 --> 01:21:46.390
+you have a lot of memory
+with very few computes
+
+01:21:46.390 --> 01:21:48.030
+at inference time
+because you load
+
+01:21:48.030 --> 01:21:51.190
+all the weights of
+your model, and you
+
+01:21:51.190 --> 01:21:54.170
+try to predict just
+one token at a time.
+
+01:21:54.170 --> 01:21:56.970
+So you're going to be
+in the purple section.
+
+01:21:56.970 --> 01:22:01.270
+When you're at decode time,
+you're going to be memory-bound.
+
+01:22:01.270 --> 01:22:06.630
+And when you do smart tricks
+like the one Afshine mentioned,
+
+01:22:06.630 --> 01:22:11.210
+like flash attention, if you do
+your job well, at prefill time,
+
+01:22:11.210 --> 01:22:14.390
+you should be in a
+compute-bound region.
+
+01:22:14.390 --> 01:22:17.570
+Because you are optimized
+in terms of memory,
+
+01:22:17.570 --> 01:22:20.530
+you have a lot of computations
+to do in parallel.
+
+01:22:20.530 --> 01:22:25.870
+So this should be
+your bottleneck.
+
+01:22:25.870 --> 01:22:28.330
+And to be
+mathematically precise,
+
+01:22:28.330 --> 01:22:34.590
+you can even draw a relationship
+at this reach point.
+
+01:22:34.590 --> 01:22:36.670
+So did that make sense so far?
+
+01:22:36.670 --> 01:22:39.790
+Yeah, the question is, why did
+the graph start from non-zero?
+
+01:22:39.790 --> 01:22:40.730
+It's my bad.
+
+01:22:40.730 --> 01:22:43.120
+So usually, these graphs,
+they are on a log scale.
+
+01:22:43.120 --> 01:22:46.400
+So when you zoom in, it doesn't
+go to 0, but it should go to 0.
+
+01:22:46.400 --> 01:22:50.020
+Yeah, great point, because
+it's a linear relationship.
+
+01:22:50.020 --> 01:22:51.280
+And awesomely said.
+
+01:22:51.280 --> 01:22:54.520
+So now, I'm going to go
+quickly through a KV caching.
+
+01:22:54.520 --> 01:22:57.740
+So we have all seen that when
+we are at inference time,
+
+01:22:57.740 --> 01:23:05.200
+we reuse the keys and values
+that were computed in the past.
+
+01:23:05.200 --> 01:23:08.700
+So this is why we're interested
+in maintaining a cache.
+
+01:23:08.700 --> 01:23:13.520
+So let's say you want to
+compute a cute teddy bear.
+
+01:23:13.520 --> 01:23:15.860
+So let's say you have--
+
+01:23:15.860 --> 01:23:18.220
+then the keys and
+values will be reused
+
+01:23:18.220 --> 01:23:25.820
+later on for your later tokens
+to attend to it, and so on.
+
+01:23:25.820 --> 01:23:29.580
+And when it comes to
+caching, since you
+
+01:23:29.580 --> 01:23:32.540
+reuse existing
+computations, this
+
+01:23:32.540 --> 01:23:35.100
+is typically going
+to be much cheaper.
+
+01:23:35.100 --> 01:23:38.220
+So just to take one
+of these graphs,
+
+01:23:38.220 --> 01:23:43.130
+if you have a cached input,
+then it's going to be about 1/10
+
+01:23:43.130 --> 01:23:47.450
+compared to if you were to give
+new inputs to the provider.
+
+01:23:47.450 --> 01:23:51.210
+And I want to do a
+second caveat here.
+
+01:23:51.210 --> 01:23:54.930
+The caching that we're talking
+here is at decode time,
+
+01:23:54.930 --> 01:23:57.250
+and you're computing
+each token at a time
+
+01:23:57.250 --> 01:23:59.370
+by relying on some KV cache.
+
+01:23:59.370 --> 01:24:04.090
+The pricing of that caching is
+included in the output cost.
+
+01:24:04.090 --> 01:24:05.810
+And the caching that
+I'm mentioning here
+
+01:24:05.810 --> 01:24:09.430
+is typically one where
+you compare turns.
+
+01:24:09.430 --> 01:24:13.650
+So let's say you have had a
+turn and you issue a new query.
+
+01:24:13.650 --> 01:24:15.850
+Then that query
+will anchor on what
+
+01:24:15.850 --> 01:24:18.370
+you have discussed in
+the past, and then those
+
+01:24:18.370 --> 01:24:19.990
+would be part of your cache.
+
+01:24:19.990 --> 01:24:22.070
+So this is not new input.
+
+01:24:22.070 --> 01:24:25.430
+These are states already
+computed by your provider.
+
+01:24:25.430 --> 01:24:30.010
+And these are the
+prices that you see.
+
+01:24:30.010 --> 01:24:32.850
+OK, awesome.
+
+01:24:32.850 --> 01:24:34.610
+Yeah?
+
+01:24:34.610 --> 01:24:37.310
+So the question here,
+what about causal masking?
+
+01:24:37.310 --> 01:24:39.930
+So there is a trick where
+you multiply all of these
+
+01:24:39.930 --> 01:24:42.410
+by some triangular matrix.
+
+01:24:42.410 --> 01:24:44.470
+So suppose it's
+all taken care of.
+
+01:24:49.650 --> 01:24:52.730
+So now, I'm going
+to move on to--
+
+01:24:52.730 --> 01:24:54.910
+let's say you are an
+inference provider.
+
+01:24:54.910 --> 01:24:58.530
+You have your GPU
+and a bunch of memory
+
+01:24:58.530 --> 01:25:04.810
+that's allocatable to KV
+cache, like keys and values
+
+01:25:04.810 --> 01:25:09.130
+and you want to see how many
+queries you can accommodate.
+
+01:25:09.130 --> 01:25:11.770
+So let's say you issue a prompt.
+
+01:25:11.770 --> 01:25:14.770
+All of these providers,
+they will tell you,
+
+01:25:14.770 --> 01:25:21.450
+hey, you can have a
+maximum of x output.
+
+01:25:21.450 --> 01:25:23.490
+So there is nothing
+that prevents
+
+01:25:23.490 --> 01:25:27.250
+when you see an input
+query from expecting
+
+01:25:27.250 --> 01:25:29.930
+that size as an output.
+
+01:25:29.930 --> 01:25:34.190
+So if you were to naively
+design memory management,
+
+01:25:34.190 --> 01:25:40.120
+you would need to reserve all
+of that as a block in your GPU.
+
+01:25:40.120 --> 01:25:45.400
+But the issue is, when you come
+with your actual completion,
+
+01:25:45.400 --> 01:25:48.340
+it's often much less
+than the maximum output.
+
+01:25:48.340 --> 01:25:55.280
+So your actual space used has
+made a part of your memory
+
+01:25:55.280 --> 01:25:58.040
+nonusable because,
+of course, these
+
+01:25:58.040 --> 01:26:01.080
+were the maximum output
+you were expecting then.
+
+01:26:01.080 --> 01:26:03.320
+If a new query
+comes in, no matter
+
+01:26:03.320 --> 01:26:07.000
+how small the prompt,
+then the space remaining
+
+01:26:07.000 --> 01:26:09.320
+will be smaller than
+the one you were
+
+01:26:09.320 --> 01:26:11.680
+expecting in the first place.
+
+01:26:11.680 --> 01:26:14.000
+So now, let's suppose
+you do that at scale.
+
+01:26:14.000 --> 01:26:18.100
+You will end up with a bunch of
+memory that is not being used,
+
+01:26:18.100 --> 01:26:21.240
+but at the same time
+not being usable.
+
+01:26:21.240 --> 01:26:28.680
+And this is where the concept
+of paged attention comes in.
+
+01:26:28.680 --> 01:26:35.630
+So you do not naively put
+each key and value one
+
+01:26:35.630 --> 01:26:36.530
+after the other.
+
+01:26:36.530 --> 01:26:41.150
+But instead, you have some
+logical view of your memory
+
+01:26:41.150 --> 01:26:44.410
+that is smart about
+putting things around.
+
+01:26:44.410 --> 01:26:48.390
+So you would typically put
+things into blocks of size B.
+
+01:26:48.390 --> 01:26:52.830
+And you maintain some metadata
+that says for each query
+
+01:26:52.830 --> 01:26:55.110
+where you should put
+each keys and values
+
+01:26:55.110 --> 01:26:58.470
+and where you should
+look for them.
+
+01:26:58.470 --> 01:27:00.790
+So of course, you
+have a trade-off here.
+
+01:27:00.790 --> 01:27:04.870
+So if your B is too
+small, then your metadata
+
+01:27:04.870 --> 01:27:06.130
+is going to be huge.
+
+01:27:06.130 --> 01:27:08.790
+So you're going to tell
+everyone, OK, you should go here
+
+01:27:08.790 --> 01:27:09.290
+and there.
+
+01:27:09.290 --> 01:27:12.610
+It's going to be quite a hassle.
+
+01:27:12.610 --> 01:27:15.630
+But at the same time, if you
+have a B that's too high,
+
+01:27:15.630 --> 01:27:17.510
+then you're
+reproducing the issue
+
+01:27:17.510 --> 01:27:19.050
+that you had in the first place.
+
+01:27:19.050 --> 01:27:21.670
+So you will see
+still fragmentation.
+
+01:27:21.670 --> 01:27:23.710
+So just to give you
+some intuition here,
+
+01:27:23.710 --> 01:27:26.670
+B is taken equal to 16.
+
+01:27:26.670 --> 01:27:30.270
+In practice, that's the
+typical order of magnitude.
+
+01:27:30.270 --> 01:27:32.750
+OK, yeah.
+
+01:27:32.750 --> 01:27:34.010
+So the question is, what is B?
+
+01:27:34.010 --> 01:27:35.870
+B is the block size.
+
+01:27:35.870 --> 01:27:39.630
+So you have a lookup
+map, a lookup table,
+
+01:27:39.630 --> 01:27:42.370
+and you want to see where
+to store keys and values.
+
+01:27:42.370 --> 01:27:46.190
+And you store keys and values in
+where that lookup map tells you.
+
+01:27:46.190 --> 01:27:48.710
+So let's say you have
+a block of size 16.
+
+01:27:48.710 --> 01:27:53.270
+These are yours
+and no one else's.
+
+01:27:53.270 --> 01:27:54.910
+So your fragmentation
+issue can just
+
+01:27:54.910 --> 01:27:59.270
+be at the block level rather
+than the whole memory level.
+
+01:27:59.270 --> 01:28:01.950
+Yeah, great question.
+
+01:28:01.950 --> 01:28:04.450
+So now, we're good on
+fragmentation of the memory.
+
+01:28:04.450 --> 01:28:06.430
+Let's move on to the next topic.
+
+01:28:06.430 --> 01:28:10.750
+Now, we have too many
+vectors to keep track of.
+
+01:28:10.750 --> 01:28:12.530
+So how we can remedy that?
+
+01:28:12.530 --> 01:28:16.030
+So we have seen a glimpse
+at that in the past.
+
+01:28:16.030 --> 01:28:20.570
+So now, you operate
+at an image A level.
+
+01:28:20.570 --> 01:28:21.810
+So multi-head attention.
+
+01:28:21.810 --> 01:28:24.590
+You suppose that you
+have h heads and h
+
+01:28:24.590 --> 01:28:28.590
+projection of your queries
+alongside h projection
+
+01:28:28.590 --> 01:28:30.390
+of your keys and values.
+
+01:28:30.390 --> 01:28:35.020
+This is something that you
+could optimize by saying, OK,
+
+01:28:35.020 --> 01:28:39.600
+I do not want h projection
+matrices of keys and values.
+
+01:28:39.600 --> 01:28:41.460
+I want g of them.
+
+01:28:41.460 --> 01:28:45.780
+And you combine
+groups of queries
+
+01:28:45.780 --> 01:28:49.900
+inside each key and value.
+
+01:28:49.900 --> 01:28:52.420
+And this is what we call GQA.
+
+01:28:52.420 --> 01:28:55.500
+So I'm going to go a bit fast
+on it because we have seen it.
+
+01:28:55.500 --> 01:28:58.480
+And you can have these
+two extremal values.
+
+01:28:58.480 --> 01:29:02.020
+So if g equals h, then
+you go back to MHA.
+
+01:29:02.020 --> 01:29:05.540
+And if g equals 1, meaning that
+you have just one key and one
+
+01:29:05.540 --> 01:29:10.180
+value per token, you
+go to multi-attention,
+
+01:29:10.180 --> 01:29:12.620
+which is typically another
+extreme that you do not
+
+01:29:12.620 --> 01:29:16.580
+want because you do not have an
+expression of keys and values
+
+01:29:16.580 --> 01:29:18.700
+that is expressive
+enough for your model
+
+01:29:18.700 --> 01:29:23.680
+to build good enough features.
+
+01:29:23.680 --> 01:29:25.020
+So that's awesome.
+
+01:29:25.020 --> 01:29:31.698
+And just one word, if you take g
+equals 2, and with h equals 24,
+
+01:29:31.698 --> 01:29:33.490
+I just want to give
+some order of magnitude
+
+01:29:33.490 --> 01:29:34.830
+that's trivial to compute.
+
+01:29:34.830 --> 01:29:37.110
+It's 1 minus 2 over 24.
+
+01:29:37.110 --> 01:29:40.530
+So you have 91%
+less memory taken.
+
+01:29:40.530 --> 01:29:44.710
+So just taking g
+somewhere reasonable.
+
+01:29:44.710 --> 01:29:49.890
+So I think g equals 2 is what
+was taken in Qwen3.8-Flash-Next.
+
+01:29:49.890 --> 01:29:53.630
+So it's very much something
+that's used in practice.
+
+01:29:53.630 --> 01:29:56.790
+It's quite efficient.
+
+01:29:59.410 --> 01:30:00.550
+OK, great.
+
+01:30:00.550 --> 01:30:02.530
+And now-- yeah?
+
+01:30:02.530 --> 01:30:04.425
+So the comment is,
+wouldn't this make
+
+01:30:04.425 --> 01:30:06.050
+the model less
+expressive because there
+
+01:30:06.050 --> 01:30:07.030
+are less parameters?
+
+01:30:07.030 --> 01:30:09.930
+And absolutely,
+this is a trade-off.
+
+01:30:09.930 --> 01:30:14.770
+So you would typically
+do some grid search.
+
+01:30:14.770 --> 01:30:17.250
+Like, if you were a
+pre-trainer of these models,
+
+01:30:17.250 --> 01:30:19.770
+you would do some grid
+search, do ablation studies,
+
+01:30:19.770 --> 01:30:24.090
+see which g works best in order
+to determine which one works.
+
+01:30:24.090 --> 01:30:26.750
+So it turns out in practice,
+if you're too close to h,
+
+01:30:26.750 --> 01:30:30.030
+you have only marginal
+improvements in performance.
+
+01:30:30.030 --> 01:30:33.550
+So this is why you
+don't have h exactly.
+
+01:30:33.550 --> 01:30:37.330
+And the thing that you
+mentioned is just good enough.
+
+01:30:37.330 --> 01:30:39.050
+But yeah, it's a trade-off.
+
+01:30:39.050 --> 01:30:41.850
+Yeah.
+
+01:30:41.850 --> 01:30:42.430
+OK, awesome.
+
+01:30:42.430 --> 01:30:45.370
+So I'm going to talk about the
+technique that's not necessarily
+
+01:30:45.370 --> 01:30:47.730
+an and but maybe an or.
+
+01:30:47.730 --> 01:30:50.670
+So you see all these
+vectors being stored.
+
+01:30:50.670 --> 01:30:53.730
+So you have g of them
+per token now, g times 2
+
+01:30:53.730 --> 01:30:55.410
+for keys and values.
+
+01:30:55.410 --> 01:30:58.630
+But let's say you want less of
+them, and you want them smaller.
+
+01:30:58.630 --> 01:31:00.290
+Then how do you do it?
+
+01:31:00.290 --> 01:31:09.410
+So you have this concept called
+MLA, multi-latent attention.
+
+01:31:09.410 --> 01:31:15.610
+So what it does is that it wants
+to convert all of these to 2h
+
+01:31:15.610 --> 01:31:20.650
+or 2g vectors into
+just one that is small.
+
+01:31:20.650 --> 01:31:24.330
+So what we'll do is that
+we'll apply a concept
+
+01:31:24.330 --> 01:31:28.360
+that we might have seen
+Laura, where we decompose
+
+01:31:28.360 --> 01:31:32.000
+a matrix multiply into.
+
+01:31:32.000 --> 01:31:35.720
+So you have a smaller
+representation
+
+01:31:35.720 --> 01:31:37.600
+that is being computed first.
+
+01:31:37.600 --> 01:31:42.040
+And the trick here is
+to train then a decoder
+
+01:31:42.040 --> 01:31:47.640
+that you can use to reproduce
+the representation of keys
+
+01:31:47.640 --> 01:31:48.660
+and values.
+
+01:31:48.660 --> 01:31:51.720
+And the latter ones
+are not what you store.
+
+01:31:51.720 --> 01:31:56.740
+What you store are only these
+shared and fixed representation.
+
+01:32:00.280 --> 01:32:07.360
+And the magic of MLA is that you
+are sharing one of the matrices
+
+01:32:07.360 --> 01:32:11.000
+across keys and values, meaning
+that your first projection
+
+01:32:11.000 --> 01:32:14.360
+matrix will give a single
+representation that
+
+01:32:14.360 --> 01:32:19.160
+is shared across all heads
+and both keys and values.
+
+01:32:19.160 --> 01:32:25.730
+So instead of being with a bunch
+of vectors for keys and values,
+
+01:32:25.730 --> 01:32:29.790
+you're just with one per token.
+
+01:32:29.790 --> 01:32:33.670
+Quite amazing, no?
+
+01:32:33.670 --> 01:32:34.490
+OK, great.
+
+01:32:34.490 --> 01:32:38.530
+So just to do a recap, we
+were in a bad situation.
+
+01:32:38.530 --> 01:32:40.470
+Now, we're in a good situation.
+
+01:32:40.470 --> 01:32:44.190
+Now, let's move on to-- so we're
+discussing about the attention
+
+01:32:44.190 --> 01:32:45.030
+layer.
+
+01:32:45.030 --> 01:32:48.710
+Now, let's move on to exactly
+the process of actually
+
+01:32:48.710 --> 01:32:51.150
+generating next tokens.
+
+01:32:51.150 --> 01:32:54.170
+So let's look at
+the last layers.
+
+01:32:54.170 --> 01:32:57.030
+And I'm going to talk to
+you about a concept that
+
+01:32:57.030 --> 01:32:58.090
+is quite powerful.
+
+01:32:58.090 --> 01:33:01.670
+So it's called
+speculative decoding.
+
+01:33:01.670 --> 01:33:05.470
+Who has heard of
+speculative decoding?
+
+01:33:05.470 --> 01:33:06.410
+Yeah, one?
+
+01:33:06.410 --> 01:33:07.310
+OK.
+
+01:33:07.310 --> 01:33:10.350
+I'm so glad we're
+all seeing this
+
+01:33:10.350 --> 01:33:12.050
+because it's quite interesting.
+
+01:33:12.050 --> 01:33:15.590
+So the concept here,
+so since we have
+
+01:33:15.590 --> 01:33:19.110
+said that the computation of
+each new token at the time,
+
+01:33:19.110 --> 01:33:21.830
+the autoregression was
+what taking us time,
+
+01:33:21.830 --> 01:33:25.950
+then why not generate
+multiple of them
+
+01:33:25.950 --> 01:33:28.750
+and then use the property
+that you have at prefill
+
+01:33:28.750 --> 01:33:30.550
+and also at training time?
+
+01:33:30.550 --> 01:33:34.750
+The fact that verifying
+tokens is cheap
+
+01:33:34.750 --> 01:33:38.110
+because you can input them all
+in parallel, but generating them
+
+01:33:38.110 --> 01:33:39.750
+is slow.
+
+01:33:39.750 --> 01:33:42.430
+So using these two
+properties to our advantage
+
+01:33:42.430 --> 01:33:47.270
+to design a process that
+makes generation cheaper,
+
+01:33:47.270 --> 01:33:49.430
+and it still
+leverages verification
+
+01:33:49.430 --> 01:33:52.630
+because it's something that
+we know isn't too expensive.
+
+01:33:52.630 --> 01:33:54.630
+So the concept here
+is that you take
+
+01:33:54.630 --> 01:33:58.670
+a model called the draft model
+to come here and generate
+
+01:33:58.670 --> 01:34:01.270
+for you next tokens.
+
+01:34:01.270 --> 01:34:05.390
+So d1 to dk, like
+the next k tokens.
+
+01:34:05.390 --> 01:34:11.230
+And then you put all of them as
+inputs alongside your prompt.
+
+01:34:11.230 --> 01:34:16.430
+And you use your target model
+to verify some properties
+
+01:34:16.430 --> 01:34:18.270
+about them.
+
+01:34:18.270 --> 01:34:19.750
+So this is the gist.
+
+01:34:19.750 --> 01:34:22.780
+Now, it's going to
+get more concrete.
+
+01:34:22.780 --> 01:34:26.020
+So here's the process
+that I propose.
+
+01:34:26.020 --> 01:34:31.780
+So if the target is more
+confident than the draft
+
+01:34:31.780 --> 01:34:37.300
+about the predicted token, then
+the verification of that token
+
+01:34:37.300 --> 01:34:42.540
+accepts it, otherwise
+accepts it with some ratio
+
+01:34:42.540 --> 01:34:44.500
+of probabilities.
+
+01:34:44.500 --> 01:34:47.420
+And if not, reject it.
+
+01:34:47.420 --> 01:34:51.580
+And if you reject it,
+then sample the next token
+
+01:34:51.580 --> 01:34:56.700
+with the residual distribution
+of a quantity that's
+
+01:34:56.700 --> 01:35:00.980
+displayed later on.
+
+01:35:00.980 --> 01:35:06.240
+And so this is called
+rejection sampling.
+
+01:35:06.240 --> 01:35:08.300
+And in the process that
+I mentioned to you,
+
+01:35:08.300 --> 01:35:12.820
+it's roughly us trying to
+align the prediction with what
+
+01:35:12.820 --> 01:35:14.923
+the target says is most likely.
+
+01:35:14.923 --> 01:35:16.340
+So when the target
+says it's super
+
+01:35:16.340 --> 01:35:19.060
+likely-- it says it's even
+more likely than what the draft
+
+01:35:19.060 --> 01:35:25.130
+model says, accept it.
+otherwise, have some rules.
+
+01:35:25.130 --> 01:35:28.810
+And when you convert
+that into math notations,
+
+01:35:28.810 --> 01:35:31.330
+so you just have the--
+the first case is
+
+01:35:31.330 --> 01:35:33.150
+if the probability is bigger.
+
+01:35:33.150 --> 01:35:38.370
+And then later on, when
+I say relatively more,
+
+01:35:38.370 --> 01:35:41.270
+probability means more
+probability of acceptance.
+
+01:35:41.270 --> 01:35:45.570
+It's nothing else than
+the ratio of the two.
+
+01:35:45.570 --> 01:35:51.610
+So now, when I say speculative
+decoding reproduces
+
+01:35:51.610 --> 01:35:54.890
+the probability distribution
+of the target model,
+
+01:35:54.890 --> 01:35:58.230
+are you convinced that this
+recipe will give you that?
+
+01:36:01.110 --> 01:36:01.610
+Yes?
+
+01:36:01.610 --> 01:36:04.070
+OK, so we have some
+people who trust in me.
+
+01:36:04.070 --> 01:36:06.690
+Thank you.
+
+01:36:06.690 --> 01:36:11.290
+Does everyone agree that we will
+recover the target distribution?
+
+01:36:11.290 --> 01:36:12.410
+I see some notes.
+
+01:36:12.410 --> 01:36:14.390
+Yeah, I agree with
+you, it's not obvious.
+
+01:36:14.390 --> 01:36:15.590
+So let's prove it together.
+
+01:36:23.574 --> 01:36:25.530
+So let's see.
+
+01:36:25.530 --> 01:36:30.850
+So let's suppose that we
+have a random variable called
+
+01:36:30.850 --> 01:36:38.370
+x that defines what your
+next token is going to be.
+
+01:36:38.370 --> 01:36:40.650
+So just to make
+sure that we agree,
+
+01:36:40.650 --> 01:36:45.170
+our goal is to prove
+that the probability
+
+01:36:45.170 --> 01:36:49.930
+that this random variable
+equals a given token x
+
+01:36:49.930 --> 01:36:54.370
+is the same as what your
+target distribution says.
+
+01:36:54.370 --> 01:36:56.890
+Is that right?
+
+01:36:56.890 --> 01:36:58.030
+Awesome.
+
+01:36:58.030 --> 01:36:59.350
+So this is what we want.
+
+01:36:59.350 --> 01:37:01.530
+So goal.
+
+01:37:01.530 --> 01:37:06.350
+Now, let's try to compute it.
+
+01:37:06.350 --> 01:37:08.370
+So we have two branches here.
+
+01:37:08.370 --> 01:37:12.950
+So we have one that are
+given by accepted cases.
+
+01:37:12.950 --> 01:37:15.510
+So when you see a check mark,
+it's something that we accept.
+
+01:37:15.510 --> 01:37:17.840
+Otherwise, it's rejected.
+
+01:37:17.840 --> 01:37:21.560
+So I'm going to use the
+law of total probability
+
+01:37:21.560 --> 01:37:27.360
+by saying that this probability
+is the same as the one where
+
+01:37:27.360 --> 01:37:35.240
+we consider things that are
+accepted plus the one where we
+
+01:37:35.240 --> 01:37:38.660
+consider a case of rejection.
+
+01:37:43.000 --> 01:37:45.240
+Does everyone agree?
+
+01:37:45.240 --> 01:37:46.180
+OK, great.
+
+01:37:46.180 --> 01:37:54.960
+Now, I'm going to use
+joint probability formula.
+
+01:37:54.960 --> 01:38:00.200
+So if you say pa
+intersect b, so it's
+
+01:38:00.200 --> 01:38:04.400
+p of a times p of b given a.
+
+01:38:04.400 --> 01:38:07.280
+Does everyone
+recall that formula?
+
+01:38:07.280 --> 01:38:11.560
+So I'm going to do apply this
+formula to the two terms here.
+
+01:38:11.560 --> 01:38:13.800
+So we're going to have--
+
+01:38:13.800 --> 01:38:20.570
+so let's say you're in a
+situation of acceptance.
+
+01:38:20.570 --> 01:38:25.590
+So you are in a case where
+the draft says something.
+
+01:38:25.590 --> 01:38:27.610
+And you accept it.
+
+01:38:27.610 --> 01:38:34.110
+So you say, OK, I accept the
+draft that you've given me.
+
+01:38:34.110 --> 01:38:37.550
+So this is how I apply the
+relationship for the first one.
+
+01:38:37.550 --> 01:38:43.250
+Then for the second one,
+I do it in a similar way.
+
+01:38:49.310 --> 01:38:55.290
+So P rejected times P of x
+equals small x given rejected.
+
+01:38:58.950 --> 01:39:00.950
+Does everyone agree?
+
+01:39:00.950 --> 01:39:03.710
+Now, let's compute
+what these are.
+
+01:39:03.710 --> 01:39:05.830
+So these are
+probability distribution
+
+01:39:05.830 --> 01:39:07.370
+of the next token for the draft.
+
+01:39:07.370 --> 01:39:12.270
+So this is nothing else than D
+of x probability of acceptance
+
+01:39:12.270 --> 01:39:13.760
+given d equals x.
+
+01:39:13.760 --> 01:39:15.300
+So it's written on the board.
+
+01:39:15.300 --> 01:39:20.420
+So it's the minimum of 1
+and T of x over D of x.
+
+01:39:20.420 --> 01:39:21.600
+Does everyone agree?
+
+01:39:34.740 --> 01:39:36.020
+All right.
+
+01:39:36.020 --> 01:39:40.940
+And then this, since everything
+is positive and nice,
+
+01:39:40.940 --> 01:39:52.940
+this is the minimum of D of x
+and T of x for the left term.
+
+01:39:52.940 --> 01:39:55.180
+OK, great.
+
+01:39:55.180 --> 01:39:57.840
+Now, let's deal
+with the right term.
+
+01:40:22.820 --> 01:40:24.560
+So p rejected.
+
+01:40:29.540 --> 01:40:34.640
+So I'm going to say
+it's 1 minus p accepted.
+
+01:40:39.300 --> 01:40:42.180
+And then p accepted,
+it's nothing
+
+01:40:42.180 --> 01:40:49.080
+else than the sum of the
+cases where x equals x prime.
+
+01:40:52.540 --> 01:40:59.180
+And where this is accepted,
+summed over all x primes.
+
+01:40:59.180 --> 01:41:01.860
+Do you agree?
+
+01:41:01.860 --> 01:41:03.620
+Great.
+
+01:41:03.620 --> 01:41:07.660
+And now, each of these terms,
+we have taken the effort
+
+01:41:07.660 --> 01:41:09.770
+of nicely computing it for you.
+
+01:41:09.770 --> 01:41:20.510
+So it's 1 minus the sum of
+mean of Dx prime, Tx prime.
+
+01:41:24.170 --> 01:41:26.610
+And then what is 1?
+
+01:41:26.610 --> 01:41:29.490
+1 is the sum--
+
+01:41:29.490 --> 01:41:32.770
+so let's just see
+what we get first.
+
+01:41:32.770 --> 01:41:37.170
+So this is the same
+as me saying that this
+
+01:41:37.170 --> 01:41:45.990
+is plus the max between minus of
+D of x prime minus T of x prime.
+
+01:41:50.730 --> 01:41:53.170
+And then here, I'm
+going to do a trick.
+
+01:41:53.170 --> 01:41:58.250
+1 is the sum over x
+prime of T of x prime.
+
+01:42:03.750 --> 01:42:08.960
+Such that when I
+sum the two, I'm
+
+01:42:08.960 --> 01:42:12.040
+going to get a sum
+over all x primes
+
+01:42:12.040 --> 01:42:24.840
+of the max of Tx prime
+minus D of x prime and 0.
+
+01:42:24.840 --> 01:42:28.400
+Does everyone agree?
+
+01:42:28.400 --> 01:42:33.240
+So I went through all
+this trouble for you
+
+01:42:33.240 --> 01:42:42.600
+such that we can
+say that this is
+
+01:42:42.600 --> 01:42:45.840
+nothing else than the residual
+distribution that I mentioned.
+
+01:42:45.840 --> 01:42:54.680
+So it's T of x minus D of x
+over the sum of the same--
+
+01:42:54.680 --> 01:42:59.760
+so it's the max, of
+course, of this quantity
+
+01:42:59.760 --> 01:43:05.920
+with 0 over the sum over
+x primes of max of 0
+
+01:43:05.920 --> 01:43:12.120
+and T of x prime
+minus D of x prime.
+
+01:43:12.120 --> 01:43:15.400
+And I've gone through
+all this trouble for us
+
+01:43:15.400 --> 01:43:19.240
+to be able to cancel
+these terms out.
+
+01:43:19.240 --> 01:43:23.840
+Are you convinced
+such that at the end
+
+01:43:23.840 --> 01:43:29.060
+you're with minimum
+of D of x, T of x.
+
+01:43:31.920 --> 01:43:39.540
+Plus the maximum between
+0 and T of x minus D of x.
+
+01:43:47.640 --> 01:43:52.480
+And this is what
+we want to check
+
+01:43:52.480 --> 01:43:56.520
+that it is equal to T of x.
+
+01:43:56.520 --> 01:44:01.460
+So if you do the
+distinction of cases,
+
+01:44:01.460 --> 01:44:05.470
+depending on D of x being bigger
+than T of x, T of x being bigger
+
+01:44:05.470 --> 01:44:06.610
+than D of x.
+
+01:44:06.610 --> 01:44:08.430
+You see that it is the case.
+
+01:44:08.430 --> 01:44:09.450
+So congrats, everyone.
+
+01:44:09.450 --> 01:44:12.350
+We have proven this
+fact that was nontrivial
+
+01:44:12.350 --> 01:44:15.470
+that some people knew was true.
+
+01:44:15.470 --> 01:44:18.070
+Good job.
+
+01:44:18.070 --> 01:44:19.850
+So this is why it's amazing.
+
+01:44:19.850 --> 01:44:21.430
+And the second
+thing that's great
+
+01:44:21.430 --> 01:44:26.790
+is when you do this concept
+of generating then verifying,
+
+01:44:26.790 --> 01:44:29.550
+you get the next token for
+free because everything
+
+01:44:29.550 --> 01:44:35.190
+that you put in the target
+model gets computed,
+
+01:44:35.190 --> 01:44:39.870
+and you get the next
+token, which is amazing.
+
+01:44:39.870 --> 01:44:42.930
+And the other thing
+that I want to say,
+
+01:44:42.930 --> 01:44:44.570
+so you see these
+rejection cases?
+
+01:44:44.570 --> 01:44:46.950
+These are those that we
+want to avoid at all costs
+
+01:44:46.950 --> 01:44:49.430
+because they mean
+that we exit the loop.
+
+01:44:49.430 --> 01:44:53.510
+And everything that we have done
+with the draft after that point
+
+01:44:53.510 --> 01:44:55.090
+is going to be wasted work.
+
+01:44:55.090 --> 01:44:57.370
+So we do not want
+to do wasted work.
+
+01:44:57.370 --> 01:45:00.190
+We want these distributions
+to be aligned,
+
+01:45:00.190 --> 01:45:02.470
+which is my next point.
+
+01:45:02.470 --> 01:45:06.780
+And you might have heard
+of this concept called
+
+01:45:06.780 --> 01:45:10.220
+knowledge distillation, where
+you take a smaller model.
+
+01:45:10.220 --> 01:45:13.140
+So this draft 1
+that we have defined
+
+01:45:13.140 --> 01:45:16.920
+to fit the predictions
+of your teacher model.
+
+01:45:16.920 --> 01:45:18.980
+And the nice
+property is that you
+
+01:45:18.980 --> 01:45:22.380
+learn the distribution of
+the next token, which is what
+
+01:45:22.380 --> 01:45:24.460
+would align the distributions.
+
+01:45:24.460 --> 01:45:26.100
+So this is one thing you can do.
+
+01:45:26.100 --> 01:45:29.500
+A second thing you can do
+is by using a method called
+
+01:45:29.500 --> 01:45:34.820
+multi-token prediction,
+where you use the same LLM
+
+01:45:34.820 --> 01:45:40.060
+both as draft and as verifier.
+
+01:45:40.060 --> 01:45:44.360
+So instead of training just
+one linear and softmax heads,
+
+01:45:44.360 --> 01:45:46.620
+you train k ones.
+
+01:45:46.620 --> 01:45:48.980
+And you use these k
+ones for your draft.
+
+01:45:48.980 --> 01:45:52.260
+And you use just your
+first one as your verifier,
+
+01:45:52.260 --> 01:45:54.460
+which is quite nice.
+
+01:45:54.460 --> 01:45:57.860
+So in one minute,
+answering the two questions
+
+01:45:57.860 --> 01:46:00.180
+that Afshine had mentioned.
+
+01:46:00.180 --> 01:46:02.260
+How do we make everything fit?
+
+01:46:02.260 --> 01:46:06.180
+So paged attention is
+what will make us fit
+
+01:46:06.180 --> 01:46:08.300
+these things into our hardware.
+
+01:46:08.300 --> 01:46:11.840
+But then methods, such as
+reducing the number of heads
+
+01:46:11.840 --> 01:46:14.060
+or even computing
+representations that
+
+01:46:14.060 --> 01:46:16.740
+are small enough, will help us.
+
+01:46:16.740 --> 01:46:22.180
+And regarding making it faster,
+generating more tokens at once
+
+01:46:22.180 --> 01:46:24.140
+is what will help us.
+
+01:46:24.140 --> 01:46:26.820
+And I just want to
+conclude with the fact
+
+01:46:26.820 --> 01:46:28.980
+that everything
+that we saw today,
+
+01:46:28.980 --> 01:46:31.300
+while more tedious
+than usual because you
+
+01:46:31.300 --> 01:46:34.180
+have to talk about
+technical stuff much more,
+
+01:46:34.180 --> 01:46:35.640
+they are top of mind.
+
+01:46:35.640 --> 01:46:38.720
+So this is the home page
+or artificial in analysis,
+
+01:46:38.720 --> 01:46:40.500
+an aggregator of benchmarks.
+
+01:46:40.500 --> 01:46:45.180
+So the top of the home page,
+2/3 of the real estate is taken
+
+01:46:45.180 --> 01:46:49.160
+by these
+inference-related graphs.
+
+01:46:49.160 --> 01:46:52.660
+So this is important and also
+top of mind to you as users.
+
+01:46:52.660 --> 01:46:56.150
+And with that, I hope you
+have a great Halloween.
+

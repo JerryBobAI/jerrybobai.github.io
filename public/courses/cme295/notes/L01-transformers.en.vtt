@@ -1,0 +1,6650 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:06.080 --> 00:00:11.440
+Hello, everyone, and welcome
+to CME 295, transformers
+
+00:00:11.440 --> 00:00:13.520
+and large language models.
+
+00:00:13.520 --> 00:00:16.960
+My name is Afshine, and
+I'll be teaching this class
+
+00:00:16.960 --> 00:00:19.600
+with Shervine,
+who's in the back.
+
+00:00:19.600 --> 00:00:21.720
+So before we start,
+I just want to say
+
+00:00:21.720 --> 00:00:25.240
+a few words about ourselves.
+
+00:00:25.240 --> 00:00:28.280
+So Shervine and I
+are twin brothers,
+
+00:00:28.280 --> 00:00:31.400
+and we have very
+similar backgrounds.
+
+00:00:31.400 --> 00:00:34.960
+So we both went to a school in
+France called Centrale Paris.
+
+00:00:34.960 --> 00:00:37.800
+And then we came to
+the US for grad school.
+
+00:00:37.800 --> 00:00:39.960
+So on my end, I went to MIT.
+
+00:00:39.960 --> 00:00:44.720
+And then Shervine came here at
+Stanford in the ICME department.
+
+00:00:44.720 --> 00:00:48.560
+And then after that, we both
+went to the tech industry.
+
+00:00:48.560 --> 00:00:53.560
+So we first both went to Uber,
+and then we went to Google.
+
+00:00:53.560 --> 00:00:56.640
+And now we're both at Netflix.
+
+00:00:56.640 --> 00:01:02.320
+So Shervine and I, we like LLMs.
+
+00:01:02.320 --> 00:01:05.239
+So we've been working
+in the field of LLMs,
+
+00:01:05.239 --> 00:01:07.500
+I would say since
+the early 2020s.
+
+00:01:07.500 --> 00:01:09.020
+And so that's one
+of the reasons why
+
+00:01:09.020 --> 00:01:12.260
+we're so lucky to be
+teaching this class.
+
+00:01:12.260 --> 00:01:17.220
+We've been teaching it since
+2021 under various formats.
+
+00:01:17.220 --> 00:01:21.180
+But as attention
+gained towards LLMs,
+
+00:01:21.180 --> 00:01:24.100
+we have actually made
+it an actual Stanford
+
+00:01:24.100 --> 00:01:26.860
+class since last year.
+
+00:01:26.860 --> 00:01:31.260
+And this session is
+the third instance.
+
+00:01:31.260 --> 00:01:36.420
+And so if you're here wondering
+if this class is good for you--
+
+00:01:36.420 --> 00:01:40.860
+so the goal of this class
+is to tell you how LLMs work
+
+00:01:40.860 --> 00:01:47.020
+and in particular, understand
+the underlying mechanism of its
+
+00:01:47.020 --> 00:01:50.060
+architecture-- so we're going
+to see the transformer--
+
+00:01:50.060 --> 00:01:54.700
+but also how LLMs are
+trained, how we can use them,
+
+00:01:54.700 --> 00:01:58.230
+what they're good at,
+what they're not good at.
+
+00:01:58.230 --> 00:02:00.750
+So hopefully, you'll be
+able to get a sense of all
+
+00:02:00.750 --> 00:02:03.150
+of that in this class.
+
+00:02:03.150 --> 00:02:05.930
+And in terms of the
+target audience,
+
+00:02:05.930 --> 00:02:08.590
+I would say it's a
+pretty wide audience.
+
+00:02:08.590 --> 00:02:12.970
+So in case you want to go
+and be a research scientist,
+
+00:02:12.970 --> 00:02:16.270
+I would say it could be a
+great class to just open up
+
+00:02:16.270 --> 00:02:19.830
+the set of things that you
+are able to see in terms of,
+
+00:02:19.830 --> 00:02:22.430
+what are the different
+techniques that are being used,
+
+00:02:22.430 --> 00:02:27.190
+what are the different
+applications, and so on.
+
+00:02:27.190 --> 00:02:28.870
+So I think that's one.
+
+00:02:28.870 --> 00:02:33.050
+The second one is if you want
+to do a personal project.
+
+00:02:33.050 --> 00:02:36.250
+So nowadays, coding
+agents are everywhere.
+
+00:02:36.250 --> 00:02:40.290
+And so if you want to just take
+one tool and just do something,
+
+00:02:40.290 --> 00:02:43.030
+you should probably know
+what the coding agent
+
+00:02:43.030 --> 00:02:45.230
+is good at and not good at.
+
+00:02:45.230 --> 00:02:48.990
+And third, I would say
+no matter your role,
+
+00:02:48.990 --> 00:02:53.050
+there is a growing need
+of being literate in AI.
+
+00:02:53.050 --> 00:02:56.770
+So there's this term
+called AI literacy.
+
+00:02:56.770 --> 00:03:00.690
+So no matter where you
+work and your role,
+
+00:03:00.690 --> 00:03:05.090
+I would say just knowing how
+these tools work is becoming
+
+00:03:05.090 --> 00:03:07.530
+increasingly important.
+
+00:03:07.530 --> 00:03:10.250
+So if you feel like you're
+in one of these categories,
+
+00:03:10.250 --> 00:03:12.970
+this class may be good for you.
+
+00:03:12.970 --> 00:03:15.570
+And in terms of
+the prerequisites,
+
+00:03:15.570 --> 00:03:20.310
+I would say if you have some
+foundations in linear algebra,
+
+00:03:20.310 --> 00:03:23.930
+if you know what a matrix is,
+how we do multiplications,
+
+00:03:23.930 --> 00:03:27.570
+then that would be great--
+along with some basics in ML.
+
+00:03:27.570 --> 00:03:29.590
+So for instance, what
+is a loss function,
+
+00:03:29.590 --> 00:03:33.610
+what is a neural network, what
+is an embedding, although we
+
+00:03:33.610 --> 00:03:36.230
+will be seeing
+that in the class.
+
+00:03:36.230 --> 00:03:41.330
+But it's good to have those,
+I would say, beforehand.
+
+00:03:41.330 --> 00:03:43.690
+Make sense?
+
+00:03:43.690 --> 00:03:45.170
+OK, cool.
+
+00:03:45.170 --> 00:03:50.390
+So you may or may not know that
+this class is being recorded.
+
+00:03:50.390 --> 00:03:52.570
+So you can see the
+camera in the back.
+
+00:03:52.570 --> 00:03:54.750
+It was actually
+recorded last year.
+
+00:03:54.750 --> 00:03:56.878
+So you may be
+wondering, well, what
+
+00:03:56.878 --> 00:03:58.670
+is the point in attending
+the lecture if it
+
+00:03:58.670 --> 00:04:00.190
+was already recorded?
+
+00:04:00.190 --> 00:04:04.070
+So the field is
+moving so quickly
+
+00:04:04.070 --> 00:04:06.750
+that there has been so
+many new things that
+
+00:04:06.750 --> 00:04:09.150
+have come up since last year.
+
+00:04:09.150 --> 00:04:12.030
+And actually, one of
+the goals of this class
+
+00:04:12.030 --> 00:04:17.029
+is to incorporate all the
+advances that have happened.
+
+00:04:17.029 --> 00:04:18.510
+So I'll name a few.
+
+00:04:18.510 --> 00:04:23.730
+So there has been some progress
+on the post-training side.
+
+00:04:23.730 --> 00:04:26.130
+So for instance, on
+policy distillation,
+
+00:04:26.130 --> 00:04:28.650
+if you've heard
+of it, of course,
+
+00:04:28.650 --> 00:04:32.190
+AI agents, so coding
+agents and so on,
+
+00:04:32.190 --> 00:04:35.450
+and new paradigms of LLMs.
+
+00:04:35.450 --> 00:04:39.490
+So traditionally, it was
+predicting tokens one at a time.
+
+00:04:39.490 --> 00:04:43.830
+But nowadays, there's been an
+increasing number of models
+
+00:04:43.830 --> 00:04:46.010
+that have approached
+things differently,
+
+00:04:46.010 --> 00:04:51.320
+so from the diffusion
+perspective, among other things.
+
+00:04:51.320 --> 00:04:54.120
+So long story short, if
+you're attending this class
+
+00:04:54.120 --> 00:04:56.160
+and you're preparing
+for exams, please
+
+00:04:56.160 --> 00:04:58.240
+look at this year's
+lectures because they
+
+00:04:58.240 --> 00:05:02.000
+will be quite different.
+
+00:05:02.000 --> 00:05:03.760
+In terms of the logistics--
+
+00:05:03.760 --> 00:05:08.700
+so I'm so happy to see so many
+of you on a Friday afternoon.
+
+00:05:08.700 --> 00:05:14.480
+So it will be every
+Friday from 3:30 to 5:20.
+
+00:05:14.480 --> 00:05:17.680
+It will be in this class.
+
+00:05:17.680 --> 00:05:21.680
+And then it is a two-unit class.
+
+00:05:21.680 --> 00:05:25.360
+You can either choose it to
+take it as letter or credit,
+
+00:05:25.360 --> 00:05:27.480
+noncredit.
+
+00:05:27.480 --> 00:05:30.180
+So again, all the
+lectures are recorded.
+
+00:05:30.180 --> 00:05:32.680
+We'll make sure to
+post the recordings,
+
+00:05:32.680 --> 00:05:36.600
+at most, two days after
+the lecture has happened.
+
+00:05:36.600 --> 00:05:40.200
+So feel free to watch
+it remotely if you want
+
+00:05:40.200 --> 00:05:42.912
+or attend the class in person.
+
+00:05:42.912 --> 00:05:44.620
+Actually, we'd love
+to see you in person,
+
+00:05:44.620 --> 00:05:47.600
+so feel free to
+choose either way.
+
+00:05:47.600 --> 00:05:56.500
+And this class has no
+homeworks, but it has two exams.
+
+00:05:56.500 --> 00:06:00.340
+So one is the midterm,
+and one is the final.
+
+00:06:00.340 --> 00:06:05.260
+So the midterm will be about
+the first four lectures,
+
+00:06:05.260 --> 00:06:07.920
+and it will be one
+month from now, I guess?
+
+00:06:07.920 --> 00:06:09.860
+Yeah, October 23.
+
+00:06:09.860 --> 00:06:13.920
+And the final exam will be
+on the last five lectures.
+
+00:06:13.920 --> 00:06:17.140
+So there will be nine
+lectures in total.
+
+00:06:17.140 --> 00:06:22.500
+And it will be accounting
+for 50% of the total.
+
+00:06:22.500 --> 00:06:24.780
+So given that it's
+not the first time
+
+00:06:24.780 --> 00:06:28.180
+that we're giving this
+class, we have already
+
+00:06:28.180 --> 00:06:31.240
+posted online what a
+midterm looks like,
+
+00:06:31.240 --> 00:06:32.240
+what a final looks like.
+
+00:06:32.240 --> 00:06:38.017
+So if you go on the website, you
+can actually see in the tab 2025
+
+00:06:38.017 --> 00:06:39.600
+what we would expect
+from these exams.
+
+00:06:39.600 --> 00:06:42.280
+So it's a multi-choice
+questions.
+
+00:06:42.280 --> 00:06:44.740
+We also have some
+free-form questions.
+
+00:06:44.740 --> 00:06:49.800
+So this is the kind of
+question we would ask.
+
+00:06:49.800 --> 00:06:52.220
+Any questions on the
+logistics so far?
+
+00:06:54.960 --> 00:06:56.840
+Yeah.
+
+00:06:56.840 --> 00:06:58.920
+So I'm going to always
+repeat, by the way,
+
+00:06:58.920 --> 00:07:01.980
+questions just for people
+who are watching remotely.
+
+00:07:01.980 --> 00:07:04.500
+So the question is,
+are there office hours?
+
+00:07:04.500 --> 00:07:07.320
+So we don't have
+official office hours.
+
+00:07:07.320 --> 00:07:10.800
+However, Shervine and I will be
+staying after each class in case
+
+00:07:10.800 --> 00:07:12.700
+you want to ask any questions.
+
+00:07:12.700 --> 00:07:15.880
+And we're going to
+see it actually here
+
+00:07:15.880 --> 00:07:18.680
+in case you have any--
+
+00:07:18.680 --> 00:07:21.060
+So we're going to see it later
+if you have any questions.
+
+00:07:21.060 --> 00:07:24.800
+There is also Ed, so platform
+where we can ask questions.
+
+00:07:24.800 --> 00:07:26.300
+So yeah, we'd love
+to answer them.
+
+00:07:29.800 --> 00:07:32.320
+Cool.
+
+00:07:32.320 --> 00:07:35.960
+So in terms of the material--
+
+00:07:35.960 --> 00:07:39.180
+so I was talking about
+the midterms and so on.
+
+00:07:39.180 --> 00:07:41.540
+So they're all-- so the
+ones from last year,
+
+00:07:41.540 --> 00:07:43.680
+they're on the website.
+
+00:07:43.680 --> 00:07:48.220
+The website also
+contains the syllabus,
+
+00:07:48.220 --> 00:07:51.500
+and the recordings
+will be posted there.
+
+00:07:51.500 --> 00:07:54.180
+One thing that we're
+doing is that we're
+
+00:07:54.180 --> 00:07:58.780
+posting the slides one
+day before the lecture
+
+00:07:58.780 --> 00:08:01.320
+because last year, some
+people came to us and said,
+
+00:08:01.320 --> 00:08:04.940
+OK, we'd love to be able
+to annotate on the slides.
+
+00:08:04.940 --> 00:08:08.020
+So now, we took the
+habit of posting them
+
+00:08:08.020 --> 00:08:09.280
+one day before the lecture.
+
+00:08:09.280 --> 00:08:13.580
+So if you go on the website,
+you can retrieve them.
+
+00:08:13.580 --> 00:08:16.180
+So in terms of the
+material, we do
+
+00:08:16.180 --> 00:08:20.340
+have a textbook, which is
+this one, the Super Study
+
+00:08:20.340 --> 00:08:23.060
+Guide, Transformers and LLMs.
+
+00:08:23.060 --> 00:08:25.500
+I believe the library
+has a few copies,
+
+00:08:25.500 --> 00:08:28.500
+so you can borrow from there.
+
+00:08:28.500 --> 00:08:30.040
+You can also get it online.
+
+00:08:30.040 --> 00:08:33.179
+We got the website as well.
+
+00:08:33.179 --> 00:08:35.539
+And along with
+that, we also have
+
+00:08:35.539 --> 00:08:41.740
+a cheat sheet which aims at
+being the most up to date.
+
+00:08:41.740 --> 00:08:45.430
+So Shervine and I actually
+updated it just a couple
+
+00:08:45.430 --> 00:08:47.750
+of weeks ago.
+
+00:08:47.750 --> 00:08:52.950
+And that one aims at
+covering the whole content
+
+00:08:52.950 --> 00:08:54.390
+in a concise way.
+
+00:08:54.390 --> 00:08:58.670
+So maybe it's a good
+companion for studying right
+
+00:08:58.670 --> 00:09:01.350
+before each exam.
+
+00:09:01.350 --> 00:09:04.890
+And also, I know a lot of
+us are international people.
+
+00:09:04.890 --> 00:09:08.230
+In case you don't see your
+language being translated,
+
+00:09:08.230 --> 00:09:09.410
+feel free to come to us.
+
+00:09:09.410 --> 00:09:11.310
+We'd love to partner with you.
+
+00:09:11.310 --> 00:09:14.450
+So right now, it's available
+in, I believe, 15 languages,
+
+00:09:14.450 --> 00:09:15.750
+including English.
+
+00:09:15.750 --> 00:09:20.070
+So yeah, I'd love to see
+more languages as well.
+
+00:09:20.070 --> 00:09:21.030
+Cool.
+
+00:09:21.030 --> 00:09:23.310
+In terms of how we
+communicate-- so
+
+00:09:23.310 --> 00:09:27.110
+we will post
+announcements on Canvas.
+
+00:09:27.110 --> 00:09:32.310
+And you can also access
+it through Canvas.
+
+00:09:32.310 --> 00:09:33.910
+But if you have any
+questions that you
+
+00:09:33.910 --> 00:09:37.630
+want to ask us in
+private, we can also
+
+00:09:37.630 --> 00:09:39.150
+answer through the
+mailing list that
+
+00:09:39.150 --> 00:09:42.630
+is on the slide, along
+with our Stanford emails.
+
+00:09:45.210 --> 00:09:47.090
+I think I'm done
+for the logistics.
+
+00:09:47.090 --> 00:09:48.630
+Is there any question?
+
+00:09:54.290 --> 00:09:55.050
+Is it scary?
+
+00:09:55.050 --> 00:09:58.570
+Because we had
+only one question.
+
+00:09:58.570 --> 00:10:01.870
+Just wondering if there's
+any that you may worry.
+
+00:10:01.870 --> 00:10:04.050
+Is everything
+clear, super clear?
+
+00:10:04.050 --> 00:10:05.290
+Yeah.
+
+00:10:05.290 --> 00:10:07.930
+So the question
+is, will we see how
+
+00:10:07.930 --> 00:10:10.750
+this ties back to what is
+practiced in the industry?
+
+00:10:10.750 --> 00:10:12.010
+The answer is yes.
+
+00:10:12.010 --> 00:10:14.490
+So one of the things we'll
+be seeing, especially
+
+00:10:14.490 --> 00:10:16.410
+in the second part
+of this class is
+
+00:10:16.410 --> 00:10:19.170
+how we can apply those
+LLMs in different settings.
+
+00:10:19.170 --> 00:10:22.227
+And so just as an
+anecdote, so last year,
+
+00:10:22.227 --> 00:10:23.810
+I remember there
+were some things that
+
+00:10:23.810 --> 00:10:27.870
+came up that were released as
+we were teaching the class.
+
+00:10:27.870 --> 00:10:31.430
+And so we updated the
+content as we went.
+
+00:10:31.430 --> 00:10:34.510
+So I'm sure we'll do the same
+thing this cycle as well.
+
+00:10:34.510 --> 00:10:37.290
+So yeah, the answer is yes.
+
+00:10:37.290 --> 00:10:38.607
+Yeah.
+
+00:10:38.607 --> 00:10:41.190
+So the question is, what is the
+recommendation for preparation
+
+00:10:41.190 --> 00:10:44.110
+given that there is no
+homework, and then it's 50-50
+
+00:10:44.110 --> 00:10:45.610
+midterm-final?
+
+00:10:45.610 --> 00:10:48.310
+I would say depending
+on how you usually
+
+00:10:48.310 --> 00:10:52.990
+study, I think, just studying
+regularly, I think, works best.
+
+00:10:52.990 --> 00:10:56.550
+I would say just paying
+attention to things
+
+00:10:56.550 --> 00:10:58.110
+that we're covering
+in the class,
+
+00:10:58.110 --> 00:11:00.790
+during the class, I
+think, is most important.
+
+00:11:00.790 --> 00:11:03.430
+So there may be topics
+that are in the textbook
+
+00:11:03.430 --> 00:11:05.950
+that we're not covering, and
+I would say those are not
+
+00:11:05.950 --> 00:11:08.770
+expected in either exams.
+
+00:11:08.770 --> 00:11:15.710
+So roughly speaking, anything
+we say can be in the exam.
+
+00:11:15.710 --> 00:11:18.330
+So question is, do you
+have any practice problems?
+
+00:11:18.330 --> 00:11:19.090
+So yes.
+
+00:11:19.090 --> 00:11:20.330
+So last year, we said no.
+
+00:11:20.330 --> 00:11:22.850
+But now yes, you
+have the 2025 ones.
+
+00:11:22.850 --> 00:11:25.270
+So yeah.
+
+00:11:25.270 --> 00:11:27.190
+But the questions
+will be different.
+
+00:11:27.190 --> 00:11:29.830
+So yeah.
+
+00:11:29.830 --> 00:11:32.430
+OK, great.
+
+00:11:32.430 --> 00:11:37.280
+So one thing is we only
+have two hours or one hour
+
+00:11:37.280 --> 00:11:39.280
+and 15 minutes per week.
+
+00:11:39.280 --> 00:11:42.880
+So we will have nowhere near
+the time to cover everything.
+
+00:11:42.880 --> 00:11:46.920
+So one thing that we'll be
+seeing in each of the slides
+
+00:11:46.920 --> 00:11:50.320
+that we'll be talking
+over is always--
+
+00:11:50.320 --> 00:11:52.680
+I mean, most of
+the time-- a source
+
+00:11:52.680 --> 00:11:54.920
+at the very bottom
+of the slides that
+
+00:11:54.920 --> 00:11:57.440
+is meant for you
+to check in case
+
+00:11:57.440 --> 00:12:00.280
+you're interested to
+learn more details.
+
+00:12:00.280 --> 00:12:02.120
+So feel free to refer
+to the slides in case
+
+00:12:02.120 --> 00:12:04.480
+you're interested in a
+topic that maybe we've
+
+00:12:04.480 --> 00:12:07.180
+covered for a few minutes,
+but you want to learn more.
+
+00:12:09.760 --> 00:12:10.900
+Cool.
+
+00:12:10.900 --> 00:12:13.040
+Another thing-- I mean,
+something that I personally
+
+00:12:13.040 --> 00:12:17.760
+have felt when I first
+started in the NLP field
+
+00:12:17.760 --> 00:12:19.960
+a few years ago,
+there are so many
+
+00:12:19.960 --> 00:12:22.680
+abbreviations all
+over the place.
+
+00:12:22.680 --> 00:12:24.960
+And it can be intimidating.
+
+00:12:24.960 --> 00:12:27.800
+So our hope is
+that in case you're
+
+00:12:27.800 --> 00:12:31.040
+feeling overwhelmed today
+by these abbreviations,
+
+00:12:31.040 --> 00:12:33.440
+that by the end of
+this class, you'll
+
+00:12:33.440 --> 00:12:39.020
+have a mental mapping of which
+abbreviations correspond to what
+
+00:12:39.020 --> 00:12:40.020
+concepts.
+
+00:12:40.020 --> 00:12:42.380
+So there is our goal.
+
+00:12:42.380 --> 00:12:48.820
+And with that, we're going
+to start by asking ourselves
+
+00:12:48.820 --> 00:12:51.660
+how we got here.
+
+00:12:51.660 --> 00:12:58.500
+So 10-15 years ago, in
+the 2010's, so I remember,
+
+00:12:58.500 --> 00:13:01.220
+the field was
+completely different.
+
+00:13:01.220 --> 00:13:03.700
+We didn't have one model
+that did everything.
+
+00:13:03.700 --> 00:13:07.100
+We had typically one
+model per use case.
+
+00:13:07.100 --> 00:13:10.460
+So the kind of model that
+was dominating the field
+
+00:13:10.460 --> 00:13:13.840
+was RNNs, Recurrent
+Neural Networks,
+
+00:13:13.840 --> 00:13:17.220
+which we'll briefly
+see in this lecture.
+
+00:13:17.220 --> 00:13:21.140
+And you had these use
+case specific models,
+
+00:13:21.140 --> 00:13:23.840
+such as for
+sentiment extraction.
+
+00:13:23.840 --> 00:13:27.700
+So you ask yourself if
+a sentence, a review
+
+00:13:27.700 --> 00:13:30.380
+is positive,
+negative, or neutral.
+
+00:13:30.380 --> 00:13:32.860
+If you had a text you
+wanted to translate,
+
+00:13:32.860 --> 00:13:35.440
+you had a dedicated
+model for that.
+
+00:13:35.440 --> 00:13:36.540
+And if you had--
+
+00:13:36.540 --> 00:13:40.500
+I don't know-- text, you wanted
+to identify names, locations,
+
+00:13:40.500 --> 00:13:44.520
+and so on, you would also have
+a dedicated model for that.
+
+00:13:44.520 --> 00:13:46.800
+So this was in 2010's.
+
+00:13:46.800 --> 00:13:50.120
+Performance was OK.
+
+00:13:50.120 --> 00:13:54.200
+But the thing that really
+made a true difference that
+
+00:13:54.200 --> 00:13:58.760
+was a turning point was 2017.
+
+00:13:58.760 --> 00:14:02.680
+So 2017, there's a
+paper that came out,
+
+00:14:02.680 --> 00:14:06.040
+that we're going to talk
+about at length today,
+
+00:14:06.040 --> 00:14:09.680
+that's called "Attention
+is All You Need,"
+
+00:14:09.680 --> 00:14:13.920
+that introduced a new
+architecture that relied
+
+00:14:13.920 --> 00:14:18.920
+on a paradigm, that proved
+to be very scalable.
+
+00:14:18.920 --> 00:14:22.800
+By scalable, I mean,
+if you give your model
+
+00:14:22.800 --> 00:14:27.440
+more data, more computes,
+and more parameters,
+
+00:14:27.440 --> 00:14:30.800
+you're actually able to
+see performance gains that
+
+00:14:30.800 --> 00:14:35.108
+are far greater compared to
+what you used to see before.
+
+00:14:35.108 --> 00:14:37.150
+And it's something that
+we're going to see today.
+
+00:14:37.150 --> 00:14:41.570
+So this architecture is
+called the transformer.
+
+00:14:41.570 --> 00:14:44.090
+And on the right, you
+have an illustration
+
+00:14:44.090 --> 00:14:47.870
+of how it's illustrated
+in the original paper.
+
+00:14:47.870 --> 00:14:50.530
+We're going to see how it works.
+
+00:14:50.530 --> 00:14:55.490
+And from there, people have
+taken this architecture
+
+00:14:55.490 --> 00:14:59.910
+and just scaled it from
+a model size perspective
+
+00:14:59.910 --> 00:15:04.690
+but also from the number of
+tokens it's been trained on.
+
+00:15:04.690 --> 00:15:10.530
+And this is how modern-day LLMs
+have come into the picture,
+
+00:15:10.530 --> 00:15:12.450
+lLMs that actually know--
+
+00:15:12.450 --> 00:15:15.430
+I mean, that actually
+generate texts pretty well,
+
+00:15:15.430 --> 00:15:18.050
+that generate code pretty well.
+
+00:15:18.050 --> 00:15:23.430
+And in particular, in
+2022, ChatGPT got released.
+
+00:15:23.430 --> 00:15:25.070
+So I remember in
+November, I believe.
+
+00:15:25.070 --> 00:15:27.890
+Yeah.
+
+00:15:27.890 --> 00:15:30.030
+And again, it was
+a turning point
+
+00:15:30.030 --> 00:15:31.890
+from more of a
+product perspective
+
+00:15:31.890 --> 00:15:34.430
+because before that
+date, people were not
+
+00:15:34.430 --> 00:15:38.110
+really used to interacting
+with the chatbot.
+
+00:15:38.110 --> 00:15:41.630
+So I believe that release
+was really the first time
+
+00:15:41.630 --> 00:15:44.870
+that people got
+introduced to that aspect.
+
+00:15:44.870 --> 00:15:47.950
+And I think even the
+person or the company
+
+00:15:47.950 --> 00:15:49.910
+who launched it
+probably didn't even
+
+00:15:49.910 --> 00:15:51.730
+realize how big it would get.
+
+00:15:51.730 --> 00:15:56.230
+I mean, I'm assuming because
+in their tweets that released
+
+00:15:56.230 --> 00:15:59.630
+the model, I believe
+they had a typo, which
+
+00:15:59.630 --> 00:16:01.630
+I find funny because
+nowadays, whenever
+
+00:16:01.630 --> 00:16:06.710
+there is a model release,
+there is 10 times review
+
+00:16:06.710 --> 00:16:08.410
+of what the wording is.
+
+00:16:08.410 --> 00:16:11.190
+So I'm assuming
+that this was not
+
+00:16:11.190 --> 00:16:13.090
+the case for the
+announcement here.
+
+00:16:13.090 --> 00:16:14.250
+But yeah.
+
+00:16:14.250 --> 00:16:17.670
+So that is also
+another turning point.
+
+00:16:17.670 --> 00:16:22.110
+And then here we are, 2026.
+
+00:16:22.110 --> 00:16:26.030
+I'm assuming a lot
+of you or all of you
+
+00:16:26.030 --> 00:16:30.210
+are interacting with coding
+agents almost on a daily basis.
+
+00:16:30.210 --> 00:16:33.410
+So we're going to see how
+we got to that stage, how
+
+00:16:33.410 --> 00:16:39.170
+we went from a conversational
+LLM, conversational assistant,
+
+00:16:39.170 --> 00:16:43.370
+to actually agentic behavior.
+
+00:16:43.370 --> 00:16:44.970
+So we're going to
+see that, especially
+
+00:16:44.970 --> 00:16:47.310
+in the second part
+of this class.
+
+00:16:51.050 --> 00:16:54.330
+So far so good?
+
+00:16:54.330 --> 00:16:55.830
+Cool.
+
+00:16:55.830 --> 00:16:59.650
+So with that, we're
+going to start
+
+00:16:59.650 --> 00:17:06.730
+with one foundational concept,
+which is tokenization.
+
+00:17:06.730 --> 00:17:09.210
+So what is tokenization?
+
+00:17:09.210 --> 00:17:14.210
+So when we talk about text,
+text is not really something
+
+00:17:14.210 --> 00:17:16.250
+that models can understand.
+
+00:17:16.250 --> 00:17:19.450
+Models understand numbers.
+
+00:17:19.450 --> 00:17:22.490
+They don't understand text.
+
+00:17:22.490 --> 00:17:26.819
+So the first goal
+is to find a way
+
+00:17:26.819 --> 00:17:30.220
+to represent that text
+in forms of something
+
+00:17:30.220 --> 00:17:34.220
+that models can understand,
+so in forms of numbers.
+
+00:17:34.220 --> 00:17:37.140
+So the way that we
+do that is we first
+
+00:17:37.140 --> 00:17:42.740
+try to divide the
+text into entities
+
+00:17:42.740 --> 00:17:46.140
+that we can then represent.
+
+00:17:46.140 --> 00:17:48.420
+And so the process
+of dividing the text
+
+00:17:48.420 --> 00:17:53.620
+into indivisible entities is
+what is called tokenization.
+
+00:17:53.620 --> 00:17:58.300
+So in this example, we have "A
+cute Teddy bear is reading."
+
+00:17:58.300 --> 00:18:05.500
+And one possible tokenization
+is to say that "A" is one
+
+00:18:05.500 --> 00:18:06.980
+indivisible unit.
+
+00:18:06.980 --> 00:18:09.260
+"Cute" is another unit.
+
+00:18:09.260 --> 00:18:11.540
+"Teddy bear" can
+be another unit.
+
+00:18:11.540 --> 00:18:15.100
+And so on and so forth.
+
+00:18:15.100 --> 00:18:21.260
+So each of these elements
+is called a token.
+
+00:18:21.260 --> 00:18:26.120
+And our goal is to
+represent these tokens
+
+00:18:26.120 --> 00:18:28.800
+with mathematical
+representations that
+
+00:18:28.800 --> 00:18:30.760
+are meaningful.
+
+00:18:30.760 --> 00:18:32.600
+So in this case,
+we want each token
+
+00:18:32.600 --> 00:18:36.700
+to be represented by a
+vector, a vector of numbers.
+
+00:18:40.200 --> 00:18:46.560
+So in order for you to
+tokenize an input text,
+
+00:18:46.560 --> 00:18:49.600
+you need to know, what
+are the tokens that are
+
+00:18:49.600 --> 00:18:52.040
+allowed for you to be using?
+
+00:18:52.040 --> 00:18:53.720
+And so we have
+something that's called
+
+00:18:53.720 --> 00:18:58.080
+a vocabulary which includes
+all possible tokens
+
+00:18:58.080 --> 00:19:00.680
+that you can use.
+
+00:19:00.680 --> 00:19:04.540
+And depending on the
+vocabulary that you choose,
+
+00:19:04.540 --> 00:19:09.480
+you may end up with
+different sequence length.
+
+00:19:09.480 --> 00:19:11.540
+So here, by sequence
+length, I mean
+
+00:19:11.540 --> 00:19:15.300
+the number of tokens, by
+which you divided your text.
+
+00:19:15.300 --> 00:19:16.820
+So for instance,
+in this instance,
+
+00:19:16.820 --> 00:19:21.700
+we have 1, 2, 3, 4,
+5, 6, six tokens.
+
+00:19:21.700 --> 00:19:24.060
+We're going to see in
+a second that there
+
+00:19:24.060 --> 00:19:28.980
+is a tight relationship between
+vocabulary size and sequence
+
+00:19:28.980 --> 00:19:30.620
+length, and that's
+something that
+
+00:19:30.620 --> 00:19:34.800
+will inform which tokenizer
+we should be choosing.
+
+00:19:38.060 --> 00:19:39.740
+So far, so good?
+
+00:19:39.740 --> 00:19:43.040
+So now, you may be wondering,
+well, all of that is great,
+
+00:19:43.040 --> 00:19:47.500
+but how do I know how
+I tokenize my text?
+
+00:19:47.500 --> 00:19:52.080
+This is just a theoretical
+concept, but how do I do that?
+
+00:19:52.080 --> 00:19:56.000
+So one natural way is
+for you to say, OK,
+
+00:19:56.000 --> 00:20:01.240
+so I'll just tokenize the
+texts with respect to words.
+
+00:20:01.240 --> 00:20:03.860
+So I'm going to
+consider space as being
+
+00:20:03.860 --> 00:20:07.460
+a delimiter between tokens.
+
+00:20:07.460 --> 00:20:09.720
+So here, I would say "A
+cute Teddy bear is reading."
+
+00:20:09.720 --> 00:20:16.140
+So every word in that text would
+actually represent a token.
+
+00:20:16.140 --> 00:20:19.040
+So what are the pros and
+cons of this approach?
+
+00:20:19.040 --> 00:20:23.640
+So pros, very simple, especially
+for the English language,
+
+00:20:23.640 --> 00:20:27.680
+you map a token to its
+words, very simple.
+
+00:20:27.680 --> 00:20:30.780
+It is also
+interpretable, as in you
+
+00:20:30.780 --> 00:20:33.480
+know when you get a
+representation of a word that it
+
+00:20:33.480 --> 00:20:36.200
+corresponds-- or a
+representation of a token
+
+00:20:36.200 --> 00:20:40.520
+that it corresponds
+to a given word.
+
+00:20:40.520 --> 00:20:45.800
+However, at least
+in English, you
+
+00:20:45.800 --> 00:20:48.120
+have many variations of words.
+
+00:20:48.120 --> 00:20:53.280
+So, for instance, a
+noun, you can have it
+
+00:20:53.280 --> 00:20:55.180
+as singular and plural.
+
+00:20:55.180 --> 00:20:58.520
+You can have the masculine
+form, the feminine form.
+
+00:20:58.520 --> 00:21:00.720
+You can have many,
+many variations.
+
+00:21:00.720 --> 00:21:05.180
+So your vocabulary size may get
+very large as a result of that.
+
+00:21:05.180 --> 00:21:07.400
+So that's one con.
+
+00:21:07.400 --> 00:21:11.320
+The second con is, we're
+going to see in a second,
+
+00:21:11.320 --> 00:21:16.400
+that when we learn the
+representation of each token,
+
+00:21:16.400 --> 00:21:18.210
+there is nothing
+that guarantees us
+
+00:21:18.210 --> 00:21:22.890
+that two tokens that
+represent the same thing
+
+00:21:22.890 --> 00:21:24.830
+would get the same
+representation.
+
+00:21:24.830 --> 00:21:29.330
+So, for instance, if you
+consider the word "bear"
+
+00:21:29.330 --> 00:21:33.730
+and the word "bears," these
+are the singular and plural
+
+00:21:33.730 --> 00:21:36.690
+of the same animal,
+which is a bear.
+
+00:21:36.690 --> 00:21:40.250
+And so you wouldn't want the
+representation of these two
+
+00:21:40.250 --> 00:21:43.030
+tokens to be too
+far from one another
+
+00:21:43.030 --> 00:21:46.210
+because they represent
+the same thing.
+
+00:21:46.210 --> 00:21:50.130
+Well, with this way of
+tokenizing your text,
+
+00:21:50.130 --> 00:21:54.290
+you would have a hard
+time, first of all,
+
+00:21:54.290 --> 00:21:55.970
+leveraging the
+knowledge that you
+
+00:21:55.970 --> 00:21:59.850
+have from the similar
+token, and second, just
+
+00:21:59.850 --> 00:22:04.370
+guaranteeing that these
+representations are similar.
+
+00:22:04.370 --> 00:22:09.690
+And then the third one is, well,
+given that you need to learn
+
+00:22:09.690 --> 00:22:13.470
+the representation of
+each of these words--
+
+00:22:13.470 --> 00:22:15.830
+so one word is one token--
+
+00:22:15.830 --> 00:22:21.950
+you may run into a case where
+if you train your tokenizer
+
+00:22:21.950 --> 00:22:26.470
+on a given corpus of
+text, that you actually
+
+00:22:26.470 --> 00:22:29.550
+do not have a given
+word that you then
+
+00:22:29.550 --> 00:22:33.230
+encounter at inference time.
+
+00:22:33.230 --> 00:22:36.590
+So you may actually be
+missing representations
+
+00:22:36.590 --> 00:22:39.370
+that you could not have
+had the chance to learn,
+
+00:22:39.370 --> 00:22:42.910
+just because you did not
+encounter that word at training
+
+00:22:42.910 --> 00:22:44.190
+time.
+
+00:22:44.190 --> 00:22:50.370
+And therefore, you can run into
+the risk of out-of-vocabulary,
+
+00:22:50.370 --> 00:22:56.070
+meaning that a token is actually
+not something that you have seen
+
+00:22:56.070 --> 00:22:58.470
+at training time, and you
+don't have the representation
+
+00:22:58.470 --> 00:23:00.750
+for that one.
+
+00:23:00.750 --> 00:23:05.050
+So long story short, word-level
+tokenization is simple,
+
+00:23:05.050 --> 00:23:08.750
+but it comes with a few cons.
+
+00:23:08.750 --> 00:23:11.910
+And one of the cons
+is really the fact
+
+00:23:11.910 --> 00:23:18.330
+that you are not able to
+leverage words of similar roots.
+
+00:23:18.330 --> 00:23:21.850
+And this leads to vocabulary
+being large and risk
+
+00:23:21.850 --> 00:23:23.090
+out-of-vocabulary.
+
+00:23:27.650 --> 00:23:30.670
+So the next question is,
+OK, can we do better?
+
+00:23:30.670 --> 00:23:33.930
+Is there another way of
+tokenizing the text that
+
+00:23:33.930 --> 00:23:35.810
+could make more sense?
+
+00:23:35.810 --> 00:23:42.510
+So a natural thought could be,
+well, you don't divide by words,
+
+00:23:42.510 --> 00:23:45.090
+you divide by a character.
+
+00:23:45.090 --> 00:23:48.290
+You have a fixed number of
+allowed characters, at least
+
+00:23:48.290 --> 00:23:51.170
+in English or in any languages.
+
+00:23:51.170 --> 00:23:57.090
+And so you are not running
+the risk out-of-vocabulary
+
+00:23:57.090 --> 00:24:00.930
+anymore because you will
+encounter all the letters
+
+00:24:00.930 --> 00:24:05.410
+in the alphabet in your training
+set, or you can try to do that.
+
+00:24:05.410 --> 00:24:09.930
+And by doing so, you will
+also have a small vocabulary.
+
+00:24:09.930 --> 00:24:15.940
+And you would also be robust
+to casing and misspellings
+
+00:24:15.940 --> 00:24:19.060
+that people usually make when--
+
+00:24:19.060 --> 00:24:21.760
+I mean, I'm not sure if you
+recognize yourself, I do.
+
+00:24:21.760 --> 00:24:22.860
+So when I type--
+
+00:24:22.860 --> 00:24:27.080
+I don't know-- on my computer,
+I sometimes misspell things.
+
+00:24:27.080 --> 00:24:29.500
+And I wouldn't want
+the representation
+
+00:24:29.500 --> 00:24:35.220
+of a word I meant to write to be
+different from the actual word.
+
+00:24:35.220 --> 00:24:37.900
+And so here, we
+would not be going
+
+00:24:37.900 --> 00:24:42.460
+into the case of not
+recognizing a word just
+
+00:24:42.460 --> 00:24:45.780
+because it is misspelled.
+
+00:24:45.780 --> 00:24:53.980
+But we will see that if you do
+that, the sequence length is
+
+00:24:53.980 --> 00:24:58.380
+going to get much longer.
+
+00:24:58.380 --> 00:25:04.260
+And model complexity is a
+function of sequence length.
+
+00:25:04.260 --> 00:25:06.660
+So the sequence is very long.
+
+00:25:06.660 --> 00:25:10.360
+Then your model will take a long
+time to process the sequence.
+
+00:25:10.360 --> 00:25:14.840
+So it will make
+computations much slower.
+
+00:25:14.840 --> 00:25:19.900
+And the embeddings themselves,
+they're much less interpretable
+
+00:25:19.900 --> 00:25:22.360
+as in-- if we tell
+you the letter
+
+00:25:22.360 --> 00:25:25.560
+A has this
+representation, it's maybe
+
+00:25:25.560 --> 00:25:31.080
+much more abstract than talking
+about word representation.
+
+00:25:31.080 --> 00:25:32.620
+And we will see
+that in a second.
+
+00:25:36.360 --> 00:25:39.040
+So far, does that make sense?
+
+00:25:39.040 --> 00:25:40.920
+Yeah.
+
+00:25:40.920 --> 00:25:46.840
+So I hope I am motivating
+a trade-off enough
+
+00:25:46.840 --> 00:25:49.320
+that the next natural
+thought in your mind
+
+00:25:49.320 --> 00:25:51.340
+is to actually try
+something in between,
+
+00:25:51.340 --> 00:25:55.800
+so not word, not character,
+but in between, so subwords.
+
+00:25:55.800 --> 00:26:00.480
+So how about we
+tokenize the text
+
+00:26:00.480 --> 00:26:05.080
+by leveraging
+knowledge that we have
+
+00:26:05.080 --> 00:26:11.100
+about words that we can learn
+from some training corpus?
+
+00:26:11.100 --> 00:26:16.740
+And we divide common
+occurrences of letters,
+
+00:26:16.740 --> 00:26:18.360
+and we represent
+them with a token.
+
+00:26:18.360 --> 00:26:22.620
+So for instance, for reading,
+we would represent "read"
+
+00:26:22.620 --> 00:26:26.460
+with a token and "ing"
+with another token.
+
+00:26:26.460 --> 00:26:28.715
+So how about we do that?
+
+00:26:28.715 --> 00:26:30.340
+So the good thing
+here is that we would
+
+00:26:30.340 --> 00:26:32.180
+leverage the root of words.
+
+00:26:32.180 --> 00:26:36.180
+So in my previous example,
+"bear" and "bears"
+
+00:26:36.180 --> 00:26:41.460
+would have the, for instance,
+"bear" token in common.
+
+00:26:41.460 --> 00:26:43.900
+And then the second thing is
+it would be actually learned
+
+00:26:43.900 --> 00:26:50.220
+from the data, as in the way you
+tokenize text is informed by how
+
+00:26:50.220 --> 00:26:53.420
+words are actually written.
+
+00:26:53.420 --> 00:26:56.360
+But then the con is, well, you
+need to do that extra work.
+
+00:26:56.360 --> 00:26:58.380
+So in the word-level
+case, you just
+
+00:26:58.380 --> 00:27:03.600
+need to produce tokens by
+just dividing based on space.
+
+00:27:03.600 --> 00:27:06.670
+So here, you would do-- you
+need to do some extra work.
+
+00:27:06.670 --> 00:27:11.310
+And then the way you
+obtain these tokens will
+
+00:27:11.310 --> 00:27:16.870
+be highly dependent on the
+type of data that you have
+
+00:27:16.870 --> 00:27:20.450
+when you do your
+tokenizer training.
+
+00:27:20.450 --> 00:27:22.590
+So that's another
+thing, another con.
+
+00:27:22.590 --> 00:27:24.750
+So we need to make sure
+that the data that you
+
+00:27:24.750 --> 00:27:28.350
+use to learn how
+to tokenize things
+
+00:27:28.350 --> 00:27:31.210
+is actually aligned
+with your end goal.
+
+00:27:35.630 --> 00:27:40.430
+So I just want to
+say something here.
+
+00:27:40.430 --> 00:27:43.930
+So I talked about three
+ways of tokenizing texts.
+
+00:27:43.930 --> 00:27:50.230
+So word level, character level,
+subword level Among the three,
+
+00:27:50.230 --> 00:27:54.270
+subword level is by far
+the most popular nowadays,
+
+00:27:54.270 --> 00:27:56.910
+for all the reasons
+that I mentioned.
+
+00:27:56.910 --> 00:28:02.430
+And you'll hear the word
+or the acronym BPE a lot.
+
+00:28:02.430 --> 00:28:06.210
+So BPE is a type of
+subword tokenizer
+
+00:28:06.210 --> 00:28:09.770
+that stands for
+Byte Pair Encoding.
+
+00:28:09.770 --> 00:28:12.527
+So the paper is linked at the
+bottom of the slide in case
+
+00:28:12.527 --> 00:28:14.610
+you're interested to learn
+more, but I'll give you
+
+00:28:14.610 --> 00:28:17.570
+just the gist of how it works.
+
+00:28:17.570 --> 00:28:24.370
+So BPE learns what tokens
+should be in your vocabulary
+
+00:28:24.370 --> 00:28:29.690
+by starting from an
+initial set of tokens
+
+00:28:29.690 --> 00:28:37.050
+and identifying the most
+frequent pairs in your training
+
+00:28:37.050 --> 00:28:42.010
+data and by coming up
+with dedicated tokens
+
+00:28:42.010 --> 00:28:45.510
+for merged tokens
+of these pairs.
+
+00:28:45.510 --> 00:28:47.270
+So for instance--
+I'll give an example.
+
+00:28:47.270 --> 00:28:51.490
+Let's imagine your initial
+vocabulary is all the letters
+
+00:28:51.490 --> 00:28:53.090
+in the alphabet.
+
+00:28:53.090 --> 00:29:01.590
+And you have, I don't know,
+the word "an," like "an idea,"
+
+00:29:01.590 --> 00:29:02.850
+"an amazing course."
+
+00:29:02.850 --> 00:29:05.450
+So "an," that occurs
+very frequently.
+
+00:29:05.450 --> 00:29:10.230
+So here, it will say, OK, "a"
+and "an" appear very frequently
+
+00:29:10.230 --> 00:29:10.810
+together.
+
+00:29:10.810 --> 00:29:15.870
+So let's actually add a
+token that merges the two.
+
+00:29:15.870 --> 00:29:18.870
+It will add that new
+token in the vocabulary,
+
+00:29:18.870 --> 00:29:24.430
+and then repeat the process
+until reaching a desired
+
+00:29:24.430 --> 00:29:26.990
+final vocabulary size.
+
+00:29:26.990 --> 00:29:31.070
+And that will be your
+final vocabulary.
+
+00:29:31.070 --> 00:29:33.790
+So the nice thing is that
+these tokens are learned
+
+00:29:33.790 --> 00:29:36.630
+from the data, so things
+that appear together
+
+00:29:36.630 --> 00:29:40.290
+are actually identified and
+added to your vocabulary.
+
+00:29:40.290 --> 00:29:44.810
+So this will lead to your
+sequence length being shorter.
+
+00:29:44.810 --> 00:29:47.070
+So you will not have
+to decompose your text
+
+00:29:47.070 --> 00:29:48.910
+into that many tokens.
+
+00:29:48.910 --> 00:29:55.110
+So your model will not take that
+much time to process your texts.
+
+00:29:55.110 --> 00:29:57.650
+And so that's where the
+efficiency comes from.
+
+00:29:57.650 --> 00:30:00.970
+So if you have a
+training corpus that has,
+
+00:30:00.970 --> 00:30:04.610
+let's say, a lot of the words
+that you encounter in practice,
+
+00:30:04.610 --> 00:30:07.610
+then the sequence
+length of the tokens
+
+00:30:07.610 --> 00:30:11.290
+you will get from a
+piece of text that
+
+00:30:11.290 --> 00:30:15.130
+uses the same words as what you
+had in your training corpus,
+
+00:30:15.130 --> 00:30:19.610
+will be much shorter.
+
+00:30:19.610 --> 00:30:23.910
+So in case you're doing
+multilingual work,
+
+00:30:23.910 --> 00:30:26.170
+then make sure that your
+tokenizer is trained
+
+00:30:26.170 --> 00:30:30.130
+on a corpus that represents
+all the languages that you're
+
+00:30:30.130 --> 00:30:31.610
+interested in.
+
+00:30:31.610 --> 00:30:32.630
+That's one example.
+
+00:30:36.330 --> 00:30:37.550
+So that was a lot.
+
+00:30:37.550 --> 00:30:39.150
+So I'll just pause for a second.
+
+00:30:39.150 --> 00:30:46.130
+Is there any questions
+so far on this part?
+
+00:30:46.130 --> 00:30:47.730
+Yes.
+
+00:30:47.730 --> 00:30:51.610
+So the question is,
+what is the relationship
+
+00:30:51.610 --> 00:30:53.230
+between BPE and n-gram?
+
+00:30:53.230 --> 00:30:55.130
+So n-gram is actually
+something separate.
+
+00:30:55.130 --> 00:30:57.090
+And this one, yes--
+to your point,
+
+00:30:57.090 --> 00:31:01.700
+it will learn the
+tokens from your corpus
+
+00:31:01.700 --> 00:31:04.940
+by merging the most frequent
+pairs in an iterative way
+
+00:31:04.940 --> 00:31:10.820
+until reaching a final
+desired vocabulary size.
+
+00:31:10.820 --> 00:31:14.580
+So next natural question is, OK,
+you have your tokens, then now,
+
+00:31:14.580 --> 00:31:16.580
+how do you know how
+to represent them?
+
+00:31:16.580 --> 00:31:18.300
+Maybe you're asking
+yourself this.
+
+00:31:18.300 --> 00:31:22.140
+And we will see that actually
+in about five minutes.
+
+00:31:22.140 --> 00:31:24.763
+So more on that in a bit.
+
+00:31:24.763 --> 00:31:26.180
+Actually, I'm
+looking at the time.
+
+00:31:26.180 --> 00:31:29.840
+I don't think I'm on time,
+so I'll probably move on.
+
+00:31:29.840 --> 00:31:31.460
+But if you have any
+questions, please
+
+00:31:31.460 --> 00:31:34.420
+feel free to interrupt me.
+
+00:31:34.420 --> 00:31:37.220
+Tokenization is really the
+building block of everything
+
+00:31:37.220 --> 00:31:40.760
+we'll see from here, so yeah.
+
+00:31:44.340 --> 00:31:47.860
+So far, we've seen tokens
+that represent texts
+
+00:31:47.860 --> 00:31:49.320
+that we want to tokenize.
+
+00:31:49.320 --> 00:31:52.780
+But the truth is we also
+have some special tokens.
+
+00:31:52.780 --> 00:31:54.940
+And these special
+tokens are meant
+
+00:31:54.940 --> 00:32:00.000
+to represent things that we
+want to express in sequence.
+
+00:32:00.000 --> 00:32:03.600
+So one such token is
+whenever we encounter
+
+00:32:03.600 --> 00:32:07.200
+a term or a piece that is
+actually not something that
+
+00:32:07.200 --> 00:32:09.320
+is part of our vocabulary.
+
+00:32:09.320 --> 00:32:13.840
+So the convention is to have a
+dedicated token that represents
+
+00:32:13.840 --> 00:32:18.120
+this out-of-vocabulary
+piece of text,
+
+00:32:18.120 --> 00:32:20.960
+and it's called
+the unknown token.
+
+00:32:20.960 --> 00:32:23.120
+So it's one special token.
+
+00:32:23.120 --> 00:32:25.280
+So I give an example,
+"Teddy bear."
+
+00:32:25.280 --> 00:32:29.080
+Imagine if I write
+it Teddy DI bear.
+
+00:32:29.080 --> 00:32:30.960
+And in the training
+corpus, we've
+
+00:32:30.960 --> 00:32:32.580
+never seen such a spelling.
+
+00:32:35.360 --> 00:32:40.500
+Then if your vocabulary is only
+composed of these four tokens,
+
+00:32:40.500 --> 00:32:43.080
+so Teddy, cute,
+bear, and unknown,
+
+00:32:43.080 --> 00:32:48.040
+then Teddy bear will be
+tokenized as unknown token,
+
+00:32:48.040 --> 00:32:50.280
+and then bear.
+
+00:32:50.280 --> 00:32:52.400
+One example--
+
+00:32:52.400 --> 00:32:58.180
+Another set of special
+tokens-- so a lot of the times,
+
+00:32:58.180 --> 00:33:01.780
+you need to indicate
+when the sequence is
+
+00:33:01.780 --> 00:33:05.860
+starting, when it is ending,
+and we'll see how we do that.
+
+00:33:05.860 --> 00:33:08.240
+So we have two sets
+of special tokens.
+
+00:33:08.240 --> 00:33:12.620
+One is beginning of
+sequence, BOS, and then
+
+00:33:12.620 --> 00:33:15.060
+end of sequence, EOS.
+
+00:33:15.060 --> 00:33:19.220
+Those are mostly used when
+we want to generate text.
+
+00:33:19.220 --> 00:33:23.380
+So for instance, when you
+want to start the generation,
+
+00:33:23.380 --> 00:33:26.420
+the convention is
+to feed your model
+
+00:33:26.420 --> 00:33:28.580
+with the beginning
+of sequence token,
+
+00:33:28.580 --> 00:33:30.820
+just to indicate to your
+token-- to your model
+
+00:33:30.820 --> 00:33:33.060
+that you want to generate text.
+
+00:33:33.060 --> 00:33:37.320
+Your model will then, at
+the end of its generation,
+
+00:33:37.320 --> 00:33:39.860
+just output the end
+of sequence token
+
+00:33:39.860 --> 00:33:44.660
+to just tell you that its
+generation is finished.
+
+00:33:44.660 --> 00:33:46.580
+So this is how it's used.
+
+00:33:46.580 --> 00:33:49.840
+So "What a cute Teddy bear"
+would be beginning of sequence,
+
+00:33:49.840 --> 00:33:53.110
+"What a cute Teddy bear" and
+end of sequence, as an example.
+
+00:33:53.110 --> 00:33:55.390
+And then the last one
+that you may encounter
+
+00:33:55.390 --> 00:33:57.010
+is the padding token.
+
+00:33:57.010 --> 00:34:02.270
+And that one is meant
+to make your sequences
+
+00:34:02.270 --> 00:34:05.710
+be of a certain size.
+
+00:34:05.710 --> 00:34:11.230
+So this is sometimes used
+for efficiency perspectives.
+
+00:34:11.230 --> 00:34:14.469
+If you want all your sequences
+to be of the same length,
+
+00:34:14.469 --> 00:34:16.969
+because we'll see that we can
+represent that with vectors,
+
+00:34:16.969 --> 00:34:18.949
+matrices, tensors--
+
+00:34:18.949 --> 00:34:24.310
+and hardware loves things
+that have the same dimension--
+
+00:34:24.310 --> 00:34:28.469
+then padding can also be used.
+
+00:34:28.469 --> 00:34:34.429
+But I want to say that this
+list is by no means exhaustive
+
+00:34:34.429 --> 00:34:39.310
+and that you also have a
+lot of different conventions
+
+00:34:39.310 --> 00:34:40.670
+that people take.
+
+00:34:40.670 --> 00:34:43.929
+So this way of
+writing, BOS, EOS,
+
+00:34:43.929 --> 00:34:48.630
+this way of writing
+padding, it's not universal.
+
+00:34:48.630 --> 00:34:50.530
+So just don't be
+surprised if you
+
+00:34:50.530 --> 00:34:53.570
+encounter different variations.
+
+00:34:53.570 --> 00:34:57.550
+And nowadays, you have
+things like assistants.
+
+00:34:57.550 --> 00:34:59.750
+So you have a user, assistant.
+
+00:34:59.750 --> 00:35:02.130
+And those are other
+things that people
+
+00:35:02.130 --> 00:35:04.570
+represent with special tokens.
+
+00:35:04.570 --> 00:35:07.330
+So again, this is not
+an exhaustive list.
+
+00:35:07.330 --> 00:35:10.730
+But just know that
+such tokens exist,
+
+00:35:10.730 --> 00:35:14.290
+and they are meant to convey
+something about the text
+
+00:35:14.290 --> 00:35:16.630
+that the model
+should understand.
+
+00:35:22.210 --> 00:35:24.090
+Cool.
+
+00:35:24.090 --> 00:35:28.010
+That's it for tokenization.
+
+00:35:28.010 --> 00:35:30.050
+Any questions?
+
+00:35:30.050 --> 00:35:31.170
+Yes.
+
+00:35:31.170 --> 00:35:32.730
+The question is,
+what is the order
+
+00:35:32.730 --> 00:35:35.790
+of magnitude of the vocabulary
+size for LLMs right now?
+
+00:35:35.790 --> 00:35:37.170
+So it's a great question.
+
+00:35:37.170 --> 00:35:41.770
+It is on the order of
+hundreds of thousands.
+
+00:35:41.770 --> 00:35:44.990
+So you will see something like
+hundreds of thousands, 200,000,
+
+00:35:44.990 --> 00:35:46.330
+something like this.
+
+00:35:46.330 --> 00:35:48.870
+And these are
+tokenizers that are
+
+00:35:48.870 --> 00:35:54.630
+able to handle both English
+but also other languages.
+
+00:35:54.630 --> 00:35:58.710
+And as I mentioned, the most
+common type of tokenizer
+
+00:35:58.710 --> 00:36:00.470
+nowadays is the BPE one.
+
+00:36:00.470 --> 00:36:05.190
+So yeah, so these are the things
+that are good to have in mind.
+
+00:36:05.190 --> 00:36:06.790
+Yeah.
+
+00:36:06.790 --> 00:36:10.910
+So the question is, having
+multiple languages be handled
+
+00:36:10.910 --> 00:36:13.550
+by your tokenizer, does that
+make your tokenizer a bit less
+
+00:36:13.550 --> 00:36:15.230
+of an expert in
+a given language?
+
+00:36:15.230 --> 00:36:18.030
+I think it is hard
+to say, I would say,
+
+00:36:18.030 --> 00:36:22.830
+because there may be some
+synergies between languages.
+
+00:36:22.830 --> 00:36:25.690
+So I would say it's
+hard to say in general.
+
+00:36:25.690 --> 00:36:29.270
+But that being
+said, the vocabulary
+
+00:36:29.270 --> 00:36:35.270
+size that you fix when you
+run your BPE algorithm will
+
+00:36:35.270 --> 00:36:38.790
+be filled with tokens
+from different languages.
+
+00:36:38.790 --> 00:36:48.320
+So you may get a vocabulary that
+may lead you to longer sequence
+
+00:36:48.320 --> 00:36:52.760
+length if you're only interested
+in one particular language.
+
+00:36:52.760 --> 00:36:55.060
+So from an efficiency
+perspective,
+
+00:36:55.060 --> 00:36:57.120
+maybe you'll see something.
+
+00:36:57.120 --> 00:36:59.920
+But then from a
+representation perspective,
+
+00:36:59.920 --> 00:37:01.020
+it's not super clear.
+
+00:37:01.020 --> 00:37:05.760
+So one example is
+acronyms of organizations
+
+00:37:05.760 --> 00:37:08.280
+that maybe something
+that people talk
+
+00:37:08.280 --> 00:37:10.080
+about in a bunch of languages.
+
+00:37:10.080 --> 00:37:14.040
+So you may benefit from
+learning that representation
+
+00:37:14.040 --> 00:37:19.880
+from different texts of
+different languages, so pros
+
+00:37:19.880 --> 00:37:20.500
+and cons.
+
+00:37:24.400 --> 00:37:26.560
+Great.
+
+00:37:26.560 --> 00:37:27.060
+Cool.
+
+00:37:27.060 --> 00:37:29.640
+So now, what we
+know, what we have
+
+00:37:29.640 --> 00:37:33.560
+learned is given an
+input text, we're
+
+00:37:33.560 --> 00:37:38.720
+able to generate tokens or
+represent that text with tokens.
+
+00:37:38.720 --> 00:37:44.620
+So the next natural question is
+how to represent those tokens.
+
+00:37:44.620 --> 00:37:47.900
+So this is what we're
+going to see now.
+
+00:37:47.900 --> 00:37:51.100
+So the most naive
+way to do that is
+
+00:37:51.100 --> 00:37:55.740
+to say that each
+token is different.
+
+00:37:55.740 --> 00:37:57.080
+So it's extremely obvious.
+
+00:37:57.080 --> 00:37:58.580
+But you can
+represent your tokens
+
+00:37:58.580 --> 00:38:02.180
+by what we call
+one-hot encodings.
+
+00:38:02.180 --> 00:38:05.280
+So here, let's say I
+have the token soft.
+
+00:38:05.280 --> 00:38:11.020
+I can say, OK, it's
+the 1,0,0 vector.
+
+00:38:11.020 --> 00:38:13.900
+And if you do that
+for all your tokens,
+
+00:38:13.900 --> 00:38:16.820
+well, the bad thing
+is they're all
+
+00:38:16.820 --> 00:38:20.340
+going to be orthogonal
+to each other
+
+00:38:20.340 --> 00:38:23.380
+if you take the dot product.
+
+00:38:23.380 --> 00:38:24.640
+So is it a good thing?
+
+00:38:28.340 --> 00:38:29.380
+No.
+
+00:38:29.380 --> 00:38:31.740
+It's not a good thing
+because it doesn't tell you
+
+00:38:31.740 --> 00:38:34.860
+anything about what
+these tokens are
+
+00:38:34.860 --> 00:38:36.940
+and how they're
+related to each other.
+
+00:38:36.940 --> 00:38:39.580
+So it's not what you want.
+
+00:38:39.580 --> 00:38:43.240
+What you want is to
+represent these tokens
+
+00:38:43.240 --> 00:38:50.360
+in a way that reflects how
+similar they are to one another.
+
+00:38:50.360 --> 00:38:52.160
+That is what you want.
+
+00:38:52.160 --> 00:38:54.320
+So, for instance,
+you want "Teddy bear"
+
+00:38:54.320 --> 00:38:58.560
+to be similar to "soft"
+because Teddy bears are soft,
+
+00:38:58.560 --> 00:39:01.728
+but maybe book to be
+maybe independent.
+
+00:39:01.728 --> 00:39:03.020
+This is what you want to learn.
+
+00:39:03.020 --> 00:39:06.880
+You want to learn
+meaningful representations.
+
+00:39:06.880 --> 00:39:09.880
+And by the way, why
+do you want to learn
+
+00:39:09.880 --> 00:39:11.060
+meaningful representations?
+
+00:39:11.060 --> 00:39:13.518
+Well, it's because you want to
+do something with your text.
+
+00:39:13.518 --> 00:39:15.880
+You need to have it as
+input into your model
+
+00:39:15.880 --> 00:39:18.200
+in order to do
+something as output--
+
+00:39:18.200 --> 00:39:21.720
+so for instance,
+generating the next words,
+
+00:39:21.720 --> 00:39:22.820
+predicting some class.
+
+00:39:22.820 --> 00:39:27.680
+So you need to understand
+what is in your text, which
+
+00:39:27.680 --> 00:39:30.880
+is the reason why
+what you want is
+
+00:39:30.880 --> 00:39:35.560
+meaningful token
+representations.
+
+00:39:35.560 --> 00:39:42.930
+So this is what an
+earlier method called
+
+00:39:42.930 --> 00:39:46.930
+Word2vec tried to achieve.
+
+00:39:46.930 --> 00:39:54.810
+So here, the idea is to
+learn these representations
+
+00:39:54.810 --> 00:39:57.530
+through what we
+call a proxy task.
+
+00:39:57.530 --> 00:40:00.995
+So a proxy task is a task
+that you're trying to learn,
+
+00:40:00.995 --> 00:40:02.370
+but it's not the
+task that you're
+
+00:40:02.370 --> 00:40:05.370
+trying to learn as an end goal.
+
+00:40:05.370 --> 00:40:07.650
+It is a task that you
+try to learn in order
+
+00:40:07.650 --> 00:40:10.130
+to achieve something else.
+
+00:40:10.130 --> 00:40:14.930
+And here, the proxy task is
+something like predicting
+
+00:40:14.930 --> 00:40:18.950
+the word that is in between
+some context words--
+
+00:40:18.950 --> 00:40:23.490
+so this is the continuous bag
+of words version of Word2vec--
+
+00:40:23.490 --> 00:40:28.710
+or predicting words that are
+surrounding a given word.
+
+00:40:28.710 --> 00:40:31.170
+That is the skip-gram version.
+
+00:40:31.170 --> 00:40:34.930
+So we'll go through an example
+so that it becomes clear.
+
+00:40:34.930 --> 00:40:38.870
+So, does everyone know
+what a neural network is?
+
+00:40:38.870 --> 00:40:40.030
+Yeah.
+
+00:40:40.030 --> 00:40:40.530
+OK.
+
+00:40:40.530 --> 00:40:44.230
+So I represented a very
+basic neural network.
+
+00:40:44.230 --> 00:40:48.350
+So you can think of it as an
+input matrix multiplication
+
+00:40:48.350 --> 00:40:53.990
+to get a hidden representation
+of size D and then again,
+
+00:40:53.990 --> 00:40:58.070
+matrix multiplication to go back
+to size V or vocabulary size.
+
+00:40:58.070 --> 00:41:03.830
+So let's assume that you have
+the sentence "A cute Teddy bear
+
+00:41:03.830 --> 00:41:05.550
+is reading."
+
+00:41:05.550 --> 00:41:07.850
+And let's assume, for
+the sake of simplicity,
+
+00:41:07.850 --> 00:41:16.550
+that your goal is to predict
+"cute" from the word "a."
+
+00:41:16.550 --> 00:41:18.390
+So let's imagine that
+your proxy task is
+
+00:41:18.390 --> 00:41:22.110
+to predict the next word.
+
+00:41:22.110 --> 00:41:29.270
+So here, "a," you're very
+naive representation of "a" is
+
+00:41:29.270 --> 00:41:31.110
+the one-hot encoding.
+
+00:41:31.110 --> 00:41:35.270
+So let's assume that you have
+a vocabulary size of six,
+
+00:41:35.270 --> 00:41:37.690
+and "a" is your first token.
+
+00:41:37.690 --> 00:41:43.810
+So you would represent
+"a" with 1,0,0,0,0,0.
+
+00:41:43.810 --> 00:41:45.630
+You pass it through
+your network.
+
+00:41:45.630 --> 00:41:49.330
+So think of it as matrix
+multiplication with this vector.
+
+00:41:49.330 --> 00:41:52.970
+You would have a
+hidden state of size 2,
+
+00:41:52.970 --> 00:41:56.970
+to assume two
+numbers, 0.2 and 0.9.
+
+00:41:56.970 --> 00:41:59.230
+And then you pass it
+through your network,
+
+00:41:59.230 --> 00:42:00.990
+so again, another
+matrix multiplication.
+
+00:42:00.990 --> 00:42:04.930
+And then you have
+predictions that sum to 1.
+
+00:42:04.930 --> 00:42:09.530
+So you can use something like
+a softmax to normalize them.
+
+00:42:09.530 --> 00:42:20.290
+And your goal is to have these
+probabilities be as close
+
+00:42:20.290 --> 00:42:23.850
+to the label that you have,
+which is predicting the word
+
+00:42:23.850 --> 00:42:24.410
+"cute."
+
+00:42:24.410 --> 00:42:26.930
+And so "cute," let's suppose
+that it's the second word
+
+00:42:26.930 --> 00:42:27.870
+of your vocabulary.
+
+00:42:27.870 --> 00:42:31.936
+So it is represented
+by 0,1,0,0,0.
+
+00:42:31.936 --> 00:42:38.550
+Your goal is, like on the slide,
+for the 0.4 to be as close as 1
+
+00:42:38.550 --> 00:42:41.510
+as possible.
+
+00:42:41.510 --> 00:42:45.950
+So the idea is to have
+a loss function that
+
+00:42:45.950 --> 00:42:51.950
+penalizes the fact of having
+a probability of a given word
+
+00:42:51.950 --> 00:42:54.870
+being too far from the word
+that you're trying to predict--
+
+00:42:54.870 --> 00:42:58.230
+so in case you know the
+cross-entropy loss--
+
+00:42:58.230 --> 00:43:02.350
+and then updates the
+weights of your model
+
+00:43:02.350 --> 00:43:06.950
+in order to reflect
+what you want.
+
+00:43:06.950 --> 00:43:09.270
+So just so that we're
+clear, I will just
+
+00:43:09.270 --> 00:43:12.390
+walk through all the
+quantities that we mentioned.
+
+00:43:12.390 --> 00:43:16.030
+So here, the one-hot encoding
+that represents the token
+
+00:43:16.030 --> 00:43:19.790
+is of the vocabulary size.
+
+00:43:19.790 --> 00:43:24.630
+The hidden state or also
+called latent representation
+
+00:43:24.630 --> 00:43:29.650
+is of size D. And D is actually
+a parameter that you can choose,
+
+00:43:29.650 --> 00:43:33.640
+typically much smaller
+than the vocabulary size.
+
+00:43:33.640 --> 00:43:36.040
+And then the predicted
+word probabilities--
+
+00:43:36.040 --> 00:43:38.060
+well, you have a
+probability per token,
+
+00:43:38.060 --> 00:43:40.740
+so it needs to match
+the vocabulary size.
+
+00:43:40.740 --> 00:43:44.320
+So it's of size V. And
+it also matches the size
+
+00:43:44.320 --> 00:43:46.080
+of the one-hot encoding.
+
+00:43:46.080 --> 00:43:50.560
+And this is where
+you're able to try
+
+00:43:50.560 --> 00:43:52.920
+to penalize for
+deviations from the word
+
+00:43:52.920 --> 00:43:54.840
+that you're trying to predict.
+
+00:43:54.840 --> 00:44:01.400
+So let's assume you do that for
+"a" trying to predict "cute."
+
+00:44:01.400 --> 00:44:04.840
+You repeat the same thing
+for "cute" for "Teddy bear."
+
+00:44:04.840 --> 00:44:06.420
+So you go "cute."
+
+00:44:06.420 --> 00:44:08.525
+You represent it with
+the one-hot encoding.
+
+00:44:08.525 --> 00:44:09.900
+You pass it through
+your network.
+
+00:44:09.900 --> 00:44:13.680
+You have a latent representation
+and again, probabilities.
+
+00:44:13.680 --> 00:44:17.080
+You compare that with the actual
+label that is representing
+
+00:44:17.080 --> 00:44:18.240
+"Teddy bear."
+
+00:44:18.240 --> 00:44:19.760
+Compute the loss.
+
+00:44:19.760 --> 00:44:26.840
+Update the weights given how
+far you are from the label.
+
+00:44:26.840 --> 00:44:30.500
+And you repeat that
+through your whole corpus.
+
+00:44:30.500 --> 00:44:36.460
+Well, at the end of this,
+what the authors realize
+
+00:44:36.460 --> 00:44:39.340
+is that the latent
+representation
+
+00:44:39.340 --> 00:44:42.620
+that you learn in the
+middle of the network
+
+00:44:42.620 --> 00:44:50.230
+actually is making
+sense, as in you
+
+00:44:50.230 --> 00:44:54.500
+can compute similarity
+measures between
+
+00:44:54.500 --> 00:44:56.540
+the learned representations.
+
+00:44:56.540 --> 00:45:01.380
+And you see that representations
+of similar tokens
+
+00:45:01.380 --> 00:45:04.940
+are actually similar.
+
+00:45:04.940 --> 00:45:07.940
+So in this example,
+so Teddy bear is soft,
+
+00:45:07.940 --> 00:45:09.760
+what is Persian poetry to art.
+
+00:45:09.760 --> 00:45:12.260
+So another example is
+Paris is to France,
+
+00:45:12.260 --> 00:45:14.040
+what Berlin is to Germany.
+
+00:45:14.040 --> 00:45:16.660
+So you have these
+nice associations
+
+00:45:16.660 --> 00:45:20.820
+that are actually something
+that the model learns.
+
+00:45:20.820 --> 00:45:27.920
+So that gives you meaningful
+word representations.
+
+00:45:27.920 --> 00:45:31.900
+So that's a method that
+appeared, I believe,
+
+00:45:31.900 --> 00:45:33.140
+in the early 2010's.
+
+00:45:33.140 --> 00:45:36.560
+I believe it was 2013,
+if I remember correctly.
+
+00:45:36.560 --> 00:45:40.700
+So who can tell me what is a
+limitation of this approach?
+
+00:45:45.160 --> 00:45:48.620
+So here, the representation
+of the words that we learn--
+
+00:45:51.440 --> 00:45:54.180
+we saw that they end
+up being meaningful.
+
+00:45:54.180 --> 00:45:59.160
+But is there a limitation
+to this approach?
+
+00:45:59.160 --> 00:46:00.160
+Yeah.
+
+00:46:00.160 --> 00:46:04.760
+So one answer is that you would
+have trouble if you actually
+
+00:46:04.760 --> 00:46:07.640
+are not encountering
+something that you have seen
+
+00:46:07.640 --> 00:46:10.300
+during your training process.
+
+00:46:10.300 --> 00:46:11.420
+So yes, that is right.
+
+00:46:11.420 --> 00:46:14.160
+And I think that's right
+in actually most cases,
+
+00:46:14.160 --> 00:46:16.560
+beyond that case in particular.
+
+00:46:16.560 --> 00:46:17.380
+So that's one.
+
+00:46:17.380 --> 00:46:20.880
+Is there another-- yes,
+another limitation?
+
+00:46:20.880 --> 00:46:25.120
+So the answer here is
+the dimension scales up
+
+00:46:25.120 --> 00:46:28.030
+when the vocabulary
+size gets bigger.
+
+00:46:28.030 --> 00:46:32.090
+So actually, this is a
+limitation of your tokenizer
+
+00:46:32.090 --> 00:46:34.890
+because the tokenizer is the one
+that determines your vocabulary
+
+00:46:34.890 --> 00:46:37.750
+size.
+
+00:46:37.750 --> 00:46:41.950
+But you're right that
+this is a limitation.
+
+00:46:41.950 --> 00:46:43.870
+But it's not specific
+to that approach,
+
+00:46:43.870 --> 00:46:45.690
+as in you will
+always need to find
+
+00:46:45.690 --> 00:46:50.230
+a representation of each
+element in your vocabulary.
+
+00:46:50.230 --> 00:46:54.290
+So, I mean, it's a
+limitation but limitation
+
+00:46:54.290 --> 00:46:57.290
+in methods in general.
+
+00:46:57.290 --> 00:46:58.170
+Yes.
+
+00:46:58.170 --> 00:46:58.990
+Oh, yes.
+
+00:46:58.990 --> 00:47:01.790
+So the answer is words can
+have multiple meanings.
+
+00:47:01.790 --> 00:47:02.510
+So exactly.
+
+00:47:02.510 --> 00:47:10.890
+So one limitation here is if
+the word, let's say "cute,"
+
+00:47:10.890 --> 00:47:15.650
+is in this sentence versus
+in another sentence,
+
+00:47:15.650 --> 00:47:18.110
+they will both get the
+same representation.
+
+00:47:18.110 --> 00:47:24.430
+So if you say cute Teddy bear
+in a nice way versus someone who
+
+00:47:24.430 --> 00:47:28.308
+sarcastically
+says, oh, how cute,
+
+00:47:28.308 --> 00:47:30.350
+they may mean different
+things between the word--
+
+00:47:30.350 --> 00:47:32.350
+behind the word "cute."
+
+00:47:32.350 --> 00:47:38.530
+So I think a very classic
+example is "bank,"
+
+00:47:38.530 --> 00:47:41.110
+so river bank versus
+going to the bank.
+
+00:47:41.110 --> 00:47:43.990
+These are the same words
+but different meaning.
+
+00:47:43.990 --> 00:47:45.670
+So the problem
+with this approach
+
+00:47:45.670 --> 00:47:50.230
+is that the representation
+of this word
+
+00:47:50.230 --> 00:47:53.350
+would actually be the same
+regardless of the sentence
+
+00:47:53.350 --> 00:47:54.870
+that it is in.
+
+00:47:54.870 --> 00:47:56.430
+So great point.
+
+00:47:56.430 --> 00:48:02.310
+Another limitation here is that
+the word order does not matter.
+
+00:48:02.310 --> 00:48:07.970
+So let's assume we're saying the
+child is hugging the Teddy bear,
+
+00:48:07.970 --> 00:48:10.950
+and the Teddy bear
+is hugging the child.
+
+00:48:10.950 --> 00:48:15.050
+These are the exact same words,
+but they mean different things.
+
+00:48:15.050 --> 00:48:18.310
+We would get the same
+embeddings with this approach
+
+00:48:18.310 --> 00:48:21.390
+in both cases.
+
+00:48:21.390 --> 00:48:24.930
+So these are all
+limitations, which
+
+00:48:24.930 --> 00:48:28.090
+is the reason why
+this is something
+
+00:48:28.090 --> 00:48:33.410
+that people have tried to
+resolve through different means.
+
+00:48:33.410 --> 00:48:41.610
+One such means is RNNs,
+which, as we previously saw,
+
+00:48:41.610 --> 00:48:46.970
+was the type of model that
+was dominating the models back
+
+00:48:46.970 --> 00:48:49.250
+in the 2010's.
+
+00:48:49.250 --> 00:48:54.770
+And so here, RNNs, what they
+do is that they actually
+
+00:48:54.770 --> 00:48:58.310
+have an extra quantity
+that they compute,
+
+00:48:58.310 --> 00:49:01.600
+which here is
+represented with A.
+
+00:49:01.600 --> 00:49:05.090
+There is also called
+a hidden state
+
+00:49:05.090 --> 00:49:10.570
+that tries to encapsulate the
+meaning of the sentence seen
+
+00:49:10.570 --> 00:49:12.770
+so far.
+
+00:49:12.770 --> 00:49:15.030
+So we're going to see
+that as an example.
+
+00:49:15.030 --> 00:49:17.070
+So let's assume we go
+with the same sentence.
+
+00:49:17.070 --> 00:49:18.850
+So a cute Teddy bear is reading.
+
+00:49:18.850 --> 00:49:25.420
+So here, you would actually
+put the word into the RNN.
+
+00:49:25.420 --> 00:49:28.180
+It would try to predict
+the word "cute."
+
+00:49:28.180 --> 00:49:32.420
+But then what it
+will do is keep what
+
+00:49:32.420 --> 00:49:36.140
+we call a hidden state
+that encodes the meaning
+
+00:49:36.140 --> 00:49:39.780
+of the sequence seen so far.
+
+00:49:39.780 --> 00:49:44.160
+That will be an input
+to the next prediction.
+
+00:49:44.160 --> 00:49:49.660
+So we'll have "cute" as an input
+and then this hidden states
+
+00:49:49.660 --> 00:49:55.980
+as an input as well in order to
+inform the next representation,
+
+00:49:55.980 --> 00:49:57.860
+and so on and so forth.
+
+00:49:57.860 --> 00:50:01.060
+So here, what you're
+doing is you're not just
+
+00:50:01.060 --> 00:50:06.420
+considering embeddings
+of tokens on their own.
+
+00:50:06.420 --> 00:50:10.060
+You're also considering
+the embedding
+
+00:50:10.060 --> 00:50:13.780
+of the sequence decoded so far.
+
+00:50:13.780 --> 00:50:19.000
+And that allows you to
+take into a consideration
+
+00:50:19.000 --> 00:50:23.920
+the order of the
+words in the sentence.
+
+00:50:23.920 --> 00:50:26.680
+And RNNs are
+actually models that
+
+00:50:26.680 --> 00:50:29.437
+were used in a bunch of
+tasks back in the day.
+
+00:50:29.437 --> 00:50:31.020
+So, for instance,
+for classifications,
+
+00:50:31.020 --> 00:50:34.940
+what you would do is
+process tokens one at a time
+
+00:50:34.940 --> 00:50:38.040
+and then keep a
+self-mutating state that
+
+00:50:38.040 --> 00:50:41.320
+encodes the meaning of
+the sequence seen so far.
+
+00:50:41.320 --> 00:50:44.020
+And it would try to
+predict, let's say,
+
+00:50:44.020 --> 00:50:47.840
+a sentiment in the
+sentiment extraction case.
+
+00:50:47.840 --> 00:50:50.580
+In the
+multi-classification case,
+
+00:50:50.580 --> 00:50:53.040
+for instance, if you
+wanted to determine
+
+00:50:53.040 --> 00:50:55.800
+if a word was a noun
+or a verb, then you
+
+00:50:55.800 --> 00:50:59.720
+would actually leverage the
+representations corresponding
+
+00:50:59.720 --> 00:51:02.200
+to each input,
+which again, would
+
+00:51:02.200 --> 00:51:07.320
+take into consideration
+the hidden states or just
+
+00:51:07.320 --> 00:51:08.300
+generation.
+
+00:51:11.080 --> 00:51:16.340
+But one limitation
+of RNNs is that--
+
+00:51:16.340 --> 00:51:16.840
+OK.
+
+00:51:16.840 --> 00:51:21.020
+It was great you would consider
+the order at which the words
+
+00:51:21.020 --> 00:51:24.060
+would appear in a sequence.
+
+00:51:24.060 --> 00:51:29.700
+But it would have trouble
+remembering words that
+
+00:51:29.700 --> 00:51:34.460
+happened far in the past,
+because what it used to do
+
+00:51:34.460 --> 00:51:38.980
+was to encode the
+meaning of the sequence
+
+00:51:38.980 --> 00:51:44.340
+in one single vector that
+kept on being modified.
+
+00:51:44.340 --> 00:51:50.140
+So you had this issue of what
+we call long-range dependency,
+
+00:51:50.140 --> 00:51:54.140
+where if you end up two
+sentences after something
+
+00:51:54.140 --> 00:51:56.980
+that you have talked
+about prior to that
+
+00:51:56.980 --> 00:52:02.220
+would have trouble teasing
+that out just using
+
+00:52:02.220 --> 00:52:05.940
+the hidden state at that point.
+
+00:52:05.940 --> 00:52:08.940
+And that can be
+problematic, for instance,
+
+00:52:08.940 --> 00:52:12.220
+when you refer to something
+that happened in the past.
+
+00:52:12.220 --> 00:52:17.110
+So for instance, you can say,
+oh, my Teddy bear is so cute.
+
+00:52:17.110 --> 00:52:20.270
+It is 3 feet tall.
+
+00:52:20.270 --> 00:52:23.710
+So "it" refers to something
+that is in the past.
+
+00:52:23.710 --> 00:52:27.390
+So now let's assume that
+"it" I'm using is referring
+
+00:52:27.390 --> 00:52:30.390
+to something that
+is far in the past.
+
+00:52:30.390 --> 00:52:33.430
+Then we have this
+problem of actually
+
+00:52:33.430 --> 00:52:36.550
+having the right set of
+information in the hidden state
+
+00:52:36.550 --> 00:52:40.110
+that we're considering.
+
+00:52:40.110 --> 00:52:46.430
+So this is the reason why there
+were some variations of RNNs.
+
+00:52:46.430 --> 00:52:52.390
+One such variation was called
+LSTM, Long Short-Term Memory,
+
+00:52:52.390 --> 00:52:55.190
+which tried to
+address this problem,
+
+00:52:55.190 --> 00:52:58.910
+by not only keeping
+a hidden state
+
+00:52:58.910 --> 00:53:03.030
+but also another state
+called the cell state
+
+00:53:03.030 --> 00:53:10.670
+that was meant to carry
+information for longer.
+
+00:53:10.670 --> 00:53:15.610
+But the truth is
+even such variations
+
+00:53:15.610 --> 00:53:22.330
+had their limitations, which,
+again, had the same issue.
+
+00:53:22.330 --> 00:53:27.130
+So if we were to just recap
+the state of the ways we could
+
+00:53:27.130 --> 00:53:31.010
+obtain our embeddings
+so far, we saw
+
+00:53:31.010 --> 00:53:34.610
+Word2vec, which is a
+very simple approach
+
+00:53:34.610 --> 00:53:39.290
+to compute
+representations of words.
+
+00:53:39.290 --> 00:53:43.230
+But the problem is
+that if a word is,
+
+00:53:43.230 --> 00:53:46.090
+let's say, in a
+different sequence, then
+
+00:53:46.090 --> 00:53:47.670
+the representation is the same.
+
+00:53:47.670 --> 00:53:49.990
+So that is a limitation.
+
+00:53:49.990 --> 00:53:53.810
+And also as
+mentioned previously,
+
+00:53:53.810 --> 00:53:57.010
+the same word can actually
+mean different things.
+
+00:53:57.010 --> 00:54:00.370
+And so that is
+also not conveyed.
+
+00:54:00.370 --> 00:54:03.370
+And in the case of
+RNNs, we are actually
+
+00:54:03.370 --> 00:54:07.250
+addressing the
+word order problem
+
+00:54:07.250 --> 00:54:11.110
+by having a hidden state that
+encapsulates the sequence that
+
+00:54:11.110 --> 00:54:13.750
+is seen so far.
+
+00:54:13.750 --> 00:54:17.270
+But the problem is that we
+have this long-range dependency
+
+00:54:17.270 --> 00:54:18.150
+problem.
+
+00:54:18.150 --> 00:54:21.590
+That is actually coming
+from a deeper problem called
+
+00:54:21.590 --> 00:54:23.590
+the vanishing-gradient
+problem, which
+
+00:54:23.590 --> 00:54:28.270
+is a problem when you
+want to backpropagate,
+
+00:54:28.270 --> 00:54:31.150
+that just introduces
+some limitation.
+
+00:54:31.150 --> 00:54:35.510
+And another thing that we
+have not mentioned, but RNNs,
+
+00:54:35.510 --> 00:54:40.150
+the problem is every time you
+want to predict the next token,
+
+00:54:40.150 --> 00:54:43.750
+you need to have the
+hidden state that
+
+00:54:43.750 --> 00:54:47.230
+encapsulates all the things
+that you have seen so far.
+
+00:54:47.230 --> 00:54:52.270
+So you always have to
+just go through tokens one
+
+00:54:52.270 --> 00:54:54.450
+at a time in order to
+make the next prediction.
+
+00:54:54.450 --> 00:54:56.990
+And when it comes to
+training such a model,
+
+00:54:56.990 --> 00:54:58.810
+it is just extremely slow.
+
+00:55:01.670 --> 00:55:10.490
+And it had great results at the
+time but not amazing either.
+
+00:55:10.490 --> 00:55:15.410
+So for all of these reasons,
+in the 2010's, people
+
+00:55:15.410 --> 00:55:17.490
+tried different techniques.
+
+00:55:17.490 --> 00:55:22.930
+And there is one technique
+that really stood out now
+
+00:55:22.930 --> 00:55:27.770
+from hindsight, but that
+is called attention.
+
+00:55:27.770 --> 00:55:30.930
+And the idea is as follows.
+
+00:55:30.930 --> 00:55:35.290
+Instead of solely relying
+on the hidden state
+
+00:55:35.290 --> 00:55:37.530
+to encapsulate the
+meaning of the sequence
+
+00:55:37.530 --> 00:55:40.890
+that you have seen
+so far, the idea
+
+00:55:40.890 --> 00:55:47.930
+is to let your model have
+direct connections from tokens
+
+00:55:47.930 --> 00:55:51.010
+that you have seen in the past.
+
+00:55:51.010 --> 00:55:54.050
+So in other words,
+we're not saying
+
+00:55:54.050 --> 00:55:56.170
+only rely on the
+hidden state to know
+
+00:55:56.170 --> 00:55:57.970
+what has happened in the past.
+
+00:55:57.970 --> 00:56:02.530
+We're saying you can also have
+direct connections to tokens
+
+00:56:02.530 --> 00:56:04.970
+that you have seen
+in the past in order
+
+00:56:04.970 --> 00:56:08.540
+to predict the next token.
+
+00:56:08.540 --> 00:56:11.580
+So in the translation example,
+so let's assume you want
+
+00:56:11.580 --> 00:56:15.340
+to translate in French, "A
+cute Teddy bear is reading."
+
+00:56:15.340 --> 00:56:16.620
+And let's assume you say--
+
+00:56:16.620 --> 00:56:18.500
+[SPEAKING FRENCH]
+
+00:56:18.500 --> 00:56:20.940
+And you want to
+predict the next word.
+
+00:56:20.940 --> 00:56:26.940
+So intuitively, in order
+to predict the next word,
+
+00:56:26.940 --> 00:56:29.620
+it would be amazing to
+know what the word that you
+
+00:56:29.620 --> 00:56:32.460
+want to translate is.
+
+00:56:32.460 --> 00:56:34.980
+So in the traditional
+RNN case, you
+
+00:56:34.980 --> 00:56:38.740
+would not have access to that--
+direct access to that word.
+
+00:56:38.740 --> 00:56:42.380
+You would only have access
+to it via the hidden state.
+
+00:56:42.380 --> 00:56:46.300
+So here, the idea is to
+have a direct connection
+
+00:56:46.300 --> 00:56:51.660
+to previous tokens and let the
+model learn which ones matter.
+
+00:56:51.660 --> 00:56:54.460
+And here, for the prediction,
+to rely on the ones
+
+00:56:54.460 --> 00:57:00.380
+that matter in order
+to make the prediction.
+
+00:57:00.380 --> 00:57:04.400
+So this is the
+concept of attention.
+
+00:57:04.400 --> 00:57:06.840
+The concept of attention
+is letting your model
+
+00:57:06.840 --> 00:57:11.240
+draw direct connections
+from a given token
+
+00:57:11.240 --> 00:57:13.540
+to some tokens in the past.
+
+00:57:16.200 --> 00:57:21.360
+And this concept
+is very important
+
+00:57:21.360 --> 00:57:25.220
+because it is at the foundation
+of what we're going to see now.
+
+00:57:27.840 --> 00:57:33.120
+So I mentioned previously that
+there was this paper called
+
+00:57:33.120 --> 00:57:36.760
+"Attention is All You Need"
+that came out in 2017.
+
+00:57:36.760 --> 00:57:39.680
+That was a turning
+point because people
+
+00:57:39.680 --> 00:57:41.820
+saw that it was very scalable.
+
+00:57:41.820 --> 00:57:45.440
+It was giving you
+amazing results.
+
+00:57:45.440 --> 00:57:50.160
+Well, this paper
+relies on the concept
+
+00:57:50.160 --> 00:57:57.360
+of the self-attention, which
+is attention but on steroids.
+
+00:57:57.360 --> 00:58:01.760
+And we'll go through exactly
+what we mean by that.
+
+00:58:01.760 --> 00:58:06.380
+So let's assume you have the
+sequence "A cute Teddy bear is
+
+00:58:06.380 --> 00:58:08.020
+reading."
+
+00:58:08.020 --> 00:58:10.700
+So now the idea is
+to not say that we're
+
+00:58:10.700 --> 00:58:12.820
+going to compute the
+representation of a given
+
+00:58:12.820 --> 00:58:19.220
+word as a function of the
+hidden state that encapsulates
+
+00:58:19.220 --> 00:58:23.240
+the meaning of the sequence
+so far and the word itself.
+
+00:58:23.240 --> 00:58:24.280
+We're not saying that.
+
+00:58:24.280 --> 00:58:26.940
+Now what we're saying
+is that in order
+
+00:58:26.940 --> 00:58:29.820
+to compute the representation
+of a given token,
+
+00:58:29.820 --> 00:58:34.300
+we can actually do that by
+expressing that representation
+
+00:58:34.300 --> 00:58:39.740
+as a function of all the
+other tokens in that sequence.
+
+00:58:39.740 --> 00:58:41.260
+Sorry?
+
+00:58:41.260 --> 00:58:43.820
+So I think you raise an
+important point, which
+
+00:58:43.820 --> 00:58:47.180
+is, how do you know
+the order of words
+
+00:58:47.180 --> 00:58:49.940
+if you just let everyone
+interact to everyone, in case
+
+00:58:49.940 --> 00:58:51.660
+that was your question.
+
+00:58:51.660 --> 00:58:56.700
+So if you let a token interact
+with all other tokens,
+
+00:58:56.700 --> 00:59:02.270
+you actually lose the
+concept of word order.
+
+00:59:02.270 --> 00:59:04.890
+And it is actually something
+that is addressed later on.
+
+00:59:04.890 --> 00:59:07.310
+So we're going to
+exactly see that part.
+
+00:59:07.310 --> 00:59:09.990
+But here, you
+actually do not know
+
+00:59:09.990 --> 00:59:14.150
+where tokens are because you
+have a direct connection.
+
+00:59:14.150 --> 00:59:16.330
+In this very vanilla
+representation,
+
+00:59:16.330 --> 00:59:17.930
+you don't know where tokens are.
+
+00:59:17.930 --> 00:59:22.870
+So we're going to see exactly
+how you fix that issue.
+
+00:59:22.870 --> 00:59:24.970
+But does the idea make sense?
+
+00:59:24.970 --> 00:59:27.230
+The idea that in
+order to compute
+
+00:59:27.230 --> 00:59:30.310
+a representation of
+a token, you actually
+
+00:59:30.310 --> 00:59:32.750
+want to express that
+as a function of all
+
+00:59:32.750 --> 00:59:34.210
+the other tokens
+in the sequence,
+
+00:59:34.210 --> 00:59:35.730
+does this idea make sense?
+
+00:59:40.310 --> 00:59:40.910
+Roughly?
+
+00:59:43.870 --> 00:59:45.250
+Yeah, I'll take that as a yes.
+
+00:59:45.250 --> 00:59:47.050
+So we're going to
+go through examples.
+
+00:59:47.050 --> 00:59:49.610
+And actually, Shervine has
+a detailed example later on.
+
+00:59:49.610 --> 00:59:53.190
+So hopefully that will
+make a bit more sense.
+
+00:59:53.190 --> 00:59:58.610
+There is a set of notations
+that people use that we're
+
+00:59:58.610 --> 01:00:00.330
+going to introduce now.
+
+01:00:00.330 --> 01:00:07.130
+So these notations are
+queries, keys, and values,
+
+01:00:07.130 --> 01:00:16.690
+Q, K, and V. So the
+query is the entity
+
+01:00:16.690 --> 01:00:22.730
+that is trying to determine
+what a given token is about.
+
+01:00:22.730 --> 01:00:30.010
+And the idea is it wants to find
+tokens that are useful in order
+
+01:00:30.010 --> 01:00:32.770
+to construct a meaningful
+representation of the token
+
+01:00:32.770 --> 01:00:34.670
+that it is responsible for.
+
+01:00:34.670 --> 01:00:37.930
+So the query for Teddy
+bear, what it tries to do
+
+01:00:37.930 --> 01:00:40.850
+is to find other
+tokens that is relevant
+
+01:00:40.850 --> 01:00:45.890
+in order to compute a meaningful
+representation of that token.
+
+01:00:45.890 --> 01:00:50.890
+So what it will do is see
+how similar that quantity
+
+01:00:50.890 --> 01:00:56.430
+is to keys of the sequence
+that are associated
+
+01:00:56.430 --> 01:01:00.150
+with each token in the sequence.
+
+01:01:00.150 --> 01:01:03.870
+And once it determines
+the magnitude at which it
+
+01:01:03.870 --> 01:01:09.310
+is similar to each token,
+we will associate a value
+
+01:01:09.310 --> 01:01:12.870
+to each of these tokens.
+
+01:01:12.870 --> 01:01:15.910
+So in other words, we want
+to express the representation
+
+01:01:15.910 --> 01:01:19.350
+of Teddy bear as a function
+of all the other tokens
+
+01:01:19.350 --> 01:01:20.510
+in the sequence.
+
+01:01:20.510 --> 01:01:23.750
+So what we will do is first
+determine the weights.
+
+01:01:23.750 --> 01:01:25.130
+So it's a weighted average.
+
+01:01:25.130 --> 01:01:25.970
+We want the weights.
+
+01:01:25.970 --> 01:01:29.550
+The weights are determined by
+how similar the query for Teddy
+
+01:01:29.550 --> 01:01:33.270
+bear is to each key.
+
+01:01:33.270 --> 01:01:38.030
+And then the actual value
+will be just the value vector
+
+01:01:38.030 --> 01:01:42.290
+corresponding to each token.
+
+01:01:42.290 --> 01:01:44.970
+So it will be something
+like-- if I were to write it,
+
+01:01:44.970 --> 01:01:50.270
+so it's like the sum
+of something that
+
+01:01:50.270 --> 01:01:52.410
+is representing the similarity.
+
+01:01:52.410 --> 01:01:59.960
+So Q and Ki, Vi.
+
+01:01:59.960 --> 01:02:01.760
+So this is your query.
+
+01:02:01.760 --> 01:02:06.480
+You're trying to determine
+how similar your query is
+
+01:02:06.480 --> 01:02:09.940
+to all the other keys with
+some similarity operations.
+
+01:02:09.940 --> 01:02:12.400
+So here's the dot
+product as an example.
+
+01:02:12.400 --> 01:02:13.460
+And you associate that.
+
+01:02:13.460 --> 01:02:15.480
+So this is a scalar.
+
+01:02:15.480 --> 01:02:17.760
+This is a scalar.
+
+01:02:17.760 --> 01:02:22.340
+And you associate that with
+Vi which is also a vector.
+
+01:02:25.640 --> 01:02:28.973
+So this may seem a
+little bit abstract,
+
+01:02:28.973 --> 01:02:30.140
+so I'll give you an example.
+
+01:02:30.140 --> 01:02:34.160
+So let's assume we want to know
+what best describes the Teddy
+
+01:02:34.160 --> 01:02:35.080
+bear.
+
+01:02:35.080 --> 01:02:37.240
+The query can be
+asking itself, OK,
+
+01:02:37.240 --> 01:02:39.560
+what best describes
+a Teddy bear?
+
+01:02:39.560 --> 01:02:40.860
+And you look at all the tokens.
+
+01:02:40.860 --> 01:02:45.680
+You're like, oh, "cute" actually
+describes the Teddy bear pretty
+
+01:02:45.680 --> 01:02:46.960
+well.
+
+01:02:46.960 --> 01:02:50.000
+So maybe the dot
+product between cute,
+
+01:02:50.000 --> 01:02:56.260
+Teddy bear, and K cute
+is going to be high.
+
+01:02:56.260 --> 01:02:58.500
+So the representation
+that you compute
+
+01:02:58.500 --> 01:03:01.860
+for Teddy bear is actually
+something that will depend
+
+01:03:01.860 --> 01:03:04.080
+heavily on cute, let's assume.
+
+01:03:06.660 --> 01:03:10.080
+So these are the concepts
+of query key value.
+
+01:03:10.080 --> 01:03:12.740
+Now the next question is,
+how do you obtain those?
+
+01:03:12.740 --> 01:03:16.300
+How do you obtain
+queries key values?
+
+01:03:16.300 --> 01:03:20.460
+So these are actually
+quantities that you can
+
+01:03:20.460 --> 01:03:25.220
+learn with projection matrices.
+
+01:03:25.220 --> 01:03:28.620
+So you initially
+have some input token
+
+01:03:28.620 --> 01:03:33.220
+that represents each token.
+
+01:03:33.220 --> 01:03:37.740
+And what you do is you
+take that representation,
+
+01:03:37.740 --> 01:03:45.860
+and you project it on the space
+of queries, of keys, of values
+
+01:03:45.860 --> 01:03:49.780
+through some
+projection matrices.
+
+01:03:49.780 --> 01:03:52.120
+And then you use
+these quantities
+
+01:03:52.120 --> 01:04:00.440
+in order to compute meaningful
+representations of tokens.
+
+01:04:00.440 --> 01:04:02.272
+Yes.
+
+01:04:02.272 --> 01:04:02.980
+Amazing question.
+
+01:04:02.980 --> 01:04:04.420
+So the question
+is, what is the T?
+
+01:04:04.420 --> 01:04:07.340
+So T is actually just to
+be mathematically rigorous.
+
+01:04:07.340 --> 01:04:09.840
+So T is transpose.
+
+01:04:09.840 --> 01:04:17.620
+So it's just that this, you can
+also write it as QK transpose.
+
+01:04:25.400 --> 01:04:28.320
+Any other question?
+
+01:04:28.320 --> 01:04:30.220
+So we have a detailed
+example later.
+
+01:04:30.220 --> 01:04:36.400
+So in case that roughly makes
+sense, I think that's great.
+
+01:04:36.400 --> 01:04:40.240
+We'll see that in a second.
+
+01:04:40.240 --> 01:04:43.080
+So it just turns out
+that what I described
+
+01:04:43.080 --> 01:04:46.680
+is something that is
+very nicely-- something
+
+01:04:46.680 --> 01:04:52.180
+you can express in mathematical
+terms with matrices.
+
+01:04:52.180 --> 01:04:55.700
+So in particular, the
+operation I just mentioned
+
+01:04:55.700 --> 01:04:57.500
+is something that
+can be expressed
+
+01:04:57.500 --> 01:05:02.660
+as the softmax of the
+query and the keys.
+
+01:05:02.660 --> 01:05:08.180
+And you scale that by some
+factor times the values.
+
+01:05:08.180 --> 01:05:13.980
+And actually, I maybe have
+enough time for you to say why.
+
+01:05:13.980 --> 01:05:17.100
+So let's assume you have--
+
+01:05:17.100 --> 01:05:18.820
+so the softmax is
+just a way for you
+
+01:05:18.820 --> 01:05:24.000
+to get the sum of the
+coefficients being equal to 1.
+
+01:05:24.000 --> 01:05:25.900
+So that's roughly what it does.
+
+01:05:25.900 --> 01:05:32.660
+But the question is, well, if
+you have query key transpose V--
+
+01:05:32.660 --> 01:05:38.660
+I mean, more or less the
+softmax and the scaling,
+
+01:05:38.660 --> 01:05:42.740
+why does it give you the
+thing that we saw above?
+
+01:05:42.740 --> 01:05:48.350
+Well, let's assume that
+your query matrix has
+
+01:05:48.350 --> 01:05:54.110
+all your queries, so Q1, Qn.
+
+01:05:54.110 --> 01:05:57.730
+So 1 is the first
+index of your sequence.
+
+01:05:57.730 --> 01:05:59.550
+So let's assume in
+the previous slides
+
+01:05:59.550 --> 01:06:04.350
+that we say the first index
+is A. Let's say A is 1.
+
+01:06:04.350 --> 01:06:08.550
+And then the dot
+is n, let's assume.
+
+01:06:08.550 --> 01:06:16.870
+So we have the query for A up
+until the query for the dot.
+
+01:06:16.870 --> 01:06:22.430
+And you do the same for K and V.
+
+01:06:22.430 --> 01:06:30.870
+So if you multiply this query
+matrix times Q transpose,
+
+01:06:30.870 --> 01:06:38.570
+what you get is
+K1, like this, Kn.
+
+01:06:43.190 --> 01:06:49.090
+And so this is where you're
+glad some linear algebra.
+
+01:06:49.090 --> 01:06:50.970
+So matrix
+multiplication-- so you
+
+01:06:50.970 --> 01:07:01.090
+do this times this, which
+is the dot product of Q1 K1.
+
+01:07:01.090 --> 01:07:04.430
+And then second
+element is Q1 K2.
+
+01:07:11.650 --> 01:07:16.250
+So if you repeat this, you will
+have the matrix of the QIKJ.
+
+01:07:19.970 --> 01:07:22.430
+I'm going to maybe
+write that up up there.
+
+01:07:33.010 --> 01:07:37.970
+So I'm just going to write
+exactly what is above.
+
+01:07:37.970 --> 01:07:38.950
+So you have--
+
+01:07:47.270 --> 01:07:51.750
+Q1 K1.
+
+01:07:51.750 --> 01:07:55.130
+Up until Q1 Kn.
+
+01:07:58.670 --> 01:08:00.090
+And then you repeat that here.
+
+01:08:00.090 --> 01:08:00.890
+You put that here.
+
+01:08:00.890 --> 01:08:02.110
+You repeat that here.
+
+01:08:02.110 --> 01:08:22.270
+Now if you add a V in here,
+then what you obtain is V1 Vn.
+
+01:08:22.270 --> 01:08:26.550
+So again, you do your
+matrix multiplication.
+
+01:08:26.550 --> 01:08:29.710
+And here, what you get is--
+
+01:08:29.710 --> 01:08:33.350
+this times this plus this times
+this plus this times this,
+
+01:08:33.350 --> 01:08:34.670
+up until here.
+
+01:08:34.670 --> 01:08:46.020
+So you have the sum of Q1 Ki Vi.
+
+01:08:48.600 --> 01:08:58.760
+And the same up until
+the sum of Qn, Ki, Vi.
+
+01:09:01.640 --> 01:09:06.080
+So long story
+short, I just wanted
+
+01:09:06.080 --> 01:09:13.120
+to say that the fact
+of expressing something
+
+01:09:13.120 --> 01:09:18.222
+as a function of this similarity
+operation and the values
+
+01:09:18.222 --> 01:09:19.680
+is something that
+you can represent
+
+01:09:19.680 --> 01:09:21.180
+very well with matrices.
+
+01:09:23.960 --> 01:09:26.920
+And you will see this
+formula quite often.
+
+01:09:26.920 --> 01:09:29.439
+So I believe there was a
+question on the midterm.
+
+01:09:29.439 --> 01:09:35.080
+So hint, this formula
+can be important.
+
+01:09:35.080 --> 01:09:40.040
+And so now that we know how
+self-attention is defined,
+
+01:09:40.040 --> 01:09:43.220
+how self-attention works,
+now we're going to, hopefully
+
+01:09:43.220 --> 01:09:48.859
+in the next 17 minutes, see
+how self-attention is used
+
+01:09:48.859 --> 01:09:52.439
+in the transformer
+architecture, which is a--
+
+01:09:52.439 --> 01:09:55.900
+which is the architecture that
+was introduced in the "Attention
+
+01:09:55.900 --> 01:09:58.140
+is All You Need" paper.
+
+01:09:58.140 --> 01:10:03.180
+So why is it called
+"Attention is All You Need?"
+
+01:10:03.180 --> 01:10:10.800
+Well, the authors at the time,
+most models, were recurrent.
+
+01:10:10.800 --> 01:10:12.420
+They were based on RNN.
+
+01:10:12.420 --> 01:10:16.740
+So they used to compute
+things in a recurrent fashion.
+
+01:10:16.740 --> 01:10:18.880
+But here, what we're
+saying is actually,
+
+01:10:18.880 --> 01:10:25.700
+we don't care about keeping
+a hidden state by recurring
+
+01:10:25.700 --> 01:10:27.160
+through tokens.
+
+01:10:27.160 --> 01:10:28.780
+We're not doing that.
+
+01:10:28.780 --> 01:10:32.300
+What we're doing instead
+is letting tokens
+
+01:10:32.300 --> 01:10:39.200
+interact with all tokens through
+direct connections, a.k.a.
+
+01:10:39.200 --> 01:10:44.200
+through self-attention, which
+is why attention is all you
+
+01:10:44.200 --> 01:10:46.400
+Need.
+
+01:10:46.400 --> 01:10:48.640
+So this paper was
+released in the context
+
+01:10:48.640 --> 01:10:51.200
+of machine translation.
+
+01:10:51.200 --> 01:10:54.160
+So in this context, we're
+interested in translating
+
+01:10:54.160 --> 01:10:56.760
+a source text, let's
+say in English, over
+
+01:10:56.760 --> 01:11:00.200
+to another language,
+let's say in French.
+
+01:11:00.200 --> 01:11:05.960
+And what we do is we have two
+components in the transformer.
+
+01:11:05.960 --> 01:11:10.240
+On the left, we have
+what we call an encoder.
+
+01:11:10.240 --> 01:11:14.040
+And the role of the
+encoder is to compute
+
+01:11:14.040 --> 01:11:17.480
+meaningful representations
+for the source
+
+01:11:17.480 --> 01:11:21.440
+text that is fed as input.
+
+01:11:21.440 --> 01:11:23.840
+And we have a second
+part of the transformer
+
+01:11:23.840 --> 01:11:26.640
+which is called the decoder.
+
+01:11:26.640 --> 01:11:29.760
+And the role of the
+decoder is to use
+
+01:11:29.760 --> 01:11:33.840
+the meaningful representations
+from the encoder
+
+01:11:33.840 --> 01:11:37.170
+along with some
+internal embeddings
+
+01:11:37.170 --> 01:11:42.630
+that it is computing in order
+to generate the translation.
+
+01:11:45.370 --> 01:11:49.530
+So that is the context in which
+the transformer was released,
+
+01:11:49.530 --> 01:11:51.770
+and it performed great.
+
+01:11:51.770 --> 01:11:55.810
+And it is at the foundation
+of modern-day LLMs, which
+
+01:11:55.810 --> 01:11:58.030
+is the reason why
+we're focusing on this.
+
+01:11:58.030 --> 01:12:00.490
+So that's the reason
+why we're here.
+
+01:12:00.490 --> 01:12:04.530
+The reason why I wrote these
+formulas on the Blackboard
+
+01:12:04.530 --> 01:12:06.850
+is because I think
+this is probably
+
+01:12:06.850 --> 01:12:10.770
+the most important formula
+when it comes to transformers.
+
+01:12:10.770 --> 01:12:16.770
+So just visualizing this in
+terms of matrix multiplies
+
+01:12:16.770 --> 01:12:19.710
+is very important.
+
+01:12:19.710 --> 01:12:23.610
+So what we will do now is
+walk through each component
+
+01:12:23.610 --> 01:12:28.432
+of the transformer and see
+how this all comes together.
+
+01:12:28.432 --> 01:12:29.890
+And I'm looking at
+you with respect
+
+01:12:29.890 --> 01:12:31.850
+to the position embeddings.
+
+01:12:31.850 --> 01:12:34.030
+We're going to talk
+about this now.
+
+01:12:34.030 --> 01:12:39.590
+So for machine
+translation, what you
+
+01:12:39.590 --> 01:12:44.990
+get as input is a text
+in a source language.
+
+01:12:44.990 --> 01:12:47.230
+And your task is to
+translate that source
+
+01:12:47.230 --> 01:12:50.990
+language, that text
+in the source language
+
+01:12:50.990 --> 01:12:53.910
+into a target language.
+
+01:12:53.910 --> 01:12:57.870
+So your first task
+is to understand
+
+01:12:57.870 --> 01:13:00.750
+what your source text is about.
+
+01:13:00.750 --> 01:13:04.030
+So here, you have
+an input embedding
+
+01:13:04.030 --> 01:13:08.430
+that is tasked with just
+converting this input
+
+01:13:08.430 --> 01:13:13.510
+text into tokens and then
+associating each of these tokens
+
+01:13:13.510 --> 01:13:16.310
+with some embedding
+that you can learn.
+
+01:13:16.310 --> 01:13:20.630
+This embedding is only
+with respect to each token.
+
+01:13:20.630 --> 01:13:24.070
+It is not context
+aware in any way.
+
+01:13:24.070 --> 01:13:28.470
+And what you do is you
+add an embedding that
+
+01:13:28.470 --> 01:13:31.130
+is associated with the
+position that the token is
+
+01:13:31.130 --> 01:13:33.930
+in the sequence.
+
+01:13:33.930 --> 01:13:39.290
+And this is where we know
+where tokens are located.
+
+01:13:39.290 --> 01:13:42.970
+So we add the token
+embedding and the position
+
+01:13:42.970 --> 01:13:46.290
+embedding together.
+
+01:13:46.290 --> 01:13:48.250
+And so the question
+you may have is, well,
+
+01:13:48.250 --> 01:13:50.650
+how do you obtain the
+position embedding?
+
+01:13:50.650 --> 01:13:52.730
+So you have different ways.
+
+01:13:52.730 --> 01:13:56.930
+The ways people-- like
+the authors have tried
+
+01:13:56.930 --> 01:13:58.650
+is actually two ways.
+
+01:13:58.650 --> 01:14:03.233
+One way is to learn
+the embedding.
+
+01:14:03.233 --> 01:14:04.650
+The second way is
+to actually have
+
+01:14:04.650 --> 01:14:11.090
+something that is a function
+of just different frequencies.
+
+01:14:11.090 --> 01:14:13.490
+So there are some pros and cons.
+
+01:14:13.490 --> 01:14:16.530
+But I just want to--
+so I think the learning
+
+01:14:16.530 --> 01:14:18.570
+way is very natural.
+
+01:14:18.570 --> 01:14:23.690
+But a clear con is if you have
+an input text that is longer
+
+01:14:23.690 --> 01:14:27.130
+than what you have learned at
+training time-- so if you have,
+
+01:14:27.130 --> 01:14:31.780
+let's say 1,000 tokens as
+input but you already--
+
+01:14:31.780 --> 01:14:35.540
+you only have learned positions,
+like embeddings for positions,
+
+01:14:35.540 --> 01:14:38.480
+up to, let's say 500,
+then you're out of luck.
+
+01:14:38.480 --> 01:14:41.240
+You cannot represent
+positions greater than that,
+
+01:14:41.240 --> 01:14:46.620
+which is why the arbitrary,
+predefined representation can be
+
+01:14:46.620 --> 01:14:48.420
+useful.
+
+01:14:48.420 --> 01:14:51.620
+And I just want
+to illustrate why
+
+01:14:51.620 --> 01:14:56.420
+choosing different frequencies
+could be a good way to represent
+
+01:14:56.420 --> 01:14:59.300
+something like the position.
+
+01:14:59.300 --> 01:15:01.900
+So you may have a
+watch, and you may
+
+01:15:01.900 --> 01:15:04.900
+notice that you
+represent the time with,
+
+01:15:04.900 --> 01:15:11.320
+let's say an hour thingy,
+with the minutes, seconds.
+
+01:15:11.320 --> 01:15:14.340
+They all turn at
+different frequencies.
+
+01:15:14.340 --> 01:15:17.220
+So if you want to read
+the time, so for 4:49.
+
+01:15:17.220 --> 01:15:22.280
+It's 4, which is the hour piece.
+
+01:15:22.280 --> 01:15:25.180
+And then you have the minutes,
+and then you have the seconds.
+
+01:15:25.180 --> 01:15:28.600
+And each of them they turn
+at different frequencies.
+
+01:15:28.600 --> 01:15:30.600
+And if you put
+them together, you
+
+01:15:30.600 --> 01:15:34.440
+can exactly know
+what time it is.
+
+01:15:34.440 --> 01:15:37.280
+So this is the
+idea behind having
+
+01:15:37.280 --> 01:15:41.860
+a vector of elements that vary
+with different frequencies.
+
+01:15:41.860 --> 01:15:45.760
+So you can obtain that with
+cosine and sine functions.
+
+01:15:45.760 --> 01:15:48.720
+And this is what
+people use here.
+
+01:15:48.720 --> 01:15:51.000
+So the good thing with
+these representations
+
+01:15:51.000 --> 01:15:59.820
+is that positions that are close
+to one another are very similar.
+
+01:15:59.820 --> 01:16:02.660
+And the ones that are far from
+one another are dissimilar.
+
+01:16:02.660 --> 01:16:05.280
+So this is one nice property.
+
+01:16:05.280 --> 01:16:08.520
+So this is one way of
+representing the positions.
+
+01:16:08.520 --> 01:16:10.220
+Anyway, maybe I
+digress too much.
+
+01:16:10.220 --> 01:16:12.740
+We're going to talk more
+about position next time.
+
+01:16:12.740 --> 01:16:18.320
+But long story short, we
+can represent tokens along
+
+01:16:18.320 --> 01:16:20.040
+with their positions.
+
+01:16:20.040 --> 01:16:22.640
+So at this stage,
+what we did was
+
+01:16:22.640 --> 01:16:27.580
+add the token embedding
+and the position embedding.
+
+01:16:27.580 --> 01:16:30.940
+And here, we come
+into the encoder.
+
+01:16:30.940 --> 01:16:34.260
+So the encoder is the component
+of the transformer which
+
+01:16:34.260 --> 01:16:37.740
+is tasked with computing
+meaningful representations
+
+01:16:37.740 --> 01:16:39.620
+of the tokens.
+
+01:16:39.620 --> 01:16:43.700
+So here, we have one
+very important type
+
+01:16:43.700 --> 01:16:47.207
+of layer called the
+attention layer.
+
+01:16:47.207 --> 01:16:49.040
+It's actually called a
+self-attention layer.
+
+01:16:49.040 --> 01:16:51.020
+So a self-attention
+layer, what does it do?
+
+01:16:51.020 --> 01:16:56.260
+What it does is
+computes representations
+
+01:16:56.260 --> 01:17:01.060
+of tokens as a function
+of all other tokens.
+
+01:17:01.060 --> 01:17:06.700
+And this is where this query
+key value thing happens.
+
+01:17:06.700 --> 01:17:08.700
+So you're going to see
+that in the example
+
+01:17:08.700 --> 01:17:10.200
+that Shervine will
+walk you through.
+
+01:17:10.200 --> 01:17:15.380
+But the idea is to learn
+projection matrices that
+
+01:17:15.380 --> 01:17:21.420
+will allow you to project your
+tokens into a space of queries,
+
+01:17:21.420 --> 01:17:25.240
+keys, and values,
+that will then allow
+
+01:17:25.240 --> 01:17:29.380
+them to interact through
+the formula that we saw.
+
+01:17:32.680 --> 01:17:35.880
+So that allows you to
+represent your tokens
+
+01:17:35.880 --> 01:17:38.560
+as a function of others.
+
+01:17:38.560 --> 01:17:42.560
+And then you have
+another layer called
+
+01:17:42.560 --> 01:17:45.480
+the feedforward
+neural network, which
+
+01:17:45.480 --> 01:17:52.000
+is a way for your architecture
+to project representations
+
+01:17:52.000 --> 01:17:57.760
+into spaces of higher dimension,
+along with some activation
+
+01:17:57.760 --> 01:18:00.780
+function, which allows you
+to learn nonlinearities.
+
+01:18:04.320 --> 01:18:05.800
+So you go through the encoder.
+
+01:18:05.800 --> 01:18:08.440
+At the tip of the
+encoder, what you get
+
+01:18:08.440 --> 01:18:12.600
+is a very meaningful
+representation per token.
+
+01:18:12.600 --> 01:18:18.400
+That is a function of all
+other tokens in the sequence.
+
+01:18:18.400 --> 01:18:23.570
+So what you do is now, when
+you want to translate the text,
+
+01:18:23.570 --> 01:18:25.650
+so you take your
+special token that we
+
+01:18:25.650 --> 01:18:28.890
+saw in the very beginning,
+end of sequence-- sorry,
+
+01:18:28.890 --> 01:18:30.210
+beginning of sequence.
+
+01:18:30.210 --> 01:18:31.610
+So you tell your
+model, well, now
+
+01:18:31.610 --> 01:18:33.770
+I want to start the generation.
+
+01:18:33.770 --> 01:18:39.530
+So you input begin of sequence
+as an input to the decoder.
+
+01:18:39.530 --> 01:18:41.890
+You add the position
+encoding that
+
+01:18:41.890 --> 01:18:44.410
+is associated with
+that token, which
+
+01:18:44.410 --> 01:18:46.970
+is the first element
+in the sequence.
+
+01:18:46.970 --> 01:18:56.770
+And what you do is you enter the
+decoder, which does two things.
+
+01:18:56.770 --> 01:19:04.570
+The first thing is it also has
+an self-attention mechanism
+
+01:19:04.570 --> 01:19:09.050
+with respect to the token
+itself and all the tokens that
+
+01:19:09.050 --> 01:19:12.050
+was generated so far.
+
+01:19:12.050 --> 01:19:17.730
+So it tries to express each
+token as a function of itself
+
+01:19:17.730 --> 01:19:20.750
+and all the tokens that
+were generated so far.
+
+01:19:20.750 --> 01:19:22.810
+So in the beginning
+of sequence case,
+
+01:19:22.810 --> 01:19:24.730
+it's the only token that
+was generated so far.
+
+01:19:24.730 --> 01:19:26.310
+So that's it.
+
+01:19:26.310 --> 01:19:31.410
+And then you have a
+second attention layer,
+
+01:19:31.410 --> 01:19:36.470
+which is a different kind,
+where you're actually
+
+01:19:36.470 --> 01:19:41.950
+letting the representations from
+tokens that were generated so
+
+01:19:41.950 --> 01:19:48.230
+far and let them interact
+with tokens from the source,
+
+01:19:48.230 --> 01:19:52.150
+from your input source,
+from the source language.
+
+01:19:52.150 --> 01:19:54.790
+So I'm not sure if you can
+see in the illustration,
+
+01:19:54.790 --> 01:19:59.530
+you have one arrow which is
+from what was generated so far.
+
+01:19:59.530 --> 01:20:03.590
+And then you have two arrows
+coming from the encoder.
+
+01:20:03.590 --> 01:20:09.390
+So the one arrow from the
+generator so far is the query.
+
+01:20:09.390 --> 01:20:12.950
+And the key and the value
+are coming from the encoder
+
+01:20:12.950 --> 01:20:15.710
+because you're
+asking yourself, how
+
+01:20:15.710 --> 01:20:19.290
+can I express this token
+as a function of all
+
+01:20:19.290 --> 01:20:24.090
+the tokens in the input text?
+
+01:20:24.090 --> 01:20:26.090
+By the way, does
+that make sense?
+
+01:20:26.090 --> 01:20:27.410
+Yeah.
+
+01:20:27.410 --> 01:20:28.055
+OK, great.
+
+01:20:28.055 --> 01:20:28.930
+And then you do that.
+
+01:20:28.930 --> 01:20:30.530
+And then you have
+another layer that's
+
+01:20:30.530 --> 01:20:32.530
+called the feedforward
+neural network that
+
+01:20:32.530 --> 01:20:39.890
+again, allows your model to
+learn ways to project your data.
+
+01:20:39.890 --> 01:20:45.010
+And then at the end, you get a
+very meaningful representation
+
+01:20:45.010 --> 01:20:48.515
+of the word that the token
+that you passed as inputs.
+
+01:20:48.515 --> 01:20:50.390
+So here, in this case,
+in the very beginning,
+
+01:20:50.390 --> 01:20:52.450
+you have beginning of sequence.
+
+01:20:52.450 --> 01:20:55.530
+And at the end of
+the decoder, you
+
+01:20:55.530 --> 01:21:00.130
+have a very meaningful
+representation of that token.
+
+01:21:00.130 --> 01:21:03.130
+So what you do is you then
+project that representation
+
+01:21:03.130 --> 01:21:07.530
+on the space of vocabularies.
+
+01:21:07.530 --> 01:21:13.050
+And you get probabilities that
+correspond to what you think
+
+01:21:13.050 --> 01:21:14.190
+is the next token.
+
+01:21:17.340 --> 01:21:22.340
+And so here, translation
+is just figuring out
+
+01:21:22.340 --> 01:21:23.332
+what the next token is.
+
+01:21:23.332 --> 01:21:25.040
+So you figure out what
+the next token is.
+
+01:21:25.040 --> 01:21:27.780
+And then you choose
+what that next token
+
+01:21:27.780 --> 01:21:29.620
+is based on the probabilities.
+
+01:21:29.620 --> 01:21:33.320
+And then you repeat that
+in an autoregressive way.
+
+01:21:33.320 --> 01:21:37.720
+So you put that new decoded
+token as input of the decoder.
+
+01:21:37.720 --> 01:21:39.640
+And you repeat exactly
+what I mentioned.
+
+01:21:42.300 --> 01:21:46.460
+So we have five minutes.
+
+01:21:46.460 --> 01:21:48.860
+I have some tricks
+to tell you, but I
+
+01:21:48.860 --> 01:21:50.868
+want to make sure we're
+all on the same page.
+
+01:21:50.868 --> 01:21:52.660
+So I'm just going to
+open the floor in case
+
+01:21:52.660 --> 01:21:54.840
+there is any questions so far.
+
+01:21:54.840 --> 01:21:57.020
+We've seen a lot of
+things, by the way.
+
+01:21:57.020 --> 01:21:59.900
+And this first
+lecture is probably
+
+01:21:59.900 --> 01:22:04.380
+one of the most difficult in
+terms of number of concepts
+
+01:22:04.380 --> 01:22:08.780
+we see, so completely normal if
+you feel like we've seen a lot.
+
+01:22:08.780 --> 01:22:12.240
+Any questions on this?
+
+01:22:12.240 --> 01:22:13.920
+Yep.
+
+01:22:13.920 --> 01:22:16.280
+So the question is-- there
+are multiple arrows merging
+
+01:22:16.280 --> 01:22:17.280
+into one.
+
+01:22:17.280 --> 01:22:19.100
+So it's because we have
+not seen it so far.
+
+01:22:19.100 --> 01:22:21.960
+So this is a trick that
+actually we can see now.
+
+01:22:21.960 --> 01:22:26.040
+So you may be referring to this
+one, the residual connections.
+
+01:22:26.040 --> 01:22:31.640
+So this is actually a trick to
+help your model learn better.
+
+01:22:31.640 --> 01:22:34.000
+So these residual
+connections, they're
+
+01:22:34.000 --> 01:22:36.840
+very useful in
+architectures that
+
+01:22:36.840 --> 01:22:39.400
+are deep because
+they allow your model
+
+01:22:39.400 --> 01:22:44.040
+to pass in features directly
+instead of having them
+
+01:22:44.040 --> 01:22:48.920
+be modified by some sublayer.
+
+01:22:48.920 --> 01:22:53.400
+So one way I like to think about
+this is instead of thinking
+
+01:22:53.400 --> 01:22:59.900
+about each layer as something
+that modifies the whole input--
+
+01:22:59.900 --> 01:23:05.220
+so instead of saying my layer
+is just changing the input--
+
+01:23:05.220 --> 01:23:09.160
+so let's assume your input is--
+
+01:23:09.160 --> 01:23:13.740
+let's assume your input is x.
+
+01:23:13.740 --> 01:23:15.980
+Instead of saying that
+the output of a layer
+
+01:23:15.980 --> 01:23:19.580
+is some function of
+x, what you're saying
+
+01:23:19.580 --> 01:23:26.960
+is the output of your layer
+is some function of x plus x.
+
+01:23:26.960 --> 01:23:28.460
+And the way I like
+to think about it
+
+01:23:28.460 --> 01:23:34.660
+is it's as if you were taking
+x and modifying it, as opposed
+
+01:23:34.660 --> 01:23:38.860
+to changing completely x.
+
+01:23:38.860 --> 01:23:47.860
+So in practice, doing that
+helps with back propagation
+
+01:23:47.860 --> 01:23:52.060
+and allows your model
+to learn better.
+
+01:23:52.060 --> 01:23:54.160
+So this is what
+this arrow is about.
+
+01:23:54.160 --> 01:23:55.420
+Yeah.
+
+01:23:55.420 --> 01:23:57.660
+So speaking of the tricks,
+I have some other tricks
+
+01:23:57.660 --> 01:23:58.440
+to tell you.
+
+01:23:58.440 --> 01:24:03.180
+So one other is the fact of
+normalizing the activations
+
+01:24:03.180 --> 01:24:06.660
+with what we call
+layer normalization.
+
+01:24:06.660 --> 01:24:11.110
+So it also helps
+with convergence.
+
+01:24:11.110 --> 01:24:14.350
+You may have seen
+the word "masked"
+
+01:24:14.350 --> 01:24:16.410
+self-attention in the decoder.
+
+01:24:16.410 --> 01:24:20.470
+And the reason why it's masked
+is because you want your decoder
+
+01:24:20.470 --> 01:24:26.110
+tokens to only interact with
+tokens you have decoded so far,
+
+01:24:26.110 --> 01:24:29.850
+because you cannot interact with
+tokens you have not decoded yet.
+
+01:24:32.430 --> 01:24:35.890
+Multi-head attention-- so what
+I described with QKV, well,
+
+01:24:35.890 --> 01:24:39.090
+you can do it with
+in different ways.
+
+01:24:39.090 --> 01:24:42.230
+You can learn
+different projections.
+
+01:24:42.230 --> 01:24:46.350
+So for those of us who also are
+familiar with Vision-related
+
+01:24:46.350 --> 01:24:47.870
+models, who knows--
+
+01:24:47.870 --> 01:24:51.070
+who has a Vision
+background here?
+
+01:24:51.070 --> 01:24:53.270
+1, 2, OK.
+
+01:24:53.270 --> 01:24:56.110
+So in case you
+know-- when it comes
+
+01:24:56.110 --> 01:24:58.990
+to convolutional
+neural networks,
+
+01:24:58.990 --> 01:25:02.430
+when you do the
+convolution operation,
+
+01:25:02.430 --> 01:25:04.710
+you can use several
+filters, which
+
+01:25:04.710 --> 01:25:08.810
+are different ways of
+convoluting on your inputs.
+
+01:25:08.810 --> 01:25:11.650
+So having different
+attention heads is also a way
+
+01:25:11.650 --> 01:25:13.810
+for your model to learn--
+
+01:25:13.810 --> 01:25:16.850
+to have different ways
+to learn the same thing
+
+01:25:16.850 --> 01:25:19.410
+through different
+projection matrices.
+
+01:25:19.410 --> 01:25:25.090
+And so you typically
+have h such heads.
+
+01:25:25.090 --> 01:25:29.330
+So another trick, dropout--
+who has heard of dropout?
+
+01:25:29.330 --> 01:25:30.190
+OK, great.
+
+01:25:30.190 --> 01:25:33.810
+Yeah, this is an
+idea that is not
+
+01:25:33.810 --> 01:25:37.430
+just applied in the
+transformer but widely used.
+
+01:25:37.430 --> 01:25:41.450
+So that one is a technique
+for which at training time,
+
+01:25:41.450 --> 01:25:45.050
+you intentionally
+drop some units
+
+01:25:45.050 --> 01:25:49.210
+with some probability
+in order for you
+
+01:25:49.210 --> 01:25:54.810
+to have your model to not rely
+too much on some features.
+
+01:25:54.810 --> 01:26:00.250
+And that allows your model
+to generalize better.
+
+01:26:00.250 --> 01:26:01.710
+And then what do I have?
+
+01:26:01.710 --> 01:26:04.310
+Yeah, label smoothing is another
+technique that was used here.
+
+01:26:04.310 --> 01:26:06.350
+So the idea behind
+label smoothing
+
+01:26:06.350 --> 01:26:11.630
+is when you tell your model
+to predict the next words.
+
+01:26:11.630 --> 01:26:17.490
+Instead of saying-- let's
+say what a nice day.
+
+01:26:17.490 --> 01:26:20.230
+Instead of saying, OK, I want
+you to predict the word "day"
+
+01:26:20.230 --> 01:26:25.110
+100%, your model is saying you
+can predict the word "day--"
+
+01:26:25.110 --> 01:26:26.410
+actually, not 100%.
+
+01:26:26.410 --> 01:26:30.190
+You can have also other words,
+because in language, you
+
+01:26:30.190 --> 01:26:33.750
+can complete things in different
+ways and still be valid.
+
+01:26:33.750 --> 01:26:37.570
+So you can say, what a nice
+day, what a nice class,
+
+01:26:37.570 --> 01:26:41.110
+what a nice evening.
+
+01:26:41.110 --> 01:26:46.190
+Anyways, so label
+smoothing takes
+
+01:26:46.190 --> 01:26:52.270
+these labels, and it
+softens it by saying,
+
+01:26:52.270 --> 01:26:55.190
+OK, so instead of
+your model needing
+
+01:26:55.190 --> 01:27:01.950
+to predict that label, as in you
+need to predict that model 100%,
+
+01:27:01.950 --> 01:27:08.360
+you say, OK, actually, the
+label that I wanted to predict
+
+01:27:08.360 --> 01:27:10.480
+is maybe, I don't know, 90%.
+
+01:27:10.480 --> 01:27:13.700
+And then the remaining 10%
+is all the other words,
+
+01:27:13.700 --> 01:27:16.360
+in the vocabulary.
+
+01:27:16.360 --> 01:27:20.380
+So it just allows your model
+to generalize a bit better.
+
+01:27:20.380 --> 01:27:23.520
+And authors have
+found that this also
+
+01:27:23.520 --> 01:27:28.000
+improves metrics when it
+comes to machine translation.
+
+01:27:28.000 --> 01:27:31.660
+So for those of you who know
+BLEU is one such metric.
+
+01:27:34.200 --> 01:27:38.480
+And with that, I'll
+give it to Shervine.
+
+01:27:38.480 --> 01:27:40.120
+Thank you, Afshine.
+
+01:27:40.120 --> 01:27:42.480
+So in this last
+part, our goal is
+
+01:27:42.480 --> 01:27:46.280
+going to piece all that
+Afshine talked about together
+
+01:27:46.280 --> 01:27:50.200
+in one single example and see
+exactly how this computation
+
+01:27:50.200 --> 01:27:53.920
+works in a precise example.
+
+01:27:53.920 --> 01:27:57.400
+So as Afshine mentioned,
+the original transformer
+
+01:27:57.400 --> 01:28:00.220
+is in the business of
+machine translation.
+
+01:28:00.220 --> 01:28:04.140
+So what we're going to take
+is a sentence in English,
+
+01:28:04.140 --> 01:28:06.340
+and we're going to
+try to translate it
+
+01:28:06.340 --> 01:28:07.860
+into some other language.
+
+01:28:07.860 --> 01:28:10.540
+So in the example of the
+original transformer paper,
+
+01:28:10.540 --> 01:28:12.080
+they took French and German.
+
+01:28:12.080 --> 01:28:14.060
+So let's take that.
+
+01:28:14.060 --> 01:28:17.000
+And let's start with our
+favorite toy example,
+
+01:28:17.000 --> 01:28:19.140
+so "A cute Teddy
+bear is reading."
+
+01:28:19.140 --> 01:28:23.020
+And as you recall, the
+first step in all of this
+
+01:28:23.020 --> 01:28:24.820
+is tokenization.
+
+01:28:24.820 --> 01:28:27.940
+And Afshine mentioned
+that it's a way
+
+01:28:27.940 --> 01:28:33.260
+to arbitrarily split these
+words into atomic entities.
+
+01:28:33.260 --> 01:28:37.620
+So Afshine mentioned subword
+is an optimal way to do it.
+
+01:28:37.620 --> 01:28:39.200
+But for the sake
+of this example,
+
+01:28:39.200 --> 01:28:41.340
+I'm going to take
+another split just
+
+01:28:41.340 --> 01:28:43.220
+to prove that it's arbitrary.
+
+01:28:43.220 --> 01:28:46.220
+So let's say we
+split it like this.
+
+01:28:46.220 --> 01:28:49.620
+As Afshine mentioned, we
+have also special tokens.
+
+01:28:49.620 --> 01:28:55.100
+So beginning of sentence and
+end of sequence that you put
+
+01:28:55.100 --> 01:28:59.960
+to characterize where your
+sequence starts and ends.
+
+01:28:59.960 --> 01:29:03.560
+Now let's look at
+how we encode them.
+
+01:29:03.560 --> 01:29:08.960
+So we have, in
+this architecture,
+
+01:29:08.960 --> 01:29:12.800
+a lookup table that is
+made of learnable weights.
+
+01:29:12.800 --> 01:29:14.900
+So this is what we
+call embeddings.
+
+01:29:14.900 --> 01:29:19.160
+And these will be learned as
+part of the learning process.
+
+01:29:19.160 --> 01:29:22.680
+And as someone
+mentioned it here,
+
+01:29:22.680 --> 01:29:26.200
+if you want to perform attention
+in a way that's context aware
+
+01:29:26.200 --> 01:29:28.920
+and that you know where
+other tokens are positioned,
+
+01:29:28.920 --> 01:29:31.680
+you need that
+position information.
+
+01:29:31.680 --> 01:29:34.560
+And the original
+transformer paper
+
+01:29:34.560 --> 01:29:39.820
+puts this position information
+at the beginning of the input.
+
+01:29:39.820 --> 01:29:42.520
+So you add it additively.
+
+01:29:42.520 --> 01:29:47.520
+So let's say you call your
+embedding of size D model.
+
+01:29:47.520 --> 01:29:50.080
+Then your position embedding
+that Afshine described
+
+01:29:50.080 --> 01:29:54.040
+by a series of sines and
+cosines of different frequencies
+
+01:29:54.040 --> 01:29:56.820
+will be a vector
+of the same length
+
+01:29:56.820 --> 01:30:00.460
+and its additive operation.
+
+01:30:00.460 --> 01:30:04.020
+So at this stage, you
+end up with an embedding
+
+01:30:04.020 --> 01:30:06.720
+that's at least half learnable.
+
+01:30:06.720 --> 01:30:08.940
+So the lookup table
+that I mentioned to you
+
+01:30:08.940 --> 01:30:10.280
+is at least learnable.
+
+01:30:10.280 --> 01:30:14.300
+Maybe the positions as well
+depends on your design choice.
+
+01:30:14.300 --> 01:30:19.540
+And this is what you will put
+as an input to your encoder.
+
+01:30:19.540 --> 01:30:21.260
+So what happens next?
+
+01:30:21.260 --> 01:30:24.380
+Every token has
+this representation,
+
+01:30:24.380 --> 01:30:28.180
+and you can represent it
+in a nice matrix form.
+
+01:30:28.180 --> 01:30:30.180
+Let's go with it.
+
+01:30:30.180 --> 01:30:33.060
+And you're going to
+go into the encoder.
+
+01:30:33.060 --> 01:30:36.540
+And as we have seen, the
+first component of the encoder
+
+01:30:36.540 --> 01:30:40.900
+is going to be that
+self-attention layer.
+
+01:30:40.900 --> 01:30:47.600
+So you project these inputs
+into the space of queries.
+
+01:30:47.600 --> 01:30:52.300
+So for that, you have
+this Wq projection matrix.
+
+01:30:52.300 --> 01:30:54.020
+You get queries.
+
+01:30:54.020 --> 01:30:56.510
+With the same
+initial embeddings,
+
+01:30:56.510 --> 01:30:58.610
+you projected on keys.
+
+01:30:58.610 --> 01:31:02.790
+So you have a Wk
+projection matrix
+
+01:31:02.790 --> 01:31:06.230
+that you will learn to
+project it into keys K.
+
+01:31:06.230 --> 01:31:13.390
+And you do the same with
+values V. OK, great.
+
+01:31:13.390 --> 01:31:17.390
+And then based on that,
+you apply the formula
+
+01:31:17.390 --> 01:31:21.390
+that we mentioned that is so
+important, that softmax formula.
+
+01:31:21.390 --> 01:31:24.810
+And we do this matrix products.
+
+01:31:24.810 --> 01:31:28.230
+And then we obtain
+another matrix
+
+01:31:28.230 --> 01:31:34.070
+that is of same dimension
+as the matrix V.
+
+01:31:34.070 --> 01:31:38.090
+So before we dive deeper
+into more specifics,
+
+01:31:38.090 --> 01:31:42.430
+I just want for us to
+get on the same page
+
+01:31:42.430 --> 01:31:45.930
+on dimensions, because we talked
+about a lot of embeddings here.
+
+01:31:45.930 --> 01:31:47.330
+We project things.
+
+01:31:47.330 --> 01:31:48.830
+And I just want to
+make sure that we
+
+01:31:48.830 --> 01:31:55.610
+speak the same language as to
+what size are these objects.
+
+01:31:55.610 --> 01:32:01.890
+So your input sequence-- so
+we mentioned it's of length n.
+
+01:32:01.890 --> 01:32:06.250
+And one notation that people use
+to characterize these embedding
+
+01:32:06.250 --> 01:32:09.290
+size is D model.
+
+01:32:09.290 --> 01:32:13.810
+And then what the projection
+matrices of Q, K and V
+
+01:32:13.810 --> 01:32:18.690
+do is respectively, you
+start from the D model world,
+
+01:32:18.690 --> 01:32:22.570
+and you turn it into
+the query world,
+
+01:32:22.570 --> 01:32:25.310
+and then key worlds,
+and then value world.
+
+01:32:25.310 --> 01:32:29.890
+So this is why it's of
+size D model and DQ.
+
+01:32:29.890 --> 01:32:34.530
+And similarly, D
+model Dk, D model DV
+
+01:32:34.530 --> 01:32:37.170
+for each projection matrix.
+
+01:32:37.170 --> 01:32:41.490
+And you obtain these
+queries, keys, and values
+
+01:32:41.490 --> 01:32:44.970
+that are of size n rows
+but that are this time,
+
+01:32:44.970 --> 01:32:48.610
+into these query,
+key, and value space.
+
+01:32:48.610 --> 01:32:54.390
+So the number of columns
+is DQ, DK, and DV.
+
+01:32:54.390 --> 01:32:57.630
+And since you do,
+this matrix multiply,
+
+01:32:57.630 --> 01:33:02.270
+you need these constraints
+that DQ is equal to DK.
+
+01:33:02.270 --> 01:33:04.750
+So here, I put DQ and
+DK just for the sake
+
+01:33:04.750 --> 01:33:06.650
+of properly naming things.
+
+01:33:06.650 --> 01:33:12.630
+But DQ should be equal
+to DK by construction.
+
+01:33:12.630 --> 01:33:15.910
+And this is what you get.
+
+01:33:15.910 --> 01:33:18.430
+All good so far?
+
+01:33:18.430 --> 01:33:19.710
+OK, great.
+
+01:33:19.710 --> 01:33:25.750
+So now, let's pause a second
+and then go back to this example
+
+01:33:25.750 --> 01:33:29.830
+and see how the matrix-matrix
+computation work.
+
+01:33:29.830 --> 01:33:33.110
+So as Afshine was
+mentioning earlier,
+
+01:33:33.110 --> 01:33:39.190
+each token can be represented
+as a row embedding.
+
+01:33:39.190 --> 01:33:44.710
+And you have that for Q. If
+you consider K transpose,
+
+01:33:44.710 --> 01:33:49.160
+each column is going to be the
+embedding of a given vector.
+
+01:33:49.160 --> 01:33:51.520
+So when you do the
+matrix multiply,
+
+01:33:51.520 --> 01:33:56.120
+you're going to end up
+with a matrix of size n
+
+01:33:56.120 --> 01:34:02.620
+by n, where each cell is
+going to be some similarity.
+
+01:34:02.620 --> 01:34:06.520
+Like here, it's a dot
+product between a given
+
+01:34:06.520 --> 01:34:11.400
+query and a given key.
+
+01:34:11.400 --> 01:34:14.360
+And let's suppose
+here, you multiply this
+
+01:34:14.360 --> 01:34:19.320
+by V. What you're going to
+end up with is for each row,
+
+01:34:19.320 --> 01:34:21.080
+you have a given query.
+
+01:34:21.080 --> 01:34:24.600
+You project it on
+the space of keys
+
+01:34:24.600 --> 01:34:25.940
+that you have in your sentence.
+
+01:34:25.940 --> 01:34:29.400
+So you get some-- so you
+want to get some probability
+
+01:34:29.400 --> 01:34:32.000
+distribution over keys.
+
+01:34:32.000 --> 01:34:38.560
+And then you're going to
+use these weights to weight
+
+01:34:38.560 --> 01:34:39.520
+the values.
+
+01:34:39.520 --> 01:34:41.800
+And then you're going to
+do a sum of all of this.
+
+01:34:41.800 --> 01:34:44.160
+Now you're going to say,
+OK, Shervine and Afshine,
+
+01:34:44.160 --> 01:34:48.700
+you talk about QK transpose
+V, QK transpose V. This is not
+
+01:34:48.700 --> 01:34:49.640
+what the formula is.
+
+01:34:49.640 --> 01:34:51.340
+And then you are right.
+
+01:34:51.340 --> 01:34:53.480
+The formula is
+approximately this.
+
+01:34:53.480 --> 01:34:55.700
+We take the softmax
+in order to get
+
+01:34:55.700 --> 01:34:58.820
+a probability distribution
+that sums to 1
+
+01:34:58.820 --> 01:35:00.820
+and has nice properties.
+
+01:35:00.820 --> 01:35:02.840
+And one thing we
+haven't mentioned,
+
+01:35:02.840 --> 01:35:05.780
+but that the authors
+chose, is that you
+
+01:35:05.780 --> 01:35:12.460
+will normalize by some factor
+because the dimension decay will
+
+01:35:12.460 --> 01:35:15.520
+influence the variance that you
+might get as part of the sum.
+
+01:35:15.520 --> 01:35:19.020
+So if you want everything
+to be properly normalized,
+
+01:35:19.020 --> 01:35:22.620
+you can divide by the
+standard deviation.
+
+01:35:22.620 --> 01:35:26.460
+And this is what happens here.
+
+01:35:26.460 --> 01:35:31.680
+And so, as we mentioned, this
+is a multi-headed process.
+
+01:35:31.680 --> 01:35:35.900
+So you do not do this process
+once you do it h times.
+
+01:35:35.900 --> 01:35:40.340
+So this process of learning
+queries, keys, and values
+
+01:35:40.340 --> 01:35:41.780
+is done in parallel.
+
+01:35:41.780 --> 01:35:44.520
+And then at the
+end, you concatenate
+
+01:35:44.520 --> 01:35:51.760
+all these softmax of QK
+transpose over square root of DK
+
+01:35:51.760 --> 01:35:54.000
+times V, together.
+
+01:35:54.000 --> 01:35:56.560
+And then you have a
+last projection matrix
+
+01:35:56.560 --> 01:36:01.840
+that we call W0 that will turn
+these embeddings in a space
+
+01:36:01.840 --> 01:36:07.240
+HDV back into D model.
+
+01:36:07.240 --> 01:36:09.120
+So you have this nice
+property, by the way,
+
+01:36:09.120 --> 01:36:12.560
+in the transformer, where
+a lot of the operations
+
+01:36:12.560 --> 01:36:16.240
+make the original dimension
+of embeddings invariant.
+
+01:36:16.240 --> 01:36:18.800
+So you start with D
+model, you do a bunch
+
+01:36:18.800 --> 01:36:21.540
+of attention calculations.
+
+01:36:21.540 --> 01:36:23.480
+You end up with D model.
+
+01:36:23.480 --> 01:36:25.500
+And then you go
+into the next layer,
+
+01:36:25.500 --> 01:36:28.000
+which is a feedforward
+neural network.
+
+01:36:28.000 --> 01:36:31.160
+That is a one
+hidden layer network
+
+01:36:31.160 --> 01:36:36.240
+that projects this D model
+representation into a DFF1.
+
+01:36:36.240 --> 01:36:38.600
+And then typically, you would
+have this dimension that
+
+01:36:38.600 --> 01:36:41.200
+is bigger than
+the model in order
+
+01:36:41.200 --> 01:36:46.330
+to allow for learning
+complex representations.
+
+01:36:46.330 --> 01:36:50.430
+And you do all of
+that big N time.
+
+01:36:50.430 --> 01:36:54.230
+So in the original transformer
+paper, big N is equal to 6.
+
+01:36:54.230 --> 01:36:55.810
+So you do that a bunch of times.
+
+01:36:55.810 --> 01:36:59.250
+And then at the
+end of the encoder,
+
+01:36:59.250 --> 01:37:02.610
+you have for each
+token, a representation
+
+01:37:02.610 --> 01:37:10.290
+that represents that token in a
+context aware and learned way.
+
+01:37:10.290 --> 01:37:11.790
+Is everything good so far?
+
+01:37:14.730 --> 01:37:15.612
+OK, awesome.
+
+01:37:15.612 --> 01:37:18.070
+So I'm asking because we're
+going to switch to the decoder.
+
+01:37:18.070 --> 01:37:21.890
+So I just want to make
+sure all make sense.
+
+01:37:21.890 --> 01:37:27.410
+So now that we have
+that, as we mentioned,
+
+01:37:27.410 --> 01:37:29.650
+the original transformer
+is in the business
+
+01:37:29.650 --> 01:37:30.990
+of machine translation.
+
+01:37:30.990 --> 01:37:33.130
+So you need to
+start the beginning
+
+01:37:33.130 --> 01:37:35.250
+of your translated sentence.
+
+01:37:35.250 --> 01:37:38.250
+And one way to force
+the start of it
+
+01:37:38.250 --> 01:37:41.810
+is to have this is
+placeholder token.
+
+01:37:41.810 --> 01:37:43.910
+So you add this BOS token.
+
+01:37:43.910 --> 01:37:46.170
+Look at the lookup table
+of your embeddings.
+
+01:37:46.170 --> 01:37:47.990
+You have an initial embedding.
+
+01:37:47.990 --> 01:37:51.130
+You add your position
+embedding to it,
+
+01:37:51.130 --> 01:37:53.550
+and then you pass
+it to the decoder.
+
+01:37:53.550 --> 01:37:57.150
+And you have this
+self-attention layer
+
+01:37:57.150 --> 01:38:00.290
+that Afshine mentioned is a
+masked self-attention layer,
+
+01:38:00.290 --> 01:38:03.710
+because what happens
+here is that it's causal.
+
+01:38:03.710 --> 01:38:10.150
+Every token looks at itself
+and the tokens that precede it.
+
+01:38:10.150 --> 01:38:15.350
+And once that happens, you
+have another attention layer
+
+01:38:15.350 --> 01:38:18.510
+that's called
+cross-attention, where
+
+01:38:18.510 --> 01:38:21.870
+the query is the decoder token.
+
+01:38:21.870 --> 01:38:26.310
+And then the keys and
+the values are the tokens
+
+01:38:26.310 --> 01:38:28.550
+that come from the encoder.
+
+01:38:28.550 --> 01:38:30.290
+So you look at the
+stack of encoders.
+
+01:38:30.290 --> 01:38:32.910
+You look at the
+output embedding.
+
+01:38:32.910 --> 01:38:37.870
+And in every layer of
+decoder, every decoder block
+
+01:38:37.870 --> 01:38:42.850
+will get that last embedding
+as keys and values.
+
+01:38:42.850 --> 01:38:44.610
+So you do that,
+and then you have,
+
+01:38:44.610 --> 01:38:47.010
+just like in the
+encoder, a layer
+
+01:38:47.010 --> 01:38:50.650
+of feedforward neural network
+that allows for complex feature
+
+01:38:50.650 --> 01:38:52.290
+learning.
+
+01:38:52.290 --> 01:38:54.030
+And all of that goes.
+
+01:38:54.030 --> 01:38:57.170
+And then you have some
+linear layer and then
+
+01:38:57.170 --> 01:39:01.490
+a softmax layer that will
+turn these representations
+
+01:39:01.490 --> 01:39:06.010
+into a probability distribution
+over the space of your words--
+
+01:39:06.010 --> 01:39:09.090
+or your tokens over
+the vocabulary space
+
+01:39:09.090 --> 01:39:11.690
+to predict the next word.
+
+01:39:11.690 --> 01:39:13.530
+And then what happens
+here is that-- we
+
+01:39:13.530 --> 01:39:15.890
+will see in the
+next lectures what
+
+01:39:15.890 --> 01:39:18.810
+could be heuristics
+to pick the next word.
+
+01:39:18.810 --> 01:39:21.490
+But let's say here,
+we pick the max.
+
+01:39:21.490 --> 01:39:22.470
+So you pick the max.
+
+01:39:22.470 --> 01:39:24.570
+You know what word
+we have predicted.
+
+01:39:24.570 --> 01:39:28.410
+And then you put it back
+as an input to the decoder.
+
+01:39:28.410 --> 01:39:31.890
+And you do the exact
+same process again.
+
+01:39:31.890 --> 01:39:35.270
+So here, we put
+beginning of sequence.
+
+01:39:35.270 --> 01:39:36.510
+You get "un."
+
+01:39:36.510 --> 01:39:41.150
+And then you get the next token
+[FRENCH] which is the equivalent
+
+01:39:41.150 --> 01:39:44.870
+of "Teddy bear," and so on.
+
+01:39:44.870 --> 01:39:50.150
+And then you get, at
+the end, your sequence
+
+01:39:50.150 --> 01:39:51.590
+in the target language.
+
+01:39:51.590 --> 01:39:56.572
+And then you do that until you
+hit an end of sequence token.
+
+01:39:56.572 --> 01:39:59.030
+This is where you know that
+you should stop the translation
+
+01:39:59.030 --> 01:40:01.110
+process.
+
+01:40:01.110 --> 01:40:06.650
+So this is how we start from a
+sentence in a given language,
+
+01:40:06.650 --> 01:40:10.430
+and we end up in one
+in the target language.
+
+01:40:10.430 --> 01:40:14.490
+So any questions on this so far?
+
+01:40:18.630 --> 01:40:20.190
+Yep.
+
+01:40:20.190 --> 01:40:23.410
+The comment here is it
+all looks complicated.
+
+01:40:23.410 --> 01:40:26.170
+If you were to boil down
+exactly what makes it work,
+
+01:40:26.170 --> 01:40:27.350
+what would it be?
+
+01:40:27.350 --> 01:40:30.710
+So "Attention is All You
+Need," the title of the paper,
+
+01:40:30.710 --> 01:40:34.150
+translates a bit
+the secret sauce.
+
+01:40:34.150 --> 01:40:37.720
+So the attention
+layer here is key.
+
+01:40:37.720 --> 01:40:40.560
+We're going to see in the
+next lectures that actually,
+
+01:40:40.560 --> 01:40:42.840
+a lot of these
+things are dropped.
+
+01:40:42.840 --> 01:40:45.720
+And we rely on a subset
+of these components
+
+01:40:45.720 --> 01:40:48.800
+that we repeat again and again.
+
+01:40:48.800 --> 01:40:51.340
+So this attention
+layer is the key.
+
+01:40:51.340 --> 01:40:54.240
+And then the second thing is
+this feedforward neural network
+
+01:40:54.240 --> 01:40:57.380
+where most of the parameters
+of the network reside.
+
+01:40:57.380 --> 01:40:59.760
+So if you were to calculate
+exactly the parameters
+
+01:40:59.760 --> 01:41:01.960
+of your model, you
+realize that these
+
+01:41:01.960 --> 01:41:04.180
+contain most of the capacity.
+
+01:41:04.180 --> 01:41:06.360
+And this is where
+the learning happens.
+
+01:41:06.360 --> 01:41:09.560
+So if you were to ask me,
+these two, and then the rest
+
+01:41:09.560 --> 01:41:14.700
+are just tricks to better
+learn to improve all of it,
+
+01:41:14.700 --> 01:41:17.040
+and then, of course, the
+quality of the data, which
+
+01:41:17.040 --> 01:41:20.240
+is another layer of complexity.
+
+01:41:20.240 --> 01:41:22.720
+Yeah.
+
+01:41:22.720 --> 01:41:27.360
+So the question is, can you
+talk more about the masked part?
+
+01:41:27.360 --> 01:41:31.120
+So it's a computational
+trick where
+
+01:41:31.120 --> 01:41:33.260
+you have a triangular
+matrix that
+
+01:41:33.260 --> 01:41:37.940
+will mask some connections
+of your self-attention layer.
+
+01:41:37.940 --> 01:41:41.180
+And at training time,
+it prevents connections
+
+01:41:41.180 --> 01:41:45.940
+that you shouldn't
+know to be made.
+
+01:41:45.940 --> 01:41:49.697
+So yeah, that's the gist of it.
+
+01:41:49.697 --> 01:41:50.280
+Yeah, exactly.
+
+01:41:50.280 --> 01:41:52.760
+So yeah, the question is
+how it relates to softmax?
+
+01:41:52.760 --> 01:41:54.120
+So you have minus infinities.
+
+01:41:54.120 --> 01:41:56.020
+And then this will be 0.
+
+01:41:56.020 --> 01:41:58.900
+Softmax of minus
+infinity will be 0.
+
+01:41:58.900 --> 01:42:01.640
+This is how it relates.
+
+01:42:01.640 --> 01:42:02.140
+Yeah.
+
+01:42:02.140 --> 01:42:05.420
+But these are more
+computational tricks.
+
+01:42:05.420 --> 01:42:08.180
+I think the main
+thing to have in mind
+
+01:42:08.180 --> 01:42:11.780
+is to forget about all
+connections from a given
+
+01:42:11.780 --> 01:42:14.900
+token and all the
+ones that succeeded.
+
+01:42:14.900 --> 01:42:19.340
+I think that's good
+enough as a mental model.
+
+01:42:19.340 --> 01:42:20.860
+Yeah.
+
+01:42:20.860 --> 01:42:21.660
+OK, awesome.
+
+01:42:21.660 --> 01:42:23.060
+Yeah.
+
+01:42:23.060 --> 01:42:26.320
+The question here is on
+various uses of softmax.
+
+01:42:26.320 --> 01:42:31.160
+So the ones that are used
+in the self-attention layers
+
+01:42:31.160 --> 01:42:34.720
+and the cross-attention layers
+have a different function
+
+01:42:34.720 --> 01:42:36.920
+than the one at the last layer.
+
+01:42:36.920 --> 01:42:39.160
+You should see the ones
+in the attention layer
+
+01:42:39.160 --> 01:42:42.640
+as a projection of the query
+over the space of keys.
+
+01:42:42.640 --> 01:42:47.240
+So what we do is projecting the
+representation of a given token,
+
+01:42:47.240 --> 01:42:50.760
+so cross tokens,
+whereas the last softmax
+
+01:42:50.760 --> 01:42:52.620
+layer has a different function.
+
+01:42:52.620 --> 01:42:57.880
+It's one that tries for you
+to predict the next token.
+
+01:42:57.880 --> 01:43:02.080
+So in some sense,
+yeah, so I do get the--
+
+01:43:02.080 --> 01:43:03.680
+I think it's a great
+point that we're
+
+01:43:03.680 --> 01:43:05.490
+using several times,
+this function,
+
+01:43:05.490 --> 01:43:06.740
+but it's for different things.
+
+01:43:09.760 --> 01:43:11.720
+I think there was-- yeah.
+
+01:43:11.720 --> 01:43:14.132
+So the question is, why
+is the translation not
+
+01:43:14.132 --> 01:43:15.340
+having beginning of sequence?
+
+01:43:15.340 --> 01:43:16.520
+It does.
+
+01:43:16.520 --> 01:43:18.720
+Yeah, it's the first token here.
+
+01:43:18.720 --> 01:43:19.220
+Oh, yeah.
+
+01:43:19.220 --> 01:43:22.880
+So the first token here
+is a placeholder for you
+
+01:43:22.880 --> 01:43:25.580
+to predict the next token
+that comes after it.
+
+01:43:25.580 --> 01:43:28.200
+So it doesn't come at the
+output of the decoder.
+
+01:43:28.200 --> 01:43:30.050
+It's just the input
+of the decoder.
+
+01:43:30.050 --> 01:43:32.370
+And then what you get as
+the output of the decoder
+
+01:43:32.370 --> 01:43:35.530
+that you should watch
+out is end of sequence
+
+01:43:35.530 --> 01:43:38.250
+because this is where
+you should stop.
+
+01:43:38.250 --> 01:43:40.050
+Yeah.
+
+01:43:40.050 --> 01:43:41.470
+OK, awesome.
+
+01:43:41.470 --> 01:43:44.370
+And then with all that,
+I want to tell you
+
+01:43:44.370 --> 01:43:48.790
+that what we presented
+today is just the beginning.
+
+01:43:48.790 --> 01:43:51.850
+We're just in 2017
+at this point.
+
+01:43:51.850 --> 01:43:54.010
+And there has been,
+as I'm sure you know,
+
+01:43:54.010 --> 01:43:58.210
+many uses of this
+technology that now powers
+
+01:43:58.210 --> 01:44:01.290
+all these chatbots that we use.
+
+01:44:01.290 --> 01:44:04.810
+So we're going to cover
+how we train such models
+
+01:44:04.810 --> 01:44:06.330
+in the next few lectures.
+
+01:44:06.330 --> 01:44:08.310
+And then in the second
+part of the class,
+
+01:44:08.310 --> 01:44:11.370
+we will tackle how
+these can power
+
+01:44:11.370 --> 01:44:14.530
+the agents that we
+interact and use today
+
+01:44:14.530 --> 01:44:17.810
+and how it can be used
+in several systems.
+
+01:44:17.810 --> 01:44:20.410
+And with that, thank
+you for your attention.
+
+01:44:20.410 --> 01:44:22.840
+And I hope you have
+a great weekend.
+
