@@ -1,0 +1,13 @@
+---
+import { SITE, NAV_ITEMS } from '../config/site';
+---
+<header class="border-b border-slate-200">
+  <nav class="mx-auto flex max-w-3xl items-center justify-between px-4 py-3" aria-label="主导航">
+    <a href="/" class="text-lg font-bold">{SITE.name}</a>
+    <ul class="flex gap-4 text-sm">
+      {NAV_ITEMS.map((item) => (
+        <li><a href={item.href} class="text-slate-600 hover:text-slate-900">{item.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</header>
