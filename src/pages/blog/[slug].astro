@@ -13,7 +13,9 @@ const { post } = Astro.props;
 if (post.data.origin !== '原创' && !post.data.source) {
   throw new Error(`[${post.id}] origin 为非原创时必须填写 source 字段`);
 }
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+// 目录数据源：正文小节标题；排除「凝练自」溯源区块的 h2
+const tocItems = headings.filter((h) => h.depth <= 3 && !h.text.startsWith('本文凝练自'));
 
 const jsonLd = [
   {
@@ -34,12 +36,52 @@ const jsonLd = [
       {formatDate(post.data.pubDate)} · {post.data.origin}
       {post.data.source && <a href={post.data.source} class="ml-2 underline">原文</a>}
     </p>
+    {post.data.tags.length > 0 && (
+      <div class="mt-3 flex flex-wrap gap-2">
+        {post.data.tags.map((t) => (
+          <a
+            href={`/blog/?tag=${encodeURIComponent(t)}`}
+            class="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-900"
+          >
+            #{t}
+          </a>
+        ))}
+      </div>
+    )}
     <div class="prose prose-slate mt-8 max-w-none">
       <Content />
     </div>
   </article>
+  {tocItems.length >= 3 && (
+    <nav
+      id="toc"
+      aria-label="文章目录"
+      class="fixed top-28 hidden w-44 xl:block"
+      style="left: calc(50% + 26rem);"
+    >
+      <p class="text-xs font-medium uppercase tracking-wider text-slate-400">目录</p>
+      <ul class="mt-3 space-y-1 border-l border-slate-200">
+        {tocItems.map((h) => (
+          <li>
+            <a
+              href={`#${h.slug}`}
+              data-toc-link={h.slug}
+              class="-ml-px block border-l-2 border-transparent py-1 pl-3 text-sm leading-snug text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-900"
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )}
 </BaseLayout>
 <style is:global>
+  /* 锚点跳转时标题不被视口顶部裁掉 */
+  .prose h2,
+  .prose h3 {
+    scroll-margin-top: 5rem;
+  }
   /* 「凝练自」溯源区块（hr 之后的 h2+ul）：降为小字灰色，不与正文争视觉 */
   .prose hr ~ h2 {
     font-size: 0.875rem;
@@ -68,3 +110,50 @@ const jsonLd = [
     color: rgb(71 85 105);
   }
 </style>
+<script>
+  // 目录滚动高亮：以视口顶部下方 160px 为扫描线，最后一个越过扫描线的小节即当前小节
+  // （不用 IntersectionObserver：scroll-margin 让锚点跳转停在带区之外，高亮无法跟随）
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  if (links.length > 0) {
+    const targets = links
+      .map((a) => document.getElementById(a.dataset.tocLink ?? ''))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setCurrent = (id: string) => {
+      links.forEach((a) => {
+        const active = a.dataset.tocLink === id;
+        a.classList.toggle('border-slate-900', active);
+        a.classList.toggle('font-medium', active);
+        a.classList.toggle('text-slate-900', active);
+        a.classList.toggle('text-slate-500', !active);
+      });
+    };
+
+    const SCAN_OFFSET = 160;
+    const onScroll = () => {
+      const line = window.scrollY + SCAN_OFFSET;
+      let current = targets[0];
+      for (const h of targets) {
+        const top = h.getBoundingClientRect().top + window.scrollY;
+        if (top <= line) current = h;
+        else break;
+      }
+      if (current) setCurrent(current.id);
+    };
+
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // 目录点击平滑滚动（原生锚点兜底）
+    links.forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const target = document.getElementById(a.dataset.tocLink ?? '');
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', a.getAttribute('href') ?? '#');
+        }
+      });
+    });
+  }
+</script>
