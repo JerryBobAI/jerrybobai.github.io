@@ -62,12 +62,8 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP
   const items = document.querySelectorAll('.archive-item');
   const info = document.getElementById('match-info');
   const noMatch = document.getElementById('no-match');
-  bar.addEventListener('click', (ev) => {
-    const btn = ev.target.closest('.tag-btn');
-    if (!btn) return;
-    bar.querySelectorAll('.tag-btn').forEach((b) => b.classList.remove('tag-btn-active'));
-    btn.classList.add('tag-btn-active');
-    const tag = btn.dataset.tag || '';
+
+  function applyFilter(tag) {
     let shown = 0;
     items.forEach((li) => {
       const hit = tag === '' || (li.dataset.tags || '').split(' ').includes(tag);
@@ -76,5 +72,26 @@ const topTags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP
     });
     info.textContent = tag === '' ? '' : `「${tag}」筛选出 ${shown} 篇`;
     noMatch.hidden = shown !== 0;
+    bar.querySelectorAll('.tag-btn').forEach((b) => {
+      b.classList.toggle('tag-btn-active', (b.dataset.tag || '') === tag);
+    });
+  }
+
+  function syncHash(tag) {
+    history.replaceState(null, '', tag ? `${location.pathname}#tag=${encodeURIComponent(tag)}` : location.pathname);
+  }
+
+  bar.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('.tag-btn');
+    if (!btn) return;
+    const tag = btn.dataset.tag || '';
+    applyFilter(tag);
+    syncHash(tag);
   });
+
+  // 从 URL hash 恢复筛选状态（返回、刷新、带状态的分享链接）
+  if (location.hash.startsWith('#tag=')) {
+    const tag = decodeURIComponent(location.hash.slice(5));
+    if (tag) applyFilter(tag);
+  }
 </script>

@@ -424,8 +424,6 @@ function renderArticleHeader(currentPath, isRoot) {
         }).join('');
     }
 
-    const homeLink = `${prefix}index.html`;
-
     // 根据背景色动态调整毛玻璃效果 - 同步检测
     let isDark = true; // 默认深色
     if (typeof window.isDarkBackground === 'function') {
@@ -536,8 +534,9 @@ function renderArticleHeader(currentPath, isRoot) {
         ${headerStyles}
         <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <div class="flex items-center ultra-light-date">
-                <a href="${homeLink}" class="home-link">
-                    <i class="fa-solid fa-home mr-2" aria-hidden="true"></i>
+                <a href="/docs/timeline/" class="home-link" title="返回"
+                   onclick="if (document.referrer && document.referrer.includes(location.host)) { history.back(); return false; }">
+                    <i class="fa-solid fa-arrow-left mr-2" aria-hidden="true"></i><span class="text-sm font-medium mr-3">返回</span>
                 </a>
                 <span class="text-sm font-medium">${dateStr}</span>
             </div>
