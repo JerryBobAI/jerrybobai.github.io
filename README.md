@@ -17,7 +17,7 @@
 
 - [Astro](https://astro.build)（静态生成，零客户端框架）
 - [Tailwind CSS v4](https://tailwindcss.com) + `@tailwindcss/typography`（长文排版）
-- TypeScript + 原生 CSS 变量主题（深浅色跟随系统）
+- 纯浅色主题；Open Graph 社交分享卡片（文章页用封面图）；RSS feed（`/rss.xml`）
 - GitHub Actions 自动部署到 GitHub Pages
 
 ## 本地开发

@@ -10,9 +10,13 @@ interface Props {
   jsonLd?: Record<string, unknown>[];
   /** wide：栏目页/首页 max-w-6xl；narrow（默认）：长文正文 max-w-3xl */
   width?: 'narrow' | 'wide';
+  /** 社交分享卡片图（og:image），默认品牌图 */
+  image?: string;
+  ogType?: 'website' | 'article';
+  pubDate?: Date;
 }
 
-const { title, description, jsonLd = [], width = 'narrow' } = Astro.props;
+const { title, description, jsonLd = [], width = 'narrow', image, ogType, pubDate } = Astro.props;
 const containerMax = width === 'wide' ? 'max-w-6xl' : 'max-w-3xl';
 ---
 <!doctype html>
@@ -21,7 +25,7 @@ const containerMax = width === 'wide' ? 'max-w-6xl' : 'max-w-3xl';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} image={image} ogType={ogType} pubDate={pubDate} />
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body class="min-h-screen bg-white text-slate-900 antialiased">

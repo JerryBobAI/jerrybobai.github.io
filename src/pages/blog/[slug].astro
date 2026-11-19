@@ -30,7 +30,7 @@ const jsonLd = [
   },
 ];
 ---
-<BaseLayout title={`${post.data.title} · ${SITE.name}`} description={post.data.summary} jsonLd={jsonLd}>
+<BaseLayout title={`${post.data.title} · ${SITE.name}`} description={post.data.summary} jsonLd={jsonLd} image={post.data.cover} ogType="article" pubDate={post.data.pubDate}>
   <article>
     <BackLink href="/blog/" label="返回文章列表" />
     <h1 class="mt-4 text-3xl font-bold">{post.data.title}</h1>
