@@ -50,6 +50,15 @@ const jsonLd = [
         ))}
       </div>
     )}
+    {post.data.cover && (
+      <img
+        src={post.data.cover}
+        alt={`${post.data.title} 封面插图`}
+        class="mt-8 w-full rounded-2xl border border-slate-200"
+        width={900}
+        height={600}
+      />
+    )}
     <div class="prose prose-slate mt-8 max-w-none">
       <Content />
     </div>

@@ -17,7 +17,14 @@ const jsonLd = [
 <BaseLayout title={`关于 · ${SITE.name}`} description={SITE.description} jsonLd={jsonLd}>
   <BackLink href="/" label="返回首页" />
   <h1 class="mt-4 text-3xl font-bold">关于</h1>
-  <div class="mt-6 space-y-4 leading-relaxed text-slate-700">
+  <img
+    src="/covers/about-brand.jpg"
+    alt="老式显示器里装着一片海和一轮弯月——数字海洋的月光"
+    class="mt-8 w-full max-w-2xl rounded-2xl border border-slate-200"
+    width={900}
+    height={600}
+  />
+  <div class="mt-8 space-y-4 leading-relaxed text-slate-700">
     <p>我是 {SITE.author}。这里是我的个人品牌主页：观点文章、创业点子、实战项目、在线产品与工具。</p>
     <p>站点正在重建，内容陆续上线。</p>
     <p>GitHub：<a class="underline" href={SITE.github}>{SITE.github}</a></p>

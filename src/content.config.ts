@@ -15,6 +15,7 @@ const blog = defineCollection({
     ...shared,
     origin: z.enum(['原创', '转载', '翻译']).default('原创'),
     source: z.string().optional(),
+    cover: z.string().optional(),
   }),
 });
 
