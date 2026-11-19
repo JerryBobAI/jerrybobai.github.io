@@ -1,149 +1,69 @@
 # JerryBob 个人网站
 
-## 项目简介
+以「鲸波月影」为主题的个人品牌站：鲸波深处，代码与月光共振。
 
-这是JerryBob的个人网站，通过GitHub Pages托管。网站以「鲸波月影」为主题，融合了数字与艺术的元素，展示了标签、个人、家庭、工作和社交等多个领域的内容。
+**线上地址**：[https://jerrybobai.github.io](https://jerrybobai.github.io)
 
-网站地址：[https://jerrybobai.github.io](https://jerrybobai.github.io)
+## 网站栏目
 
-## 网站结构
+- **文章**：观点文章，原创为主（支持标签筛选与 `?tag=` 链入过滤）
+- **标签**：全站标签索引
+- **点子**：想法与灵感碎片
+- **项目**：实战项目与在线产品，卡片直达（含 [Courses 学习中心](https://jerrybobai.github.io/courses/)、[DieDaily](https://jerrybobai.github.io/die-daily/) 等）
+- **工具**：在线小工具
+- **关于**：个人介绍
 
-网站主要分为以下几个部分：
+## 技术栈
 
-- **首页**：展示网站的主题「鲸波月影」和基本介绍
-- **标签**：文章标签汇总页面，支持标签筛选和文章浏览
-- **个人**：个人成长和经历分享
-- **家庭**：家庭生活相关内容
-- **工作**：职业发展和工作经验
-- **社交**：社交网络和社区活动
-
-## 技术实现
-
-### 使用的技术
-
-- HTML5/CSS3：网站的基本结构和样式
-- JavaScript：实现动态组件加载和交互功能
-- Tailwind CSS：用于快速构建响应式界面
-- Font Awesome：提供丰富的图标资源
-- Google Fonts：使用Noto Sans SC等字体美化页面
-
-### 组件系统
-
-网站采用了组件化的设计方式，主要组件包括：
-
-1. **Header组件**：导航栏，根据当前页面路径自动高亮对应的菜单项
-2. **Footer组件**：页脚信息，包含版权声明和社交媒体链接
-3. **文章元信息组件**：显示文章的标签、日期等信息
-4. **iframe预览组件**：用于展示嵌入式内容
-
-## 路径处理
-
-网站针对不同的访问路径进行了特殊处理，确保在各种环境下（本地开发和GitHub Pages）都能正确显示。系统会自动识别当前路径，并根据路径判断是否为首页，从而加载相应的内容和样式。
-
-## 目录结构
-
-```text
-/
-├── css/            # 样式文件
-├── docs/           # 文档和内容
-│   ├── ai/         # AI相关内容
-│   ├── family/     # 家庭相关内容
-│   ├── personal/   # 个人相关内容
-│   ├── social/     # 社交相关内容
-│   ├── timeline/   # 时间线内容
-│   └── work/       # 工作相关内容
-├── images/         # 图片资源
-├── js/             # JavaScript文件
-├── cache/            # 构建缓存与元数据等
-│   └── metadata.json # 文章元数据配置
-└── index.html      # 网站首页
-```
-
-## 项目元数据管理 (`cache/metadata.json`)
-
-本项目的文章元数据集中管理在项目根目录下的 `cache/metadata.json` 文件中。该文件对于网站的文章列表、分类、标签云以及其他依赖文章信息的展示功能至关重要。
-
-### 文件用途
-
-`cache/metadata.json` 文件主要用于存储 `docs/timeline/` 目录下所有 HTML 文章页面的元信息。网站的构建脚本或动态页面组件会读取此文件，以获取每篇文章的标题、发布日期和标签等数据。
-
-### 文件结构
-
-该文件采用 JSON 格式，其主要结构是一个对象，对象的键是文章HTML文件相对于项目根目录的路径（例如 `docs/timeline/文章文件名1.html`），值是另一个包含具体元数据的对象。示例如下：
-
-```json
-{
-  "docs/timeline/文章文件名1.html": {
-    "title": "文章标题1",
-    "date": "YYYY-MM-DD",
-    "tags": ["标签1", "标签2", "标签3"]
-  },
-  "docs/timeline/文章文件名2.html": {
-    "title": "文章标题2",
-    "date": "YYYY-MM-DD",
-    "tags": ["标签A", "标签B", "标签C"]
-  }
-  // ... 更多文章条目
-}
-```
-
--   **`title`**: (字符串) 文章的标题。通常根据 HTML 文件名自动生成（去除 `.html` 后缀）。
--   **`date`**: (字符串) 文章的发布日期，格式为 `YYYY-MM-DD`。此日期是根据对应 HTML 文件的实际文件系统创建时间自动更新的，以确保准确性。
--   **`tags`**: (字符串数组) 一个包含3-4个描述文章核心内容的简短关键词（标签）的数组。这些标签是基于文章标题和内容进行语义分析后生成的，旨在提供更精确的文章分类和检索。
-
-### 重要维护历史
-
--   **初始创建与迁移**: `metadata.json` 文件最初在项目根目录创建，后迁移至 `cache/` 目录下。初始版本中，所有文章的 `date` 字段统一使用了占位符，`tags` 字段使用了通用的默认标签（如 `["博客", "分享", "随笔"]`）。
--   **标签优化 (近期)**: 对所有文章的 `tags` 进行了重要更新。通过分析每篇文章的标题和内容，生成了更具语义相关性、更简短（3-4个）的标签，替代了原有的默认标签。
--   **日期修正 (近期)**: 对所有文章的 `date` 字段进行了修正。通过读取每个 HTML 文件在文件系统中的实际创建时间，将 `date` 更新为真实的、准确的日期。
-
-### 注意事项与未来建议
-
-1.  **新增文章**: 当在 `docs/timeline/` 目录下添加新的 HTML 文章时，需要相应地在 `cache/metadata.json` 文件中手动添加或通过脚本自动生成新的元数据条目。
-2.  **内容同步**: 确保 `cache/metadata.json` 中的信息（尤其是 `title`）与实际文章内容保持一致。
-3.  **依赖检查**: 如果网站的其他组件或构建脚本依赖此文件，请确保它们配置为正确读取 `cache/metadata.json` 的路径和结构。
-4.  **自动化潜力**: 对于大型项目，可以考虑开发自动化脚本来维护此文件，例如在新增文章时自动提取标题、生成初始标签，并获取文件创建日期。
-
-## 功能特点
-
-### 文章元信息展示
-
-- 支持通过 `cache/metadata.json` 配置文件来管理文章的标签和日期
-- 标签使用随机颜色进行展示，增强视觉效果
-- 日期显示采用低透明度设计，不抢占视觉焦点
-
-### 自适应设计
-
-- 网站采用响应式设计，适配不同尺寸的设备
-- 在移动设备上提供良好的浏览体验
+- [Astro](https://astro.build)（静态生成，零客户端框架）
+- [Tailwind CSS v4](https://tailwindcss.com) + `@tailwindcss/typography`（长文排版）
+- TypeScript + 原生 CSS 变量主题（深浅色跟随系统）
+- GitHub Actions 自动部署到 GitHub Pages
 
 ## 本地开发
 
-1. 克隆仓库：
+```bash
+npm install
+npm run dev       # 开发服务器 localhost:4321
+npm run build     # 构建到 dist/
+npm run preview   # 预览构建产物
+```
 
-   ```bash
-   git clone https://github.com/jerrybobai/jerrybobai.github.io.git
-   ```
+## 内容管理
 
-2. 使用本地服务器运行网站（可以使用VS Code的Live Server插件或其他HTTP服务器）
+内容集合在 `src/content/`，均为带 frontmatter 的 Markdown：
 
-3. 在浏览器中访问 `http://localhost:端口号` 查看效果
+| 集合 | 目录 | 说明 |
+|---|---|---|
+| `blog` | `src/content/blog/` | 文章：`title / pubDate / tags / summary / origin / cover(可选) / draft` |
+| `projects` | `src/content/projects/` | 项目卡：`kind / status / cover / link / stats / cta` |
+| `ideas` | `src/content/ideas/` | 点子：`status`（种子→验证中→已验证→搁置） |
 
-## 部署说明
+新建文章：在 `src/content/blog/` 新建 `.md` 文件即可，构建时自动进列表与标签索引。
 
-本网站通过GitHub Pages自动部署。当代码推送到main分支后，GitHub会自动构建并发布网站。
+## 子项目托管
 
-## 常见问题
+`public/` 下的静态子站随主站一同部署：
 
-### 路径问题
+- `public/courses/` — Courses 学习中心（6 门课，蒸馏笔记 + 时间戳 seek 视频 + 论文库 + 间隔复习）
+- `public/die-daily/` — DieDaily 每日一死小游戏
 
-在不同环境下（本地开发vs GitHub Pages），网站的路径处理可能有所不同。如果遇到资源加载或导航问题，请检查路径处理逻辑。
+新项目产物通过 `scripts/sync-projects.sh` 一键同步：构建 → rsync 进 `public/` → 统一本地提交（脚本顶部 `PROJECTS` 表登记，只本地提交、push 需人工确认）。
 
-### 内容更新
+## 目录结构
 
-更新网站内容时，可以直接修改docs目录下的相应文件，并在 `cache/metadata.json` 中更新元数据信息。
+```
+src/
+├── content/          # 内容集合（blog / projects / ideas）
+├── content.config.ts # 集合 schema 定义
+├── layouts/          # BaseLayout 等
+├── components/       # SiteNav / BackLink 等
+├── pages/            # 路由：blog / projects / ideas / tags / tools / docs / about
+└── lib/              # 内容工具函数（排序、过滤、日期）
+public/               # 构建直出资源（covers / courses / die-daily）
+scripts/              # sync-projects.sh 项目产物同步
+```
 
-## 联系方式
+## 许可
 
-- 即刻：[JerryBob](https://web.okjike.com/u/8d6e830c-4da1-4753-ab41-020b91002aec)
-- Twitter/X：[@JerryBobAI](https://x.com/JerryBobAI)
+文章内容版权归 JerryBob 所有；代码部分可参考，转载文章请注明来源。
