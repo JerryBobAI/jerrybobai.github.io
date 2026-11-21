@@ -1,6 +1,6 @@
 # JerryBob 个人网站
 
-以「鲸波月影」为主题的个人品牌站：鲸波深处，代码与月光共振。
+个人品牌站「Jerry 的造物间」：我用代码造一切——文章、点子、实战项目、在线产品与工具。
 
 **线上地址**：[https://jerrybobai.github.io](https://jerrybobai.github.io)
 
