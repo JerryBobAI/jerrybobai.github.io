@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>吟诗 · 给古诗注上拼音</title>
+<meta name="description" content="吟诗：读一首带拼音的古诗。今日一诗、横排竖排田字格、飞花令、遮字背诵、课本读音修正。">
+<meta name="theme-color" content="#f3ede1">
+<link rel="icon" href="favicon.svg?v=202610310753" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=202610310753">
+<link rel="preconnect" href="https://fonts.googleapis.cn">
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin>
+<script>
+/* 首屏前套用上次选的诗文字体，只加载那一种（默认朱雀仿宋，本站托管）。地址与 assets/js/fonts.js 保持一致 */
+(function () {
+  var G = "https://fonts.googleapis.cn/css2?family=";
+  var u = { fang: "fonts/zhuque-fangsong/zhuque-fangsong.css",
+            song: G + "Noto+Serif+SC:wght@400&display=swap",
+            kai: "https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-regular.css",
+            hei: G + "Noto+Sans+SC:wght@400&display=swap",
+            xiaowei: G + "ZCOOL+XiaoWei&display=swap", mashan: G + "Ma+Shan+Zheng&display=swap",
+            kuaile: G + "ZCOOL+KuaiLe&display=swap", longcang: G + "Long+Cang&display=swap" };
+  var k = "fang";
+  try { var s = JSON.parse(localStorage.getItem("yinshi:font")); if (s in u) k = s; } catch (e) { /* 存储不可用 */ }
+  if (k !== "fang") document.documentElement.setAttribute("data-font", k);
+  /* 纸面主题（自定义背景的图片由 themes.js 从 IndexedDB 取出后再铺上） */
+  try { var t = JSON.parse(localStorage.getItem("yinshi:theme")); if (/^(su|zhu|juan|qinghua|ye|xin|custom)$/.test(t)) { document.documentElement.setAttribute("data-theme", t); if (t === "ye") { var mc = document.querySelector('meta[name="theme-color"]'); if (mc) mc.content = "#171511"; } } } catch (e) { /* 存储不可用 */ }
+  document.write('<link rel="stylesheet" id="font-' + k + '" href="' + u[k] + '">');
+})();
+</script>
+<link rel="preload" href="fonts/noto-serif-latin-ext-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/yinshi.css?v=202610310753">
+</head>
+<body>
+<a class="skip" href="#poem">跳到诗文</a>
+
+<header class="topbar" role="banner">
+  <a class="brand" href="./" aria-label="吟诗 首页">
+    <img class="seal-img" src="assets/logo.svg?v=202610310753" width="36" height="36" alt="" aria-hidden="true">
+    <span class="brand-name">吟诗</span>
+  </a>
+
+  <form class="search" id="searchForm" role="search" autocomplete="off">
+    <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></svg>
+    <input id="q" type="search" enterkeyhint="search" placeholder="搜诗名、诗句或作者" aria-label="搜诗名、诗句或作者">
+    <kbd class="kbd" aria-hidden="true">/</kbd>
+  </form>
+
+  <nav class="top-actions" aria-label="找诗">
+    <button class="btn ghost" id="btnRandom" type="button" title="随机一首（R）">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3.5c2 0 3 1 4.5 3.5S14.5 17 16.5 17H20M4 17h3.5c1 0 1.8-.3 2.5-1M14 8c.7-.7 1.5-1 2.5-1H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"/></svg>
+      <span>随机</span>
+    </button>
+    <button class="btn ghost" id="btnFeihua" type="button" aria-haspopup="dialog" title="飞花令">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c0-4 1.5-7 4.5-8-1 3.5-1.5 6-4.5 8Zm0 0c-4 0-7-1.5-8-4.5 3.5 1 6 1.5 8 4.5Zm0 0c0 4-1.5 7-4.5 8 1-3.5 1.5-6 4.5-8Zm0 0c4 0 7 1.5 8 4.5-3.5-1-6-1.5-8-4.5Z"/></svg>
+      <span>飞花令</span>
+    </button>
+    <button class="btn ghost" id="btnBrowse" type="button" title="分类找诗 · 我的诗单 · 接龙">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h4.5v15H5zM9.5 4.5H14v15H9.5zM15 5.2l3.6-.9 2.9 14.6-3.6.8z"/></svg>
+      <span>诗单</span>
+    </button>
+    <button class="btn ghost icon-only" id="btnFilter" type="button" aria-expanded="false" aria-controls="drawer" title="朝代 · 体裁 · 诗人">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      <span class="sr">朝代、体裁与诗人</span><i class="dot" hidden></i>
+    </button>
+  </nav>
+</header>
+
+<section class="drawer" id="drawer" aria-label="随机筛选" hidden>
+  <div class="drawer-inner">
+    <div class="drawer-row">
+      <h2>朝代</h2>
+      <div class="chips" id="chipsDyn" role="group" aria-label="朝代"></div>
+    </div>
+    <div class="drawer-row">
+      <h2>体裁</h2>
+      <div class="chips" id="chipsType" role="group" aria-label="体裁"></div>
+    </div>
+    <div class="drawer-row">
+      <h2>诗人</h2>
+      <div class="drawer-poet">
+        <div class="drawer-author">
+          <input id="fAuthor" type="text" list="poetList" placeholder="如：李白" aria-label="诗人" autocomplete="off">
+          <datalist id="poetList"></datalist>
+          <button class="btn ghost" id="btnPoetList" type="button">看这位诗人的诗</button>
+        </div>
+        <div class="chips chips-poet" id="chipsPoet" role="group" aria-label="常见诗人"></div>
+      </div>
+    </div>
+    <div class="drawer-row drawer-go">
+      <h2></h2>
+      <div class="drawer-author">
+        <button class="btn solid" id="btnFilterGo" type="button">按条件随机一首</button>
+        <button class="btn text" id="btnFilterClear" type="button">清除</button>
+      </div>
+    </div>
+    <p class="drawer-note" id="drawerNote"></p>
+  </div>
+</section>
+
+<main class="stage" id="main">
+  <div class="toolbar" role="toolbar" aria-label="阅读方式">
+    <div class="seg" id="modeSeg" role="radiogroup" aria-label="排版">
+      <button type="button" role="radio" data-mode="h" aria-checked="true">横排</button>
+      <button type="button" role="radio" data-mode="v" aria-checked="false">竖排</button>
+      <button type="button" role="radio" data-mode="g" aria-checked="false">田字格</button>
+    </div>
+    <div class="toggles">
+      <button type="button" class="tog" id="togPinyin" aria-pressed="true">显示拼音</button>
+      <button type="button" class="tog" id="togVeil" aria-pressed="false">遮字背诵</button>
+    </div>
+  </div>
+
+  <button class="due-chip" id="dueChip" type="button" hidden></button>
+  <div class="card-wrap">
+  <article class="card" id="poem" tabindex="-1" aria-live="polite">
+    <button class="card-gear" id="btnSettings" type="button" aria-haspopup="dialog" title="设置">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h9M18 7h1M5 17h1M10 17h9"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+      <span class="sr">设置</span>
+    </button>
+    <div class="poem" id="poemView"></div>
+    <div class="card-note" id="cardNote" hidden></div>
+    <div class="card-tip" id="cardTip" hidden></div>
+    <div class="print-extra" id="printExtra"></div>
+  </article>
+  <div class="study" role="group" aria-label="学习">
+    <button type="button" class="st" id="btnRead" aria-pressed="false" aria-haspopup="dialog" hidden><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h3l4 3.5v-11L8 10zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg><span>朗读</span></button>
+    <button type="button" class="st" id="btnDictate" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h4l10-10-4-4L5 15zM13 7l4 4"/></svg><span>默写</span></button>
+    <button type="button" class="st" id="btnFav" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 4 2.4 5 5.4.6-4 3.7 1.1 5.3L12 16l-4.9 2.6 1.1-5.3-4-3.7 5.4-.6z"/></svg><span>收藏</span></button>
+    <button type="button" class="st" id="btnAddList" aria-haspopup="dialog" title="加入学习列表"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h10M5 12h10M5 17h6M17 14v6M14 17h6"/></svg><span>加入列表</span></button>
+    <button type="button" class="st" id="btnRecited" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17l9-10"/></svg><span>背会了</span></button>
+  </div>
+  <!-- 宽屏：诗笺左右两侧；窄屏：诗笺下方可展开的两节（默认收起）。内容来自 data/poets.json、data/notes.json，按需载入 -->
+  <section class="side side-au" id="sideAu" aria-label="作者" hidden>
+    <button class="side-toggle" type="button" aria-expanded="false" aria-controls="sideAuBody"><span>作者</span><i aria-hidden="true"></i></button>
+    <div class="side-body" id="sideAuBody"></div>
+  </section>
+  <section class="side side-note" id="sideNote" aria-label="赏析" hidden>
+    <button class="side-toggle" type="button" aria-expanded="false" aria-controls="sideNoteBody"><span>赏析</span><i aria-hidden="true"></i></button>
+    <div class="side-body" id="sideNoteBody"></div>
+  </section>
+  </div>
+
+  <div class="actions" role="group" aria-label="导出">
+    <button type="button" class="act" id="btnPrint">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V4h10v5M7 17H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2M7 14h10v6H7z"/></svg>打印</button>
+    <button type="button" class="act" id="btnImage">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="m4 16 4.5-4.5 4 4 2.5-2.5L20 18"/><circle cx="15.5" cy="9.5" r="1.3"/></svg>导出图片</button>
+    <button type="button" class="act" id="btnCopy">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="12" rx="1.5"/><path d="M5 15V5a1 1 0 0 1 1-1h9"/></svg>复制带拼音文本</button>
+  </div>
+  <p class="hint" id="hint">点任意一字可改读音 · 按 <kbd>/</kbd> 搜索 · <kbd>R</kbd> 随机</p>
+</main>
+
+<nav class="dock" aria-label="快捷操作">
+  <button type="button" id="dSearch"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></svg><span>搜索</span></button>
+  <button type="button" id="dRandom"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3.5c2 0 3 1 4.5 3.5S14.5 17 16.5 17H20M4 17h3.5c1 0 1.8-.3 2.5-1M14 8c.7-.7 1.5-1 2.5-1H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"/></svg><span>随机</span></button>
+  <button type="button" id="dFeihua"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c0-4 1.5-7 4.5-8-1 3.5-1.5 6-4.5 8Zm0 0c-4 0-7-1.5-8-4.5 3.5 1 6 1.5 8 4.5Zm0 0c0 4-1.5 7-4.5 8 1-3.5 1.5-6 4.5-8Zm0 0c4 0 7 1.5 8 4.5-3.5-1-6-1.5-8-4.5Z"/></svg><span>飞花令</span></button>
+  <button type="button" id="dMode"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M12 4v16M4 12h16" stroke-dasharray="2 2"/></svg><span id="dModeLabel">横排</span></button>
+  <button type="button" id="dPinyin" aria-pressed="true"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9h14M5 13h14" opacity=".5"/><path d="M8 18l4-11 4 11M9.5 14h5"/></svg><span>拼音</span></button>
+  <button type="button" id="dVeil" aria-pressed="false"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z"/><circle cx="12" cy="12" r="2.5"/><path d="M4 20 20 4"/></svg><span>背诵</span></button>
+</nav>
+
+<!-- 搜索结果：桌面为右侧抽屉，手机为底部弹层 -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="sheet-grip" aria-hidden="true"></div>
+  <div class="sheet-head">
+    <form class="search sheet-search" id="sheetForm" role="search" autocomplete="off">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></svg>
+      <input id="q2" type="search" enterkeyhint="search" placeholder="搜诗名、诗句或作者" aria-label="搜诗名、诗句或作者">
+    </form>
+    <button type="button" class="btn text sheet-close" id="sheetClose">关闭</button>
+  </div>
+  <h2 class="sr" id="sheetTitle">搜索结果</h2>
+  <p class="sheet-status" id="sheetStatus"></p>
+  <ol class="results" id="results"></ol>
+  <div class="sheet-more"><button type="button" class="btn ghost" id="btnMore" hidden>更多结果</button></div>
+</aside>
+
+<!-- 分类找诗 · 我的诗单 · 诗词接龙 -->
+<aside class="sheet browse" id="browse" role="dialog" aria-modal="true" aria-label="诗单" hidden>
+  <div class="sheet-grip" aria-hidden="true"></div>
+  <div class="sheet-head browse-head">
+    <div class="seg seg-sm" role="tablist" aria-label="诗单">
+      <button type="button" role="tab" data-tab="cat" aria-selected="true">分类</button>
+      <button type="button" role="tab" data-tab="mine" aria-selected="false">我的诗单</button>
+      <button type="button" role="tab" data-tab="jl" aria-selected="false">接龙</button>
+    </div>
+    <button type="button" class="btn text sheet-close" id="browseClose">关闭</button>
+  </div>
+  <div class="browse-body" id="browseBody"></div>
+</aside>
+
+<div class="pop" id="pop" role="dialog" aria-modal="false" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+<script src="poem/config.js?v=202610310753"></script>
+<script src="vendor/pinyin-pro-3.29.5.min.js"></script>
+<!-- 发版时把所有 ?v= 改成新的版本号（tools/bump-version.sh），避免浏览器拿旧缓存的脚本和样式拼在一起 -->
+<script type="importmap">
+{
+  "imports": {
+    "./assets/js/api.js": "./assets/js/api.js?v=202610310753",
+    "./assets/js/cp.js": "./assets/js/cp.js?v=202610310753",
+    "./assets/js/lists.js": "./assets/js/lists.js?v=202610310753",
+    "./assets/js/map.js": "./assets/js/map.js?v=202610310753",
+    "./assets/js/practice.js": "./assets/js/practice.js?v=202610310753",
+    "./assets/js/study.js": "./assets/js/study.js?v=202610310753",
+    "./assets/js/themes.js": "./assets/js/themes.js?v=202610310753",
+    "./assets/js/exporter.js": "./assets/js/exporter.js?v=202610310753",
+    "./assets/js/fonts.js": "./assets/js/fonts.js?v=202610310753",
+    "./assets/js/main.js": "./assets/js/main.js?v=202610310753",
+    "./assets/js/reading.js": "./assets/js/reading.js?v=202610310753",
+    "./assets/js/render.js": "./assets/js/render.js?v=202610310753",
+    "./assets/js/store.js": "./assets/js/store.js?v=202610310753",
+    "./assets/js/zh.js": "./assets/js/zh.js?v=202610310753"
+  }
+}
+</script>
+<script type="module" src="assets/js/main.js?v=202610310753"></script>
+</body>
+</html>

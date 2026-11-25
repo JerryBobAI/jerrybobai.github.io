@@ -30,6 +30,8 @@ jspm_packages/
 vendor/
 !public/vendor/
 !public/otherworld-ride/vendor/
+!public/yinshi/vendor/
+!public/paper-plane/vendor/
 
 # 构建输出
 dist/
