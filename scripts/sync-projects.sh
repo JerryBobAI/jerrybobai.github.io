@@ -16,6 +16,10 @@ SITE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECTS=(
   "die-daily|$HOME/Workspace/Creation/die-daily/app|npm run build|$HOME/Workspace/Creation/die-daily/app/dist/|public/die-daily/|"
   "courses|$HOME/Workspace/Creation/courses||$HOME/Workspace/Creation/courses/|public/courses/|lectures;audio;readings;repos;site"
+  # ghibli-ride 是免构建静态站，这里的「构建」只做组装发布产物：本项目运行时文件
+  # + popup-books 书房成品子集（书单从 popup-books/index.html 的 BOOKS 解析，
+  # 那边加一本书不用改这里）。源目录是 workspace 里那个，不是 popup-books。
+  "ghibli-ride|$HOME/Workspace/Creation/ghibli-ride|node tools/build-dist.mjs|$HOME/Workspace/Creation/ghibli-ride/dist/|public/ghibli-ride/|"
 )
 
 # ---- 解析参数，筛出要同步的项目 ----

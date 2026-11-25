@@ -25,8 +25,46 @@ const jsonLd = [
     height={600}
   />
   <div class="mt-8 space-y-4 leading-relaxed text-slate-700">
-    <p>我是 {SITE.author}。这里是我的个人品牌主页：观点文章、创业点子、实战项目、在线产品与工具。</p>
-    <p>站点正在重建，内容陆续上线。</p>
+    <p>
+      我是 Jerry，用代码造东西的 builder。这个站叫「造物间」，因为这里造的不止代码：工具、产品、内容——连把内容分发到全平台的那条流水线，本身也是造出来的东西。
+    </p>
+  </div>
+
+  <section class="mt-10" aria-label="造物间里有什么">
+    <h2 class="text-xl font-bold">造物间里有什么</h2>
+    <ul class="mt-4 space-y-3 leading-relaxed text-slate-700">
+      <li><strong>文章</strong>：观点与造物长文，原创为主。</li>
+      <li><strong>点子</strong>：想法与灵感碎片，从种子到验证。</li>
+      <li><strong>项目</strong>：实战项目与在线产品。</li>
+      <li><strong>工具</strong>：随手造的在线小工具。</li>
+    </ul>
+  </section>
+
+  <section class="mt-10" aria-label="怎么造">
+    <h2 class="text-xl font-bold">怎么造：和 AI 协作</h2>
+    <div class="mt-4 space-y-4 leading-relaxed text-slate-700">
+      <p>整个造物间是我和 AI 协作跑出来的。我把重复的工作方式沉淀成一套技能：生图、配乐、长文转视频脚本，还有一条发布流水线。</p>
+      <p>
+        同一个造物项目，一次开发，就能转译成 B站视频、公众号长文、小红书图集、抖音切片——各自按平台的语言重新立论，不是复制粘贴。
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-label="发布矩阵">
+    <h2 class="text-xl font-bold">发布矩阵</h2>
+    <div class="mt-4 space-y-4 leading-relaxed text-slate-700">
+      <p>内容不只在这一个站。已上线：</p>
+      <ul class="space-y-2">
+        <li><strong>B站</strong>「Jerry的造物间」——代码造物深度视频</li>
+        <li><strong>小红书</strong>「Jerry的一人公司」——一人公司真人 IP</li>
+      </ul>
+      <p>
+        筹备中，陆续上线：YouTube（<code class="rounded bg-slate-100 px-1 py-0.5 text-sm">@JerryBobBuilds</code>）、视频号「Jerry的造物日记」、抖音「看Jerry造东西」、公众号「Jerry造物手记」、X（英文线）。
+      </p>
+    </div>
+  </section>
+
+  <div class="mt-10 space-y-4 leading-relaxed text-slate-700">
     <p>GitHub：<a class="underline" href={SITE.github}>{SITE.github}</a></p>
   </div>
 </BaseLayout>
