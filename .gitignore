@@ -29,6 +29,7 @@ bower_components/
 jspm_packages/
 vendor/
 !public/vendor/
+!public/otherworld-ride/vendor/
 
 # 构建输出
 dist/
