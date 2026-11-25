@@ -3,9 +3,9 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BackLink from '../../components/BackLink.astro';
 import { SITE } from '../../config/site';
-import { notDraft } from '../../lib/content';
+import { notDraft, byDateDesc, formatDate } from '../../lib/content';
 
-const posts = await getCollection('blog', notDraft);
+const posts = (await getCollection('blog', notDraft)).sort(byDateDesc);
 const tagCount = new Map<string, number>();
 for (const post of posts) {
   for (const t of post.data.tags) tagCount.set(t, (tagCount.get(t) ?? 0) + 1);
@@ -14,17 +14,126 @@ const tags = [...tagCount.entries()].sort((a, b) => b[1] - a[1]);
 ---
 
 <BaseLayout width="wide" title={`标签 · ${SITE.name}`} description="按标签浏览全部文章。">
-  <BackLink href="/" label="返回首页" />
-  <h1 class="mt-4 text-3xl font-bold">标签</h1>
-  <p class="mt-2 text-sm text-slate-500">共 {tags.length} 个标签，按文章数排序。</p>
-  <div class="mt-6 flex flex-wrap gap-2">
-    {tags.map(([t, n]) => (
-      <a
-        href={`/tags/${encodeURIComponent(t)}/`}
-        class="rounded-full border border-slate-200 px-3 py-1 text-sm text-slate-600 transition-colors hover:border-slate-400 hover:text-slate-900"
-      >
-        #{t} <span class="text-slate-400">{n}</span>
-      </a>
-    ))}
+  {/* 内容 + 右栏 hairline 同容器（同文章详情页模型），右栏收窄正文列宽 */}
+  <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div>
+      <BackLink href="/" label="返回首页" />
+      <h1 class="mt-4 text-3xl font-bold">标签</h1>
+      <p id="tag-hint" class="mt-2 text-sm text-slate-500" data-total={posts.length} data-tag-count={tags.length}></p>
+      <div id="tag-cloud" class="mt-6 flex flex-wrap gap-2">
+        <button
+          data-tag=""
+          class="rounded-full border px-3 py-1 text-sm transition-colors"
+        >
+          全部 <span class="text-slate-400">{posts.length}</span>
+        </button>
+        {tags.map(([t, n]) => (
+          <button
+            data-tag={t}
+            class="rounded-full border px-3 py-1 text-sm transition-colors"
+          >
+            #{t} <span class="text-slate-400">{n}</span>
+          </button>
+        ))}
+      </div>
+      <ul id="post-list" class="mt-8 space-y-6">
+        {posts.map((post) => (
+          <li class="border-b pb-6" data-tags={post.data.tags.join('\t')}>
+            <a href={`/blog/${post.id}/`} class="text-xl font-medium hover:underline">{post.data.title}</a>
+            <p class="mt-2 text-sm text-slate-500">
+              {formatDate(post.data.pubDate)}
+              <span class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs">{post.data.origin}</span>
+              {post.data.tags.map((t) => (
+                <span class="ml-1 text-xs text-slate-400">#{t}</span>
+              ))}
+            </p>
+            <p class="mt-2 text-slate-600">{post.data.summary}</p>
+          </li>
+        ))}
+      </ul>
+      <nav id="pager" aria-label="分页" class="mt-8 hidden items-center justify-between text-sm">
+        <button id="pager-prev" class="rounded-lg border border-slate-300 px-3 py-1.5 transition-colors hover:border-slate-900">← 上一页</button>
+        <span id="pager-info" class="text-slate-500"></span>
+        <button id="pager-next" class="rounded-lg border border-slate-300 px-3 py-1.5 transition-colors hover:border-slate-900">下一页 →</button>
+      </nav>
+    </div>
+    <div class="hidden self-start lg:sticky lg:top-28 lg:block">
+      <div id="tags-figure" aria-hidden="true" class="w-full"></div>
+    </div>
   </div>
 </BaseLayout>
+
+<script>
+  import { hub } from '@lucasmarkes/hairline';
+  const figureEl = document.getElementById('tags-figure');
+  if (figureEl) hub(figureEl as HTMLElement, { play: true });
+
+  // 标签就地过滤 + 前端分页：全量列表已由服务端渲染，这里只做显隐切片
+  const PAGE_SIZE = 10;
+  const list = document.getElementById('post-list')!;
+  const items = [...list.children] as HTMLElement[];
+  const hint = document.getElementById('tag-hint')!;
+  const cloud = document.getElementById('tag-cloud')!;
+  const chips = [...cloud.querySelectorAll<HTMLButtonElement>('[data-tag]')];
+  const pager = document.getElementById('pager')!;
+  const prevBtn = document.getElementById('pager-prev')!;
+  const nextBtn = document.getElementById('pager-next')!;
+  const info = document.getElementById('pager-info')!;
+
+  const activeCls = ['border-slate-900', 'bg-slate-900', 'text-white'];
+  const idleCls = ['border-slate-200', 'text-slate-600', 'hover:border-slate-400', 'hover:text-slate-900'];
+
+  let activeTag = '';
+  let page = 1;
+
+  // URL 初始化（/tags/?tag=游戏&page=2），从文章页标签链接落地即为过滤态
+  const params = new URLSearchParams(window.location.search);
+  const urlTag = params.get('tag') ?? '';
+  if (urlTag && chips.some((c) => c.dataset.tag === urlTag)) activeTag = urlTag;
+  page = Math.max(1, parseInt(params.get('page') ?? '1', 10) || 1);
+
+  function apply() {
+    const filtered = items.filter(
+      (li) => !activeTag || (li.dataset.tags ?? '').split('\t').includes(activeTag),
+    );
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    page = Math.min(Math.max(1, page), totalPages);
+
+    items.forEach((li) => (li.style.display = 'none'));
+    filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).forEach((li) => (li.style.display = ''));
+
+    hint.textContent = activeTag
+      ? `#${activeTag} · ${filtered.length} 篇文章（点击「全部」返回所有文章）`
+      : `共 ${hint.dataset.total} 篇文章 · ${hint.dataset.tagCount} 个标签`;
+
+    chips.forEach((chip) => {
+      const active = chip.dataset.tag === activeTag;
+      chip.classList.remove(...activeCls, ...idleCls);
+      chip.classList.add(...(active ? activeCls : idleCls));
+    });
+
+    pager.classList.toggle('hidden', totalPages <= 1);
+    pager.classList.toggle('flex', totalPages > 1);
+    info.textContent = `第 ${page} / ${totalPages} 页`;
+    (prevBtn as HTMLButtonElement).disabled = page <= 1;
+    (nextBtn as HTMLButtonElement).disabled = page >= totalPages;
+
+    const qs = new URLSearchParams();
+    if (activeTag) qs.set('tag', activeTag);
+    if (page > 1) qs.set('page', String(page));
+    history.replaceState(null, '', qs.toString() ? `/tags/?${qs}` : '/tags/');
+  }
+
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const tag = chip.dataset.tag ?? '';
+      activeTag = activeTag === tag ? '' : tag; // 再点同一标签取消过滤
+      page = 1;
+      apply();
+    }),
+  );
+  prevBtn.addEventListener('click', () => { page -= 1; apply(); });
+  nextBtn.addEventListener('click', () => { page += 1; apply(); });
+
+  apply();
+</script>
