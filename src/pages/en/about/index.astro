@@ -16,9 +16,12 @@ const jsonLd = [
   },
 ];
 ---
-<BaseLayout lang="en" title={title} description={description} jsonLd={jsonLd} alternates={{ zh: '/about/', en: '/en/about/' }}>
-  <h1 class="text-3xl font-bold tracking-tight">About</h1>
-  <div class="mt-8 space-y-4 leading-relaxed text-slate-700">
+<BaseLayout lang="en" width="wide" title={title} description={description} jsonLd={jsonLd} alternates={{ zh: '/about/', en: '/en/about/' }}>
+  {/* 与首页同宽的容器；hairline 右栏收窄正文列，行宽保持舒适（同文章详情页模型） */}
+  <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight">About</h1>
+      <div class="mt-8 space-y-4 leading-relaxed text-slate-700">
     <p>
       I'm Jerry, a builder. This site is my workshop — and the name is literal: what gets built here isn't only
       code. Tools, products, content — even the publishing pipeline that ships the content across platforms is
@@ -60,4 +63,15 @@ const jsonLd = [
       </p>
     </div>
   </section>
+    </div>
+    <div class="hidden self-start lg:sticky lg:top-28 lg:block">
+      <div id="about-figure" aria-hidden="true" class="w-full"></div>
+    </div>
+  </div>
 </BaseLayout>
+
+<script>
+  import { cabinet } from '@lucasmarkes/hairline';
+  const el = document.getElementById('about-figure');
+  if (el) cabinet(el as HTMLElement, { play: true });
+</script>
