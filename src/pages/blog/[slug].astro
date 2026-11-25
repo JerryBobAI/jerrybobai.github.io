@@ -65,7 +65,7 @@ const jsonLd = [
         ))}
       </div>
     )}
-    {post.data.cover && (
+    {post.data.cover && !post.data.hideHero && (
       <img
         src={post.data.cover}
         alt={`${post.data.title} 封面插图`}

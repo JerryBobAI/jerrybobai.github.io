@@ -16,6 +16,8 @@ const blog = defineCollection({
     origin: z.enum(['原创', '转载', '翻译']).default('原创'),
     source: z.string().optional(),
     cover: z.string().optional(),
+    // true 时文章详情页不渲染封面大图（列表卡仍显示）——正文自带题图的文章用
+    hideHero: z.boolean().default(false),
     // 文章页左上角的 hairline 线条图（图案名对应 @lucasmarkes/hairline 的导出函数）
     figure: z.string().optional(),
   }),

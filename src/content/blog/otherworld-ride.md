@@ -5,10 +5,13 @@ tags: [游戏, 独立开发]
 summary: 我第二款上线 itch.io 的网页游戏：POV 无尽骑行穿过 40+ 浮空世界，掉下去弹回来，没有失败画面。上一款把死亡做成奖励，这一款把失败改成弹跳——压力不从惩罚来，从金币串、每日串和一条命来。
 origin: 原创
 cover: /covers/blog-otherworld-ride.jpg
+hideHero: true
 figure: terrain
 ---
 
 OTHERWORLD RIDE（站内中文版叫「异界骑行」）是一款第一人称的无尽摩托骑行游戏：车把握在手里，路在 40 多个浮空世界之间无限展开——钟楼小镇、珊瑚浅滩、云海日出、水晶荒原，还有一个永远向上盘旋的世界。掉下去不会死，弹回来接着骑。它已经上线 [itch.io](https://jerrybobai.itch.io/otherworld-ride)，也可以直接[在站内玩](/otherworld-ride/)。这是我第二款上线的完整作品。第一款 [DieDaily](/blog/die-daily/) 把死亡数当分数，这一款把失败改成弹跳——同一个题材，两种相反的压力哲学。这篇文章记录它的设计核心和技术踩坑。
+
+![浮空岛群与云海鲸鱼：游戏世界的日系插画版](/images/otherworld-ride/otherworlds-anime.jpg?v=1)
 
 ### 把失败改成弹跳
 
