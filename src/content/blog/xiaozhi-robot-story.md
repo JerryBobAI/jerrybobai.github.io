@@ -40,6 +40,8 @@ cover: /covers/blog-xiaozhi-story.jpg
 
 ![装机过程：走线是最耗时的一步](/images/xiaozhi/xiaozhi-build-1.jpg)
 
+![装屏：屏幕复位到前脸](/images/xiaozhi/xiaozhi-build-2.jpg)
+
 装机前先收藏三个坑，都是我替你踩过的：
 
 1. **摄像头不在套装里**，要单独买——而后面所有「看」的玩法（拍照、体感判断）全靠它，别省；
