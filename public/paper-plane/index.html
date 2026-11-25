@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>纸飞机 · Paper Airplane</title>
+<meta name="theme-color" content="#e8dcc6">
+<!-- 内联图标：省掉一次 /favicon.ico 的 404（纸飞机折角剪影） -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f2ecdf'/%3E%3Cpath d='M27 5 4 14.5l8.5 3.2L16 27l4.2-6.6 6.8 3.4z' fill='none' stroke='%232b251e' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M12.5 17.7 27 5' fill='none' stroke='%232b251e' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --ink: #2b251e;
+    --ink-soft: rgba(43, 37, 30, 0.62);
+    --ink-faint: rgba(43, 37, 30, 0.32);
+    --paper: #f8f2e4;
+    --paper-strong: #fdf9ef;
+    --line: rgba(58, 48, 36, 0.18);
+
+    /* 控件语言取自 still-alive：深色毛玻璃 + 细白边 + 内高光 + 分层投影。
+       那边是暗场照片查看器，这里是午后暖木书桌，所以灰换成暖墨色，
+       结构（999px 胶囊 / blur 20–26px / inset 高光 / 悬停抬升 / 按下下沉）不动。 */
+    --glass: rgba(38, 32, 25, 0.60);
+    --glass-deep: rgba(30, 25, 20, 0.72);
+    --chip: rgba(255, 249, 238, 0.10);
+    --chip-hi: rgba(255, 249, 238, 0.20);
+    --line-glass: rgba(255, 255, 255, 0.18);
+    --line-glass-2: rgba(255, 255, 255, 0.28);
+    --ui: rgba(255, 250, 240, 0.96);
+    --ui-soft: rgba(255, 250, 240, 0.72);
+    --ui-faint: rgba(255, 250, 240, 0.54);
+    --shadow: 0 24px 64px rgba(30, 20, 12, 0.30), 0 2px 8px rgba(30, 20, 12, 0.12);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #d9cbb4;
+    color: var(--ink);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+
+  body {
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #stage {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+    cursor: grab;
+  }
+
+  #ui {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 26px clamp(18px, 3.4vw, 46px) 22px;
+  }
+
+  #ui > * { pointer-events: none; }
+
+  /* 标题也做成一块玻璃卡，和底栏三块同一套壳：白字、无衬线、三级对比
+     （标题纯白 600 → 副标 .55 → 正文 .72），不再用衬线大字压在桌面上 */
+  .masthead {
+    align-self: flex-start;
+    max-width: min(430px, 88vw);
+    padding: 16px 22px 17px;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 20px;
+    background: rgba(44, 37, 29, 0.42);
+    backdrop-filter: blur(28px) saturate(1.25);
+    -webkit-backdrop-filter: blur(28px) saturate(1.25);
+    box-shadow: 0 18px 48px rgba(30, 20, 12, 0.20), 0 2px 8px rgba(30, 20, 12, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  h1 {
+    margin: 0;
+    font: 600 clamp(18px, 1.7vw, 21px)/1.4 -apple-system, system-ui, "PingFang SC", sans-serif;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  }
+
+  h1 span {
+    display: block;
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+  }
+
+  .masthead p {
+    margin: 10px 0 0;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 0.02em;
+  }
+
+  /* 右上角声音：一个按钮 + 点开的小面板，不抢画面 */
+  .sound {
+    pointer-events: auto;
+    position: fixed;
+    top: 22px;
+    right: clamp(18px, 3.4vw, 46px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    z-index: 5;
+  }
+
+  #soundBtn {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--glass);
+    border: 1px solid var(--line-glass);
+    color: var(--ui);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    backdrop-filter: blur(20px) saturate(1.4);
+    box-shadow: 0 8px 24px rgba(30, 20, 12, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  }
+
+  /* 圆形按钮的通用悬停被 #id 特异性压掉了，这里单独补上抬升 */
+  #soundBtn:hover {
+    background: rgba(56, 48, 38, 0.72);
+    border-color: var(--line-glass-2);
+    box-shadow: 0 12px 30px rgba(20, 14, 8, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      0 0 0 4px rgba(255, 250, 240, 0.14);
+  }
+
+  #soundBtn:active { transform: translateY(1px) scale(0.96); }
+
+  #soundBtn svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* 静音不再靠喇叭上的斜线：齿轮降一档亮度，点开「声音」页签还有小点 */
+  .sound.muted #soundBtn { opacity: 0.58; }
+  .sound.muted #soundBtn:hover { opacity: 0.86; }
+
+  /* 提示游离在按钮左侧同一行：它一消失，按钮不会跟着跳 38px */
+  #soundHint {
+    position: absolute;
+    top: 5px;
+    right: 48px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    background: rgba(43, 37, 30, 0.78);
+    color: var(--paper-strong);
+    border-color: transparent;
+    animation: breathe 1.8s ease-in-out infinite;
+  }
+
+  #soundHint:hover { background: rgba(43, 37, 30, 0.9); border-color: transparent; }
+
+  /* 面板展开时提示语会让位，免得压在面板左边像多出来一个按钮。
+     提示在放 breathe 呼吸动画，动画会盖过普通 opacity 声明，得先把动画停掉 */
+  .sound.open #soundHint { animation: none; opacity: 0; visibility: hidden; pointer-events: none; }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.72; }
+    50% { opacity: 1; }
+  }
+
+  /* 面板开合照 still-alive 的菜单：从右上角长出来，淡入 + 上移 6px + 缩放 .98。
+     不用 [hidden] 开关 display——那样过渡直接跳过，只有淡入没有形变 */
+  .sound-panel {
+    width: 252px;
+    padding: 10px 10px 12px;
+    border-radius: 16px;
+    border: 1px solid var(--line-glass);
+    background: var(--glass-deep);
+    backdrop-filter: blur(26px) saturate(1.5);
+    -webkit-backdrop-filter: blur(26px) saturate(1.5);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transform-origin: 100% 0;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+  }
+
+  /* 页签：声音 / 背景。底槽比面板再暗一层，选中项是一枚纸白薄片 */
+  .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 3px;
+    border-radius: 999px;
+    background: rgba(255, 250, 240, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .tabs .tab {
+    padding: 5px 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    box-shadow: none;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--ui-faint);
+    transition: background 0.16s ease, color 0.16s ease;
+  }
+
+  .tabs .tab:hover {
+    background: transparent;
+    color: var(--ui-soft);
+    box-shadow: none;
+  }
+
+  .tabs .tab[aria-selected="true"] {
+    background: rgba(255, 250, 240, 0.17);
+    color: var(--ui);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+
+  .tabs .tab[data-muted="true"]::after {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: #e79a72;
+    vertical-align: middle;
+  }
+
+  .pane {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2px 4px 0;
+  }
+
+  .pane[hidden] { display: none; }
+
+  .bg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* 背景项是整行按钮：左边一块渐变色卡，中间名称，右边选中圆点 */
+  .bg-list button {
+    display: grid;
+    grid-template-columns: 40px 1fr 14px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    box-shadow: none;
+    text-align: left;
+  }
+
+  .bg-list button:hover {
+    background: rgba(255, 250, 240, 0.08);
+    border-color: rgba(255, 255, 255, 0.13);
+    box-shadow: none;
+  }
+
+  .bg-list button[aria-pressed="true"] {
+    background: rgba(255, 250, 240, 0.14);
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+
+  .bg-list .swatch {
+    width: 40px;
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(165deg, var(--s1) 0%, var(--s2) 58%, var(--s3) 100%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.20), 0 2px 6px rgba(12, 8, 4, 0.24);
+  }
+
+  .bg-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .bg-text b {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ui);
+  }
+
+  .bg-text em {
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    color: var(--ui-faint);
+  }
+
+  .bg-list .pick {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    transition: background 0.16s ease, border-color 0.16s ease;
+  }
+
+  .bg-list button[aria-pressed="true"] .pick {
+    background: var(--paper-strong);
+    border-color: rgba(255, 255, 255, 0.72);
+    box-shadow: inset 0 0 0 3px rgba(43, 37, 30, 0.42);
+  }
+
+  .bg-note {
+    margin: 0;
+    padding: 0 4px 2px;
+    font-size: 10px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    color: var(--ui-faint);
+  }
+
+  .sound-panel.open {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s;
+  }
+
+  #soundHint[hidden] { display: none; }
+
+  #soundOn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 6px 7px 10px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--ui);
+  }
+
+  #soundOn .pill {
+    width: 30px;
+    height: 17px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 250, 240, 0.12);
+    position: relative;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  #soundOn .pill i {
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--paper-strong);
+    box-shadow: 0 1px 3px rgba(20, 14, 8, 0.45);
+    transition: transform 0.22s cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+
+  #soundOn[aria-checked="true"] .pill {
+    background: var(--paper-strong);
+    border-color: rgba(255, 255, 255, 0.62);
+  }
+
+  #soundOn[aria-checked="true"] .pill i {
+    background: var(--ink);
+    box-shadow: 0 1px 3px rgba(20, 14, 8, 0.5);
+  }
+
+  #soundOn[aria-checked="true"] .pill i { transform: translateX(13px); }
+
+  #soundOn em {
+    font-style: normal;
+    min-width: 1.6em;
+    text-align: right;
+    color: var(--ui-soft);
+  }
+
+  .vol {
+    display: grid;
+    grid-template-columns: 34px 1fr 38px;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ui-soft);
+  }
+
+  .vol input[type="range"] {
+    min-width: 0;
+    height: 24px;
+    touch-action: none;
+  }
+
+  .vol b {
+    font-weight: 500;
+    text-align: right;
+    font-size: 10.5px;
+    color: var(--ui-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 底栏拆成三块独立的玻璃卡：左下折法 / 中下进度 / 右下操作。
+     外层只负责摆位，自己不铺底色，中间才空得出来 */
+  .dock {
+    pointer-events: none;
+    align-self: stretch;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "styles rail row";
+    align-items: end;
+    gap: 14px;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .dock.hidden {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .dock.hidden > * { pointer-events: none; }
+
+  /* 三块共用的玻璃壳。书桌是亮米色，所以玻璃压得很薄（.42），
+     靠 blur + 内高光 + 外投影托住，别做成一块石板 */
+  .styles, .rail-wrap, .row {
+    pointer-events: auto;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 20px;
+    background: rgba(44, 37, 29, 0.42);
+    backdrop-filter: blur(30px) saturate(1.2);
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    box-shadow: 0 18px 48px rgba(30, 20, 12, 0.20), 0 2px 8px rgba(30, 20, 12, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .row {
+    grid-area: row;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    padding: 7px 10px;
+  }
+
+  /* 胶囊控件：琥珀色图标/文字压在半透明白片上，悬停提亮 + 投影抬起，
+     按下压 1px 并缩到 .985——still-alive 的按压手感，比单纯变色多一层触感 */
+  button, .btn {
+    pointer-events: auto;
+    appearance: none;
+    border: 1px solid var(--line-glass);
+    background: var(--chip);
+    color: var(--ui);
+    font: inherit;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    padding: 9px 15px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease,
+      transform 0.15s ease, opacity 0.2s ease;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  }
+
+  button:hover, .btn:hover {
+    background: var(--chip-hi);
+    border-color: var(--line-glass-2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 18px rgba(20, 14, 8, 0.22);
+  }
+
+  button:active, .btn:active {
+    transform: translateY(1px) scale(0.985);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  }
+
+  button:focus-visible, .btn:focus-visible {
+    outline: 2px solid rgba(255, 250, 240, 0.72);
+    outline-offset: 3px;
+  }
+
+  /* 主按钮反过来做：暗玻璃上填一块奶油纸色，最亮的元素就是主操作 */
+  button.primary {
+    background: var(--paper-strong);
+    color: var(--ink);
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 22px rgba(10, 6, 2, 0.28);
+    font-weight: 500;
+  }
+
+  button.primary:hover {
+    background: #fffdf6;
+    border-color: rgba(255, 255, 255, 0.75);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 12px 30px rgba(10, 6, 2, 0.34);
+  }
+
+  /* 选中态就用纸白填充：整块控件里只有「当前这一项」是亮的，
+     不再掺橙色——玻璃上出现两种强调色会互相打架 */
+  button[aria-pressed="true"] {
+    background: var(--paper-strong);
+    color: var(--ink);
+    border-color: rgba(255, 255, 255, 0.62);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 18px rgba(10, 6, 2, 0.24);
+  }
+
+  button[aria-pressed="true"]:hover {
+    background: #fffdf6;
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  button:disabled, .btn.disabled {
+    opacity: 0.38;
+    pointer-events: none;
+  }
+
+  .rail-wrap {
+    grid-area: rail;
+    justify-self: center;
+    width: min(460px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    padding: 10px 18px 11px;
+  }
+
+  input[type="range"] {
+    pointer-events: auto;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 22px;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(255, 250, 240, 0.94) var(--fill, 0%), rgba(255, 250, 240, 0.28) var(--fill, 0%));
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 250, 240, 0.30);
+  }
+
+  input[type="range"]::-moz-range-progress {
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 250, 240, 0.94);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -5.5px;
+    border-radius: 50%;
+    background: var(--paper-strong);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 8px rgba(10, 6, 2, 0.45), inset 0 1px 0 #fff;
+    transition: transform 0.15s ease, box-shadow 0.18s ease;
+  }
+
+  input[type="range"]:active::-webkit-slider-thumb {
+    transform: scale(1.18);
+    box-shadow: 0 2px 12px rgba(10, 6, 2, 0.5), 0 0 0 6px rgba(255, 250, 240, 0.18);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--paper-strong);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 2px 8px rgba(10, 6, 2, 0.45);
+  }
+
+  .ticks {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    /* 玻璃已经很淡，白字压在浅木色上对比不够，靠一层暗投影把边缘拉回来 */
+    text-shadow: 0 1px 3px rgba(28, 18, 8, 0.45);
+    color: rgba(255, 250, 240, 0.78);
+    padding: 0 2px;
+  }
+
+  /* 滑杆每跨一道折痕，对应标签跟着点亮——配 audio 的 stage 声 */
+  .ticks span {
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+
+  .ticks span.on {
+    color: var(--ui);
+    text-shadow: 0 0 10px rgba(255, 250, 240, 0.55);
+    animation: tickPop 0.34s cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+
+  /* 跨折痕时标签轻轻弹一下，和那声 stage 对齐 */
+  @keyframes tickPop {
+    0% { transform: translateY(2px) scale(0.92); opacity: 0.5; }
+    60% { transform: translateY(-1px) scale(1.04); }
+    100% { transform: none; opacity: 1; }
+  }
+
+  .hint {
+    min-height: 16px;
+    font-size: 11.5px;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    color: var(--ui-soft);
+    transition: color 0.2s ease;
+    text-shadow: 0 1px 3px rgba(28, 18, 8, 0.4);
+  }
+
+  .styles {
+    grid-area: styles;
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    padding: 7px 10px;
+  }
+
+  .styles .cap {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--ui-faint);
+    text-shadow: 0 1px 3px rgba(28, 18, 8, 0.4);
+    margin-right: 2px;
+  }
+
+  .styles button {
+    padding: 6px 11px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+
+  /* 撑满整行，底栏三段才能一左一右贴到屏幕边；.away / #toast 都是
+     相对它定位的绝对值元素，不受拉伸影响 */
+  .footer {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  /* 放飞后出现的两个按钮挂在底栏上方，跟着底栏高度走：
+     写死 fixed bottom 时窄屏 / 矮窗口底栏变高就会被压进折法按钮行 */
+  /* 这一组悬在场景上方，底栏的 .42 薄玻璃在这里不够用——底下直接是木纹和窗，
+     白字会糊。所以单独给一层更实的玻璃，让它读起来是一张悬浮卡 */
+  .away {
+    pointer-events: auto;
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%) translateY(8px);
+    display: flex;
+    gap: 10px;
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(40, 34, 27, 0.62);
+    backdrop-filter: blur(26px) saturate(1.3);
+    -webkit-backdrop-filter: blur(26px) saturate(1.3);
+    box-shadow: 0 16px 40px rgba(20, 14, 8, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .away.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+
+  #toast {
+    position: absolute;
+    left: 50%;
+    /* 同样挂底栏上方：压在上面会被半透明面板糊住还挡住滑杆 */
+    bottom: calc(100% + 62px);
+    transform: translateX(-50%) translateY(6px);
+    z-index: 3;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line-glass);
+    background: var(--glass-deep);
+    color: var(--ui);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(22px) saturate(1.4);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    box-shadow: 0 12px 32px rgba(16, 10, 4, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    /* 出提示时轻轻弹一下，和按钮按压同一个节拍 */
+    transition: opacity 0.22s ease, transform 0.26s cubic-bezier(0.3, 1.3, 0.5, 1);
+    max-width: 80vw;
+    text-align: center;
+  }
+
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  #loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #e8dcc6;
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    transition: opacity 0.6s ease;
+    z-index: 10;
+  }
+
+  #loader.done { opacity: 0; pointer-events: none; }
+
+  /* 加载页：一只线稿纸飞机从左下飞向右上，一路缩小淡出，像飞进远处的窗光里。
+     外层走位移 + 缩放 + 透明度，内层走上下轻摆——两个动画都写 transform，
+     必须分居两层，写在同一元素上后一个会把前一个顶掉 */
+  /* 透视容器：消失点定在偏右上，飞机沿 z 轴从镜头前跃进远处时会自然收向它 */
+  .flight {
+    position: relative;
+    width: 360px;
+    height: 200px;
+    perspective: 380px;
+    perspective-origin: 58% 32%;
+  }
+
+  .plane-wrap {
+    position: absolute;
+    left: 10px;
+    bottom: 16px;
+    width: 76px;
+    height: 76px;
+    transform-style: preserve-3d;
+    animation: flyAway 2.4s cubic-bezier(0.25, 0.15, 0.4, 1) infinite;
+    will-change: transform, opacity;
+  }
+
+  .plane {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: rgba(43, 37, 30, 0.66);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    animation: planeBob 0.9s ease-in-out infinite alternate;
+  }
+
+  /* 真实纵深的来源是 z：从镜头前（+160px）冲到远处（-520px），近大远小由透视算。
+     整段只给一条缓出曲线：起跳快、越远越慢，中途不再分段，否则屏幕位移会忽然停顿，
+     又读成平面滑行。旋转是爬升转平飞的姿态变化 */
+  @keyframes flyAway {
+    0% {
+      transform: translate3d(-18px, 66px, 160px) rotate(-9deg);
+      opacity: 0;
+    }
+    10% { opacity: 1; }
+    65% { opacity: 0.9; }
+    100% {
+      transform: translate3d(112px, -72px, -640px) rotate(2deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes planeBob {
+    from { transform: rotate(-3.5deg) translateY(1.5px); }
+    to { transform: rotate(3deg) translateY(-1.5px); }
+  }
+
+  /* 减速偏好下别让飞机停在透明的终点：直接给一个静态中景 */
+  @media (prefers-reduced-motion: reduce) {
+    .plane-wrap { animation: none !important; opacity: 1; transform: translate3d(52px, -16px, -150px) rotate(-3deg); }
+    .plane { animation: none !important; }
+  }
+
+  #loader .bar {
+    width: 132px;
+    height: 1px;
+    background: rgba(58, 48, 36, 0.18);
+    overflow: hidden;
+  }
+
+  #loader .bar i {
+    display: block;
+    width: 40%;
+    height: 100%;
+    background: var(--ink-soft);
+    animation: slide 1.3s ease-in-out infinite;
+  }
+
+  @keyframes slide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(340%); }
+  }
+
+  /* 三段式放不下时退回竖排：折法 → 操作 → 进度（进度留最后，滑杆要独占一行好拖） */
+  @media (max-width: 900px) {
+    .dock {
+      grid-template-columns: 1fr;
+      grid-template-areas: "styles" "row" "rail";
+      gap: 10px;
+    }
+    .styles, .rail-wrap, .row {
+      justify-self: stretch;
+      width: auto;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .row { flex-wrap: wrap; }
+    .styles { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 720px) {
+    #ui { padding: 18px 14px 16px; }
+    .masthead { padding: 12px 16px 13px; border-radius: 16px; }
+    .masthead p { display: none; }
+    .dock { gap: 8px; }
+    .styles, .rail-wrap, .row { padding-left: 10px; padding-right: 10px; }
+    button, .btn { padding: 8px 12px; font-size: 11.5px; }
+    .sound { top: 14px; right: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+<script type="importmap">
+  { "imports": { "three": "./vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="stage"></canvas>
+
+<div id="ui">
+  <header class="masthead">
+    <h1>纸飞机<span>Paper Airplane</span></h1>
+    <p>一张照片折成一架纸飞机。<br>午后，窗边，纸上的一次远行。</p>
+  </header>
+
+  <div class="sound" id="sound">
+    <button id="soundHint" type="button" hidden>轻触开声</button>
+    <button id="soundBtn" type="button" aria-label="设置" aria-haspopup="dialog" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.1"/>
+        <path d="M19.4 13.6a7.9 7.9 0 0 0 0-3.2l1.9-1.4-2-3.5-2.2.9a7.9 7.9 0 0 0-2.8-1.6L14.1 2h-4.2l-.4 2.8a7.9 7.9 0 0 0-2.8 1.6l-2.2-.9-2 3.5 1.9 1.4a7.9 7.9 0 0 0 0 3.2l-1.9 1.4 2 3.5 2.2-.9a7.9 7.9 0 0 0 2.8 1.6l.4 2.8h4.2l.4-2.8a7.9 7.9 0 0 0 2.8-1.6l2.2.9 2-3.5z"/>
+      </svg>
+    </button>
+    <div class="sound-panel" id="soundPanel" role="dialog" aria-label="设置">
+      <div class="tabs" role="tablist" aria-label="设置分类">
+        <button class="tab" id="tabSound" type="button" role="tab" aria-selected="true" aria-controls="paneSound">声音</button>
+        <button class="tab" id="tabBg" type="button" role="tab" aria-selected="false" aria-controls="paneBg">背景</button>
+      </div>
+      <div class="pane" id="paneSound" role="tabpanel" aria-labelledby="tabSound">
+        <button id="soundOn" type="button" role="switch" aria-checked="true">
+          <span>声音</span>
+          <span class="pill"><i></i></span>
+          <em id="soundOnText">开</em>
+        </button>
+        <label class="vol">
+          <span>音乐</span>
+          <input id="volMusic" type="range" min="0" max="100" step="5" value="45" aria-label="背景音乐音量">
+          <b id="volMusicV">45%</b>
+        </label>
+        <label class="vol">
+          <span>音效</span>
+          <input id="volSfx" type="range" min="0" max="100" step="5" value="80" aria-label="音效音量">
+          <b id="volSfxV">80%</b>
+        </label>
+      </div>
+      <div class="pane" id="paneBg" role="tabpanel" aria-labelledby="tabBg" hidden>
+        <div class="bg-list" id="bgList">
+          <button type="button" data-theme="desk" aria-pressed="true">
+            <span class="swatch" style="--s1:#f6efd8;--s2:#a9b889;--s3:#55663f"></span>
+            <span class="bg-text"><b>窗边书桌</b><em>午后 · 树影</em></span>
+            <span class="pick" aria-hidden="true"></span>
+          </button>
+          <button type="button" data-theme="coast" aria-pressed="false">
+            <span class="swatch" style="--s1:#d8edf4;--s2:#8dc0cd;--s3:#2f6c7c"></span>
+            <span class="bg-text"><b>海边</b><em>海风 · 正午</em></span>
+            <span class="pick" aria-hidden="true"></span>
+          </button>
+          <button type="button" data-theme="dusk" aria-pressed="false">
+            <span class="swatch" style="--s1:#f6d3a0;--s2:#d8895f;--s3:#5d4157"></span>
+            <span class="bg-text"><b>黄昏</b><em>落日 · 长影</em></span>
+            <span class="pick" aria-hidden="true"></span>
+          </button>
+        </div>
+        <p class="bg-note">每一套景连桌子一起换：木料、地板、窗框和桌边的小物都跟着走，纸还是这张纸。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="away" id="away">
+      <button id="retrieveBtn">取回纸飞机</button>
+      <button class="primary" id="reflyBtn">再飞一次</button>
+    </div>
+    <div id="toast"></div>
+    <section class="dock" id="dock">
+      <div class="styles" id="styles" role="group" aria-label="折法">
+        <span class="cap">折法</span>
+        <button data-recipe="dart" aria-pressed="true">经典飞镖</button>
+        <button data-recipe="glider" aria-pressed="false">宽翼滑翔机</button>
+        <button data-recipe="wide" aria-pressed="false">宽体飞镖</button>
+        <button data-recipe="swift" aria-pressed="false">燕子</button>
+        <button data-recipe="hammer" aria-pressed="false">平头飞镖</button>
+      </div>
+      <div class="row">
+        <button class="primary" id="foldBtn">折成飞机</button>
+        <label class="btn" id="uploadBtn" for="file">换一张照片</label>
+        <input id="file" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif" hidden>
+        <button id="fitBtn" aria-pressed="false" title="照片在纸面上的填充方式">完整显示</button>
+      </div>
+      <div class="rail-wrap">
+        <div class="ticks" id="ticks">
+          <span>对折</span><span>锁鼻</span><span>再收角</span><span>合身</span><span>展翼</span>
+        </div>
+        <input id="rail" type="range" min="0" max="1000" value="0" aria-label="折叠进度">
+        <div class="hint" id="hint">拖动滑杆逐折查看，或按「折成飞机」。</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="loader">
+  <div class="flight" aria-hidden="true">
+    <div class="plane-wrap">
+      <svg class="plane" viewBox="0 0 64 64">
+        <path d="M5 31 L59 6 L39 60 L31 39 Z" />
+        <path d="M31 39 L59 6" />
+      </svg>
+    </div>
+  </div>
+  <div>正在布置书桌</div>
+  <div class="bar"><i></i></div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

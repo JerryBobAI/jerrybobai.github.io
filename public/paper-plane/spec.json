@@ -1,0 +1,76 @@
+{
+  "_runtime": "src/main.js 只读取 camera 与 post 两段；其余字段是场景说明，实际数值以 src/ 为准（2026-11-21 已与代码对齐）",
+  "name": "threejs-paper-airplane",
+  "title": "纸飞机 · Paper Airplane",
+  "space": "indoor desk in front of a tall window, afternoon; table top at y=0, window wall at z=-0.70",
+  "subject": "A5 photo print (0.148 x 0.210 m), printed side up, folded into a paper dart on the desk",
+  "time": "16:10, sun elevation 40 deg, warm back light through the window",
+  "weather": "clear, thin haze outside the window",
+  "scale": {
+    "unit": "m",
+    "paperW": 0.148,
+    "paperH": 0.210,
+    "paperThickness": 0.00025,
+    "tableTop": [1.2, 1.0],
+    "tableHeight": 0.75,
+    "anchor": "paper width 0.148 m; desk height 0.75 m"
+  },
+  "camera": {
+    "hFovDeg": 46,
+    "vFovDeg": 32,
+    "position": [0.30, 0.235, 0.47],
+    "target": [0.0, 0.02, -0.02],
+    "fStop": 2.8,
+    "focalLengthMm": 50,
+    "focusDistance": 0.58
+  },
+  "mood": "quiet, warm, dust in the light shaft",
+  "interaction": "pick one of five fold recipes, fold progress slider, click the finished plane to launch, orbit around it",
+  "light": {
+    "sunPos": [-0.1, 1.35, -1.6],
+    "sunColor": [1.0, 0.929, 0.839],
+    "sunIntensity": 2.7,
+    "skyColor": [1.0, 0.949, 0.863],
+    "groundColor": [0.42, 0.31, 0.227],
+    "hemiIntensity": 0.5,
+    "fillColor": [1.0, 0.941, 0.859],
+    "fillIntensity": 0.45,
+    "deskEnvIntensity": 0.5,
+    "wallEnvIntensity": 0.35
+  },
+  "window": {
+    "wallZ": -0.7,
+    "wallThickness": 0.08,
+    "opening": { "x": [-0.5, 0.5], "y": [-0.08, 1.7] }
+  },
+  "paper": {
+    "recipes": {
+      "dart": { "label": "经典飞镖", "wingX": 0.017, "dihedralRad": 0.46 },
+      "glider": { "label": "宽翼滑翔机", "wingX": 0.012, "dihedralRad": 0.34 },
+      "wide": { "label": "宽体飞镖", "wingX": 0.024, "dihedralRad": 0.44 },
+      "swift": { "label": "燕子", "wingX": 0.020, "dihedralRad": 0.50, "tipX": 0.040, "tipFoldRad": 0.9, "tipDir": -1 },
+      "hammer": { "label": "平头飞镖", "wingX": 0.017, "dihedralRad": 0.46, "noseCut": 0.010 }
+    },
+    "creaseRadius": 0.00026,
+    "layerGap": 0.00006,
+    "autoFoldSeconds": 8.8
+  },
+  "post": {
+    "exposure": 1.0,
+    "bloomThreshold": 0.9,
+    "bloomStrength": 0.28,
+    "dofMaxPx": 7.0,
+    "grain": 0.018,
+    "vignette": 0.18,
+    "ca": 0.0007,
+    "whiteBalance": [1.03, 1.0, 0.975],
+    "contrast": 1.05,
+    "saturation": 1.02
+  },
+  "palette": {
+    "paperBack": "#f7f3ea",
+    "printPaper": "#fbf7ec",
+    "wood": "#be976e",
+    "wall": "#f2ecdf"
+  }
+}
