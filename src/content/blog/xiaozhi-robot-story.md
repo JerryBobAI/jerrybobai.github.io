@@ -4,7 +4,7 @@ pubDate: 2026-11-25
 tags: [AI 玩具, ESP32, 独立开发, 亲子]
 summary: 一台 300 元级的 Otto 机器人 + 开源小智生态，六天里从开箱翻车到脱云自建，再到一天加满四个新玩法——选型对比、装机坑、服务端架构、家长后台与成本台账，全在这篇。
 origin: 原创
-cover: /covers/blog-xiaozhi-lit.jpg
+cover: /covers/blog-xiaozhi-sketch.jpg
 ---
 
 起因很朴素：我想给娃一台真正的 AI 伙伴，而不是又一个「按一下放一句预录音」的电动玩具。列出来的愿望清单其实不短——
@@ -36,11 +36,11 @@ cover: /covers/blog-xiaozhi-lit.jpg
 
 到货的是一个零件袋：3D 打印的外壳件、ESP32 主板、六个舵机、电池喇叭，说明书写着「30 分钟装好」。实际我装了一个多小时——不是难度问题，是走线问题：六个舵机的线要从四肢穿到主板仓，光理线就花了一顿饭的时间。
 
-![开箱全家福：外壳件、主板、舵机](/images/xiaozhi/xiaozhi-parts.jpg)
+![开箱全家福：外壳件、主板、舵机](/images/xiaozhi/xiaozhi-parts.jpg?v=4)
 
-![装机过程：走线是最耗时的一步](/images/xiaozhi/xiaozhi-wiring.jpg)
+![装机过程：走线是最耗时的一步](/images/xiaozhi/xiaozhi-wiring.jpg?v=4)
 
-![装屏：屏幕复位到前脸](/images/xiaozhi/xiaozhi-faceplate.jpg)
+![装屏：屏幕复位到前脸](/images/xiaozhi/xiaozhi-faceplate.jpg?v=4)
 
 装机前先收藏三个坑，都是我替你踩过的：
 
@@ -48,11 +48,11 @@ cover: /covers/blog-xiaozhi-lit.jpg
 2. **配网必须连 2.4GHz 的 Wi-Fi**，iPhone 开个人热点记得打开「最大兼容性」，不然设备死活连不上；
 3. 装完屏幕上会出现 `xiaozhi.me` 和一个**六位设备码**——那是设备码，不是短信码，别发群里让人代绑（绑了就到别人账号里去了）。
 
-![激活界面：屏幕上的设备码](/images/xiaozhi/xiaozhi-pairing.jpg)
+![激活界面：屏幕上的设备码](/images/xiaozhi/xiaozhi-pairing.jpg?v=4)
 
 装好连上小智控制台，配好角色音色和语言模型，娃直接玩起来了：语音唤醒、查天气、点歌、讲笑话，最炸的是喊「跳个太空步」「自己即兴编一个舞蹈」它都照做——蓝眼睛亮起来的那一刻，孩子笑疯了。
 
-![点亮时刻：蓝眼睛亮起来，它人生第一次跳舞](/images/xiaozhi/xiaozhi-lit-up.jpg)
+![点亮时刻：蓝眼睛亮起来，它人生第一次跳舞](/images/xiaozhi/xiaozhi-lit-up.jpg?v=4)
 
 ### 03 · 云端够用，但不太听话
 
