@@ -39,7 +39,7 @@ const jsonLd = [
     }
   </style>
 
-  <section aria-label="栏目精选" class="mt-6 grid items-start gap-6 lg:grid-cols-3">
+  <section aria-label="栏目精选" class="mt-6 grid items-start gap-6 sm:grid-cols-2">
     <div class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/70">
       <h2 class="text-lg font-bold">最新文章</h2>
       {posts.length === 0 && <p class="mt-4 text-sm text-slate-500">写作中，敬请期待。</p>}
@@ -68,7 +68,8 @@ const jsonLd = [
       <a href="/projects/" class="mt-5 inline-block text-sm text-sky-700 hover:underline">查看全部 →</a>
     </div>
 
-    <div class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/70">
+    {/* 工具卡暂不显示（工具还在制作中）；恢复时 grid 改回三列 */}
+    {/* <div class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/70">
       <h2 class="text-lg font-bold">工具</h2>
       {sortedTools.length === 0 && <p class="mt-4 text-sm text-slate-500">工具制作中。每个工具独立成页，进入才加载交互代码。</p>}
       <ul class="mt-4 space-y-4">
@@ -80,7 +81,7 @@ const jsonLd = [
         ))}
       </ul>
       <a href="/tools/" class="mt-5 inline-block text-sm text-sky-700 hover:underline">查看全部 →</a>
-    </div>
+    </div> */}
   </section>
 </BaseLayout>
 
