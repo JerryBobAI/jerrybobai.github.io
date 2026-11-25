@@ -114,8 +114,8 @@ const jsonLd = [
 <script>
   // Post hairline figure: pattern name comes from the figure frontmatter field (data-figure)
   // Do NOT `import *` and index by name — Rollup prunes the namespace to statically-used bindings
-  import { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet } from '@lucasmarkes/hairline';
-  const figures: Record<string, ((el: HTMLElement, opts?: { play?: boolean }) => unknown) | undefined> = { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet };
+  import { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet, terrain } from '@lucasmarkes/hairline';
+  const figures: Record<string, ((el: HTMLElement, opts?: { play?: boolean }) => unknown) | undefined> = { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet, terrain };
   const figureEl = document.getElementById('post-figure');
   const figureName = figureEl?.dataset.figure;
   const draw = figureName ? figures[figureName] : undefined;

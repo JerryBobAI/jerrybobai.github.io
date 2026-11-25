@@ -156,8 +156,8 @@ const jsonLd = [
 <script>
   // 文章 hairline 线条图：图案名来自 frontmatter figure 字段（data-figure）
   // 注意：不能 import * 后按名索引——Rollup 会把 namespace 砍到只剩被静态引用的绑定，动态查找落空
-  import { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet } from '@lucasmarkes/hairline';
-  const figures: Record<string, ((el: HTMLElement, opts?: { play?: boolean }) => unknown) | undefined> = { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet };
+  import { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet, terrain } from '@lucasmarkes/hairline';
+  const figures: Record<string, ((el: HTMLElement, opts?: { play?: boolean }) => unknown) | undefined> = { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet, terrain };
   const figureEl = document.getElementById('post-figure');
   const figureName = figureEl?.dataset.figure;
   const draw = figureName ? figures[figureName] : undefined;
