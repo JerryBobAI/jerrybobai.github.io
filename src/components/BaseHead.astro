@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../config/site';
+import { DEFAULT_LOCALE, OG_LOCALE, type Locale } from '../i18n/ui';
 
 interface Props {
   title: string;
@@ -7,15 +8,17 @@ interface Props {
   image?: string;
   ogType?: 'website' | 'article';
   pubDate?: Date;
+  locale?: Locale;
 }
 
-const { title, description, image = '/covers/about-brand.jpg', ogType = 'website', pubDate } = Astro.props;
+const { title, description, image = '/covers/about-brand.jpg', ogType = 'website', pubDate, locale = DEFAULT_LOCALE } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 <link rel="alternate" type="application/rss+xml" title={SITE.name} href={new URL('/rss.xml', SITE.url).href} />
+<meta property="og:locale" content={OG_LOCALE[locale]} />
 <meta property="og:type" content={ogType} />
 <meta property="og:site_name" content={SITE.name} />
 <meta property="og:title" content={title} />

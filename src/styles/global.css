@@ -1,2 +1,8 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* 链接下划线与下延字母（g/y/p…）拉开距离，避免视觉断裂；文章正文另有 scoped 2px 规则不受影响 */
+a {
+  text-underline-offset: 4px;
+}
+

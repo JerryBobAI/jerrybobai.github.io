@@ -1,12 +1,20 @@
 ---
 import { SITE } from '../config/site';
+import { DEFAULT_LOCALE, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(locale);
 const year = new Date().getFullYear();
 ---
 <footer class="mt-10 border-t border-slate-200">
   <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">
-    <p>{SITE.tagline}</p>
+    <p>{t('site.tagline')}</p>
     <p class="mt-2">
-      <a href="/docs/timeline/" class="hover:text-slate-900">文章归档</a>
+      <a href="/docs/timeline/" class="hover:text-slate-900">{t('footer.archive')}</a>
       <span class="mx-2">·</span>
       <a href={SITE.github} rel="me" class="hover:text-slate-900">GitHub</a>
       <span class="mx-2">·</span>

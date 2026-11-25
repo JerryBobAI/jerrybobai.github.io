@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { SITE } from '../../../config/site';
+
+const title = "About — Jerry's Workshop";
+const description =
+  "Jerry's workshop: what's inside, how it's built with AI, and where to find the work — GitHub now, YouTube and X coming.";
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: title,
+    url: `${SITE.url}/en/about/`,
+    inLanguage: 'en',
+  },
+];
+---
+<BaseLayout lang="en" title={title} description={description} jsonLd={jsonLd} alternates={{ zh: '/about/', en: '/en/about/' }}>
+  <h1 class="text-3xl font-bold tracking-tight">About</h1>
+  <div class="mt-8 space-y-4 leading-relaxed text-slate-700">
+    <p>
+      I'm Jerry, a builder. This site is my workshop — and the name is literal: what gets built here isn't only
+      code. Tools, products, content — even the publishing pipeline that ships the content across platforms is
+      itself one of the builds.
+    </p>
+  </div>
+
+  <section class="mt-10" aria-label="What's inside">
+    <h2 class="text-xl font-bold">What's inside</h2>
+    <ul class="mt-4 space-y-3 leading-relaxed text-slate-700">
+      <li><strong>Essays</strong> — opinions and build deep-dives, mostly original. (<a class="underline" href="/blog/">Chinese sections</a>)</li>
+      <li><strong>Ideas</strong> — early notes and validation logs. (<a class="underline" href="/ideas/">Chinese</a>)</li>
+      <li><strong>Projects</strong> — shipped builds and live products. (<a class="underline" href="/projects/">Chinese</a>)</li>
+      <li><strong>Tools</strong> — small web utilities, one page each. (<a class="underline" href="/tools/">Chinese</a>)</li>
+    </ul>
+  </section>
+
+  <section class="mt-10" aria-label="How it's built">
+    <h2 class="text-xl font-bold">How it's built: with AI</h2>
+    <div class="mt-4 space-y-4 leading-relaxed text-slate-700">
+      <p>
+        The whole workshop is a human-AI collaboration. Repeated workflows get distilled into skills: image
+        generation, soundtracks, long-form-to-video scripting, and a publishing pipeline.
+      </p>
+      <p>
+        One build, many languages of distribution: a game becomes a Bilibili video, an essay, an image set —
+        each re-argued in the platform's own language, never copy-paste.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-10" aria-label="Where to find me">
+    <h2 class="text-xl font-bold">Where to find me</h2>
+    <div class="mt-4 space-y-4 leading-relaxed text-slate-700">
+      <p>GitHub: <a class="underline" href={SITE.github} rel="me">{SITE.github}</a></p>
+      <p>
+        English line in preparation: YouTube (<code class="rounded bg-slate-100 px-1 py-0.5 text-sm">@JerryBobBuilds</code>)
+        and X. Chinese platforms already live: Bilibili「Jerry的造物间」and Xiaohongshu「Jerry的一人公司」.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

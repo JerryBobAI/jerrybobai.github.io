@@ -1,16 +1,32 @@
 ---
 import { SITE, NAV_ITEMS } from '../config/site';
+import { DEFAULT_LOCALE, SITE_NAME, localePath, useTranslations, type Locale } from '../i18n/ui';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+  /** 当前页面语言；导航只列该语言下真实存在的栏目 */
+  locale?: Locale;
+  /** 语言切换器指向的地址（当前页的另一语言版本）；缺省回落另一语言入口页 */
+  alternateUrl?: string;
+}
+
+const { locale = DEFAULT_LOCALE, alternateUrl } = Astro.props;
+const t = useTranslations(locale);
+const items = NAV_ITEMS.filter((item) => (item.locales ?? ['zh']).includes(locale));
 ---
 <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
   <nav
     class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3"
-    aria-label="主导航"
+    aria-label={t('nav.aria')}
   >
-    <a href="/" class="whitespace-nowrap text-lg font-bold">{SITE.name}</a>
-    <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-      {NAV_ITEMS.map((item) => (
-        <li><a href={item.href} class="whitespace-nowrap text-slate-600 hover:text-slate-900">{item.label}</a></li>
-      ))}
-    </ul>
+    <a href={localePath('/', locale)} class="whitespace-nowrap text-lg font-bold">{SITE_NAME[locale]}</a>
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+      <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+        {items.map((item) => (
+          <li><a href={localePath(item.href, locale)} class="whitespace-nowrap text-slate-600 hover:text-slate-900">{t(item.key)}</a></li>
+        ))}
+      </ul>
+      <LangSwitch locale={locale} alternateUrl={alternateUrl} />
+    </div>
   </nav>
 </header>

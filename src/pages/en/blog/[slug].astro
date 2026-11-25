@@ -1,0 +1,191 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BackLink from '../../../components/BackLink.astro';
+import { SITE } from '../../../config/site';
+import { notDraft, formatDate } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blogEn', notDraft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const tocItems = headings.filter((h) => h.depth <= 3);
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.data.title,
+    datePublished: post.data.pubDate.toISOString(),
+    author: { '@type': 'Person', name: SITE.author, url: SITE.url },
+    description: post.data.summary,
+    mainEntityOfPage: new URL(Astro.url.pathname, SITE.url).href,
+    inLanguage: 'en',
+  },
+];
+---
+<BaseLayout
+  lang="en"
+  title={`${post.data.title} · Jerry's Workshop`}
+  description={post.data.summary}
+  jsonLd={jsonLd}
+  image={post.data.cover}
+  ogType="article"
+  pubDate={post.data.pubDate}
+  alternates={{ zh: `/blog/${post.id}/`, en: `/en/blog/${post.id}/` }}
+>
+  <article>
+    <BackLink href="/en/blog/" label="Back to all posts" />
+    <h1 class="mt-4 text-3xl font-bold">{post.data.title}</h1>
+    <p class="mt-2 text-sm text-slate-500">
+      {formatDate(post.data.pubDate)} · Original
+      {post.data.translatedFrom && <a href={post.data.translatedFrom} class="ml-2 underline">Chinese version</a>}
+    </p>
+    {post.data.tags.length > 0 && (
+      <div class="mt-3 flex flex-wrap gap-2">
+        {post.data.tags.map((t) => (
+          <span class="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs text-slate-500">#{t}</span>
+        ))}
+      </div>
+    )}
+    {post.data.cover && (
+      <img
+        src={post.data.cover}
+        alt={`Cover illustration for ${post.data.title}`}
+        class="mt-8 w-full rounded-2xl border border-slate-200"
+        width={900}
+        height={600}
+      />
+    )}
+    <div class="prose prose-slate mt-8 max-w-none">
+      <Content />
+    </div>
+  </article>
+  {post.data.figure && (
+    <div
+      id="post-figure-wrap"
+      aria-hidden="true"
+      class="fixed top-28 hidden w-44 transition-opacity duration-200 xl:block"
+      style="left: calc(50% + 26rem);"
+    >
+      {/* Inner div is the hairline container: the lib injects :where([data-hairline]) { position: relative }
+          via adoptedStyleSheets, and unlayered rules beat @layer utilities' .fixed */}
+      <div id="post-figure" data-figure={post.data.figure}></div>
+    </div>
+  )}
+  {tocItems.length >= 3 && (
+    <nav
+      id="toc"
+      aria-label="Table of contents"
+      class="fixed top-28 hidden w-44 opacity-0 transition-opacity duration-200 xl:block"
+      style="left: calc(50% + 26rem);"
+    >
+      <p class="text-xs font-medium uppercase tracking-wider text-slate-400">Contents</p>
+      <ul class="mt-3 space-y-1 border-l border-slate-200">
+        {tocItems.map((h) => (
+          <li>
+            <a
+              href={`#${h.slug}`}
+              data-toc-link={h.slug}
+              class="-ml-px block border-l-2 border-transparent py-1 pl-3 text-sm leading-snug text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-900"
+            >
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a
+        href="#"
+        id="toc-top"
+        class="mt-3 -ml-px block border-l-2 border-transparent py-1 pl-3 text-sm text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-900"
+      >Back to top ↑</a>
+    </nav>
+  )}
+</BaseLayout>
+<style is:global>
+  .prose h2,
+  .prose h3 {
+    scroll-margin-top: 5rem;
+  }
+</style>
+<script>
+  // Post hairline figure: pattern name comes from the figure frontmatter field (data-figure)
+  // Do NOT `import *` and index by name — Rollup prunes the namespace to statically-used bindings
+  import { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet } from '@lucasmarkes/hairline';
+  const figures: Record<string, ((el: HTMLElement, opts?: { play?: boolean }) => unknown) | undefined> = { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet };
+  const figureEl = document.getElementById('post-figure');
+  const figureName = figureEl?.dataset.figure;
+  const draw = figureName ? figures[figureName] : undefined;
+  if (figureEl && typeof draw === 'function') draw(figureEl, { play: true });
+
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+  if (links.length > 0) {
+    // While the title area is visible: TOC hidden, hairline figure shown; swap after scrolling past
+    const toc = document.getElementById('toc');
+    const figureWrap = document.getElementById('post-figure-wrap');
+    const h1 = document.querySelector('article h1');
+    if (h1 && (toc || figureWrap)) {
+      new IntersectionObserver(([e]) => {
+        const atTop = e.isIntersecting;
+        if (toc) {
+          toc.classList.toggle('opacity-0', atTop);
+          toc.classList.toggle('pointer-events-none', atTop);
+        }
+        if (figureWrap) {
+          figureWrap.classList.toggle('opacity-0', !atTop);
+          figureWrap.classList.toggle('pointer-events-none', !atTop);
+        }
+      }).observe(h1);
+    }
+    const targets = links
+      .map((a) => document.getElementById(a.dataset.tocLink ?? ''))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setCurrent = (id: string) => {
+      links.forEach((a) => {
+        const active = a.dataset.tocLink === id;
+        a.classList.toggle('border-slate-900', active);
+        a.classList.toggle('font-medium', active);
+        a.classList.toggle('text-slate-900', active);
+        a.classList.toggle('text-slate-500', !active);
+      });
+    };
+
+    const SCAN_OFFSET = 160;
+    const onScroll = () => {
+      const line = window.scrollY + SCAN_OFFSET;
+      let current = targets[0];
+      for (const h of targets) {
+        const top = h.getBoundingClientRect().top + window.scrollY;
+        if (top <= line) current = h;
+        else break;
+      }
+      if (current) setCurrent(current.id);
+    };
+
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    links.forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const target = document.getElementById(a.dataset.tocLink ?? '');
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', a.getAttribute('href') ?? '#');
+        }
+      });
+    });
+
+    const topLink = document.getElementById('toc-top');
+    if (topLink) {
+      topLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+</script>

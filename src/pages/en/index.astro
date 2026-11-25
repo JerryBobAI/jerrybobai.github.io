@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../config/site';
+
+const title = "Jerry's Workshop — I build everything with code";
+const description =
+  'Jerry builds things with code and AI: browser games, small tools, and the content pipeline that ships them. Full site in Chinese; English line is on its way.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: "Jerry's Workshop",
+    url: `${SITE.url}/en/`,
+    inLanguage: 'en',
+  },
+];
+---
+<BaseLayout lang="en" title={title} description={description} jsonLd={jsonLd} width="wide" alternates={{ zh: '/', en: '/en/' }}>
+  <h1 class="text-4xl font-bold tracking-tight lg:text-5xl">Jerry's Workshop</h1>
+  <p class="mt-4 text-lg leading-relaxed text-slate-600">
+    I build everything with code — tools, games, products, and the content pipeline that ships them.
+  </p>
+
+  <div class="mt-10 space-y-4 leading-relaxed text-slate-700">
+    <p>
+      Hi, I'm Jerry, a builder. Everything in this workshop is made with code and AI, solo, from idea to launch:
+      browser games, little tools, and the publishing pipeline that turns one build into videos, essays and posts.
+    </p>
+  </div>
+
+  <section class="mt-10" aria-label="Featured work">
+    <h2 class="text-xl font-bold">Featured work</h2>
+    <ul class="mt-4 space-y-3 leading-relaxed text-slate-700">
+      <li>
+        <strong>DieDaily</strong> — a black-and-white physics motorcycle game where your death count is your score. Play it on <a class="underline" href="https://jerrybobai.itch.io/diedaily" rel="noopener">itch.io</a> (<a class="underline" href="/die-daily/">in-browser version</a>, Chinese UI).
+      </li>
+      <li>
+        <strong>GitHub</strong> — <a class="underline" href={SITE.github} rel="me">{SITE.github}</a>, everything built in public.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mt-10" aria-label="About the language">
+    <h2 class="text-xl font-bold">About this site</h2>
+    <div class="mt-4 space-y-4 leading-relaxed text-slate-700">
+      <p>The workshop speaks Chinese — essays, ideas, projects and tools all live in the <a class="underline" href="/">Chinese sections</a>. English essays are on the roadmap and will land here.</p>
+    </div>
+  </section>
+</BaseLayout>

@@ -16,6 +16,20 @@ const blog = defineCollection({
     origin: z.enum(['原创', '转载', '翻译']).default('原创'),
     source: z.string().optional(),
     cover: z.string().optional(),
+    // 文章页左上角的 hairline 线条图（图案名对应 @lucasmarkes/hairline 的导出函数）
+    figure: z.string().optional(),
+  }),
+});
+
+// 英文文章线：slug 与中文版一致时，语言切换器和 hreflang 自动互指
+const blogEn = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/blog-en' }),
+  schema: z.object({
+    ...shared,
+    cover: z.string().optional(),
+    figure: z.string().optional(),
+    // 对应中文版路径，如 /blog/die-daily/
+    translatedFrom: z.string().optional(),
   }),
 });
 
@@ -43,4 +57,4 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { blog, ideas, projects };
+export const collections = { blog, blogEn, ideas, projects };

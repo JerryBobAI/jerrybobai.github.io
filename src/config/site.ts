@@ -7,11 +7,15 @@ export const SITE = {
   github: 'https://github.com/JerryBobAI',
 } as const;
 
+/**
+ * 导航栏目。locales 标注该栏目有哪些语言版本（缺省仅中文）；
+ * SiteNav 只渲染当前语言下真实存在的栏目，避免点进去 404 或被扔回另一语言。
+ */
 export const NAV_ITEMS = [
-  { href: '/blog/', label: '文章' },
-  { href: '/tags/', label: '标签' },
-  { href: '/ideas/', label: '点子' },
-  { href: '/projects/', label: '项目' },
-  { href: '/tools/', label: '工具' },
-  { href: '/about/', label: '关于' },
+  { href: '/blog/', key: 'nav.blog', locales: ['zh', 'en'] },
+  { href: '/tags/', key: 'nav.tags' },
+  { href: '/ideas/', key: 'nav.ideas' },
+  { href: '/projects/', key: 'nav.projects' },
+  { href: '/tools/', key: 'nav.tools' },
+  { href: '/about/', key: 'nav.about', locales: ['zh', 'en'] },
 ] as const;

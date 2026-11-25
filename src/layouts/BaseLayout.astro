@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { DEFAULT_LOCALE, HTML_LANG, type Locale } from '../i18n/ui';
 import '../styles/global.css';
 
 interface Props {
@@ -14,25 +15,44 @@ interface Props {
   image?: string;
   ogType?: 'website' | 'article';
   pubDate?: Date;
+  /** 页面语言，默认中文；英文页显式传 lang="en" */
+  lang?: Locale;
+  /** 本页其他语言版本的路径表，如 { en: '/en/' }，用于输出 hreflang */
+  alternates?: Partial<Record<Locale, string>>;
 }
 
-const { title, description, jsonLd = [], width = 'narrow', image, ogType, pubDate } = Astro.props;
+const {
+  title,
+  description,
+  jsonLd = [],
+  width = 'narrow',
+  image,
+  ogType,
+  pubDate,
+  lang = DEFAULT_LOCALE,
+  alternates,
+} = Astro.props;
 const containerMax = width === 'wide' ? 'max-w-6xl' : 'max-w-3xl';
+const otherLocale: Locale = lang === 'zh' ? 'en' : 'zh';
+const alternateUrl = alternates?.[otherLocale];
 ---
 <!doctype html>
-<html lang="zh-CN">
+<html lang={HTML_LANG[lang]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <BaseHead title={title} description={description} image={image} ogType={ogType} pubDate={pubDate} />
+    <BaseHead title={title} description={description} image={image} ogType={ogType} pubDate={pubDate} locale={lang} />
+    {alternates && Object.entries(alternates).map(([altLocale, path]) => (
+      <link rel="alternate" hreflang={HTML_LANG[altLocale as Locale]} href={new URL(path, Astro.site)} />
+    ))}
     {jsonLd.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
   <body class="min-h-screen bg-white text-slate-900 antialiased">
-    <SiteNav />
+    <SiteNav locale={lang} alternateUrl={alternateUrl} />
     <main class={`mx-auto ${containerMax} px-4 py-10`}>
       <slot />
     </main>
-    <SiteFooter />
+    <SiteFooter locale={lang} />
   </body>
 </html>
