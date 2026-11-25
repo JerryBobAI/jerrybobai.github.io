@@ -6,11 +6,18 @@ import { SITE } from '../../config/site';
 import { notDraft, formatDate } from '../../lib/content';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', notDraft);
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  const [posts, enPosts] = await Promise.all([
+    getCollection('blog', notDraft),
+    getCollection('blogEn', notDraft),
+  ]);
+  const enSlugs = new Set(enPosts.map((p) => p.id));
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, hasEn: enSlugs.has(post.id) },
+  }));
 }
 
-const { post } = Astro.props;
+const { post, hasEn } = Astro.props;
 if (post.data.origin !== '原创' && !post.data.source) {
   throw new Error(`[${post.id}] origin 为非原创时必须填写 source 字段`);
 }
@@ -30,7 +37,15 @@ const jsonLd = [
   },
 ];
 ---
-<BaseLayout title={`${post.data.title} · ${SITE.name}`} description={post.data.summary} jsonLd={jsonLd} image={post.data.cover} ogType="article" pubDate={post.data.pubDate}>
+<BaseLayout
+  title={`${post.data.title} · ${SITE.name}`}
+  description={post.data.summary}
+  jsonLd={jsonLd}
+  image={post.data.cover}
+  ogType="article"
+  pubDate={post.data.pubDate}
+  alternates={hasEn ? { zh: `/blog/${post.id}/`, en: `/en/blog/${post.id}/` } : undefined}
+>
   <article>
     <BackLink href="/blog/" label="返回文章列表" />
     <h1 class="mt-4 text-3xl font-bold">{post.data.title}</h1>
@@ -63,6 +78,18 @@ const jsonLd = [
       <Content />
     </div>
   </article>
+  {post.data.figure && (
+    <div
+      id="post-figure-wrap"
+      aria-hidden="true"
+      class="fixed top-28 hidden w-44 transition-opacity duration-200 xl:block"
+      style="left: calc(50% + 26rem);"
+    >
+      {/* 内层才是 hairline 容器：库会经 adoptedStyleSheets 注入 :where([data-hairline]) { position: relative }，
+          未分层规则能压过 @layer utilities 的 .fixed，fixed 放同一元素上会被打回 relative */}
+      <div id="post-figure" data-figure={post.data.figure}></div>
+    </div>
+  )}
   {tocItems.length >= 3 && (
     <nav
       id="toc"
@@ -84,6 +111,11 @@ const jsonLd = [
           </li>
         ))}
       </ul>
+      <a
+        href="#"
+        id="toc-top"
+        class="mt-3 -ml-px block border-l-2 border-transparent py-1 pl-3 text-sm text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-900"
+      >回到顶部 ↑</a>
     </nav>
   )}
 </BaseLayout>
@@ -122,17 +154,34 @@ const jsonLd = [
   }
 </style>
 <script>
+  // 文章 hairline 线条图：图案名来自 frontmatter figure 字段（data-figure）
+  // 注意：不能 import * 后按名索引——Rollup 会把 namespace 砍到只剩被静态引用的绑定，动态查找落空
+  import { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet } from '@lucasmarkes/hairline';
+  const figures: Record<string, ((el: HTMLElement, opts?: { play?: boolean }) => unknown) | undefined> = { rail, hub, exploded, keyboard, rebuild, relay, stack, settle, loupe, slow, turntable, vault, cabinet };
+  const figureEl = document.getElementById('post-figure');
+  const figureName = figureEl?.dataset.figure;
+  const draw = figureName ? figures[figureName] : undefined;
+  if (figureEl && typeof draw === 'function') draw(figureEl, { play: true });
+
   // 目录滚动高亮：以视口顶部下方 160px 为扫描线，最后一个越过扫描线的小节即当前小节
   // （不用 IntersectionObserver：scroll-margin 让锚点跳转停在带区之外，高亮无法跟随）
   const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
   if (links.length > 0) {
-    // 文章标题区可见时隐藏悬浮目录（含过滚橡皮筋把标题拉回视口的瞬间），滚出后淡入
+    // 文章标题区可见时：目录隐藏、hairline 图显示；滚出后两者互换（同一位/右侧栏互斥显隐）
     const toc = document.getElementById('toc');
+    const figureWrap = document.getElementById('post-figure-wrap');
     const h1 = document.querySelector('article h1');
-    if (toc && h1) {
+    if (h1 && (toc || figureWrap)) {
       new IntersectionObserver(([e]) => {
-        toc.classList.toggle('opacity-0', e.isIntersecting);
-        toc.classList.toggle('pointer-events-none', e.isIntersecting);
+        const atTop = e.isIntersecting;
+        if (toc) {
+          toc.classList.toggle('opacity-0', atTop);
+          toc.classList.toggle('pointer-events-none', atTop);
+        }
+        if (figureWrap) {
+          figureWrap.classList.toggle('opacity-0', !atTop);
+          figureWrap.classList.toggle('pointer-events-none', !atTop);
+        }
       }).observe(h1);
     }
     const targets = links
@@ -175,5 +224,14 @@ const jsonLd = [
         }
       });
     });
+
+    // 目录尾部的「回到顶部」
+    const topLink = document.getElementById('toc-top');
+    if (topLink) {
+      topLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   }
 </script>

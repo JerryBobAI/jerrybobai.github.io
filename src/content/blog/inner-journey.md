@@ -5,6 +5,7 @@ tags: [修行, 内心, 哲学]
 summary: 修行不是换一台更昂贵的机器，而是按下你生来就持有却从未按下的静音键。18 篇修行主题短文的凝练：穿越喧闹，拜访内在最深邃的寂静。
 origin: 原创
 cover: /covers/blog-inner-journey.jpg
+figure: turntable
 ---
 
 你的心，是喋喋不休的收音机，还是静水流深的音乐厅？

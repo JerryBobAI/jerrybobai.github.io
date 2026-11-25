@@ -5,6 +5,7 @@ tags: [游戏, 独立开发]
 summary: 我第一款上线 itch.io 的网页游戏：黑白物理摩托即死闯关，死亡数就是分数。8 个自然日从首个 commit 到上线，30 关的锯齿难度曲线，是手工坐标加机器验证摆出来的。
 origin: 原创
 cover: /covers/blog-die-daily.jpg
+figure: rail
 ---
 
 DieDaily 是一款黑白物理摩托闯关游戏：油门刹车两个键，ragdoll 火柴人，碰到尖刺就摔毙——摔完不重试，死亡数直接计入成绩。它已经上线 [itch.io](https://jerrybobai.itch.io/diedaily)，也可以直接[在站内玩](/die-daily/)。这是我第一款真正上线的完整作品，从首个 commit 到 itch 上线用了 8 个自然日。这篇文章记录它的设计核心和技术踩坑。

@@ -6,6 +6,7 @@ summary: Tesla 首次公开拆解 FSD 基础模型全栈：摄像头像素直接
 origin: 原创
 source: https://www.youtube.com/watch?v=IRu-cPkpiFk
 cover: /covers/blog-tesla-fsd-world-simulator.jpg
+figure: hub
 ---
 
 Ashok Elluswamy（Tesla AI 副总裁）在 ICCV 2025 WDFM-AD 研讨会（2nd Workshop on Distillation of Foundation Models for Autonomous Driving，檀香山）发表主题演讲「Building an Autonomous Future」，远程出席。这是 Tesla 首次对外结构化拆解其端到端基础模型技术栈。本文基于演讲字幕全文逐段精读整理，并与研讨会主办方发布的官方博客交叉验证——文中演讲者的宣称均已标注口径，未经 Tesla 官方确认的数字单独说明。
