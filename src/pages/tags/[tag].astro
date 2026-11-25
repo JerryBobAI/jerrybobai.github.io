@@ -24,22 +24,36 @@ const { tag, posts } = Astro.props;
 ---
 
 <BaseLayout width="wide" title={`#${tag} · ${SITE.name}`} description={`标签 #${tag} 下的全部文章，共 ${posts.length} 篇。`}>
-  <BackLink href="/tags/" label="返回标签" />
-  <h1 class="mt-4 text-3xl font-bold">#{tag}</h1>
-  <p class="mt-2 text-sm text-slate-500">共 {posts.length} 篇文章。</p>
-  <ul class="mt-8 space-y-6">
-    {posts.map((post) => (
-      <li class="border-b pb-6">
-        <a href={`/blog/${post.id}/`} class="text-xl font-medium hover:underline">{post.data.title}</a>
-        <p class="mt-2 text-sm text-slate-500">
-          {formatDate(post.data.pubDate)}
-          <span class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs">{post.data.origin}</span>
-          {post.data.tags.filter((t) => t !== tag).map((t) => (
-            <a href={`/tags/${encodeURIComponent(t)}/`} class="ml-1 text-xs text-slate-400 hover:text-slate-900">#{t}</a>
-            ))}
-        </p>
-        <p class="mt-2 text-slate-600">{post.data.summary}</p>
-      </li>
-    ))}
-  </ul>
+  {/* 内容 + 右栏 hairline 同容器（同文章详情页模型），右栏收窄正文列宽 */}
+  <div class="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div>
+      <BackLink href="/tags/" label="返回标签" />
+      <h1 class="mt-4 text-3xl font-bold">#{tag}</h1>
+      <p class="mt-2 text-sm text-slate-500">共 {posts.length} 篇文章。</p>
+      <ul class="mt-8 space-y-6">
+        {posts.map((post) => (
+          <li class="border-b pb-6">
+            <a href={`/blog/${post.id}/`} class="text-xl font-medium hover:underline">{post.data.title}</a>
+            <p class="mt-2 text-sm text-slate-500">
+              {formatDate(post.data.pubDate)}
+              <span class="ml-2 rounded bg-slate-100 px-1.5 py-0.5 text-xs">{post.data.origin}</span>
+              {post.data.tags.filter((t) => t !== tag).map((t) => (
+                <a href={`/tags/${encodeURIComponent(t)}/`} class="ml-1 text-xs text-slate-400 hover:text-slate-900">#{t}</a>
+                ))}
+            </p>
+            <p class="mt-2 text-slate-600">{post.data.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="hidden self-start lg:sticky lg:top-28 lg:block">
+      <div id="tags-figure" aria-hidden="true" class="w-full"></div>
+    </div>
+  </div>
 </BaseLayout>
+
+<script>
+  import { hub } from '@lucasmarkes/hairline';
+  const el = document.getElementById('tags-figure');
+  if (el) hub(el as HTMLElement, { play: true });
+</script>
