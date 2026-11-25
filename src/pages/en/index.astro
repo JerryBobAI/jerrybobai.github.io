@@ -1,6 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { SITE } from '../../config/site';
+import { notDraft, byDateDesc, formatDate } from '../../lib/content';
+
+const posts = (await getCollection('blogEn', notDraft)).sort(byDateDesc).slice(0, 3);
 
 const title = "Jerry's Workshop — I build everything with code";
 const description =
@@ -17,34 +21,68 @@ const jsonLd = [
 ];
 ---
 <BaseLayout lang="en" title={title} description={description} jsonLd={jsonLd} width="wide" alternates={{ zh: '/', en: '/en/' }}>
-  <h1 class="text-4xl font-bold tracking-tight lg:text-5xl">Jerry's Workshop</h1>
-  <p class="mt-4 text-lg leading-relaxed text-slate-600">
-    I build everything with code — tools, games, products, and the content pipeline that ships them.
+  <section class="grid items-center gap-6 py-6 sm:grid-cols-2 sm:gap-8 sm:py-8">
+    <div>
+      <h1 class="text-4xl font-bold tracking-tight lg:text-5xl">Jerry's Workshop</h1>
+      <p class="mt-4 text-lg leading-relaxed text-slate-600">
+        I build everything with code — tools, games, products, and the content pipeline that ships them.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/en/blog/" class="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-slate-700">Browse the blog</a>
+        <a href={SITE.github} class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-medium transition-colors hover:border-slate-900">GitHub</a>
+      </div>
+    </div>
+    <div id="hero-figure" aria-hidden="true" class="mx-auto w-full max-w-[240px] sm:max-w-xs lg:max-w-lg"></div>
+  </section>
+  <style>
+    /* hairline 默认 aspect-ratio 5/4，压扁到 2/1 与左侧文字块等高（同中文首页） */
+    #hero-figure {
+      aspect-ratio: 2 / 1;
+    }
+  </style>
+
+  <p class="leading-relaxed text-slate-700">
+    Hi, I'm Jerry, a builder. Everything in this workshop is made with code and AI, solo, from idea to launch.
+    The full site speaks Chinese — English essays are on the roadmap.
   </p>
 
-  <div class="mt-10 space-y-4 leading-relaxed text-slate-700">
-    <p>
-      Hi, I'm Jerry, a builder. Everything in this workshop is made with code and AI, solo, from idea to launch:
-      browser games, little tools, and the publishing pipeline that turns one build into videos, essays and posts.
-    </p>
-  </div>
+  <section aria-label="Featured work" class="mt-6 grid items-start gap-6 sm:grid-cols-2">
+    <div class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/70">
+      <h2 class="text-lg font-bold">Essays</h2>
+      {posts.length === 0 && <p class="mt-4 text-sm text-slate-500">English essays are on the roadmap — the <a class="underline" href="/">Chinese sections</a> are live.</p>}
+      <ul class="mt-4 space-y-4">
+        {posts.map((post) => (
+          <li>
+            <a href={`/en/blog/${post.id}/`} class="font-medium hover:underline">{post.data.title}</a>
+            <p class="mt-1 line-clamp-2 text-sm text-slate-500">{formatDate(post.data.pubDate)} · {post.data.summary}</p>
+          </li>
+        ))}
+      </ul>
+      {posts.length > 0 && <a href="/en/blog/" class="mt-5 inline-block text-sm text-sky-700 hover:underline">View all →</a>}
+    </div>
 
-  <section class="mt-10" aria-label="Featured work">
-    <h2 class="text-xl font-bold">Featured work</h2>
-    <ul class="mt-4 space-y-3 leading-relaxed text-slate-700">
-      <li>
-        <strong>DieDaily</strong> — a black-and-white physics motorcycle game where your death count is your score. Play it on <a class="underline" href="https://jerrybobai.itch.io/diedaily" rel="noopener">itch.io</a> (<a class="underline" href="/die-daily/">in-browser version</a>, Chinese UI).
-      </li>
-      <li>
-        <strong>GitHub</strong> — <a class="underline" href={SITE.github} rel="me">{SITE.github}</a>, everything built in public.
-      </li>
-    </ul>
-  </section>
-
-  <section class="mt-10" aria-label="About the language">
-    <h2 class="text-xl font-bold">About this site</h2>
-    <div class="mt-4 space-y-4 leading-relaxed text-slate-700">
-      <p>The workshop speaks Chinese — essays, ideas, projects and tools all live in the <a class="underline" href="/">Chinese sections</a>. English essays are on the roadmap and will land here.</p>
+    <div class="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/70">
+      <h2 class="text-lg font-bold">Featured work</h2>
+      <ul class="mt-4 space-y-4">
+        <li>
+          <a href="https://jerrybobai.itch.io/diedaily" class="font-medium hover:underline" rel="noopener">DieDaily</a>
+          <p class="mt-1 line-clamp-2 text-sm text-slate-500">A black-and-white physics motorcycle game where your death count is your score.</p>
+        </li>
+        <li>
+          <a href="/en/about/" class="font-medium hover:underline">About the workshop</a>
+          <p class="mt-1 line-clamp-2 text-sm text-slate-500">What gets built here, and how a human-AI workshop runs.</p>
+        </li>
+        <li>
+          <a href={SITE.github} class="font-medium hover:underline" rel="me">GitHub</a>
+          <p class="mt-1 line-clamp-2 text-sm text-slate-500">Everything built in public.</p>
+        </li>
+      </ul>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  import { terrain } from '@lucasmarkes/hairline';
+  const el = document.getElementById('hero-figure');
+  if (el) terrain(el as HTMLElement, { play: true });
+</script>
