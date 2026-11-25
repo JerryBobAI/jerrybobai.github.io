@@ -30,7 +30,6 @@ jspm_packages/
 vendor/
 !public/vendor/
 !public/otherworld-ride/vendor/
-!public/otherworld-ride/vendor/three/build/
 
 # 构建输出
 dist/
