@@ -33,12 +33,15 @@ const jsonLd = [
   description={post.data.summary}
   jsonLd={jsonLd}
   image={post.data.cover}
+  width="article"
   ogType="article"
   pubDate={post.data.pubDate}
   alternates={{ zh: `/blog/${post.id}/`, en: `/en/blog/${post.id}/` }}
 >
-  <article>
-    <BackLink href="/en/blog/" label="Back to all posts" />
+  {/* Article + right rail (hairline figure / TOC) share one container as wide as the homepage; rail sticks on scroll */}
+  <div class="grid items-start gap-10 xl:grid-cols-[minmax(0,1fr)_11rem]">
+    <article>
+      <BackLink href="/en/blog/" label="Back to all posts" />
     <h1 class="mt-4 text-3xl font-bold">{post.data.title}</h1>
     <p class="mt-2 text-sm text-slate-500">
       {formatDate(post.data.pubDate)} · Original
@@ -64,25 +67,25 @@ const jsonLd = [
       <Content />
     </div>
   </article>
-  {post.data.figure && (
-    <div
-      id="post-figure-wrap"
-      aria-hidden="true"
-      class="fixed top-28 hidden w-44 transition-opacity duration-200 xl:block"
-      style="left: calc(50% + 26rem);"
-    >
-      {/* Inner div is the hairline container: the lib injects :where([data-hairline]) { position: relative }
-          via adoptedStyleSheets, and unlayered rules beat @layer utilities' .fixed */}
-      <div id="post-figure" data-figure={post.data.figure}></div>
-    </div>
-  )}
-  {tocItems.length >= 3 && (
-    <nav
-      id="toc"
-      aria-label="Table of contents"
-      class="fixed top-28 hidden w-44 opacity-0 transition-opacity duration-200 xl:block"
-      style="left: calc(50% + 26rem);"
-    >
+  {/* Right rail: hairline figure and TOC stack in the same cell (grid-area 1/1); IntersectionObserver toggles their opacity */}
+  <div class="hidden self-start xl:sticky xl:top-28 xl:grid">
+    {post.data.figure && (
+      <div
+        id="post-figure-wrap"
+        aria-hidden="true"
+        class="[grid-area:1/1] transition-opacity duration-200"
+      >
+        {/* Inner div is the hairline container: the lib injects :where([data-hairline]) { position: relative }
+            via adoptedStyleSheets, and unlayered rules beat @layer utilities' .fixed */}
+        <div id="post-figure" data-figure={post.data.figure}></div>
+      </div>
+    )}
+    {tocItems.length >= 3 && (
+      <nav
+        id="toc"
+        aria-label="Table of contents"
+        class="pointer-events-none opacity-0 [grid-area:1/1] transition-opacity duration-200"
+      >
       <p class="text-xs font-medium uppercase tracking-wider text-slate-400">Contents</p>
       <ul class="mt-3 space-y-1 border-l border-slate-200">
         {tocItems.map((h) => (
@@ -104,6 +107,8 @@ const jsonLd = [
       >Back to top ↑</a>
     </nav>
   )}
+  </div>
+  </div>
 </BaseLayout>
 <style is:global>
   .prose h2,

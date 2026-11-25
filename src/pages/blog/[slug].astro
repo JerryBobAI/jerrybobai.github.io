@@ -42,12 +42,15 @@ const jsonLd = [
   description={post.data.summary}
   jsonLd={jsonLd}
   image={post.data.cover}
+  width="wide"
   ogType="article"
   pubDate={post.data.pubDate}
   alternates={hasEn ? { zh: `/blog/${post.id}/`, en: `/en/blog/${post.id}/` } : undefined}
 >
-  <article>
-    <BackLink href="/blog/" label="返回文章列表" />
+  {/* 文章 + 右栏（hairline 图/目录）作为一个整体容器，总宽与首页一致；右栏 sticky 跟随滚动 */}
+  <div class="grid items-start gap-10 xl:grid-cols-[minmax(0,1fr)_11rem]">
+    <article>
+      <BackLink href="/blog/" label="返回文章列表" />
     <h1 class="mt-4 text-3xl font-bold">{post.data.title}</h1>
     <p class="mt-2 text-sm text-slate-500">
       {formatDate(post.data.pubDate)} · {post.data.origin}
@@ -78,25 +81,25 @@ const jsonLd = [
       <Content />
     </div>
   </article>
-  {post.data.figure && (
-    <div
-      id="post-figure-wrap"
-      aria-hidden="true"
-      class="fixed top-28 hidden w-44 transition-opacity duration-200 xl:block"
-      style="left: calc(50% + 26rem);"
-    >
-      {/* 内层才是 hairline 容器：库会经 adoptedStyleSheets 注入 :where([data-hairline]) { position: relative }，
-          未分层规则能压过 @layer utilities 的 .fixed，fixed 放同一元素上会被打回 relative */}
-      <div id="post-figure" data-figure={post.data.figure}></div>
-    </div>
-  )}
-  {tocItems.length >= 3 && (
-    <nav
-      id="toc"
-      aria-label="文章目录"
-      class="fixed top-28 hidden w-44 opacity-0 transition-opacity duration-200 xl:block"
-      style="left: calc(50% + 26rem);"
-    >
+  {/* 右栏：hairline 图与目录同位叠放（grid-area 1/1），互斥显隐由 IntersectionObserver 切换 opacity */}
+  <div class="hidden self-start xl:sticky xl:top-28 xl:grid">
+    {post.data.figure && (
+      <div
+        id="post-figure-wrap"
+        aria-hidden="true"
+        class="[grid-area:1/1] transition-opacity duration-200"
+      >
+        {/* 内层才是 hairline 容器：库会经 adoptedStyleSheets 注入 :where([data-hairline]) { position: relative }，
+            未分层规则能压过 @layer utilities 的 .fixed，fixed 放同一元素上会被打回 relative */}
+        <div id="post-figure" data-figure={post.data.figure}></div>
+      </div>
+    )}
+    {tocItems.length >= 3 && (
+      <nav
+        id="toc"
+        aria-label="文章目录"
+        class="pointer-events-none opacity-0 [grid-area:1/1] transition-opacity duration-200"
+      >
       <p class="text-xs font-medium uppercase tracking-wider text-slate-400">目录</p>
       <ul class="mt-3 space-y-1 border-l border-slate-200">
         {tocItems.map((h) => (
@@ -118,6 +121,8 @@ const jsonLd = [
       >回到顶部 ↑</a>
     </nav>
   )}
+  </div>
+  </div>
 </BaseLayout>
 <style is:global>
   /* 锚点跳转时标题不被视口顶部裁掉 */
