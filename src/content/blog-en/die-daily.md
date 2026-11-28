@@ -2,13 +2,13 @@
 title: "DieDaily: A 30-Level Motorcycle Gauntlet Where Deaths Are Your Score"
 pubDate: 2026-11-22
 tags: [games, indie dev]
-summary: "My first game on itch.io: a black-and-white physics motorcycle platformer where dying is scoring. Eight days from first commit to launch, and 30 handmade levels with a sawtooth difficulty curve held up by hand-placed coordinates and machine-checked solvability."
+summary: "My first game launch: a black-and-white physics motorcycle platformer where dying is scoring. Eight days from first commit to launch, and 30 handmade levels with a sawtooth difficulty curve held up by hand-placed coordinates and machine-checked solvability."
 figure: rail
 cover: /covers/blog-die-daily.jpg
 translatedFrom: /blog/die-daily/
 ---
 
-DieDaily is a black-and-white physics motorcycle platformer. Two controls — throttle and brake — a ragdoll stick figure, and spikes that kill on contact. When you die, you don't retry: the death goes straight onto your score. The game is live on [itch.io](https://jerrybobai.itch.io/diedaily), or you can [play it right here](/die-daily/) (Chinese UI). It's the first thing I've ever shipped end to end, and it took eight days from first commit to launch. This essay is about the design core and the bugs worth remembering.
+DieDaily is a black-and-white physics motorcycle platformer. Two controls — throttle and brake — a ragdoll stick figure, and spikes that kill on contact. When you die, you don't retry: the death goes straight onto your score. The game is live on [CrazyGames](https://www.crazygames.com/game/diedaily), or you can [play it right here](/die-daily/) (Chinese UI). It's the first thing I've ever shipped end to end, and it took eight days from first commit to launch. This essay is about the design core and the bugs worth remembering.
 
 ### Why deaths are the score
 
@@ -40,6 +40,6 @@ The four-dimension framework that settled out of the LEVEL spec transfers direct
 
 ### Limits and what's next
 
-The "daily" promise is only half-kept: today the daily level rotates through the 30 by date — it isn't a new level every day. Whether to build true daily levels waits on the first round of analytics. Touch controls are in; the itch.io link may need a proxy in some regions, but the on-site mirror plays direct.
+The "daily" promise is only half-kept: today the daily level rotates through the 30 by date — it isn't a new level every day. Whether to build true daily levels waits on the first round of analytics. Touch controls are in; the game now lives on CrazyGames, which loads directly in most regions, and the on-site mirror plays direct.
 
-When you're done dying, come browse the other builds in [the projects list](/projects/) — and post your death count in the itch.io comments.
+When you're done dying, come browse the other builds in [the projects list](/projects/) — and post your death count in the CrazyGames comments.
